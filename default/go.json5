@@ -1,0 +1,6 @@
+// Struct for a Go Project
+{
+    "name": "*",
+    "folders": [],
+    "files": ["go.mod"]
+}
