@@ -1,0 +1,6 @@
+// Struct for a NPM Project
+{
+    "name": "*",
+    "folders": [],
+    "files": ["package.json"]
+}

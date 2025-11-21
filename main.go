@@ -3,11 +3,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"os"
 
-	"github.com/shadowdara/finder/search"
-	"github.com/shadowdara/finder/structure"
+	"github.com/shadowdara/finder/cli"
 )
 
 func PrettyPrint(v any) {
@@ -16,7 +14,7 @@ func PrettyPrint(v any) {
 }
 
 func main() {
-	fmt.Println("Struct Finder")
+	cli.Handle_command(os.Args)
 
 	// 	json1 := `
 	// {
@@ -60,42 +58,4 @@ func main() {
 	// 	hgh := structure.LoadJSON5(json3)
 	// 	PrettyPrint(hgh)
 
-	// System Argument Check
-	if len(os.Args) < 2 {
-		fmt.Println("Please start with one argument atleast or start with help.")
-		return
-	}
-
-	// Help Message
-	if os.Args[1] == "help" {
-		printHelp()
-	}
-
-	if len(os.Args) < 3 {
-		if os.Args[1] == "custom" {
-			// Load Custom JSON File
-			// search.Find()
-
-			// Check for file
-
-			// Use as JSON Source
-			search.Find(structure.LoadJSON5(os.Args[2]))
-		}
-	}
-
-	// Load Arg 1
-	data, err := JSONtemplateLoader(os.Args[1])
-	if err != nil {
-		log.Println("Could not read the JSON File")
-	}
-
-	// Search the struct
-	fmt.Printf("Searchin for %s\n", os.Args[1])
-	search.Find(structure.LoadJSON5(string(data)))
-}
-
-func printHelp() {
-	fmt.Println("Help for Finder")
-	fmt.Println("Check: ")
-	fmt.Println("https://github.com/ShadowDara/finder")
 }
