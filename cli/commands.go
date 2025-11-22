@@ -13,8 +13,10 @@ import (
 	"log"
 )
 
+const version = "0.1.0"
+
 func Handle_command(args []string) {
-	fmt.Printf("%sStruct Finder%s\n", color.Green, color.Reset)
+	fmt.Printf("%sStruct Finder v%s%s\n", color.Green, version, color.Reset)
 
 	// System Argument Check
 	if len(os.Args) < 2 {
