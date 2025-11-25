@@ -2,13 +2,32 @@
 
 a simple go program to search for certain folderstructures
 
+### Usage
+
+```sh
+finder git
+```
+
+and the programm will search for all folder which do have a *.git*
+directory.
+
 ### INFO
 
-not usable yet, but hopefully soon!!!
+- programm only uses **`.json5`** files
 
-### Idea
+### Path for custom structs
+```js
+// Windows → %AppData%\finder
+// Linux   → ~/.config/finder
+// macOS   → ~/Library/Application Support/finder
+```
+create a new struct there to search then for it via
 
-First Idea for a structure
+```sh
+finder <struct-name>
+```
+
+### Folderstruct
 
 ```json
 // A default struct to find git Repositories
@@ -22,9 +41,7 @@ First Idea for a structure
     }]
 }
 
-// *      means they doenst matter
 // if they are missing, means the default which means they dont matter
-// null   means they must be empty
 ```
 
 ### Contributing
@@ -38,9 +55,10 @@ from other software / projects / etc !!!
 - custom start dir for search
 - dynamic templates
 - faster search via coroutines
+- add check comments in directories (to check for example for git repositories
+which have uncomitted files)
 
 <!--
-
 $env:CC = "zig cc"
 $env:CXX = "zig c++"
 $env:CGO_ENABLED = "1"

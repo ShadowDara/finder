@@ -14,5 +14,5 @@ import (
 // Start the Programm
 func main() {
 	// Run the Command Hanlder
-	cli.Handle_command(os.Args)
+	cli.HandleCommand(os.Args)
 }

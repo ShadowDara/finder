@@ -1,0 +1,6 @@
+// Folderstruct for dotnet
+{
+    "name": "*",
+    "folders": [],
+    "files": ["*.csproj"]
+}

@@ -18,7 +18,9 @@ func getRootPath() string {
 
 func Find(folderstruct structure.Folder) {
 	matches := findMatchingFolders(getRootPath(), folderstruct)
+	fmt.Println("# Found:")
 	for _, m := range matches {
-		fmt.Println("Found:", m)
+		fmt.Println(m)
 	}
+	fmt.Println("# End of the List")
 }

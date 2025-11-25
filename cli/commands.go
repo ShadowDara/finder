@@ -2,76 +2,84 @@ package cli
 
 import (
 	"fmt"
-	"os"
+	"log"
 
 	"github.com/shadowdara/finder/cli/color"
 	"github.com/shadowdara/finder/loader"
 	"github.com/shadowdara/finder/search"
 	"github.com/shadowdara/finder/structure"
 	"github.com/shadowdara/finder/templates"
-
-	"log"
 )
 
 const version = "0.1.0"
 
-func Handle_command(args []string) {
+func HandleCommand(args []string) {
 	fmt.Printf("%sStruct Finder v%s%s\n", color.Green, version, color.Reset)
 
-	// System Argument Check
-	if len(os.Args) < 2 {
-		fmt.Printf("%sPlease start with atleast one argument or start with help.%s", color.Red, color.Reset)
+	// Argument count check
+	if len(args) < 2 {
+		fmt.Printf("%sPlease provide at least one argument (or use 'help').%s\n", color.Red, color.Reset)
 		return
 	}
 
-	// Help Message
-	if os.Args[1] == "help" {
+	switch args[1] {
+
+	// --------------------------
+	// HELP
+	// --------------------------
+	case "help":
 		printHelp()
 		return
-	}
 
-	if len(os.Args) >= 3 {
-		if os.Args[1] == "-f" {
-			// Load Custom JSON File
-			fmt.Println("Load Custom JSON File")
-
-			// Check for file
-			content, err := loader.LoadFile(os.Args[2])
-			if err != nil {
-				panic(err)
-			}
-
-			// Use Content as JSON
-			search.Find(structure.LoadJSON5(content))
-
-			// End After
-			return
-		} else if os.Args[1] == "-c" {
-			// Load JSON from Argh
-			fmt.Println("Load JSON from the Command Line Argument")
-
-			// Use Argh 2
-			search.Find(structure.LoadJSON5(os.Args[2]))
-
-			// End After
+	// --------------------------
+	// LOAD CUSTOM FILE
+	// --------------------------
+	case "-f":
+		if len(args) < 3 {
+			fmt.Printf("%sMissing file path for -f option.%s\n", color.Red, color.Reset)
 			return
 		}
+
+		fmt.Println("Loading custom JSON file...")
+		content, err := loader.LoadFile(args[2])
+		if err != nil {
+			fmt.Printf("%sError loading file: %v%s\n", color.Red, err, color.Reset)
+			return
+		}
+
+		search.Find(structure.LoadJSON5(content))
+		return
+
+	// --------------------------
+	// JSON DIRECT FROM ARGUMENT
+	// --------------------------
+	case "-c":
+		if len(args) < 3 {
+			fmt.Printf("%sMissing JSON string for -c option.%s\n", color.Red, color.Reset)
+			return
+		}
+
+		fmt.Println("Loading JSON from command-line argument...")
+		search.Find(structure.LoadJSON5(args[2]))
+		return
 	}
 
-	// Load Arg 1
-	data, err := templates.JSONtemplateLoader(os.Args[1])
+	// Default: Treat argument as a template name / file
+	data, err := templates.JSONtemplateLoader(args[1])
 	if err != nil {
-		log.Fatalf("%sCould not read the JSON File%s", color.Red, color.Reset)
+		log.Fatalf("%sCould not read JSON template: %v%s\n", color.Red, err, color.Reset)
 	}
 
-	// Search the struct
-	fmt.Printf("Searchin for %s\n", os.Args[1])
+	fmt.Printf("Searching for %s...\n", args[1])
 	search.Find(structure.LoadJSON5(string(data)))
 }
 
-// Function to print a Help Message
 func printHelp() {
-	fmt.Println("Help for Finder")
-	fmt.Println("Check for more Infos: ")
+	fmt.Println("Finder Help")
+	fmt.Println("More info at:")
 	fmt.Println("https://github.com/ShadowDara/finder")
+	fmt.Println("\nCustom Folder:")
+	fmt.Println("Windows → %AppData%\\finder")
+	fmt.Println("Linux   → ~/.config/finder")
+	fmt.Println("macOS   → ~/Library/Application Support/finder")
 }

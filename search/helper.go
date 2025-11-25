@@ -1,23 +1,25 @@
 package search
 
+// Prüft, ob ein Verzeichnis mit dem Template übereinstimmt
 import (
 	"io/fs"
 	"os"
+	"path"
 	"path/filepath"
 
 	"github.com/shadowdara/finder/structure"
 )
 
-// Prüft, ob ein Verzeichnis mit dem Template übereinstimmt
-func matchFolderTemplate(path string, template structure.Folder) bool {
-	entries, err := os.ReadDir(path)
+func matchFolderTemplate(dirPath string, template structure.Folder) bool {
+	entries, err := os.ReadDir(dirPath)
 	if err != nil {
 		return false
 	}
 
-	// Dateien prüfen
+	// Maps für schnellen Zugriff
 	filesMap := map[string]bool{}
 	dirsMap := map[string]bool{}
+
 	for _, e := range entries {
 		if e.IsDir() {
 			dirsMap[e.Name()] = true
@@ -26,22 +28,40 @@ func matchFolderTemplate(path string, template structure.Folder) bool {
 		}
 	}
 
-	// Dateien prüfen
-	for _, f := range template.Files {
-		if !filesMap[f] {
+	// Dateien prüfen (mit Wildcards)
+	for _, pattern := range template.Files {
+		if !matchAny(filesMap, pattern) {
 			return false
 		}
 	}
 
-	// Unterordner prüfen
+	// Ordner prüfen (mit Wildcards)
 	for _, folder := range template.Folders {
-		// Wildcard für Unterordnername
-		if folder.Name != "*" && !dirsMap[folder.Name] {
+		pattern := folder.Name
+		if !matchAny(dirsMap, pattern) {
 			return false
 		}
 	}
 
 	return true
+}
+
+// Prüft, ob mind. ein Eintrag zur Wildcard passt
+func matchAny(entries map[string]bool, pattern string) bool {
+	// Exakte Übereinstimmung
+	if entries[pattern] {
+		return true
+	}
+
+	// Wildcard-Match
+	for name := range entries {
+		ok, _ := path.Match(pattern, name)
+		if ok {
+			return true
+		}
+	}
+
+	return false
 }
 
 func findMatchingFolders(root string, template structure.Folder) []string {
