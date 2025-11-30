@@ -1,0 +1,6 @@
+// Folder Struct for Minecraft Worlds
+{
+    "name": "*",
+    "folders": [],
+    "files": ["level.dat"]
+}
