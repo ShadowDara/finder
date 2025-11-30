@@ -82,4 +82,7 @@ func printHelp() {
 	fmt.Println("Windows → %AppData%\\finder")
 	fmt.Println("Linux   → ~/.config/finder")
 	fmt.Println("macOS   → ~/Library/Application Support/finder")
+	fmt.Println("\nCommand Line Args")
+	fmt.Println("-f		Load a Custom JSON File")
+	fmt.Println("-c		Load JSON from the next commandline Argument")
 }
