@@ -29,7 +29,7 @@ finder <struct-name>
 
 ### Folderstruct
 
-```json
+```json5
 // A default struct to find git Repositories
 {
     "name": "*",
