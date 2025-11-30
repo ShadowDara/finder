@@ -1,10 +1,3 @@
-name: Build & Release Go
-
-on:
-  push:
-    tags:
-      - "v*"
-
 jobs:
   build:
     name: Build binaries
@@ -15,12 +8,15 @@ jobs:
           - os: ubuntu-latest
             goos: linux
             goarch: amd64
+            ext: ""
           - os: macos-latest
             goos: darwin
             goarch: amd64
+            ext: ""
           - os: windows-latest
             goos: windows
             goarch: amd64
+            ext: ".exe"
 
     steps:
       - name: Checkout
@@ -31,28 +27,17 @@ jobs:
         with:
           go-version: "1.22"
 
+      - name: Export GOOS/GOARCH for all shells
+        run: |
+          echo "GOOS=${{ matrix.goos }}" >> $GITHUB_ENV
+          echo "GOARCH=${{ matrix.goarch }}" >> $GITHUB_ENV
+
       - name: Build binary
         run: |
-          GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} go build -o app-${{ matrix.goos }}-${{ matrix.goarch }}
+          go build -o app-${{ matrix.goos }}-${{ matrix.goarch }}${{ matrix.ext }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: app-${{ matrix.goos }}-${{ matrix.goarch }}
-          path: app-${{ matrix.goos }}-${{ matrix.goarch }}
-
-  release:
-    name: Create Release
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Download all artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: release-files
-
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: release-files/**/*
+          path: app-${{ matrix.goos }}-${{ matrix.goarch }}${{ matrix.ext }}
