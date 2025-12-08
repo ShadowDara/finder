@@ -22,6 +22,14 @@ func HandleCommand(args []string) {
 		return
 	}
 
+	outputtype := "normal"
+
+	for _, arg := range args {
+		if arg == "--json" {
+			outputtype = "json"
+		}
+	}
+
 	switch args[1] {
 
 	// --------------------------
@@ -47,7 +55,7 @@ func HandleCommand(args []string) {
 			return
 		}
 
-		search.Find(structure.LoadJSON5(content))
+		search.Find(structure.LoadJSON5(content), outputtype)
 		return
 
 	// --------------------------
@@ -60,7 +68,7 @@ func HandleCommand(args []string) {
 		}
 
 		fmt.Println("Loading JSON from command-line argument...")
-		search.Find(structure.LoadJSON5(args[2]))
+		search.Find(structure.LoadJSON5(args[2]), outputtype)
 		return
 	}
 
@@ -71,7 +79,7 @@ func HandleCommand(args []string) {
 	}
 
 	fmt.Printf("Searching for %s...\n", args[1])
-	search.Find(structure.LoadJSON5(string(data)))
+	search.Find(structure.LoadJSON5(string(data)), outputtype)
 }
 
 func printHelp() {
@@ -83,6 +91,7 @@ func printHelp() {
 	fmt.Println("Linux   → ~/.config/finder")
 	fmt.Println("macOS   → ~/Library/Application Support/finder")
 	fmt.Println("\nCommand Line Args")
-	fmt.Println("-f		Load a Custom JSON File")
-	fmt.Println("-c		Load JSON from the next commandline Argument")
+	fmt.Println("-f		  Load a Custom JSON File")
+	fmt.Println("-c		  Load JSON from the next commandline Argument")
+	fmt.Println("--json   Displays the output in the Terminal as JSON")
 }

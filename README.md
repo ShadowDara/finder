@@ -57,6 +57,7 @@ from other software / projects / etc !!!
 - faster search via coroutines
 - add check comments in directories (to check for example for git repositories
 which have uncomitted files)
+- enable Caching
 
 <!--
 $env:CC = "zig cc"
