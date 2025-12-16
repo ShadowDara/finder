@@ -1,0 +1,6 @@
+// Default Folder Struct for Unreal Engine Projects
+{
+    "name": "*",
+    "folders": [{"name":"Content"}],
+    "files": ["*.uproject"]
+}

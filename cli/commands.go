@@ -38,6 +38,13 @@ func HandleCommand(args []string) {
 	case "help":
 		printHelp()
 		return
+	
+	// --------------------------
+	// List all available JSON5 Templates
+	// --------------------------
+	case "list":
+		list()
+		return
 
 	// --------------------------
 	// LOAD CUSTOM FILE
@@ -87,11 +94,19 @@ func printHelp() {
 	fmt.Println("More info at:")
 	fmt.Println("https://github.com/ShadowDara/finder")
 	fmt.Println("\nCustom Folder:")
-	fmt.Println("Windows → %AppData%\\finder")
-	fmt.Println("Linux   → ~/.config/finder")
-	fmt.Println("macOS   → ~/Library/Application Support/finder")
+	fmt.Println("- Windows → %AppData%\\finder")
+	fmt.Println("- Linux   → ~/.config/finder")
+	fmt.Println("- macOS   → ~/Library/Application Support/finder")
 	fmt.Println("\nCommand Line Args")
-	fmt.Println("-f		  Load a Custom JSON File")
-	fmt.Println("-c		  Load JSON from the next commandline Argument")
-	fmt.Println("--json   Displays the output in the Terminal as JSON")
+	fmt.Println("  -f		  Load a Custom JSON File")
+	fmt.Println("  -c		  Load JSON from the next commandline Argument")
+	fmt.Println("  --json   	  Displays the output in the Terminal as JSON")
+	fmt.Println("\nAlready blocked names for templates")
+	fmt.Println("- help")
+	fmt.Println("- list")
+}
+
+func list() {
+	fmt.Println("List available Templates:")
+	fmt.Println("- implemnted soon ...")
 }
