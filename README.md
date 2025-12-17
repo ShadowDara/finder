@@ -51,9 +51,11 @@ from other software / projects / etc !!!
 
 ### Future Ideas
 - Web Dashboard
+- change or add project name via command line
+- description to the structs
+- dynamic templates
 - Indexing
 - custom start dir for search
-- dynamic templates
 - faster search via coroutines
 - add check comments in directories (to check for example for git repositories
 which have uncomitted files)

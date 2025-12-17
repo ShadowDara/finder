@@ -38,7 +38,7 @@ func HandleCommand(args []string) {
 	case "help":
 		printHelp()
 		return
-	
+
 	// --------------------------
 	// List all available JSON5 Templates
 	// --------------------------
@@ -85,7 +85,8 @@ func HandleCommand(args []string) {
 		log.Fatalf("%sCould not read JSON template: %v%s\n", color.Red, err, color.Reset)
 	}
 
-	fmt.Printf("Searching for %s...\n", args[1])
+	// Searching for the Folderstruct
+	fmt.Printf("Searching for %s ...\n", args[1])
 	search.Find(structure.LoadJSON5(string(data)), outputtype)
 }
 

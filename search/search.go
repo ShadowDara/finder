@@ -21,6 +21,9 @@ func getRootPath() string {
 }
 
 func Find(folderstruct structure.Folder, rttype string) {
+	// fmt.Printf("Searching for %s...\n", folderstruct.Name)
+	fmt.Printf("Description: %s\n", folderstruct.Description)
+
 	matches := findMatchingFolders(getRootPath(), folderstruct)
 
 	// Pfade Windows-sicher machen

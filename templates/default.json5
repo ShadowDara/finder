@@ -1,6 +1,13 @@
 // Default Folder Struct
 {
     "name": "*",
-    "folders": [],
-    "files": []
+    "folders": [{
+        "name": "",
+        "folders": [],
+        "files": []
+    }],
+    "files": [
+        "hallo.txt",
+        "file2.txt"
+    ]
 }

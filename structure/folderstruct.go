@@ -12,17 +12,19 @@ import (
 
 // Type for a Folder
 type Folder struct {
-	Name    string   `json:"name"`
-	Folders []Folder `json:"folders"`
-	Files   []string `json:"files"` // Only the filename for now
+	Description string   `json:"description"`
+	Name        string   `json:"name"`
+	Folders     []Folder `json:"folders"`
+	Files       []string `json:"files"` // Only the filename for now
 }
 
 // Constructor function with default values
 func NewFolder(foldername string) Folder {
 	return Folder{
-		Name:    foldername, // default name
-		Folders: []Folder{}, // empty list of subfolders
-		Files:   []string{}, // empty list of files
+		Description: "",
+		Name:        foldername, // default name
+		Folders:     []Folder{}, // empty list of subfolders
+		Files:       []string{}, // empty list of files
 	}
 }
 
