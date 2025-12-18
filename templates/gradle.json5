@@ -1,0 +1,10 @@
+// Default Folder Struct
+{
+    "description": "a Struct for Gradle Projects with Java and etc ...",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "build.gradle*",
+        "settings.gradle*"
+    ]
+}
