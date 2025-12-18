@@ -1,0 +1,7 @@
+// Default Folder Struct for Godot Projects
+{
+    "description": "The Folder Struct for Godot Game Engine Projects",
+    "name": "*",
+    "folders": [],
+    "files": ["project.godot"]
+}

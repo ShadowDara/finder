@@ -1,5 +1,6 @@
 // Default Folder Struct
 {
+    "description": "A little Description for the Struct which gets Display when the Struct is searched.",
     "name": "*",
     "folders": [{
         "name": "",
