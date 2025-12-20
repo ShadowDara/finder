@@ -1,0 +1,6 @@
+{
+    "description": "a folder struct for a Minecraft Resource Pack which is not zipped",
+    "name": "*",
+    "folders": [{"name": "assets"}],
+    "files": ["pack.mcmeta"]
+}
