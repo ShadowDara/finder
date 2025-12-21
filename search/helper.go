@@ -11,6 +11,16 @@ import (
 )
 
 func matchFolderTemplate(dirPath string, template structure.Folder) bool {
+	// Ordnername prüfen
+	dirName := filepath.Base(dirPath)
+
+	if template.Name != "" {
+		ok, err := path.Match(template.Name, dirName)
+		if err != nil || !ok {
+			return false
+		}
+	}
+
 	entries, err := os.ReadDir(dirPath)
 	if err != nil {
 		return false
