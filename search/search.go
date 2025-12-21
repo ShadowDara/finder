@@ -22,7 +22,9 @@ func getRootPath() string {
 
 func Find(folderstruct structure.Folder, rttype string) {
 	// fmt.Printf("Searching for %s...\n", folderstruct.Name)
-	fmt.Printf("Description: %s\n", folderstruct.Description)
+	if rttype != "clear" {
+		fmt.Printf("Description: %s\n", folderstruct.Description)
+	}
 
 	matches := findMatchingFolders(getRootPath(), folderstruct)
 
@@ -45,6 +47,11 @@ func Find(folderstruct structure.Folder, rttype string) {
 		// enc.SetIndent("", "  ") // optional pretty print
 		if err := enc.Encode(matches); err != nil {
 			fmt.Println("JSON encoding error:", err)
+		}
+
+	case "clear":
+		for _, m := range matches {
+			fmt.Println(m)
 		}
 	}
 }

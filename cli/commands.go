@@ -14,9 +14,6 @@ import (
 const version = "0.1.0"
 
 func HandleCommand(args []string) {
-	fmt.Printf("%sStruct Finder v%s%s\n",
-		color.Green, version, color.Reset)
-
 	// Argument count check
 	if len(args) < 2 {
 		fmt.Printf("%sPlease provide at least one argument (or use 'help').%s\n",
@@ -27,9 +24,19 @@ func HandleCommand(args []string) {
 	outputtype := "normal"
 
 	for _, arg := range args {
+		// JSON
 		if arg == "--json" {
 			outputtype = "json"
+
+			// Clear
+		} else if arg == "--clear" {
+			outputtype = "clear"
 		}
+	}
+
+	if outputtype != "clear" {
+		fmt.Printf("%sStruct Finder v%s%s\n",
+			color.Green, version, color.Reset)
 	}
 
 	switch args[1] {
@@ -99,7 +106,9 @@ func HandleCommand(args []string) {
 	}
 
 	// Searching for the Folderstruct
-	fmt.Printf("Searching for %s ...\n", args[1])
+	if outputtype != "clear" {
+		fmt.Printf("Searching for %s ...\n", args[1])
+	}
 	search.Find(structure.LoadJSON5(string(data)), outputtype)
 }
 
@@ -115,6 +124,7 @@ func printHelp() {
 	fmt.Println("  -f         Load a Custom JSON File")
 	fmt.Println("  -c         Load JSON from the next commandline Argument")
 	fmt.Println("  --json     Displays the output in the Terminal as JSON")
+	fmt.Println("  --clear    Displays the output in the Terminal without any other printing")
 	fmt.Println("\nAlready blocked names for templates")
 	fmt.Println("  - check")
 	fmt.Println("  - help")
