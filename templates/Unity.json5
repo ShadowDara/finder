@@ -1,0 +1,12 @@
+{
+    "description": "A folder struct for Unity Projects",
+    "name": "*",
+    "folders": [
+        {
+            "name": "Assets"
+        }
+    ],
+    "files": [
+        "Assembly-CSharp.csproj"
+    ]
+}
