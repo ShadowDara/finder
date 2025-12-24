@@ -1,0 +1,24 @@
+{
+    "description": "Struct for Tauri V2 Apps / Projects",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src"
+        },
+        {
+            "name": "src-tauri",
+            "folders": [
+                {
+                    "name": "src"
+                },
+                {
+                    "name": "icons"
+                }
+            ],
+            "files": []
+        }
+    ],
+    "files": [
+        "package.json"
+    ]
+}
