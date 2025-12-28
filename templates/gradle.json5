@@ -5,6 +5,9 @@
     "folders": [],
     "files": [
         "build.gradle*",
-        "settings.gradle*"
+        "settings.gradle*",
+        "gradle.properties",
+        "gradlew",
+        "gradlew.bat"
     ]
 }
