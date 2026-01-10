@@ -7,7 +7,15 @@
             "folders": [
                 {
                     "name": "gui"
+                },
+                {
+                    "name": "saves"
                 }
+            ],
+            "files": [
+                "options.rpy",
+                "screens.rpy",
+                "script.rpy"
             ]
         }
     ]

@@ -2,5 +2,8 @@
 {
     "name": "*",
     "folders": [],
-    "files": ["Cargo.toml", "Cargo.lock"]
+    "files": [
+        "Cargo.toml",
+        "Cargo.lock"
+    ]
 }

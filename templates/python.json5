@@ -2,5 +2,7 @@
 {
     "name": "*",
     "folders": [],
-    "files": ["requirements.txt"]
+    "files": [
+        "requirements.txt"
+    ]
 }

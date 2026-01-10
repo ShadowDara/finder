@@ -2,8 +2,10 @@
 {
     "description": "a Folder Struct for Jetbrains Idea Projects",
     "name": "*",
-    "folders": [{
-        "name": ".idea"
-    }],
+    "folders": [
+        {
+            "name": ".idea"
+        }
+    ],
     "files": []
 }

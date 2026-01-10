@@ -2,6 +2,12 @@
 {
     "description": "Struct for Visual Studio Projects",
     "name": "*",
-    "folders": [{"name": ".vs"}],
-    "files": ["*.sln"]
+    "folders": [
+        {
+            "name": ".vs"
+        }
+    ],
+    "files": [
+        "*.sln"
+    ]
 }

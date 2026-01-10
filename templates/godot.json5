@@ -3,5 +3,7 @@
     "description": "The Folder Struct for Godot Game Engine Projects",
     "name": "*",
     "folders": [],
-    "files": ["project.godot"]
+    "files": [
+        "project.godot"
+    ]
 }

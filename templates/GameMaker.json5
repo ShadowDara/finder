@@ -1,0 +1,16 @@
+// Default Folder Struct
+{
+    "description": "a Folder Struct for a GameMaker Project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "*.yyp",
+        ".resource_order"
+    ]
+}

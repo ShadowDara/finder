@@ -2,6 +2,9 @@
 
 a simple go program to search for certain folderstructures
 
+**Please Open an Issue if one of the precreated Folder Structs is not
+specific enough and returns wrong projects!!!**
+
 ### Usage
 
 ```sh

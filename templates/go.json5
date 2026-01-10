@@ -2,5 +2,7 @@
 {
     "name": "*",
     "folders": [],
-    "files": ["go.mod"]
+    "files": [
+        "go.mod"
+    ]
 }
