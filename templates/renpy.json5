@@ -1,0 +1,14 @@
+{
+    "description": "A Folder Struct for RenPy Projects",
+    "name": "*",
+    "folders": [
+        {
+            "name": "game",
+            "folders": [
+                {
+                    "name": "gui"
+                }
+            ]
+        }
+    ]
+}
