@@ -1,0 +1,13 @@
+{
+    "description": "A Folder Struct for Dart Lang Projects",
+    "name": "*",
+    "folders": [
+        {
+            "name": "lib"
+        }
+    ],
+    "files": [
+        "pubspec.yaml",
+        "analysis_options.yaml"
+    ]
+}

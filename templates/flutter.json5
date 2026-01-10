@@ -1,0 +1,13 @@
+{
+    "description": "A Folder Struct for Flutter Lang Projects",
+    "name": "*",
+    "folders": [
+        {
+            "name": "lib"
+        }
+    ],
+    "files": [
+        "pubspec.yaml",
+        "analysis_options.yaml"
+    ]
+}

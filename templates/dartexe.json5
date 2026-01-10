@@ -1,0 +1,13 @@
+{
+    "description": "A Folder Struct for Dart Lang Projects with Executables",
+    "name": "*",
+    "folders": [
+        {
+            "name": "bin"
+        }
+    ],
+    "files": [
+        "pubspec.yaml",
+        "analysis_options.yaml"
+    ]
+}
