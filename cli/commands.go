@@ -11,7 +11,7 @@ import (
 	"github.com/shadowdara/finder/templates"
 )
 
-const version = "0.1.0"
+const version = "0.3.0"
 
 func HandleCommand(args []string) {
 	// Argument count check
@@ -126,9 +126,9 @@ func printHelp() {
 	fmt.Println("  --json     Displays the output in the Terminal as JSON")
 	fmt.Println("  --clear    Displays the output in the Terminal without any other printing")
 	fmt.Println("\nAlready blocked names for templates")
-	fmt.Println("  - check")
-	fmt.Println("  - help")
-	fmt.Println("  - list")
+	fmt.Println("  - check    Check all templates if their syntax is correct")
+	fmt.Println("  - help     Display this help Message")
+	fmt.Println("  - list     List all Templates Files")
 }
 
 // TODO
