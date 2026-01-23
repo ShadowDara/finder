@@ -1,0 +1,11 @@
+{
+    "name": "*",
+    "folders": [
+        {
+            "name": "out"
+        }
+    ],
+    "files": [
+        "CMakeLists.txt"
+    ]
+}

@@ -52,6 +52,13 @@ finder <struct-name>
 Feel free to add more Default Templates for other Folderstructures
 from other software / projects / etc !!!
 
+### TODO
+- View Command
+- Custom Template Folder / Loader
+- switch from JSON5 to JSON
+- add description field to every JSON File
+- add JSON Shema
+
 ### Future Ideas
 - Web Dashboard
 - change or add project name via command line
