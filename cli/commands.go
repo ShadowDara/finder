@@ -112,25 +112,6 @@ func HandleCommand(args []string) {
 	search.Find(structure.LoadJSON5(string(data)), outputtype)
 }
 
-func printHelp() {
-	fmt.Println("Finder Help")
-	fmt.Println("More info at:")
-	fmt.Println("https://github.com/ShadowDara/finder")
-	fmt.Println("\nCustom Folder:")
-	fmt.Println("  - Windows → %AppData%\\finder")
-	fmt.Println("  - Linux   → ~/.config/finder")
-	fmt.Println("  - MacOS   → ~/Library/Application Support/finder")
-	fmt.Println("\nCommand Line Args")
-	fmt.Println("  -f         Load a Custom JSON File")
-	fmt.Println("  -c         Load JSON from the next commandline Argument")
-	fmt.Println("  --json     Displays the output in the Terminal as JSON")
-	fmt.Println("  --clear    Displays the output in the Terminal without any other printing")
-	fmt.Println("\nAlready blocked names for templates")
-	fmt.Println("  - check    Check all templates if their syntax is correct")
-	fmt.Println("  - help     Display this help Message")
-	fmt.Println("  - list     List all Templates Files")
-}
-
 // TODO
 // Open all available Templates and print in the Terminal
 func list() {
@@ -140,7 +121,7 @@ func list() {
 	fmt.Println("Default Templates:")
 	templates, dataerror := templates.LoadAll()
 	if dataerror != nil {
-		fmt.Println("Error!")
+		fmt.Println("Error in the builtin Templates!")
 		return
 	}
 	for _, templ := range templates {
@@ -149,7 +130,7 @@ func list() {
 
 	// Custom Templates
 	fmt.Println("\nCustom Templates:")
-	fmt.Println("soon")
+	fmt.Println("soon ...")
 }
 
 // TODO
@@ -159,7 +140,7 @@ func check() {
 	fmt.Println("Checking all Templates ...")
 
 	// Checking Default Templates
-	fmt.Println("Checking Default Templates:")
+	fmt.Println("Checking all Default Templates:")
 	template, dataerror := templates.LoadAll()
 	if dataerror != nil {
 		fmt.Println("Error!")
@@ -177,4 +158,5 @@ func check() {
 
 		structure.LoadJSON5(string(data))
 	}
+	fmt.Println("\nFinished Cheking!")
 }
