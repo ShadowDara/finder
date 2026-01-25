@@ -3,6 +3,7 @@
     "name": "*",
     "folders": [],
     "files": [
-        "requirements.txt"
+        "requirements.txt",
+        "*.py"
     ]
 }
