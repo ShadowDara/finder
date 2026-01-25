@@ -2,7 +2,6 @@
     "description": "a Folder Struct for a GameMaker Project",
     "name": "*",
     "files": [
-        "*.yyp",
-        ".resource_order"
+        "*.yyp"
     ]
 }
