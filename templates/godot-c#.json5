@@ -1,0 +1,9 @@
+{
+    "description": "The Folder Struct for Godot Game Engine Projects with C#",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "*.cs",
+        "project.godot"
+    ]
+}
