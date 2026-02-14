@@ -3,7 +3,7 @@ package main
 import (
     "os"
 
-    "github.com/shadowdara/finder/cli"
+    "github.com/shadowdara/finder/internal/cli"
 )
 
 // main is the program entrypoint for the finder CLI when built as

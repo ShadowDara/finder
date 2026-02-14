@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/shadowdara/finder/cli/color"
+	"github.com/shadowdara/finder/internal/cli/color"
 	"github.com/shadowdara/finder/internal/loader"
 	"github.com/shadowdara/finder/internal/search"
 	"github.com/shadowdara/finder/pkg/structure"
