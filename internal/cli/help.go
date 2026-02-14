@@ -2,6 +2,10 @@ package cli
 
 import (
 	"fmt"
+	"github.com/shadowdara/finder/internal/loader"
+
+	"os"
+	"text/tabwriter"
 )
 
 // printHelp writes a short usage help page to stdout. It is intentionally
@@ -21,7 +25,14 @@ func printHelp() {
 	fmt.Println("  --json     Displays the output in the Terminal as JSON")
 	fmt.Println("  --clear    Displays the output in the Terminal without any other printing")
 	fmt.Println("\nAlready blocked names for templates")
-	fmt.Println("  - check    Check all templates if their syntax is correct")
-	fmt.Println("  - help     Display this help Message")
-	fmt.Println("  - list     List all Templates Files")
+	
+	blockednames := loader.GetBlockedTemplateNames()
+
+	w := tabwriter.NewWriter(os.Stdout, 0, 8, 2, ' ', 0)
+
+	for k, v := range blockednames {
+		fmt.Fprintf(w, " - %s\t%s\n", k, v)
+	}
+
+	w.Flush()
 }
