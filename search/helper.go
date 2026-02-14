@@ -4,8 +4,10 @@ package search
 import (
 	"io/fs"
 	"os"
+	"os/exec"
 	"path"
 	"path/filepath"
+	"runtime"
 
 	"github.com/shadowdara/finder/structure"
 )
@@ -74,6 +76,40 @@ func matchAny(entries map[string]bool, pattern string) bool {
 	return false
 }
 
+// Executes a command in the given directory and returns true if successful
+// A command is considered successful if it exits with code 0 and produces output
+func executeCommand(dirPath string, command string) bool {
+	if command == "" {
+		return true // No command means always pass
+	}
+
+	var cmd *exec.Cmd
+	
+	// Use appropriate shell based on OS
+	if runtime.GOOS == "windows" {
+		cmd = exec.Command("cmd", "/c", command)
+	} else {
+		cmd = exec.Command("sh", "-c", command)
+	}
+	
+	cmd.Dir = dirPath
+
+	output, err := cmd.Output()
+	if err != nil {
+		// Command failed or exited with non-zero status
+		// For commands like "git status --porcelain", we want to include repos with changes
+		// Check if there's any output even if exit code is non-zero
+		if len(output) > 0 {
+			return true
+		}
+		return false
+	}
+
+	// Command succeeded - check if there's meaningful output
+	// Empty output means no changes/uncommitted files
+	return len(output) > 0
+}
+
 func findMatchingFolders(root string, template structure.Folder) []string {
 	var matches []string
 
@@ -86,7 +122,10 @@ func findMatchingFolders(root string, template structure.Folder) []string {
 		}
 
 		if matchFolderTemplate(path, template) {
-			matches = append(matches, path)
+			// If there's a command, execute it to filter results
+			if executeCommand(path, template.Command) {
+				matches = append(matches, path)
+			}
 		}
 		return nil
 	})

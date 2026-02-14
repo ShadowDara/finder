@@ -1,7 +1,7 @@
 # CHANGELOG
 
 ## Newest Dev:
-...
+- add comment after searching but only works with the return code currently
 
 # 0.2.0 - 23.01.2026
 More Templates

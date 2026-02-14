@@ -16,6 +16,7 @@ type Folder struct {
 	Name        string   `json:"name"`
 	Folders     []Folder `json:"folders"`
 	Files       []string `json:"files"` // Only the filename for now
+	Command     string   `json:"command"` // Optional command to execute after finding directory
 }
 
 // Constructor function with default values

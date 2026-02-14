@@ -1,11 +1,12 @@
 // A default struct to find git Repositories
 {
     "name": "*",
-    "description": "Finds all git repositories",
+    "description": "Finds all git repositories with uncommited Changes",
     "files": [],
     "folders": [
         {
             "name": ".git"
         }
-    ]
+    ],
+    "command": "git status --porcelain"
 }
