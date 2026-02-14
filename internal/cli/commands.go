@@ -125,6 +125,17 @@ func check() {
 	}
 
 	for _, templ := range templateNames {
+		// Check for blocked Templated by the blocked names
+
+		blockednames := loader.GetBlockedTemplateNames()
+
+		for k, _ := range blockednames {
+			// fmt.Fprintf(w, " - %s\t%s\n", k, v)
+			if (templ == k) {
+				fmt.Printf("Template %s is blocked by the blocked names!\n", color.Red, k, color.Reset)
+			}
+		}
+
 		data, err := templates.JSONtemplateLoader(templ)
 		if err != nil {
 			log.Fatalf("%sCould not read JSON template: %v%s\n", color.Red, err, color.Reset)
