@@ -1,16 +1,18 @@
 package structure
 
-// File for Code for the Datastructures
+// Package structure defines the Folder template data-structure used to
+// describe the files and subfolders that should be present in a match.
 
 import (
-	"log"
-
 	"encoding/json"
+	"log"
 
 	"github.com/shadowdara/finder/loader/json5"
 )
 
-// Type for a Folder
+// Folder represents the JSON structure used to describe a directory
+// template. Fields are exported and annotated so encoding/json can
+// decode them after the lightweight JSON5 preprocessing step.
 type Folder struct {
 	Description string   `json:"description"`
 	Name        string   `json:"name"`
@@ -19,25 +21,26 @@ type Folder struct {
 	Command     string   `json:"command"` // Optional command to execute after finding directory
 }
 
-// Constructor function with default values
+// NewFolder constructs a minimal Folder instance with reasonable defaults.
 func NewFolder(foldername string) Folder {
 	return Folder{
 		Description: "",
-		Name:        foldername, // default name
-		Folders:     []Folder{}, // empty list of subfolders
-		Files:       []string{}, // empty list of files
+		Name:        foldername,
+		Folders:     []Folder{},
+		Files:       []string{},
 	}
 }
 
-// Funktion to load a JSON5 File
+// LoadJSON5 accepts a JSON5-like string, runs a lightweight
+// preprocessing step and unmarshals the result into a Folder. On
+// unrecoverable parse errors the function exits the program with a
+// non-zero status via log.Fatalf — this mirrors the original project
+// behaviour and keeps the command-line UX simple.
 func LoadJSON5(data string) Folder {
 	var f Folder
 
-	// Vorverarbeitung der JSON5-Daten (Optional)
-	// Falls du zusätzliche Logik zur Normalisierung von JSON5-Daten brauchst (z.B. für Wildcards oder Fehlerbehandlung)
 	normalizedData := json5.PreprocessJSON5(data)
 
-	// Unmarshal JSON5 mit dem `finder/json5` Modul
 	err := json.Unmarshal([]byte(normalizedData), &f)
 	if err != nil {
 		log.Fatalf("Error while parsing JSON5: %v", err)

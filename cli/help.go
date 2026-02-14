@@ -4,7 +4,9 @@ import (
 	"fmt"
 )
 
-// Function to print help to the Terminal
+// printHelp writes a short usage help page to stdout. It is intentionally
+// simple and human-focused; for automated help extraction one could add
+// structured flags in the future.
 func printHelp() {
 	fmt.Println("Finder Help")
 	fmt.Println("More info at:")

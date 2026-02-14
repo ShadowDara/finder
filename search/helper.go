@@ -1,6 +1,5 @@
 package search
 
-// Prüft, ob ein Verzeichnis mit dem Template übereinstimmt
 import (
 	"io/fs"
 	"os"
@@ -12,8 +11,12 @@ import (
 	"github.com/shadowdara/finder/structure"
 )
 
+// matchFolderTemplate checks whether the directory at dirPath matches the
+// provided template. Matching includes name pattern, required files and
+// required subfolders. Wildcards in template fields are supported via
+// path.Match.
 func matchFolderTemplate(dirPath string, template structure.Folder) bool {
-	// Ordnername prüfen
+	// Check folder name if provided
 	dirName := filepath.Base(dirPath)
 
 	if template.Name != "" {
@@ -28,7 +31,7 @@ func matchFolderTemplate(dirPath string, template structure.Folder) bool {
 		return false
 	}
 
-	// Maps für schnellen Zugriff
+	// Maps for quick lookups
 	filesMap := map[string]bool{}
 	dirsMap := map[string]bool{}
 
@@ -40,14 +43,14 @@ func matchFolderTemplate(dirPath string, template structure.Folder) bool {
 		}
 	}
 
-	// Dateien prüfen (mit Wildcards)
+	// Check required files (supports wildcards)
 	for _, pattern := range template.Files {
 		if !matchAny(filesMap, pattern) {
 			return false
 		}
 	}
 
-	// Ordner prüfen (mit Wildcards)
+	// Check required subfolders (supports wildcards)
 	for _, folder := range template.Folders {
 		pattern := folder.Name
 		if !matchAny(dirsMap, pattern) {
@@ -58,14 +61,14 @@ func matchFolderTemplate(dirPath string, template structure.Folder) bool {
 	return true
 }
 
-// Prüft, ob mind. ein Eintrag zur Wildcard passt
+// matchAny returns true if at least one entry in the provided map matches
+// the pattern. Exact match is checked first, then path.Match is used for
+// wildcard matching.
 func matchAny(entries map[string]bool, pattern string) bool {
-	// Exakte Übereinstimmung
 	if entries[pattern] {
 		return true
 	}
 
-	// Wildcard-Match
 	for name := range entries {
 		ok, _ := path.Match(pattern, name)
 		if ok {
@@ -76,40 +79,39 @@ func matchAny(entries map[string]bool, pattern string) bool {
 	return false
 }
 
-// Executes a command in the given directory and returns true if successful
-// A command is considered successful if it exits with code 0 and produces output
+// executeCommand runs a shell command in dirPath. The function returns
+// true when the command should be considered successful for filtering
+// purposes. An empty command is considered successful. If the command
+// fails but produced output (e.g. some commands write to stderr), this
+// helper treats that as success to allow commands like git status --porcelain
+// to signal repository state.
 func executeCommand(dirPath string, command string) bool {
 	if command == "" {
-		return true // No command means always pass
+		return true
 	}
 
 	var cmd *exec.Cmd
-	
-	// Use appropriate shell based on OS
 	if runtime.GOOS == "windows" {
 		cmd = exec.Command("cmd", "/c", command)
 	} else {
 		cmd = exec.Command("sh", "-c", command)
 	}
-	
 	cmd.Dir = dirPath
 
 	output, err := cmd.Output()
 	if err != nil {
-		// Command failed or exited with non-zero status
-		// For commands like "git status --porcelain", we want to include repos with changes
-		// Check if there's any output even if exit code is non-zero
 		if len(output) > 0 {
 			return true
 		}
 		return false
 	}
 
-	// Command succeeded - check if there's meaningful output
-	// Empty output means no changes/uncommitted files
 	return len(output) > 0
 }
 
+// findMatchingFolders searches recursively under root and returns a list of
+// directories that match the given template. It uses matchFolderTemplate
+// and executeCommand to filter results.
 func findMatchingFolders(root string, template structure.Folder) []string {
 	var matches []string
 
@@ -122,7 +124,6 @@ func findMatchingFolders(root string, template structure.Folder) []string {
 		}
 
 		if matchFolderTemplate(path, template) {
-			// If there's a command, execute it to filter results
 			if executeCommand(path, template.Command) {
 				matches = append(matches, path)
 			}

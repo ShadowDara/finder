@@ -13,6 +13,11 @@ import (
 
 const version = "0.3.0"
 
+// HandleCommand parses the provided CLI arguments and dispatches the
+// requested action. It prints user-facing messages to stdout/stderr and
+// uses other packages (templates, loader, structure, search) to perform
+// the actual work. The function intentionally operates on a raw
+// argument slice so it can be called from tests or a different bootstrap.
 func HandleCommand(args []string) {
 	// Argument count check
 	if len(args) < 2 {
@@ -24,72 +29,45 @@ func HandleCommand(args []string) {
 	outputtype := "normal"
 
 	for _, arg := range args {
-		// JSON
 		if arg == "--json" {
 			outputtype = "json"
-
-			// Clear
 		} else if arg == "--clear" {
 			outputtype = "clear"
 		}
 	}
 
 	if outputtype != "clear" {
-		fmt.Printf("%sStruct Finder v%s%s\n",
-			color.Green, version, color.Reset)
+		fmt.Printf("%sStruct Finder v%s%s\n", color.Green, version, color.Reset)
 	}
 
 	switch args[1] {
-
-	// --------------------------
-	// HELP
-	// --------------------------
 	case "help":
 		printHelp()
 		return
-
-	// --------------------------
-	// List all available JSON5 Templates
-	// --------------------------
 	case "list":
 		list()
 		return
-
-	// --------------------------
-	// Check all available JSON5 Templates
-	// --------------------------
 	case "check":
 		check()
 		return
-
-	// --------------------------
-	// LOAD CUSTOM FILE
-	// --------------------------
 	case "-f":
 		if len(args) < 3 {
-			fmt.Printf("%sMissing file path for -f option.%s\n",
-				color.Red, color.Reset)
+			fmt.Printf("%sMissing file path for -f option.%s\n", color.Red, color.Reset)
 			return
 		}
 
 		fmt.Println("Loading custom JSON file...")
 		content, err := loader.LoadFile(args[2])
 		if err != nil {
-			fmt.Printf("%sError loading file: %v%s\n",
-				color.Red, err, color.Reset)
+			fmt.Printf("%sError loading file: %v%s\n", color.Red, err, color.Reset)
 			return
 		}
 
 		search.Find(structure.LoadJSON5(content), outputtype)
 		return
-
-	// --------------------------
-	// JSON DIRECT FROM ARGUMENT
-	// --------------------------
 	case "-c":
 		if len(args) < 3 {
-			fmt.Printf("%sMissing JSON string for -c option.%s\n",
-				color.Red, color.Reset)
+			fmt.Printf("%sMissing JSON string for -c option.%s\n", color.Red, color.Reset)
 			return
 		}
 
@@ -98,65 +76,57 @@ func HandleCommand(args []string) {
 		return
 	}
 
-	// Default: Treat argument as a template name / file
+	// Default: treat the first argument as a template name
 	data, err := templates.JSONtemplateLoader(args[1])
 	if err != nil {
-		log.Fatalf("%sCould not read JSON template: %v%s\n",
-			color.Red, err, color.Reset)
+		log.Fatalf("%sCould not read JSON template: %v%s\n", color.Red, err, color.Reset)
 	}
 
-	// Searching for the Folderstruct
 	if outputtype != "clear" {
 		fmt.Printf("Searching for %s ...\n", args[1])
 	}
 	search.Find(structure.LoadJSON5(string(data)), outputtype)
 }
 
-// TODO
-// Open all available Templates and print in the Terminal
+// list prints available built-in templates. Custom templates will be
+// loaded from the user configuration directory in the future.
 func list() {
 	fmt.Println("List available Templates:")
 
-	// Default Templates
 	fmt.Println("Default Templates:")
-	templates, dataerror := templates.LoadAll()
-	if dataerror != nil {
+	templatesList, err := templates.LoadAll()
+	if err != nil {
 		fmt.Println("Error in the builtin Templates!")
 		return
 	}
-	for _, templ := range templates {
+	for _, templ := range templatesList {
 		fmt.Printf("%s\t", templ)
 	}
 
-	// Custom Templates
 	fmt.Println("\nCustom Templates:")
 	fmt.Println("soon ...")
 }
 
-// TODO
-// Open All available Templates and load them and check if the JSON Loader
-// crashes
+// check parses all built-in templates to validate that the JSON5 loader
+// accepts them (useful for debugging or CI checks).
 func check() {
 	fmt.Println("Checking all Templates ...")
 
-	// Checking Default Templates
 	fmt.Println("Checking all Default Templates:")
-	template, dataerror := templates.LoadAll()
-	if dataerror != nil {
+	templateNames, err := templates.LoadAll()
+	if err != nil {
 		fmt.Println("Error!")
 		return
 	}
-	for _, templ := range template {
+	for _, templ := range templateNames {
 		fmt.Printf("%s\t", templ)
 
-		// Default: Treat argument as a template name / file
 		data, err := templates.JSONtemplateLoader(templ)
 		if err != nil {
-			log.Fatalf("%sCould not read JSON template: %v%s\n",
-				color.Red, err, color.Reset)
+			log.Fatalf("%sCould not read JSON template: %v%s\n", color.Red, err, color.Reset)
 		}
 
 		structure.LoadJSON5(string(data))
 	}
-	fmt.Println("\nFinished Cheking!")
+	fmt.Println("\nFinished Checking!")
 }

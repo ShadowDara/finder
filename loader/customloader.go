@@ -10,18 +10,17 @@ import (
 
 const PROGRAM_NAME = "finder"
 
-// LoadCustomJSON lädt eine Datei <name>.json5 aus dem AppData-Finder-Ordner.
-// Rückgabe entspricht genau JSONtemplateLoader:
-//
-//	[]byte → Inhalt
-//	error  → nil, wenn gefunden
+// LoadCustomJSON attempts to read a user-provided template file named
+// <name>.json5 from the OS-specific configuration directory for this
+// application. It returns the raw file bytes or an error describing the
+// problem.
 func LoadCustomJSON(name string) ([]byte, error) {
 	configPath, err := getAppDataPath()
 	if err != nil {
 		return nil, err
 	}
 
-	// AppData Ordner automatisch erstellen (falls nicht existiert)
+	// Ensure the config directory exists (no-op if it already exists).
 	if err := os.MkdirAll(configPath, 0755); err != nil {
 		return nil, err
 	}
@@ -37,10 +36,9 @@ func LoadCustomJSON(name string) ([]byte, error) {
 	return data, nil
 }
 
-// Ermittelt den plattformabhängigen AppData-Pfad
-// Windows → %AppData%\finder
-// Linux   → ~/.config/finder
-// macOS   → ~/Library/Application Support/finder
+// getAppDataPath returns a per-OS configuration directory for storing
+// user-specific files. On Windows it uses %APPDATA%\finder, on Linux
+// ~/.config/finder and on macOS ~/Library/Application Support/finder.
 func getAppDataPath() (string, error) {
 	home, err := os.UserHomeDir()
 	if err != nil {
@@ -54,10 +52,8 @@ func getAppDataPath() (string, error) {
 			return "", errors.New("APPDATA not set")
 		}
 		return filepath.Join(appData, PROGRAM_NAME), nil
-
 	case "linux":
 		return filepath.Join(home, ".config", PROGRAM_NAME), nil
-
 	case "darwin":
 		return filepath.Join(home, "Library", "Application Support", PROGRAM_NAME), nil
 	}

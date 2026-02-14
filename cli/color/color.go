@@ -1,3 +1,8 @@
+// Package color exposes simple ANSI color codes used for command-line
+// output. Values are plain strings so they can be interpolated into
+// printed messages. On Windows without ANSI support output may be
+// uncoloured; consider using a proper terminal library if portability
+// is required.
 package color
 
 const (
