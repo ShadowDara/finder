@@ -5,10 +5,10 @@ import (
 	"log"
 
 	"github.com/shadowdara/finder/cli/color"
-	"github.com/shadowdara/finder/loader"
-	"github.com/shadowdara/finder/search"
-	"github.com/shadowdara/finder/structure"
-	"github.com/shadowdara/finder/templates"
+	"github.com/shadowdara/finder/internal/loader"
+	"github.com/shadowdara/finder/internal/search"
+	"github.com/shadowdara/finder/pkg/structure"
+	"github.com/shadowdara/finder/internal/templates"
 )
 
 const version = "0.3.0"

@@ -1,5 +1,4 @@
 *.exe
-finder
 cli/export
 
 # Goofy Ass Imgui File

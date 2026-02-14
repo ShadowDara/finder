@@ -1,3 +1,7 @@
+<!--
+go build ./cmd/finder
+-->
+
 # finder
 
 a simple go program to search for certain folderstructures
