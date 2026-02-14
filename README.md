@@ -107,8 +107,8 @@ go test ./...
 Generate coverage report:
 
 ```bash
-go test -coverprofile=coverage.out ./...
-go tool cover -html=coverage.out
+go test -coverprofile=coverage ./...
+go tool cover -html=coverage
 ```
 
 Build:
@@ -133,5 +133,6 @@ go build ./cmd/finder
 
 See `LICENSE`.
 
---
-Project: `github.com/shadowdara/finder`
+---
+
+Project: `https://github.com/shadowdara/finder`

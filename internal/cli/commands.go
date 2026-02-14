@@ -110,23 +110,27 @@ func list() {
 // check parses all built-in templates to validate that the JSON5 loader
 // accepts them (useful for debugging or CI checks).
 func check() {
-	fmt.Println("Checking all Templates ...")
+	fmt.Println("Checking all Templates ...\n")
 
-	fmt.Println("Checking all Default Templates:")
+	fmt.Printf("Name\t\t\tDescription\n")
+
 	templateNames, err := templates.LoadAll()
+
 	if err != nil {
 		fmt.Println("Error!")
 		return
 	}
 	for _, templ := range templateNames {
-		fmt.Printf("%s\t", templ)
+		// fmt.Printf("%s\t", templ)
 
 		data, err := templates.JSONtemplateLoader(templ)
 		if err != nil {
 			log.Fatalf("%sCould not read JSON template: %v%s\n", color.Red, err, color.Reset)
 		}
 
-		structure.LoadJSON5(string(data))
+		folder := structure.LoadJSON5(string(data))
+
+		fmt.Printf("- %s\t\t\t%s\n", templ, folder.Description)
 	}
-	fmt.Println("\nFinished Checking!")
+	fmt.Printf("%sFinished Checking!%s\n", color.Green, color.Reset)
 }
