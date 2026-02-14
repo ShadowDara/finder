@@ -3,6 +3,8 @@ package cli
 import (
 	"fmt"
 	"log"
+	"os"
+	"text/tabwriter"
 
 	"github.com/shadowdara/finder/internal/cli/color"
 	"github.com/shadowdara/finder/internal/loader"
@@ -110,27 +112,28 @@ func list() {
 // check parses all built-in templates to validate that the JSON5 loader
 // accepts them (useful for debugging or CI checks).
 func check() {
-	fmt.Println("Checking all Templates ...\n")
+	fmt.Println("Checking all Templates ...")
 
-	fmt.Printf("Name\t\t\tDescription\n")
+	// use tabwriter to align columns instead of manual tabs
+	w := tabwriter.NewWriter(os.Stdout, 0, 8, 2, ' ', 0)
+	fmt.Fprintln(w, "Name\tDescription")
 
 	templateNames, err := templates.LoadAll()
-
 	if err != nil {
 		fmt.Println("Error!")
 		return
 	}
-	for _, templ := range templateNames {
-		// fmt.Printf("%s\t", templ)
 
+	for _, templ := range templateNames {
 		data, err := templates.JSONtemplateLoader(templ)
 		if err != nil {
 			log.Fatalf("%sCould not read JSON template: %v%s\n", color.Red, err, color.Reset)
 		}
 
 		folder := structure.LoadJSON5(string(data))
-
-		fmt.Printf("- %s\t\t\t%s\n", templ, folder.Description)
+		fmt.Fprintf(w, "%s\t%s\n", templ, folder.Description)
 	}
+
+	w.Flush()
 	fmt.Printf("%sFinished Checking!%s\n", color.Green, color.Reset)
 }

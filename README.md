@@ -125,6 +125,7 @@ go build ./cmd/finder
 
 ## Roadmap / Ideas
 
+- use temporary Template via the Command Line
 - Caching/Indexing for faster searches
 - Web UI for template management
 - Template schema and validation
