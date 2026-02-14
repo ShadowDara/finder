@@ -8,5 +8,6 @@
             "name": ".git"
         }
     ],
-    "command": "git status --porcelain"
+    "command": "git status --porcelain",
+    "invert_command": false
 }

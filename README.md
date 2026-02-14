@@ -4,132 +4,134 @@ go build ./cmd/finder
 
 # finder
 
-a simple go program to search for certain folderstructures
+Finder is a small command-line tool written in Go to locate projects
+based on predefined folder/file structure templates.
 
-**Please Open an Issue if one of the precreated Folder Structs is not
-specific enough and returns wrong projects!!!**
+In short: you can search for repositories (e.g. `.git`), project layouts,
+or your own custom structures using templates.
 
-### Usage
+## Features
 
-```sh
+- Searches using JSON5 templates stored in `internal/structure/templates`.
+- Supports user templates in the OS-specific configuration folder.
+- Lightweight, tested, and easy to extend.
+
+## Requirements
+
+- Go 1.25 or newer
+
+## Installation
+
+Build from source:
+
+```bash
+go build ./cmd/finder
+```
+
+Or install with `go install` (Go 1.18+):
+
+```bash
+go install github.com/shadowdara/finder/cmd/finder@latest
+```
+
+The produced binary is `finder` (on Windows `finder.exe`).
+
+## Usage
+
+Basic syntax:
+
+```bash
+finder <template-name>
+```
+
+Example — find Git repositories:
+
+```bash
 finder git
 ```
 
-and the programm will search for all folder which do have a *.git*
-directory.
+The program searches the current directory recursively and prints
+matches based on the template name.
 
-### INFO
+## Templates
 
-- programm only uses **`.json5`** files
-
-### Path for custom structs
-```js
-// Windows → %AppData%\finder
-// Linux   → ~/.config/finder
-// macOS   → ~/Library/Application Support/finder
-```
-create a new struct there to search then for it via
-
-```sh
-finder <struct-name>
-```
-
-### Folderstruct
+Default templates are stored in `internal/structure/templates`.
+Templates are JSON5 files with fields such as `name`, `files`, and
+`folders`. A simple template to find Git repositories looks like:
 
 ```json5
-// A default struct to find git Repositories
 {
     "name": "*",
-    // "files": ["*"],
-    "folders": [{
-        "name": ".git"
-        // "files":
-        // "folders":
-    }]
+    "folders": [
+        { "name": ".git" }
+    ],
 }
-
-// if they are missing, means the default which means they dont matter
 ```
 
-### Contributing
+And a full template looks like this. Empty Value are not required
+in the Template. The `description` will be displayed in the program
+when searching for the Template and although when displaying all
+templates. The `command` runs in the Structure Directory after the
+Structure is found. The Entrywill only be added is the `command` 
+returns `0` when `invert_command` is `false`, else `1`.
 
-Feel free to add more Default Templates for other Folderstructures
-from other software / projects / etc !!!
-
-### TODO
-- View Command
-- Custom Template Folder / Loader
-- switch from JSON5 to JSON
-- add description field to every JSON File
-- add JSON Shema
-
-### Future Ideas
-- Web Dashboard
-- change or add project name via command line
-- description to the structs
-- dynamic templates
-- Indexing
-- custom start dir for search
-- faster search via coroutines
-- add check comments in directories (to check for example for git repositories
-which have uncomitted files)
-- enable Caching
-
-<!--
-$env:CC = "zig cc"
-$env:CXX = "zig c++"
-$env:CGO_ENABLED = "1"
-go build -x
-
-build cmd
-
-cd cli
-
-go build -buildmode=c-shared -o export/finder_cli.dll
-go build -buildmode=c-shared -ldflags="-s -w -trimpath" -o export/finder_cli.dll
-zig cc -O3 -flto -g0 -fomit-frame-pointer -target x86_64-windows-gnu c_cli.c finder_cli.dll -o finder.exe
-
-/* C Code */
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "finder_cli.h"   // <-- dein generiertes cgo-Header (umbenennen falls anders)
-
-//
-// Hilfsfunktion: C-String in GoString konvertieren
-//
-GoString makeGoString(const char *s) {
-    GoString gs;
-    gs.p = s;
-    gs.n = strlen(s);
-    return gs;
+```json5
+{
+    "name": "*",
+    "description": "",
+    "folders": [
+        { "name": ".git" }
+    ],
+    "files": [],
+    "command": "",
+    "invert_command": false
 }
+```
 
-int main(int argc, char **argv) {
+Place custom templates in the following folder:
 
-    // 1) Array aus GoString erzeugen
-    GoString* items = (GoString*)malloc(sizeof(GoString) * argc);
-    if (!items) {
-        fprintf(stderr, "malloc failed\n");
-        return 1;
-    }
+- Windows: `%AppData%\\finder`
+- Linux: `~/.config/finder`
+- macOS: `~/Library/Application Support/finder`
 
-    for (int i = 0; i < argc; i++) {
-        items[i] = makeGoString(argv[i]);
-    }
+Then call `finder <template-name>` to use them.
 
-    // 2) GoSlice erstellen
-    GoSlice slice;
-    slice.data = items;  // Pointer auf das GoString-Array
-    slice.len  = argc;
-    slice.cap  = argc;
+## Development
 
-    // 3) Go-Funktion aufrufen
-    Handle_command(slice);
+Run tests:
 
-    free(items);
-    return 0;
-}
+```bash
+go test ./...
+```
 
--->
+Generate coverage report:
+
+```bash
+go test -coverprofile=coverage.out ./...
+go tool cover -html=coverage.out
+```
+
+Build:
+
+```bash
+go build ./cmd/finder
+```
+
+## Contributing
+
+- Found a missing or inaccurate template? Please open an issue.
+- Add new templates via PR. Keep them in JSON5 and provide a short
+    description of what the template matches.
+
+## Roadmap / Ideas
+
+- Caching/Indexing for faster searches
+- Web UI for template management
+- Template schema and validation
+
+## License
+
+See `LICENSE`.
+
+--
+Project: `github.com/shadowdara/finder`

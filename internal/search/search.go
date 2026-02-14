@@ -21,13 +21,15 @@ func getRootPath() string {
     return "/"
 }
 
-// Find searches the filesystem for directories that match the provided
-// Folder template. Results are printed to stdout according to rttype:
+// Find searches the filesystem for directories that match the
+// provided
+// Folder template. Results are printed to stdout according
+// to output_type:
 // - "normal": human readable output with header and footer
 // - "json": a JSON array is emitted to stdout
 // - "clear": only paths are printed (useful for scripting)
-func Find(folderstruct structure.Folder, rttype string) {
-    if rttype != "clear" {
+func Find(folderstruct structure.Folder, output_type string) {
+    if output_type != "clear" {
         fmt.Printf("Description: %s\n", folderstruct.Description)
     }
 
@@ -38,7 +40,7 @@ func Find(folderstruct structure.Folder, rttype string) {
         matches[i] = filepath.ToSlash(m)
     }
 
-    switch rttype {
+    switch output_type {
     case "normal":
         fmt.Println("# Found:")
         for _, m := range matches {

@@ -85,7 +85,14 @@ func matchAny(entries map[string]bool, pattern string) bool {
 // fails but produced output (e.g. some commands write to stderr), this
 // helper treats that as success to allow commands like git status --porcelain
 // to signal repository state.
-func executeCommand(dirPath string, command string) bool {
+func executeCommand(dirPath string, command string, invert_command bool) bool {
+	// Get the wanted return Vale from the Template
+	returnVal := 0
+	if invert_command {
+    	returnVal = 1
+	}
+
+
     if command == "" {
         return true
     }
@@ -100,13 +107,13 @@ func executeCommand(dirPath string, command string) bool {
 
     output, err := cmd.Output()
     if err != nil {
-        if len(output) > 0 {
+        if len(output) > returnVal {
             return true
         }
         return false
     }
 
-    return len(output) > 0
+    return len(output) > returnVal
 }
 
 // findMatchingFolders searches recursively under root and returns a list of
@@ -124,7 +131,7 @@ func findMatchingFolders(root string, template structure.Folder) []string {
         }
 
         if matchFolderTemplate(path, template) {
-            if executeCommand(path, template.Command) {
+            if executeCommand(path, template.Command, template.InvertCommand) {
                 matches = append(matches, path)
             }
         }

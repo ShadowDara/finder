@@ -14,20 +14,23 @@ import (
 // template. Fields are exported and annotated so encoding/json can
 // decode them after the lightweight JSON5 preprocessing step.
 type Folder struct {
-    Description string   `json:"description"`
-    Name        string   `json:"name"`
-    Folders     []Folder `json:"folders"`
-    Files       []string `json:"files"` // Only the filename for now
-    Command     string   `json:"command"` // Optional command to execute after finding directory
+    Description     string   `json:"description"`
+    Name            string   `json:"name"`
+    Folders         []Folder `json:"folders"`
+    Files           []string `json:"files"` // Only the filename for now
+    Command         string   `json:"command"` // Optional command to execute after finding directory
+    InvertCommand   bool     `json:invert_command` // To change if return code 0 or 1 is required. False is equal to 0
 }
 
 // NewFolder constructs a minimal Folder instance with reasonable defaults.
 func NewFolder(foldername string) Folder {
     return Folder{
-        Description: "",
-        Name:        foldername,
-        Folders:     []Folder{},
-        Files:       []string{},
+        Description:    "",
+        Name:           foldername,
+        Folders:        []Folder{},
+        Files:          []string{},
+        Command:        "",
+        InvertCommand:  false,
     }
 }
 
