@@ -8,7 +8,7 @@ import (
     "path/filepath"
     "runtime"
 
-    "github.com/shadowdara/finder/pkg/structure"
+    "github.com/shadowdara/finder/internal/structure"
 )
 
 // matchFolderTemplate checks whether the directory at dirPath matches the

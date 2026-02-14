@@ -7,7 +7,7 @@ import (
     "path/filepath"
     "runtime"
 
-    "github.com/shadowdara/finder/pkg/structure"
+    "github.com/shadowdara/finder/internal/structure"
 )
 
 // getRootPath returns the search root depending on the operating system.

@@ -3,3 +3,6 @@ cli/export
 
 # Goofy Ass Imgui File
 imgui.ini
+
+# Go Test
+coverage

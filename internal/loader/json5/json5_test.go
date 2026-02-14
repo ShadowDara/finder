@@ -1,6 +1,30 @@
 package json5
 
-import "testing"
+import (
+	"strings"
+	"testing"
+)
+
+func TestPreprocessJSON5_RemovesCommentsAndQuotesKeys(t *testing.T) {
+	src := `// line comment
+	/* block comment */
+	{ key: 1, "quoted": 2 }
+	`
+
+	out := PreprocessJSON5(src)
+
+	if strings.Contains(out, "//") {
+		t.Fatalf("output contains line comment marker")
+	}
+
+	if out == "" {
+		t.Fatalf("output empty")
+	}
+
+	if !strings.Contains(out, `"key"`) {
+		t.Fatalf("expected key to be quoted in output: %s", out)
+	}
+}
 
 func TestPreprocessJSON5_Comments(t *testing.T) {
 	in := `

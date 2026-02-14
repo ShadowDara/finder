@@ -7,7 +7,7 @@ import (
 	"github.com/shadowdara/finder/internal/cli/color"
 	"github.com/shadowdara/finder/internal/loader"
 	"github.com/shadowdara/finder/internal/search"
-	"github.com/shadowdara/finder/pkg/structure"
+	"github.com/shadowdara/finder/internal/structure"
 	"github.com/shadowdara/finder/internal/templates"
 )
 

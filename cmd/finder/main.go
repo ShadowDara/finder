@@ -1,3 +1,13 @@
+// Finder
+// a project made to search for other Stuff
+// made by Shadowdara
+
+// Test the Whole Project
+//
+// go test -coverprofile=coverage ./..
+// go tool cover -html=coverage
+//
+
 package main
 
 import (
