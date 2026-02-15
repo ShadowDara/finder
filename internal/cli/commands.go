@@ -101,14 +101,10 @@ func list() {
 		return
 	}
 
-	templatecount := 0
+	templatecount := len(templatesList)
 
-	// Print the Template Count
-	for _, _ := range templateNames {
-		templatecount += 1
-	}
+	fmt.Printf("Found %d Templates\n", templatecount)
 
-	fmt.Printf("Found %s Templates", templatecount)
 	fmt.Println("Default Templates:")
 
 	for _, templ := range templatesList {
@@ -130,14 +126,9 @@ func check() {
 		return
 	}
 
-	templatecount := 0
+	templatecount := len(templateNames)
 
-	// Print the Template Count
-	for _, _ := range templateNames {
-		templatecount += 1
-	}
-
-	fmt.Printf("Found %s Templates", templatecount)
+	fmt.Printf("Found %d Templates\n", templatecount)
 
 	// use tabwriter to align columns instead of manual tabs
 	w := tabwriter.NewWriter(os.Stdout, 0, 8, 2, ' ', 0)

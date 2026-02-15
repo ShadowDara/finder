@@ -1,0 +1,10 @@
+// Struct for AWS SAM Project
+{
+    "description": "AWS Serverless Application Model",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "template.yaml",
+        "template.yml"
+    ]
+}

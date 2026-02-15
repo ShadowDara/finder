@@ -1,0 +1,10 @@
+// Struct for API Documentation (Swagger/OpenAPI)
+{
+    "description": "API documentation with Swagger UI",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "swagger.yaml",
+        "openapi.yaml"
+    ]
+}

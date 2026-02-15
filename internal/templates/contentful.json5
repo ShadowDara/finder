@@ -1,0 +1,10 @@
+// Struct for a Contentful Headless CMS
+{
+    "description": "Contentful headless CMS project",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "contentful.json",
+        "package.json"
+    ]
+}

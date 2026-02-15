@@ -1,0 +1,9 @@
+// Struct for an IPFS Project
+{
+    "description": "IPFS distributed file system",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "ipfs.config"
+    ]
+}

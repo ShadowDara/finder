@@ -1,0 +1,10 @@
+// Struct for a Hygraph CMS Project
+{
+    "description": "Hygraph headless CMS",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "hygraph.config.ts",
+        "package.json"
+    ]
+}

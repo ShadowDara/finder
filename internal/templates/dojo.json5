@@ -1,0 +1,16 @@
+// Struct for a Dojo Project
+{
+    "description": "Dojo JavaScript framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        ".dojorc",
+        "package.json"
+    ]
+}

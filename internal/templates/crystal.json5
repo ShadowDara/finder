@@ -1,0 +1,16 @@
+// Struct for a Crystal Project
+{
+    "description": "Crystal programming language project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "shard.yml",
+        "*.cr"
+    ]
+}

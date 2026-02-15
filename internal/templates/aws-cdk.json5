@@ -1,0 +1,16 @@
+// Struct for AWS CDK Project
+{
+    "description": "AWS Cloud Development Kit",
+    "name": "*",
+    "folders": [
+        {
+            "name": "lib",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "cdk.json",
+        "package.json"
+    ]
+}

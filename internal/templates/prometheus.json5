@@ -1,0 +1,10 @@
+// Struct for a Prometheus Project
+{
+    "description": "Prometheus monitoring and alerting",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "prometheus.yml",
+        "docker-compose.yml"
+    ]
+}

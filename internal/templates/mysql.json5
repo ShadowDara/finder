@@ -1,0 +1,16 @@
+// Struct for a MySQL Database Project
+{
+    "description": "MySQL database project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "migrations",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "docker-compose.yml",
+        "*.sql"
+    ]
+}

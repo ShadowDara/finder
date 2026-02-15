@@ -1,0 +1,16 @@
+// Struct for NFT Collection Project
+{
+    "description": "NFT smart contract collection",
+    "name": "*",
+    "folders": [
+        {
+            "name": "contracts",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "*.sol",
+        "hardhat.config.js"
+    ]
+}

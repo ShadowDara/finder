@@ -1,0 +1,15 @@
+// Struct for Puppet Infrastructure
+{
+    "description": "Puppet infrastructure automation",
+    "name": "*",
+    "folders": [
+        {
+            "name": "manifests",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "Puppetfile"
+    ]
+}

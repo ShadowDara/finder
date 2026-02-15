@@ -1,0 +1,16 @@
+// Struct for a Dapp Web3 Casino/Gaming
+{
+    "description": "Decentralized application gaming",
+    "name": "*",
+    "folders": [
+        {
+            "name": "contracts",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "hardhat.config.js",
+        "package.json"
+    ]
+}

@@ -1,0 +1,10 @@
+// Struct for a KVM/QEMU Project
+{
+    "description": "KVM virtual machine management",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "*.xml",
+        "*.qcow2"
+    ]
+}

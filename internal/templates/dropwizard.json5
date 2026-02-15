@@ -1,0 +1,16 @@
+// Struct for a Dropwizard Project
+{
+    "description": "Dropwizard Java framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "pom.xml",
+        "config.yml"
+    ]
+}

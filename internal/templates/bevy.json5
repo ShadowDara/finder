@@ -1,0 +1,16 @@
+// Struct for a Bevy Game Engine Project
+{
+    "description": "Bevy Rust game engine",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "Cargo.toml",
+        "main.rs"
+    ]
+}

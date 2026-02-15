@@ -1,0 +1,16 @@
+// Struct for a Babylon.js Project
+{
+    "description": "Babylon.js 3D engine",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "package.json",
+        "*.ts"
+    ]
+}

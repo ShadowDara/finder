@@ -1,0 +1,9 @@
+// Struct for a Presto/Trino Project
+{
+    "description": "Presto/Trino SQL query engine",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "etc/catalog"
+    ]
+}

@@ -1,0 +1,9 @@
+// Struct for Blender Project
+{
+    "description": "Blender 3D design project",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "*.blend"
+    ]
+}

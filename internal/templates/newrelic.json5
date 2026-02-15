@@ -1,0 +1,10 @@
+// Struct for a New Relic Project
+{
+    "description": "New Relic APM monitoring",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "newrelic.ini",
+        "newrelic.yml"
+    ]
+}

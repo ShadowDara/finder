@@ -1,0 +1,16 @@
+// Struct for a Fortran Project
+{
+    "description": "Fortran programming language",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "*.f90",
+        "*.f95"
+    ]
+}

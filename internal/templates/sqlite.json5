@@ -1,0 +1,10 @@
+// Struct for a SQLite Project
+{
+    "description": "SQLite database project",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "*.db",
+        "*.sqlite"
+    ]
+}

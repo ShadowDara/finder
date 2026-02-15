@@ -1,0 +1,10 @@
+// Struct for an Xen Hypervisor
+{
+    "description": "Xen hypervisor virtualization",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "*.cfg",
+        "Makefile"
+    ]
+}

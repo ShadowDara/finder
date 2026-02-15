@@ -1,0 +1,16 @@
+// Struct for DAO (Decentralized Autonomous Organization)
+{
+    "description": "DAO governance smart contracts",
+    "name": "*",
+    "folders": [
+        {
+            "name": "contracts",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "*.sol",
+        "package.json"
+    ]
+}

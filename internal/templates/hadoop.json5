@@ -1,0 +1,16 @@
+// Struct for an Apache Hadoop Project
+{
+    "description": "Apache Hadoop big data framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "pom.xml",
+        "*.java"
+    ]
+}

@@ -1,0 +1,16 @@
+// Struct for an Ada Project
+{
+    "description": "Ada programming language",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "*.adb",
+        "*.ads"
+    ]
+}

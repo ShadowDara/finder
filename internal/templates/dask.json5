@@ -1,0 +1,10 @@
+// Struct for a Dask Project
+{
+    "description": "Dask parallel computing library",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "requirements.txt",
+        "*.py"
+    ]
+}

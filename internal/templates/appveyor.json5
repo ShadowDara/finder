@@ -1,0 +1,9 @@
+// Struct for an AppVeyor Project
+{
+    "description": "AppVeyor CI for Windows",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "appveyor.yml"
+    ]
+}

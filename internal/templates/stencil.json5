@@ -1,0 +1,16 @@
+// Struct for a Stencil Project
+{
+    "description": "Stencil web components compiler",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "stencil.config.ts",
+        "package.json"
+    ]
+}

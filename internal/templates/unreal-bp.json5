@@ -1,0 +1,15 @@
+// Struct for Unreal Engine Blueprints
+{
+    "description": "Unreal Engine Blueprint visual scripting",
+    "name": "*",
+    "folders": [
+        {
+            "name": "Content",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "*.uproject"
+    ]
+}

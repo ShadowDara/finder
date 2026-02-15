@@ -1,0 +1,16 @@
+// Struct for an Apache Spark Project
+{
+    "description": "Apache Spark big data processing",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "pom.xml",
+        "*.py"
+    ]
+}

@@ -1,0 +1,16 @@
+// Struct for an Apache Airflow Project
+{
+    "description": "Apache Airflow workflow orchestration",
+    "name": "*",
+    "folders": [
+        {
+            "name": "dags",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "airflow.cfg",
+        "requirements.txt"
+    ]
+}

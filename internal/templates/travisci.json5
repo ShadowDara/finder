@@ -1,0 +1,9 @@
+// Struct for a TravisCI Project
+{
+    "description": "Travis CI continuous integration",
+    "name": "*",
+    "folders": [],
+    "files": [
+        ".travis.yml"
+    ]
+}

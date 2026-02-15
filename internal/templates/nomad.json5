@@ -1,0 +1,9 @@
+// Struct for Nomad Orchestration
+{
+    "description": "HashiCorp Nomad container orchestration",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "*.nomad"
+    ]
+}

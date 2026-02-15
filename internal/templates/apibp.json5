@@ -1,0 +1,9 @@
+// Struct for API Blueprint Project
+{
+    "description": "API Blueprint documentation",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "*.apib"
+    ]
+}

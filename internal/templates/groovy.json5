@@ -1,0 +1,16 @@
+// Struct for a Groovy Project
+{
+    "description": "Groovy programming language project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "build.gradle",
+        "*.groovy"
+    ]
+}

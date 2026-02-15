@@ -1,0 +1,15 @@
+// Struct for a Defold Game Engine Project
+{
+    "description": "Defold game engine project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "assets",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "game.project"
+    ]
+}

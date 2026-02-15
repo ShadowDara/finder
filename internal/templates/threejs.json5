@@ -1,0 +1,16 @@
+// Struct for a Three.js Project
+{
+    "description": "Three.js 3D JavaScript library",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "package.json",
+        "*.js"
+    ]
+}

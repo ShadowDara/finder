@@ -1,0 +1,10 @@
+// Struct for Heroku Deployment
+{
+    "description": "Heroku platform as a service",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "Procfile",
+        "app.json"
+    ]
+}

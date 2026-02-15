@@ -1,0 +1,16 @@
+// Struct for a Perl Project
+{
+    "description": "Perl programming language project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "lib",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "Makefile.PL",
+        "*.pl"
+    ]
+}

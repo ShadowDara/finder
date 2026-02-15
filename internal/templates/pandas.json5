@@ -1,0 +1,10 @@
+// Struct for a Pandas Project
+{
+    "description": "Pandas data analysis library",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "requirements.txt",
+        "*.py"
+    ]
+}

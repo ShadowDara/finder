@@ -1,0 +1,9 @@
+// Struct for a Fossil VCS Project
+{
+    "description": "Fossil distributed version control",
+    "name": "*",
+    "folders": [],
+    "files": [
+        ".fossil"
+    ]
+}
