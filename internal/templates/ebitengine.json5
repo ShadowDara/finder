@@ -1,0 +1,16 @@
+// Struct for an Ebitengine Project
+{
+    "description": "Ebitengine Go game framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "images",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "main.go",
+        "go.mod"
+    ]
+}

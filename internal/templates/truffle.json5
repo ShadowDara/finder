@@ -1,0 +1,26 @@
+// Truffle Ethereum development suite
+{
+    "description": "Truffle Suite Ethereum smart contract development",
+    "name": "*",
+    "folders": [
+        {
+            "name": "contracts",
+            "folders": [],
+            "files": ["*.sol"]
+        },
+        {
+            "name": "migrations",
+            "folders": [],
+            "files": ["*.js"]
+        },
+        {
+            "name": "test",
+            "folders": [],
+            "files": ["*.js", "*.sol"]
+        }
+    ],
+    "files": [
+        "truffle-config.js",
+        "truffle.js"
+    ]
+}

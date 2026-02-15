@@ -1,0 +1,15 @@
+// Struct for a Supabase Project
+{
+    "description": "Supabase open source Firebase alternative",
+    "name": "*",
+    "folders": [
+        {
+            "name": "supabase",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "supabase.json"
+    ]
+}

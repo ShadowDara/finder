@@ -1,0 +1,17 @@
+// Panel Bokeh interactive applications
+{
+    "description": "Panel framework for building web applications with Python",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": ["*.py"]
+        }
+    ],
+    "files": [
+        "panel.config.yaml",
+        "requirements.txt",
+        "app.py"
+    ]
+}

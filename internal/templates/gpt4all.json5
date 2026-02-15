@@ -1,0 +1,22 @@
+// GPT4All local LLM project
+{
+    "description": "GPT4All local LLM execution environment",
+    "name": "*",
+    "folders": [
+        {
+            "name": "models",
+            "folders": [],
+            "files": ["*.gguf", "*.bin"]
+        },
+        {
+            "name": "client",
+            "folders": [],
+            "files": ["*.py", "*.js"]
+        }
+    ],
+    "files": [
+        "gpt4all.config.json",
+        "requirements.txt",
+        "setup.py"
+    ]
+}

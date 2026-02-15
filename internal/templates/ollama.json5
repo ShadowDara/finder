@@ -1,0 +1,23 @@
+// Ollama local LLM project
+{
+    "description": "Ollama local language model inference server",
+    "name": "*",
+    "folders": [
+        {
+            "name": "models",
+            "folders": [],
+            "files": ["Modelfile", "*.bin"]
+        },
+        {
+            "name": "api",
+            "folders": [],
+            "files": ["*.py", "*.js"]
+        }
+    ],
+    "files": [
+        "Modelfile",
+        ".ollama",
+        "docker-compose.yml",
+        "requirements.txt"
+    ]
+}

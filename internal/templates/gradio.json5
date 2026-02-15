@@ -1,0 +1,17 @@
+// Gradio machine learning UI
+{
+    "description": "Gradio Python library for machine learning demos and UIs",
+    "name": "*",
+    "folders": [
+        {
+            "name": "models",
+            "folders": [],
+            "files": ["*.pkl", "*.h5"]
+        }
+    ],
+    "files": [
+        "app.py",
+        "requirements.txt",
+        "gradio.config.json"
+    ]
+}

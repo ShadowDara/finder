@@ -1,0 +1,16 @@
+// RAPIDS GPU data science
+{
+    "description": "NVIDIA RAPIDS GPU-accelerated data science framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "notebooks",
+            "folders": [],
+            "files": ["*.ipynb"]
+        }
+    ],
+    "files": [
+        "requirements.txt",
+        "rapids.config.yaml"
+    ]
+}

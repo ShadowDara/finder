@@ -1,0 +1,10 @@
+// Struct for a Pygame Project
+{
+    "description": "Pygame Python game development",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "main.py",
+        "requirements.txt"
+    ]
+}

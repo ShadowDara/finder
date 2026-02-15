@@ -1,0 +1,17 @@
+// Cosmos SDK blockchain
+{
+    "description": "Cosmos SDK blockchain development framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "x",
+            "folders": [],
+            "files": ["*.go"]
+        }
+    ],
+    "files": [
+        "go.mod",
+        "go.sum",
+        "Makefile"
+    ]
+}

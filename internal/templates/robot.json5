@@ -1,0 +1,15 @@
+// Struct for a Robot Framework
+{
+    "description": "Robot Framework automation testing",
+    "name": "*",
+    "folders": [
+        {
+            "name": "tests",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "*.robot"
+    ]
+}

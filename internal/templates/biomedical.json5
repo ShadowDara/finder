@@ -1,0 +1,21 @@
+// Biomedical informatics project
+{
+    "description": "Biomedical informatics and health data science",
+    "name": "*",
+    "folders": [
+        {
+            "name": "data",
+            "folders": [],
+            "files": ["*.csv", "*.dicom", "*.nii"]
+        },
+        {
+            "name": "analysis",
+            "folders": [],
+            "files": ["*.py", "*.R"]
+        }
+    ],
+    "files": [
+        "requirements.txt",
+        "bioinfo.config.yaml"
+    ]
+}

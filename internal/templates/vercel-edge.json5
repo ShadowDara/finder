@@ -1,0 +1,22 @@
+// Vercel Edge Functions and Middleware
+{
+    "description": "Vercel Edge Functions and Edge Middleware",
+    "name": "*",
+    "folders": [
+        {
+            "name": "pages",
+            "folders": [],
+            "files": ["*.tsx", "*.jsx", "*.ts", "*.js"]
+        },
+        {
+            "name": "middleware",
+            "folders": [],
+            "files": ["*.ts", "*.js"]
+        }
+    ],
+    "files": [
+        "vercel.json",
+        "edge.config.json",
+        "next.config.js"
+    ]
+}

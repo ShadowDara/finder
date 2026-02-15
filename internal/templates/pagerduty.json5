@@ -1,0 +1,9 @@
+// Struct for a PagerDuty Integration
+{
+    "description": "PagerDuty incident management",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "pagerduty.yml"
+    ]
+}

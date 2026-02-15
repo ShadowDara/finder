@@ -1,0 +1,16 @@
+// Struct for a Payload CMS Project
+{
+    "description": "Payload headless CMS",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "tsconfig.json",
+        "package.json"
+    ]
+}

@@ -1,0 +1,10 @@
+// Struct for a Firestore Project
+{
+    "description": "Google Cloud Firestore database",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "firestore.rules",
+        "firestore.indexes.json"
+    ]
+}

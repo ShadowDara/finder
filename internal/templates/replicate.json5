@@ -1,0 +1,17 @@
+// Replicate AI model API
+{
+    "description": "Replicate AI model API and cloud inference",
+    "name": "*",
+    "folders": [
+        {
+            "name": "models",
+            "folders": [],
+            "files": ["*.py"]
+        }
+    ],
+    "files": [
+        "replicate.config.json",
+        "requirements.txt",
+        ".env.replicate"
+    ]
+}

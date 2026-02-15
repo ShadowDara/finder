@@ -1,0 +1,21 @@
+// Whisper speech-to-text
+{
+    "description": "OpenAI Whisper speech recognition and transcription",
+    "name": "*",
+    "folders": [
+        {
+            "name": "audio",
+            "folders": [],
+            "files": ["*.mp3", "*.wav", "*.m4a"]
+        },
+        {
+            "name": "transcripts",
+            "folders": [],
+            "files": ["*.txt", "*.json", "*.vtt"]
+        }
+    ],
+    "files": [
+        "whisper.config.yaml",
+        "requirements.txt"
+    ]
+}

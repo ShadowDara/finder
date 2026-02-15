@@ -1,0 +1,15 @@
+// Struct for a Perseus Project
+{
+    "description": "Perseus Rust full-stack framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "Cargo.toml"
+    ]
+}

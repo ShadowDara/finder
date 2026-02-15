@@ -1,0 +1,9 @@
+// Struct for an Okta Project
+{
+    "description": "Okta identity platform",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "okta.config.js"
+    ]
+}

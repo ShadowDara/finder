@@ -1,0 +1,27 @@
+// dbt data transformation
+{
+    "description": "dbt data build tool for analytics engineering",
+    "name": "*",
+    "folders": [
+        {
+            "name": "models",
+            "folders": [],
+            "files": ["*.sql"]
+        },
+        {
+            "name": "tests",
+            "folders": [],
+            "files": ["*.sql", "*.py"]
+        },
+        {
+            "name": "macros",
+            "folders": [],
+            "files": ["*.sql"]
+        }
+    ],
+    "files": [
+        "dbt_project.yml",
+        "profiles.yml",
+        "requirements.txt"
+    ]
+}

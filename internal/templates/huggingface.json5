@@ -1,0 +1,29 @@
+// Hugging Face ML models and datasets project
+{
+    "description": "Hugging Face transformer models or datasets project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "models",
+            "folders": [],
+            "files": ["*.pt", "*.bin", "*.safetensors"]
+        },
+        {
+            "name": "data",
+            "folders": [],
+            "files": ["*.csv", "*.json", "*.parquet"]
+        },
+        {
+            "name": "scripts",
+            "folders": [],
+            "files": ["*.py"]
+        }
+    ],
+    "files": [
+        "model_card.md",
+        "README.md",
+        "requirements.txt",
+        "config.json",
+        ".huggingface"
+    ]
+}

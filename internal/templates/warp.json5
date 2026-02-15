@@ -1,0 +1,15 @@
+// Struct for a Warp Project
+{
+    "description": "Warp Rust web framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "Cargo.toml"
+    ]
+}

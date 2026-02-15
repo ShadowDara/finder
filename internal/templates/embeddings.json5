@@ -1,0 +1,16 @@
+// Embedding models and vector representations
+{
+    "description": "Text or image embedding models project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "embeddings",
+            "folders": [],
+            "files": ["*.npy", "*.pkl", "*.bin"]
+        }
+    ],
+    "files": [
+        "embedding.config.yaml",
+        "requirements.txt"
+    ]
+}

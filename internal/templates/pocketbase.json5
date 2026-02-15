@@ -1,0 +1,15 @@
+// Struct for a Pocketbase Project
+{
+    "description": "Pocketbase backend as a service",
+    "name": "*",
+    "folders": [
+        {
+            "name": "pb_migrations",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "pb_schema.json"
+    ]
+}

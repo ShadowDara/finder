@@ -103,7 +103,7 @@ func list() {
 
 	templatecount := len(templatesList)
 
-	fmt.Printf("Found %d Templates\n", templatecount)
+	fmt.Printf("%sFound %d Templates%s\n", color.Yellow, templatecount, color.Reset)
 
 	fmt.Println("Default Templates:")
 
@@ -128,7 +128,7 @@ func check() {
 
 	templatecount := len(templateNames)
 
-	fmt.Printf("Found %d Templates\n", templatecount)
+	fmt.Printf("%sFound %d Templates%s\n", color.Yellow, templatecount, color.Reset)
 
 	// use tabwriter to align columns instead of manual tabs
 	w := tabwriter.NewWriter(os.Stdout, 0, 8, 2, ' ', 0)
@@ -152,7 +152,7 @@ func check() {
 		}
 
 		folder := structure.LoadJSON5(string(data))
-		fmt.Fprintf(w, "%s\t%s\n", templ, folder.Description)
+		fmt.Fprintf(w, "%s%s%s\t%s\n", color.Cyan, templ, color.Reset, folder.Description)
 	}
 
 	w.Flush()

@@ -1,0 +1,17 @@
+// Weights & Biases experiment tracking
+{
+    "description": "Weights & Biases machine learning experiments tracking",
+    "name": "*",
+    "folders": [
+        {
+            "name": "logs",
+            "folders": [],
+            "files": ["*.json"]
+        }
+    ],
+    "files": [
+        "wandb.config.yaml",
+        "requirements.txt",
+        ".wandb"
+    ]
+}

@@ -1,0 +1,9 @@
+// Struct for a Webflow Project
+{
+    "description": "Webflow visual web builder",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "*.webflow"
+    ]
+}

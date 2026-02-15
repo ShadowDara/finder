@@ -1,0 +1,16 @@
+// Struct for a Vitest Testing Framework
+{
+    "description": "Vitest Vite-native unit test framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "tests",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "vitest.config.ts",
+        "package.json"
+    ]
+}

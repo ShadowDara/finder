@@ -1,0 +1,16 @@
+// Struct for a Mocha Testing Framework
+{
+    "description": "Mocha JavaScript test framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "test",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        ".mocharc.json",
+        "package.json"
+    ]
+}

@@ -1,0 +1,16 @@
+// Voila Jupyter notebooks as dashboards
+{
+    "description": "Voila convert Jupyter notebooks to standalone web apps",
+    "name": "*",
+    "folders": [
+        {
+            "name": "notebooks",
+            "folders": [],
+            "files": ["*.ipynb"]
+        }
+    ],
+    "files": [
+        "voila.config.py",
+        "requirements.txt"
+    ]
+}

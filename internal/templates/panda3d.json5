@@ -1,0 +1,15 @@
+// Struct for a Panda3D Project
+{
+    "description": "Panda3D game engine",
+    "name": "*",
+    "folders": [
+        {
+            "name": "models",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "main.py"
+    ]
+}

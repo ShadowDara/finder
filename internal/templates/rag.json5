@@ -1,0 +1,27 @@
+// RAG (Retrieval-Augmented Generation) project
+{
+    "description": "Retrieval-Augmented Generation system for LLMs",
+    "name": "*",
+    "folders": [
+        {
+            "name": "documents",
+            "folders": [],
+            "files": ["*.pdf", "*.txt", "*.md"]
+        },
+        {
+            "name": "retrieval",
+            "folders": [],
+            "files": ["*.py"]
+        },
+        {
+            "name": "embeddings",
+            "folders": [],
+            "files": ["*.pkl", "*.npz"]
+        }
+    ],
+    "files": [
+        "rag.config.json",
+        "requirements.txt",
+        "README.md"
+    ]
+}

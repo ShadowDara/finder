@@ -1,0 +1,16 @@
+// Struct for a Cypress Testing Framework
+{
+    "description": "Cypress end-to-end testing",
+    "name": "*",
+    "folders": [
+        {
+            "name": "cypress",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "cypress.config.ts",
+        "package.json"
+    ]
+}

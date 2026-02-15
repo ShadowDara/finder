@@ -1,0 +1,17 @@
+// Grok AI API
+{
+    "description": "Grok AI API integration project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": ["*.py", "*.ts", "*.js"]
+        }
+    ],
+    "files": [
+        "grok.config.yaml",
+        "requirements.txt",
+        ".env.grok"
+    ]
+}

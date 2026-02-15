@@ -1,0 +1,16 @@
+// Struct for a Capacitor Project
+{
+    "description": "Capacitor cross-platform mobile",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "capacitor.config.ts",
+        "package.json"
+    ]
+}

@@ -1,0 +1,16 @@
+// Fireworks.ai model API
+{
+    "description": "Fireworks.ai fast model inference API",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": ["*.py"]
+        }
+    ],
+    "files": [
+        "fireworks.config.yaml",
+        "requirements.txt"
+    ]
+}

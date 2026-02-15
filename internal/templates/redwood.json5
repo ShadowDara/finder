@@ -1,0 +1,15 @@
+// Struct for a Redwood JS Project
+{
+    "description": "Redwood full-stack JavaScript framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "web",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "redwood.toml"
+    ]
+}

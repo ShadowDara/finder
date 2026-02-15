@@ -1,0 +1,9 @@
+// Struct for a Realm Database Project
+{
+    "description": "Realm mobile database",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "*.realm"
+    ]
+}

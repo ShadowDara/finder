@@ -1,0 +1,9 @@
+// Struct for a RocksDB Project
+{
+    "description": "RocksDB embedded database",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "Makefile"
+    ]
+}

@@ -1,0 +1,16 @@
+// Struct for a Blitz.js Project
+{
+    "description": "Blitz.js full-stack React framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "pages",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "package.json",
+        "blitz.config.ts"
+    ]
+}

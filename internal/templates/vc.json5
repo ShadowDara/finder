@@ -1,0 +1,10 @@
+// Struct for a Verifiable Credentials Project
+{
+    "description": "W3C Verifiable Credentials",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "*.jsonld",
+        "credentials.json"
+    ]
+}

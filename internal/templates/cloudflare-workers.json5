@@ -1,0 +1,18 @@
+// Cloudflare Workers edge computing
+{
+    "description": "Cloudflare Workers edge computing platform",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": ["*.ts", "*.js"]
+        }
+    ],
+    "files": [
+        "wrangler.toml",
+        "wrangler.json",
+        "package.json",
+        "tsconfig.json"
+    ]
+}

@@ -1,0 +1,16 @@
+// Together.ai API
+{
+    "description": "Together.ai model inference API",
+    "name": "*",
+    "folders": [
+        {
+            "name": "models",
+            "folders": [],
+            "files": ["*.yaml"]
+        }
+    ],
+    "files": [
+        "together.config.yaml",
+        "requirements.txt"
+    ]
+}

@@ -1,0 +1,15 @@
+// Struct for a Behat BDD Project
+{
+    "description": "Behat behavior-driven development",
+    "name": "*",
+    "folders": [
+        {
+            "name": "features",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "behat.yml"
+    ]
+}

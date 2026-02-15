@@ -1,0 +1,9 @@
+// Struct for a Scratch Project
+{
+    "description": "Scratch visual programming",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "*.sb3"
+    ]
+}

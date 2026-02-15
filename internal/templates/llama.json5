@@ -1,0 +1,22 @@
+// Llama 2 or Llama model project
+{
+    "description": "Meta Llama 2 or Llama language model project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "checkpoints",
+            "folders": [],
+            "files": ["*.pt", "*.pth"]
+        },
+        {
+            "name": "scripts",
+            "folders": [],
+            "files": ["*.py"]
+        }
+    ],
+    "files": [
+        "llama.config.json",
+        "requirements.txt",
+        "params.json"
+    ]
+}
