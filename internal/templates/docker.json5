@@ -1,0 +1,10 @@
+// Struct for a Docker Project
+{
+    "description": "Docker container configuration",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "Dockerfile",
+        "docker-compose.yml"
+    ]
+}

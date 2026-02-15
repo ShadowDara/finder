@@ -1,0 +1,15 @@
+// Struct for a Swift Project
+{
+    "description": "Swift programming language project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "Sources",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "Package.swift"
+    ]
+}

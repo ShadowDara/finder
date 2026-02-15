@@ -1,0 +1,16 @@
+// Struct for a Vue.js Project
+{
+    "description": "Vue.js JavaScript web framework project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "package.json",
+        "*.vue"
+    ]
+}

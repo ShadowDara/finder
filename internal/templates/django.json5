@@ -1,0 +1,10 @@
+// Struct for a Django Project
+{
+    "description": "Python Django web framework project",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "manage.py",
+        "requirements.txt"
+    ]
+}

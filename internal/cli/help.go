@@ -31,7 +31,7 @@ func printHelp() {
 	w := tabwriter.NewWriter(os.Stdout, 0, 8, 2, ' ', 0)
 
 	for k, v := range blockednames {
-		fmt.Fprintf(w, " - %s\t%s\n", k, v)
+		fmt.Fprintf(w, "  - %s\t%s\n", k, v)
 	}
 
 	w.Flush()

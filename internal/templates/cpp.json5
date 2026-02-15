@@ -1,0 +1,15 @@
+// Struct for a C/C++ CMake Project
+{
+    "description": "C/C++ project with CMake build system",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "CMakeLists.txt"
+    ]
+}

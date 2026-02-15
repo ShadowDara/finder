@@ -1,0 +1,15 @@
+// Struct for a Java Maven Project
+{
+    "description": "Java project with Maven build tool",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "pom.xml"
+    ]
+}

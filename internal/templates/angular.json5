@@ -1,0 +1,16 @@
+// Struct for an Angular Project
+{
+    "description": "Angular TypeScript web framework project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "angular.json",
+        "package.json"
+    ]
+}

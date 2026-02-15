@@ -1,0 +1,16 @@
+// Struct for a React Project
+{
+    "description": "React JavaScript/TypeScript web application",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "package.json",
+        "*.jsx"
+    ]
+}
