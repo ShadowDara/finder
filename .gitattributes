@@ -1,3 +1,7 @@
 # JSON5
 *.json5 linguist-detectable=true
 *.json5 linguist-documentation=false
+
+# JSON
+*.json linguist-detectable=true
+*.json linguist-documentation=false
