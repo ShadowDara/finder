@@ -19,7 +19,7 @@ func TestGetBlockedTemplateNames_ReturnsMap(t *testing.T) {
 func TestGetBlockedTemplateNames_ContainsExpectedKeys(t *testing.T) {
 	blocked := GetBlockedTemplateNames()
 
-	expectedKeys := []string{"check", "help", "list"}
+	expectedKeys := []string{"check", "help", "list", "ls", "tags", "tag"}
 
 	for _, key := range expectedKeys {
 		if _, exists := blocked[key]; !exists {
@@ -69,12 +69,52 @@ func TestGetBlockedTemplateNames_ListKey(t *testing.T) {
 		t.Errorf("expected description %q for list, got %q", expectedDesc, desc)
 	}
 }
-
-func TestGetBlockedTemplateNames_SizeThree(t *testing.T) {
+func TestGetBlockedTemplateNames_LsKey(t *testing.T) {
 	blocked := GetBlockedTemplateNames()
 
-	if len(blocked) != 3 {
-		t.Errorf("expected exactly 3 blocked names, got %d", len(blocked))
+	desc, exists := blocked["ls"]
+	if !exists {
+		t.Fatalf("ls key not found")
+	}
+
+	expectedDesc := "same as list"
+	if desc != expectedDesc {
+		t.Errorf("expected description %q for ls, got %q", expectedDesc, desc)
+	}
+}
+
+func TestGetBlockedTemplateNames_TagsKey(t *testing.T) {
+	blocked := GetBlockedTemplateNames()
+
+	desc, exists := blocked["tags"]
+	if !exists {
+		t.Fatalf("tags key not found")
+	}
+
+	expectedDesc := "display all tags in the console"
+	if desc != expectedDesc {
+		t.Errorf("expected description %q for tags, got %q", expectedDesc, desc)
+	}
+}
+
+func TestGetBlockedTemplateNames_TagKey(t *testing.T) {
+	blocked := GetBlockedTemplateNames()
+
+	desc, exists := blocked["tag"]
+	if !exists {
+		t.Fatalf("tag key not found")
+	}
+
+	expectedDesc := "same as tags"
+	if desc != expectedDesc {
+		t.Errorf("expected description %q for tag, got %q", expectedDesc, desc)
+	}
+}
+func TestGetBlockedTemplateNames_SizeSix(t *testing.T) {
+	blocked := GetBlockedTemplateNames()
+
+	if len(blocked) != 6 {
+		t.Errorf("expected exactly 6 blocked names, got %d", len(blocked))
 	}
 }
 

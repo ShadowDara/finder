@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## Newest -> 0.3.2
+- added Tag Search
+
 ## 0.3.1 - 15.02.2026
 
 ### ✨ Features
