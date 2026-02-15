@@ -1,10 +1,15 @@
 # CHANGELOG
 
-## 0.3.2
+## Newest ...
+
+## 0.3.3
+- added JSON Shema
+- added File Options
 - Search on all Drives on Windows
 - added Tag Search
+
+## 0.3.2
 - little Fixes
-- added JSON Shema
 
 ## 0.3.1 - 15.02.2026
 
