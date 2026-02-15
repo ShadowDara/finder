@@ -88,11 +88,11 @@ returns `0` when `invert_command` is `false`, else `1`.
 }
 ```
 
-Place custom templates in the following folder:
+<!-- Place custom templates in the following folder: -->
 
-- Windows: `%AppData%\\finder`
+<!-- - Windows: `%AppData%\\finder`
 - Linux: `~/.config/finder`
-- macOS: `~/Library/Application Support/finder`
+- macOS: `~/Library/Application Support/finder` -->
 
 Then call `finder <template-name>` to use them.
 
