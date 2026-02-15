@@ -32,7 +32,7 @@ func TestFind_NormalOutput(t *testing.T) {
 	folder := structure.Folder{
 		Description: "Test Folder",
 		Name:        "testfolder",
-		Files:       []string{},
+		Files:       structure.Files{},
 		Folders:     []structure.Folder{},
 	}
 
@@ -55,7 +55,7 @@ func TestFind_ClearOutput(t *testing.T) {
 	folder := structure.Folder{
 		Description: "Test Folder",
 		Name:        "testfolder",
-		Files:       []string{},
+		Files:       structure.Files{},
 		Folders:     []structure.Folder{},
 	}
 
@@ -73,7 +73,7 @@ func TestFind_JSONOutput(t *testing.T) {
 	folder := structure.Folder{
 		Description: "Test Folder",
 		Name:        "testfolder",
-		Files:       []string{},
+		Files:       structure.Files{},
 		Folders:     []structure.Folder{},
 	}
 
@@ -89,26 +89,19 @@ func TestFind_JSONOutput(t *testing.T) {
 	}
 }
 
-func TestGetRootPath_Windows(t *testing.T) {
-	// We can't easily test Windows-specific behavior without mocking
-	// but we can verify the function returns something
-	path := getRootPath()
+func TestGetSearchRoots_ReturnsSlice(t *testing.T) {
+	// Verify that getSearchRoots returns a non-empty slice
+	roots := getSearchRoots()
 
-	if path == "" {
-		t.Fatalf("expected non-empty root path")
+	if len(roots) == 0 {
+		t.Fatalf("expected non-empty roots slice")
 	}
 
-	if len(path) < 1 {
-		t.Errorf("root path unexpectedly short: %q", path)
-	}
-}
-
-func TestGetRootPath_ReturnValue(t *testing.T) {
-	path := getRootPath()
-
-	// Should return either C:\ or /
-	if !strings.HasPrefix(path, "C:\\") && path != "/" {
-		t.Errorf("expected C:\\ or /, got %q", path)
+	// Each root should be non-empty
+	for _, root := range roots {
+		if root == "" {
+			t.Errorf("expected non-empty root path")
+		}
 	}
 }
 
@@ -117,7 +110,7 @@ func TestMatchFolderTemplate_NoTemplate(t *testing.T) {
 
 	template := structure.Folder{
 		Name:    "",
-		Files:   []string{},
+		Files:   structure.Files{},
 		Folders: []structure.Folder{},
 	}
 
@@ -135,7 +128,7 @@ func TestMatchFolderTemplate_WithFileName(t *testing.T) {
 
 	template := structure.Folder{
 		Name:    "mytest",
-		Files:   []string{},
+		Files:   structure.Files{},
 		Folders: []structure.Folder{},
 	}
 
@@ -153,7 +146,7 @@ func TestMatchFolderTemplate_WithWildcard(t *testing.T) {
 
 	template := structure.Folder{
 		Name:    "mytest*",
-		Files:   []string{},
+		Files:   structure.Files{},
 		Folders: []structure.Folder{},
 	}
 
@@ -174,7 +167,7 @@ func TestMatchFolderTemplate_WithFile(t *testing.T) {
 
 	template := structure.Folder{
 		Name:    "project",
-		Files:   []string{"package.json"},
+		Files:   structure.Files{{Name: "package.json"}},
 		Folders: []structure.Folder{},
 	}
 
@@ -192,7 +185,7 @@ func TestMatchFolderTemplate_MissingFile(t *testing.T) {
 
 	template := structure.Folder{
 		Name:    "project",
-		Files:   []string{"package.json"},
+		Files:   structure.Files{{Name: "package.json"}},
 		Folders: []structure.Folder{},
 	}
 
@@ -213,7 +206,7 @@ func TestMatchFolderTemplate_WithSubfolder(t *testing.T) {
 
 	template := structure.Folder{
 		Name: "project",
-		Files: []string{},
+		Files: structure.Files{},
 		Folders: []structure.Folder{
 			{Name: "src"},
 		},
@@ -233,7 +226,7 @@ func TestMatchFolderTemplate_MissingSubfolder(t *testing.T) {
 
 	template := structure.Folder{
 		Name: "project",
-		Files: []string{},
+		Files: structure.Files{},
 		Folders: []structure.Folder{
 			{Name: "src"},
 		},
@@ -306,7 +299,7 @@ func TestFindMatchingFolders_Empty(t *testing.T) {
 
 	template := structure.Folder{
 		Name:    "nonexistent",
-		Files:   []string{},
+		Files:   structure.Files{},
 		Folders: []structure.Folder{},
 	}
 
@@ -326,7 +319,7 @@ func TestFindMatchingFolders_SingleMatch(t *testing.T) {
 
 	template := structure.Folder{
 		Name:    "testfolder",
-		Files:   []string{},
+		Files:   structure.Files{},
 		Folders: []structure.Folder{},
 	}
 
@@ -353,7 +346,7 @@ func TestFindMatchingFolders_MultipleMatches(t *testing.T) {
 
 	template := structure.Folder{
 		Name:    "test*",
-		Files:   []string{},
+		Files:   structure.Files{},
 		Folders: []structure.Folder{},
 	}
 

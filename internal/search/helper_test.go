@@ -22,7 +22,7 @@ func TestMatchFolderTemplateAndFind(t *testing.T) {
 
     tpl := structure.Folder{
         Name: "proj",
-        Files: []string{"a.txt"},
+        Files: structure.Files{{Name: "a.txt"}},
         Folders: []structure.Folder{{Name: "sub"}},
     }
 
