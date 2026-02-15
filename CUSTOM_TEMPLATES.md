@@ -1,5 +1,9 @@
 # Custom Templates Guide
 
+> [!WARNING] 
+> This file could be not updated, but there `json shema files` in
+> `.finder/shema` available which will always be updated!
+
 ## How to Create Your Own Templates
 
 Finder now supports loading custom templates from the filesystem without requiring recompilation. You can add your own project detection templates easily!

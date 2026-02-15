@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Finder Template Schema",
+  "type": "object",
+  "properties": {
+    "description": {
+      "type": "string",
+      "description": "Description of the template."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the folder or template."
+    },
+    "folders": {
+      "type": "array",
+      "description": "Subfolders described by the template.",
+      "items": { "$ref": "#/definitions/folder" }
+    },
+    "files": {
+      "type": "array",
+      "description": "Files required, forbidden, or optional in the folder.",
+      "items": { "$ref": "#/definitions/file" }
+    },
+    "command": {
+      "type": "string",
+      "description": "Optional command to execute after finding directory."
+    },
+    "invert_command": {
+      "type": "boolean",
+      "description": "Invert command return code logic."
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Tags to sort or filter templates."
+    }
+  },
+  "required": [],
+  "definitions": {
+    "file": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "existence": {
+          "type": "string",
+          "enum": ["required", "forbidden", "optional"],
+          "description": "File existence: required, forbidden, or optional. Default is required."
+        }
+      },
+      "required": ["name"]
+    },
+    "folder": {
+      "type": "object",
+      "properties": {
+        "description": { "type": "string" },
+        "name": { "type": "string" },
+        "folders": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/folder" }
+        },
+        "files": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/file" }
+        },
+        "command": { "type": "string" },
+        "invert_command": { "type": "boolean" },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["name", "files"]
+    }
+  }
+}
