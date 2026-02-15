@@ -18,7 +18,7 @@ or your own custom structures using templates.
 
 ## Requirements
 
-- Go 1.25 or newer
+- Go 1.18 or newer
 
 ## Installation
 

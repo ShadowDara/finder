@@ -15,7 +15,7 @@ func HandleCommand(args []string) {
 	// Parse CLI arguments
 	opts, err := ParseCLI(args)
 	if err != nil {
-		fmt.Printf("%sError: %v. Use 'help' for usage information.%s\n",
+		fmt.Printf("finder: %sError: %v. Use 'help' for usage information.%s\n",
 			color.Red, err, color.Reset)
 		return
 	}
