@@ -1,0 +1,16 @@
+// Struct for a Yarn Workspace Project
+{
+    "description": "Yarn workspace monorepo",
+    "name": "*",
+    "folders": [
+        {
+            "name": "packages",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "package.json",
+        "yarn.lock"
+    ]
+}

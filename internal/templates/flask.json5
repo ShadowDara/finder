@@ -1,0 +1,16 @@
+// Struct for a Flask Project
+{
+    "description": "Flask lightweight Python web framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "app",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "app.py",
+        "requirements.txt"
+    ]
+}

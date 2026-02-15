@@ -1,0 +1,16 @@
+// Struct for a Bun Project
+{
+    "description": "Bun JavaScript/TypeScript runtime",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "bunfig.toml",
+        "package.json"
+    ]
+}

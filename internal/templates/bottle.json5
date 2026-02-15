@@ -1,0 +1,10 @@
+// Struct for a Bottle Project
+{
+    "description": "Bottle micro Python web framework",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "app.py",
+        "requirements.txt"
+    ]
+}

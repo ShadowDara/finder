@@ -1,0 +1,16 @@
+// Struct for a Hugo Project
+{
+    "description": "Hugo static site generator",
+    "name": "*",
+    "folders": [
+        {
+            "name": "content",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "hugo.toml",
+        "config.toml"
+    ]
+}

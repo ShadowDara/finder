@@ -1,0 +1,16 @@
+// Struct for a Strapi Project
+{
+    "description": "Strapi headless CMS",
+    "name": "*",
+    "folders": [
+        {
+            "name": "api",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "package.json",
+        "server.js"
+    ]
+}

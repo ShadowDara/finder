@@ -1,0 +1,16 @@
+// Struct for a Pnpm Workspace Project
+{
+    "description": "Pnpm workspace monorepo",
+    "name": "*",
+    "folders": [
+        {
+            "name": "packages",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "pnpm-workspace.yaml",
+        "package.json"
+    ]
+}

@@ -1,0 +1,16 @@
+// Struct for a Nuxt Project
+{
+    "description": "Nuxt.js Vue.js full-stack framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "pages",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "nuxt.config.ts",
+        "package.json"
+    ]
+}

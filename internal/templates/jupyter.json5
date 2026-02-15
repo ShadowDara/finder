@@ -1,0 +1,16 @@
+// Struct for a Jupyter Notebook Project
+{
+    "description": "Jupyter Notebook data science project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "notebooks",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "*.ipynb",
+        "requirements.txt"
+    ]
+}

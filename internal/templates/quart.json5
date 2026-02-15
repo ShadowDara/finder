@@ -1,0 +1,10 @@
+// Struct for a Quart Project
+{
+    "description": "Quart async Python web framework",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "app.py",
+        "requirements.txt"
+    ]
+}

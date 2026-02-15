@@ -1,0 +1,16 @@
+// Struct for a Webpack Project
+{
+    "description": "Webpack module bundler",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "webpack.config.js",
+        "package.json"
+    ]
+}

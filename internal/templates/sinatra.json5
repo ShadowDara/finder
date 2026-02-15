@@ -1,0 +1,10 @@
+// Struct for a Sinatra Project
+{
+    "description": "Sinatra lightweight Ruby web framework",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "app.rb",
+        "Gemfile"
+    ]
+}

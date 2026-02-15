@@ -1,0 +1,10 @@
+// Struct for an OpenAPI/Swagger Project
+{
+    "description": "OpenAPI/Swagger API specification",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "openapi.yaml",
+        "swagger.json"
+    ]
+}

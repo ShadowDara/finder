@@ -1,0 +1,16 @@
+// Struct for a Remix Project
+{
+    "description": "Remix React full-stack framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "app",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "remix.config.js",
+        "package.json"
+    ]
+}
