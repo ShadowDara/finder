@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 )
 
@@ -26,10 +27,29 @@ func JSONtemplateLoader(name string) ([]byte, error) {
 	return data, nil
 }
 
+// getAvailableDrives returns a list of available drive letters on Windows.
+// On non-Windows systems, returns an empty list.
+func getAvailableDrives() []string {
+	if runtime.GOOS != "windows" {
+		return []string{}
+	}
+
+	var drives []string
+	// Check drives A-Z
+	for i := 'A'; i <= 'Z'; i++ {
+		drive := string(i) + ":"
+		if _, err := os.Stat(drive); err == nil {
+			drives = append(drives, drive)
+		}
+	}
+	return drives
+}
+
 // LoadUserTemplates loads custom templates from user directories and returns
 // a map of template names to their raw bytes. User templates can be placed in:
 //   - ~/.finder/templates/
 //   - ./.finder/templates/ (current directory)
+//   - X:\.finder\templates/ (on Windows, for each available drive X:)
 // Returns empty map if no user templates found (not an error).
 func LoadUserTemplates() (map[string][]byte, error) {
 	userTemplates := make(map[string][]byte)
@@ -48,6 +68,21 @@ func LoadUserTemplates() (map[string][]byte, error) {
 	if err := loadTemplatesFromDir(".finder/templates", userTemplates); err != nil {
 		// Log but don't fail if local dir can't be read
 		fmt.Fprintf(os.Stderr, "Warning: could not read user templates from .finder/templates: %v\n", err)
+	}
+
+	// On Windows, also search on all available drives for .finder/templates/
+	if runtime.GOOS == "windows" {
+		drives := getAvailableDrives()
+		for _, drive := range drives {
+			drivePath := filepath.Join(drive, ".finder", "templates")
+			if err := loadTemplatesFromDir(drivePath, userTemplates); err != nil {
+				// Log but don't fail - directory might not exist
+				// Only log if it's not a "not found" error to reduce noise
+				if !os.IsNotExist(err) {
+					fmt.Fprintf(os.Stderr, "Warning: could not read user templates from %s: %v\n", drivePath, err)
+				}
+			}
+		}
 	}
 
 	return userTemplates, nil

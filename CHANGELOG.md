@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## 0.3.2
+- Search on all Drives on Windows
 - added Tag Search
 - little Fixes
 

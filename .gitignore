@@ -6,3 +6,5 @@ imgui.ini
 
 # Go Test
 coverage
+
+*.dummy.json5
