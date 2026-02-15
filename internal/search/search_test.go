@@ -205,7 +205,7 @@ func TestMatchFolderTemplate_WithSubfolder(t *testing.T) {
 	}
 
 	template := structure.Folder{
-		Name: "project",
+		Name:  "project",
 		Files: structure.Files{},
 		Folders: []structure.Folder{
 			{Name: "src"},
@@ -225,7 +225,7 @@ func TestMatchFolderTemplate_MissingSubfolder(t *testing.T) {
 	}
 
 	template := structure.Folder{
-		Name: "project",
+		Name:  "project",
 		Files: structure.Files{},
 		Folders: []structure.Folder{
 			{Name: "src"},
@@ -239,7 +239,7 @@ func TestMatchFolderTemplate_MissingSubfolder(t *testing.T) {
 
 func TestMatchAny_ExactMatch(t *testing.T) {
 	entries := map[string]bool{
-		"file.txt": true,
+		"file.txt":  true,
 		"data.json": true,
 	}
 
@@ -250,7 +250,7 @@ func TestMatchAny_ExactMatch(t *testing.T) {
 
 func TestMatchAny_WildcardMatch(t *testing.T) {
 	entries := map[string]bool{
-		"file.txt": true,
+		"file.txt":    true,
 		"config.json": true,
 	}
 
