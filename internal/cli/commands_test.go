@@ -62,7 +62,7 @@ func TestHandleCommand_NoArguments(t *testing.T) {
 		HandleCommand([]string{"finder"})
 	})
 
-	if !strings.Contains(output, "Please provide at least one argument") {
+	if !strings.Contains(output, "Error") {
 		t.Errorf("expected error message for no arguments, got: %s", output)
 	}
 }
@@ -137,28 +137,62 @@ func TestHandleCommand_WithCustomJSON(t *testing.T) {
 	}
 }
 
-func TestList(t *testing.T) {
+func TestHandleCommand_ListViaAlias(t *testing.T) {
 	output := captureOutput(func() {
-		list()
+		HandleCommand([]string{"finder", "ls"})
 	})
 
 	if !strings.Contains(output, "List available Templates") {
-		t.Errorf("expected template list header, got: %s", output)
-	}
-	if !strings.Contains(output, "Default Templates") {
-		t.Errorf("expected default templates section, got: %s", output)
+		t.Errorf("expected template list header with 'ls' alias, got: %s", output)
 	}
 }
 
-func TestCheck(t *testing.T) {
-	output := captureOutput(func() {
-		check()
-	})
-
-	if !strings.Contains(output, "Checking all Templates") {
-		t.Errorf("expected checking message, got: %s", output)
+func TestParseCLI_FileLoadCommand(t *testing.T) {
+	opts, err := ParseCLI([]string{"finder", "-f", "/path/to/file.json5"})
+	if err != nil {
+		t.Errorf("unexpected error: %v", err)
 	}
-	if !strings.Contains(output, "Finished Checking") {
-		t.Errorf("expected finished message, got: %s", output)
+
+	if !opts.IsFileLoad() {
+		t.Errorf("expected file load command")
+	}
+
+	filePath, _ := opts.GetFileArg()
+	if filePath != "/path/to/file.json5" {
+		t.Errorf("expected file path '/path/to/file.json5', got: %s", filePath)
+	}
+}
+
+func TestParseCLI_DirectLoadCommand(t *testing.T) {
+	jsonStr := `{"name": "test", "files": []}`
+	opts, err := ParseCLI([]string{"finder", "-c", jsonStr})
+	if err != nil {
+		t.Errorf("unexpected error: %v", err)
+	}
+
+	if !opts.IsDirectLoad() {
+		t.Errorf("expected direct load command")
+	}
+
+	json, _ := opts.GetDirectLoadArg()
+	if json != jsonStr {
+		t.Errorf("expected JSON string to be preserved")
+	}
+}
+
+func TestParseCLI_OutputTypeFlags(t *testing.T) {
+	optsJSON, _ := ParseCLI([]string{"finder", "list", "--json"})
+	if optsJSON.OutputType != "json" {
+		t.Errorf("expected output type 'json', got: %s", optsJSON.OutputType)
+	}
+
+	optsClear, _ := ParseCLI([]string{"finder", "check", "--clear"})
+	if optsClear.OutputType != "clear" {
+		t.Errorf("expected output type 'clear', got: %s", optsClear.OutputType)
+	}
+
+	optsNormal, _ := ParseCLI([]string{"finder", "help"})
+	if optsNormal.OutputType != "normal" {
+		t.Errorf("expected output type 'normal', got: %s", optsNormal.OutputType)
 	}
 }

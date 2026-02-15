@@ -3,10 +3,13 @@
 // made by Shadowdara
 
 // Test the Whole Project
-//
-// go test -coverprofile=coverage ./..
-// go tool cover -html=coverage
-//
+
+/*
+
+go test -coverprofile=coverage ./...
+go tool cover -html=coverage
+
+*/
 
 package main
 
