@@ -17,7 +17,7 @@ type Folder struct {
     Description     string   `json:"description"`
     Name            string   `json:"name"`
     Folders         []Folder `json:"folders"`
-    Files           []string `json:"files"` // Only the filename for now
+    Files           Files `json:"files"` // Only the filename for now
     Command         string   `json:"command"` // Optional command to execute after finding directory
     InvertCommand   bool     `json:invert_command` // To change if return code 0 or 1 is required. False is equal to 0
     Tags            []string `json:tags` // tags to sort the Templates
@@ -29,7 +29,7 @@ func NewFolder(foldername string) Folder {
         Description:    "",
         Name:           foldername,
         Folders:        []Folder{},
-        Files:          []string{},
+        Files:          Files{},
         Command:        "",
         InvertCommand:  false,
         Tags:           []string{},
@@ -50,5 +50,10 @@ func LoadJSON5(data string) Folder {
     if err != nil {
         log.Fatalf("Error while parsing JSON5: %v", err)
     }
+
+    if err := f.Files.Validate(); err != nil {
+        log.Fatalf("Invalid template: %v", err)
+    }
+
     return f
 }

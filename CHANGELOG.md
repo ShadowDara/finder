@@ -4,6 +4,7 @@
 - Search on all Drives on Windows
 - added Tag Search
 - little Fixes
+- added JSON Shema
 
 ## 0.3.1 - 15.02.2026
 
