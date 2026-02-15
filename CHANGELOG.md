@@ -1,6 +1,9 @@
 # CHANGELOG
 
-## Newest ...
+## Newest ... -> 0.3.4 prob
+- changed Go Version to 1.18
+- fixed *`Search on all Drives on Windows`* from 0.3.3, it
+didn't quite well before
 
 ## 0.3.3
 - added JSON Shema

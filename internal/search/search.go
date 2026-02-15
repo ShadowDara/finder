@@ -10,15 +10,23 @@ import (
     "github.com/shadowdara/finder/internal/structure"
 )
 
-// getRootPath returns the search root depending on the operating system.
-// On Windows it returns the root of the current drive (C:\), on Unix-like
-// systems it returns "/". This helper centralizes platform-specific
+// getSearchRoots returns the search roots depending on the operating system.
+// On Windows it returns all available drive letters (C:\, D:\, etc.),
+// on Unix-like systems it returns "/". This helper centralizes platform-specific
 // behaviour used by the search routines.
-func getRootPath() string {
+func getSearchRoots() []string {
     if runtime.GOOS == "windows" {
-        return "C:\\"
+        var roots []string
+        // Check all possible drive letters from A: to Z:
+        for letter := 'A'; letter <= 'Z'; letter++ {
+            drive := string(letter) + ":\\"
+            if _, err := os.Stat(drive); err == nil {
+                roots = append(roots, drive)
+            }
+        }
+        return roots
     }
-    return "/"
+    return []string{"/"}
 }
 
 // Find searches the filesystem for directories that match the
@@ -33,7 +41,11 @@ func Find(folderstruct structure.Folder, output_type string) {
         fmt.Printf("Description: %s\n", folderstruct.Description)
     }
 
-    matches := findMatchingFolders(getRootPath(), folderstruct)
+    var matches []string
+    // Search all available roots (all drives on Windows, "/" on Unix)
+    for _, root := range getSearchRoots() {
+        matches = append(matches, findMatchingFolders(root, folderstruct)...)
+    }
 
     // Normalize Windows backslashes to forward slashes for consistent output
     for i, m := range matches {
