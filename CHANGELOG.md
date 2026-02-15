@@ -1,7 +1,8 @@
 # CHANGELOG
 
-## Newest -> 0.3.2
+## 0.3.2
 - added Tag Search
+- little Fixes
 
 ## 0.3.1 - 15.02.2026
 
