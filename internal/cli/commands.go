@@ -6,7 +6,7 @@ import (
 	"github.com/shadowdara/finder/internal/cli/color"
 )
 
-const version = "0.3.1"
+const version = "0.3.2"
 
 // HandleCommand is the main entry point for CLI command processing.
 // It parses raw arguments into structured CLIOptions, then dispatches
