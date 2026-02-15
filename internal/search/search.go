@@ -72,7 +72,7 @@ func Find(folderstruct structure.Folder, output_type string) {
 	}()
 
 	// Collect all results from the channel
-	var matches []string
+	matches := []string{}
 	for results := range resultsChan {
 		matches = append(matches, results...)
 	}
