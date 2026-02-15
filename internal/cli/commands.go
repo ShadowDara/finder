@@ -79,9 +79,26 @@ func HandleCommand(args []string) {
 	}
 
 	// Default: treat the first argument as a template name
-	data, err := templates.JSONtemplateLoader(args[1])
+	// Load user templates and attempt to find the requested template
+	templateNames, userTemplates, err := templates.LoadAllWithUserTemplates()
 	if err != nil {
-		log.Fatalf("%sCould not read JSON template: %v%s\n", color.Red, err, color.Reset)
+		log.Fatalf("%sCould not load templates: %v%s\n", color.Red, err, color.Reset)
+	}
+
+	// Try to load with user templates first (they can override built-in ones)
+	data, err := templates.JSONtemplateLoaderWithUserTemplates(args[1], userTemplates)
+	if err != nil {
+		// Template not found - provide helpful error message
+		fmt.Printf("%sTemplate '%s' not found.%s\n", color.Red, args[1], color.Reset)
+		fmt.Printf("Available templates: %s\n", color.Yellow)
+		for i, t := range templateNames {
+			if i > 0 {
+				fmt.Print(", ")
+			}
+			fmt.Print(t)
+		}
+		fmt.Printf("%s\n", color.Reset)
+		return
 	}
 
 	if outputtype != "clear" {
@@ -90,14 +107,19 @@ func HandleCommand(args []string) {
 	search.Find(structure.LoadJSON5(string(data)), outputtype)
 }
 
-// list prints available built-in templates. Custom templates will be
-// loaded from the user configuration directory in the future.
+// list prints available built-in and custom templates, showing where they're
+// loaded from and distinguishing between built-in and user-defined templates.
 func list() {
 	fmt.Println("List available Templates:")
 
+	_, userTemplates, err := templates.LoadAllWithUserTemplates()
+	if err != nil {
+		fmt.Printf("%sWarning: Error loading templates: %v%s\n", color.Yellow, err, color.Reset)
+	}
+
 	templatesList, err := templates.LoadAll()
 	if err != nil {
-		fmt.Println("Error in the builtin Templates!")
+		fmt.Println("Error loading templates!")
 		return
 	}
 
@@ -105,25 +127,46 @@ func list() {
 
 	fmt.Printf("%sFound %d Templates%s\n", color.Yellow, templatecount, color.Reset)
 
-	fmt.Println("Default Templates:")
+	// Separate built-in from custom templates
+	builtInTemplates := []string{}
+	customTemplates := []string{}
 
 	for _, templ := range templatesList {
-		fmt.Printf("%s\t", templ)
+		if _, isCustom := userTemplates[templ]; isCustom {
+			customTemplates = append(customTemplates, templ)
+		} else {
+			builtInTemplates = append(builtInTemplates, templ)
+		}
 	}
 
-	fmt.Println("\nCustom Templates:")
-	fmt.Println("soon ...")
+	// Print built-in templates
+	fmt.Printf("%sBuilt-in Templates (%d):%s\n", color.Green, len(builtInTemplates), color.Reset)
+	for _, templ := range builtInTemplates {
+		fmt.Printf("  %s%s%s\n", color.Cyan, templ, color.Reset)
+	}
+
+	// Print custom templates if any
+	if len(customTemplates) > 0 {
+		fmt.Printf("\n%sCustom Templates (%d):%s\n", color.Green, len(customTemplates), color.Reset)
+		for _, templ := range customTemplates {
+			fmt.Printf("  %s%s%s  (from ~/.finder/templates/ or ./.finder/templates/)\n", color.Cyan, templ, color.Reset)
+		}
+		fmt.Printf("\n%sHint:%s Place your custom templates in:\n", color.Yellow, color.Reset)
+		fmt.Printf("  - $HOME/.finder/templates/\n")
+		fmt.Printf("  - ./.finder/templates/\n")
+	} else {
+		fmt.Printf("\n%sNo custom templates found. Add them to:~/.finder/templates/ or ./.finder/templates/%s\n", color.Yellow, color.Reset)
+	}
 }
 
-// check parses all built-in templates to validate that the JSON5 loader
-// accepts them (useful for debugging or CI checks).
+// check parses all built-in and custom templates to validate that the JSON5
+// loader accepts them (useful for debugging or CI checks).
 func check() {
 	fmt.Println("Checking all Templates ...")
 
-	templateNames, err := templates.LoadAll()
+	templateNames, userTemplates, err := templates.LoadAllWithUserTemplates()
 	if err != nil {
-		fmt.Println("Error!")
-		return
+		fmt.Printf("%sWarning: %v%s\n", color.Yellow, err, color.Reset)
 	}
 
 	templatecount := len(templateNames)
@@ -132,27 +175,35 @@ func check() {
 
 	// use tabwriter to align columns instead of manual tabs
 	w := tabwriter.NewWriter(os.Stdout, 0, 8, 2, ' ', 0)
-	fmt.Fprintln(w, "Name\tDescription")
+	fmt.Fprintln(w, "Name\tDescription\tSource")
 	
 	for _, templ := range templateNames {
 		// Check for blocked Templated by the blocked names
-
 		blockednames := loader.GetBlockedTemplateNames()
 
-		for k, _ := range blockednames {
-			// fmt.Fprintf(w, " - %s\t%s\n", k, v)
-			if (templ == k) {
-				fmt.Printf("Template %s is blocked by the blocked names!\n", color.Red, k, color.Reset)
+		for k := range blockednames {
+			if templ == k {
+				fmt.Fprintf(w, "%s%s (BLOCKED)%s\t%s\t%s\n", color.Red, templ, color.Reset, "---", "---")
+				continue
 			}
 		}
 
-		data, err := templates.JSONtemplateLoader(templ)
+		// Try to load with user templates first
+		data, err := templates.JSONtemplateLoaderWithUserTemplates(templ, userTemplates)
 		if err != nil {
-			log.Fatalf("%sCould not read JSON template: %v%s\n", color.Red, err, color.Reset)
+			fmt.Fprintf(w, "%s%s (ERROR)%s\t%s\t%s\n", color.Red, templ, color.Reset, "Error loading", "---")
+			continue
 		}
 
 		folder := structure.LoadJSON5(string(data))
-		fmt.Fprintf(w, "%s%s%s\t%s\n", color.Cyan, templ, color.Reset, folder.Description)
+		
+		// Determine source (built-in or custom)
+		source := "Built-in"
+		if _, isCustom := userTemplates[templ]; isCustom {
+			source = fmt.Sprintf("%sCustom%s", color.Green, color.Reset)
+		}
+
+		fmt.Fprintf(w, "%s%s%s\t%s\t%s\n", color.Cyan, templ, color.Reset, folder.Description, source)
 	}
 
 	w.Flush()
