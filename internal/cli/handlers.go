@@ -190,6 +190,123 @@ func handleTemplateSearch(opts *CLIOptions) error {
 }
 
 
+// handleTagSearch searches for templates with a specific tag
+func handleTagSearch(opts *CLIOptions) error {
+	// Get the tag to search for from Args
+	if len(opts.Args) < 1 {
+		return fmt.Errorf("missing tag name. Usage: finder -t <tag-name>")
+	}
+
+	searchTag := opts.Args[0]
+
+	if opts.Verbose {
+		fmt.Printf("Searching for templates with tag '%s'...\n", searchTag)
+	}
+
+	// Load all templates
+	templateNames, userTemplates, err := templates.LoadAllWithUserTemplates()
+	if err != nil {
+		fmt.Printf("%sWarning: %v%s\n", color.Yellow, err, color.Reset)
+	}
+
+	// Find templates with the requested tag
+	matchingTemplates := []struct {
+		name   string
+		tags   []string
+		source string
+	}{}
+
+	for _, templ := range templateNames {
+		// Try to load with user templates first
+		data, err := templates.JSONtemplateLoaderWithUserTemplates(templ, userTemplates)
+		if err != nil {
+			if opts.Verbose {
+				fmt.Printf("%sWarning: Could not load template '%s'%s\n", color.Yellow, templ, color.Reset)
+			}
+			continue
+		}
+
+		folder := structure.LoadJSON5(string(data))
+
+		// Check if this template has the searched tag
+		for _, tag := range folder.Tags {
+			if tag == searchTag {
+				source := "Built-in"
+				if _, isCustom := userTemplates[templ]; isCustom {
+					source = "Custom"
+				}
+
+				matchingTemplates = append(matchingTemplates, struct {
+					name   string
+					tags   []string
+					source string
+				}{
+					name:   templ,
+					tags:   folder.Tags,
+					source: source,
+				})
+				break
+			}
+		}
+	}
+
+	// Display results
+	if len(matchingTemplates) == 0 {
+		fmt.Printf("%sNo templates found with tag '%s'%s\n", color.Yellow, searchTag, color.Reset)
+		return nil
+	}
+
+	if opts.OutputType == "json" {
+		// JSON output
+		fmt.Printf("[")
+		for i, tmpl := range matchingTemplates {
+			if i > 0 {
+				fmt.Printf(",")
+			}
+			fmt.Printf(`{"name":"%s","tags":[`, tmpl.name)
+			for j, tag := range tmpl.tags {
+				if j > 0 {
+					fmt.Printf(",")
+				}
+				fmt.Printf(`"%s"`, tag)
+			}
+			fmt.Printf(`],"source":"%s"}`, tmpl.source)
+		}
+		fmt.Printf("]\n")
+	} else {
+		// Normal output
+		fmt.Printf("%sTemplates with tag '%s' (%d found):%s\n", color.Green, searchTag, len(matchingTemplates), color.Reset)
+		fmt.Println()
+
+		w := tabwriter.NewWriter(os.Stdout, 0, 8, 2, ' ', 0)
+		fmt.Fprintln(w, "Template\tTags\tSource")
+
+		for _, tmpl := range matchingTemplates {
+			tagStr := ""
+			for i, tag := range tmpl.tags {
+				if i > 0 {
+					tagStr += ", "
+				}
+				tagStr += tag
+			}
+
+			sourceColor := color.Cyan
+			if tmpl.source == "Custom" {
+				sourceColor = fmt.Sprintf("%s%s%s", color.Green, tmpl.source, color.Reset)
+			} else {
+				sourceColor = fmt.Sprintf("%s%s%s", color.Cyan, tmpl.source, color.Reset)
+			}
+
+			fmt.Fprintf(w, "%s%s%s\t%s\t%s\n", color.Cyan, tmpl.name, color.Reset, tagStr, sourceColor)
+		}
+
+		w.Flush()
+	}
+
+	return nil
+}
+
+
 // handleTags displays available tags or processes tag-related operations
 func handleTags(opts *CLIOptions) error {
     if opts.Verbose {

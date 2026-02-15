@@ -276,6 +276,57 @@ func TestRouteCommand_UnknownRoute(t *testing.T) {
 
 // TestParseCLI_Tags tests parsing tags command
 func TestParseCLI_Tags(t *testing.T) {
+	tagsCommands := []string{"tags", "tag"}
+
+	for _, cmd := range tagsCommands {
+		opts, err := ParseCLI([]string{"finder", cmd})
+		if err != nil {
+			t.Errorf("unexpected error for '%s': %v", cmd, err)
+			continue
+		}
+
+		if !opts.IsTags() {
+			t.Errorf("expected IsTags() to be true for command '%s'", cmd)
+		}
+	}
+}
+
+// TestParseCLI_TagsSearch tests parsing -t tag search command
+func TestParseCLI_TagsSearch(t *testing.T) {
+	opts, err := ParseCLI([]string{"finder", "-t", "frontend"})
+	if err != nil {
+		t.Errorf("unexpected error: %v", err)
+	}
+
+	if !opts.IsTagsSearch() {
+		t.Errorf("expected IsTagsSearch() to be true")
+	}
+
+	if len(opts.Args) < 1 || opts.Args[0] != "frontend" {
+		t.Errorf("expected args to contain 'frontend', got: %v", opts.Args)
+	}
+}
+
+// TestRouteCommand_TagsRoute tests routing to tags handler
+func TestRouteCommand_TagsRoute(t *testing.T) {
+	opts := &CLIOptions{Command: "tags"}
+	handler := routeCommand(opts)
+	if handler == nil {
+		t.Errorf("expected handler for tags command")
+	}
+}
+
+// TestRouteCommand_TagsSearchRoute tests routing to tags search handler
+func TestRouteCommand_TagsSearchRoute(t *testing.T) {
+	opts := &CLIOptions{Command: "-t"}
+	handler := routeCommand(opts)
+	if handler == nil {
+		t.Errorf("expected handler for tags search command")
+	}
+}
+
+// TestParseCLI_Tags tests parsing tags command
+func TestParseCLI_Tags(t *testing.T) {
     tagsCommands := []string{"tags", "tag"}
 
     for _, cmd := range tagsCommands {

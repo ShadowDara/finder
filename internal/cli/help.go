@@ -50,6 +50,7 @@ func printHelp() {
 	}{
 		{"-f, --file <path>", "Load structure from a custom JSON/JSON5 file"},
 		{"-c, --config <json>", "Load structure from inline JSON string"},
+		{"-t <tag-name>", "Search for templates with specific tag"},
 	}
 
 	for _, op := range operations {

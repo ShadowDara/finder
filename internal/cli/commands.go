@@ -50,6 +50,8 @@ func routeCommand(opts *CLIOptions) HandlerFunc {
 		return handleList
 	case opts.IsCheck():
 		return handleCheck
+	case opts.IsTagsSearch():
+		return handleTagSearch
 	case opts.IsTags():
 		return handleTags
 	case opts.IsFileLoad():

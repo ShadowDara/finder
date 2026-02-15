@@ -99,7 +99,14 @@ func (o *CLIOptions) GetTemplateName() string {
 	return o.Command
 }
 
+// Function to search for a Tag
+func (o *CLIOptions) IsTagsSearch() bool {
+	// to search for a Tag
+	return o.Command == "-t"
+}
+
 // IsTagsCommand checks if the user requested tags command
 func (o *CLIOptions) IsTags() bool {
+	// To Display all Tags
     return o.Command == "tags" || o.Command == "tag"
 }
