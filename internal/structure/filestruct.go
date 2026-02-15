@@ -6,6 +6,7 @@ import (
 	"fmt"
 )
 
+// For Existance Keyword
 // required		muss existieren
 // forbidden 	darf nicht existieren
 // optional		wird ignoriert
