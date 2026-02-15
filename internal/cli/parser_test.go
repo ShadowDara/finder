@@ -273,3 +273,29 @@ func TestRouteCommand_UnknownRoute(t *testing.T) {
 		t.Errorf("expected no handler for empty command")
 	}
 }
+
+// TestParseCLI_Tags tests parsing tags command
+func TestParseCLI_Tags(t *testing.T) {
+    tagsCommands := []string{"tags", "tag"}
+
+    for _, cmd := range tagsCommands {
+        opts, err := ParseCLI([]string{"finder", cmd})
+        if err != nil {
+            t.Errorf("unexpected error for '%s': %v", cmd, err)
+            continue
+        }
+
+        if !opts.IsTags() {
+            t.Errorf("expected IsTags() to be true for command '%s'", cmd)
+        }
+    }
+}
+
+// TestRouteCommand_TagsRoute tests routing to tags handler
+func TestRouteCommand_TagsRoute(t *testing.T) {
+    opts := &CLIOptions{Command: "tags"}
+    handler := routeCommand(opts)
+    if handler == nil {
+        t.Errorf("expected handler for tags command")
+    }
+}

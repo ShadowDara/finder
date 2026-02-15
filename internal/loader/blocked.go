@@ -6,6 +6,8 @@ func GetBlockedTemplateNames() map[string]string {
 		"help": "Display this help Message",
 		"list": "List all Templates Files",
 		"ls": "same as list",
+		"tags": "display all tags in the console",
+		"tag": "same as tags",
 	}
 
 	return m

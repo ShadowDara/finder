@@ -28,6 +28,7 @@ func printHelp() {
 		{"help, h, -h, --help", "Display this help information"},
 		{"list, ls", "List all available templates (built-in and custom)"},
 		{"check", "Validate all templates for syntax errors"},
+		 {"tags, tag", "Display available tags for templates"},  // ← NEU
 		{"<template-name>", "Detect project structure using specified template"},
 	}
 

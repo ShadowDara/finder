@@ -98,3 +98,8 @@ func (o *CLIOptions) GetDirectLoadArg() (string, error) {
 func (o *CLIOptions) GetTemplateName() string {
 	return o.Command
 }
+
+// IsTagsCommand checks if the user requested tags command
+func (o *CLIOptions) IsTags() bool {
+    return o.Command == "tags" || o.Command == "tag"
+}

@@ -13,14 +13,17 @@ import (
 	"github.com/shadowdara/finder/internal/cli/color"
 )
 
+
 // HandlerFunc is the signature for command handlers
 type HandlerFunc func(opts *CLIOptions) error
+
 
 // handleHelp displays the help information
 func handleHelp(opts *CLIOptions) error {
 	printHelp()
 	return nil
 }
+
 
 // handleList displays all available templates
 func handleList(opts *CLIOptions) error {
@@ -73,6 +76,7 @@ func handleList(opts *CLIOptions) error {
 	return nil
 }
 
+
 // handleCheck validates all templates
 func handleCheck(opts *CLIOptions) error {
 	fmt.Println("Checking all Templates ...")
@@ -120,6 +124,7 @@ func handleCheck(opts *CLIOptions) error {
 	return nil
 }
 
+
 // handleFileLoad loads a custom JSON/JSON5 file
 func handleFileLoad(opts *CLIOptions) error {
 	filePath, err := opts.GetFileArg()
@@ -137,6 +142,7 @@ func handleFileLoad(opts *CLIOptions) error {
 	return nil
 }
 
+
 // handleDirectLoad loads JSON directly from command-line argument
 func handleDirectLoad(opts *CLIOptions) error {
 	jsonStr, err := opts.GetDirectLoadArg()
@@ -148,6 +154,7 @@ func handleDirectLoad(opts *CLIOptions) error {
 	search.Find(structure.LoadJSON5(jsonStr), opts.OutputType)
 	return nil
 }
+
 
 // handleTemplateSearch loads and searches a template by name
 func handleTemplateSearch(opts *CLIOptions) error {
@@ -180,4 +187,61 @@ func handleTemplateSearch(opts *CLIOptions) error {
 	}
 	search.Find(structure.LoadJSON5(string(data)), opts.OutputType)
 	return nil
+}
+
+
+// handleTags displays available tags or processes tag-related operations
+func handleTags(opts *CLIOptions) error {
+    if opts.Verbose {
+        fmt.Println("Tags command - listing all available tags...")
+    }
+
+    // LOAD ALL TEMPLATES
+
+	templateNames, userTemplates, err := templates.LoadAllWithUserTemplates()
+	if err != nil {
+		fmt.Printf("%sWarning: %v%s\n", color.Yellow, err, color.Reset)
+	}
+
+	// Save all available tags to an tags array
+
+	var tags []string = []string{}
+
+	for _, templ := range templateNames {
+		// Try to load with user templates first
+		data, err := templates.JSONtemplateLoaderWithUserTemplates(templ, userTemplates)
+		if err != nil {
+			fmt.Printf("%s%s (ERROR)%s\t%s\t%s\n", color.Red, templ, color.Reset, "Error loading", "---")
+			continue
+		}
+
+		folder := structure.LoadJSON5(string(data))
+
+		for _, tag := range folder.Tags {
+			if (!contains(tags, tag)) {
+				tags = append(tags, tag)
+			}
+		}
+	}
+
+	fmt.Println("Available Tags:")
+
+	for _, tag := range tags {
+		fmt.Printf(" - %s\n", tag)
+	}
+
+	// Print the tags array
+
+    return nil
+}
+
+
+// Contains helper function
+func contains(slice []string, s string) bool {
+   	for _, v := range slice {
+       	if v == s {
+           	return true
+       	}
+   	}
+   	return false
 }

@@ -6,7 +6,7 @@ import (
 	"github.com/shadowdara/finder/internal/cli/color"
 )
 
-const version = "0.3.0"
+const version = "0.3.1"
 
 // HandleCommand is the main entry point for CLI command processing.
 // It parses raw arguments into structured CLIOptions, then dispatches
@@ -50,6 +50,8 @@ func routeCommand(opts *CLIOptions) HandlerFunc {
 		return handleList
 	case opts.IsCheck():
 		return handleCheck
+	case opts.IsTags():
+		return handleTags
 	case opts.IsFileLoad():
 		return handleFileLoad
 	case opts.IsDirectLoad():
