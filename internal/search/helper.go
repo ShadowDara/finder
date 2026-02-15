@@ -43,10 +43,26 @@ func matchFolderTemplate(dirPath string, template structure.Folder) bool {
         }
     }
 
-    // Check required files (supports wildcards)
-    for _, pattern := range template.Files {
-        if !matchAny(filesMap, pattern) {
-            return false
+
+    // Check files with existence logic
+    for _, file := range template.Files {
+        exists := matchAny(filesMap, file.Name)
+        switch file.Existence {
+        case "required", "": // default is required
+            if !exists {
+                return false
+            }
+        case "forbidden":
+            if exists {
+                return false
+            }
+        case "optional":
+            // ignore
+        default:
+            // treat unknown as required
+            if !exists {
+                return false
+            }
         }
     }
 
