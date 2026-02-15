@@ -95,12 +95,22 @@ func HandleCommand(args []string) {
 func list() {
 	fmt.Println("List available Templates:")
 
-	fmt.Println("Default Templates:")
 	templatesList, err := templates.LoadAll()
 	if err != nil {
 		fmt.Println("Error in the builtin Templates!")
 		return
 	}
+
+	templatecount := 0
+
+	// Print the Template Count
+	for _, _ := range templateNames {
+		templatecount += 1
+	}
+
+	fmt.Printf("Found %s Templates", templatecount)
+	fmt.Println("Default Templates:")
+
 	for _, templ := range templatesList {
 		fmt.Printf("%s\t", templ)
 	}
@@ -114,16 +124,25 @@ func list() {
 func check() {
 	fmt.Println("Checking all Templates ...")
 
-	// use tabwriter to align columns instead of manual tabs
-	w := tabwriter.NewWriter(os.Stdout, 0, 8, 2, ' ', 0)
-	fmt.Fprintln(w, "Name\tDescription")
-
 	templateNames, err := templates.LoadAll()
 	if err != nil {
 		fmt.Println("Error!")
 		return
 	}
 
+	templatecount := 0
+
+	// Print the Template Count
+	for _, _ := range templateNames {
+		templatecount += 1
+	}
+
+	fmt.Printf("Found %s Templates", templatecount)
+
+	// use tabwriter to align columns instead of manual tabs
+	w := tabwriter.NewWriter(os.Stdout, 0, 8, 2, ' ', 0)
+	fmt.Fprintln(w, "Name\tDescription")
+	
 	for _, templ := range templateNames {
 		// Check for blocked Templated by the blocked names
 

@@ -1,0 +1,16 @@
+// Struct for an Ansible Project
+{
+    "description": "Ansible automation project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "playbooks",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "ansible.cfg",
+        "*.yml"
+    ]
+}

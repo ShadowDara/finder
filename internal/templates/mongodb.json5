@@ -1,0 +1,15 @@
+// Struct for a MongoDB Project
+{
+    "description": "MongoDB NoSQL database project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "schemas",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "docker-compose.yml"
+    ]
+}

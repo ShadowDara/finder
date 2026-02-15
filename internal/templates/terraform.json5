@@ -1,0 +1,10 @@
+// Struct for a Terraform Project
+{
+    "description": "Terraform infrastructure as code",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "*.tf",
+        "terraform.tfvars"
+    ]
+}

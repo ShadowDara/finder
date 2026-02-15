@@ -1,0 +1,16 @@
+// Struct for a Pytest Project
+{
+    "description": "Python pytest test suite",
+    "name": "*",
+    "folders": [
+        {
+            "name": "tests",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "test_*.py",
+        "pytest.ini"
+    ]
+}

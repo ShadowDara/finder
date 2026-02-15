@@ -1,0 +1,16 @@
+// Struct for a Microservices Project
+{
+    "description": "Microservices architecture project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "services",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "docker-compose.yml",
+        "package.json"
+    ]
+}

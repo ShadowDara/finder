@@ -1,0 +1,10 @@
+// Struct for a Docker Compose Stack
+{
+    "description": "Docker Compose multi-container setup",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "docker-compose.yml",
+        "docker-compose.yaml"
+    ]
+}

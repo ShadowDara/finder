@@ -1,0 +1,16 @@
+// Struct for a GitHub Actions Workflow
+{
+    "description": "GitHub Actions CI/CD workflow",
+    "name": "*",
+    "folders": [
+        {
+            "name": ".github/workflows",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "*.yml",
+        "*.yaml"
+    ]
+}

@@ -1,0 +1,9 @@
+// Struct for an Arduino Project
+{
+    "description": "Arduino microcontroller project",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "*.ino"
+    ]
+}

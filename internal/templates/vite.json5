@@ -1,0 +1,16 @@
+// Struct for a Vite Project
+{
+    "description": "Vite next generation build tool",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "vite.config.ts",
+        "package.json"
+    ]
+}

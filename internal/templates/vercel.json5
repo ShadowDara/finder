@@ -1,0 +1,9 @@
+// Struct for a Vercel Project
+{
+    "description": "Vercel deployment configuration",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "vercel.json"
+    ]
+}

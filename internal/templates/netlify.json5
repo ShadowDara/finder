@@ -1,0 +1,9 @@
+// Struct for a Netlify Site
+{
+    "description": "Netlify deployment configuration",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "netlify.toml"
+    ]
+}

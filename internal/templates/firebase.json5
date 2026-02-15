@@ -1,0 +1,16 @@
+// Struct for a Firebase Project
+{
+    "description": "Firebase backend project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "functions",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "firebase.json",
+        ".firebaserc"
+    ]
+}

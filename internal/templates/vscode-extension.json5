@@ -1,0 +1,16 @@
+// Struct for a VSCode Extension
+{
+    "description": "Visual Studio Code extension",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "package.json",
+        "extension.js"
+    ]
+}

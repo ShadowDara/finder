@@ -1,0 +1,16 @@
+// Struct for a Solidity/Smart Contract Project
+{
+    "description": "Ethereum smart contract project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "contracts",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "hardhat.config.js",
+        "*.sol"
+    ]
+}

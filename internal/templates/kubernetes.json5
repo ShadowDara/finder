@@ -1,0 +1,16 @@
+// Struct for a Kubernetes Project
+{
+    "description": "Kubernetes container orchestration",
+    "name": "*",
+    "folders": [
+        {
+            "name": "manifests",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "*.yaml",
+        "*.yml"
+    ]
+}

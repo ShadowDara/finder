@@ -1,0 +1,16 @@
+// Struct for a Markdown Documentation Site
+{
+    "description": "Markdown documentation website",
+    "name": "*",
+    "folders": [
+        {
+            "name": "content",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "README.md",
+        "*.md"
+    ]
+}

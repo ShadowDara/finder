@@ -1,0 +1,10 @@
+// Struct for a Chrome Extension
+{
+    "description": "Chrome browser extension",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "manifest.json",
+        "popup.html"
+    ]
+}

@@ -1,0 +1,16 @@
+// Struct for an Electron App
+{
+    "description": "Electron cross-platform desktop application",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "main.js",
+        "package.json"
+    ]
+}
