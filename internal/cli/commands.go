@@ -3,7 +3,7 @@ package cli
 import (
 	"fmt"
 
-	"github.com/shadowdara/finder/internal/cli/color"
+	"github.com/shadowdara/finder/color"
 )
 
 const version = "0.3.4"
