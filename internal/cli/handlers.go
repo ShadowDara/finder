@@ -10,7 +10,7 @@ import (
 	"github.com/shadowdara/finder/internal/search"
 	"github.com/shadowdara/finder/internal/structure"
 	"github.com/shadowdara/finder/internal/templates"
-	"github.com/shadowdara/finder/color"
+	"github.com/shadowdara/finder/pub/color"
 )
 
 

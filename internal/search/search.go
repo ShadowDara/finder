@@ -1,12 +1,13 @@
 package search
 
 import (
-	"encoding/json"
-	"fmt"
-	"os"
-	"path/filepath"
-	"runtime"
-	"sync"
+		"encoding/json"
+		"fmt"
+		"os"
+		"path/filepath"
+		"runtime"
+		"sync"
+		"time"
 
 	"github.com/shadowdara/finder/internal/structure"
 )
@@ -45,6 +46,9 @@ func Find(folderstruct structure.Folder, output_type string) {
 		fmt.Printf("Description: %s\n", folderstruct.Description)
 	}
 
+	// Start timing
+	start := time.Now()
+
 	roots := getSearchRoots()
 
 	// Use a channel to collect results from goroutines
@@ -80,6 +84,12 @@ func Find(folderstruct structure.Folder, output_type string) {
 	// Normalize Windows backslashes to forward slashes for consistent output
 	for i, m := range matches {
 		matches[i] = filepath.ToSlash(m)
+	}
+
+	// Calculate elapsed time
+	elapsed := time.Since(start).Seconds()
+	if output_type != "clear" {
+		fmt.Printf("Search by finder took: %.2f seconds\n", elapsed)
 	}
 
 	switch output_type {

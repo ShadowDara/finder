@@ -5,5 +5,6 @@
     "files": [
         "*.cs",
         "project.godot"
-    ]
+    ],
+    "tags": ["game-engine"]
 }

@@ -1,6 +1,10 @@
 # CHANGELOG
 
-## Newest ... -> 0.3.4 prob
+## Newest ... -> 0.3.5 prob
+- made a Folder public for public finder modules
+- added Template for
+  - flax
+- added Time which the searching took
 
 ## 0.3.4
 - changed Go Version to 1.18

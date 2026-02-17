@@ -1,0 +1,12 @@
+{
+    "name": "*",
+    "folders": [
+        {
+            "name": "Content"
+        }
+    ],
+    "files": [
+        "*.flaxproj"
+    ],
+    "tags": ["game-engine"]
+}
