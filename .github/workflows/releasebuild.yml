@@ -41,7 +41,7 @@ jobs:
 
       - name: Build binary
         run: |
-          go build -o app-${{ matrix.goos }}-${{ matrix.goarch }}${{ matrix.ext }}
+          go build ./cmd/finder -o app-${{ matrix.goos }}-${{ matrix.goarch }}${{ matrix.ext }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4

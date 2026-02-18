@@ -20,6 +20,8 @@ Feel although free to submit Templates via Issues!
 - Searches using JSON5 templates stored in `internal/structure/templates`.
 - Supports user templates in the OS-specific configuration folder.
 - Lightweight, tested, and easy to extend.
+- **Finder can although be used to search single files and is a lot faster
+than Windows Search just to say**
 
 ## Requirements
 
