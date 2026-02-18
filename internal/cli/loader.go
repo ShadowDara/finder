@@ -1,13 +1,8 @@
 package cli
 
-import (
-	"fmt"
+// Removed from the Version
 
-	"github.com/shadowdara/finder/internal/loader"
-	"github.com/shadowdara/finder/internal/search"
-	"github.com/shadowdara/finder/internal/structure"
-)
-
+/*
 // handleFileLoad loads a custom JSON/JSON5 file
 func handleFileLoad(opts *CLIOptions) error {
 	filePath, err := opts.GetFileArg()
@@ -36,3 +31,4 @@ func handleDirectLoad(opts *CLIOptions) error {
 	search.Find(structure.LoadJSON5(jsonStr), opts.OutputType)
 	return nil
 }
+*/

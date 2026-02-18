@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"text/tabwriter"
 )
 
 type Flag struct {
@@ -21,6 +23,7 @@ type Flag struct {
 // Struct for a Command
 type Command struct {
 	Name        string
+	Hidden      bool
 	Aliases     []string
 	Description string
 	Flags       map[string]*Flag
@@ -30,16 +33,17 @@ type Command struct {
 }
 
 // Function to create a new Command
-func NewCommand(name, desc string, aliases ...string) *Command {
+func NewCommand(name, desc string, hidden bool, aliases ...string) *Command {
 	cmd := &Command{
 		Name:        name,
+		Hidden:      hidden,
 		Aliases:     aliases,
 		Description: desc,
 		Flags:       make(map[string]*Flag),
 		Subcommands: make(map[string]*Command),
 	}
 
-	cmd.Bool("help", false, "Show help", false, "h")
+	// cmd.Bool("help", false, "Show help", false, "h")
 
 	return cmd
 }
@@ -198,32 +202,50 @@ func (c *Command) PrintHelp() {
 		fmt.Println()
 	}
 
+	w := tabwriter.NewWriter(os.Stdout, 0, 4, 2, ' ', 0)
+
+	// Subcommands
 	if len(c.Subcommands) > 0 {
-		fmt.Println("Subcommands:")
+		fmt.Fprintln(w, "Subcommands:")
 		for _, sub := range c.Subcommands {
 			aliasStr := ""
 			if len(sub.Aliases) > 0 {
 				aliasStr = fmt.Sprintf(" (%s)", strings.Join(sub.Aliases, ", "))
 			}
-			fmt.Printf("  %s%s\t%s\n", sub.Name, aliasStr, sub.Description)
+			fmt.Fprintf(w, "  %s%s\t%s\n",
+				sub.Name,
+				aliasStr,
+				sub.Description,
+			)
 		}
+		fmt.Fprintln(w)
 	}
 
+	// Flags
 	if len(c.Flags) > 0 {
-		fmt.Println("Options:")
+		fmt.Fprintln(w, "Options:")
 		for _, f := range c.Flags {
 			aliasStr := ""
 			if len(f.Aliases) > 0 {
 				aliasStr = fmt.Sprintf(" (-%s)", strings.Join(f.Aliases, ", -"))
 			}
+
 			req := ""
 			if f.Required {
 				req = " [required]"
 			}
-			fmt.Printf("  --%s%s%s\n      %s\n\n",
-				f.Name, aliasStr, req, f.Usage)
+
+			fmt.Fprintf(w, "  --%s%s%s\t%s\n",
+				f.Name,
+				aliasStr,
+				req,
+				f.Usage,
+			)
 		}
+		fmt.Fprintln(w)
 	}
+
+	w.Flush()
 }
 
 func (c *Command) fullCommandPath() string {

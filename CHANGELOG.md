@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Newest ... -> 0.3.5 prob
+## 0.3.5
 - made a Folder public for public finder modules
 - added Template for
   - flax
@@ -8,6 +8,11 @@
 - resturctured the argparser
 - added version Command
 - added Argparser package
+- removed loading templates directly from the Console or via a custom filepath!
+Just move them into `$HOME/.finder/templates`.
+- json output is broken in this Release, but will we fixed in future Releases
+although with other Output Types
+- formatted the tag Search output correctly
 
 ## 0.3.4
 - changed Go Version to 1.18

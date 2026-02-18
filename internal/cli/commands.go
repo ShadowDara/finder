@@ -15,31 +15,34 @@ const version = "0.3.5"
 func HandleCommand() {
 	// NEW
 	root := argparser.NewCommand("finder",
-		"a simple go program to find your files")
+		"a simple go program to find your files", false)
+
+	// Add option for JSON Output
+	// root.Bool("json", false, "Enable JSON Output", false)
 
 	// Add Version Command
 	versionCmd := argparser.NewCommand(
-		"--version", "to get the Version of the Program", "-v")
+		"--version", "to get the Version of the Program", false, "-v")
 
 	// Check Command
 	checkCmd := argparser.NewCommand("check",
-		"to check all available Templates if their syntax is correct")
+		"to check all available Templates if their syntax is correct", false)
 
 	// list, ls Command
 	listCmd := argparser.NewCommand("list",
-		"list all available templates", "ls")
+		"list all available templates", false, "ls")
 
 	// tags, tag Command
 	tagsCmd := argparser.NewCommand("tags",
-		"show all tags in the console", "tag")
+		"show all tags in the console", false, "tag")
 
 	// Tag Search
 	tagSearchCmd := argparser.NewCommand("-t",
-		"search for tags")
+		"search for tags with the next argument", false)
 
 	// help
 	helpCmd := argparser.NewCommand("help",
-		"shows help", "--help", "h", "-h")
+		"shows help", true, "--help", "h", "-h")
 
 	root.AddSubcommand(versionCmd)
 	root.AddSubcommand(checkCmd)
@@ -68,21 +71,31 @@ func HandleCommand() {
 	case helpCmd:
 		// Help
 		root.PrintHelp()
+		help()
+
 	case tagSearchCmd:
 		if len(cmd.Args) == 0 {
 			root.PrintHelp()
+			help()
 			return
 		}
 
 		// Search for tags
-		TagSearch(cmd.Args[0], "", true)
+		TagSearch(cmd.Args[0], "normal", true)
 	default:
 		if len(cmd.Args) == 0 {
 			root.PrintHelp()
+			help()
 			return
 		}
 
 		// Search the Template
-		Search(cmd.Args[0], "", true)
+		Search(cmd.Args[0], "normal", true)
 	}
+}
+
+func help() {
+	fmt.Println("Place custom templates in:")
+	fmt.Println("  - $HOME/.finder/templates/       (User templates)")
+	fmt.Println("  - ./.finder/templates/           (Project templates)")
 }

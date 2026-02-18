@@ -16,6 +16,10 @@ import (
 
 // Function to search for a Template
 func Search(searchTemplate string, OutputType string, Verbose bool) error {
+	if Verbose {
+		fmt.Printf("%sStruct Finder v%s%s\n", color.Green, version, color.Reset)
+	}
+
 	templateName := searchTemplate
 
 	// Load all templates (built-in + custom)
@@ -44,12 +48,14 @@ func Search(searchTemplate string, OutputType string, Verbose bool) error {
 		fmt.Printf("Searching for %s ...\n", templateName)
 	}
 	search.Find(structure.LoadJSON5(string(data)), OutputType)
+
 	return nil
 }
 
 // Function to search for tags
 func TagSearch(searchTag string, OutputType string, Verbose bool) error {
 	if Verbose {
+		fmt.Printf("%sStruct Finder v%s%s\n", color.Green, version, color.Reset)
 		fmt.Printf("Searching for templates with tag '%s'...\n", searchTag)
 	}
 
@@ -129,9 +135,11 @@ func TagSearch(searchTag string, OutputType string, Verbose bool) error {
 		fmt.Println()
 
 		w := tabwriter.NewWriter(os.Stdout, 0, 8, 2, ' ', 0)
-		fmt.Fprintln(w, "Template\tTags\tSource")
+		fmt.Fprintf(w, "%sTemplate%s\tTags\t%sSource%s\n",
+			color.Yellow, color.Reset, color.Yellow, color.Reset)
 
 		for _, tmpl := range matchingTemplates {
+			// Tags als kommagetrennten String bauen
 			tagStr := ""
 			for i, tag := range tmpl.tags {
 				if i > 0 {
@@ -140,14 +148,24 @@ func TagSearch(searchTag string, OutputType string, Verbose bool) error {
 				tagStr += tag
 			}
 
-			sourceColor := color.Cyan
+			// Source einfärben
+			var sourceColor string
 			if tmpl.source == "Custom" {
 				sourceColor = fmt.Sprintf("%s%s%s", color.Green, tmpl.source, color.Reset)
 			} else {
 				sourceColor = fmt.Sprintf("%s%s%s", color.Cyan, tmpl.source, color.Reset)
 			}
 
-			fmt.Fprintf(w, "%s%s%s\t%s\t%s\n", color.Cyan, tmpl.name, color.Reset, tagStr, sourceColor)
+			// Ausgabe
+			fmt.Fprintf(
+				w,
+				"%s%s%s\t%s\t%s\n",
+				color.Cyan,
+				tmpl.name,
+				color.Reset,
+				tagStr,
+				sourceColor,
+			)
 		}
 
 		w.Flush()
@@ -158,6 +176,7 @@ func TagSearch(searchTag string, OutputType string, Verbose bool) error {
 
 // handleCheck validates all templates
 func Check() error {
+
 	fmt.Println("Checking all Templates ...")
 
 	templateNames, userTemplates, err := templates.LoadAllWithUserTemplates()
