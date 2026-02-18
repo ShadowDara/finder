@@ -26,6 +26,7 @@ type Command struct {
 	Flags       map[string]*Flag
 	Subcommands map[string]*Command
 	Parent      *Command
+	Args        []string
 }
 
 // Function to create a new Command
@@ -89,9 +90,11 @@ func (c *Command) findFlag(key string) *Flag {
 
 // Function to Parse all the Arguments
 func (c *Command) Parse(args []string) *Command {
+
 	if len(args) > 0 {
 		input := args[0]
 
+		// Prüfe Subcommands + Aliases
 		for _, sub := range c.Subcommands {
 			if sub.Name == input {
 				return sub.Parse(args[1:])
@@ -104,13 +107,14 @@ func (c *Command) Parse(args []string) *Command {
 		}
 	}
 
+	// Kein Subcommand → normal parsen
 	for i := 0; i < len(args); i++ {
 		arg := args[i]
 
+		// Flags
 		if strings.HasPrefix(arg, "--") {
 			key := strings.TrimPrefix(arg, "--")
 
-			// --key=value
 			if strings.Contains(key, "=") {
 				parts := strings.SplitN(key, "=", 2)
 				key = parts[0]
@@ -132,9 +136,11 @@ func (c *Command) Parse(args []string) *Command {
 					f.Set = true
 					i++
 				}
+				continue
 			}
 		}
 
+		// Short flags
 		if strings.HasPrefix(arg, "-") && len(arg) == 2 {
 			key := strings.TrimPrefix(arg, "-")
 
@@ -147,18 +153,21 @@ func (c *Command) Parse(args []string) *Command {
 					f.Set = true
 					i++
 				}
+				continue
 			}
 		}
+
+		// 👇 Wenn kein Flag → positional argument
+		c.Args = append(c.Args, arg)
 	}
 
-	// help?
+	// help
 	if f := c.findFlag("help"); f != nil && f.BoolValue {
 		c.PrintHelp()
 		os.Exit(0)
 	}
 
 	c.validateRequired()
-
 	return c
 }
 

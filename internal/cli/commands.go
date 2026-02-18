@@ -2,65 +2,87 @@ package cli
 
 import (
 	"fmt"
+	"os"
 
-	"github.com/shadowdara/finder/pub/color"
+	"github.com/shadowdara/finder/pub/argparser"
 )
 
-const version = "0.3.4"
+const version = "0.3.5"
 
 // HandleCommand is the main entry point for CLI command processing.
 // It parses raw arguments into structured CLIOptions, then dispatches
 // to the appropriate command handler based on the parsed options.
-func HandleCommand(args []string) {
-	// Parse CLI arguments
-	opts, err := ParseCLI(args)
-	if err != nil {
-		fmt.Printf("finder: %sError: %v. Use 'help' for usage information.%s\n",
-			color.Red, err, color.Reset)
-		return
-	}
+func HandleCommand() {
+	// NEW
+	root := argparser.NewCommand("finder",
+		"a simple go program to find your files")
 
-	// Print header unless in "clear" mode
-	if opts.OutputType != "clear" {
-		fmt.Printf("%sStruct Finder v%s%s\n", color.Green, version, color.Reset)
-	}
+	// Add Version Command
+	versionCmd := argparser.NewCommand(
+		"--version", "to get the Version of the Program", "-v")
 
-	// Dispatch to appropriate handler based on command
-	handler := routeCommand(opts)
-	if handler == nil {
-		fmt.Printf("%sUnknown command '%s'. Use 'help' for usage information.%s\n",
-			color.Yellow, opts.Command, color.Reset)
-		return
-	}
+	// Check Command
+	checkCmd := argparser.NewCommand("check",
+		"to check all available Templates if their syntax is correct")
 
-	// Execute the handler
-	if err := handler(opts); err != nil {
-		fmt.Printf("%sError: %v%s\n", color.Red, err, color.Reset)
-		return
-	}
-}
+	// list, ls Command
+	listCmd := argparser.NewCommand("list",
+		"list all available templates", "ls")
 
-// routeCommand returns the appropriate handler function for the given command options.
-// Returns nil if no matching handler is found.
-func routeCommand(opts *CLIOptions) HandlerFunc {
-	switch {
-	case opts.IsHelp():
-		return handleHelp
-	case opts.IsList():
-		return handleList
-	case opts.IsCheck():
-		return handleCheck
-	case opts.IsTagsSearch():
-		return handleTagSearch
-	case opts.IsTags():
-		return handleTags
-	case opts.IsFileLoad():
-		return handleFileLoad
-	case opts.IsDirectLoad():
-		return handleDirectLoad
-	case opts.IsTemplateSearch():
-		return handleTemplateSearch
+	// tags, tag Command
+	tagsCmd := argparser.NewCommand("tags",
+		"show all tags in the console", "tag")
+
+	// Tag Search
+	tagSearchCmd := argparser.NewCommand("-t",
+		"search for tags")
+
+	// help
+	helpCmd := argparser.NewCommand("help",
+		"shows help", "--help", "h", "-h")
+
+	root.AddSubcommand(versionCmd)
+	root.AddSubcommand(checkCmd)
+	root.AddSubcommand(listCmd)
+	root.AddSubcommand(tagsCmd)
+	root.AddSubcommand(helpCmd)
+	root.AddSubcommand(tagSearchCmd)
+
+	// Parse the Arguments
+	cmd := root.Parse(os.Args[1:])
+
+	// Evaluate the Arguments
+	switch cmd {
+	case versionCmd:
+		// Version
+		fmt.Printf("%s\n", version)
+	case checkCmd:
+		// Check
+		Check()
+	case listCmd:
+		// List
+		List()
+	case tagsCmd:
+		// Tags
+		Tags()
+	case helpCmd:
+		// Help
+		root.PrintHelp()
+	case tagSearchCmd:
+		if len(cmd.Args) == 0 {
+			root.PrintHelp()
+			return
+		}
+
+		// Search for tags
+		TagSearch(cmd.Args[0], "", true)
 	default:
-		return nil
+		if len(cmd.Args) == 0 {
+			root.PrintHelp()
+			return
+		}
+
+		// Search the Template
+		Search(cmd.Args[0], "", true)
 	}
 }

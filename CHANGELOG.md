@@ -5,6 +5,9 @@
 - added Template for
   - flax
 - added Time which the searching took
+- resturctured the argparser
+- added version Command
+- added Argparser package
 
 ## 0.3.4
 - changed Go Version to 1.18
