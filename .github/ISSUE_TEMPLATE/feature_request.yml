@@ -1,0 +1,30 @@
+name: 💡 Feature Request
+description: Suggest a new feature or improvement
+title: "[FEATURE] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Suggest a new feature or improvement. Please describe why this change is needed.
+  - type: input
+    id: goal
+    attributes:
+      label: What is the goal?
+      description: Summarize the suggestion in your own words
+      required: true
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation and Context
+      description: Why is this change valuable? What problem does it solve?
+  - type: textarea
+    id: implementation
+    attributes:
+      label: Possible Implementation
+      description: Optional ideas how this could be implemented
+  - type: input
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Other ideas you considered and why you rejected them

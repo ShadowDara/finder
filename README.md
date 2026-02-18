@@ -10,6 +10,11 @@ based on predefined folder/file structure templates.
 In short: you can search for repositories (e.g. `.git`), project layouts,
 or your own custom structures using templates.
 
+## Commiting
+
+feel free to help the Project by committing Code for the project are Templates.
+Feel although free to submit Templates via Issues!
+
 ## Features
 
 - Searches using JSON5 templates stored in `internal/structure/templates`.

@@ -7,7 +7,7 @@ import (
 	"github.com/shadowdara/finder/pub/argparser"
 )
 
-const version = "0.3.5"
+const version = "0.3.6"
 
 // HandleCommand is the main entry point for CLI command processing.
 // It parses raw arguments into structured CLIOptions, then dispatches
@@ -71,12 +71,10 @@ func HandleCommand() {
 	case helpCmd:
 		// Help
 		root.PrintHelp()
-		help()
 
 	case tagSearchCmd:
 		if len(cmd.Args) == 0 {
 			root.PrintHelp()
-			help()
 			return
 		}
 
@@ -85,17 +83,10 @@ func HandleCommand() {
 	default:
 		if len(cmd.Args) == 0 {
 			root.PrintHelp()
-			help()
 			return
 		}
 
 		// Search the Template
 		Search(cmd.Args[0], "normal", true)
 	}
-}
-
-func help() {
-	fmt.Println("Place custom templates in:")
-	fmt.Println("  - $HOME/.finder/templates/       (User templates)")
-	fmt.Println("  - ./.finder/templates/           (Project templates)")
 }
