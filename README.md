@@ -29,13 +29,13 @@ Feel although free to submit Templates via Issues!
 
 Build from source:
 
-```bash
+```sh
 go build ./cmd/finder
 ```
 
 Or install with `go install` (Go 1.18+):
 
-```bash
+```sh
 go install github.com/shadowdara/finder/cmd/finder@latest
 ```
 
@@ -45,13 +45,13 @@ The produced binary is `finder` (on Windows `finder.exe`).
 
 Basic syntax:
 
-```bash
+```sh
 finder <template-name>
 ```
 
 Example — find Git repositories:
 
-```bash
+```sh
 finder git
 ```
 
@@ -64,7 +64,7 @@ Default templates are stored in `internal/structure/templates`.
 Templates are JSON5 files with fields such as `name`, `files`, and
 `folders`. A simple template to find Git repositories looks like:
 
-```json5
+```json
 {
     "name": "*",
     "folders": [
@@ -80,7 +80,7 @@ templates. The `command` runs in the Structure Directory after the
 Structure is found. The Entrywill only be added is the `command` 
 returns `0` when `invert_command` is `false`, else `1`.
 
-```json5
+```json
 {
     "name": "*",
     "description": "",
@@ -105,20 +105,20 @@ Then call `finder <template-name>` to use them.
 
 Run tests:
 
-```bash
+```sh
 go test ./...
 ```
 
 Generate coverage report:
 
-```bash
+```sh
 go test -coverprofile=coverage ./...
 go tool cover -html=coverage
 ```
 
 Build:
 
-```bash
+```sh
 go build ./cmd/finder
 ```
 
