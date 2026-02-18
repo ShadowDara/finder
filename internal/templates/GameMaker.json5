@@ -3,5 +3,6 @@
     "name": "*",
     "files": [
         "*.yyp"
-    ]
+    ],
+    "tags": ["game-engine"]
 }

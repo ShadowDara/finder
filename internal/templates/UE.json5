@@ -1,6 +1,7 @@
 // Default Folder Struct for Unreal Engine Projects
 {
     "name": "*",
+    "description": "Struct for Unreal Engine Games",
     "folders": [
         {
             "name": "Content"
@@ -8,5 +9,6 @@
     ],
     "files": [
         "*.uproject"
-    ]
+    ],
+    "tags": ["game-engine"]
 }

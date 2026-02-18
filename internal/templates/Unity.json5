@@ -8,5 +8,6 @@
     ],
     "files": [
         "Assembly-CSharp.csproj"
-    ]
+    ],
+    "tags": ["game-engine"]
 }
