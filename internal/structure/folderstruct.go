@@ -21,6 +21,7 @@ type Folder struct {
 	Command       string   `json:"command"`      // Optional command to execute after finding directory
 	InvertCommand bool     `json:invert_command` // To change if return code 0 or 1 is required. False is equal to 0
 	Tags          []string `json:tags`           // tags to sort the Templates
+	DataSize      Size     `json:"size,omitempty"`
 }
 
 // NewFolder constructs a minimal Folder instance with reasonable defaults.
@@ -33,6 +34,7 @@ func NewFolder(foldername string) Folder {
 		Command:       "",
 		InvertCommand: false,
 		Tags:          []string{},
+		DataSize:      NewSize(),
 	}
 }
 

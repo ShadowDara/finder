@@ -5,6 +5,8 @@ import (
 	"os"
 
 	"github.com/shadowdara/finder/pub/argparser"
+
+	"github.com/shadowdara/finder/internal/config"
 )
 
 const version = "0.3.6"
@@ -13,6 +15,10 @@ const version = "0.3.6"
 // It parses raw arguments into structured CLIOptions, then dispatches
 // to the appropriate command handler based on the parsed options.
 func HandleCommand() {
+	var finderconfig config.Config
+
+	finderconfig = config.NewConfig()
+
 	// NEW
 	root := argparser.NewCommand("finder",
 		"a simple go program to find your files", false)
@@ -79,7 +85,7 @@ func HandleCommand() {
 		}
 
 		// Search for tags
-		TagSearch(cmd.Args[0], "normal", true)
+		TagSearch(cmd.Args[0], finderconfig.OutputType, true)
 	default:
 		if len(cmd.Args) == 0 {
 			root.PrintHelp()
@@ -87,6 +93,6 @@ func HandleCommand() {
 		}
 
 		// Search the Template
-		Search(cmd.Args[0], "normal", true)
+		Search(cmd.Args[0], finderconfig.OutputType, true)
 	}
 }

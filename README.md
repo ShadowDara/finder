@@ -124,6 +124,12 @@ Build:
 go build ./cmd/finder
 ```
 
+Check the Templates
+
+```sh
+go run ./cmd/finder check
+```
+
 ## Contributing
 
 - Found a missing or inaccurate template? Please open an issue.
@@ -144,3 +150,8 @@ See `LICENSE`.
 ---
 
 Project: `https://github.com/shadowdara/finder`
+
+## Extra Info
+
+The Project [fs-tools](https://github.com/shadowdara/fs-tools) was more or less
+the prototype for finder.

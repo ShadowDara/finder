@@ -89,7 +89,7 @@ func Find(folderstruct structure.Folder, output_type string) {
 	// Calculate elapsed time
 	elapsed := time.Since(start).Seconds()
 	if output_type != "clear" {
-		fmt.Printf("Search by finder took: %.3f seconds\n", elapsed)
+		fmt.Printf("Search by finder took: %.4f seconds\n", elapsed)
 	}
 
 	switch output_type {

@@ -12,6 +12,7 @@ import (
 	"github.com/shadowdara/finder/internal/structure"
 	"github.com/shadowdara/finder/internal/templates"
 	"github.com/shadowdara/finder/pub/color"
+	"github.com/shadowdara/finder/pub/goansi"
 )
 
 // Function to search for a Template
@@ -189,7 +190,7 @@ func Check() error {
 
 	// use tabwriter to align columns
 	w := tabwriter.NewWriter(os.Stdout, 0, 8, 2, ' ', 0)
-	fmt.Fprintln(w, "Name\tDescription\tSource")
+	fmt.Fprintf(w, "%sName%s\t%sSource%s\tDescription\n", goansi.WHITE, goansi.END, goansi.WHITE, goansi.END)
 
 	for _, templ := range templateNames {
 		// Check for blocked templates
@@ -209,12 +210,13 @@ func Check() error {
 		folder := structure.LoadJSON5(string(data))
 
 		// Determine source (built-in or custom)
-		source := "Built-in"
+		source := goansi.WHITE + "Built-in" + goansi.END
 		if _, isCustom := userTemplates[templ]; isCustom {
 			source = fmt.Sprintf("%sCustom%s", color.Green, color.Reset)
 		}
 
-		fmt.Fprintf(w, "%s%s%s\t%s\t%s\n", color.Cyan, templ, color.Reset, folder.Description, source)
+		fmt.Fprintf(w, "%s%s%s\t%s\t%s\n", color.Cyan, templ,
+			color.Reset, source, folder.Description)
 	}
 
 	w.Flush()

@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## Newest -> 0.3.6 prob
+- added Size option to the Templates
 
 ## 0.3.5
 - made a Folder public for public finder modules
