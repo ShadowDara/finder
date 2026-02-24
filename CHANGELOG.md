@@ -2,7 +2,10 @@
 
 The whole finder CHANGELOG
 
-## Newest -> prob 0.3.7
+## Newest -> prob 0.3.8
+
+## 0.3.7
+- only for releasing
 
 ## 0.3.6 - 24.02.2026
 - added Size option to the Templates
