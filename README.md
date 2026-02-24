@@ -4,6 +4,13 @@ go build ./cmd/finder
 
 # finder
 
+[![Build Status](https://github.com/ShadowDara/finder/actions/workflows/releasebuild.yml/badge.svg)](https://github.com/ShadowDara/finder/actions/workflows/releasebuild.yml)
+[![GitHub contributors](https://img.shields.io/github/contributors/shadowdara/finder)](https://github.com/shadowdara/finder/graphs/contributors)
+[![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/m/shadowdara/finder)](https://github.com/shadowdara/finder/commits)
+[![GitHub all releases](https://img.shields.io/github/downloads/shadowdara/finder/total?logo=github)](https://github.com/shadowdara/finder/releases)
+[![GitHub release (with filter)](https://img.shields.io/github/v/release/shadowdara/finder?logo=github)](https://github.com/shadowdara/finder/releases)
+
+
 Finder is a small command-line tool written in Go to locate projects
 based on predefined folder/file structure templates.
 
@@ -124,7 +131,7 @@ Build:
 go build ./cmd/finder
 ```
 
-Check the Templates
+Check the available Templates
 
 ```sh
 go run ./cmd/finder check
@@ -155,3 +162,11 @@ Project: `https://github.com/shadowdara/finder`
 
 The Project [fs-tools](https://github.com/shadowdara/fs-tools) was more or less
 the prototype for finder.
+
+<!--
+
+TODO
+
+- Fix Build Workflow
+- Fix Issue and PR Templates
+-->
