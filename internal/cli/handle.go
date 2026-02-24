@@ -7,6 +7,7 @@ import (
 
 	"text/tabwriter"
 
+	"github.com/shadowdara/finder/internal/finderversion"
 	"github.com/shadowdara/finder/internal/loader"
 	"github.com/shadowdara/finder/internal/search"
 	"github.com/shadowdara/finder/internal/structure"
@@ -18,7 +19,7 @@ import (
 // Function to search for a Template
 func Search(searchTemplate string, OutputType string, Verbose bool) error {
 	if Verbose {
-		fmt.Printf("%sStruct Finder v%s%s\n", color.Green, version, color.Reset)
+		fmt.Printf("%sStruct Finder v%s%s\n", color.Green, finderversion.Version, color.Reset)
 	}
 
 	templateName := searchTemplate
