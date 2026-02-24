@@ -7,9 +7,8 @@ import (
 	"github.com/shadowdara/finder/pub/argparser"
 
 	"github.com/shadowdara/finder/internal/config"
+	"github.com/shadowdara/finder/internal/finderversion"
 )
-
-const version = "0.3.6"
 
 // HandleCommand is the main entry point for CLI command processing.
 // It parses raw arguments into structured CLIOptions, then dispatches
@@ -64,7 +63,7 @@ func HandleCommand() {
 	switch cmd {
 	case versionCmd:
 		// Version
-		fmt.Printf("%s\n", version)
+		fmt.Printf("%s\n", finderversion.Version)
 	case checkCmd:
 		// Check
 		Check()

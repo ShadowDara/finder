@@ -1,9 +1,18 @@
 # CHANGELOG
 
-## Newest -> 0.3.6 prob
-- added Size option to the Templates
+The whole finder CHANGELOG
 
-## 0.3.5
+## Newest -> prob 0.3.7
+
+## 0.3.6 - 24.02.2026
+- added Size option to the Templates
+- updated README File
+- updates `CUSTOM_TEMPLATES`
+- added a new entry to the Template: **min finder version** which should
+help with for example old and new templates but is not required
+- added Version package
+
+## 0.3.5 - 18.02.2026
 - made a Folder public for public finder modules
 - added Template for
   - flax
@@ -17,20 +26,20 @@ Just move them into `$HOME/.finder/templates`.
 although with other Output Types
 - formatted the tag Search output correctly
 
-## 0.3.4
+## 0.3.4 - 16.02.2026
 - changed Go Version to 1.18
 - fixed *`Search on all Drives on Windows`* from 0.3.3, it
 didn't quite well before
 - added Async Search
 - made color package public
 
-## 0.3.3
+## 0.3.3 - 15.02.2026
 - added JSON Shema
 - added File Options
 - Search on all Drives on Windows
 - added Tag Search
 
-## 0.3.2
+## 0.3.2 - 15.02.2026
 - little Fixes
 
 ## 0.3.1 - 15.02.2026
@@ -135,5 +144,5 @@ More Templates
 Better Console Output
 Help Message
 
-# 0.1.0 - 17.05.2025
+# 0.1.0 - 17.11.2025
 Programm Init

@@ -37,6 +37,7 @@ Templates are JSON5 files that describe the folder structure and file patterns o
 
 ```json5
 {
+    "min_version": "0.3.6",
     "description": "My Custom Project Type",
     "name": "*",
     "folders": [
@@ -179,3 +180,48 @@ Check the built-in templates in `/internal/templates/` for more examples:
 
 ### Need help?
 Run `finder help` for more command options.
+
+## Example for Size Usage 
+
+*(new in 0.3.6)*
+
+Single Size Block
+```json
+"size": {
+  "min": 1,
+  "min_size_type": "KB",
+  "max": 10,
+  "max_size_type": "GB",
+}
+```
+
+Template with the new Size Block
+
+```json
+{
+  "description": "Go project with go.mod and minimum total size 10KB",
+  "name": "*",
+  "folders": [],
+  "files": [
+    {
+      "name": "go.mod",
+      "existence": "required"
+    },
+    {
+      "name": "*.go",
+      "existence": "required",
+      "size": {
+        "min": 1,
+        "min_size_type": "KB"
+      }
+    }
+  ],
+  "command": "",
+  "invert_command": false,
+  "tags": ["go", "project"],
+  "size": {
+    "min": 10,
+    "min_size_type": "KB"
+  }
+}
+```

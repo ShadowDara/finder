@@ -1,5 +1,6 @@
 // A default struct to find git Repositories
 {
+    "min_version": "0.3.6",
     "name": "*",
     "description": "Finds all git repositories with uncommited Changes",
     "files": [],

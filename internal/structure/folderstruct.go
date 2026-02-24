@@ -14,6 +14,8 @@ import (
 // template. Fields are exported and annotated so encoding/json can
 // decode them after the lightweight JSON5 preprocessing step.
 type Folder struct {
+	// To check that to old templates are not used an the user will be informed!
+	MinVersion    string   `json:"min_version,omitempty`
 	Description   string   `json:"description"`
 	Name          string   `json:"name"`
 	Folders       []Folder `json:"folders"`
@@ -27,6 +29,7 @@ type Folder struct {
 // NewFolder constructs a minimal Folder instance with reasonable defaults.
 func NewFolder(foldername string) Folder {
 	return Folder{
+		MinVersion:    "0.0.0",
 		Description:   "",
 		Name:          foldername,
 		Folders:       []Folder{},
