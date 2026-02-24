@@ -4,7 +4,7 @@ go build ./cmd/finder
 
 # finder
 
-[![Build Status](https://github.com/ShadowDara/finder/actions/workflows/releasebuild.yml/badge.svg)](https://github.com/ShadowDara/finder/actions/workflows/releasebuild.yml)
+[![Build Status](https://github.com/ShadowDara/finder/actions/workflows/release.yml/badge.svg)](https://github.com/ShadowDara/finder/actions/workflows/release.yml)
 [![GitHub contributors](https://img.shields.io/github/contributors/shadowdara/finder)](https://github.com/shadowdara/finder/graphs/contributors)
 [![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/m/shadowdara/finder)](https://github.com/shadowdara/finder/commits)
 [![GitHub all releases](https://img.shields.io/github/downloads/shadowdara/finder/total?logo=github)](https://github.com/shadowdara/finder/releases)
