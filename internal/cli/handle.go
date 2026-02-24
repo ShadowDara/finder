@@ -57,7 +57,7 @@ func Search(searchTemplate string, OutputType string, Verbose bool) error {
 // Function to search for tags
 func TagSearch(searchTag string, OutputType string, Verbose bool) error {
 	if Verbose {
-		fmt.Printf("%sStruct Finder v%s%s\n", color.Green, version, color.Reset)
+		fmt.Printf("%sStruct Finder v%s%s\n", color.Green, finderversion.Version, color.Reset)
 		fmt.Printf("Searching for templates with tag '%s'...\n", searchTag)
 	}
 
