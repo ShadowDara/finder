@@ -1,0 +1,10 @@
+Finder
+
+Finder is a small command-line tool written in Go to locate projects
+based on predefined folder/file structure templates.
+
+In short: you can search for repositories (e.g. .git), project layouts,
+or your own custom structures using templates.
+
+For more Infos visit: https://github.com/shadowdara/finder
+or read the Documentation

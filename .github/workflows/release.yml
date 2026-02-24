@@ -34,6 +34,7 @@ jobs:
           GOARCH: ${{ matrix.goarch }}
         run: |
           mkdir -p dist
+
           BINARY_NAME=finder
           VERSION=${{ steps.vars.outputs.VERSION }}
 
@@ -43,12 +44,20 @@ jobs:
             EXT=""
           fi
 
-          OUTPUT="${BINARY_NAME}_${VERSION}_${GOOS}_${GOARCH}${EXT}"
+          OUTPUT="${BINARY_NAME}_${VERSION}_${GOOS}_${GOARCH}"
+          PACKAGE_DIR="dist/${OUTPUT}"
+
+          mkdir -p "${PACKAGE_DIR}"
 
           go build \
-            -o "dist/${OUTPUT}" \
+            -o "${PACKAGE_DIR}/${BINARY_NAME}${EXT}" \
             -ldflags="-s -w -X main.Version=${VERSION}" \
             ./cmd/finder
+
+          # add Changelog and Info about the program
+          cp CHANGELOG.md "${PACKAGE_DIR}/"
+          cp INFO.txt "${PACKAGE_DIR}/"
+          cp LICENSE "${PACKAGE_DIR}/"
 
       - uses: actions/upload-artifact@v4
         with:
