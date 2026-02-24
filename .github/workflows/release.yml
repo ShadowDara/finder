@@ -50,7 +50,10 @@ jobs:
 
           OUTPUT="${BINARY_NAME}_${VERSION}_${GOOS}_${GOARCH}${EXT}"
 
-          go build -ldflags="-s -w -X -o dist/${OUTPUT} 'main.Version=${VERSION}'" ./cmd/finder
+          go build \
+            -o "dist/${OUTPUT}" \
+            -ldflags="-s -w -X main.Version=${VERSION}" \
+            ./cmd/finder
 
       - name: Archive
         run: |
