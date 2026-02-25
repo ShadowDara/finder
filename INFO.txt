@@ -8,3 +8,6 @@ or your own custom structures using templates.
 
 For more Infos visit: https://github.com/shadowdara/finder
 or read the Documentation
+
+To install it, add the PATH of the Current Folder to your PATH Variable
+so you can access finder from everywhere

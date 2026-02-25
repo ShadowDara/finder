@@ -164,6 +164,10 @@ Project: `https://github.com/shadowdara/finder`
 The Project [fs-tools](https://github.com/shadowdara/fs-tools) was more or less
 the prototype for finder.
 
+## Info Video
+
+[![INFO Video about Finder](https://www.youtube.com/watch?v=oIRgAYv-mOA)](https://www.youtube.com/watch?v=oIRgAYv-mOA)
+
 <!--
 
 TODO

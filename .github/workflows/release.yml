@@ -1,4 +1,4 @@
-name: Build
+name: Release
 
 on:
   push:
@@ -51,7 +51,7 @@ jobs:
 
           go build \
             -o "${PACKAGE_DIR}/${BINARY_NAME}${EXT}" \
-            -ldflags="-s -w -X main.Version=${VERSION}" \
+            -ldflags="-s -w -X finderversion.Version=${VERSION}" \
             ./cmd/finder
 
           # add Changelog and Info about the program

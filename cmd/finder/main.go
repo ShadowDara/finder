@@ -14,6 +14,8 @@ go tool cover -html=coverage
 package main
 
 import (
+	"os"
+
 	"github.com/shadowdara/finder/internal/cli"
 )
 
@@ -21,5 +23,5 @@ import (
 // a command under cmd/finder. Keeping the bootstrap minimal makes the
 // core packages easy to test.
 func main() {
-	cli.HandleCommand()
+	cli.HandleCommand(os.Args)
 }

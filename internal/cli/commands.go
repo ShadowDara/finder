@@ -2,7 +2,6 @@ package cli
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/shadowdara/finder/pub/argparser"
 
@@ -13,7 +12,7 @@ import (
 // HandleCommand is the main entry point for CLI command processing.
 // It parses raw arguments into structured CLIOptions, then dispatches
 // to the appropriate command handler based on the parsed options.
-func HandleCommand() {
+func HandleCommand(args []string) {
 	var finderconfig config.Config
 
 	finderconfig = config.NewConfig()
@@ -27,7 +26,7 @@ func HandleCommand() {
 
 	// Add Version Command
 	versionCmd := argparser.NewCommand(
-		"--version", "to get the Version of the Program", false, "-v")
+		"--version", "to get the Version of the Program", false, "-v", "v", "version")
 
 	// Check Command
 	checkCmd := argparser.NewCommand("check",
@@ -57,7 +56,7 @@ func HandleCommand() {
 	root.AddSubcommand(tagSearchCmd)
 
 	// Parse the Arguments
-	cmd := root.Parse(os.Args[1:])
+	cmd := root.Parse(args[1:])
 
 	// Evaluate the Arguments
 	switch cmd {
