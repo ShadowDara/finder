@@ -1,5 +1,14 @@
 <!--
 go build ./cmd/finder
+
+Push Tag
+git tag v0.3.7
+git push origin v0.3.7
+
+Maybe
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/shadowdara/finder?logo=github)
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr/shadowdara/finder?logo=github)
+
 -->
 
 # finder
@@ -10,7 +19,9 @@ go build ./cmd/finder
 [![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/m/shadowdara/finder)](https://github.com/shadowdara/finder/commits)
 [![GitHub all releases](https://img.shields.io/github/downloads/shadowdara/finder/total?logo=github)](https://github.com/shadowdara/finder/releases)
 [![GitHub release (with filter)](https://img.shields.io/github/v/release/shadowdara/finder?logo=github)](https://github.com/shadowdara/finder/releases)
-
+[![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/shadowdara/finder?logo=github)](https://github.com/shadowdara/finder.git)
+![GitHub Repo stars](https://img.shields.io/github/stars/shadowdara/finder)
+![GitHub forks](https://img.shields.io/github/forks/shadowdara/finder)
 
 Finder is a small command-line tool written in Go to locate projects
 based on predefined folder/file structure templates.
@@ -166,13 +177,12 @@ the prototype for finder.
 
 ## Info Video
 
-[![INFO Video about Finder](https://www.youtube.com/watch?v=oIRgAYv-mOA)](https://www.youtube.com/watch?v=oIRgAYv-mOA)
+[![INFO Video 1 about Finder](https://img.youtube.com/vi/oIRgAYv-mOA/0.jpg)](https://www.youtube.com/watch?v=oIRgAYv-mOA)
 
 <!--
 
 TODO
 
-- Fix Build Workflow
 - Fix Issue and PR Templates
 
 -->
