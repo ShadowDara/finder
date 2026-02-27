@@ -70,29 +70,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Get Code Access
       - uses: actions/checkout@v4
 
       - uses: actions/download-artifact@v4
         with:
           path: dist
 
-      - name: Flatten artifacts
+      - name: Create release archives per system
         run: |
-          mkdir release
-          find dist -type f -exec mv {} release/ \;
+          mkdir -p release
 
-      - name: Archive
-        run: |
-          cd release
-          for file in *; do
-            if [[ "$file" == *.exe ]]; then
-              zip "${file}.zip" "$file"
-              rm "$file"
-            else
-              tar -czf "${file}.tar.gz" "$file"
-              rm "$file"
-            fi
+          # Jeder Artifact-Ordner enthält die jeweiligen dist-Unterordner
+          for dir in dist/build-*; do
+            find "$dir" -mindepth 1 -maxdepth 1 -type d | while read package_dir; do
+
+              BASENAME=$(basename "$package_dir")
+
+              if ls "$package_dir"/*.exe 1> /dev/null 2>&1; then
+                cd "$package_dir"
+                zip -r "../../../release/${BASENAME}.zip" .
+                cd - > /dev/null
+              else
+                tar -czf "release/${BASENAME}.tar.gz" -C "$package_dir" .
+              fi
+
+            done
           done
 
       - name: Generate SHA256 checksums
