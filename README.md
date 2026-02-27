@@ -178,6 +178,8 @@ the prototype for finder.
 
 ## Info Video
 
+(*a Youtube Video*)
+
 [![INFO Video 1 about Finder](https://img.youtube.com/vi/oIRgAYv-mOA/0.jpg)](https://www.youtube.com/watch?v=oIRgAYv-mOA)
 
 <!--
