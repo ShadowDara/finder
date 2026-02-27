@@ -105,7 +105,7 @@ jobs:
           awk "/^## ${VERSION}/{flag=1; next} /^## /{flag=0} flag" CHANGELOG.md > RELEASE_NOTES.md
 
           echo "RELEASE_BODY<<EOF" >> $GITHUB_OUTPUT
-          cat CHANGELOG.md >> $GITHUB_OUTPUT
+          cat RELEASE_NOTES.md >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Create Release
