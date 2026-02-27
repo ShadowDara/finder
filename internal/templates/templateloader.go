@@ -50,6 +50,7 @@ func getAvailableDrives() []string {
 //   - ~/.finder/templates/
 //   - ./.finder/templates/ (current directory)
 //   - X:\.finder\templates/ (on Windows, for each available drive X:)
+//
 // Returns empty map if no user templates found (not an error).
 func LoadUserTemplates() (map[string][]byte, error) {
 	userTemplates := make(map[string][]byte)

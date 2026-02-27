@@ -8,6 +8,7 @@ git push origin v0.3.7
 Maybe
 ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/shadowdara/finder?logo=github)
 ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr/shadowdara/finder?logo=github)
+[![GitHub top language](https://img.shields.io/github/languages/top/shadowdara/finder?logo=go&label=)](https://github.com/shadowdara/finder/)
 
 -->
 
@@ -184,5 +185,9 @@ the prototype for finder.
 TODO
 
 - Fix Issue and PR Templates
+
+IDEAS for Later
+
+- should not search in the Trashbin
 
 -->

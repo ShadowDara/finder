@@ -19,7 +19,7 @@ import (
 // Function to search for a Template
 func Search(searchTemplate string, OutputType string, Verbose bool) error {
 	if Verbose {
-		fmt.Printf("%sStruct Finder v%s%s\n", color.Green, finderversion.Version, color.Reset)
+		fmt.Printf("%sStruct Finder %s%s - Buildtime: %s\n", color.Green, finderversion.Version, color.Reset, finderversion.BuildTime)
 	}
 
 	templateName := searchTemplate

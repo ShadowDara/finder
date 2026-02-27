@@ -10,7 +10,7 @@ build:
 
 # Build a Release
 release:
-	go build -ldflags="-s -w -X" ./cmd/finder
+	go build -ldflags="-s -w -X finderversion.BuildTime=$(date -u '+%Y-%m-%dT%H:%M:%SZ')" ./cmd/finder
 
 # Install the program
 install:

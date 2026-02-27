@@ -28,6 +28,11 @@ func HandleCommand(args []string) {
 	versionCmd := argparser.NewCommand(
 		"--version", "to get the Version of the Program", false, "-v", "v", "version")
 
+	// Temaplte Command
+	templateCmd := argparser.NewCommand("template",
+		"to search for a template - for the case that the name for a template is overwritten by another argument name",
+		false, "tpl")
+
 	// Check Command
 	checkCmd := argparser.NewCommand("check",
 		"to check all available Templates if their syntax is correct", false)
@@ -49,6 +54,7 @@ func HandleCommand(args []string) {
 		"shows help", true, "--help", "h", "-h")
 
 	root.AddSubcommand(versionCmd)
+	root.AddSubcommand(templateCmd)
 	root.AddSubcommand(checkCmd)
 	root.AddSubcommand(listCmd)
 	root.AddSubcommand(tagsCmd)
@@ -84,6 +90,14 @@ func HandleCommand(args []string) {
 
 		// Search for tags
 		TagSearch(cmd.Args[0], finderconfig.OutputType, true)
+	case templateCmd:
+		if len(cmd.Args) == 0 {
+			root.PrintHelp()
+			return
+		}
+
+		// Search the Template
+		Search(cmd.Args[0], finderconfig.OutputType, true)
 	default:
 		if len(cmd.Args) == 0 {
 			root.PrintHelp()
