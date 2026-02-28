@@ -181,15 +181,3 @@ the prototype for finder.
 (*a Youtube Video*)
 
 [![INFO Video 1 about Finder](https://img.youtube.com/vi/oIRgAYv-mOA/0.jpg)](https://www.youtube.com/watch?v=oIRgAYv-mOA)
-
-<!--
-
-TODO
-
-- Fix Issue and PR Templates
-
-IDEAS for Later
-
-- should not search in the Trashbin
-
--->

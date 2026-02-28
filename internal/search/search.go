@@ -50,7 +50,7 @@ func Find(folderstruct structure.Folder, output_type string) {
 
 		// If Version is to old
 		if /*folderstruct.MinVersion != "0.0.0" && */ !version.IsNewer(finderversion.Version, folderstruct.MinVersion) {
-			fmt.Printf("%s[WARNING] Your Version of finder is to old for this Template! Something could go wrong!%s\n", goansi.YELLOW, goansi.END)
+			fmt.Printf("%s[WARNING] Your Version of finder is maybe to old for this Template! Something could go wrong!%s\n", goansi.YELLOW, goansi.END)
 		}
 	}
 

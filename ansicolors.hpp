@@ -1,4 +1,8 @@
 // Header File with all ANSI Colors as Macros
+// by Shadowdara
+//
+// licensed under Appache 2.0
+//
 
 #pragma once
 

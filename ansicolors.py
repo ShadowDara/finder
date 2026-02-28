@@ -1,5 +1,9 @@
 # Python with ANSIColors
+# by Shadowdara
 #
+# licensed under Appache 2.0
+#
+
 
 END = "\x1b[0m"
 BOLD = "\x1b[1m"

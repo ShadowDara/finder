@@ -4,6 +4,10 @@
 # Standard run
 all: build
 
+# Run all the Tests
+test:
+	go test ./...
+
 # Build the Program in Debug Mode
 build:
 	go build ./cmd/finder

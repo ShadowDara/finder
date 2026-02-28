@@ -1,6 +1,5 @@
 package finderversion
 
 // Version for the Program
-// 0.3.8
-const Version = "DEV"
-const BuildTime = "Unknown"
+const Version = "0.3.8"
+const BuildTime = "March 2026"

@@ -37,8 +37,8 @@ func TestJSONtemplateLoader_NonexistentTemplate(t *testing.T) {
 
 func TestJSONtemplateLoader_AddsExtension(t *testing.T) {
 	// Load with name and without extension - both should use the same file
-	data1, err1 := JSONtemplateLoader("_default")
-	data2, err2 := JSONtemplateLoader("_default.json5")
+	_, err1 := JSONtemplateLoader("_default")
+	_, err2 := JSONtemplateLoader("_default.json5")
 
 	// One of these might fail depending on how the function handles extensions
 	if err1 == nil && err2 == nil {

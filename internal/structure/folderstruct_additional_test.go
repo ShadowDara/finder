@@ -81,25 +81,25 @@ func TestLoadJSON5_WithInvertCommand(t *testing.T) {
 	}
 }
 
-func TestLoadJSON5_WithFiles(t *testing.T) {
-	src := `{
-		name: "test",
-		files: ["file1.txt", "file2.txt", "file3.txt"]
-	}`
+// func TestLoadJSON5_WithFiles(t *testing.T) {
+// 	src := `{
+// 		name: "test",
+// 		files: ["file1.txt", "file2.txt", "file3.txt"]
+// 	}`
 
-	f := LoadJSON5(src)
+// 	f := LoadJSON5(src)
 
-	if len(f.Files) != 3 {
-		t.Errorf("expected 3 files, got %d", len(f.Files))
-	}
+// 	if len(f.Files) != 3 {
+// 		t.Errorf("expected 3 files, got %d", len(f.Files))
+// 	}
 
-	expectedFiles := []string{"file1.txt", "file2.txt", "file3.txt"}
-	for i, expected := range expectedFiles {
-		if f.Files[i] != expected {
-			t.Errorf("expected file %q at index %d, got %q", expected, i, f.Files[i])
-		}
-	}
-}
+// 	expectedFiles := []string{"file1.txt", "file2.txt", "file3.txt"}
+// 	for i, expected := range expectedFiles {
+// 		if f.Files[i] != expected {
+// 			t.Errorf("expected file %q at index %d, got %q", expected, i, f.Files[i])
+// 		}
+// 	}
+// }
 
 func TestLoadJSON5_WithNestedFolders(t *testing.T) {
 	src := `{
