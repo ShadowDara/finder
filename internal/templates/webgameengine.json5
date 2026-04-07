@@ -1,0 +1,7 @@
+{
+    "description": "a Project with webgameengine",
+    "name": "*"
+    "files": [
+        "webgameengine.config.ts"
+    ]
+}

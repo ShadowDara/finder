@@ -3,6 +3,9 @@
 //
 // licensed under Appache 2.0
 //
+// by
+// https://github.com/ShadowDara/finder
+//
 
 #pragma once
 
