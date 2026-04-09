@@ -7,6 +7,7 @@ import (
 
 	"github.com/shadowdara/finder/internal/config"
 	"github.com/shadowdara/finder/internal/finderversion"
+	"github.com/shadowdara/finder/internal/search/binarycheck"
 )
 
 // HandleCommand is the main entry point for CLI command processing.
@@ -49,6 +50,10 @@ func HandleCommand(args []string) {
 	tagSearchCmd := argparser.NewCommand("-t",
 		"search for tags with the next argument", false)
 
+	// BinarySearch
+	binarySearchCmd := argparser.NewCommand(
+		"-b", "search for executables in path", false)
+
 	// help
 	helpCmd := argparser.NewCommand("help",
 		"shows help", true, "--help", "h", "-h")
@@ -58,8 +63,9 @@ func HandleCommand(args []string) {
 	root.AddSubcommand(checkCmd)
 	root.AddSubcommand(listCmd)
 	root.AddSubcommand(tagsCmd)
-	root.AddSubcommand(helpCmd)
 	root.AddSubcommand(tagSearchCmd)
+	root.AddSubcommand(binarySearchCmd)
+	root.AddSubcommand(helpCmd)
 
 	// Parse the Arguments
 	cmd := root.Parse(args[1:])
@@ -82,8 +88,17 @@ func HandleCommand(args []string) {
 		// Help
 		root.PrintHelp()
 
+	case binarySearchCmd:
+		if len(cmd.Args) > 0 {
+			binarycheck.CheckAllBinaries(cmd.Args[0])
+			return
+		} else {
+			root.PrintHelp()
+			return
+		}
+
 	case tagSearchCmd:
-		if len(cmd.Args) == 0 {
+		if len(cmd.Args) <= 0 {
 			root.PrintHelp()
 			return
 		}
@@ -91,7 +106,7 @@ func HandleCommand(args []string) {
 		// Search for tags
 		TagSearch(cmd.Args[0], finderconfig.OutputType, true)
 	case templateCmd:
-		if len(cmd.Args) == 0 {
+		if len(cmd.Args) <= 0 {
 			root.PrintHelp()
 			return
 		}
@@ -99,7 +114,7 @@ func HandleCommand(args []string) {
 		// Search the Template
 		Search(cmd.Args[0], finderconfig.OutputType, true)
 	default:
-		if len(cmd.Args) == 0 {
+		if len(cmd.Args) <= 0 {
 			root.PrintHelp()
 			return
 		}
