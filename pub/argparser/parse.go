@@ -8,31 +8,57 @@ import (
 	"text/tabwriter"
 )
 
+// Flag represents a single CLI option.
+//
+// A flag can either be a string or a boolean value.
+//
+// Examples:
+//
+//	--name=John
+//	--verbose
+//
+// Supported features:
+//   - Long flags: --name
+//   - Short aliases: -n
+//   - Required flags
 type Flag struct {
-	Name     string
-	Aliases  []string
-	Usage    string
-	Required bool
+	Name     string   // Primary name of the flag (e.g. "name" → --name)
+	Aliases  []string // Short aliases (e.g. "n" → -n)
+	Usage    string   // Description shown in help output
+	Required bool     // Whether the flag must be provided
 
-	StringValue string
-	BoolValue   bool
-	IsBool      bool
-	Set         bool
+	StringValue string // Value for string flags
+	BoolValue   bool   // Value for boolean flags
+	IsBool      bool   // Flag type (true = bool, false = string)
+	Set         bool   // Indicates whether the flag was explicitly set
 }
 
-// Struct for a Command
+// Command represents a CLI command.
+//
+// Features:
+//   - Subcommands (e.g. git commit)
+//   - Command-specific flags
+//   - Aliases for commands
+//   - Positional arguments
 type Command struct {
-	Name        string
-	Hidden      bool
-	Aliases     []string
-	Description string
-	Flags       map[string]*Flag
-	Subcommands map[string]*Command
-	Parent      *Command
-	Args        []string
+	Name        string              // Command name
+	Hidden      bool                // If true, command is hidden from help output
+	Aliases     []string            // Alternative names (e.g. "rm" for "remove")
+	Description string              // Description shown in help output
+	Flags       map[string]*Flag    // Registered flags
+	Subcommands map[string]*Command // Registered subcommands
+	Parent      *Command            // Parent command (used to build full path)
+	Args        []string            // Positional arguments
 }
 
-// Function to create a new Command
+// NewCommand creates a new Command.
+//
+// Parameters:
+//
+//	name     → command name
+//	desc     → description for help output
+//	hidden   → whether the command should be hidden
+//	aliases  → optional aliases
 func NewCommand(name, desc string, hidden bool, aliases ...string) *Command {
 	cmd := &Command{
 		Name:        name,
@@ -43,12 +69,23 @@ func NewCommand(name, desc string, hidden bool, aliases ...string) *Command {
 		Subcommands: make(map[string]*Command),
 	}
 
+	// Optional: automatically add a help flag
 	// cmd.Bool("help", false, "Show help", false, "h")
 
 	return cmd
 }
 
-// Function to add a String Value to the Current Command
+// String registers a string flag for the command.
+//
+// Example:
+//
+//	cmd.String("name", "", "Your name", true, "n")
+//
+// CLI usage:
+//
+//	--name John
+//	--name=John
+//	-n John
 func (c *Command) String(name, def, usage string, required bool, aliases ...string) {
 	c.Flags[name] = &Flag{
 		Name:        name,
@@ -60,7 +97,16 @@ func (c *Command) String(name, def, usage string, required bool, aliases ...stri
 	}
 }
 
-// Function to add a Boolean Value to the Current Command
+// Bool registers a boolean flag.
+//
+// Example:
+//
+//	cmd.Bool("verbose", false, "Enable verbose mode", false, "v")
+//
+// CLI usage:
+//
+//	--verbose
+//	-v
 func (c *Command) Bool(name string, def bool, usage string, required bool, aliases ...string) {
 	c.Flags[name] = &Flag{
 		Name:      name,
@@ -72,12 +118,21 @@ func (c *Command) Bool(name string, def bool, usage string, required bool, alias
 	}
 }
 
-// Function to register a Subcommand at the End
+// AddSubcommand adds a subcommand to the current command.
+//
+// Example:
+//
+//	root.AddSubcommand(commitCmd)
+//
+// Result:
+//
+//	app commit
 func (c *Command) AddSubcommand(sub *Command) {
 	sub.Parent = c
 	c.Subcommands[sub.Name] = sub
 }
 
+// findFlag searches for a flag by name or alias.
 func (c *Command) findFlag(key string) *Flag {
 	for _, f := range c.Flags {
 		if f.Name == key {
@@ -92,13 +147,24 @@ func (c *Command) findFlag(key string) *Flag {
 	return nil
 }
 
-// Function to Parse all the Arguments
+// Parse processes CLI arguments.
+//
+// Features:
+//   - Recursive subcommand parsing
+//   - Long flags (--name)
+//   - Short flags (-n)
+//   - Inline values (--name=John)
+//   - Positional arguments
+//
+// Returns:
+//
+//	The final command (important when using subcommands)
 func (c *Command) Parse(args []string) *Command {
 
+	// Check if first argument is a subcommand
 	if len(args) > 0 {
 		input := args[0]
 
-		// Prüfe Subcommands + Aliases
 		for _, sub := range c.Subcommands {
 			if sub.Name == input {
 				return sub.Parse(args[1:])
@@ -111,14 +177,15 @@ func (c *Command) Parse(args []string) *Command {
 		}
 	}
 
-	// Kein Subcommand → normal parsen
+	// No subcommand → parse flags and args
 	for i := 0; i < len(args); i++ {
 		arg := args[i]
 
-		// Flags
+		// Long flags (--flag or --flag=value)
 		if strings.HasPrefix(arg, "--") {
 			key := strings.TrimPrefix(arg, "--")
 
+			// Format: --key=value
 			if strings.Contains(key, "=") {
 				parts := strings.SplitN(key, "=", 2)
 				key = parts[0]
@@ -131,6 +198,7 @@ func (c *Command) Parse(args []string) *Command {
 				continue
 			}
 
+			// Format: --key value
 			if f := c.findFlag(key); f != nil {
 				if f.IsBool {
 					f.BoolValue = true
@@ -144,7 +212,7 @@ func (c *Command) Parse(args []string) *Command {
 			}
 		}
 
-		// Short flags
+		// Short flags (-k)
 		if strings.HasPrefix(arg, "-") && len(arg) == 2 {
 			key := strings.TrimPrefix(arg, "-")
 
@@ -161,21 +229,23 @@ func (c *Command) Parse(args []string) *Command {
 			}
 		}
 
-		// 👇 Wenn kein Flag → positional argument
+		// Not a flag → positional argument
 		c.Args = append(c.Args, arg)
 	}
 
-	// help
+	// Handle help flag
 	if f := c.findFlag("help"); f != nil && f.BoolValue {
 		c.PrintHelp()
 		os.Exit(0)
 	}
 
+	// Validate required flags
 	c.validateRequired()
+
 	return c
 }
 
-// Function to check a String in the Command
+// GetString returns the value of a string flag.
 func (c *Command) GetString(name string) string {
 	if f := c.findFlag(name); f != nil {
 		return f.StringValue
@@ -183,7 +253,7 @@ func (c *Command) GetString(name string) string {
 	return ""
 }
 
-// Function to check a Bool in the Command
+// GetBool returns the value of a boolean flag.
 func (c *Command) GetBool(name string) bool {
 	if f := c.findFlag(name); f != nil {
 		return f.BoolValue
@@ -191,7 +261,13 @@ func (c *Command) GetBool(name string) bool {
 	return false
 }
 
-// Function to print a Help Message from all the Commands
+// PrintHelp prints a formatted help message.
+//
+// Includes:
+//   - Usage
+//   - Description
+//   - Subcommands
+//   - Flags
 func (c *Command) PrintHelp() {
 	full := c.fullCommandPath()
 
@@ -208,10 +284,15 @@ func (c *Command) PrintHelp() {
 	if len(c.Subcommands) > 0 {
 		fmt.Fprintln(w, "Subcommands:")
 		for _, sub := range c.Subcommands {
+			if sub.Hidden {
+				continue
+			}
+
 			aliasStr := ""
 			if len(sub.Aliases) > 0 {
 				aliasStr = fmt.Sprintf(" (%s)", strings.Join(sub.Aliases, ", "))
 			}
+
 			fmt.Fprintf(w, "  %s%s\t%s\n",
 				sub.Name,
 				aliasStr,
@@ -248,6 +329,11 @@ func (c *Command) PrintHelp() {
 	w.Flush()
 }
 
+// fullCommandPath builds the full command path.
+//
+// Example:
+//
+//	app user create
 func (c *Command) fullCommandPath() string {
 	if c.Parent == nil {
 		return os.Args[0]
@@ -255,6 +341,7 @@ func (c *Command) fullCommandPath() string {
 	return c.Parent.fullCommandPath() + " " + c.Name
 }
 
+// validateRequired ensures all required flags are set.
 func (c *Command) validateRequired() {
 	for _, f := range c.Flags {
 		if f.Required && !f.Set {
