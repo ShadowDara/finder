@@ -7,7 +7,7 @@ import (
 	"encoding/json"
 	"log"
 
-	"github.com/shadowdara/finder/internal/loader/json5"
+	"github.com/shadowdara/finder/pub/json5"
 )
 
 // Folder represents the JSON structure used to describe a directory
