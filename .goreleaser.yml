@@ -1,0 +1,68 @@
+project_name: finder
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: finder
+    main: ./cmd/finder
+    binary: finder
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w
+      - -X finderversion.Version={{ .Version }}
+      - -X finderversion.BuildTime={{ .Date }}
+
+archives:
+  - id: default
+    builds:
+      - finder
+    name_template: >-
+      {{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}
+    format_overrides:
+      - goos: windows
+        format: zip
+    files:
+      - LICENSE
+      - CHANGELOG.md
+      - INFO.txt
+
+checksum:
+  name_template: "SHA256SUMS"
+
+release:
+  github:
+    owner: shadowdara
+    name: finder
+  draft: false
+  prerelease: auto
+
+brews:
+  - name: finder
+    homepage: https://github.com/yourname/finder
+    description: Fast file finder CLI
+    license: MIT
+    tap:
+      owner: shadowdara
+      name: homebrew-finder
+    commit_author:
+      name: shadowdara
+      email: shadowdara74@gmail.com
+
+scoops:
+  - name: finder
+    homepage: https://github.com/yourname/finder
+    description: Fast file finder CLI
+    license: MIT
+    bucket:
+      owner: shadowdara
+      name: scoop-bucket
