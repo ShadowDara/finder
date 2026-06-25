@@ -1,9 +1,0 @@
-{
-    "name": "*",
-    "description": "Structure for an Obsidian Markdown Vault",
-    "folders": [
-        {
-            "name": ".obsidian"
-        }
-    ]
-}

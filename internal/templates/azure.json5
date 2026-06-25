@@ -1,9 +1,0 @@
-// Struct for an Azure DevOps Project
-{
-    "description": "Azure DevOps project",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "azure-pipelines.yml"
-    ]
-}

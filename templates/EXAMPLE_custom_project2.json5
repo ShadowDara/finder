@@ -1,0 +1,68 @@
+// Example Custom Template - Copy this to ~/.finder/templates/ or ./.finder/templates/
+// and rename it to your project type!
+//
+// This template detects a custom web framework project with standard structure
+
+{
+    "description": "Custom Web Framework Project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [
+                {
+                    "name": "components",
+                    "folders": [],
+                    "files": ["*.jsx", "*.tsx", "*.js", "*.ts"]
+                },
+                {
+                    "name": "pages",
+                    "folders": [],
+                    "files": ["*.jsx", "*.tsx", "*.js", "*.ts"]
+                },
+                {
+                    "name": "utils",
+                    "folders": [],
+                    "files": ["*.js", "*.ts"]
+                },
+                {
+                    "name": "styles",
+                    "folders": [],
+                    "files": ["*.css", "*.scss", "*.less"]
+                }
+            ],
+            "files": ["index.js", "App.jsx", "App.tsx"]
+        },
+        {
+            "name": "tests",
+            "folders": [],
+            "files": ["*.test.js", "*.test.ts", "*.spec.js", "*.spec.ts"]
+        },
+        {
+            "name": "public",
+            "folders": [],
+            "files": ["index.html", "*.ico", "*.png"]
+        },
+        {
+            "name": ".github",
+            "folders": [
+                {
+                    "name": "workflows",
+                    "folders": [],
+                    "files": ["*.yml", "*.yaml"]
+                }
+            ],
+            "files": []
+        }
+    ],
+    "files": [
+        "package.json",
+        "tsconfig.json",
+        ".eslintrc.json",
+        ".prettierrc",
+        "webpack.config.js",
+        "vite.config.ts",
+        "jest.config.js",
+        "README.md"
+    ]
+}

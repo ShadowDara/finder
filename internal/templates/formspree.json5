@@ -1,9 +1,0 @@
-// Struct for a Formspree Project
-{
-    "description": "Formspree form backend",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "form.json"
-    ]
-}

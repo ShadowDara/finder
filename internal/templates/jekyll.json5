@@ -1,9 +1,0 @@
-// Struct for a Jekyll Project
-{
-    "name": "*",
-    "folders": [],
-    "files": [
-        "Gemfile",
-        "_config.yml"
-    ]
-}

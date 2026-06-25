@@ -1,9 +1,0 @@
-// Struct for a Processing Project
-{
-    "description": "Processing creative coding project",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "*.pde"
-    ]
-}

@@ -1,9 +1,0 @@
-// Struct for Railway Deployment
-{
-    "description": "Railway platform as a service",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "railway.json"
-    ]
-}

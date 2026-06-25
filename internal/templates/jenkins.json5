@@ -1,9 +1,0 @@
-// Struct for a Jenkins Pipeline
-{
-    "description": "Jenkins CI/CD pipeline",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "Jenkinsfile"
-    ]
-}

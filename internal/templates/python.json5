@@ -1,9 +1,0 @@
-// Struct for a Python Project
-{
-    "name": "*",
-    "folders": [],
-    "files": [
-        "requirements.txt",
-        "*.py"
-    ]
-}
