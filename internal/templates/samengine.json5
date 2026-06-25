@@ -1,0 +1,7 @@
+{
+    "description": "a Project with samengine",
+    "name": "*",
+    "files": [
+        "samengine.config.ts"
+    ]
+}

@@ -2,6 +2,7 @@
 {
     "name": "*",
     "description": "Finds all git repositories",
+    "min_version": "0.3.6",
     "files": [],
     "folders": [
         {
