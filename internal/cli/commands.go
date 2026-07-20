@@ -86,6 +86,7 @@ func HandleCommand(args []string) {
 		Tags()
 	case helpCmd:
 		// Help
+		banner()
 		root.PrintHelp()
 
 	case binarySearchCmd:
@@ -115,6 +116,7 @@ func HandleCommand(args []string) {
 		Search(cmd.Args[0], finderconfig.OutputType, true)
 	default:
 		if len(cmd.Args) <= 0 {
+			banner()
 			root.PrintHelp()
 			return
 		}
