@@ -1,9 +1,13 @@
-// Struct for an Arduino Project
 {
     "description": "Arduino microcontroller project",
     "name": "*",
     "folders": [],
     "files": [
         "*.ino"
-    ]
+    ],
+    "tags": [
+        "C",
+        "C++"
+    ],
+    "min_version": "0.3.14"
 }

@@ -1,8 +1,11 @@
-// Folderstruct for dotnet
 {
     "name": "*",
     "folders": [],
     "files": [
         "*.csproj"
-    ]
+    ],
+    "tags": [
+        "C#"
+    ],
+    "min_version": "0.3.14"
 }

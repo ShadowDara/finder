@@ -1,4 +1,3 @@
-// Struct for a Vue.js Project
 {
     "description": "Vue.js JavaScript web framework project",
     "name": "*",
@@ -12,5 +11,10 @@
     "files": [
         "package.json",
         "*.vue"
-    ]
+    ],
+    "tags": [
+        "web",
+        "npm"
+    ],
+    "min_version": "0.3.14"
 }

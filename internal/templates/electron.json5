@@ -1,4 +1,3 @@
-// Struct for an Electron App
 {
     "description": "Electron cross-platform desktop application",
     "name": "*",
@@ -12,5 +11,11 @@
     "files": [
         "main.js",
         "package.json"
-    ]
+    ],
+    "tags": [
+        "npm",
+        "js",
+        "ts"
+    ],
+    "min_version": "0.3.14"
 }

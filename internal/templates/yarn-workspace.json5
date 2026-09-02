@@ -1,4 +1,3 @@
-// Struct for a Yarn Workspace Project
 {
     "description": "Yarn workspace monorepo",
     "name": "*",
@@ -12,5 +11,10 @@
     "files": [
         "package.json",
         "yarn.lock"
-    ]
+    ],
+    "tags": [
+        "npm",
+        "js"
+    ],
+    "min_version": "0.3.14"
 }

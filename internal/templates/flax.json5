@@ -8,5 +8,8 @@
     "files": [
         "*.flaxproj"
     ],
-    "tags": ["game-engine"]
+    "tags": [
+        "game-engine"
+    ],
+    "min_version": "0.3.14"
 }

@@ -1,4 +1,3 @@
-// Struct for a Bun Project
 {
     "description": "Bun JavaScript/TypeScript runtime",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "bunfig.toml",
         "package.json"
-    ]
+    ],
+    "min_version": "0.3.14"
 }

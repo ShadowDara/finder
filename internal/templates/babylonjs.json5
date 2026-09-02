@@ -1,4 +1,3 @@
-// Struct for a Babylon.js Project
 {
     "description": "Babylon.js 3D engine",
     "name": "*",
@@ -12,5 +11,10 @@
     "files": [
         "package.json",
         "*.ts"
-    ]
+    ],
+    "tags": [
+        "npm",
+        "js"
+    ],
+    "min_version": "0.3.14"
 }

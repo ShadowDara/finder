@@ -1,4 +1,3 @@
-// Struct for a Docker Compose Stack
 {
     "description": "Docker Compose multi-container setup",
     "name": "*",
@@ -6,5 +5,9 @@
     "files": [
         "docker-compose.yml",
         "docker-compose.yaml"
-    ]
+    ],
+    "tags": [
+        "docker"
+    ],
+    "min_version": "0.3.14"
 }

@@ -1,4 +1,3 @@
-// Struct for a VSCode Extension
 {
     "description": "Visual Studio Code extension",
     "name": "*",
@@ -12,5 +11,10 @@
     "files": [
         "package.json",
         "extension.js"
-    ]
+    ],
+    "tags": [
+        "npm",
+        "js"
+    ],
+    "min_version": "0.3.14"
 }

@@ -1,4 +1,3 @@
-// Struct for a Flask Project
 {
     "description": "Flask lightweight Python web framework",
     "name": "*",
@@ -12,5 +11,10 @@
     "files": [
         "app.py",
         "requirements.txt"
-    ]
+    ],
+    "tags": [
+        "python",
+        "web"
+    ],
+    "min_version": "0.3.14"
 }

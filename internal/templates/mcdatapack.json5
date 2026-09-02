@@ -8,5 +8,6 @@
     ],
     "files": [
         "pack.mcmeta"
-    ]
+    ],
+    "min_version": "0.3.14"
 }

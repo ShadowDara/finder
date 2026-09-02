@@ -1,4 +1,3 @@
-// Struct for a Vitest Testing Framework
 {
     "description": "Vitest Vite-native unit test framework",
     "name": "*",
@@ -12,5 +11,10 @@
     "files": [
         "vitest.config.ts",
         "package.json"
-    ]
+    ],
+    "tags": [
+        "npm",
+        "test"
+    ],
+    "min_version": "0.3.14"
 }

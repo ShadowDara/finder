@@ -1,4 +1,3 @@
-// Struct for a Bevy Game Engine Project
 {
     "description": "Bevy Rust game engine",
     "name": "*",
@@ -12,5 +11,10 @@
     "files": [
         "Cargo.toml",
         "main.rs"
-    ]
+    ],
+    "tags": [
+        "rust",
+        "game-engine"
+    ],
+    "min_version": "0.3.14"
 }

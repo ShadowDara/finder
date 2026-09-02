@@ -11,5 +11,6 @@
     "files": [
         "hallo.txt",
         "file2.txt"
-    ]
+    ],
+    "min_version": "0.3.14"
 }

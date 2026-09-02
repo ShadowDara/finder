@@ -12,5 +12,6 @@
     "files": [
         "docker-compose.yml",
         "*.sql"
-    ]
+    ],
+    "tags": ["sql"]
 }

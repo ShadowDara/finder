@@ -3,5 +3,7 @@
     "name": "*",
     "files": [
         "samengine.config.ts"
-    ]
+    ],
+    "min_version": "0.3.14",
+    "tags": ["game-engine"]
 }

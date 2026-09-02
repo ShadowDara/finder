@@ -20,5 +20,6 @@
     ],
     "files": [
         "package.json"
-    ]
+    ],
+    "min_version": "0.3.14"
 }

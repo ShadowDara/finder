@@ -12,5 +12,7 @@
     "files": [
         "angular.json",
         "package.json"
-    ]
+    ],
+    "tags": ["web", "npm"],
+    "min_version": "0.3.14"
 }

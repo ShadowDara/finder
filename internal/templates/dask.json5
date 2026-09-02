@@ -1,4 +1,3 @@
-// Struct for a Dask Project
 {
     "description": "Dask parallel computing library",
     "name": "*",
@@ -6,5 +5,9 @@
     "files": [
         "requirements.txt",
         "*.py"
-    ]
+    ],
+    "tags": [
+        "python"
+    ],
+    "min_version": "0.3.14"
 }

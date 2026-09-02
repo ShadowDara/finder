@@ -6,5 +6,6 @@
     "files": [
         "*.rbxl",
         "*.lua"
-    ]
+    ],
+    "tags": ["game-engine"]
 }

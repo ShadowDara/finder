@@ -1,4 +1,3 @@
-// Struct for AWS CDK Project
 {
     "description": "AWS Cloud Development Kit",
     "name": "*",
@@ -12,5 +11,10 @@
     "files": [
         "cdk.json",
         "package.json"
-    ]
+    ],
+    "tags": [
+        "aws",
+        "npm"
+    ],
+    "min_version": "0.3.14"
 }

@@ -1,4 +1,3 @@
-// Struct for a Webpack Project
 {
     "description": "Webpack module bundler",
     "name": "*",
@@ -12,5 +11,10 @@
     "files": [
         "webpack.config.js",
         "package.json"
-    ]
+    ],
+    "tags": [
+        "web",
+        "npm"
+    ],
+    "min_version": "0.3.14"
 }

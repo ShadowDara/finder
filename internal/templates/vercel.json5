@@ -1,9 +1,13 @@
-// Struct for a Vercel Project
 {
     "description": "Vercel deployment configuration",
     "name": "*",
     "folders": [],
     "files": [
         "vercel.json"
-    ]
+    ],
+    "tags": [
+        "web",
+        "deployment"
+    ],
+    "min_version": "0.3.14"
 }

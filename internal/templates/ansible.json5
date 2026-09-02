@@ -1,4 +1,3 @@
-// Struct for an Ansible Project
 {
     "description": "Ansible automation project",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "ansible.cfg",
         "*.yml"
-    ]
+    ],
+    "min_version": "0.3.14"
 }

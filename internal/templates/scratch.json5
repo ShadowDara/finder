@@ -5,5 +5,6 @@
     "folders": [],
     "files": [
         "*.sb3"
-    ]
+    ],
+    "tags": ["game-engine"]
 }
