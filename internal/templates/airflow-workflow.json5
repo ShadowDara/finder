@@ -1,1 +1,1 @@
-{"description":"Apache Airflow data workflow orchestration platform","files":["airflow.cfg","requirements.txt","docker-compose.yml"],"folders":[{"files":["*.py"],"folders":[],"name":"dags"},{"files":["*.py"],"folders":[],"name":"plugins"}],"name":"*"}
+{"description":"Apache Airflow data workflow orchestration platform","files":["airflow.cfg","requirements.txt","docker-compose.yml"],"folders":[{"files":["*.py"],"folders":[],"name":"dags"},{"files":["*.py"],"folders":[],"name":"plugins"}],"min_version":"0.3.15","name":"*"}

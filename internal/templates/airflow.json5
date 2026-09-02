@@ -1,1 +1,1 @@
-{"description":"Apache Airflow workflow orchestration","files":["airflow.cfg","requirements.txt"],"folders":[{"files":[],"folders":[],"name":"dags"}],"name":"*"}
+{"description":"Apache Airflow workflow orchestration","files":["airflow.cfg","requirements.txt"],"folders":[{"files":[],"folders":[],"name":"dags"}],"min_version":"0.3.15","name":"*"}

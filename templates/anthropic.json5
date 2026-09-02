@@ -1,4 +1,3 @@
-// Anthropic Claude AI project template
 {
     "description": "Anthropic Claude AI integration project",
     "name": "*",
@@ -6,12 +5,20 @@
         {
             "name": "src",
             "folders": [],
-            "files": ["*.ts", "*.js", "*.py"]
+            "files": [
+                "*.ts",
+                "*.js",
+                "*.py"
+            ]
         },
         {
             "name": "tests",
             "folders": [],
-            "files": ["*.test.ts", "*.test.js", "*.test.py"]
+            "files": [
+                "*.test.ts",
+                "*.test.js",
+                "*.test.py"
+            ]
         }
     ],
     "files": [
@@ -20,5 +27,6 @@
         "requirements.txt",
         "package.json",
         ".env.example"
-    ]
+    ],
+    "min_version": "0.3.15"
 }

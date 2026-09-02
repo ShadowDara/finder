@@ -1,4 +1,3 @@
-// Struct for an Apache Airflow Project
 {
     "description": "Apache Airflow workflow orchestration",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "airflow.cfg",
         "requirements.txt"
-    ]
+    ],
+    "min_version": "0.3.15"
 }
