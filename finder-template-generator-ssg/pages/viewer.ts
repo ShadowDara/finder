@@ -54,6 +54,10 @@ let popup = `
     <div class="modal-footer">
       <span id="modal-size"></span>
 
+      <a class="copy-button" type="button" id="modal-edit" >
+        Edit
+      </a>
+
       <button class="copy-button" id="modal-copy" type="button">
         Copy
       </button>
@@ -289,6 +293,10 @@ function renderTemplates(
     .map(([name, content]) => {
       const tags = getTags(content);
 
+      const editUrl =
+        `../creator?template=${encodeURIComponent(content)}` +
+        `&filename=${encodeURIComponent(name)}`;
+
       return `
         <article
           class="template-card"
@@ -342,6 +350,8 @@ function renderTemplates(
           <div class="card-footer">
             <span>${content.length.toLocaleString()} Zeichen</span>
 
+            <a href="${editUrl}" class="copy-button">Edit</a>
+
             <button
               class="copy-button"
               data-content="${encodeURIComponent(content)}"
@@ -370,6 +380,7 @@ function setupSelector(el: HTMLDivElement) {
   const modalSize = el.querySelector<HTMLElement>("#modal-size");
   const modalClose = el.querySelector<HTMLButtonElement>("#modal-close");
   const modalCopy = el.querySelector<HTMLButtonElement>("#modal-copy");
+  const modalEdit = el.querySelector<HTMLAnchorElement>("#modal-edit");
 
   let activeFilter = "all";
   let activeTag = "all";
@@ -473,6 +484,8 @@ function setupSelector(el: HTMLDivElement) {
   // Template-Modal
   cards.forEach((card) => {
     card.addEventListener("click", (event) => {
+      // Open Modal
+
       const target = event.target as HTMLElement;
 
       // Buttons innerhalb der Card sollen ihre eigene Funktion behalten
@@ -506,6 +519,12 @@ function setupSelector(el: HTMLDivElement) {
       if (modalCopy) {
         modalCopy.dataset.content = encodeURIComponent(content);
         modalCopy.textContent = "Copy";
+      }
+
+      if (modalEdit) {
+        modalEdit.href =
+          `../creator?template=${encodeURIComponent(JSON.stringify(JSON.parse(content), null, 0))}` +
+          `&filename=${encodeURIComponent(title)}`;
       }
 
       modal.showModal();

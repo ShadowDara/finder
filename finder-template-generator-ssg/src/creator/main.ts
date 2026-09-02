@@ -14,6 +14,7 @@ import {
 export function renderCreator(app: HTMLDivElement) {
   type Selection = { kind: "folder" | "file"; id: string } | null;
 
+  let filename: string = "new file";
   let root: FolderNode = newRoot();
   let selection: Selection = { kind: "folder", id: root.id };
   let importError: string | null = null;
@@ -21,6 +22,11 @@ export function renderCreator(app: HTMLDivElement) {
   let createbutton = "";
 
   let servermode = false;
+
+  const params = new URLSearchParams(window.location.search);
+
+  const template = params.get("template");
+  const filname = params.get("filename");
 
   if (import.meta.env.MODE != "static") {
     servermode = true;
@@ -128,7 +134,7 @@ export function renderCreator(app: HTMLDivElement) {
   }
 
   function frageDateiname() {
-    const dateiname = prompt("Wie soll die Datei heißen?", "meine-datei");
+    const dateiname = prompt("Wie soll die Datei heißen?", filename);
 
     // if (dateiname) {
     //   alert("Dateiname: " + dateiname);
@@ -628,6 +634,20 @@ export function renderCreator(app: HTMLDivElement) {
         importErrorEl.textContent = `Couldn't parse that JSON: ${importError}`;
       }
     });
+
+  // Import Template / Filename from URL
+  if (filname != null) {
+    filename = filname;
+  }
+
+  if (template != null) {
+    try {
+      root = parseFolder(JSON.parse(template));
+      selection = { kind: "folder", id: root.id };
+    } catch (error) {
+      console.error("Could not load template from URL:", error);
+    }
+  }
 
   render();
 }
