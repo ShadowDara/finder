@@ -1,0 +1,9 @@
+// Struct for an OpenTelemetry Project
+{
+    "description": "OpenTelemetry observability framework",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "otel-collector-config.yml"
+    ]
+}

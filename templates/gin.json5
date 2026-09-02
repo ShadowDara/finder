@@ -1,0 +1,16 @@
+// Struct for a Gin Project
+{
+    "description": "Gin web framework for Go",
+    "name": "*",
+    "folders": [
+        {
+            "name": "routes",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "main.go",
+        "go.mod"
+    ]
+}

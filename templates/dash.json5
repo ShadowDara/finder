@@ -1,0 +1,29 @@
+{
+    "description": "Plotly Dash Python framework for interactive dashboards",
+    "name": "*",
+    "folders": [
+        {
+            "name": "assets",
+            "folders": [],
+            "files": [
+                "*.css",
+                "*.js"
+            ]
+        },
+        {
+            "name": "callbacks",
+            "folders": [],
+            "files": [
+                "*.py"
+            ]
+        }
+    ],
+    "files": [
+        "app.py",
+        "requirements.txt"
+    ],
+    "tags": [
+        "python"
+    ],
+    "min_version": "0.3.14"
+}

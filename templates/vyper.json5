@@ -1,0 +1,21 @@
+// Vyper smart contract language (Python-like)
+{
+    "description": "Vyper secure smart contract language for Ethereum",
+    "name": "*",
+    "folders": [
+        {
+            "name": "contracts",
+            "folders": [],
+            "files": ["*.vy"]
+        },
+        {
+            "name": "tests",
+            "folders": [],
+            "files": ["*.py"]
+        }
+    ],
+    "files": [
+        "vyper.config.yaml",
+        "requirements.txt"
+    ]
+}

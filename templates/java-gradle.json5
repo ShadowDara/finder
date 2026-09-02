@@ -1,0 +1,10 @@
+// Struct for a Java Gradle Project
+{
+    "description": "Java project with Gradle build tool",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "build.gradle",
+        "settings.gradle"
+    ]
+}

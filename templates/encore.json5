@@ -1,0 +1,15 @@
+// Struct for an Encore Project
+{
+    "description": "Encore backend development platform",
+    "name": "*",
+    "folders": [
+        {
+            "name": "encore.app",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "encore.gen.cue"
+    ]
+}

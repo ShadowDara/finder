@@ -1,0 +1,15 @@
+// Struct for a Pijul VCS Project
+{
+    "description": "Pijul version control system",
+    "name": "*",
+    "folders": [
+        {
+            "name": ".pijul",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "pijul.toml"
+    ]
+}

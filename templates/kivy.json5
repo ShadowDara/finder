@@ -1,0 +1,10 @@
+// Struct for a Kivy Project
+{
+    "description": "Kivy Python mobile framework",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "main.py",
+        "*.kv"
+    ]
+}

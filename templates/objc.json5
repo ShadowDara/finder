@@ -1,0 +1,11 @@
+// Struct for an Objective-C Project
+{
+    "description": "Objective-C macOS/iOS project",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "*.xcodeproj",
+        "*.m",
+        "*.h"
+    ]
+}

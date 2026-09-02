@@ -1,0 +1,9 @@
+// Struct for an Elastic Stack Project
+{
+    "description": "ELK Stack logging and monitoring",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "docker-compose.yml"
+    ]
+}

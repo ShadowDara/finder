@@ -1,0 +1,17 @@
+// Struct for a SvelteKit Project
+{
+    "description": "SvelteKit full-stack framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "svelte.config.js",
+        "vite.config.ts",
+        "package.json"
+    ]
+}

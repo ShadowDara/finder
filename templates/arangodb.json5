@@ -1,0 +1,9 @@
+// Struct for an ArangoDB Project
+{
+    "description": "ArangoDB multi-model database",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "docker-compose.yml"
+    ]
+}

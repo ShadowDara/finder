@@ -1,0 +1,11 @@
+{
+    "name": "*",
+    "folders": [],
+    "files": [
+        "go.mod"
+    ],
+    "tags": [
+        "go"
+    ],
+    "min_version": "0.3.14"
+}

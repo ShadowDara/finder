@@ -1,0 +1,16 @@
+// Struct for an Actix-web Project
+{
+    "description": "Actix-web Rust web framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "Cargo.toml",
+        "main.rs"
+    ]
+}

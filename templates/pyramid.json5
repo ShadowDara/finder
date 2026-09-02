@@ -1,0 +1,16 @@
+// Struct for a Pyramid Project
+{
+    "description": "Pyramid Python web framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "myapp",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "setup.py",
+        "requirements.txt"
+    ]
+}

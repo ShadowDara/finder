@@ -1,0 +1,10 @@
+// Struct for OCI Container Image
+{
+    "description": "Open Container Initiative image",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "Dockerfile",
+        "*.oci"
+    ]
+}

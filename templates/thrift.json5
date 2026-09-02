@@ -1,0 +1,9 @@
+// Struct for an Apache Thrift Project
+{
+    "description": "Apache Thrift RPC framework",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "*.thrift"
+    ]
+}

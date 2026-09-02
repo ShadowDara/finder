@@ -1,0 +1,16 @@
+// Struct for a Sanity CMS Project
+{
+    "description": "Sanity.io content management",
+    "name": "*",
+    "folders": [
+        {
+            "name": "schemas",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "sanity.config.ts",
+        "package.json"
+    ]
+}

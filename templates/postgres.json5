@@ -1,0 +1,10 @@
+// Struct for a PostgreSQL Database Project
+{
+    "description": "PostgreSQL database project",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "*.sql",
+        "docker-compose.yml"
+    ]
+}

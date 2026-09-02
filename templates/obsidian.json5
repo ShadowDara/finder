@@ -1,0 +1,10 @@
+{
+    "name": "*",
+    "description": "Structure for an Obsidian Markdown Vault",
+    "folders": [
+        {
+            "name": ".obsidian"
+        }
+    ],
+    "min_version": "0.3.14"
+}

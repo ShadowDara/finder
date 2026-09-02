@@ -1,0 +1,16 @@
+// Struct for a Mapbox Project
+{
+    "description": "Mapbox mapping platform",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "package.json",
+        ".mapboxrc"
+    ]
+}

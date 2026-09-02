@@ -1,0 +1,12 @@
+{
+    "description": "The Folder Struct for Godot Game Engine Projects",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "project.godot"
+    ],
+    "tags": [
+        "game-engine"
+    ],
+    "min_version": "0.3.14"
+}

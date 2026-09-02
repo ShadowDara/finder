@@ -1,0 +1,16 @@
+// Struct for a Julia Programming Project
+{
+    "description": "Julia programming language project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "Project.toml",
+        "*.jl"
+    ]
+}

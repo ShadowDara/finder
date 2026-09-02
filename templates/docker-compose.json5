@@ -1,0 +1,13 @@
+{
+    "description": "Docker Compose multi-container setup",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "docker-compose.yml",
+        "docker-compose.yaml"
+    ],
+    "tags": [
+        "docker"
+    ],
+    "min_version": "0.3.14"
+}

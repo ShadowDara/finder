@@ -1,0 +1,16 @@
+// Struct for a Jest Testing Framework
+{
+    "description": "Jest JavaScript testing framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "__tests__",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "jest.config.js",
+        "package.json"
+    ]
+}

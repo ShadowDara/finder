@@ -1,0 +1,16 @@
+// Struct for a Protractor Testing Framework
+{
+    "description": "Protractor Angular E2E testing",
+    "name": "*",
+    "folders": [
+        {
+            "name": "e2e",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "protractor.conf.js",
+        "package.json"
+    ]
+}

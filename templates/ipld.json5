@@ -1,0 +1,9 @@
+// Struct for an IPLD Project
+{
+    "description": "InterPlanetary Linked Data",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "*.ipld"
+    ]
+}

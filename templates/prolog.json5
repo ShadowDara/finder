@@ -1,0 +1,10 @@
+// Struct for a Prolog Project
+{
+    "description": "Prolog logic programming",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "*.pl",
+        "*.pro"
+    ]
+}

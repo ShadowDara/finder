@@ -1,0 +1,16 @@
+// Struct for a Spring Boot Project
+{
+    "description": "Java Spring Boot web application",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "pom.xml",
+        "*.java"
+    ]
+}

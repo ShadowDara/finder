@@ -1,0 +1,10 @@
+// Struct for a Bazel Build Project
+{
+    "description": "Bazel build system project",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "BUILD",
+        "WORKSPACE"
+    ]
+}

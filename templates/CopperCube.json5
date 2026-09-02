@@ -1,0 +1,9 @@
+{
+    "description": "A Struct for CopperCube6 Game Engine Projects",
+    "name": "*",
+    "files": [
+        "*.ccb"
+    ],
+    "min_version": "0.3.14",
+    "tags": ["game-engine"]
+}

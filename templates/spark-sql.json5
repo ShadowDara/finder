@@ -1,0 +1,21 @@
+// Apache Spark SQL analytics
+{
+    "description": "Apache Spark SQL distributed SQL query engine",
+    "name": "*",
+    "folders": [
+        {
+            "name": "sql",
+            "folders": [],
+            "files": ["*.sql"]
+        },
+        {
+            "name": "scripts",
+            "folders": [],
+            "files": ["*.py", "*.scala"]
+        }
+    ],
+    "files": [
+        "spark-sql.config.yaml",
+        "requirements.txt"
+    ]
+}

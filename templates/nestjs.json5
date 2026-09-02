@@ -1,0 +1,16 @@
+// Struct for a NestJS Project
+{
+    "description": "NestJS Node.js framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "nest-cli.json",
+        "package.json"
+    ]
+}

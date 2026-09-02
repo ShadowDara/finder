@@ -1,0 +1,22 @@
+// Anchor Solana smart contract framework
+{
+    "description": "Anchor Solana blockchain smart contract framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "programs",
+            "folders": [],
+            "files": ["*.rs"]
+        },
+        {
+            "name": "tests",
+            "folders": [],
+            "files": ["*.ts", "*.js"]
+        }
+    ],
+    "files": [
+        "Anchor.toml",
+        "Cargo.toml",
+        ".env.solana"
+    ]
+}

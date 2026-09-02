@@ -1,0 +1,15 @@
+// Struct for a Codecept Project
+{
+    "description": "CodeceptJS end-to-end testing",
+    "name": "*",
+    "folders": [
+        {
+            "name": "tests",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "codecept.conf.js"
+    ]
+}

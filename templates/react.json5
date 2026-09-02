@@ -1,0 +1,20 @@
+{
+    "description": "React JavaScript/TypeScript web application",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "package.json",
+        "*.jsx"
+    ],
+    "tags": [
+        "web",
+        "npm"
+    ],
+    "min_version": "0.3.14"
+}

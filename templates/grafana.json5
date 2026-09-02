@@ -1,0 +1,10 @@
+// Struct for a Grafana Project
+{
+    "description": "Grafana monitoring and visualization",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "docker-compose.yml",
+        "provisioning"
+    ]
+}

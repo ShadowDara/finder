@@ -1,0 +1,16 @@
+// Struct for a Machine Learning/TensorFlow Project
+{
+    "description": "TensorFlow machine learning project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "models",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "requirements.txt",
+        "*.py"
+    ]
+}

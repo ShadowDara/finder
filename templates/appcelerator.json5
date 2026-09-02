@@ -1,0 +1,15 @@
+// Struct for an Appcelerator Project
+{
+    "description": "Appcelerator Titanium mobile",
+    "name": "*",
+    "folders": [
+        {
+            "name": "Resources",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "tiapp.xml"
+    ]
+}

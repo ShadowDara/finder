@@ -1,0 +1,20 @@
+{
+    "description": "Vitest Vite-native unit test framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "tests",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "vitest.config.ts",
+        "package.json"
+    ],
+    "tags": [
+        "npm",
+        "test"
+    ],
+    "min_version": "0.3.14"
+}

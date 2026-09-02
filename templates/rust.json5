@@ -1,0 +1,9 @@
+// Struct for a Rust Project
+{
+    "name": "*",
+    "folders": [],
+    "files": [
+        "Cargo.toml",
+        "Cargo.lock"
+    ]
+}

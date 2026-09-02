@@ -1,0 +1,9 @@
+// Struct for a Datadog Project
+{
+    "description": "Datadog monitoring and analytics",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "docker-compose.yml"
+    ]
+}

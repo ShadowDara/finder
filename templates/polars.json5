@@ -1,0 +1,16 @@
+// Polars data manipulation
+{
+    "description": "Polars fast dataframe library written in Rust",
+    "name": "*",
+    "folders": [
+        {
+            "name": "data",
+            "folders": [],
+            "files": ["*.parquet", "*.csv"]
+        }
+    ],
+    "files": [
+        "requirements.txt",
+        "polars.config.yaml"
+    ]
+}

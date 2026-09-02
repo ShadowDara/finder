@@ -1,0 +1,15 @@
+// Struct for a Clojure Project
+{
+    "description": "Clojure programming language project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "project.clj"
+    ]
+}

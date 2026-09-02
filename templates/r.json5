@@ -1,0 +1,16 @@
+// Struct for an R Programming Project
+{
+    "description": "R statistical computing project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "R",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "DESCRIPTION",
+        "*.R"
+    ]
+}

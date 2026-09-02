@@ -1,0 +1,16 @@
+// Struct for a Dagster Project
+{
+    "description": "Dagster data orchestration",
+    "name": "*",
+    "folders": [
+        {
+            "name": "dagster_project",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "pyproject.toml",
+        "requirements.txt"
+    ]
+}

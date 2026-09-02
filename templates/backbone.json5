@@ -1,0 +1,16 @@
+// Struct for a Backbone.js Project
+{
+    "description": "Backbone.js JavaScript framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "js",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "package.json",
+        "*.js"
+    ]
+}

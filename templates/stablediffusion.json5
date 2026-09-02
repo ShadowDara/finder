@@ -1,0 +1,21 @@
+// Stable Diffusion AI image generation
+{
+    "description": "Stable Diffusion AI image generation model",
+    "name": "*",
+    "folders": [
+        {
+            "name": "models",
+            "folders": [],
+            "files": ["*.safetensors", "*.ckpt"]
+        },
+        {
+            "name": "prompts",
+            "folders": [],
+            "files": ["*.txt", "*.json"]
+        }
+    ],
+    "files": [
+        "config.yaml",
+        "requirements.txt"
+    ]
+}

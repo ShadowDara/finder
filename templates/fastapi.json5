@@ -1,0 +1,10 @@
+// Struct for a FastAPI Project
+{
+    "description": "Python FastAPI web framework project",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "main.py",
+        "requirements.txt"
+    ]
+}

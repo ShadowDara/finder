@@ -1,0 +1,10 @@
+// Struct for a Lisp Project
+{
+    "description": "Lisp programming language",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "*.lisp",
+        "*.cl"
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "description": "Groovy programming language project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "build.gradle",
+        "*.groovy"
+    ],
+    "min_version": "0.3.14"
+}

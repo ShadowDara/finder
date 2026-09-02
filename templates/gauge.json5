@@ -1,0 +1,15 @@
+// Struct for a Gauge Framework
+{
+    "description": "Gauge test automation framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "specs",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "manifest.json"
+    ]
+}

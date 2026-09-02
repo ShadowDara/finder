@@ -1,0 +1,9 @@
+// Struct for a Keycloak Project
+{
+    "description": "Keycloak identity management",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "docker-compose.yml"
+    ]
+}

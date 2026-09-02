@@ -1,0 +1,10 @@
+// Struct for a Scheme Project
+{
+    "description": "Scheme programming language",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "*.scm",
+        "*.ss"
+    ]
+}

@@ -1,0 +1,16 @@
+// Struct for a Nim Project
+{
+    "description": "Nim programming language project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "*.nim",
+        "*.nimble"
+    ]
+}

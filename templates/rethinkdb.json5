@@ -1,0 +1,9 @@
+// Struct for a RethinkDB Project
+{
+    "description": "RethinkDB real-time database",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "docker-compose.yml"
+    ]
+}

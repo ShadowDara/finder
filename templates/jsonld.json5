@@ -1,0 +1,10 @@
+// Struct for a JSON-LD Project
+{
+    "description": "JSON-LD linked data",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "*.jsonld",
+        "context.json"
+    ]
+}

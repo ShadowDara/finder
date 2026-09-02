@@ -1,0 +1,15 @@
+// Struct for a Protocol Buffers Project
+{
+    "description": "Protocol Buffers serialization",
+    "name": "*",
+    "folders": [
+        {
+            "name": "proto",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "*.proto"
+    ]
+}

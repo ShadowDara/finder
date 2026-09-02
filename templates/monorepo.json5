@@ -1,0 +1,16 @@
+// Struct for a Monorepo Project
+{
+    "description": "Monorepo project (multiple packages)",
+    "name": "*",
+    "folders": [
+        {
+            "name": "packages",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "package.json",
+        "yarn.lock"
+    ]
+}

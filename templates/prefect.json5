@@ -1,0 +1,17 @@
+// Prefect workflow automation
+{
+    "description": "Prefect modern data workflow automation",
+    "name": "*",
+    "folders": [
+        {
+            "name": "flows",
+            "folders": [],
+            "files": ["*.py"]
+        }
+    ],
+    "files": [
+        "prefect.yaml",
+        "requirements.txt",
+        ".prefect"
+    ]
+}

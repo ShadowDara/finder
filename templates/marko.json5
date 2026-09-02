@@ -1,0 +1,16 @@
+// Struct for a Marko Project
+{
+    "description": "Marko templating engine project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "package.json",
+        "*.marko"
+    ]
+}

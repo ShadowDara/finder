@@ -1,0 +1,15 @@
+// Struct for a JUnit Test Project
+{
+    "description": "Java JUnit test suite",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src/test",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "*Test.java"
+    ]
+}

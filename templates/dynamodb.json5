@@ -1,0 +1,9 @@
+// Struct for DynamoDB Project
+{
+    "description": "Amazon DynamoDB NoSQL database",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "dynamodb-local.sh"
+    ]
+}

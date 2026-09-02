@@ -1,0 +1,12 @@
+{
+    "name": "*",
+    "folders": [
+        {
+            "name": "out"
+        }
+    ],
+    "files": [
+        "CMakeLists.txt"
+    ],
+    "min_version": "0.3.14"
+}

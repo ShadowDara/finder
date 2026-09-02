@@ -1,0 +1,17 @@
+// Struct for a Svelte Project
+{
+    "description": "Svelte JavaScript framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "svelte.config.js",
+        "package.json",
+        "*.svelte"
+    ]
+}

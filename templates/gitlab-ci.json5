@@ -1,0 +1,9 @@
+// Struct for a GitLab CI Project
+{
+    "description": "GitLab CI/CD pipeline",
+    "name": "*",
+    "folders": [],
+    "files": [
+        ".gitlab-ci.yml"
+    ]
+}

@@ -1,0 +1,27 @@
+// Science research thesis project
+{
+    "description": "Academic research thesis and papers project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "chapters",
+            "folders": [],
+            "files": ["*.tex", "*.md"]
+        },
+        {
+            "name": "figures",
+            "folders": [],
+            "files": ["*.pdf", "*.png", "*.eps"]
+        },
+        {
+            "name": "data",
+            "folders": [],
+            "files": ["*.csv", "*.xlsx"]
+        }
+    ],
+    "files": [
+        "thesis.tex",
+        "references.bib",
+        "abstract.md"
+    ]
+}

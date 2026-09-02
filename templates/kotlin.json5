@@ -1,0 +1,16 @@
+// Struct for a Kotlin Project
+{
+    "description": "Kotlin programming language project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "build.gradle.kts",
+        "*.kt"
+    ]
+}

@@ -1,0 +1,9 @@
+// Struct for a Plasmic Project
+{
+    "description": "Plasmic headless visual builder",
+    "name": "*",
+    "folders": [],
+    "files": [
+        ".plasmic.json"
+    ]
+}

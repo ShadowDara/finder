@@ -1,0 +1,16 @@
+// Struct for an Eleventy Project
+{
+    "description": "Eleventy static site generator",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        ".eleventy.js",
+        "package.json"
+    ]
+}

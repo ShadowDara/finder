@@ -1,0 +1,15 @@
+// Struct for an Apache Flink Project
+{
+    "description": "Apache Flink stream processing",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "pom.xml"
+    ]
+}

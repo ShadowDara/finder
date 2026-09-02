@@ -1,0 +1,10 @@
+// Struct for a Conda Environment
+{
+    "description": "Conda Python environment project",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "environment.yml",
+        "environment.yaml"
+    ]
+}

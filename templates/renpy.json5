@@ -1,0 +1,24 @@
+{
+    "description": "A Folder Struct for RenPy Projects",
+    "name": "*",
+    "folders": [
+        {
+            "name": "game",
+            "folders": [
+                {
+                    "name": "gui"
+                },
+                {
+                    "name": "saves"
+                }
+            ],
+            "files": [
+                "options.rpy",
+                "screens.rpy",
+                "script.rpy"
+            ]
+        }
+    ],
+    "min_version": "0.3.14",
+    "tags": ["game-engine"]
+}

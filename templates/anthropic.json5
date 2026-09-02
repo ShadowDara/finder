@@ -1,0 +1,24 @@
+// Anthropic Claude AI project template
+{
+    "description": "Anthropic Claude AI integration project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": ["*.ts", "*.js", "*.py"]
+        },
+        {
+            "name": "tests",
+            "folders": [],
+            "files": ["*.test.ts", "*.test.js", "*.test.py"]
+        }
+    ],
+    "files": [
+        "claude.json",
+        "anthropic.config.*",
+        "requirements.txt",
+        "package.json",
+        ".env.example"
+    ]
+}

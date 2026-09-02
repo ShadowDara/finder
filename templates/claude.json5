@@ -1,0 +1,23 @@
+{
+    "description": "Claude AI API usage project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "prompts",
+            "folders": [],
+            "files": [
+                "*.md",
+                "*.txt"
+            ]
+        }
+    ],
+    "files": [
+        "claude.config.yaml",
+        "requirements.txt",
+        ".env.claude"
+    ],
+    "tags": [
+        "ai"
+    ],
+    "min_version": "0.3.14"
+}

@@ -1,0 +1,15 @@
+// Struct for a Mercurial Project
+{
+    "description": "Mercurial version control",
+    "name": "*",
+    "folders": [
+        {
+            "name": ".hg",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        ".hgignore"
+    ]
+}

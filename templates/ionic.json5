@@ -1,0 +1,16 @@
+// Struct for an Ionic Project
+{
+    "description": "Ionic cross-platform mobile application",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "ionic.config.json",
+        "package.json"
+    ]
+}

@@ -1,0 +1,16 @@
+// WASI WebAssembly System Interface
+{
+    "description": "WASI WebAssembly System Interface project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": ["*.rs", "*.c", "*.wat"]
+        }
+    ],
+    "files": [
+        "Cargo.toml",
+        "wasi.config.yaml"
+    ]
+}

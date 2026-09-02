@@ -1,0 +1,10 @@
+// Struct for NATS Project
+{
+    "description": "NATS messaging system",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "docker-compose.yml",
+        "nats.conf"
+    ]
+}

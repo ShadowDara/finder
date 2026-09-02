@@ -1,0 +1,16 @@
+{
+    "description": "Ansible automation project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "playbooks",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "ansible.cfg",
+        "*.yml"
+    ],
+    "min_version": "0.3.14"
+}

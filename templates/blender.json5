@@ -1,0 +1,9 @@
+{
+    "description": "Blender 3D design project",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "*.blend"
+    ],
+    "min_version": "0.3.14"
+}

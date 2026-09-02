@@ -1,0 +1,10 @@
+// Struct for Google Cloud Project
+{
+    "description": "Google Cloud Platform project",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "app.yaml",
+        "*.json"
+    ]
+}

@@ -1,0 +1,24 @@
+// OpenAI ChatGPT/GPT API integration project
+{
+    "description": "OpenAI ChatGPT or GPT API integration project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": ["*.ts", "*.js", "*.py"]
+        },
+        {
+            "name": "prompts",
+            "folders": [],
+            "files": ["*.txt", "*.md", "*.json"]
+        }
+    ],
+    "files": [
+        "openai.config.*",
+        ".env.openai",
+        "gpt-settings.json",
+        "requirements.txt",
+        "package.json"
+    ]
+}

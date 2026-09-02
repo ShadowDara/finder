@@ -1,0 +1,10 @@
+// Struct for a WebAssembly Project
+{
+    "description": "WebAssembly module project",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "*.wasm",
+        "Cargo.toml"
+    ]
+}

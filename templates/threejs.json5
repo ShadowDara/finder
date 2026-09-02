@@ -1,0 +1,19 @@
+{
+    "description": "Three.js 3D JavaScript library",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "package.json",
+        "*.js"
+    ],
+    "tags": [
+        "game-engine"
+    ],
+    "min_version": "0.3.14"
+}

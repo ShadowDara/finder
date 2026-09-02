@@ -1,0 +1,20 @@
+{
+    "description": "Visual Studio Code extension",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "package.json",
+        "extension.js"
+    ],
+    "tags": [
+        "npm",
+        "js"
+    ],
+    "min_version": "0.3.14"
+}

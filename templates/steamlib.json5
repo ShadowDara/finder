@@ -1,0 +1,12 @@
+{
+  "name": "steamapps",
+  "folders": [
+    { "name": "common" },
+    { "name": "downloading" },
+    { "name": "shadercache" },
+    { "name": "temp" },
+    { "name": "workshop" }
+  ],
+  "tags": ["libary"],
+  "min_version": "0.3.14"
+}

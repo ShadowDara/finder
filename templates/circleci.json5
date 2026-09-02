@@ -1,0 +1,15 @@
+// Struct for a CircleCI Project
+{
+    "description": "CircleCI CI/CD pipeline",
+    "name": "*",
+    "folders": [
+        {
+            "name": ".circleci",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "config.yml"
+    ]
+}

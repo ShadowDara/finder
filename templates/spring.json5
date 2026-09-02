@@ -1,0 +1,16 @@
+// Struct for a Java Spring Project
+{
+    "description": "Java Spring Framework project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "pom.xml",
+        "build.gradle"
+    ]
+}

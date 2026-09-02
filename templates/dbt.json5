@@ -1,0 +1,15 @@
+// Struct for a dbt Project
+{
+    "description": "dbt data transformation",
+    "name": "*",
+    "folders": [
+        {
+            "name": "models",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "dbt_project.yml"
+    ]
+}

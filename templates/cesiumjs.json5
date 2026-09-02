@@ -1,0 +1,15 @@
+// Struct for a Cesium.js Project
+{
+    "description": "Cesium.js GIS mapping library",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "package.json"
+    ]
+}

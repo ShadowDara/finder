@@ -1,0 +1,16 @@
+// Struct for a GraphQL Project
+{
+    "description": "GraphQL API project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "schema",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "*.graphql",
+        "package.json"
+    ]
+}

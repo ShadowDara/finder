@@ -1,0 +1,13 @@
+{
+    "description": "AWS Serverless Application Model",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "template.yaml",
+        "template.yml"
+    ],
+    "tags": [
+        "aws"
+    ],
+    "min_version": "0.3.14"
+}

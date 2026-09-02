@@ -1,0 +1,16 @@
+// DuckDB analytics database
+{
+    "description": "DuckDB embedded SQL database for analytics",
+    name: "*",
+    folders: [
+        {
+            name: "queries",
+            folders: [],
+            files: ["*.sql"]
+        }
+    ],
+    files: [
+        "duckdb.config.yaml",
+        "requirements.txt"
+    ]
+}

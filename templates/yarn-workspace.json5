@@ -1,0 +1,20 @@
+{
+    "description": "Yarn workspace monorepo",
+    "name": "*",
+    "folders": [
+        {
+            "name": "packages",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "package.json",
+        "yarn.lock"
+    ],
+    "tags": [
+        "npm",
+        "js"
+    ],
+    "min_version": "0.3.14"
+}

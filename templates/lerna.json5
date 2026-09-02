@@ -1,0 +1,16 @@
+// Struct for a Lerna Monorepo
+{
+    "description": "Lerna monorepo project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "packages",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "lerna.json",
+        "package.json"
+    ]
+}

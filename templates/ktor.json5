@@ -1,0 +1,16 @@
+// Struct for a Ktor Project
+{
+    "description": "Ktor Kotlin web framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "build.gradle.kts",
+        "*.kt"
+    ]
+}

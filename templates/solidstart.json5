@@ -1,0 +1,16 @@
+// Struct for a SolidStart Project
+{
+    "description": "SolidStart full-stack meta-framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "app.config.ts",
+        "package.json"
+    ]
+}

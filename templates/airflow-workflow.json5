@@ -1,0 +1,22 @@
+// Apache Airflow workflow orchestration
+{
+    "description": "Apache Airflow data workflow orchestration platform",
+    "name": "*",
+    "folders": [
+        {
+            "name": "dags",
+            "folders": [],
+            "files": ["*.py"]
+        },
+        {
+            "name": "plugins",
+            "folders": [],
+            "files": ["*.py"]
+        }
+    ],
+    "files": [
+        "airflow.cfg",
+        "requirements.txt",
+        "docker-compose.yml"
+    ]
+}

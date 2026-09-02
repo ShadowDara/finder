@@ -1,0 +1,16 @@
+// Struct for a COBOL Project
+{
+    "description": "COBOL legacy business application",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "*.cob",
+        "*.cobol"
+    ]
+}

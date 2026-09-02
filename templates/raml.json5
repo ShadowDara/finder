@@ -1,0 +1,9 @@
+// Struct for RAML API Project
+{
+    "description": "RAML API modeling language",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "*.raml"
+    ]
+}

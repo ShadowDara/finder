@@ -1,0 +1,16 @@
+// Struct for a Documentation Project
+{
+    "description": "Project documentation (Sphinx, MkDocs, etc)",
+    "name": "*",
+    "folders": [
+        {
+            "name": "docs",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "*.md",
+        "mkdocs.yml"
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "description": "Python Django web framework project",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "manage.py",
+        "requirements.txt"
+    ],
+    "tags": [
+        "python",
+        "web"
+    ],
+    "min_version": "0.3.14"
+}

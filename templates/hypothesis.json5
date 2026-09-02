@@ -1,0 +1,16 @@
+// Struct for a Hypothesis Testing Framework
+{
+    "description": "Hypothesis property-based testing",
+    "name": "*",
+    "folders": [
+        {
+            "name": "tests",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "requirements.txt",
+        "conftest.py"
+    ]
+}

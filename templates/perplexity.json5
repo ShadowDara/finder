@@ -1,0 +1,16 @@
+// Perplexity AI search
+{
+    "description": "Perplexity AI API integration",
+    "name": "*",
+    "folders": [
+        {
+            "name": "queries",
+            "folders": [],
+            "files": ["*.json"]
+        }
+    ],
+    "files": [
+        "perplexity.config.yaml",
+        "requirements.txt"
+    ]
+}

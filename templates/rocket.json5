@@ -1,0 +1,16 @@
+// Struct for a Rocket Project
+{
+    "description": "Rocket Rust web framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "Cargo.toml",
+        "Rocket.toml"
+    ]
+}

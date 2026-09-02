@@ -1,0 +1,15 @@
+// Struct for Chef Infrastructure
+{
+    "description": "Chef infrastructure automation",
+    "name": "*",
+    "folders": [
+        {
+            "name": "cookbooks",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "Berksfile"
+    ]
+}

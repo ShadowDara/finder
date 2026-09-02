@@ -1,0 +1,18 @@
+// Struct for an Astro Project
+{
+    "description": "Astro static site builder",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "astro.config.mjs",
+        "package.json"
+    ],
+    "tags": ["web", "npm"],
+    "min_version": "0.3.14"
+}

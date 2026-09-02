@@ -1,0 +1,20 @@
+{
+    "description": "Flask lightweight Python web framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "app",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "app.py",
+        "requirements.txt"
+    ],
+    "tags": [
+        "python",
+        "web"
+    ],
+    "min_version": "0.3.14"
+}

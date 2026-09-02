@@ -1,0 +1,26 @@
+{
+    "description": "Cloudflare Workers edge computing platform",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": [
+                "*.ts",
+                "*.js"
+            ]
+        }
+    ],
+    "files": [
+        "wrangler.toml",
+        "wrangler.json",
+        "package.json",
+        "tsconfig.json"
+    ],
+    "tags": [
+        "npm",
+        "js",
+        "ts"
+    ],
+    "min_version": "0.3.14"
+}

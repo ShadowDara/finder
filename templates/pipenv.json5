@@ -1,0 +1,10 @@
+// Struct for a Pipenv Project
+{
+    "description": "Pipenv Python dependency manager",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "Pipfile",
+        "Pipfile.lock"
+    ]
+}

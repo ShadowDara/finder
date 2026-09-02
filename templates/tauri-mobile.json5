@@ -1,0 +1,15 @@
+// Struct for a Tauri Mobile Project
+{
+    "description": "Tauri mobile app development",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src-tauri",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "tauri.conf.json"
+    ]
+}

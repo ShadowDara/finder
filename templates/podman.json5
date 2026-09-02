@@ -1,0 +1,10 @@
+// Struct for Podman Project
+{
+    "description": "Podman container management",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "Containerfile",
+        "podman-compose.yml"
+    ]
+}

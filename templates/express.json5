@@ -1,0 +1,16 @@
+// Struct for an Express.js Project
+{
+    "description": "Express.js Node.js web framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "routes",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "app.js",
+        "package.json"
+    ]
+}

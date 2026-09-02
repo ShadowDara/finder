@@ -1,0 +1,11 @@
+{
+    "description": "a Folder Struct for a GameMaker Project",
+    "name": "*",
+    "files": [
+        "*.yyp"
+    ],
+    "tags": [
+        "game-engine"
+    ],
+    "min_version": "0.3.14"
+}

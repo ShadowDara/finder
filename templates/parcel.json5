@@ -1,0 +1,16 @@
+// Struct for a Parcel Project
+{
+    "description": "Parcel zero-config bundler",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "package.json",
+        ".parcelrc"
+    ]
+}

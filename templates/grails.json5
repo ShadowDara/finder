@@ -1,0 +1,16 @@
+// Struct for a Grails Project
+{
+    "description": "Grails Groovy web framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "grails-app",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "build.gradle",
+        "grails-app"
+    ]
+}

@@ -1,0 +1,15 @@
+// Struct for a XCTest Project
+{
+    "description": "XCTest iOS unit testing",
+    "name": "*",
+    "folders": [
+        {
+            "name": "Tests",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "*.xcodeproj"
+    ]
+}

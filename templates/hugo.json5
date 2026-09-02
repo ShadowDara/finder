@@ -1,0 +1,19 @@
+{
+    "description": "Hugo static site generator",
+    "name": "*",
+    "folders": [
+        {
+            "name": "content",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "hugo.toml",
+        "config.toml"
+    ],
+    "tags": [
+        "web"
+    ],
+    "min_version": "0.3.14"
+}

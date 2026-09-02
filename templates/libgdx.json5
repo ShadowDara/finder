@@ -1,0 +1,15 @@
+// Struct for a Libgdx Project
+{
+    "description": "Libgdx game development framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "core",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "build.gradle"
+    ]
+}

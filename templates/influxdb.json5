@@ -1,0 +1,10 @@
+// Struct for an InfluxDB Project
+{
+    "description": "InfluxDB time-series database",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "docker-compose.yml",
+        "influxdb.conf"
+    ]
+}

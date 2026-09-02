@@ -1,0 +1,10 @@
+// Struct for Typesense Project
+{
+    "description": "Typesense open source search engine",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "docker-compose.yml",
+        "typesense.conf"
+    ]
+}

@@ -1,0 +1,16 @@
+// Struct for a Rails Project
+{
+    "description": "Ruby on Rails web framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "app",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "Gemfile",
+        "config.ru"
+    ]
+}

@@ -1,0 +1,16 @@
+// Struct for a D Programming Project
+{
+    "description": "D programming language project",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "dub.json",
+        "*.d"
+    ]
+}

@@ -1,0 +1,13 @@
+{
+    "description": "Docker container configuration",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "Dockerfile",
+        "docker-compose.yml"
+    ],
+    "tags": [
+        "docker"
+    ],
+    "min_version": "0.3.14"
+}

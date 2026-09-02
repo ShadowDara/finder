@@ -1,0 +1,16 @@
+// Struct for a Axum Project
+{
+    "description": "Axum Rust web framework",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "Cargo.toml",
+        "main.rs"
+    ]
+}

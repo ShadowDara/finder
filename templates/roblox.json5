@@ -1,0 +1,11 @@
+// Struct for a Lua Roblox Project
+{
+    "description": "Roblox game development",
+    "name": "*",
+    "folders": [],
+    "files": [
+        "*.rbxl",
+        "*.lua"
+    ],
+    "tags": ["game-engine"]
+}

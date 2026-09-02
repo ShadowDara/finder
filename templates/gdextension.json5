@@ -1,0 +1,15 @@
+// Struct for a Godot GDExtension
+{
+    "description": "Godot GDExtension C++ bindings",
+    "name": "*",
+    "folders": [
+        {
+            "name": "src",
+            "folders": [],
+            "files": []
+        }
+    ],
+    "files": [
+        "project.godot"
+    ]
+}

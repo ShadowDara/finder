@@ -1,0 +1,22 @@
+// Streamlit data apps
+{
+    "description": "Streamlit Python framework for data apps",
+    "name": "*",
+    "folders": [
+        {
+            "name": "pages",
+            "folders": [],
+            "files": ["*.py"]
+        },
+        {
+            "name": ".streamlit",
+            "folders": [],
+            "files": ["config.toml"]
+        }
+    ],
+    "files": [
+        "app.py",
+        "streamlit.app.toml",
+        "requirements.txt"
+    ]
+}
