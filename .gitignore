@@ -8,3 +8,6 @@ imgui.ini
 coverage
 
 *.dummy.json5
+/finder-template-generator-ssg/dist
+/finder-template-generator-ssg/node_modules
+/finder-template-generator
