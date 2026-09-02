@@ -1,0 +1,10 @@
+{
+  "name": "*",
+  "description": "a Folder Struct for a Project which uses samfiles",
+  "files": [
+    {
+      "name": "samfile"
+    }
+  ],
+  "min_version": "0.3.14"
+}

@@ -507,7 +507,8 @@ export function renderCreator(app: HTMLDivElement) {
           "Directory size",
           sizeFields(folder.size, (s) => {
             folder.size = s;
-            render();
+            renderTree();
+            renderPreview();
           }),
         ),
       );
@@ -523,7 +524,8 @@ export function renderCreator(app: HTMLDivElement) {
         "Name",
         textInput(file.name, (v) => {
           file.name = v;
-          render();
+          renderTree();
+          renderPreview();
         }),
       ),
     );
@@ -553,7 +555,8 @@ export function renderCreator(app: HTMLDivElement) {
         "File size",
         sizeFields(file.size, (s) => {
           file.size = s;
-          render();
+          renderTree();
+          renderPreview();
         }),
       ),
     );

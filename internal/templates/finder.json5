@@ -1,0 +1,1 @@
+{"description":"a Folder Struct for a Project with custom finder templates","folders":[{"folders":[{"files":[{"name":"*.json5"}],"name":"templates"}],"name":".finder"}],"min_version":"0.3.14","name":"*"}
