@@ -1,1 +1,1 @@
-{"description":"Bark text-to-speech generation model","files":["bark.config.yaml","requirements.txt"],"folders":[{"files":["*.wav","*.mp3"],"folders":[],"name":"audio"}],"name":"*"}
+{"description":"Bark text-to-speech generation model","files":["bark.config.yaml","requirements.txt"],"folders":[{"files":["*.wav","*.mp3"],"folders":[],"name":"audio"}],"min_version":"0.3.16","name":"*"}

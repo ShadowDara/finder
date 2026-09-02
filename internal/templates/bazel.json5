@@ -1,1 +1,1 @@
-{"description":"Bazel build system project","files":["BUILD","WORKSPACE"],"folders":[],"name":"*"}
+{"description":"Bazel build system project","files":["BUILD","WORKSPACE"],"folders":[],"min_version":"0.3.16","name":"*"}

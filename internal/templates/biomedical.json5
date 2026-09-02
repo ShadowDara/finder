@@ -1,1 +1,1 @@
-{"description":"Biomedical informatics and health data science","files":["requirements.txt","bioinfo.config.yaml"],"folders":[{"files":["*.csv","*.dicom","*.nii"],"folders":[],"name":"data"},{"files":["*.py","*.R"],"folders":[],"name":"analysis"}],"name":"*"}
+{"description":"Biomedical informatics and health data science","files":["requirements.txt","bioinfo.config.yaml"],"folders":[{"files":["*.csv","*.dicom","*.nii"],"folders":[],"name":"data"},{"files":["*.py","*.R"],"folders":[],"name":"analysis"}],"min_version":"0.3.16","name":"*"}

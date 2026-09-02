@@ -1,4 +1,3 @@
-// Automatic1111 Web UI
 {
     "description": "Automatic1111 Stable Diffusion Web UI",
     "name": "*",
@@ -6,16 +5,23 @@
         {
             "name": "models",
             "folders": [],
-            "files": ["*.safetensors", "*.ckpt"]
+            "files": [
+                "*.safetensors",
+                "*.ckpt"
+            ]
         },
         {
             "name": "outputs",
             "folders": [],
-            "files": ["*.png", "*.jpg"]
+            "files": [
+                "*.png",
+                "*.jpg"
+            ]
         }
     ],
     "files": [
         "webui.py",
         "requirements.txt"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

@@ -1,1 +1,1 @@
-{"description":"Chef infrastructure automation","files":["Berksfile"],"folders":[{"files":[],"folders":[],"name":"cookbooks"}],"name":"*"}
+{"description":"Chef infrastructure automation","files":["Berksfile"],"folders":[{"files":[],"folders":[],"name":"cookbooks"}],"min_version":"0.3.16","name":"*"}

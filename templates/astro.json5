@@ -1,4 +1,3 @@
-// Struct for an Astro Project
 {
     "description": "Astro static site builder",
     "name": "*",

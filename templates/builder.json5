@@ -1,9 +1,9 @@
-// Struct for a Builder.io Project
 {
     "description": "Builder.io visual development",
     "name": "*",
     "folders": [],
     "files": [
         ".builderio"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

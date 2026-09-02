@@ -1,1 +1,1 @@
-{"description":"Apache Beam unified data processing pipeline","files":["beam.config.yaml","requirements.txt","pom.xml"],"folders":[{"files":["*.py","*.java"],"folders":[],"name":"pipelines"}],"name":"*"}
+{"description":"Apache Beam unified data processing pipeline","files":["beam.config.yaml","requirements.txt","pom.xml"],"folders":[{"files":["*.py","*.java"],"folders":[],"name":"pipelines"}],"min_version":"0.3.16","name":"*"}

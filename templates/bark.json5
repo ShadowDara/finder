@@ -1,4 +1,3 @@
-// Bark text-to-speech
 {
     "description": "Bark text-to-speech generation model",
     "name": "*",
@@ -6,11 +5,15 @@
         {
             "name": "audio",
             "folders": [],
-            "files": ["*.wav", "*.mp3"]
+            "files": [
+                "*.wav",
+                "*.mp3"
+            ]
         }
     ],
     "files": [
         "bark.config.yaml",
         "requirements.txt"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

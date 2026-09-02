@@ -1,4 +1,3 @@
-// Struct for a Backbone.js Project
 {
     "description": "Backbone.js JavaScript framework",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "package.json",
         "*.js"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

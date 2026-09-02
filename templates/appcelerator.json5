@@ -1,4 +1,3 @@
-// Struct for an Appcelerator Project
 {
     "description": "Appcelerator Titanium mobile",
     "name": "*",
@@ -11,5 +10,6 @@
     ],
     "files": [
         "tiapp.xml"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

@@ -1,4 +1,3 @@
-// Boost C++ libraries
 {
     "description": "Boost C++ libraries project",
     "name": "*",
@@ -6,11 +5,15 @@
         {
             "name": "boost",
             "folders": [],
-            "files": ["*.hpp", "*.cpp"]
+            "files": [
+                "*.hpp",
+                "*.cpp"
+            ]
         }
     ],
     "files": [
         "CMakeLists.txt",
         "boost.config"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

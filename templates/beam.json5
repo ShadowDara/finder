@@ -1,4 +1,3 @@
-// Apache Beam data pipeline
 {
     "description": "Apache Beam unified data processing pipeline",
     "name": "*",
@@ -6,12 +5,16 @@
         {
             "name": "pipelines",
             "folders": [],
-            "files": ["*.py", "*.java"]
+            "files": [
+                "*.py",
+                "*.java"
+            ]
         }
     ],
     "files": [
         "beam.config.yaml",
         "requirements.txt",
         "pom.xml"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

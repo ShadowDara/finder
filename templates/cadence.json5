@@ -1,4 +1,3 @@
-// Cadence Flow blockchain language
 {
     "description": "Cadence Flow blockchain smart contract language",
     "name": "*",
@@ -6,11 +5,14 @@
         {
             "name": "cadence",
             "folders": [],
-            "files": ["*.cdc"]
+            "files": [
+                "*.cdc"
+            ]
         }
     ],
     "files": [
         "flow.json",
         ".env.flow"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

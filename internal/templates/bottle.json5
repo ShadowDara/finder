@@ -1,1 +1,1 @@
-{"description":"Bottle micro Python web framework","files":["app.py","requirements.txt"],"folders":[],"name":"*"}
+{"description":"Bottle micro Python web framework","files":["app.py","requirements.txt"],"folders":[],"min_version":"0.3.16","name":"*"}

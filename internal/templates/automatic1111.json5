@@ -1,1 +1,1 @@
-{"description":"Automatic1111 Stable Diffusion Web UI","files":["webui.py","requirements.txt"],"folders":[{"files":["*.safetensors","*.ckpt"],"folders":[],"name":"models"},{"files":["*.png","*.jpg"],"folders":[],"name":"outputs"}],"name":"*"}
+{"description":"Automatic1111 Stable Diffusion Web UI","files":["webui.py","requirements.txt"],"folders":[{"files":["*.safetensors","*.ckpt"],"folders":[],"name":"models"},{"files":["*.png","*.jpg"],"folders":[],"name":"outputs"}],"min_version":"0.3.16","name":"*"}

@@ -1,9 +1,9 @@
-// Struct for a Blockly Project
 {
     "description": "Google Blockly visual coding",
     "name": "*",
     "folders": [],
     "files": [
         "*.xml"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

@@ -1,1 +1,1 @@
-{"description":"Boost C++ libraries project","files":["CMakeLists.txt","boost.config"],"folders":[{"files":["*.hpp","*.cpp"],"folders":[],"name":"boost"}],"name":"*"}
+{"description":"Boost C++ libraries project","files":["CMakeLists.txt","boost.config"],"folders":[{"files":["*.hpp","*.cpp"],"folders":[],"name":"boost"}],"min_version":"0.3.16","name":"*"}

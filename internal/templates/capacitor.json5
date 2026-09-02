@@ -1,1 +1,1 @@
-{"description":"Capacitor cross-platform mobile","files":["capacitor.config.ts","package.json"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}
+{"description":"Capacitor cross-platform mobile","files":["capacitor.config.ts","package.json"],"folders":[{"files":[],"folders":[],"name":"src"}],"min_version":"0.3.16","name":"*"}

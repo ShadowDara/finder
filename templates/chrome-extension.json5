@@ -1,4 +1,3 @@
-// Struct for a Chrome Extension
 {
     "description": "Chrome browser extension",
     "name": "*",
@@ -6,5 +5,6 @@
     "files": [
         "manifest.json",
         "popup.html"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

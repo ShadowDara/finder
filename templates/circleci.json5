@@ -1,4 +1,3 @@
-// Struct for a CircleCI Project
 {
     "description": "CircleCI CI/CD pipeline",
     "name": "*",
@@ -11,5 +10,6 @@
     ],
     "files": [
         "config.yml"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

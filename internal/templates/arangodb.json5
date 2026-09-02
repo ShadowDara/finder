@@ -1,1 +1,1 @@
-{"description":"ArangoDB multi-model database","files":["docker-compose.yml"],"folders":[],"name":"*"}
+{"description":"ArangoDB multi-model database","files":["docker-compose.yml"],"folders":[],"min_version":"0.3.16","name":"*"}

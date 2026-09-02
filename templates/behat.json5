@@ -1,4 +1,3 @@
-// Struct for a Behat BDD Project
 {
     "description": "Behat behavior-driven development",
     "name": "*",
@@ -11,5 +10,6 @@
     ],
     "files": [
         "behat.yml"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

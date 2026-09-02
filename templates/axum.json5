@@ -1,4 +1,3 @@
-// Struct for a Axum Project
 {
     "description": "Axum Rust web framework",
     "name": "*",
@@ -12,5 +11,10 @@
     "files": [
         "Cargo.toml",
         "main.rs"
-    ]
+    ],
+    "tags": [
+        "web",
+        "rust"
+    ],
+    "min_version": "0.3.16"
 }

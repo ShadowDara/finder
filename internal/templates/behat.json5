@@ -1,1 +1,1 @@
-{"description":"Behat behavior-driven development","files":["behat.yml"],"folders":[{"files":[],"folders":[],"name":"features"}],"name":"*"}
+{"description":"Behat behavior-driven development","files":["behat.yml"],"folders":[{"files":[],"folders":[],"name":"features"}],"min_version":"0.3.16","name":"*"}

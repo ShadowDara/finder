@@ -1,1 +1,1 @@
-{"description":"AssemblyAI speech-to-text and AI processing","files":["assemblyai.config.yaml","requirements.txt",".env.assemblyai"],"folders":[{"files":["*.mp3","*.wav"],"folders":[],"name":"audio"}],"name":"*"}
+{"description":"AssemblyAI speech-to-text and AI processing","files":["assemblyai.config.yaml","requirements.txt",".env.assemblyai"],"folders":[{"files":["*.mp3","*.wav"],"folders":[],"name":"audio"}],"min_version":"0.3.16","name":"*"}
