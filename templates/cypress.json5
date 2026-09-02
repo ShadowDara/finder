@@ -1,4 +1,3 @@
-// Struct for a Cypress Testing Framework
 {
     "description": "Cypress end-to-end testing",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "cypress.config.ts",
         "package.json"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

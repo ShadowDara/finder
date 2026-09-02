@@ -1,1 +1,1 @@
-{"description":"CircleCI CI/CD pipeline","files":["config.yml"],"folders":[{"files":[],"folders":[],"name":".circleci"}],"name":"*"}
+{"description":"CircleCI CI/CD pipeline","files":["config.yml"],"folders":[{"files":[],"folders":[],"name":".circleci"}],"min_version":"0.3.16","name":"*"}
