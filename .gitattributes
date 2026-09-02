@@ -8,3 +8,6 @@
 
 # mark samfile as shell
 samfile linguist-language=Shell
+
+# HTML DIR
+/frontend/** linguist-vendored
