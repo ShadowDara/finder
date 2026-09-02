@@ -12,3 +12,4 @@ coverage
 /finder-template-generator-ssg/node_modules
 /finder-template-generator
 finder-template-generator-ssg/stats.html
+/finder-template-generator-ssg/dist-static

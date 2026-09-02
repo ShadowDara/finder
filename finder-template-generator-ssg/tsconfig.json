@@ -16,6 +16,8 @@
     "moduleDetection": "force",
     "noEmit": true,
 
+    "allowJs": true,
+
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,

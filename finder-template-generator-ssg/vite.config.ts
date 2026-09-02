@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 import { pagesPlugin } from "./pages-ssg-plugin";
 import { visualizer } from "rollup-plugin-visualizer";
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   esbuild: {
     jsxFactory: "jsx",
     jsxFragment: "Fragment",
@@ -62,6 +62,6 @@ export default defineConfig({
         },
       },
     },
-    outDir: "dist",
+    outDir: mode === "static" ? "dist-static" : "dist",
   },
-});
+}));

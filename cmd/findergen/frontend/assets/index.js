@@ -1,5 +1,7 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/creator-BEwBCKoG.js","assets/creator-DSVGwkNZ.css","assets/viewer-CgeSkQm_.js","assets/viewer-DfdmHG-g.css"])))=>i.map(i=>d[i]);
-const C="modulepreload",w=function(e){return"/"+e},p={},m=function(n,t,s){let o=Promise.resolve();if(t&&t.length>0){document.getElementsByTagName("link");const r=document.querySelector("meta[property=csp-nonce]"),i=(r==null?void 0:r.nonce)||(r==null?void 0:r.getAttribute("nonce"));o=Promise.allSettled(t.map(a=>{if(a=w(a),a in p)return;p[a]=!0;const d=a.endsWith(".css"),h=d?'[rel="stylesheet"]':"";if(document.querySelector(`link[href="${a}"]${h}`))return;const l=document.createElement("link");if(l.rel=d?"stylesheet":C,d||(l.as="script"),l.crossOrigin="",l.href=a,i&&l.setAttribute("nonce",i),document.head.appendChild(l),d)return new Promise((f,T)=>{l.addEventListener("load",f),l.addEventListener("error",()=>T(new Error(`Unable to preload CSS for ${a}`)))})}))}function c(r){const i=new Event("vite:preloadError",{cancelable:!0});if(i.payload=r,window.dispatchEvent(i),!i.defaultPrevented)throw r}return o.then(r=>{for(const i of r||[])i.status==="rejected"&&c(i.reason);return n().catch(c)})},u="/assets/markdownstyle-CWEgKCyj.css",g={about:{id:"about",type:"component",load:()=>m(()=>import("./about-VVPQahju.js"),[]),styles:[]},changelog:{id:"changelog",type:"markdown",markdown:`# CHANGELOG\r
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/creator-y2_09cSn.js","assets/creator-DSVGwkNZ.css","assets/viewer-BKPpFfgS.js","assets/viewer-DfdmHG-g.css"])))=>i.map(i=>d[i]);
+const C="modulepreload",w=function(e){return"/"+e},u={},m=function(n,t,s){let o=Promise.resolve();if(t&&t.length>0){document.getElementsByTagName("link");const r=document.querySelector("meta[property=csp-nonce]"),i=(r==null?void 0:r.nonce)||(r==null?void 0:r.getAttribute("nonce"));o=Promise.allSettled(t.map(a=>{if(a=w(a),a in u)return;u[a]=!0;const d=a.endsWith(".css"),h=d?'[rel="stylesheet"]':"";if(document.querySelector(`link[href="${a}"]${h}`))return;const l=document.createElement("link");if(l.rel=d?"stylesheet":C,d||(l.as="script"),l.crossOrigin="",l.href=a,i&&l.setAttribute("nonce",i),document.head.appendChild(l),d)return new Promise((f,T)=>{l.addEventListener("load",f),l.addEventListener("error",()=>T(new Error(`Unable to preload CSS for ${a}`)))})}))}function c(r){const i=new Event("vite:preloadError",{cancelable:!0});if(i.payload=r,window.dispatchEvent(i),!i.defaultPrevented)throw r}return o.then(r=>{for(const i of r||[])i.status==="rejected"&&c(i.reason);return n().catch(c)})},p="/assets/markdownstyle-CWEgKCyj.css",g={about:{id:"about",type:"component",load:()=>m(()=>import("./about-VVPQahju.js"),[]),styles:[]},changelog:{id:"changelog",type:"markdown",markdown:`# CHANGELOG\r
+\r
+[Go Back](../) - _Please ignore this line, this is for the finder server_\r
 \r
 The whole finder CHANGELOG\r
 \r
@@ -7,8 +9,17 @@ The whole finder CHANGELOG\r
 \r
 - added new Templates\r
 - added a HTML Server with go backend to create and view all templates\r
-- added json output support to finder\r
+- added json output support to finder, just add \`--json\` to command\r
 - added tags and min version to a lot of the templates\r
+- the Templates are now saved as minified json\r
+\r
+## 0.3.9\r
+\r
+- fixed Binary Search\r
+\r
+## 0.3.8\r
+\r
+- added Checksums\r
 \r
 ## 0.3.7\r
 \r
@@ -169,23 +180,33 @@ This version brings the biggest improvement since 0.2.0:\r
 \r
 Template System & CLI Foundations\r
 \r
-# 0.2.0 - 23.01.2026\r
+## 0.2.0 - 23.01.2026\r
 \r
 More Templates\r
 Better Console Output\r
 Help Message\r
 \r
-# 0.1.0 - 17.11.2025\r
+## 0.1.0 - 17.11.2025\r
 \r
 Programm Init\r
 `,html:`<h1 id="changelog">CHANGELOG</h1>
+<p><a href="../">Go Back</a> - <em>Please ignore this line, this is for the finder server</em></p>
 <p>The whole finder CHANGELOG</p>
 <h2 id="newest---prob-0315">Newest -> prob 0.3.15</h2>
 <ul>
 <li>added new Templates</li>
 <li>added a HTML Server with go backend to create and view all templates</li>
-<li>added json output support to finder</li>
+<li>added json output support to finder, just add <code>--json</code> to command</li>
 <li>added tags and min version to a lot of the templates</li>
+<li>the Templates are now saved as minified json</li>
+</ul>
+<h2 id="039">0.3.9</h2>
+<ul>
+<li>fixed Binary Search</li>
+</ul>
+<h2 id="038">0.3.8</h2>
+<ul>
+<li>added Checksums</li>
 </ul>
 <h2 id="037">0.3.7</h2>
 <ul>
@@ -341,12 +362,12 @@ Programm Init\r
 <hr>
 <h2 id="030---23012026">0.3.0 - 23.01.2026</h2>
 <p>Template System & CLI Foundations</p>
-<h1 id="020---23012026">0.2.0 - 23.01.2026</h1>
+<h2 id="020---23012026">0.2.0 - 23.01.2026</h2>
 <p>More Templates
 Better Console Output
 Help Message</p>
-<h1 id="010---17112025">0.1.0 - 17.11.2025</h1>
-<p>Programm Init</p>`,styles:[u]},creator:{id:"creator",type:"component",load:()=>m(()=>import("./creator-BEwBCKoG.js"),__vite__mapDeps([0,1])),styles:[]},index:{id:"index",type:"component",load:()=>m(()=>import("./index-Cs1kWLPo.js"),[]),styles:[u]},viewer:{id:"viewer",type:"component",load:()=>m(()=>import("./viewer-CgeSkQm_.js"),__vite__mapDeps([2,3])),styles:[]}};async function y(){const e=document.getElementById("app");if(e==null)throw new Error("Missing #app element");const n=window.PAGE_ID;if(!n){v(e);return}if(n==="__404__"){const s=Object.keys(g).filter(o=>o!=="__404__").map(o=>`
+<h2 id="010---17112025">0.1.0 - 17.11.2025</h2>
+<p>Programm Init</p>`,styles:[p]},creator:{id:"creator",type:"component",load:()=>m(()=>import("./creator-y2_09cSn.js"),__vite__mapDeps([0,1])),styles:[]},index:{id:"index",type:"component",load:()=>m(()=>import("./index-B0g_HJRt.js"),[]),styles:[p]},viewer:{id:"viewer",type:"component",load:()=>m(()=>import("./viewer-BKPpFfgS.js"),__vite__mapDeps([2,3])),styles:[]}};async function y(){const e=document.getElementById("app");if(e==null)throw new Error("Missing #app element");const n=window.PAGE_ID;if(!n){v(e);return}if(n==="__404__"){const s=Object.keys(g).filter(o=>o!=="__404__").map(o=>`
         <li>
           <a href="${o==="index"?"/":`/${o}`}">
             ${o}

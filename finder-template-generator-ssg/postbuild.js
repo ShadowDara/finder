@@ -1,3 +1,10 @@
-import { cp } from "fs/promises";
+import { rm, cp } from "fs/promises";
 
-await cp("./dist", "./../cmd/findergen/frontend", { recursive: true });
+await rm("./../cmd/findergen/frontend", {
+  recursive: true,
+  force: true,
+});
+
+await cp("./dist", "./../cmd/findergen/frontend", {
+  recursive: true,
+});

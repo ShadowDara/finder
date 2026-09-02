@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "dev:static": "vite --mode static",
     "build:static": "node prebuild.js && tsc -b && vite build --mode static",
-    "previwq:static": "vite preview --mode static"
+    "previwq:static": "vite preview --mode static",
+    "bb": "npm run build && npm run build:static"
   },
   "devDependencies": {
     "@types/html-minifier-terser": "^7.0.2",

@@ -1,4 +1,5 @@
 import "./viewer.css";
+import builtinTemplates from "../src/templates.js";
 
 export interface ServerResponse {
   count_templates: number;
@@ -15,108 +16,215 @@ if (import.meta.env.DEV) {
   adress = "http://localhost:8080/api/template/load/all";
 }
 
+const isStatic = import.meta.env.MODE === "static";
+
 export default function render(el: HTMLDivElement) {
-  fetch(adress)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
+  if (isStatic) {
+    renderStatic(el);
+  } else {
+    renderServer(el);
+  }
+}
 
-      return response.json() as Promise<ServerResponse>;
-    })
-    .then((data) => {
-      const templates = Object.entries(data.templates);
-      const builtin = Object.entries(data.builtin);
-      const custom = Object.entries(data.custom);
+function renderStatic(el: HTMLDivElement) {
+  // templates.js enthält Objekte, Viewer erwartet Strings
+  const builtin: [string, string][] = Object.entries(builtinTemplates).map(
+    ([name, content]) => [name, JSON.stringify(content)],
+  );
 
-      el.innerHTML = `
-        <main class="viewer">
-          <header class="viewer-header">
-            <div>
-              <span class="eyebrow">TEMPLATE VIEWER</span> / <span class="eyebrow"><a href="../creator">TEMPLATE CREATOR</a></span> / <span class="eyebrow"><a href="../">HOME</a></span>
-              <h1>Templates</h1>
-              <p>
-                Durchsuche und erkunde alle verfügbaren Templates.
-              </p>
-            </div>
+  el.innerHTML = `
+    <main class="viewer">
+      <header class="viewer-header">
+        <div>
+          <span class="eyebrow">TEMPLATE VIEWER</span> /
+          <span class="eyebrow"><a href="../creator">TEMPLATE CREATOR</a></span> /
+          <span class="eyebrow"><a href="../">HOME</a></span>
 
-            <div class="stats">
-              <div class="stat">
-                <strong>${data.count_templates}</strong>
-                <span>Templates</span>
-              </div>
+          <h1>Templates</h1>
 
-              <div class="stat">
-                <strong>${data.count_buildin_templates}</strong>
-                <span>Built-in</span>
-              </div>
+          <p>
+            Durchsuche und erkunde alle verfügbaren Templates.
+          </p>
+        </div>
 
-              <div class="stat">
-                <strong>${data.count_custom_templates}</strong>
-                <span>Custom</span>
-              </div>
-            </div>
-          </header>
+        <div class="stats">
+          ${
+            isStatic
+              ? ""
+              : `<div class="stat">
+            <strong>${builtin.length}</strong>
+            <span>Templates</span>
+          </div>`
+          }
+          
 
-          <section class="toolbar">
-            <div class="search">
-              <span>⌕</span>
-              <input
-                id="template-search"
-                type="search"
-                placeholder="Templates suchen..."
-                autocomplete="off"
-              />
-            </div>
-
-            <div class="filters">
-              <button class="filter active" data-filter="all">
-                Alle
-                <span>${templates.length}</span>
-              </button>
-
-              <button class="filter" data-filter="builtin">
-                Built-in
-                <span>${builtin.length}</span>
-              </button>
-
-              <button class="filter" data-filter="custom">
-                Custom
-                <span>${custom.length}</span>
-              </button>
-            </div>
-          </section>
-
-          <section class="template-grid" id="template-grid">
-            ${renderTemplates(builtin, "builtin")}
-            ${renderTemplates(custom, "custom")}
-          </section>
-
-          <div class="empty-state" id="empty-state" hidden>
-            <div class="empty-icon">⌕</div>
-            <h2>Keine Templates gefunden</h2>
-            <p>Versuche einen anderen Suchbegriff.</p>
+          <div class="stat">
+            <strong>${builtin.length}</strong>
+            <span>Built-in</span>
           </div>
-        </main>
-      `;
 
-      setupSelector(el);
-    })
-    .catch((error) => {
-      console.error(error);
+          ${
+            isStatic
+              ? ""
+              : `<div class="stat">
+            <strong>0</strong>
+            <span>Custom</span>
+          </div>`
+          }
+          
+        </div>
+      </header>
 
-      el.innerHTML = `
-        <main class="viewer error">
-          <div class="error-card">
-            <span class="eyebrow">ERROR</span>
-            <h1>Templates konnten nicht geladen werden.</h1>
+      <section class="toolbar">
+        <div class="search">
+          <span>⌕</span>
+          <input
+            id="template-search"
+            type="search"
+            placeholder="Templates suchen..."
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="filters">
+        
+          <button class="filter active" data-filter="all">
+            Alle
+            <span>${builtin.length}</span>
+          </button>
+
+          ${
+            isStatic
+              ? ""
+              : `<button class="filter" data-filter="builtin">
+            Built-in
+            <span>${builtin.length}</span>
+          </button>`
+          }
+          
+        </div>
+      </section>
+
+      <section class="template-grid" id="template-grid">
+        ${renderTemplates(builtin, "builtin")}
+      </section>
+
+      <div class="empty-state" id="empty-state" hidden>
+        <div class="empty-icon">⌕</div>
+        <h2>Keine Templates gefunden</h2>
+        <p>Versuche einen anderen Suchbegriff.</p>
+      </div>
+    </main>
+  `;
+
+  setupSelector(el);
+}
+
+async function renderServer(el: HTMLDivElement) {
+  try {
+    const response = await fetch(adress);
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    const data = (await response.json()) as ServerResponse;
+
+    const templates = Object.entries(data.templates);
+    const builtin = Object.entries(data.builtin);
+    const custom = Object.entries(data.custom);
+
+    el.innerHTML = `
+      <main class="viewer">
+        <header class="viewer-header">
+          <div>
+            <span class="eyebrow">TEMPLATE VIEWER</span> /
+            <span class="eyebrow"><a href="../creator">TEMPLATE CREATOR</a></span> /
+            <span class="eyebrow"><a href="../">HOME</a></span>
+
+            <h1>Templates</h1>
+
             <p>
-              Der Template-Server ist momentan nicht erreichbar.
+              Durchsuche und erkunde alle verfügbaren Templates.
             </p>
           </div>
-        </main>
-      `;
-    });
+
+          <div class="stats">
+            <div class="stat">
+              <strong>${data.count_templates}</strong>
+              <span>Templates</span>
+            </div>
+
+            <div class="stat">
+              <strong>${data.count_buildin_templates}</strong>
+              <span>Built-in</span>
+            </div>
+
+            <div class="stat">
+              <strong>${data.count_custom_templates}</strong>
+              <span>Custom</span>
+            </div>
+          </div>
+        </header>
+
+        <section class="toolbar">
+          <div class="search">
+            <span>⌕</span>
+            <input
+              id="template-search"
+              type="search"
+              placeholder="Templates suchen..."
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="filters">
+            <button class="filter active" data-filter="all">
+              Alle
+              <span>${templates.length}</span>
+            </button>
+
+            <button class="filter" data-filter="builtin">
+              Built-in
+              <span>${builtin.length}</span>
+            </button>
+
+            <button class="filter" data-filter="custom">
+              Custom
+              <span>${custom.length}</span>
+            </button>
+          </div>
+        </section>
+
+        <section class="template-grid" id="template-grid">
+          ${renderTemplates(builtin, "builtin")}
+          ${renderTemplates(custom, "custom")}
+        </section>
+
+        <div class="empty-state" id="empty-state" hidden>
+          <div class="empty-icon">⌕</div>
+          <h2>Keine Templates gefunden</h2>
+          <p>Versuche einen anderen Suchbegriff.</p>
+        </div>
+      </main>
+    `;
+
+    setupSelector(el);
+  } catch (error) {
+    console.error(error);
+
+    el.innerHTML = `
+      <main class="viewer error">
+        <div class="error-card">
+          <span class="eyebrow">ERROR</span>
+          <h1>Templates konnten nicht geladen werden.</h1>
+          <p>
+            Der Template-Server ist momentan nicht erreichbar.
+          </p>
+        </div>
+      </main>
+    `;
+  }
 }
 
 function renderTemplates(

@@ -10,7 +10,6 @@ import {
   removeFolder,
   serializeFolder,
 } from "./state";
-import { servermode } from "./server";
 
 export function renderCreator(app: HTMLDivElement) {
   type Selection = { kind: "folder" | "file"; id: string } | null;
@@ -20,6 +19,12 @@ export function renderCreator(app: HTMLDivElement) {
   let importError: string | null = null;
 
   let createbutton = "";
+
+  let servermode = false;
+
+  if (import.meta.env.MODE != "static") {
+    servermode = true;
+  }
 
   if (servermode) {
     createbutton = `<button id="btn-save" class="btn btn-ghost" type="button">Save JSON to file</button>`;
