@@ -113,10 +113,10 @@ function loadStyles(styles: string[]) {
   console.log("[pages] loading styles:", styles);
 
   for (const href of styles) {
-    console.log("[pages] style:", href);
+    const url = new URL(href, import.meta.url).href;
 
     if (
-      document.head.querySelector(`link[data-page-style="${CSS.escape(href)}"]`)
+      document.head.querySelector(`link[data-page-style="${CSS.escape(url)}"]`)
     ) {
       continue;
     }
@@ -124,8 +124,8 @@ function loadStyles(styles: string[]) {
     const link = document.createElement("link");
 
     link.rel = "stylesheet";
-    link.href = href;
-    link.dataset.pageStyle = href;
+    link.href = url;
+    link.dataset.pageStyle = url;
 
     document.head.appendChild(link);
   }

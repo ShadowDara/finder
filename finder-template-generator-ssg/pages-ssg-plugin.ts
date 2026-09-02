@@ -149,6 +149,7 @@ let resolvedStyles = new Map<string, string>();
 const DEFAULT_EXTENSIONS = [".ts", ".tsx"];
 
 export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
+  const relativePath = options.relativePaths ?? false;
   const addRawMarkdown = options.addRawMarkdown ?? false;
   const pagesDirOpt = options.pagesDir ?? "pages";
   const docsDir = options.docsDir ?? "docs";
@@ -173,6 +174,37 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
     const clean = style.replace(/^\/+/, "");
 
     return path.resolve(config.root, clean);
+  }
+
+  function getAssetPath(htmlFileName: string, assetFileName: string): string {
+    const normalizedAsset = assetFileName
+      .replace(/^\/+/, "")
+      .replace(/\\/g, "/");
+
+    // Explizit relative Pfade gewünscht
+    if (options.relativePaths) {
+      return path.posix
+        .relative(path.posix.dirname(htmlFileName), normalizedAsset)
+        .replace(/\\/g, "/");
+    }
+
+    // Ansonsten Vite's `base` verwenden
+    const base = config.base.replace(/\/+$/, "");
+
+    // base: "./"
+    if (config.base === "./") {
+      return path.posix
+        .relative(path.posix.dirname(htmlFileName), normalizedAsset)
+        .replace(/\\/g, "/");
+    }
+
+    // base: "/"
+    if (!base) {
+      return `/${normalizedAsset}`;
+    }
+
+    // base: "/my-app/"
+    return `${base}/${normalizedAsset}`;
   }
 
   function scanDocs(): PageEntry[] {
@@ -672,8 +704,7 @@ declare module "virtual:pages" {
         const htmlFileName = outputFileName(page.id);
         const htmlDir = path.dirname(htmlFileName);
 
-        const scriptPath = getRelativeAssetPath(htmlFileName, jsChunk.fileName);
-
+        const scriptPath = getAssetPath(htmlFileName, jsChunk.fileName);
         const scriptTag = `<script type="module" src="${scriptPath}"></script>`;
 
         /*
@@ -694,7 +725,7 @@ declare module "virtual:pages" {
 
           styleTag = cssFiles
             .map((cssFile) => {
-              const cssPath = getRelativeAssetPath(htmlFileName, cssFile);
+              const cssPath = getAssetPath(htmlFileName, cssFile);
 
               return `<link rel="stylesheet" href="${cssPath}" />`;
             })
@@ -775,13 +806,4 @@ function getPageId(url: string, pages: PageEntry[]): string {
   }
 
   return pathname;
-}
-
-function getRelativeAssetPath(
-  htmlFileName: string,
-  assetFileName: string,
-): string {
-  return path.posix
-    .relative(path.posix.dirname(htmlFileName), assetFileName)
-    .replace(/\\/g, "/");
 }

@@ -29,7 +29,7 @@ export default defineConfig(({ mode }) => ({
         changelog: ["/src/markdownstyle.css"],
         index: ["/src/markdownstyle.css"],
       },
-      relativePaths: true,
+      // relativePaths: true,
       extensions: [".ts", ".tsx"],
       prettyUrls: true,
       pagesDir: "pages",
