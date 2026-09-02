@@ -415,7 +415,8 @@ export function renderCreator(app: HTMLDivElement) {
           "Name",
           textInput(folder.name, (v) => {
             folder.name = v;
-            render();
+            renderTree();
+            renderPreview();
           }),
         ),
       );

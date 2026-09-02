@@ -2,7 +2,7 @@
 
 The whole finder CHANGELOG
 
-## Newest -> prob 0.3.15
+## 0.3.15 - 02.09.2025
 
 - added new Templates
 - added a HTML Server with go backend to create and view all templates

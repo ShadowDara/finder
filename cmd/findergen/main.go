@@ -4,6 +4,7 @@ import (
 	"context"
 	"embed"
 	"encoding/json"
+	"fmt"
 	"io/fs"
 	"log"
 	"net/http"
@@ -88,6 +89,10 @@ func writeTemplateJSON(w http.ResponseWriter, name string, source string, raw []
 }
 
 func main() {
+	argconf := parseCliArgs()
+
+	fmt.Println("Run with help for more Infos")
+
 	path, err := templates.GetCustomPath()
 	if err != nil {
 		log.Fatalln(err)
@@ -95,7 +100,12 @@ func main() {
 
 	config := config.LoadConfig(path + "/" + "config.json5")
 
-	server := &http.Server{Addr: ":" + strconv.Itoa(config.Port)}
+	PORT := argconf.port
+	if PORT == 0 {
+		PORT = config.Port
+	}
+
+	server := &http.Server{Addr: ":" + strconv.Itoa(PORT)}
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/api/info", func(w http.ResponseWriter, r *http.Request) {
@@ -366,7 +376,7 @@ func main() {
 
 	mux.Handle("/", http.FileServer(http.FS(staticFS)))
 
-	log.Println("Server listening on :" + strconv.Itoa(config.Port))
+	log.Println("Server listening on :" + strconv.Itoa(PORT))
 
 	handler := corsMiddleware(loggingMiddleware(mux))
 

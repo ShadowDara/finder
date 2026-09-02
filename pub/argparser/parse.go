@@ -3,6 +3,7 @@ package argparser
 import (
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 
 	"text/tabwriter"
@@ -27,9 +28,12 @@ type Flag struct {
 	Usage    string   // Description shown in help output
 	Required bool     // Whether the flag must be provided
 
+	NumberValue int64  // Value for Integer flags
 	StringValue string // Value for string flags
 	BoolValue   bool   // Value for boolean flags
-	IsBool      bool   // Flag type (true = bool, false = string)
+	IsBool      bool   // Flag type (true = bool, false = ???)
+	IsNumber    bool   // Flag type (true = number, false = ???)
+	IsString    bool   // Flag type (true = string, false = ???)
 	Set         bool   // Indicates whether the flag was explicitly set
 }
 
@@ -118,6 +122,22 @@ func (c *Command) Bool(name string, def bool, usage string, required bool, alias
 	}
 }
 
+// Number registers an integer flag for the command.
+//
+// Example:
+//
+//	cmd.Number("limit", 10, "Maximum number of results", false, "l")
+func (c *Command) Number(name string, def int64, usage string, required bool, aliases ...string) {
+	c.Flags[name] = &Flag{
+		Name:        name,
+		Aliases:     aliases,
+		Usage:       usage,
+		Required:    required,
+		NumberValue: def,
+		IsNumber:    true,
+	}
+}
+
 // AddSubcommand adds a subcommand to the current command.
 //
 // Example:
@@ -192,8 +212,15 @@ func (c *Command) Parse(args []string) *Command {
 				value := parts[1]
 
 				if f := c.findFlag(key); f != nil && !f.IsBool {
-					f.StringValue = value
-					f.Set = true
+					if f.IsNumber {
+						if parsed, err := strconv.ParseInt(value, 10, 64); err == nil {
+							f.NumberValue = parsed
+							f.Set = true
+						}
+					} else {
+						f.StringValue = value
+						f.Set = true
+					}
 				}
 				continue
 			}
@@ -204,8 +231,16 @@ func (c *Command) Parse(args []string) *Command {
 					f.BoolValue = true
 					f.Set = true
 				} else if i+1 < len(args) {
-					f.StringValue = args[i+1]
-					f.Set = true
+					value := args[i+1]
+					if f.IsNumber {
+						if parsed, err := strconv.ParseInt(value, 10, 64); err == nil {
+							f.NumberValue = parsed
+							f.Set = true
+						}
+					} else {
+						f.StringValue = value
+						f.Set = true
+					}
 					i++
 				}
 				continue
@@ -251,6 +286,14 @@ func (c *Command) GetString(name string) string {
 		return f.StringValue
 	}
 	return ""
+}
+
+// GetNumber returns the value of a number flag.
+func (c *Command) GetNumber(name string) int64 {
+	if f := c.findFlag(name); f != nil {
+		return f.NumberValue
+	}
+	return 0
 }
 
 // GetBool returns the value of a boolean flag.
