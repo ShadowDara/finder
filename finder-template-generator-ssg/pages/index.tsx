@@ -24,14 +24,13 @@ export default function render(el: HTMLDivElement) {
           <li>
             <a href="./changelog">Changelog</a>
           </li>
+          <li>
+            <a href="./readme">README</a>
+          </li>
         </ul>
 
         {import.meta.env.MODE != "static" && (
-          <ul>
-            <li>
-              <button id="stop">Stop Server</button>
-            </li>
-          </ul>
+          <button id="stop">Stop Server</button>
         )}
       </article>
     </>

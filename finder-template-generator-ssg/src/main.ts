@@ -73,6 +73,7 @@ async function main() {
 
     if (page.type === "markdown") {
       app.innerHTML = `
+      <a href="../">Home</a>
       <article class="markdown">
         ${page.html}
       </article>

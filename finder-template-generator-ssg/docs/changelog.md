@@ -1,7 +1,5 @@
 # CHANGELOG
 
-[Go Back](../) - _Please ignore this line, this is for the finder server_
-
 The whole finder CHANGELOG
 
 ## Newest -> prob 0.3.15

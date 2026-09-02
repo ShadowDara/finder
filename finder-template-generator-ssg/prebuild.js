@@ -1,6 +1,7 @@
 import { copyFile } from "fs/promises";
 
 await copyFile("./../CHANGELOG.md", "./docs/changelog.md");
+await copyFile("./../README.md", "./docs/readme.md");
 
 // Save all templates for static frontend
 

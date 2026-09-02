@@ -1,0 +1,183 @@
+<!--
+go build ./cmd/finder
+
+Push Tag
+git tag v0.3.7
+git push origin v0.3.7
+
+Maybe
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/shadowdara/finder?logo=github)
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr/shadowdara/finder?logo=github)
+[![GitHub top language](https://img.shields.io/github/languages/top/shadowdara/finder?logo=go&label=)](https://github.com/shadowdara/finder/)
+
+-->
+
+# finder
+
+[![Build Status](https://github.com/ShadowDara/finder/actions/workflows/release.yml/badge.svg)](https://github.com/ShadowDara/finder/actions/workflows/release.yml)
+[![Build Check](https://github.com/ShadowDara/finder/actions/workflows/buildcheck.yml/badge.svg)](https://github.com/ShadowDara/finder/actions/workflows/buildcheck.yml)
+[![GitHub contributors](https://img.shields.io/github/contributors/shadowdara/finder)](https://github.com/shadowdara/finder/graphs/contributors)
+[![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/m/shadowdara/finder)](https://github.com/shadowdara/finder/commits)
+[![GitHub all releases](https://img.shields.io/github/downloads/shadowdara/finder/total?logo=github)](https://github.com/shadowdara/finder/releases)
+[![GitHub release (with filter)](https://img.shields.io/github/v/release/shadowdara/finder?logo=github)](https://github.com/shadowdara/finder/releases)
+[![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/shadowdara/finder?logo=github)](https://github.com/shadowdara/finder.git)
+![GitHub Repo stars](https://img.shields.io/github/stars/shadowdara/finder)
+![GitHub forks](https://img.shields.io/github/forks/shadowdara/finder)
+
+Finder is a small command-line tool written in Go to locate projects
+based on predefined folder/file structure templates.
+
+In short: you can search for repositories (e.g. `.git`), project layouts,
+or your own custom structures using templates.
+
+## Commiting
+
+feel free to help the Project by committing Code for the project are Templates.
+Feel although free to submit Templates via Issues!
+
+## Features
+
+- Searches using JSON5 templates stored in `internal/structure/templates`.
+- Supports user templates in the OS-specific configuration folder.
+- Lightweight, tested, and easy to extend.
+- **Finder can although be used to search single files and is a lot faster
+than Windows Search just to say**
+
+## Requirements
+
+- Go 1.18 or newer
+
+## Installation
+
+Build from source:
+
+```sh
+go build ./cmd/finder
+```
+
+Or install with `go install` (Go 1.18+):
+
+```sh
+go install github.com/shadowdara/finder/cmd/finder@latest
+```
+
+The produced binary is `finder` (on Windows `finder.exe`).
+
+## Usage
+
+Basic syntax:
+
+```sh
+finder <template-name>
+```
+
+Example — find Git repositories:
+
+```sh
+finder git
+```
+
+The program searches the current directory recursively and prints
+matches based on the template name.
+
+## Templates
+
+Default templates are stored in `internal/structure/templates`.
+Templates are JSON5 files with fields such as `name`, `files`, and
+`folders`. A simple template to find Git repositories looks like:
+
+```json
+{
+    "name": "*",
+    "folders": [
+        { "name": ".git" }
+    ],
+}
+```
+
+And a full template looks like this. Empty Value are not required
+in the Template. The `description` will be displayed in the program
+when searching for the Template and although when displaying all
+templates. The `command` runs in the Structure Directory after the
+Structure is found. The Entrywill only be added is the `command` 
+returns `0` when `invert_command` is `false`, else `1`.
+
+```json
+{
+    "name": "*",
+    "description": "",
+    "folders": [
+        { "name": ".git" }
+    ],
+    "files": [],
+    "command": "",
+    "invert_command": false
+}
+```
+
+<!-- Place custom templates in the following folder: -->
+
+<!-- - Windows: `%AppData%\\finder`
+- Linux: `~/.config/finder`
+- macOS: `~/Library/Application Support/finder` -->
+
+Then call `finder <template-name>` to use them.
+
+## Development
+
+Run tests:
+
+```sh
+go test ./...
+```
+
+Generate coverage report:
+
+```sh
+go test -coverprofile=coverage ./...
+go tool cover -html=coverage
+```
+
+Build:
+
+```sh
+go build ./cmd/finder
+```
+
+Check the available Templates
+
+```sh
+go run ./cmd/finder check
+```
+
+## Contributing
+
+- Found a missing or inaccurate template? Please open an issue.
+- Add new templates via PR. Keep them in JSON5 and provide a short
+    description of what the template matches.
+
+## Roadmap / Ideas
+
+- use temporary Template via the Command Line
+- Caching/Indexing for faster searches
+- Web UI for template management
+- Template schema and validation
+
+## License
+
+See `LICENSE`.
+
+---
+
+Project: `https://github.com/shadowdara/finder`
+
+## Extra Info
+
+The Project [fs-tools](https://github.com/shadowdara/fs-tools) was more or less
+the prototype for finder.
+
+## Info Video
+
+(*a Youtube Video*)
+
+[![INFO Video 1 about Finder](https://img.youtube.com/vi/oIRgAYv-mOA/0.jpg)](https://www.youtube.com/watch?v=oIRgAYv-mOA)
