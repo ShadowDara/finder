@@ -25,7 +25,11 @@ for (const file of files) {
   templates[file] = JSON.parse(content);
 }
 
-const output = `export default ${JSON.stringify(templates, null, 2)};\n`;
+const output = `// INFO
+// THIS FILE IS AUTO GENERATED FROM ALL BUILTIN TEMPLATES
+// DO NOT EDIT IT!!!
+
+export default ${JSON.stringify(templates, null, 2)};\n`;
 
 await writeFile(outputFile, output, "utf8");
 
