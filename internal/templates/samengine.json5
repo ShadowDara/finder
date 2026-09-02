@@ -1,9 +1,1 @@
-{
-    "description": "a Project with samengine",
-    "name": "*",
-    "files": [
-        "samengine.config.ts"
-    ],
-    "min_version": "0.3.14",
-    "tags": ["game-engine"]
-}
+{"description":"a Project with samengine","files":["samengine.config.ts"],"min_version":"0.3.14","name":"*","tags":["game-engine"]}

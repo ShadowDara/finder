@@ -1,10 +1,1 @@
-// Struct for a TimescaleDB Project
-{
-    "description": "TimescaleDB time-series database",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "docker-compose.yml",
-        "schema.sql"
-    ]
-}
+{"description":"TimescaleDB time-series database","files":["docker-compose.yml","schema.sql"],"folders":[],"name":"*"}

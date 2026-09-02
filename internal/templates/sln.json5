@@ -1,13 +1,1 @@
-// Default Folder Struct for Visual Studio Solution Files
-{
-    "description": "Struct for Visual Studio Projects",
-    "name": "*",
-    "folders": [
-        {
-            "name": ".vs"
-        }
-    ],
-    "files": [
-        "*.sln"
-    ]
-}
+{"description":"Struct for Visual Studio Projects","files":["*.sln"],"folders":[{"name":".vs"}],"name":"*"}

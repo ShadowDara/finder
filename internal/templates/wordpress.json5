@@ -1,10 +1,1 @@
-// Struct for a WordPress Theme/Plugin
-{
-    "description": "WordPress theme or plugin project",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "functions.php",
-        "style.css"
-    ]
-}
+{"description":"WordPress theme or plugin project","files":["functions.php","style.css"],"folders":[],"name":"*"}

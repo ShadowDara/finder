@@ -1,16 +1,1 @@
-// Struct for an Ember.js Project
-{
-    "description": "Ember.js JavaScript framework",
-    "name": "*",
-    "folders": [
-        {
-            "name": "app",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "ember-cli-build.js",
-        "package.json"
-    ]
-}
+{"description":"Ember.js JavaScript framework","files":["ember-cli-build.js","package.json"],"folders":[{"files":[],"folders":[],"name":"app"}],"name":"*"}

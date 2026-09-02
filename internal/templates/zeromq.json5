@@ -1,15 +1,1 @@
-// Struct for a ZeroMQ Project
-{
-    "description": "ZeroMQ messaging framework",
-    "name": "*",
-    "folders": [
-        {
-            "name": "src",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "package.json"
-    ]
-}
+{"description":"ZeroMQ messaging framework","files":["package.json"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}

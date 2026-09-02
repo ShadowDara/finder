@@ -1,10 +1,1 @@
-// Struct for a MATLAB Project
-{
-    "description": "MATLAB/Octave scientific computing project",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "*.m",
-        "*.mlx"
-    ]
-}
+{"description":"MATLAB/Octave scientific computing project","files":["*.m","*.mlx"],"folders":[],"name":"*"}

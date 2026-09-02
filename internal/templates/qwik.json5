@@ -1,16 +1,1 @@
-// Struct for a Qwik Project
-{
-    "description": "Qwik web framework",
-    "name": "*",
-    "folders": [
-        {
-            "name": "src",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "qwik.config.ts",
-        "package.json"
-    ]
-}
+{"description":"Qwik web framework","files":["qwik.config.ts","package.json"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}

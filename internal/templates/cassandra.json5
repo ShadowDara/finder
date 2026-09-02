@@ -1,10 +1,1 @@
-// Struct for Apache Cassandra Project
-{
-    "description": "Apache Cassandra distributed database",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "docker-compose.yml",
-        "cassandra.yaml"
-    ]
-}
+{"description":"Apache Cassandra distributed database","files":["docker-compose.yml","cassandra.yaml"],"folders":[],"name":"*"}

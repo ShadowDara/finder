@@ -1,16 +1,1 @@
-// Struct for a Serverless Project
-{
-    "description": "Serverless functions (AWS Lambda, etc)",
-    "name": "*",
-    "folders": [
-        {
-            "name": "functions",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "serverless.yml",
-        "package.json"
-    ]
-}
+{"description":"Serverless functions (AWS Lambda, etc)","files":["serverless.yml","package.json"],"folders":[{"files":[],"folders":[],"name":"functions"}],"name":"*"}

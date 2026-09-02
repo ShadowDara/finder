@@ -1,10 +1,1 @@
-// Struct for a Redis Cache Project
-{
-    "description": "Redis in-memory data store project",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "redis.conf",
-        "docker-compose.yml"
-    ]
-}
+{"description":"Redis in-memory data store project","files":["redis.conf","docker-compose.yml"],"folders":[],"name":"*"}

@@ -1,15 +1,1 @@
-// Struct for an Encore Project
-{
-    "description": "Encore backend development platform",
-    "name": "*",
-    "folders": [
-        {
-            "name": "encore.app",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "encore.gen.cue"
-    ]
-}
+{"description":"Encore backend development platform","files":["encore.gen.cue"],"folders":[{"files":[],"folders":[],"name":"encore.app"}],"name":"*"}

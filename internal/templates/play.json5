@@ -1,16 +1,1 @@
-// Struct for a Play Framework Project
-{
-    "description": "Play Framework Java/Scala web framework",
-    "name": "*",
-    "folders": [
-        {
-            "name": "app",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "build.sbt",
-        "conf/routes"
-    ]
-}
+{"description":"Play Framework Java/Scala web framework","files":["build.sbt","conf/routes"],"folders":[{"files":[],"folders":[],"name":"app"}],"name":"*"}

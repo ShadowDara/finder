@@ -1,15 +1,1 @@
-// Struct for a Meson Build Project
-{
-    "description": "Meson build system project",
-    "name": "*",
-    "folders": [
-        {
-            "name": "src",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "meson.build"
-    ]
-}
+{"description":"Meson build system project","files":["meson.build"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}

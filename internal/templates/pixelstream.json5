@@ -1,15 +1,1 @@
-// Struct for an Unreal Pixel Streaming
-{
-    "description": "Unreal Engine Pixel Streaming",
-    "name": "*",
-    "folders": [
-        {
-            "name": "Plugins",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "*.uproject"
-    ]
-}
+{"description":"Unreal Engine Pixel Streaming","files":["*.uproject"],"folders":[{"files":[],"folders":[],"name":"Plugins"}],"name":"*"}

@@ -1,9 +1,1 @@
-{
-    "description": "Blender 3D design project",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "*.blend"
-    ],
-    "min_version": "0.3.14"
-}
+{"description":"Blender 3D design project","files":["*.blend"],"folders":[],"min_version":"0.3.14","name":"*"}

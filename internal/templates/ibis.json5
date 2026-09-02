@@ -1,16 +1,1 @@
-// Ibis dataframe API
-{
-    "description": "Ibis Python dataframe API for data analytics",
-    "name": "*",
-    "folders": [
-        {
-            "name": "scripts",
-            "folders": [],
-            "files": ["*.py"]
-        }
-    ],
-    "files": [
-        "ibis.config.yaml",
-        "requirements.txt"
-    ]
-}
+{"description":"Ibis Python dataframe API for data analytics","files":["ibis.config.yaml","requirements.txt"],"folders":[{"files":["*.py"],"folders":[],"name":"scripts"}],"name":"*"}

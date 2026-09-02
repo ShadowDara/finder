@@ -1,15 +1,1 @@
-// Struct for a MonoGame Project
-{
-    "description": "MonoGame C# game framework",
-    "name": "*",
-    "folders": [
-        {
-            "name": "Content",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "*.csproj"
-    ]
-}
+{"description":"MonoGame C# game framework","files":["*.csproj"],"folders":[{"files":[],"folders":[],"name":"Content"}],"name":"*"}

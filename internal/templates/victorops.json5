@@ -1,9 +1,1 @@
-// Struct for a VictorOps Monitoring
-{
-    "description": "VictorOps incident response",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "victorops.yml"
-    ]
-}
+{"description":"VictorOps incident response","files":["victorops.yml"],"folders":[],"name":"*"}

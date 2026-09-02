@@ -1,16 +1,1 @@
-// Struct for a Tonic Project
-{
-    "description": "Tonic Rust gRPC framework",
-    "name": "*",
-    "folders": [
-        {
-            "name": "src",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "Cargo.toml",
-        "build.rs"
-    ]
-}
+{"description":"Tonic Rust gRPC framework","files":["Cargo.toml","build.rs"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}

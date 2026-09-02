@@ -1,9 +1,1 @@
-// Struct for an AsyncAPI Project
-{
-    "description": "AsyncAPI event-driven APIs",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "asyncapi.yaml"
-    ]
-}
+{"description":"AsyncAPI event-driven APIs","files":["asyncapi.yaml"],"folders":[],"name":"*"}

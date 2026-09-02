@@ -1,16 +1,1 @@
-// Struct for a PyTorch Project
-{
-    "description": "PyTorch deep learning project",
-    "name": "*",
-    "folders": [
-        {
-            "name": "models",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "requirements.txt",
-        "*.py"
-    ]
-}
+{"description":"PyTorch deep learning project","files":["requirements.txt","*.py"],"folders":[{"files":[],"folders":[],"name":"models"}],"name":"*"}

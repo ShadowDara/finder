@@ -1,16 +1,1 @@
-{
-    "description": "a Struct for Gradle Projects with Java and etc ...",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "build.gradle*",
-        "settings.gradle*",
-        "gradle.properties",
-        "gradlew",
-        "gradlew.bat"
-    ],
-    "tags": [
-        "java"
-    ],
-    "min_version": "0.3.14"
-}
+{"description":"a Struct for Gradle Projects with Java and etc ...","files":["build.gradle*","settings.gradle*","gradle.properties","gradlew","gradlew.bat"],"folders":[],"min_version":"0.3.14","name":"*","tags":["java"]}

@@ -1,15 +1,1 @@
-// Struct for PlatformIO IoT
-{
-    "description": "PlatformIO embedded systems development",
-    "name": "*",
-    "folders": [
-        {
-            "name": "src",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "platformio.ini"
-    ]
-}
+{"description":"PlatformIO embedded systems development","files":["platformio.ini"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}

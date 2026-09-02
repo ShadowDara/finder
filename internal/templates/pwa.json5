@@ -1,16 +1,1 @@
-// Struct for a PWA (Progressive Web App)
-{
-    "description": "Progressive Web Application",
-    "name": "*",
-    "folders": [
-        {
-            "name": "src",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "manifest.json",
-        "service-worker.js"
-    ]
-}
+{"description":"Progressive Web Application","files":["manifest.json","service-worker.js"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}

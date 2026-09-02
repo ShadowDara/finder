@@ -1,15 +1,1 @@
-// Struct for an Apache Kafka Project
-{
-    "description": "Apache Kafka stream processing project",
-    "name": "*",
-    "folders": [
-        {
-            "name": "config",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "docker-compose.yml"
-    ]
-}
+{"description":"Apache Kafka stream processing project","files":["docker-compose.yml"],"folders":[{"files":[],"folders":[],"name":"config"}],"name":"*"}

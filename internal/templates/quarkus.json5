@@ -1,16 +1,1 @@
-// Struct for a Quarkus Project
-{
-    "description": "Quarkus Java framework",
-    "name": "*",
-    "folders": [
-        {
-            "name": "src",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "pom.xml",
-        "application.properties"
-    ]
-}
+{"description":"Quarkus Java framework","files":["pom.xml","application.properties"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}

@@ -1,16 +1,1 @@
-// Dear ImGui immediate mode GUI
-{
-    "description": "Dear ImGui immediate mode graphical user interface",
-    "name": "*",
-    "folders": [
-        {
-            "name": "imgui",
-            "folders": [],
-            "files": ["*.cpp", "*.h"]
-        }
-    ],
-    "files": [
-        "CMakeLists.txt",
-        "imgui.ini"
-    ]
-}
+{"description":"Dear ImGui immediate mode graphical user interface","files":["CMakeLists.txt","imgui.ini"],"folders":[{"files":["*.cpp","*.h"],"folders":[],"name":"imgui"}],"name":"*"}

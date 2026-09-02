@@ -1,9 +1,1 @@
-// Struct for an Auth0 Project
-{
-    "description": "Auth0 authentication platform",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "auth0.json"
-    ]
-}
+{"description":"Auth0 authentication platform","files":["auth0.json"],"folders":[],"name":"*"}

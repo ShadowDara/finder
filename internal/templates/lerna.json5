@@ -1,16 +1,1 @@
-// Struct for a Lerna Monorepo
-{
-    "description": "Lerna monorepo project",
-    "name": "*",
-    "folders": [
-        {
-            "name": "packages",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "lerna.json",
-        "package.json"
-    ]
-}
+{"description":"Lerna monorepo project","files":["lerna.json","package.json"],"folders":[{"files":[],"folders":[],"name":"packages"}],"name":"*"}

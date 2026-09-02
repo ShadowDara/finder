@@ -1,9 +1,1 @@
-// Struct for an Authelia Project
-{
-    "description": "Authelia authentication server",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "configuration.yml"
-    ]
-}
+{"description":"Authelia authentication server","files":["configuration.yml"],"folders":[],"name":"*"}

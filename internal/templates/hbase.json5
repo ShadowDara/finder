@@ -1,15 +1,1 @@
-// Struct for a Hadoop Ecosystem Project
-{
-    "description": "Hadoop/HBase distributed computing",
-    "name": "*",
-    "folders": [
-        {
-            "name": "src",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "pom.xml"
-    ]
-}
+{"description":"Hadoop/HBase distributed computing","files":["pom.xml"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}

@@ -1,17 +1,1 @@
-// Airbyte data integration platform
-{
-    "description": "Airbyte open-source data integration ELT platform",
-    "name": "*",
-    "folders": [
-        {
-            "name": "connectors",
-            "folders": [],
-            "files": ["*.py", "*.java"]
-        }
-    ],
-    "files": [
-        "airbyte.config.yml",
-        "docker-compose.yml",
-        ".airbyte"
-    ]
-}
+{"description":"Airbyte open-source data integration ELT platform","files":["airbyte.config.yml","docker-compose.yml",".airbyte"],"folders":[{"files":["*.py","*.java"],"folders":[],"name":"connectors"}],"name":"*"}

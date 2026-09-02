@@ -1,16 +1,1 @@
-// Struct for an Apache Airflow Project
-{
-    "description": "Apache Airflow workflow orchestration",
-    "name": "*",
-    "folders": [
-        {
-            "name": "dags",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "airflow.cfg",
-        "requirements.txt"
-    ]
-}
+{"description":"Apache Airflow workflow orchestration","files":["airflow.cfg","requirements.txt"],"folders":[{"files":[],"folders":[],"name":"dags"}],"name":"*"}

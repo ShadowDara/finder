@@ -1,15 +1,1 @@
-// Struct for a Appium Mobile Testing
-{
-    "description": "Appium mobile app automation",
-    "name": "*",
-    "folders": [
-        {
-            "name": "test",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "package.json"
-    ]
-}
+{"description":"Appium mobile app automation","files":["package.json"],"folders":[{"files":[],"folders":[],"name":"test"}],"name":"*"}

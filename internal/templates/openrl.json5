@@ -1,16 +1,1 @@
-// OpenRL reinforcement learning
-{
-    "description": "OpenRL open reinforcement learning framework",
-    "name": "*",
-    "folders": [
-        {
-            "name": "agent",
-            "folders": [],
-            "files": ["*.py"]
-        }
-    ],
-    "files": [
-        "config.yaml",
-        "requirements.txt"
-    ]
-}
+{"description":"OpenRL open reinforcement learning framework","files":["config.yaml","requirements.txt"],"folders":[{"files":["*.py"],"folders":[],"name":"agent"}],"name":"*"}

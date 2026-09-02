@@ -1,16 +1,1 @@
-// Struct for a Selenium Testing Framework
-{
-    "description": "Selenium web automation testing",
-    "name": "*",
-    "folders": [
-        {
-            "name": "tests",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "requirements.txt",
-        "conftest.py"
-    ]
-}
+{"description":"Selenium web automation testing","files":["requirements.txt","conftest.py"],"folders":[{"files":[],"folders":[],"name":"tests"}],"name":"*"}

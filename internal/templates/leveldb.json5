@@ -1,9 +1,1 @@
-// Struct for a LevelDB Project
-{
-    "description": "LevelDB key-value database",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "package.json"
-    ]
-}
+{"description":"LevelDB key-value database","files":["package.json"],"folders":[],"name":"*"}

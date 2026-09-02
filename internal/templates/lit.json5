@@ -1,16 +1,1 @@
-// Struct for a Lit Project
-{
-    "description": "Lit web components framework",
-    "name": "*",
-    "folders": [
-        {
-            "name": "src",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "package.json",
-        "*.ts"
-    ]
-}
+{"description":"Lit web components framework","files":["package.json","*.ts"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}

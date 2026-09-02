@@ -1,10 +1,1 @@
-// Struct for a LaTeX Project
-{
-    "description": "LaTeX document project",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "*.tex",
-        "*.pdf"
-    ]
-}
+{"description":"LaTeX document project","files":["*.tex","*.pdf"],"folders":[],"name":"*"}

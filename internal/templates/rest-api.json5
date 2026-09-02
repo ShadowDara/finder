@@ -1,16 +1,1 @@
-// Struct for a REST API Project
-{
-    "description": "REST API server project",
-    "name": "*",
-    "folders": [
-        {
-            "name": "routes",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "server.js",
-        "package.json"
-    ]
-}
+{"description":"REST API server project","files":["server.js","package.json"],"folders":[{"files":[],"folders":[],"name":"routes"}],"name":"*"}

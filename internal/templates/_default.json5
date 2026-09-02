@@ -1,16 +1,1 @@
-{
-    "description": "A little Description for the Struct which gets Display when the Struct is searched. The File Starts with a # to be the first in the List",
-    "name": "*",
-    "folders": [
-        {
-            "name": "",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "hallo.txt",
-        "file2.txt"
-    ],
-    "min_version": "0.3.14"
-}
+{"description":"A little Description for the Struct which gets Display when the Struct is searched. The File Starts with a # to be the first in the List","files":["hallo.txt","file2.txt"],"folders":[{"files":[],"folders":[],"name":""}],"min_version":"0.3.14","name":"*"}

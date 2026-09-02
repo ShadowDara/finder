@@ -1,16 +1,1 @@
-// Struct for a Dioxus Project
-{
-    "description": "Dioxus Rust UI framework",
-    "name": "*",
-    "folders": [
-        {
-            "name": "src",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "Cargo.toml",
-        "Dioxus.toml"
-    ]
-}
+{"description":"Dioxus Rust UI framework","files":["Cargo.toml","Dioxus.toml"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}

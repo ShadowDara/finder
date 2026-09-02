@@ -1,16 +1,1 @@
-// Struct for a Laravel Project
-{
-    "description": "PHP Laravel web framework project",
-    "name": "*",
-    "folders": [
-        {
-            "name": "app",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "artisan",
-        "composer.json"
-    ]
-}
+{"description":"PHP Laravel web framework project","files":["artisan","composer.json"],"folders":[{"files":[],"folders":[],"name":"app"}],"name":"*"}

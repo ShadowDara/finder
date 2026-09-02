@@ -1,16 +1,1 @@
-// Struct for an OCaml Project
-{
-    "description": "OCaml functional programming",
-    "name": "*",
-    "folders": [
-        {
-            "name": "src",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "dune-project",
-        "*.ml"
-    ]
-}
+{"description":"OCaml functional programming","files":["dune-project","*.ml"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}

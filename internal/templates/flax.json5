@@ -1,15 +1,1 @@
-{
-    "name": "*",
-    "folders": [
-        {
-            "name": "Content"
-        }
-    ],
-    "files": [
-        "*.flaxproj"
-    ],
-    "tags": [
-        "game-engine"
-    ],
-    "min_version": "0.3.14"
-}
+{"files":["*.flaxproj"],"folders":[{"name":"Content"}],"min_version":"0.3.14","name":"*","tags":["game-engine"]}

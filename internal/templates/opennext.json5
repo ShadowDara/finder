@@ -1,9 +1,1 @@
-// Struct for an OpenNextJS Edge Project
-{
-    "description": "OpenNextJS edge computing deployment",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "open-next.config.ts"
-    ]
-}
+{"description":"OpenNextJS edge computing deployment","files":["open-next.config.ts"],"folders":[],"name":"*"}

@@ -1,9 +1,1 @@
-// Struct for a Framer Project
-{
-    "description": "Framer design to code platform",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "framer.config.js"
-    ]
-}
+{"description":"Framer design to code platform","files":["framer.config.js"],"folders":[],"name":"*"}

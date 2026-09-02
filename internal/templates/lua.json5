@@ -1,15 +1,1 @@
-// Struct for a Lua Project
-{
-    "description": "Lua programming language project",
-    "name": "*",
-    "folders": [
-        {
-            "name": "src",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "*.lua"
-    ]
-}
+{"description":"Lua programming language project","files":["*.lua"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}

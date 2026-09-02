@@ -1,16 +1,1 @@
-// Struct for a Drupal Project
-{
-    "description": "Drupal CMS project",
-    "name": "*",
-    "folders": [
-        {
-            "name": "modules",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "composer.json",
-        "web"
-    ]
-}
+{"description":"Drupal CMS project","files":["composer.json","web"],"folders":[{"files":[],"folders":[],"name":"modules"}],"name":"*"}

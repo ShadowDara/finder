@@ -1,15 +1,1 @@
-// Struct for a Tokio Project
-{
-    "description": "Tokio Rust async runtime",
-    "name": "*",
-    "folders": [
-        {
-            "name": "src",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "Cargo.toml"
-    ]
-}
+{"description":"Tokio Rust async runtime","files":["Cargo.toml"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}

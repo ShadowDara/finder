@@ -1,12 +1,1 @@
-{
-    "name": "*",
-    "folders": [],
-    "files": [
-        "Gemfile",
-        "_config.yml"
-    ],
-    "tags": [
-        "web"
-    ],
-    "min_version": "0.3.14"
-}
+{"files":["Gemfile","_config.yml"],"folders":[],"min_version":"0.3.14","name":"*","tags":["web"]}

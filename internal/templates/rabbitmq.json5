@@ -1,10 +1,1 @@
-// Struct for RabbitMQ Project
-{
-    "description": "RabbitMQ message broker",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "docker-compose.yml",
-        "rabbitmq.conf"
-    ]
-}
+{"description":"RabbitMQ message broker","files":["docker-compose.yml","rabbitmq.conf"],"folders":[],"name":"*"}

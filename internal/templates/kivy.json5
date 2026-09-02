@@ -1,10 +1,1 @@
-// Struct for a Kivy Project
-{
-    "description": "Kivy Python mobile framework",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "main.py",
-        "*.kv"
-    ]
-}
+{"description":"Kivy Python mobile framework","files":["main.py","*.kv"],"folders":[],"name":"*"}

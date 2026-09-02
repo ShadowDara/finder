@@ -1,9 +1,1 @@
-// Struct for a MakeCode Project
-{
-    "description": "Microsoft MakeCode block programming",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "*.json"
-    ]
-}
+{"description":"Microsoft MakeCode block programming","files":["*.json"],"folders":[],"name":"*"}

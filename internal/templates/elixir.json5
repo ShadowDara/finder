@@ -1,15 +1,1 @@
-// Struct for an Elixir Project
-{
-    "description": "Elixir programming language project",
-    "name": "*",
-    "folders": [
-        {
-            "name": "lib",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "mix.exs"
-    ]
-}
+{"description":"Elixir programming language project","files":["mix.exs"],"folders":[{"files":[],"folders":[],"name":"lib"}],"name":"*"}

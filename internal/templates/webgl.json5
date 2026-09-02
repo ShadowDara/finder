@@ -1,16 +1,1 @@
-// Struct for WebGL Project
-{
-    "description": "WebGL web graphics project",
-    "name": "*",
-    "folders": [
-        {
-            "name": "src",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "index.html",
-        "*.js"
-    ]
-}
+{"description":"WebGL web graphics project","files":["index.html","*.js"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}

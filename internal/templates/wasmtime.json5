@@ -1,16 +1,1 @@
-// Wasmtime WebAssembly runtime
-{
-    "description": "Wasmtime lightweight WebAssembly runtime",
-    "name": "*",
-    "folders": [
-        {
-            "name": "modules",
-            "folders": [],
-            "files": ["*.wasm"]
-        }
-    ],
-    "files": [
-        "wasmtime.toml",
-        "Cargo.toml"
-    ]
-}
+{"description":"Wasmtime lightweight WebAssembly runtime","files":["wasmtime.toml","Cargo.toml"],"folders":[{"files":["*.wasm"],"folders":[],"name":"modules"}],"name":"*"}

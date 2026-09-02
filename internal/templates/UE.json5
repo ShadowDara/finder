@@ -1,16 +1,1 @@
-{
-    "name": "*",
-    "description": "Struct for Unreal Engine Games",
-    "folders": [
-        {
-            "name": "Content"
-        }
-    ],
-    "files": [
-        "*.uproject"
-    ],
-    "tags": [
-        "game-engine"
-    ],
-    "min_version": "0.3.14"
-}
+{"description":"Struct for Unreal Engine Games","files":["*.uproject"],"folders":[{"name":"Content"}],"min_version":"0.3.14","name":"*","tags":["game-engine"]}

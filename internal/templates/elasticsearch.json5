@@ -1,16 +1,1 @@
-// Struct for an Elasticsearch Project
-{
-    "description": "Elasticsearch search and analytics project",
-    "name": "*",
-    "folders": [
-        {
-            "name": "data",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "docker-compose.yml",
-        "*.json"
-    ]
-}
+{"description":"Elasticsearch search and analytics project","files":["docker-compose.yml","*.json"],"folders":[{"files":[],"folders":[],"name":"data"}],"name":"*"}

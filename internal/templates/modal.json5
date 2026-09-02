@@ -1,17 +1,1 @@
-// Modal serverless computing platform
-{
-    "description": "Modal serverless cloud computing platform",
-    "name": "*",
-    "folders": [
-        {
-            "name": "functions",
-            "folders": [],
-            "files": ["*.py"]
-        }
-    ],
-    "files": [
-        "modal.config.yaml",
-        "requirements.txt",
-        ".modal.toml"
-    ]
-}
+{"description":"Modal serverless cloud computing platform","files":["modal.config.yaml","requirements.txt",".modal.toml"],"folders":[{"files":["*.py"],"folders":[],"name":"functions"}],"name":"*"}

@@ -1,16 +1,1 @@
-// Struct for a Rush Stack Monorepo
-{
-    "description": "Rush monorepo project",
-    "name": "*",
-    "folders": [
-        {
-            "name": "apps",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "rush.json",
-        "package.json"
-    ]
-}
+{"description":"Rush monorepo project","files":["rush.json","package.json"],"folders":[{"files":[],"folders":[],"name":"apps"}],"name":"*"}

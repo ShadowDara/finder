@@ -1,15 +1,1 @@
-// Struct for an OpenAPI Codegen Project
-{
-    "description": "OpenAPI code generator",
-    "name": "*",
-    "folders": [
-        {
-            "name": "generated",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "openapi.yaml"
-    ]
-}
+{"description":"OpenAPI code generator","files":["openapi.yaml"],"folders":[{"files":[],"folders":[],"name":"generated"}],"name":"*"}

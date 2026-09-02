@@ -1,13 +1,1 @@
-{
-    "description": "Dask parallel computing library",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "requirements.txt",
-        "*.py"
-    ],
-    "tags": [
-        "python"
-    ],
-    "min_version": "0.3.14"
-}
+{"description":"Dask parallel computing library","files":["requirements.txt","*.py"],"folders":[],"min_version":"0.3.14","name":"*","tags":["python"]}

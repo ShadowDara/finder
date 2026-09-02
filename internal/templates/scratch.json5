@@ -1,10 +1,1 @@
-// Struct for a Scratch Project
-{
-    "description": "Scratch visual programming",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "*.sb3"
-    ],
-    "tags": ["game-engine"]
-}
+{"description":"Scratch visual programming","files":["*.sb3"],"folders":[],"name":"*","tags":["game-engine"]}

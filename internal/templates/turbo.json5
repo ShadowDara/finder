@@ -1,16 +1,1 @@
-// Struct for a Turbo Project
-{
-    "description": "Turbo monorepo tool",
-    "name": "*",
-    "folders": [
-        {
-            "name": "packages",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "turbo.json",
-        "package.json"
-    ]
-}
+{"description":"Turbo monorepo tool","files":["turbo.json","package.json"],"folders":[{"files":[],"folders":[],"name":"packages"}],"name":"*"}

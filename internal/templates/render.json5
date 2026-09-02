@@ -1,9 +1,1 @@
-// Struct for Render Deployment
-{
-    "description": "Render platform as a service",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "render.yaml"
-    ]
-}
+{"description":"Render platform as a service","files":["render.yaml"],"folders":[],"name":"*"}

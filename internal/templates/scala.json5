@@ -1,16 +1,1 @@
-// Struct for a Scala Project
-{
-    "description": "Scala programming language project",
-    "name": "*",
-    "folders": [
-        {
-            "name": "src",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "build.sbt",
-        "*.scala"
-    ]
-}
+{"description":"Scala programming language project","files":["build.sbt","*.scala"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}

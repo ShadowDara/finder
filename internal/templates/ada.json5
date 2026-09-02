@@ -1,16 +1,1 @@
-// Struct for an Ada Project
-{
-    "description": "Ada programming language",
-    "name": "*",
-    "folders": [
-        {
-            "name": "src",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "*.adb",
-        "*.ads"
-    ]
-}
+{"description":"Ada programming language","files":["*.adb","*.ads"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}

@@ -1,15 +1,1 @@
-// Struct for a Cucumber BDD Project
-{
-    "description": "Cucumber behavior-driven development",
-    "name": "*",
-    "folders": [
-        {
-            "name": "features",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "*.feature"
-    ]
-}
+{"description":"Cucumber behavior-driven development","files":["*.feature"],"folders":[{"files":[],"folders":[],"name":"features"}],"name":"*"}

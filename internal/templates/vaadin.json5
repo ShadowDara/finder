@@ -1,16 +1,1 @@
-// Struct for a Vaadin Project
-{
-    "description": "Vaadin Java web framework",
-    "name": "*",
-    "folders": [
-        {
-            "name": "src",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "pom.xml",
-        "*.java"
-    ]
-}
+{"description":"Vaadin Java web framework","files":["pom.xml","*.java"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}

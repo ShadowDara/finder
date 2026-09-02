@@ -1,16 +1,1 @@
-// Struct for a Playwright Testing Framework
-{
-    "description": "Playwright end-to-end testing",
-    "name": "*",
-    "folders": [
-        {
-            "name": "tests",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "playwright.config.ts",
-        "package.json"
-    ]
-}
+{"description":"Playwright end-to-end testing","files":["playwright.config.ts","package.json"],"folders":[{"files":[],"folders":[],"name":"tests"}],"name":"*"}

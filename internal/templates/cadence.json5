@@ -1,16 +1,1 @@
-// Cadence Flow blockchain language
-{
-    "description": "Cadence Flow blockchain smart contract language",
-    "name": "*",
-    "folders": [
-        {
-            "name": "cadence",
-            "folders": [],
-            "files": ["*.cdc"]
-        }
-    ],
-    "files": [
-        "flow.json",
-        ".env.flow"
-    ]
-}
+{"description":"Cadence Flow blockchain smart contract language","files":["flow.json",".env.flow"],"folders":[{"files":["*.cdc"],"folders":[],"name":"cadence"}],"name":"*"}

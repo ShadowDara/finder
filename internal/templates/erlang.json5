@@ -1,16 +1,1 @@
-// Struct for an Erlang Project
-{
-    "description": "Erlang concurrent programming",
-    "name": "*",
-    "folders": [
-        {
-            "name": "src",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "rebar.config",
-        "*.erl"
-    ]
-}
+{"description":"Erlang concurrent programming","files":["rebar.config","*.erl"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}

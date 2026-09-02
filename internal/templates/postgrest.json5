@@ -1,9 +1,1 @@
-// Struct for a PostgREST Project
-{
-    "description": "PostgREST automatic API",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "postgrest.conf"
-    ]
-}
+{"description":"PostgREST automatic API","files":["postgrest.conf"],"folders":[],"name":"*"}

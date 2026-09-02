@@ -1,16 +1,1 @@
-// Struct for a Pytest Project
-{
-    "description": "Python pytest test suite",
-    "name": "*",
-    "folders": [
-        {
-            "name": "tests",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "test_*.py",
-        "pytest.ini"
-    ]
-}
+{"description":"Python pytest test suite","files":["test_*.py","pytest.ini"],"folders":[{"files":[],"folders":[],"name":"tests"}],"name":"*"}

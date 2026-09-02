@@ -1,15 +1,1 @@
-// Struct for an Apache Storm Project
-{
-    "description": "Apache Storm real-time processing",
-    "name": "*",
-    "folders": [
-        {
-            "name": "src",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "pom.xml"
-    ]
-}
+{"description":"Apache Storm real-time processing","files":["pom.xml"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}

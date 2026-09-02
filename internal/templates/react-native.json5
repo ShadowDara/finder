@@ -1,16 +1,1 @@
-// Struct for a React Native Project
-{
-    "description": "React Native mobile application",
-    "name": "*",
-    "folders": [
-        {
-            "name": "src",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "package.json",
-        "App.js"
-    ]
-}
+{"description":"React Native mobile application","files":["package.json","App.js"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}

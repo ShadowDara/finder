@@ -1,16 +1,1 @@
-// Struct for a Deno Project
-{
-    "description": "Deno JavaScript/TypeScript runtime",
-    "name": "*",
-    "folders": [
-        {
-            "name": "src",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "deno.json",
-        "*.ts"
-    ]
-}
+{"description":"Deno JavaScript/TypeScript runtime","files":["deno.json","*.ts"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}

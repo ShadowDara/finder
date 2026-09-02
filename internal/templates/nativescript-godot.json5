@@ -1,15 +1,1 @@
-// Struct for a NativeScript Project
-{
-    "description": "Godot NativeScript C++ scripting",
-    "name": "*",
-    "folders": [
-        {
-            "name": "bin",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "project.godot"
-    ]
-}
+{"description":"Godot NativeScript C++ scripting","files":["project.godot"],"folders":[{"files":[],"folders":[],"name":"bin"}],"name":"*"}

@@ -1,10 +1,1 @@
-// Struct for a PHP Composer Project
-{
-    "description": "PHP project with Composer dependency manager",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "composer.json",
-        "composer.lock"
-    ]
-}
+{"description":"PHP project with Composer dependency manager","files":["composer.json","composer.lock"],"folders":[],"name":"*"}

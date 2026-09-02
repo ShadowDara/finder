@@ -1,9 +1,1 @@
-// Struct for a DID Project
-{
-    "description": "Decentralized Identifiers",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "did.json"
-    ]
-}
+{"description":"Decentralized Identifiers","files":["did.json"],"folders":[],"name":"*"}

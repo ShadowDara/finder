@@ -1,11 +1,1 @@
-{
-    "name": "*",
-    "folders": [],
-    "files": [
-        "*.csproj"
-    ],
-    "tags": [
-        "C#"
-    ],
-    "min_version": "0.3.14"
-}
+{"files":["*.csproj"],"folders":[],"min_version":"0.3.14","name":"*","tags":["C#"]}

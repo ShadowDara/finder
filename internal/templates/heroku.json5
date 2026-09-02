@@ -1,10 +1,1 @@
-{
-    "description": "Heroku platform as a service",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "Procfile",
-        "app.json"
-    ],
-    "min_version": "0.3.14"
-}
+{"description":"Heroku platform as a service","files":["Procfile","app.json"],"folders":[],"min_version":"0.3.14","name":"*"}

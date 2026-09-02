@@ -1,14 +1,1 @@
-{
-    "description": "A Folder Struct for Dart Lang Projects",
-    "name": "*",
-    "folders": [
-        {
-            "name": "lib"
-        }
-    ],
-    "files": [
-        "pubspec.yaml",
-        "analysis_options.yaml"
-    ],
-    "min_version": "0.3.14"
-}
+{"description":"A Folder Struct for Dart Lang Projects","files":["pubspec.yaml","analysis_options.yaml"],"folders":[{"name":"lib"}],"min_version":"0.3.14","name":"*"}

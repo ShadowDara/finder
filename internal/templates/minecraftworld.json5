@@ -1,9 +1,1 @@
-// Folder Struct for Minecraft Worlds
-{
-    "description": "a Struct to search for Minecraft Worlds",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "level.dat"
-    ]
-}
+{"description":"a Struct to search for Minecraft Worlds","files":["level.dat"],"folders":[],"name":"*"}

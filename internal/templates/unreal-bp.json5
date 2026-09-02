@@ -1,18 +1,1 @@
-{
-    "description": "Unreal Engine Blueprint visual scripting",
-    "name": "*",
-    "folders": [
-        {
-            "name": "Content",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "*.uproject"
-    ],
-    "tags": [
-        "game-engine"
-    ],
-    "min_version": "0.3.14"
-}
+{"description":"Unreal Engine Blueprint visual scripting","files":["*.uproject"],"folders":[{"files":[],"folders":[],"name":"Content"}],"min_version":"0.3.14","name":"*","tags":["game-engine"]}

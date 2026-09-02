@@ -1,16 +1,1 @@
-// Struct for a Motion Canvas Project
-{
-    "description": "Motion Canvas animation framework",
-    "name": "*",
-    "folders": [
-        {
-            "name": "src",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "package.json",
-        "*.tsx"
-    ]
-}
+{"description":"Motion Canvas animation framework","files":["package.json","*.tsx"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}

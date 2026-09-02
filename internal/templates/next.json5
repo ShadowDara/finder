@@ -1,16 +1,1 @@
-// Struct for a Next.js Project
-{
-    "description": "Next.js React full-stack framework project",
-    "name": "*",
-    "folders": [
-        {
-            "name": "app",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "next.config.js",
-        "package.json"
-    ]
-}
+{"description":"Next.js React full-stack framework project","files":["next.config.js","package.json"],"folders":[{"files":[],"folders":[],"name":"app"}],"name":"*"}

@@ -1,15 +1,1 @@
-// Struct for a Loom Project
-{
-    "description": "Loom WebAssembly runtime",
-    "name": "*",
-    "folders": [
-        {
-            "name": "src",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "Cargo.toml"
-    ]
-}
+{"description":"Loom WebAssembly runtime","files":["Cargo.toml"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}

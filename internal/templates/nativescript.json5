@@ -1,16 +1,1 @@
-// Struct for a NativeScript Project
-{
-    "description": "NativeScript mobile application",
-    "name": "*",
-    "folders": [
-        {
-            "name": "app",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "nativescript.config.ts",
-        "package.json"
-    ]
-}
+{"description":"NativeScript mobile application","files":["nativescript.config.ts","package.json"],"folders":[{"files":[],"folders":[],"name":"app"}],"name":"*"}

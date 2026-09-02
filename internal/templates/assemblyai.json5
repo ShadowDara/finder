@@ -1,17 +1,1 @@
-// AssemblyAI speech recognition
-{
-    "description": "AssemblyAI speech-to-text and AI processing",
-    "name": "*",
-    "folders": [
-        {
-            "name": "audio",
-            "folders": [],
-            "files": ["*.mp3", "*.wav"]
-        }
-    ],
-    "files": [
-        "assemblyai.config.yaml",
-        "requirements.txt",
-        ".env.assemblyai"
-    ]
-}
+{"description":"AssemblyAI speech-to-text and AI processing","files":["assemblyai.config.yaml","requirements.txt",".env.assemblyai"],"folders":[{"files":["*.mp3","*.wav"],"folders":[],"name":"audio"}],"name":"*"}

@@ -1,16 +1,1 @@
-// Struct for a tRPC Project
-{
-    "description": "tRPC end-to-end type-safe APIs",
-    "name": "*",
-    "folders": [
-        {
-            "name": "src",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "package.json",
-        "tsconfig.json"
-    ]
-}
+{"description":"tRPC end-to-end type-safe APIs","files":["package.json","tsconfig.json"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}

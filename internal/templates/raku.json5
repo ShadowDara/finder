@@ -1,10 +1,1 @@
-// Struct for a Raku Project
-{
-    "description": "Raku programming language (Perl 6)",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "META.json",
-        "*.raku"
-    ]
-}
+{"description":"Raku programming language (Perl 6)","files":["META.json","*.raku"],"folders":[],"name":"*"}

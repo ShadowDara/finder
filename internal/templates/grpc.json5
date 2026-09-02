@@ -1,15 +1,1 @@
-// Struct for a gRPC Project
-{
-    "description": "gRPC project",
-    "name": "*",
-    "folders": [
-        {
-            "name": "proto",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "*.proto"
-    ]
-}
+{"description":"gRPC project","files":["*.proto"],"folders":[{"files":[],"folders":[],"name":"proto"}],"name":"*"}

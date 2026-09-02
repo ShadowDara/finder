@@ -1,16 +1,1 @@
-// Struct for a Web3 Project
-{
-    "description": "Web3.js decentralized application",
-    "name": "*",
-    "folders": [
-        {
-            "name": "src",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "package.json",
-        "web3.js"
-    ]
-}
+{"description":"Web3.js decentralized application","files":["package.json","web3.js"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}

@@ -1,12 +1,1 @@
-// A default struct to find git Repositories
-{
-    "name": "*",
-    "description": "Finds all git repositories",
-    "min_version": "0.3.6",
-    "files": [],
-    "folders": [
-        {
-            "name": ".git"
-        }
-    ]
-}
+{"description":"Finds all git repositories","files":[],"folders":[{"name":".git"}],"min_version":"0.3.6","name":"*"}

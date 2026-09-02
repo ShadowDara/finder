@@ -1,15 +1,1 @@
-{
-    "description": "C/C++ project with CMake build system",
-    "name": "*",
-    "folders": [
-        {
-            "name": "src",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "CMakeLists.txt"
-    ],
-    "min_version": "0.3.14"
-}
+{"description":"C/C++ project with CMake build system","files":["CMakeLists.txt"],"folders":[{"files":[],"folders":[],"name":"src"}],"min_version":"0.3.14","name":"*"}

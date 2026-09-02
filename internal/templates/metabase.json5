@@ -1,9 +1,1 @@
-// Struct for a Metabase Project
-{
-    "description": "Metabase analytics platform",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "docker-compose.yml"
-    ]
-}
+{"description":"Metabase analytics platform","files":["docker-compose.yml"],"folders":[],"name":"*"}

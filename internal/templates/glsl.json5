@@ -1,11 +1,1 @@
-// Struct for GLSL Shader Project
-{
-    "description": "GLSL shader programming",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "*.glsl",
-        "*.frag",
-        "*.vert"
-    ]
-}
+{"description":"GLSL shader programming","files":["*.glsl","*.frag","*.vert"],"folders":[],"name":"*"}

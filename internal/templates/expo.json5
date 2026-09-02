@@ -1,16 +1,1 @@
-// Struct for an Expo Project
-{
-    "description": "Expo React Native framework",
-    "name": "*",
-    "folders": [
-        {
-            "name": "screens",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "app.json",
-        "package.json"
-    ]
-}
+{"description":"Expo React Native framework","files":["app.json","package.json"],"folders":[{"files":[],"folders":[],"name":"screens"}],"name":"*"}

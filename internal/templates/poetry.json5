@@ -1,10 +1,1 @@
-// Struct for a Poetry Python Project
-{
-    "description": "Poetry Python dependency manager",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "pyproject.toml",
-        "poetry.lock"
-    ]
-}
+{"description":"Poetry Python dependency manager","files":["pyproject.toml","poetry.lock"],"folders":[],"name":"*"}

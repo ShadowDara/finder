@@ -1,16 +1,1 @@
-// Struct for a Haskell Project
-{
-    "description": "Haskell programming language project",
-    "name": "*",
-    "folders": [
-        {
-            "name": "src",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "stack.yaml",
-        "package.yaml"
-    ]
-}
+{"description":"Haskell programming language project","files":["stack.yaml","package.yaml"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}

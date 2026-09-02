@@ -1,9 +1,1 @@
-// Struct for a SonarQube Project
-{
-    "description": "SonarQube code quality analysis",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "sonar-project.properties"
-    ]
-}
+{"description":"SonarQube code quality analysis","files":["sonar-project.properties"],"folders":[],"name":"*"}

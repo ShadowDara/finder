@@ -1,10 +1,1 @@
-// Struct for Solr Project
-{
-    "description": "Apache Solr search engine",
-    "name": "*",
-    "folders": [],
-    "files": [
-        "docker-compose.yml",
-        "solrconfig.xml"
-    ]
-}
+{"description":"Apache Solr search engine","files":["docker-compose.yml","solrconfig.xml"],"folders":[],"name":"*"}

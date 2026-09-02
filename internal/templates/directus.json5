@@ -1,9 +1,1 @@
-// Struct for a Directus Project
-{
-    "description": "Directus headless CMS",
-    "name": "*",
-    "folders": [],
-    "files": [
-        ".env"
-    ]
-}
+{"description":"Directus headless CMS","files":[".env"],"folders":[],"name":"*"}

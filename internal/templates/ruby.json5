@@ -1,8 +1,1 @@
-// Struct for a Ruby Project
-{
-    "name": "*",
-    "folders": [],
-    "files": [
-        "Gemfile"
-    ]
-}
+{"files":["Gemfile"],"folders":[],"name":"*"}

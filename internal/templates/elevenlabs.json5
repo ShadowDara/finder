@@ -1,17 +1,1 @@
-// Eleven Labs voice synthesis
-{
-    "description": "Eleven Labs text-to-speech voice synthesis API",
-    "name": "*",
-    "folders": [
-        {
-            "name": "voices",
-            "folders": [],
-            "files": ["*.wav", "*.mp3"]
-        }
-    ],
-    "files": [
-        "elevenlabs.config.yaml",
-        "requirements.txt",
-        ".env.elevenlabs"
-    ]
-}
+{"description":"Eleven Labs text-to-speech voice synthesis API","files":["elevenlabs.config.yaml","requirements.txt",".env.elevenlabs"],"folders":[{"files":["*.wav","*.mp3"],"folders":[],"name":"voices"}],"name":"*"}

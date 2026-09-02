@@ -1,15 +1,1 @@
-// Struct for Salt Infrastructure
-{
-    "description": "SaltStack infrastructure automation",
-    "name": "*",
-    "folders": [
-        {
-            "name": "salt",
-            "folders": [],
-            "files": []
-        }
-    ],
-    "files": [
-        "top.sls"
-    ]
-}
+{"description":"SaltStack infrastructure automation","files":["top.sls"],"folders":[{"files":[],"folders":[],"name":"salt"}],"name":"*"}
