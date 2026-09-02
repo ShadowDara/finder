@@ -14,7 +14,7 @@ import (
 	"github.com/shadowdara/finder/pub/json5"
 )
 
-//go:embed frontend/*
+//go:embed frontend/***
 var frontend embed.FS
 
 func loggingMiddleware(next http.Handler) http.Handler {
