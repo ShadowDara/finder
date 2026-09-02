@@ -1,3 +1,7 @@
+// INFO
+// THIS FILE IS AUTO GENERATED FROM ALL BUILTIN TEMPLATES
+// DO NOT EDIT IT!!!
+
 export default {
   "actix-web.json5": {
     "description": "Actix-web Rust web framework",

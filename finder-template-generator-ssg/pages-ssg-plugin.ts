@@ -105,6 +105,13 @@ export interface PagesPluginOptions {
    * @default false
    */
   addRawMarkdown?: boolean;
+
+  /**
+   * Set the paths to relative paths
+   *
+   * @default false
+   */
+  relativePaths?: boolean;
 }
 
 export interface PageRenderContext {
@@ -665,9 +672,7 @@ declare module "virtual:pages" {
         const htmlFileName = outputFileName(page.id);
         const htmlDir = path.dirname(htmlFileName);
 
-        const scriptPath = path
-          .relative(htmlDir, jsChunk.fileName)
-          .replace(/\\/g, "/");
+        const scriptPath = getRelativeAssetPath(htmlFileName, jsChunk.fileName);
 
         const scriptTag = `<script type="module" src="${scriptPath}"></script>`;
 
@@ -689,9 +694,7 @@ declare module "virtual:pages" {
 
           styleTag = cssFiles
             .map((cssFile) => {
-              const cssPath = path
-                .relative(htmlDir, cssFile)
-                .replace(/\\/g, "/");
+              const cssPath = getRelativeAssetPath(htmlFileName, cssFile);
 
               return `<link rel="stylesheet" href="${cssPath}" />`;
             })
@@ -772,4 +775,13 @@ function getPageId(url: string, pages: PageEntry[]): string {
   }
 
   return pathname;
+}
+
+function getRelativeAssetPath(
+  htmlFileName: string,
+  assetFileName: string,
+): string {
+  return path.posix
+    .relative(path.posix.dirname(htmlFileName), assetFileName)
+    .replace(/\\/g, "/");
 }

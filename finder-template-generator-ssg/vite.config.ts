@@ -3,6 +3,7 @@ import { pagesPlugin } from "./pages-ssg-plugin";
 import { visualizer } from "rollup-plugin-visualizer";
 
 export default defineConfig(({ mode }) => ({
+  base: mode === "static" ? "/finder/" : "./",
   esbuild: {
     jsxFactory: "jsx",
     jsxFragment: "Fragment",
@@ -28,6 +29,7 @@ export default defineConfig(({ mode }) => ({
         changelog: ["/src/markdownstyle.css"],
         index: ["/src/markdownstyle.css"],
       },
+      relativePaths: true,
       extensions: [".ts", ".tsx"],
       prettyUrls: true,
       pagesDir: "pages",
