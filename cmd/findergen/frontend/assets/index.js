@@ -1,196 +1,5 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/creator-y2_09cSn.js","assets/creator-DSVGwkNZ.css","assets/viewer-BKPpFfgS.js","assets/viewer-DfdmHG-g.css"])))=>i.map(i=>d[i]);
-const C="modulepreload",w=function(e){return"/"+e},u={},m=function(n,t,s){let o=Promise.resolve();if(t&&t.length>0){document.getElementsByTagName("link");const r=document.querySelector("meta[property=csp-nonce]"),i=(r==null?void 0:r.nonce)||(r==null?void 0:r.getAttribute("nonce"));o=Promise.allSettled(t.map(a=>{if(a=w(a),a in u)return;u[a]=!0;const d=a.endsWith(".css"),h=d?'[rel="stylesheet"]':"";if(document.querySelector(`link[href="${a}"]${h}`))return;const l=document.createElement("link");if(l.rel=d?"stylesheet":C,d||(l.as="script"),l.crossOrigin="",l.href=a,i&&l.setAttribute("nonce",i),document.head.appendChild(l),d)return new Promise((f,T)=>{l.addEventListener("load",f),l.addEventListener("error",()=>T(new Error(`Unable to preload CSS for ${a}`)))})}))}function c(r){const i=new Event("vite:preloadError",{cancelable:!0});if(i.payload=r,window.dispatchEvent(i),!i.defaultPrevented)throw r}return o.then(r=>{for(const i of r||[])i.status==="rejected"&&c(i.reason);return n().catch(c)})},p="/assets/markdownstyle-CWEgKCyj.css",g={about:{id:"about",type:"component",load:()=>m(()=>import("./about-VVPQahju.js"),[]),styles:[]},changelog:{id:"changelog",type:"markdown",markdown:`# CHANGELOG\r
-\r
-[Go Back](../) - _Please ignore this line, this is for the finder server_\r
-\r
-The whole finder CHANGELOG\r
-\r
-## Newest -> prob 0.3.15\r
-\r
-- added new Templates\r
-- added a HTML Server with go backend to create and view all templates\r
-- added json output support to finder, just add \`--json\` to command\r
-- added tags and min version to a lot of the templates\r
-- the Templates are now saved as minified json\r
-\r
-## 0.3.9\r
-\r
-- fixed Binary Search\r
-\r
-## 0.3.8\r
-\r
-- added Checksums\r
-\r
-## 0.3.7\r
-\r
-- only for releasing\r
-\r
-## 0.3.6 - 24.02.2026\r
-\r
-- added Size option to the Templates\r
-- updated README File\r
-- updates \`CUSTOM_TEMPLATES\`\r
-- added a new entry to the Template: **min finder version** which should\r
-  help with for example old and new templates but is not required\r
-- added Version package\r
-\r
-## 0.3.5 - 18.02.2026\r
-\r
-- made a Folder public for public finder modules\r
-- added Template for\r
-  - flax\r
-- added Time which the searching took\r
-- resturctured the argparser\r
-- added version Command\r
-- added Argparser package\r
-- removed loading templates directly from the Console or via a custom filepath!\r
-  Just move them into \`$HOME/.finder/templates\`.\r
-- json output is broken in this Release, but will we fixed in future Releases\r
-  although with other Output Types\r
-- formatted the tag Search output correctly\r
-\r
-## 0.3.4 - 16.02.2026\r
-\r
-- changed Go Version to 1.18\r
-- fixed _\`Search on all Drives on Windows\`_ from 0.3.3, it\r
-  didn't quite well before\r
-- added Async Search\r
-- made color package public\r
-\r
-## 0.3.3 - 15.02.2026\r
-\r
-- added JSON Shema\r
-- added File Options\r
-- Search on all Drives on Windows\r
-- added Tag Search\r
-\r
-## 0.3.2 - 15.02.2026\r
-\r
-- little Fixes\r
-\r
-## 0.3.1 - 15.02.2026\r
-\r
-### ✨ Features\r
-\r
-#### Runtime Custom Template System\r
-\r
-- **Custom Templates without Recompilation**: Users can now create templates in \`~/.finder/templates/\` or \`./.finder/templates/\` without recompiling the program\r
-- **Automatic Template Discovery**: New \`.json5\` files are automatically detected and loaded on startup\r
-- **User Templates Override**: User-defined templates can override built-in templates with the same name\r
-- **Precedence System**: User templates take precedence over built-in templates\r
-\r
-#### CLI Reorganization & Modernization\r
-\r
-- **Modular CLI Architecture**: Complete restructuring from monolithic design\r
-  - \`parser.go\`: Dedicated argument parsing logic\r
-  - \`handlers.go\`: Isolated command handlers\r
-  - \`commands.go\`: Clean routing (reduced from 300+ to 60 lines)\r
-- **Command Aliases**: New shorter forms for common commands\r
-  - \`h\`, \`-h\`, \`--help\` in addition to \`help\`\r
-  - \`ls\` in addition to \`list\`\r
-  - \`--file\` in addition to \`-f\`\r
-  - \`--config\` in addition to \`-c\`\r
-- **CLIOptions Struct**: Structured argument representation with predicates\r
-  - \`.IsHelp()\`, \`.IsList()\`, \`.IsCheck()\`, \`.IsFileLoad()\`, \`.IsDirectLoad()\`, \`.IsTemplateSearch()\`\r
-  - \`.GetFileArg()\`, \`.GetDirectLoadArg()\`, \`.GetTemplateName()\`\r
-- **Verbose Mode**: New \`--verbose\` flag for extended output\r
-\r
-#### Enhanced Help System\r
-\r
-- **Better Help Structure**: Organized into COMMANDS, FILE & CONFIG OPERATIONS, GLOBAL FLAGS\r
-- **Table Layout**: Improved readability with consistent formatting\r
-- **Custom Templates Info**: Documentation for user template setup\r
-- **Detailed Descriptions**: Each command with clear explanation\r
-\r
-#### Enhanced List & Check Commands\r
-\r
-- **Separated Display**: Built-in and custom templates are listed separately\r
-- **Template Sources**: Source attribute shows whether template is built-in or custom\r
-- **Helpful Hints**: Paths for custom template setup are displayed\r
-- **Improved Validation**: Check command validates with source information\r
-\r
-### 🧪 Testing\r
-\r
-- **40+ new unit tests** for CLI parser logic\r
-- **Parser Tests**: Comprehensive coverage for command recognition, flag parsing, argument extraction\r
-- **Integration Tests**: End-to-end tests for command execution\r
-- **Routing Tests**: Tests for handler mapping\r
-- **Error Handling Tests**: Validation of error handling and user feedback\r
-\r
-### 📖 Documentation\r
-\r
-- **ARCHITECTURE.md**: Detailed technical documentation of the new CLI structure\r
-- **REORGANIZATION.md**: Comprehensive before/after comparison and explanation\r
-- **QUICKSTART.md**: Practical guide for adding new commands\r
-- **CUSTOM_TEMPLATES.md**: User guide for custom template creation\r
-- **Inline Code Comments**: Improved code documentation\r
-\r
-### 🔧 Infrastructure\r
-\r
-- **Enhanced Template Loader** (\`templateloader.go\`)\r
-  - \`LoadUserTemplates()\`: Discovers user templates from filesystem\r
-  - \`JSONtemplateLoaderWithUserTemplates()\`: Intelligent loading with user override\r
-  - \`LoadAllWithUserTemplates()\`: Combined built-in + custom template discovery\r
-- **Template Override Mechanism**: User templates can replace built-in templates\r
-- **Graceful Error Handling**: Missing user template directories are not fatal\r
-\r
-### 🎯 Quality Improvements\r
-\r
-- **Clean Code Structure**: Single Responsibility Principle consistently applied\r
-- **Better Testability**: Each module can be tested in isolation\r
-- **Extensibility**: New commands can be added in 5 simple steps\r
-- **Backward Compatibility**: External API (\`HandleCommand()\`) unchanged\r
-\r
-### 👥 User Experience\r
-\r
-- **Better Error Messages**: Context-sensitive error messages with suggestions\r
-- **Helpful Hints**: Tips for common tasks (e.g., where to place templates)\r
-- **Flexible Command Syntax**: Multiple synonyms for each command\r
-- **Consistent Output Formatting**: Unified design across all commands\r
-\r
-### 📊 Performance\r
-\r
-- **No Recompilation Required**: Custom templates are loaded at runtime\r
-- **Efficient Template Discovery**: Fast filesystem traversal\r
-- **Minimal Overhead**: Template loading has negligible performance impact\r
-\r
-### 🐛 Bug Fixes & Improvements\r
-\r
-- Improved error handling in template loading\r
-- Better handling of missing or malformed user templates\r
-- Consistent error messages across all commands\r
-- Fixed edge cases in CLI argument parsing\r
-\r
-### 📝 Breaking Changes\r
-\r
-- **No Breaking Changes**: All existing commands work unchanged\r
-- Internal structure completely refactored, but public API remains stable\r
-\r
-### 🙏 Highlights\r
-\r
-This version brings the biggest improvement since 0.2.0:\r
-\r
-- Users can now create their own templates\r
-- Codebase is more maintainable and extensible\r
-- Test coverage drastically improved\r
-\r
----\r
-\r
-## 0.3.0 - 23.01.2026\r
-\r
-Template System & CLI Foundations\r
-\r
-## 0.2.0 - 23.01.2026\r
-\r
-More Templates\r
-Better Console Output\r
-Help Message\r
-\r
-## 0.1.0 - 17.11.2025\r
-\r
-Programm Init\r
-`,html:`<h1 id="changelog">CHANGELOG</h1>
-<p><a href="../">Go Back</a> - <em>Please ignore this line, this is for the finder server</em></p>
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./creator-y2_09cSn.js","./creator-DSVGwkNZ.css","./viewer-BKPpFfgS.js","./viewer-DfdmHG-g.css"])))=>i.map(i=>d[i]);
+const y="modulepreload",T=function(e,n){return new URL(e,n).href},g={},u=function(n,t,i){let l=Promise.resolve();if(t&&t.length>0){const s=document.getElementsByTagName("link"),o=document.querySelector("meta[property=csp-nonce]"),h=(o==null?void 0:o.nonce)||(o==null?void 0:o.getAttribute("nonce"));l=Promise.allSettled(t.map(r=>{if(r=T(r,i),r in g)return;g[r]=!0;const d=r.endsWith(".css"),b=d?'[rel="stylesheet"]':"";if(!!i)for(let c=s.length-1;c>=0;c--){const m=s[c];if(m.href===r&&(!d||m.rel==="stylesheet"))return}else if(document.querySelector(`link[href="${r}"]${b}`))return;const a=document.createElement("link");if(a.rel=d?"stylesheet":y,d||(a.as="script"),a.crossOrigin="",a.href=r,h&&a.setAttribute("nonce",h),document.head.appendChild(a),d)return new Promise((c,m)=>{a.addEventListener("load",c),a.addEventListener("error",()=>m(new Error(`Unable to preload CSS for ${r}`)))})}))}function p(s){const o=new Event("vite:preloadError",{cancelable:!0});if(o.payload=s,window.dispatchEvent(o),!o.defaultPrevented)throw s}return l.then(s=>{for(const o of s||[])o.status==="rejected"&&p(o.reason);return n().catch(p)})},f=""+new URL("markdownstyle-CWEgKCyj.css",import.meta.url).href,w={about:{id:"about",type:"component",load:()=>u(()=>import("./about-VVPQahju.js"),[],import.meta.url),styles:[]},changelog:{id:"changelog",type:"markdown",html:`<h1 id="changelog">CHANGELOG</h1>
 <p>The whole finder CHANGELOG</p>
 <h2 id="newest---prob-0315">Newest -> prob 0.3.15</h2>
 <ul>
@@ -367,10 +176,124 @@ Programm Init\r
 Better Console Output
 Help Message</p>
 <h2 id="010---17112025">0.1.0 - 17.11.2025</h2>
-<p>Programm Init</p>`,styles:[p]},creator:{id:"creator",type:"component",load:()=>m(()=>import("./creator-y2_09cSn.js"),__vite__mapDeps([0,1])),styles:[]},index:{id:"index",type:"component",load:()=>m(()=>import("./index-B0g_HJRt.js"),[]),styles:[p]},viewer:{id:"viewer",type:"component",load:()=>m(()=>import("./viewer-BKPpFfgS.js"),__vite__mapDeps([2,3])),styles:[]}};async function y(){const e=document.getElementById("app");if(e==null)throw new Error("Missing #app element");const n=window.PAGE_ID;if(!n){v(e);return}if(n==="__404__"){const s=Object.keys(g).filter(o=>o!=="__404__").map(o=>`
+<p>Programm Init</p>`,styles:[f]},creator:{id:"creator",type:"component",load:()=>u(()=>import("./creator-y2_09cSn.js"),__vite__mapDeps([0,1]),import.meta.url),styles:[]},index:{id:"index",type:"component",load:()=>u(()=>import("./index-D171lZWw.js"),[],import.meta.url),styles:[f]},readme:{id:"readme",type:"markdown",html:`<p><!--
+go build ./cmd/finder</p>
+<p>Push Tag
+git tag v0.3.7
+git push origin v0.3.7</p>
+<p>Maybe
+<img src="https://img.shields.io/github/issues/shadowdara/finder?logo=github" alt="GitHub Issues or Pull Requests">
+<img src="https://img.shields.io/github/issues-pr/shadowdara/finder?logo=github" alt="GitHub Issues or Pull Requests">
+<a href="https://github.com/shadowdara/finder/" target="_blank" rel="noopener noreferrer">@@HTML2@@</a></p>
+<p>--></p>
+<h1 id="finder">finder</h1>
+<p><a href="https://github.com/ShadowDara/finder/actions/workflows/release.yml" target="_blank" rel="noopener noreferrer">@@HTML0@@</a>
+<a href="https://github.com/ShadowDara/finder/actions/workflows/buildcheck.yml" target="_blank" rel="noopener noreferrer">@@HTML1@@</a>
+<a href="https://github.com/shadowdara/finder/graphs/contributors" target="_blank" rel="noopener noreferrer">@@HTML2@@</a>
+<a href="https://github.com/shadowdara/finder/commits" target="_blank" rel="noopener noreferrer">@@HTML3@@</a>
+<a href="https://github.com/shadowdara/finder/releases" target="_blank" rel="noopener noreferrer">@@HTML4@@</a>
+<a href="https://github.com/shadowdara/finder/releases" target="_blank" rel="noopener noreferrer">@@HTML5@@</a>
+<a href="https://github.com/shadowdara/finder.git" target="_blank" rel="noopener noreferrer">@@HTML6@@</a>
+<img src="https://img.shields.io/github/stars/shadowdara/finder" alt="GitHub Repo stars">
+<img src="https://img.shields.io/github/forks/shadowdara/finder" alt="GitHub forks"></p>
+<p>Finder is a small command-line tool written in Go to locate projects
+based on predefined folder/file structure templates.</p>
+<p>In short: you can search for repositories (e.g. <code>.git</code>), project layouts,
+or your own custom structures using templates.</p>
+<h2 id="commiting">Commiting</h2>
+<p>feel free to help the Project by committing Code for the project are Templates.
+Feel although free to submit Templates via Issues!</p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Searches using JSON5 templates stored in <code>internal/structure/templates</code>.</li>
+<li>Supports user templates in the OS-specific configuration folder.</li>
+<li>Lightweight, tested, and easy to extend.</li>
+<li>**Finder can although be used to search single files and is a lot faster</li>
+</ul>
+<p>than Windows Search just to say**</p>
+<h2 id="requirements">Requirements</h2>
+<ul>
+<li>Go 1.18 or newer</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<p>Build from source:</p>
+<pre><code class="language-sh">go build ./cmd/finder</code></pre>
+<p>Or install with <code>go install</code> (Go 1.18+):</p>
+<pre><code class="language-sh">go install github.com/shadowdara/finder/cmd/finder@latest</code></pre>
+<p>The produced binary is <code>finder</code> (on Windows <code>finder.exe</code>).</p>
+<h2 id="usage">Usage</h2>
+<p>Basic syntax:</p>
+<pre><code class="language-sh">finder &lt;template-name&gt;</code></pre>
+<p>Example — find Git repositories:</p>
+<pre><code class="language-sh">finder git</code></pre>
+<p>The program searches the current directory recursively and prints
+matches based on the template name.</p>
+<h2 id="templates">Templates</h2>
+<p>Default templates are stored in <code>internal/structure/templates</code>.
+Templates are JSON5 files with fields such as <code>name</code>, <code>files</code>, and
+<code>folders</code>. A simple template to find Git repositories looks like:</p>
+<pre><code class="language-json">{
+    &quot;name&quot;: &quot;*&quot;,
+    &quot;folders&quot;: [
+        { &quot;name&quot;: &quot;.git&quot; }
+    ],
+}</code></pre>
+<p>And a full template looks like this. Empty Value are not required
+in the Template. The <code>description</code> will be displayed in the program
+when searching for the Template and although when displaying all
+templates. The <code>command</code> runs in the Structure Directory after the
+Structure is found. The Entrywill only be added is the <code>command</code> 
+returns <code>0</code> when <code>invert_command</code> is <code>false</code>, else <code>1</code>.</p>
+<pre><code class="language-json">{
+    &quot;name&quot;: &quot;*&quot;,
+    &quot;description&quot;: &quot;&quot;,
+    &quot;folders&quot;: [
+        { &quot;name&quot;: &quot;.git&quot; }
+    ],
+    &quot;files&quot;: [],
+    &quot;command&quot;: &quot;&quot;,
+    &quot;invert_command&quot;: false
+}</code></pre>
+<p><!-- Place custom templates in the following folder: --></p>
+<p><!-- - Windows: \`%AppData%\\finder\`
+- Linux: \`~/.config/finder\`
+- macOS: \`~/Library/Application Support/finder\` --></p>
+<p>Then call <code>finder <template-name></code> to use them.</p>
+<h2 id="development">Development</h2>
+<p>Run tests:</p>
+<pre><code class="language-sh">go test ./...</code></pre>
+<p>Generate coverage report:</p>
+<pre><code class="language-sh">go test -coverprofile=coverage ./...
+go tool cover -html=coverage</code></pre>
+<p>Build:</p>
+<pre><code class="language-sh">go build ./cmd/finder</code></pre>
+<p>Check the available Templates</p>
+<pre><code class="language-sh">go run ./cmd/finder check</code></pre>
+<h2 id="contributing">Contributing</h2>
+<ul>
+<li>Found a missing or inaccurate template? Please open an issue.</li>
+<li>Add new templates via PR. Keep them in JSON5 and provide a short</li>
+</ul>
+<h2 id="roadmap-ideas">Roadmap / Ideas</h2>
+<ul>
+<li>use temporary Template via the Command Line</li>
+<li>Caching/Indexing for faster searches</li>
+<li>Web UI for template management</li>
+<li>Template schema and validation</li>
+</ul>
+<h2 id="license">License</h2>
+<p>See <code>LICENSE</code>.</p>
+<hr>
+<p>Project: <code>https://github.com/shadowdara/finder</code></p>
+<h2 id="extra-info">Extra Info</h2>
+<p>The Project <a href="https://github.com/shadowdara/fs-tools" target="_blank" rel="noopener noreferrer">fs-tools</a> was more or less
+the prototype for finder.</p>
+<h2 id="info-video">Info Video</h2>
+<p>(<em>a Youtube Video</em>)</p>
+<p><a href="https://www.youtube.com/watch?v=oIRgAYv-mOA" target="_blank" rel="noopener noreferrer">@@HTML0@@</a></p>`,styles:[]},viewer:{id:"viewer",type:"component",load:()=>u(()=>import("./viewer-BKPpFfgS.js"),__vite__mapDeps([2,3]),import.meta.url),styles:[]}};async function v(){const e=document.getElementById("app");if(e==null)throw new Error("Missing #app element");const n=window.PAGE_ID;if(!n){C(e);return}if(n==="__404__"){const i=Object.keys(w).filter(l=>l!=="__404__").map(l=>`
         <li>
-          <a href="${o==="index"?"/":`/${o}`}">
-            ${o}
+          <a href="${l==="index"?"/":`/${l}`}">
+            ${l}
           </a>
         </li>
       `).join("");e.innerHTML=`
@@ -380,31 +303,32 @@ Help Message</p>
 
       <h2>Available pages</h2>
       <ul>
-        ${s}
+        ${i}
       </ul>
 
       <a href="/">Go home</a>
     </main>
-  `;return}const t=g[n];if(!t){console.error(`[pages] Unknown page id: ${n}`),e.innerHTML=`
+  `;return}const t=w[n];if(!t){console.error(`[pages] Unknown page id: ${n}`),e.innerHTML=`
       <main>
         <h1>404</h1>
         <p>Page "${n}" not found.</p>
         <a href="/">Go home</a>
       </main>
-    `;return}try{if(b(t.styles),t.type==="markdown"){e.innerHTML=`
+    `;return}try{if(S(t.styles),t.type==="markdown"){e.innerHTML=`
+      <a href="../">Home</a>
       <article class="markdown">
         ${t.html}
       </article>
-    `;return}await(await t.load()).default(e)}catch(s){console.error(`[pages] Failed to load page "${n}"`,s),e.innerHTML=`
+    `;return}await(await t.load()).default(e)}catch(i){console.error(`[pages] Failed to load page "${n}"`,i),e.innerHTML=`
       <main>
         <h1>Failed to load page</h1>
         <p>Could not load "${n}".</p>
         <a href="/">Go home</a>
       </main>
-    `}}y();function v(e){e.innerHTML=`
+    `}}v();function C(e){e.innerHTML=`
       <main>
         <h1>404</h1>
         <p>No page id was provided.</p>
         <a href="/">Go home</a>
       </main>
-    `}function b(e){console.log("[pages] loading styles:",e);for(const n of e){if(console.log("[pages] style:",n),document.head.querySelector(`link[data-page-style="${CSS.escape(n)}"]`))continue;const t=document.createElement("link");t.rel="stylesheet",t.href=n,t.dataset.pageStyle=n,document.head.appendChild(t)}}
+    `}function S(e){console.log("[pages] loading styles:",e);for(const n of e){const t=new URL(n,import.meta.url).href;if(document.head.querySelector(`link[data-page-style="${CSS.escape(t)}"]`))continue;const i=document.createElement("link");i.rel="stylesheet",i.href=t,i.dataset.pageStyle=t,document.head.appendChild(i)}}

@@ -242,7 +242,7 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
             id,
             source: fullPath,
             type: "markdown",
-            markdown,
+            ...(addRawMarkdown ? { markdown } : {}),
             html,
             styles: options.styles?.[id] ?? [],
           });
@@ -343,10 +343,14 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
           .join(", ");
 
         if (page.type === "markdown") {
+          const markdownField = addRawMarkdown
+            ? `markdown: ${JSON.stringify(page.markdown ?? "")},`
+            : "";
+
           return `  ${JSON.stringify(page.id)}: {
     id: ${JSON.stringify(page.id)},
     type: "markdown",
-    markdown: ${JSON.stringify(page.markdown ?? "")},
+    ${markdownField}
     html: ${JSON.stringify(page.html ?? "")},
     styles: [${styles}]
   }`;
@@ -391,7 +395,7 @@ declare module "virtual:pages" {
   export interface MarkdownPage {
     id: string;
     type: "markdown";
-    markdown: string;
+    markdown?: string;
     html: string;
     styles: string[];
   }

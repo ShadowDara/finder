@@ -17,7 +17,7 @@ declare module "virtual:pages" {
   export interface MarkdownPage {
     id: string;
     type: "markdown";
-    markdown: string;
+    markdown?: string;
     html: string;
     styles: string[];
   }
