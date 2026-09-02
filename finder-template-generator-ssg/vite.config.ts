@@ -28,6 +28,7 @@ export default defineConfig(({ mode }) => ({
       styles: {
         changelog: ["/src/markdownstyle.css"],
         index: ["/src/markdownstyle.css"],
+        readme: ["/src/markdownstyle.css"],
       },
       // relativePaths: true,
       extensions: [".ts", ".tsx"],

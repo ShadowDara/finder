@@ -8,7 +8,12 @@ MIN_VERSION = "0.3.15"
 folder = Path(__file__).parent
 folder = Path(str(folder) + "/templates")
 
+wrong = 0
+all = 0
+notags = 0
+
 for json_file in folder.glob("*.json5"):
+    all += 1
     try:
         with json_file.open("r", encoding="utf-8") as f:
             data = json.load(f)
@@ -28,6 +33,7 @@ for json_file in folder.glob("*.json5"):
 
     except json.JSONDecodeError:
         print(f"Übersprungen (ungültiges JSON): {json_file.name}")
+        wrong += 1
     except Exception as e:
         print(f"Fehler bei {json_file.name}: {e}")
 
@@ -40,8 +46,12 @@ for json_file in folder.glob("*.json5"):
         # Nur ergänzen, wenn min_version nicht vorhanden ist
         if "tags" not in data:
             print(f"No Tags: {json_file.name}")
+            notags += 1
 
     except json.JSONDecodeError:
         print(f"Übersprungen (ungültiges JSON): {json_file.name}")
     except Exception as e:
         print(f"Fehler bei {json_file.name}: {e}")
+
+print(f"\nWrong JSON {wrong} from {all}")
+print(f"Templates without tags {notags} from {all - wrong} Working")

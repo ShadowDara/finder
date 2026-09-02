@@ -1,4 +1,3 @@
-// vLLM model serving framework
 {
     "description": "vLLM high-throughput LLM inference server",
     "name": "*",
@@ -6,12 +5,16 @@
         {
             "name": "models",
             "folders": [],
-            "files": ["*.bin", "*.safetensors"]
+            "files": [
+                "*.bin",
+                "*.safetensors"
+            ]
         }
     ],
     "files": [
         "vllm.config.yaml",
         "requirements.txt",
         "docker-compose.yml"
-    ]
+    ],
+    "min_version": "0.3.15"
 }

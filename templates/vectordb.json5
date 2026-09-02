@@ -1,4 +1,3 @@
-// Vector database project (Pinecone, Weaviate, Qdrant, Milvus)
 {
     "description": "Vector database for semantic search and embeddings",
     "name": "*",
@@ -6,12 +5,19 @@
         {
             "name": "vectors",
             "folders": [],
-            "files": ["*.pkl", "*.npy", "*.bin"]
+            "files": [
+                "*.pkl",
+                "*.npy",
+                "*.bin"
+            ]
         },
         {
             "name": "scripts",
             "folders": [],
-            "files": ["*.py", "*.js"]
+            "files": [
+                "*.py",
+                "*.js"
+            ]
         }
     ],
     "files": [
@@ -20,5 +26,6 @@
         "qdrant.yaml",
         "weaviate.config.json",
         "requirements.txt"
-    ]
+    ],
+    "min_version": "0.3.15"
 }
