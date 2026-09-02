@@ -22,7 +22,7 @@ export default function render(el: HTMLDivElement) {
 
         <ul>
           <li>
-            <a href="./changelog.md">Changelog</a>
+            <a href="./changelog">Changelog</a>
           </li>
         </ul>
 
