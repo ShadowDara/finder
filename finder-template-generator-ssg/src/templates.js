@@ -16,7 +16,12 @@ export default {
         "name": "src"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.15",
+    "name": "*",
+    "tags": [
+      "web",
+      "rust"
+    ]
   },
   "ada.json5": {
     "description": "Ada programming language",
@@ -31,6 +36,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.15",
     "name": "*"
   },
   "airbyte.json5": {
@@ -50,6 +56,7 @@ export default {
         "name": "connectors"
       }
     ],
+    "min_version": "0.3.15",
     "name": "*"
   },
   "airflow-workflow.json5": {
@@ -75,6 +82,7 @@ export default {
         "name": "plugins"
       }
     ],
+    "min_version": "0.3.15",
     "name": "*"
   },
   "airflow.json5": {
@@ -90,6 +98,7 @@ export default {
         "name": "dags"
       }
     ],
+    "min_version": "0.3.15",
     "name": "*"
   },
   "anchor.json5": {
@@ -116,6 +125,7 @@ export default {
         "name": "tests"
       }
     ],
+    "min_version": "0.3.15",
     "name": "*"
   },
   "angular.json5": {
@@ -183,6 +193,7 @@ export default {
         "name": "tests"
       }
     ],
+    "min_version": "0.3.15",
     "name": "*"
   },
   "apibp.json5": {
@@ -227,6 +238,7 @@ export default {
       "appveyor.yml"
     ],
     "folders": [],
+    "min_version": "0.3.15",
     "name": "*"
   },
   "arangodb.json5": {

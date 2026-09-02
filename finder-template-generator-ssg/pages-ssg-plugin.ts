@@ -236,7 +236,7 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
           const id = relativePath.replace(/\\/g, "/").replace(/\.md$/i, "");
 
           const markdown = fs.readFileSync(fullPath, "utf8");
-          let html = parseMarkdown(markdown) as string;
+          let html = parseMarkdown(markdown, { sanitize: false }) as string;
 
           if (options.minify) {
             html = await minify(html, {
