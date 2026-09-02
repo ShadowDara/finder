@@ -207,7 +207,7 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
     return `${base}/${normalizedAsset}`;
   }
 
-  function scanDocs(): PageEntry[] {
+  async function scanDocs(): Promise<PageEntry[]> {
     const root = path.resolve(config.root, docsDir);
 
     if (!fs.existsSync(root)) {
@@ -216,14 +216,14 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
 
     const pages: PageEntry[] = [];
 
-    function walk(directory: string) {
+    async function walk(directory: string) {
       for (const entry of fs.readdirSync(directory, {
         withFileTypes: true,
       })) {
         const fullPath = path.join(directory, entry.name);
 
         if (entry.isDirectory()) {
-          walk(fullPath);
+          await walk(fullPath);
           continue;
         }
 
@@ -236,7 +236,17 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
           const id = relativePath.replace(/\\/g, "/").replace(/\.md$/i, "");
 
           const markdown = fs.readFileSync(fullPath, "utf8");
-          const html = parseMarkdown(markdown) as string;
+          let html = parseMarkdown(markdown) as string;
+
+          if (options.minify) {
+            html = await minify(html, {
+              collapseWhitespace: true,
+              removeComments: true,
+              removeRedundantAttributes: true,
+              minifyCSS: true,
+              minifyJS: true,
+            });
+          }
 
           pages.push({
             id,
@@ -250,7 +260,7 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
       }
     }
 
-    walk(root);
+    await walk(root);
 
     return pages;
   }
@@ -452,9 +462,9 @@ declare module "virtual:pages" {
 
     enforce: "pre",
 
-    configResolved(resolvedConfig) {
+    async configResolved(resolvedConfig) {
       config = resolvedConfig;
-      pages = [...scanPages(), ...scanDocs()].sort((a, b) =>
+      pages = [...scanPages(), ...(await scanDocs())].sort((a, b) =>
         a.id.localeCompare(b.id),
       );
 
@@ -494,11 +504,11 @@ declare module "virtual:pages" {
       return null;
     },
 
-    configureServer(server) {
+    async configureServer(server) {
       const pagesRoot = getPagesDir();
       const docsRoot = path.resolve(config.root, docsDir);
 
-      pages = [...scanPages(), ...scanDocs()].sort((a, b) =>
+      pages = [...scanPages(), ...(await scanDocs())].sort((a, b) =>
         a.id.localeCompare(b.id),
       );
 
@@ -514,7 +524,7 @@ declare module "virtual:pages" {
       server.watcher.add(pagesRoot);
       server.watcher.add(docsRoot);
 
-      const rescan = (file: string) => {
+      const rescan = async (file: string) => {
         const isPageFile =
           file.startsWith(pagesRoot) &&
           extensions.includes(path.extname(file).toLowerCase());
@@ -527,7 +537,7 @@ declare module "virtual:pages" {
           return;
         }
 
-        pages = [...scanPages(), ...scanDocs()].sort((a, b) =>
+        pages = [...scanPages(), ...(await scanDocs())].sort((a, b) =>
           a.id.localeCompare(b.id),
         );
 

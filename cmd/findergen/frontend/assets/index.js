@@ -1,250 +1,10 @@
 const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./creator-y2_09cSn.js","./creator-DSVGwkNZ.css","./viewer-BKPpFfgS.js","./viewer-DfdmHG-g.css"])))=>i.map(i=>d[i]);
-const y="modulepreload",T=function(e,n){return new URL(e,n).href},g={},u=function(n,t,i){let l=Promise.resolve();if(t&&t.length>0){const s=document.getElementsByTagName("link"),o=document.querySelector("meta[property=csp-nonce]"),h=(o==null?void 0:o.nonce)||(o==null?void 0:o.getAttribute("nonce"));l=Promise.allSettled(t.map(r=>{if(r=T(r,i),r in g)return;g[r]=!0;const d=r.endsWith(".css"),b=d?'[rel="stylesheet"]':"";if(!!i)for(let c=s.length-1;c>=0;c--){const m=s[c];if(m.href===r&&(!d||m.rel==="stylesheet"))return}else if(document.querySelector(`link[href="${r}"]${b}`))return;const a=document.createElement("link");if(a.rel=d?"stylesheet":y,d||(a.as="script"),a.crossOrigin="",a.href=r,h&&a.setAttribute("nonce",h),document.head.appendChild(a),d)return new Promise((c,m)=>{a.addEventListener("load",c),a.addEventListener("error",()=>m(new Error(`Unable to preload CSS for ${r}`)))})}))}function p(s){const o=new Event("vite:preloadError",{cancelable:!0});if(o.payload=s,window.dispatchEvent(o),!o.defaultPrevented)throw s}return l.then(s=>{for(const o of s||[])o.status==="rejected"&&p(o.reason);return n().catch(p)})},f=""+new URL("markdownstyle-CWEgKCyj.css",import.meta.url).href,w={about:{id:"about",type:"component",load:()=>u(()=>import("./about-VVPQahju.js"),[],import.meta.url),styles:[]},changelog:{id:"changelog",type:"markdown",html:`<h1 id="changelog">CHANGELOG</h1>
-<p>The whole finder CHANGELOG</p>
-<h2 id="newest---prob-0315">Newest -> prob 0.3.15</h2>
-<ul>
-<li>added new Templates</li>
-<li>added a HTML Server with go backend to create and view all templates</li>
-<li>added json output support to finder, just add <code>--json</code> to command</li>
-<li>added tags and min version to a lot of the templates</li>
-<li>the Templates are now saved as minified json</li>
-</ul>
-<h2 id="039">0.3.9</h2>
-<ul>
-<li>fixed Binary Search</li>
-</ul>
-<h2 id="038">0.3.8</h2>
-<ul>
-<li>added Checksums</li>
-</ul>
-<h2 id="037">0.3.7</h2>
-<ul>
-<li>only for releasing</li>
-</ul>
-<h2 id="036---24022026">0.3.6 - 24.02.2026</h2>
-<ul>
-<li>added Size option to the Templates</li>
-<li>updated README File</li>
-<li>updates <code>CUSTOM_TEMPLATES</code></li>
-<li>added a new entry to the Template: <strong>min finder version</strong> which should</li>
-<li>added Version package</li>
-</ul>
-<h2 id="035---18022026">0.3.5 - 18.02.2026</h2>
-<ul>
-<li>made a Folder public for public finder modules</li>
-<li>added Template for<ul>
-<li>flax</li>
-</ul></li>
-<li>added Time which the searching took</li>
-<li>resturctured the argparser</li>
-<li>added version Command</li>
-<li>added Argparser package</li>
-<li>removed loading templates directly from the Console or via a custom filepath!</li>
-<li>json output is broken in this Release, but will we fixed in future Releases</li>
-<li>formatted the tag Search output correctly</li>
-</ul>
-<h2 id="034---16022026">0.3.4 - 16.02.2026</h2>
-<ul>
-<li>changed Go Version to 1.18</li>
-<li>fixed <em><code>Search on all Drives on Windows</code></em> from 0.3.3, it</li>
-<li>added Async Search</li>
-<li>made color package public</li>
-</ul>
-<h2 id="033---15022026">0.3.3 - 15.02.2026</h2>
-<ul>
-<li>added JSON Shema</li>
-<li>added File Options</li>
-<li>Search on all Drives on Windows</li>
-<li>added Tag Search</li>
-</ul>
-<h2 id="032---15022026">0.3.2 - 15.02.2026</h2>
-<ul>
-<li>little Fixes</li>
-</ul>
-<h2 id="031---15022026">0.3.1 - 15.02.2026</h2>
-<h3 id="-features">✨ Features</h3>
-<h4 id="runtime-custom-template-system">Runtime Custom Template System</h4>
-<ul>
-<li><strong>Custom Templates without Recompilation</strong>: Users can now create templates in <code>~/.finder/templates/</code> or <code>./.finder/templates/</code> without recompiling the program</li>
-<li><strong>Automatic Template Discovery</strong>: New <code>.json5</code> files are automatically detected and loaded on startup</li>
-<li><strong>User Templates Override</strong>: User-defined templates can override built-in templates with the same name</li>
-<li><strong>Precedence System</strong>: User templates take precedence over built-in templates</li>
-</ul>
-<h4 id="cli-reorganization-modernization">CLI Reorganization & Modernization</h4>
-<ul>
-<li><strong>Modular CLI Architecture</strong>: Complete restructuring from monolithic design<ul>
-<li><code>parser.go</code>: Dedicated argument parsing logic</li>
-<li><code>handlers.go</code>: Isolated command handlers</li>
-<li><code>commands.go</code>: Clean routing (reduced from 300+ to 60 lines)</li>
-</ul></li>
-<li><strong>Command Aliases</strong>: New shorter forms for common commands<ul>
-<li><code>h</code>, <code>-h</code>, <code>--help</code> in addition to <code>help</code></li>
-<li><code>ls</code> in addition to <code>list</code></li>
-<li><code>--file</code> in addition to <code>-f</code></li>
-<li><code>--config</code> in addition to <code>-c</code></li>
-</ul></li>
-<li><strong>CLIOptions Struct</strong>: Structured argument representation with predicates<ul>
-<li><code>.IsHelp()</code>, <code>.IsList()</code>, <code>.IsCheck()</code>, <code>.IsFileLoad()</code>, <code>.IsDirectLoad()</code>, <code>.IsTemplateSearch()</code></li>
-<li><code>.GetFileArg()</code>, <code>.GetDirectLoadArg()</code>, <code>.GetTemplateName()</code></li>
-</ul></li>
-<li><strong>Verbose Mode</strong>: New <code>--verbose</code> flag for extended output</li>
-</ul>
-<h4 id="enhanced-help-system">Enhanced Help System</h4>
-<ul>
-<li><strong>Better Help Structure</strong>: Organized into COMMANDS, FILE & CONFIG OPERATIONS, GLOBAL FLAGS</li>
-<li><strong>Table Layout</strong>: Improved readability with consistent formatting</li>
-<li><strong>Custom Templates Info</strong>: Documentation for user template setup</li>
-<li><strong>Detailed Descriptions</strong>: Each command with clear explanation</li>
-</ul>
-<h4 id="enhanced-list-check-commands">Enhanced List & Check Commands</h4>
-<ul>
-<li><strong>Separated Display</strong>: Built-in and custom templates are listed separately</li>
-<li><strong>Template Sources</strong>: Source attribute shows whether template is built-in or custom</li>
-<li><strong>Helpful Hints</strong>: Paths for custom template setup are displayed</li>
-<li><strong>Improved Validation</strong>: Check command validates with source information</li>
-</ul>
-<h3 id="-testing">🧪 Testing</h3>
-<ul>
-<li><strong>40+ new unit tests</strong> for CLI parser logic</li>
-<li><strong>Parser Tests</strong>: Comprehensive coverage for command recognition, flag parsing, argument extraction</li>
-<li><strong>Integration Tests</strong>: End-to-end tests for command execution</li>
-<li><strong>Routing Tests</strong>: Tests for handler mapping</li>
-<li><strong>Error Handling Tests</strong>: Validation of error handling and user feedback</li>
-</ul>
-<h3 id="-documentation">📖 Documentation</h3>
-<ul>
-<li><strong>ARCHITECTURE.md</strong>: Detailed technical documentation of the new CLI structure</li>
-<li><strong>REORGANIZATION.md</strong>: Comprehensive before/after comparison and explanation</li>
-<li><strong>QUICKSTART.md</strong>: Practical guide for adding new commands</li>
-<li><strong>CUSTOM_TEMPLATES.md</strong>: User guide for custom template creation</li>
-<li><strong>Inline Code Comments</strong>: Improved code documentation</li>
-</ul>
-<h3 id="-infrastructure">🔧 Infrastructure</h3>
-<ul>
-<li><strong>Enhanced Template Loader</strong> (<code>templateloader.go</code>)<ul>
-<li><code>LoadUserTemplates()</code>: Discovers user templates from filesystem</li>
-<li><code>JSONtemplateLoaderWithUserTemplates()</code>: Intelligent loading with user override</li>
-<li><code>LoadAllWithUserTemplates()</code>: Combined built-in + custom template discovery</li>
-</ul></li>
-<li><strong>Template Override Mechanism</strong>: User templates can replace built-in templates</li>
-<li><strong>Graceful Error Handling</strong>: Missing user template directories are not fatal</li>
-</ul>
-<h3 id="-quality-improvements">🎯 Quality Improvements</h3>
-<ul>
-<li><strong>Clean Code Structure</strong>: Single Responsibility Principle consistently applied</li>
-<li><strong>Better Testability</strong>: Each module can be tested in isolation</li>
-<li><strong>Extensibility</strong>: New commands can be added in 5 simple steps</li>
-<li><strong>Backward Compatibility</strong>: External API (<code>HandleCommand()</code>) unchanged</li>
-</ul>
-<h3 id="-user-experience">👥 User Experience</h3>
-<ul>
-<li><strong>Better Error Messages</strong>: Context-sensitive error messages with suggestions</li>
-<li><strong>Helpful Hints</strong>: Tips for common tasks (e.g., where to place templates)</li>
-<li><strong>Flexible Command Syntax</strong>: Multiple synonyms for each command</li>
-<li><strong>Consistent Output Formatting</strong>: Unified design across all commands</li>
-</ul>
-<h3 id="-performance">📊 Performance</h3>
-<ul>
-<li><strong>No Recompilation Required</strong>: Custom templates are loaded at runtime</li>
-<li><strong>Efficient Template Discovery</strong>: Fast filesystem traversal</li>
-<li><strong>Minimal Overhead</strong>: Template loading has negligible performance impact</li>
-</ul>
-<h3 id="-bug-fixes-improvements">🐛 Bug Fixes & Improvements</h3>
-<ul>
-<li>Improved error handling in template loading</li>
-<li>Better handling of missing or malformed user templates</li>
-<li>Consistent error messages across all commands</li>
-<li>Fixed edge cases in CLI argument parsing</li>
-</ul>
-<h3 id="-breaking-changes">📝 Breaking Changes</h3>
-<ul>
-<li><strong>No Breaking Changes</strong>: All existing commands work unchanged</li>
-<li>Internal structure completely refactored, but public API remains stable</li>
-</ul>
-<h3 id="-highlights">🙏 Highlights</h3>
-<p>This version brings the biggest improvement since 0.2.0:</p>
-<ul>
-<li>Users can now create their own templates</li>
-<li>Codebase is more maintainable and extensible</li>
-<li>Test coverage drastically improved</li>
-</ul>
-<hr>
-<h2 id="030---23012026">0.3.0 - 23.01.2026</h2>
-<p>Template System & CLI Foundations</p>
-<h2 id="020---23012026">0.2.0 - 23.01.2026</h2>
-<p>More Templates
-Better Console Output
-Help Message</p>
-<h2 id="010---17112025">0.1.0 - 17.11.2025</h2>
-<p>Programm Init</p>`,styles:[f]},creator:{id:"creator",type:"component",load:()=>u(()=>import("./creator-y2_09cSn.js"),__vite__mapDeps([0,1]),import.meta.url),styles:[]},index:{id:"index",type:"component",load:()=>u(()=>import("./index-D171lZWw.js"),[],import.meta.url),styles:[f]},readme:{id:"readme",type:"markdown",html:`<p><!--
-go build ./cmd/finder</p>
-<p>Push Tag
-git tag v0.3.7
-git push origin v0.3.7</p>
-<p>Maybe
-<img src="https://img.shields.io/github/issues/shadowdara/finder?logo=github" alt="GitHub Issues or Pull Requests">
-<img src="https://img.shields.io/github/issues-pr/shadowdara/finder?logo=github" alt="GitHub Issues or Pull Requests">
-<a href="https://github.com/shadowdara/finder/" target="_blank" rel="noopener noreferrer">@@HTML2@@</a></p>
-<p>--></p>
-<h1 id="finder">finder</h1>
-<p><a href="https://github.com/ShadowDara/finder/actions/workflows/release.yml" target="_blank" rel="noopener noreferrer">@@HTML0@@</a>
-<a href="https://github.com/ShadowDara/finder/actions/workflows/buildcheck.yml" target="_blank" rel="noopener noreferrer">@@HTML1@@</a>
-<a href="https://github.com/shadowdara/finder/graphs/contributors" target="_blank" rel="noopener noreferrer">@@HTML2@@</a>
-<a href="https://github.com/shadowdara/finder/commits" target="_blank" rel="noopener noreferrer">@@HTML3@@</a>
-<a href="https://github.com/shadowdara/finder/releases" target="_blank" rel="noopener noreferrer">@@HTML4@@</a>
-<a href="https://github.com/shadowdara/finder/releases" target="_blank" rel="noopener noreferrer">@@HTML5@@</a>
-<a href="https://github.com/shadowdara/finder.git" target="_blank" rel="noopener noreferrer">@@HTML6@@</a>
-<img src="https://img.shields.io/github/stars/shadowdara/finder" alt="GitHub Repo stars">
-<img src="https://img.shields.io/github/forks/shadowdara/finder" alt="GitHub forks"></p>
-<p>Finder is a small command-line tool written in Go to locate projects
-based on predefined folder/file structure templates.</p>
-<p>In short: you can search for repositories (e.g. <code>.git</code>), project layouts,
-or your own custom structures using templates.</p>
-<h2 id="commiting">Commiting</h2>
-<p>feel free to help the Project by committing Code for the project are Templates.
-Feel although free to submit Templates via Issues!</p>
-<h2 id="features">Features</h2>
-<ul>
-<li>Searches using JSON5 templates stored in <code>internal/structure/templates</code>.</li>
-<li>Supports user templates in the OS-specific configuration folder.</li>
-<li>Lightweight, tested, and easy to extend.</li>
-<li>**Finder can although be used to search single files and is a lot faster</li>
-</ul>
-<p>than Windows Search just to say**</p>
-<h2 id="requirements">Requirements</h2>
-<ul>
-<li>Go 1.18 or newer</li>
-</ul>
-<h2 id="installation">Installation</h2>
-<p>Build from source:</p>
-<pre><code class="language-sh">go build ./cmd/finder</code></pre>
-<p>Or install with <code>go install</code> (Go 1.18+):</p>
-<pre><code class="language-sh">go install github.com/shadowdara/finder/cmd/finder@latest</code></pre>
-<p>The produced binary is <code>finder</code> (on Windows <code>finder.exe</code>).</p>
-<h2 id="usage">Usage</h2>
-<p>Basic syntax:</p>
-<pre><code class="language-sh">finder &lt;template-name&gt;</code></pre>
-<p>Example — find Git repositories:</p>
-<pre><code class="language-sh">finder git</code></pre>
-<p>The program searches the current directory recursively and prints
-matches based on the template name.</p>
-<h2 id="templates">Templates</h2>
-<p>Default templates are stored in <code>internal/structure/templates</code>.
-Templates are JSON5 files with fields such as <code>name</code>, <code>files</code>, and
-<code>folders</code>. A simple template to find Git repositories looks like:</p>
-<pre><code class="language-json">{
+const b="modulepreload",T=function(e,t){return new URL(e,t).href},g={},u=function(t,o,r){let n=Promise.resolve();if(o&&o.length>0){const s=document.getElementsByTagName("link"),i=document.querySelector("meta[property=csp-nonce]"),h=(i==null?void 0:i.nonce)||(i==null?void 0:i.getAttribute("nonce"));n=Promise.allSettled(o.map(l=>{if(l=T(l,r),l in g)return;g[l]=!0;const d=l.endsWith(".css"),y=d?'[rel="stylesheet"]':"";if(!!r)for(let c=s.length-1;c>=0;c--){const m=s[c];if(m.href===l&&(!d||m.rel==="stylesheet"))return}else if(document.querySelector(`link[href="${l}"]${y}`))return;const a=document.createElement("link");if(a.rel=d?"stylesheet":b,d||(a.as="script"),a.crossOrigin="",a.href=l,h&&a.setAttribute("nonce",h),document.head.appendChild(a),d)return new Promise((c,m)=>{a.addEventListener("load",c),a.addEventListener("error",()=>m(new Error(`Unable to preload CSS for ${l}`)))})}))}function p(s){const i=new Event("vite:preloadError",{cancelable:!0});if(i.payload=s,window.dispatchEvent(i),!i.defaultPrevented)throw s}return n.then(s=>{for(const i of s||[])i.status==="rejected"&&p(i.reason);return t().catch(p)})},f=""+new URL("markdownstyle-CWEgKCyj.css",import.meta.url).href,w={about:{id:"about",type:"component",load:()=>u(()=>import("./about-VVPQahju.js"),[],import.meta.url),styles:[]},changelog:{id:"changelog",type:"markdown",html:'<h1 id="changelog">CHANGELOG</h1><p>The whole finder CHANGELOG</p><h2 id="newest---prob-0315">Newest -> prob 0.3.15</h2><ul><li>added new Templates</li><li>added a HTML Server with go backend to create and view all templates</li><li>added json output support to finder, just add <code>--json</code> to command</li><li>added tags and min version to a lot of the templates</li><li>the Templates are now saved as minified json</li></ul><h2 id="039">0.3.9</h2><ul><li>fixed Binary Search</li></ul><h2 id="038">0.3.8</h2><ul><li>added Checksums</li></ul><h2 id="037">0.3.7</h2><ul><li>only for releasing</li></ul><h2 id="036---24022026">0.3.6 - 24.02.2026</h2><ul><li>added Size option to the Templates</li><li>updated README File</li><li>updates <code>CUSTOM_TEMPLATES</code></li><li>added a new entry to the Template: <strong>min finder version</strong> which should</li><li>added Version package</li></ul><h2 id="035---18022026">0.3.5 - 18.02.2026</h2><ul><li>made a Folder public for public finder modules</li><li>added Template for<ul><li>flax</li></ul></li><li>added Time which the searching took</li><li>resturctured the argparser</li><li>added version Command</li><li>added Argparser package</li><li>removed loading templates directly from the Console or via a custom filepath!</li><li>json output is broken in this Release, but will we fixed in future Releases</li><li>formatted the tag Search output correctly</li></ul><h2 id="034---16022026">0.3.4 - 16.02.2026</h2><ul><li>changed Go Version to 1.18</li><li>fixed <em><code>Search on all Drives on Windows</code></em> from 0.3.3, it</li><li>added Async Search</li><li>made color package public</li></ul><h2 id="033---15022026">0.3.3 - 15.02.2026</h2><ul><li>added JSON Shema</li><li>added File Options</li><li>Search on all Drives on Windows</li><li>added Tag Search</li></ul><h2 id="032---15022026">0.3.2 - 15.02.2026</h2><ul><li>little Fixes</li></ul><h2 id="031---15022026">0.3.1 - 15.02.2026</h2><h3 id="-features">✨ Features</h3><h4 id="runtime-custom-template-system">Runtime Custom Template System</h4><ul><li><strong>Custom Templates without Recompilation</strong>: Users can now create templates in <code>~/.finder/templates/</code> or <code>./.finder/templates/</code> without recompiling the program</li><li><strong>Automatic Template Discovery</strong>: New <code>.json5</code> files are automatically detected and loaded on startup</li><li><strong>User Templates Override</strong>: User-defined templates can override built-in templates with the same name</li><li><strong>Precedence System</strong>: User templates take precedence over built-in templates</li></ul><h4 id="cli-reorganization-modernization">CLI Reorganization & Modernization</h4><ul><li><strong>Modular CLI Architecture</strong>: Complete restructuring from monolithic design<ul><li><code>parser.go</code>: Dedicated argument parsing logic</li><li><code>handlers.go</code>: Isolated command handlers</li><li><code>commands.go</code>: Clean routing (reduced from 300+ to 60 lines)</li></ul></li><li><strong>Command Aliases</strong>: New shorter forms for common commands<ul><li><code>h</code>, <code>-h</code>, <code>--help</code> in addition to <code>help</code></li><li><code>ls</code> in addition to <code>list</code></li><li><code>--file</code> in addition to <code>-f</code></li><li><code>--config</code> in addition to <code>-c</code></li></ul></li><li><strong>CLIOptions Struct</strong>: Structured argument representation with predicates<ul><li><code>.IsHelp()</code>, <code>.IsList()</code>, <code>.IsCheck()</code>, <code>.IsFileLoad()</code>, <code>.IsDirectLoad()</code>, <code>.IsTemplateSearch()</code></li><li><code>.GetFileArg()</code>, <code>.GetDirectLoadArg()</code>, <code>.GetTemplateName()</code></li></ul></li><li><strong>Verbose Mode</strong>: New <code>--verbose</code> flag for extended output</li></ul><h4 id="enhanced-help-system">Enhanced Help System</h4><ul><li><strong>Better Help Structure</strong>: Organized into COMMANDS, FILE & CONFIG OPERATIONS, GLOBAL FLAGS</li><li><strong>Table Layout</strong>: Improved readability with consistent formatting</li><li><strong>Custom Templates Info</strong>: Documentation for user template setup</li><li><strong>Detailed Descriptions</strong>: Each command with clear explanation</li></ul><h4 id="enhanced-list-check-commands">Enhanced List & Check Commands</h4><ul><li><strong>Separated Display</strong>: Built-in and custom templates are listed separately</li><li><strong>Template Sources</strong>: Source attribute shows whether template is built-in or custom</li><li><strong>Helpful Hints</strong>: Paths for custom template setup are displayed</li><li><strong>Improved Validation</strong>: Check command validates with source information</li></ul><h3 id="-testing">🧪 Testing</h3><ul><li><strong>40+ new unit tests</strong> for CLI parser logic</li><li><strong>Parser Tests</strong>: Comprehensive coverage for command recognition, flag parsing, argument extraction</li><li><strong>Integration Tests</strong>: End-to-end tests for command execution</li><li><strong>Routing Tests</strong>: Tests for handler mapping</li><li><strong>Error Handling Tests</strong>: Validation of error handling and user feedback</li></ul><h3 id="-documentation">📖 Documentation</h3><ul><li><strong>ARCHITECTURE.md</strong>: Detailed technical documentation of the new CLI structure</li><li><strong>REORGANIZATION.md</strong>: Comprehensive before/after comparison and explanation</li><li><strong>QUICKSTART.md</strong>: Practical guide for adding new commands</li><li><strong>CUSTOM_TEMPLATES.md</strong>: User guide for custom template creation</li><li><strong>Inline Code Comments</strong>: Improved code documentation</li></ul><h3 id="-infrastructure">🔧 Infrastructure</h3><ul><li><strong>Enhanced Template Loader</strong> (<code>templateloader.go</code>)<ul><li><code>LoadUserTemplates()</code>: Discovers user templates from filesystem</li><li><code>JSONtemplateLoaderWithUserTemplates()</code>: Intelligent loading with user override</li><li><code>LoadAllWithUserTemplates()</code>: Combined built-in + custom template discovery</li></ul></li><li><strong>Template Override Mechanism</strong>: User templates can replace built-in templates</li><li><strong>Graceful Error Handling</strong>: Missing user template directories are not fatal</li></ul><h3 id="-quality-improvements">🎯 Quality Improvements</h3><ul><li><strong>Clean Code Structure</strong>: Single Responsibility Principle consistently applied</li><li><strong>Better Testability</strong>: Each module can be tested in isolation</li><li><strong>Extensibility</strong>: New commands can be added in 5 simple steps</li><li><strong>Backward Compatibility</strong>: External API (<code>HandleCommand()</code>) unchanged</li></ul><h3 id="-user-experience">👥 User Experience</h3><ul><li><strong>Better Error Messages</strong>: Context-sensitive error messages with suggestions</li><li><strong>Helpful Hints</strong>: Tips for common tasks (e.g., where to place templates)</li><li><strong>Flexible Command Syntax</strong>: Multiple synonyms for each command</li><li><strong>Consistent Output Formatting</strong>: Unified design across all commands</li></ul><h3 id="-performance">📊 Performance</h3><ul><li><strong>No Recompilation Required</strong>: Custom templates are loaded at runtime</li><li><strong>Efficient Template Discovery</strong>: Fast filesystem traversal</li><li><strong>Minimal Overhead</strong>: Template loading has negligible performance impact</li></ul><h3 id="-bug-fixes-improvements">🐛 Bug Fixes & Improvements</h3><ul><li>Improved error handling in template loading</li><li>Better handling of missing or malformed user templates</li><li>Consistent error messages across all commands</li><li>Fixed edge cases in CLI argument parsing</li></ul><h3 id="-breaking-changes">📝 Breaking Changes</h3><ul><li><strong>No Breaking Changes</strong>: All existing commands work unchanged</li><li>Internal structure completely refactored, but public API remains stable</li></ul><h3 id="-highlights">🙏 Highlights</h3><p>This version brings the biggest improvement since 0.2.0:</p><ul><li>Users can now create their own templates</li><li>Codebase is more maintainable and extensible</li><li>Test coverage drastically improved</li></ul><hr><h2 id="030---23012026">0.3.0 - 23.01.2026</h2><p>Template System & CLI Foundations</p><h2 id="020---23012026">0.2.0 - 23.01.2026</h2><p>More Templates Better Console Output Help Message</p><h2 id="010---17112025">0.1.0 - 17.11.2025</h2><p>Programm Init</p>',styles:[f]},creator:{id:"creator",type:"component",load:()=>u(()=>import("./creator-y2_09cSn.js"),__vite__mapDeps([0,1]),import.meta.url),styles:[]},index:{id:"index",type:"component",load:()=>u(()=>import("./index-D171lZWw.js"),[],import.meta.url),styles:[f]},readme:{id:"readme",type:"markdown",html:`<p></p><h1 id="finder">finder</h1><p><a href="https://github.com/ShadowDara/finder/actions/workflows/release.yml" target="_blank" rel="noopener noreferrer">@@HTML0@@</a> <a href="https://github.com/ShadowDara/finder/actions/workflows/buildcheck.yml" target="_blank" rel="noopener noreferrer">@@HTML1@@</a> <a href="https://github.com/shadowdara/finder/graphs/contributors" target="_blank" rel="noopener noreferrer">@@HTML2@@</a> <a href="https://github.com/shadowdara/finder/commits" target="_blank" rel="noopener noreferrer">@@HTML3@@</a> <a href="https://github.com/shadowdara/finder/releases" target="_blank" rel="noopener noreferrer">@@HTML4@@</a> <a href="https://github.com/shadowdara/finder/releases" target="_blank" rel="noopener noreferrer">@@HTML5@@</a> <a href="https://github.com/shadowdara/finder.git" target="_blank" rel="noopener noreferrer">@@HTML6@@</a> <img src="https://img.shields.io/github/stars/shadowdara/finder" alt="GitHub Repo stars"> <img src="https://img.shields.io/github/forks/shadowdara/finder" alt="GitHub forks"></p><p>Finder is a small command-line tool written in Go to locate projects based on predefined folder/file structure templates.</p><p>In short: you can search for repositories (e.g. <code>.git</code>), project layouts, or your own custom structures using templates.</p><h2 id="commiting">Commiting</h2><p>feel free to help the Project by committing Code for the project are Templates. Feel although free to submit Templates via Issues!</p><h2 id="features">Features</h2><ul><li>Searches using JSON5 templates stored in <code>internal/structure/templates</code>.</li><li>Supports user templates in the OS-specific configuration folder.</li><li>Lightweight, tested, and easy to extend.</li><li>**Finder can although be used to search single files and is a lot faster</li></ul><p>than Windows Search just to say**</p><h2 id="requirements">Requirements</h2><ul><li>Go 1.18 or newer</li></ul><h2 id="installation">Installation</h2><p>Build from source:</p><pre><code class="language-sh">go build ./cmd/finder</code></pre><p>Or install with <code>go install</code> (Go 1.18+):</p><pre><code class="language-sh">go install github.com/shadowdara/finder/cmd/finder@latest</code></pre><p>The produced binary is <code>finder</code> (on Windows <code>finder.exe</code>).</p><h2 id="usage">Usage</h2><p>Basic syntax:</p><pre><code class="language-sh">finder &lt;template-name&gt;</code></pre><p>Example — find Git repositories:</p><pre><code class="language-sh">finder git</code></pre><p>The program searches the current directory recursively and prints matches based on the template name.</p><h2 id="templates">Templates</h2><p>Default templates are stored in <code>internal/structure/templates</code>. Templates are JSON5 files with fields such as <code>name</code>, <code>files</code>, and <code>folders</code>. A simple template to find Git repositories looks like:</p><pre><code class="language-json">{
     &quot;name&quot;: &quot;*&quot;,
     &quot;folders&quot;: [
         { &quot;name&quot;: &quot;.git&quot; }
     ],
-}</code></pre>
-<p>And a full template looks like this. Empty Value are not required
-in the Template. The <code>description</code> will be displayed in the program
-when searching for the Template and although when displaying all
-templates. The <code>command</code> runs in the Structure Directory after the
-Structure is found. The Entrywill only be added is the <code>command</code> 
-returns <code>0</code> when <code>invert_command</code> is <code>false</code>, else <code>1</code>.</p>
-<pre><code class="language-json">{
+}</code></pre><p>And a full template looks like this. Empty Value are not required in the Template. The <code>description</code> will be displayed in the program when searching for the Template and although when displaying all templates. The <code>command</code> runs in the Structure Directory after the Structure is found. The Entrywill only be added is the <code>command</code> returns <code>0</code> when <code>invert_command</code> is <code>false</code>, else <code>1</code>.</p><pre><code class="language-json">{
     &quot;name&quot;: &quot;*&quot;,
     &quot;description&quot;: &quot;&quot;,
     &quot;folders&quot;: [
@@ -253,47 +13,11 @@ returns <code>0</code> when <code>invert_command</code> is <code>false</code>, e
     &quot;files&quot;: [],
     &quot;command&quot;: &quot;&quot;,
     &quot;invert_command&quot;: false
-}</code></pre>
-<p><!-- Place custom templates in the following folder: --></p>
-<p><!-- - Windows: \`%AppData%\\finder\`
-- Linux: \`~/.config/finder\`
-- macOS: \`~/Library/Application Support/finder\` --></p>
-<p>Then call <code>finder <template-name></code> to use them.</p>
-<h2 id="development">Development</h2>
-<p>Run tests:</p>
-<pre><code class="language-sh">go test ./...</code></pre>
-<p>Generate coverage report:</p>
-<pre><code class="language-sh">go test -coverprofile=coverage ./...
-go tool cover -html=coverage</code></pre>
-<p>Build:</p>
-<pre><code class="language-sh">go build ./cmd/finder</code></pre>
-<p>Check the available Templates</p>
-<pre><code class="language-sh">go run ./cmd/finder check</code></pre>
-<h2 id="contributing">Contributing</h2>
-<ul>
-<li>Found a missing or inaccurate template? Please open an issue.</li>
-<li>Add new templates via PR. Keep them in JSON5 and provide a short</li>
-</ul>
-<h2 id="roadmap-ideas">Roadmap / Ideas</h2>
-<ul>
-<li>use temporary Template via the Command Line</li>
-<li>Caching/Indexing for faster searches</li>
-<li>Web UI for template management</li>
-<li>Template schema and validation</li>
-</ul>
-<h2 id="license">License</h2>
-<p>See <code>LICENSE</code>.</p>
-<hr>
-<p>Project: <code>https://github.com/shadowdara/finder</code></p>
-<h2 id="extra-info">Extra Info</h2>
-<p>The Project <a href="https://github.com/shadowdara/fs-tools" target="_blank" rel="noopener noreferrer">fs-tools</a> was more or less
-the prototype for finder.</p>
-<h2 id="info-video">Info Video</h2>
-<p>(<em>a Youtube Video</em>)</p>
-<p><a href="https://www.youtube.com/watch?v=oIRgAYv-mOA" target="_blank" rel="noopener noreferrer">@@HTML0@@</a></p>`,styles:[]},viewer:{id:"viewer",type:"component",load:()=>u(()=>import("./viewer-BKPpFfgS.js"),__vite__mapDeps([2,3]),import.meta.url),styles:[]}};async function v(){const e=document.getElementById("app");if(e==null)throw new Error("Missing #app element");const n=window.PAGE_ID;if(!n){C(e);return}if(n==="__404__"){const i=Object.keys(w).filter(l=>l!=="__404__").map(l=>`
+}</code></pre><p></p><p></p><p>Then call <code>finder<template-name></template-name></code> to use them.</p><h2 id="development">Development</h2><p>Run tests:</p><pre><code class="language-sh">go test ./...</code></pre><p>Generate coverage report:</p><pre><code class="language-sh">go test -coverprofile=coverage ./...
+go tool cover -html=coverage</code></pre><p>Build:</p><pre><code class="language-sh">go build ./cmd/finder</code></pre><p>Check the available Templates</p><pre><code class="language-sh">go run ./cmd/finder check</code></pre><h2 id="contributing">Contributing</h2><ul><li>Found a missing or inaccurate template? Please open an issue.</li><li>Add new templates via PR. Keep them in JSON5 and provide a short</li></ul><h2 id="roadmap-ideas">Roadmap / Ideas</h2><ul><li>use temporary Template via the Command Line</li><li>Caching/Indexing for faster searches</li><li>Web UI for template management</li><li>Template schema and validation</li></ul><h2 id="license">License</h2><p>See <code>LICENSE</code>.</p><hr><p>Project: <code>https://github.com/shadowdara/finder</code></p><h2 id="extra-info">Extra Info</h2><p>The Project <a href="https://github.com/shadowdara/fs-tools" target="_blank" rel="noopener noreferrer">fs-tools</a> was more or less the prototype for finder.</p><h2 id="info-video">Info Video</h2><p>(<em>a Youtube Video</em>)</p><p><a href="https://www.youtube.com/watch?v=oIRgAYv-mOA" target="_blank" rel="noopener noreferrer">@@HTML0@@</a></p>`,styles:[]},viewer:{id:"viewer",type:"component",load:()=>u(()=>import("./viewer-BKPpFfgS.js"),__vite__mapDeps([2,3]),import.meta.url),styles:[]}};async function v(){const e=document.getElementById("app");if(e==null)throw new Error("Missing #app element");const t=window.PAGE_ID;if(!t){C(e);return}if(t==="__404__"){const r=Object.keys(w).filter(n=>n!=="__404__").map(n=>`
         <li>
-          <a href="${l==="index"?"/":`/${l}`}">
-            ${l}
+          <a href="${n==="index"?"/":`/${n}`}">
+            ${n}
           </a>
         </li>
       `).join("");e.innerHTML=`
@@ -303,26 +27,26 @@ the prototype for finder.</p>
 
       <h2>Available pages</h2>
       <ul>
-        ${i}
+        ${r}
       </ul>
 
       <a href="/">Go home</a>
     </main>
-  `;return}const t=w[n];if(!t){console.error(`[pages] Unknown page id: ${n}`),e.innerHTML=`
+  `;return}const o=w[t];if(!o){console.error(`[pages] Unknown page id: ${t}`),e.innerHTML=`
       <main>
         <h1>404</h1>
-        <p>Page "${n}" not found.</p>
+        <p>Page "${t}" not found.</p>
         <a href="/">Go home</a>
       </main>
-    `;return}try{if(S(t.styles),t.type==="markdown"){e.innerHTML=`
+    `;return}try{if(S(o.styles),o.type==="markdown"){e.innerHTML=`
       <a href="../">Home</a>
       <article class="markdown">
-        ${t.html}
+        ${o.html}
       </article>
-    `;return}await(await t.load()).default(e)}catch(i){console.error(`[pages] Failed to load page "${n}"`,i),e.innerHTML=`
+    `;return}await(await o.load()).default(e)}catch(r){console.error(`[pages] Failed to load page "${t}"`,r),e.innerHTML=`
       <main>
         <h1>Failed to load page</h1>
-        <p>Could not load "${n}".</p>
+        <p>Could not load "${t}".</p>
         <a href="/">Go home</a>
       </main>
     `}}v();function C(e){e.innerHTML=`
@@ -331,4 +55,4 @@ the prototype for finder.</p>
         <p>No page id was provided.</p>
         <a href="/">Go home</a>
       </main>
-    `}function S(e){console.log("[pages] loading styles:",e);for(const n of e){const t=new URL(n,import.meta.url).href;if(document.head.querySelector(`link[data-page-style="${CSS.escape(t)}"]`))continue;const i=document.createElement("link");i.rel="stylesheet",i.href=t,i.dataset.pageStyle=t,document.head.appendChild(i)}}
+    `}function S(e){console.log("[pages] loading styles:",e);for(const t of e){const o=new URL(t,import.meta.url).href;if(document.head.querySelector(`link[data-page-style="${CSS.escape(o)}"]`))continue;const r=document.createElement("link");r.rel="stylesheet",r.href=o,r.dataset.pageStyle=o,document.head.appendChild(r)}}
