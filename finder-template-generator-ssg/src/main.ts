@@ -111,7 +111,9 @@ function render404(app: HTMLElement) {
 }
 
 function loadStyles(styles: string[]) {
-  console.log("[pages] loading styles:", styles);
+  if (import.meta.env.DEV) {
+    console.log("[pages] loading styles:", styles);
+  }
 
   for (const href of styles) {
     const url = new URL(href, import.meta.url).href;
