@@ -1,9 +1,9 @@
-// Struct for a Tally Forms Project
 {
     "description": "Tally online form builder",
     "name": "*",
     "folders": [],
     "files": [
         "form.json"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

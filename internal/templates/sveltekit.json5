@@ -1,1 +1,1 @@
-{"description":"SvelteKit full-stack framework","files":["svelte.config.js","vite.config.ts","package.json"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}
+{"description":"SvelteKit full-stack framework","files":["svelte.config.js","vite.config.ts","package.json"],"folders":[{"files":[],"folders":[],"name":"src"}],"min_version":"0.3.16","name":"*","tags":["web"]}

@@ -1,4 +1,3 @@
-// Struct for a Terraform Project
 {
     "description": "Terraform infrastructure as code",
     "name": "*",
@@ -6,5 +5,6 @@
     "files": [
         "*.tf",
         "terraform.tfvars"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

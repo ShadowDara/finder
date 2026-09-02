@@ -1,4 +1,3 @@
-// Struct for a Yew Project
 {
     "description": "Yew Rust web framework",
     "name": "*",
@@ -11,5 +10,10 @@
     ],
     "files": [
         "Cargo.toml"
-    ]
+    ],
+    "tags": [
+        "web",
+        "rust"
+    ],
+    "min_version": "0.3.16"
 }

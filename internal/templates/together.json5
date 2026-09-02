@@ -1,1 +1,1 @@
-{"description":"Together.ai model inference API","files":["together.config.yaml","requirements.txt"],"folders":[{"files":["*.yaml"],"folders":[],"name":"models"}],"name":"*"}
+{"description":"Together.ai model inference API","files":["together.config.yaml","requirements.txt"],"folders":[{"files":["*.yaml"],"folders":[],"name":"models"}],"min_version":"0.3.16","name":"*"}

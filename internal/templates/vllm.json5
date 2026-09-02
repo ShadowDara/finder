@@ -1,1 +1,1 @@
-{"description":"vLLM high-throughput LLM inference server","files":["vllm.config.yaml","requirements.txt","docker-compose.yml"],"folders":[{"files":["*.bin","*.safetensors"],"folders":[],"name":"models"}],"name":"*"}
+{"description":"vLLM high-throughput LLM inference server","files":["vllm.config.yaml","requirements.txt","docker-compose.yml"],"folders":[{"files":["*.bin","*.safetensors"],"folders":[],"name":"models"}],"min_version":"0.3.15","name":"*"}

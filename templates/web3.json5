@@ -1,4 +1,3 @@
-// Struct for a Web3 Project
 {
     "description": "Web3.js decentralized application",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "package.json",
         "web3.js"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

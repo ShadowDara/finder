@@ -1,1 +1,1 @@
-{"description":"tRPC end-to-end type-safe APIs","files":["package.json","tsconfig.json"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}
+{"description":"tRPC end-to-end type-safe APIs","files":["package.json","tsconfig.json"],"folders":[{"files":[],"folders":[],"name":"src"}],"min_version":"0.3.16","name":"*"}

@@ -1,4 +1,3 @@
-// Wasmtime WebAssembly runtime
 {
     "description": "Wasmtime lightweight WebAssembly runtime",
     "name": "*",
@@ -6,11 +5,14 @@
         {
             "name": "modules",
             "folders": [],
-            "files": ["*.wasm"]
+            "files": [
+                "*.wasm"
+            ]
         }
     ],
     "files": [
         "wasmtime.toml",
         "Cargo.toml"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

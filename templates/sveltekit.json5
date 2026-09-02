@@ -1,4 +1,3 @@
-// Struct for a SvelteKit Project
 {
     "description": "SvelteKit full-stack framework",
     "name": "*",
@@ -13,5 +12,9 @@
         "svelte.config.js",
         "vite.config.ts",
         "package.json"
-    ]
+    ],
+    "tags": [
+        "web"
+    ],
+    "min_version": "0.3.16"
 }

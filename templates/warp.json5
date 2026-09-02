@@ -1,4 +1,3 @@
-// Struct for a Warp Project
 {
     "description": "Warp Rust web framework",
     "name": "*",
@@ -11,5 +10,6 @@
     ],
     "files": [
         "Cargo.toml"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

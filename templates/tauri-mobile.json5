@@ -1,4 +1,3 @@
-// Struct for a Tauri Mobile Project
 {
     "description": "Tauri mobile app development",
     "name": "*",
@@ -11,5 +10,6 @@
     ],
     "files": [
         "tauri.conf.json"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

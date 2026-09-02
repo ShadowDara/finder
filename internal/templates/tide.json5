@@ -1,1 +1,1 @@
-{"description":"Tide Rust async web framework","files":["Cargo.toml"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}
+{"description":"Tide Rust async web framework","files":["Cargo.toml"],"folders":[{"files":[],"folders":[],"name":"src"}],"min_version":"0.3.16","name":"*","tags":["rust","web"]}

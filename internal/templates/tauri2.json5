@@ -1,1 +1,1 @@
-{"description":"Struct for Tauri V2 Apps / Projects","files":["package.json"],"folders":[{"name":"src"},{"files":[],"folders":[{"name":"src"},{"name":"icons"}],"name":"src-tauri"}],"min_version":"0.3.14","name":"*"}
+{"description":"Struct for Tauri V2 Apps / Projects","files":["package.json"],"folders":[{"name":"src"},{"files":["Cargo.toml"],"folders":[{"name":"src"},{"name":"icons"}],"name":"src-tauri"}],"min_version":"0.3.14","name":"*"}

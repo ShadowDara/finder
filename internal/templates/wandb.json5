@@ -1,1 +1,1 @@
-{"description":"Weights \u0026 Biases machine learning experiments tracking","files":["wandb.config.yaml","requirements.txt",".wandb"],"folders":[{"files":["*.json"],"folders":[],"name":"logs"}],"name":"*"}
+{"description":"Weights \u0026 Biases machine learning experiments tracking","files":["wandb.config.yaml","requirements.txt",".wandb"],"folders":[{"files":["*.json"],"folders":[],"name":"logs"}],"min_version":"0.3.16","name":"*"}

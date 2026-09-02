@@ -1,1 +1,1 @@
-{"description":"XCTest iOS unit testing","files":["*.xcodeproj"],"folders":[{"files":[],"folders":[],"name":"Tests"}],"name":"*"}
+{"description":"XCTest iOS unit testing","files":["*.xcodeproj"],"folders":[{"files":[],"folders":[],"name":"Tests"}],"min_version":"0.3.16","name":"*"}

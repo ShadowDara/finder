@@ -1,1 +1,1 @@
-{"description":"Vitess MySQL sharding middleware","files":["docker-compose.yml"],"folders":[],"name":"*"}
+{"description":"Vitess MySQL sharding middleware","files":["docker-compose.yml"],"folders":[],"min_version":"0.3.16","name":"*"}

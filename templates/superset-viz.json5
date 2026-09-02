@@ -1,4 +1,3 @@
-// Apache Superset data visualization
 {
     "description": "Apache Superset modern business intelligence platform",
     "name": "*",
@@ -6,12 +5,15 @@
         {
             "name": "dashboards",
             "folders": [],
-            "files": ["*.json"]
+            "files": [
+                "*.json"
+            ]
         }
     ],
     "files": [
         "superset_config.py",
         "requirements.txt",
         "docker-compose.yml"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

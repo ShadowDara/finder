@@ -1,1 +1,1 @@
-{"description":"Tonic Rust gRPC framework","files":["Cargo.toml","build.rs"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}
+{"description":"Tonic Rust gRPC framework","files":["Cargo.toml","build.rs"],"folders":[{"files":[],"folders":[],"name":"src"}],"min_version":"0.3.16","name":"*","tags":["rust"]}

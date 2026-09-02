@@ -1,1 +1,1 @@
-{"description":"OpenAI Whisper speech recognition and transcription","files":["whisper.config.yaml","requirements.txt"],"folders":[{"files":["*.mp3","*.wav","*.m4a"],"folders":[],"name":"audio"},{"files":["*.txt","*.json","*.vtt"],"folders":[],"name":"transcripts"}],"name":"*"}
+{"description":"OpenAI Whisper speech recognition and transcription","files":["whisper.config.yaml","requirements.txt"],"folders":[{"files":["*.mp3","*.wav","*.m4a"],"folders":[],"name":"audio"},{"files":["*.txt","*.json","*.vtt"],"folders":[],"name":"transcripts"}],"min_version":"0.3.16","name":"*"}

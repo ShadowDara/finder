@@ -1,4 +1,3 @@
-// Struct for a Turbo Project
 {
     "description": "Turbo monorepo tool",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "turbo.json",
         "package.json"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

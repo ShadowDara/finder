@@ -1,1 +1,1 @@
-{"description":"TiDB distributed SQL database","files":["docker-compose.yml"],"folders":[],"name":"*"}
+{"description":"TiDB distributed SQL database","files":["docker-compose.yml"],"folders":[],"min_version":"0.3.16","name":"*"}

@@ -1,1 +1,1 @@
-{"description":"WebAssembly module project","files":["*.wasm","Cargo.toml"],"folders":[],"name":"*"}
+{"description":"WebAssembly module project","files":["*.wasm","Cargo.toml"],"folders":[],"min_version":"0.3.16","name":"*"}

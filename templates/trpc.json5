@@ -1,4 +1,3 @@
-// Struct for a tRPC Project
 {
     "description": "tRPC end-to-end type-safe APIs",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "package.json",
         "tsconfig.json"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

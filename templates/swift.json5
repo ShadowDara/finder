@@ -1,4 +1,3 @@
-// Struct for a Swift Project
 {
     "description": "Swift programming language project",
     "name": "*",
@@ -11,5 +10,6 @@
     ],
     "files": [
         "Package.swift"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

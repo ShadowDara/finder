@@ -1,1 +1,1 @@
-{"description":"Svelte JavaScript framework","files":["svelte.config.js","package.json","*.svelte"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}
+{"description":"Svelte JavaScript framework","files":["svelte.config.js","package.json","*.svelte"],"folders":[{"files":[],"folders":[],"name":"src"}],"min_version":"0.3.16","name":"*"}

@@ -1,1 +1,1 @@
-{"description":"Terraform infrastructure as code","files":["*.tf","terraform.tfvars"],"folders":[],"name":"*"}
+{"description":"Terraform infrastructure as code","files":["*.tf","terraform.tfvars"],"folders":[],"min_version":"0.3.16","name":"*"}

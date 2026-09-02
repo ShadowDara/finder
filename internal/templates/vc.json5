@@ -1,1 +1,1 @@
-{"description":"W3C Verifiable Credentials","files":["*.jsonld","credentials.json"],"folders":[],"name":"*"}
+{"description":"W3C Verifiable Credentials","files":["*.jsonld","credentials.json"],"folders":[],"min_version":"0.3.16","name":"*"}

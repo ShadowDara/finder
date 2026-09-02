@@ -1,1 +1,1 @@
-{"description":"Turbo monorepo tool","files":["turbo.json","package.json"],"folders":[{"files":[],"folders":[],"name":"packages"}],"name":"*"}
+{"description":"Turbo monorepo tool","files":["turbo.json","package.json"],"folders":[{"files":[],"folders":[],"name":"packages"}],"min_version":"0.3.16","name":"*"}

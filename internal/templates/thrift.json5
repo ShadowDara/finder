@@ -1,1 +1,1 @@
-{"description":"Apache Thrift RPC framework","files":["*.thrift"],"folders":[],"name":"*"}
+{"description":"Apache Thrift RPC framework","files":["*.thrift"],"folders":[],"min_version":"0.3.16","name":"*"}

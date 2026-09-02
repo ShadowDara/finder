@@ -1,9 +1,9 @@
-// Struct for a TravisCI Project
 {
     "description": "Travis CI continuous integration",
     "name": "*",
     "folders": [],
     "files": [
         ".travis.yml"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

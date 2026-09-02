@@ -1,4 +1,3 @@
-// Struct for a Supabase Project
 {
     "description": "Supabase open source Firebase alternative",
     "name": "*",
@@ -11,5 +10,6 @@
     ],
     "files": [
         "supabase.json"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

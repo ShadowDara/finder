@@ -1,4 +1,3 @@
-// Struct for a Svelte Project
 {
     "description": "Svelte JavaScript framework",
     "name": "*",
@@ -13,5 +12,6 @@
         "svelte.config.js",
         "package.json",
         "*.svelte"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

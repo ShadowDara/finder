@@ -1,4 +1,3 @@
-// Struct for a Tide Project
 {
     "description": "Tide Rust async web framework",
     "name": "*",
@@ -11,5 +10,10 @@
     ],
     "files": [
         "Cargo.toml"
-    ]
+    ],
+    "tags": [
+        "rust",
+        "web"
+    ],
+    "min_version": "0.3.16"
 }

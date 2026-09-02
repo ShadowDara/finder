@@ -1,1 +1,1 @@
-{"description":"Tauri mobile app development","files":["tauri.conf.json"],"folders":[{"files":[],"folders":[],"name":"src-tauri"}],"name":"*"}
+{"description":"Tauri mobile app development","files":["tauri.conf.json"],"folders":[{"files":[],"folders":[],"name":"src-tauri"}],"min_version":"0.3.16","name":"*"}

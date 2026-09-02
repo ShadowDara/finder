@@ -1,1 +1,1 @@
-{"description":"WASI WebAssembly System Interface project","files":["Cargo.toml","wasi.config.yaml"],"folders":[{"files":["*.rs","*.c","*.wat"],"folders":[],"name":"src"}],"name":"*"}
+{"description":"WASI WebAssembly System Interface project","files":["Cargo.toml","wasi.config.yaml"],"folders":[{"files":["*.rs","*.c","*.wat"],"folders":[],"name":"src"}],"min_version":"0.3.16","name":"*"}

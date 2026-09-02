@@ -1,4 +1,3 @@
-// Struct for a Machine Learning/TensorFlow Project
 {
     "description": "TensorFlow machine learning project",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "requirements.txt",
         "*.py"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

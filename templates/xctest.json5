@@ -1,4 +1,3 @@
-// Struct for a XCTest Project
 {
     "description": "XCTest iOS unit testing",
     "name": "*",
@@ -11,5 +10,6 @@
     ],
     "files": [
         "*.xcodeproj"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

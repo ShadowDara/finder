@@ -1,9 +1,9 @@
-// Struct for a Webflow Project
 {
     "description": "Webflow visual web builder",
     "name": "*",
     "folders": [],
     "files": [
         "*.webflow"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

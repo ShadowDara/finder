@@ -1,1 +1,1 @@
-{"description":"Voila convert Jupyter notebooks to standalone web apps","files":["voila.config.py","requirements.txt"],"folders":[{"files":["*.ipynb"],"folders":[],"name":"notebooks"}],"name":"*"}
+{"description":"Voila convert Jupyter notebooks to standalone web apps","files":["voila.config.py","requirements.txt"],"folders":[{"files":["*.ipynb"],"folders":[],"name":"notebooks"}],"min_version":"0.3.15","name":"*"}

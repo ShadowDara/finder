@@ -1,1 +1,1 @@
-{"description":"Vyper secure smart contract language for Ethereum","files":["vyper.config.yaml","requirements.txt"],"folders":[{"files":["*.vy"],"folders":[],"name":"contracts"},{"files":["*.py"],"folders":[],"name":"tests"}],"name":"*"}
+{"description":"Vyper secure smart contract language for Ethereum","files":["vyper.config.yaml","requirements.txt"],"folders":[{"files":["*.vy"],"folders":[],"name":"contracts"},{"files":["*.py"],"folders":[],"name":"tests"}],"min_version":"0.3.16","name":"*"}

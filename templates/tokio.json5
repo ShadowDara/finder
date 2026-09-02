@@ -1,4 +1,3 @@
-// Struct for a Tokio Project
 {
     "description": "Tokio Rust async runtime",
     "name": "*",
@@ -11,5 +10,9 @@
     ],
     "files": [
         "Cargo.toml"
-    ]
+    ],
+    "tags": [
+        "rust"
+    ],
+    "min_version": "0.3.16"
 }
