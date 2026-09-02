@@ -26,13 +26,52 @@ export default function render(el: HTMLDivElement) {
   }
 }
 
+let popup = `
+<dialog class="template-modal" id="template-modal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div>
+        <span class="eyebrow">TEMPLATE</span>
+        <h2 id="modal-title">Template</h2>
+      </div>
+
+      <button
+        class="modal-close"
+        id="modal-close"
+        type="button"
+        aria-label="Schließen"
+      >
+        ×
+      </button>
+    </div>
+
+    <div class="modal-tags" id="modal-tags"></div>
+
+    <div class="modal-code">
+      <pre id="modal-content"></pre>
+    </div>
+
+    <div class="modal-footer">
+      <span id="modal-size"></span>
+
+      <button class="copy-button" id="modal-copy" type="button">
+        Copy
+      </button>
+    </div>
+  </div>
+</dialog>
+`;
+
 function renderStatic(el: HTMLDivElement) {
   // templates.js enthält Objekte, Viewer erwartet Strings
   const builtin: [string, string][] = Object.entries(builtinTemplates).map(
     ([name, content]) => [name, JSON.stringify(content)],
   );
 
+  const allTags = getAllTags(builtin);
+
   el.innerHTML = `
+    ${popup}
     <main class="viewer">
       <header class="viewer-header">
         <div>
@@ -101,9 +140,11 @@ function renderStatic(el: HTMLDivElement) {
             <span>${builtin.length}</span>
           </button>`
           }
-          
         </div>
       </section>
+
+      <div class="tag-filters"> <span class="tag-filter-label">Tags:</span> <button class="tag-filter active" type="button" data-tag-filter="all" > Alle </button> ${allTags.map((tag) => ` <button class="tag-filter" type="button" data-tag-filter="${escapeHtml(tag)}" > #${escapeHtml(tag)} </button> `).join("")} </div>
+      <br>
 
       <section class="template-grid" id="template-grid">
         ${renderTemplates(builtin, "builtin")}
@@ -134,7 +175,10 @@ async function renderServer(el: HTMLDivElement) {
     const builtin = Object.entries(data.builtin);
     const custom = Object.entries(data.custom);
 
+    const allTags = getAllTags(templates);
+
     el.innerHTML = `
+    ${popup}
       <main class="viewer">
         <header class="viewer-header">
           <div>
@@ -193,8 +237,18 @@ async function renderServer(el: HTMLDivElement) {
               Custom
               <span>${custom.length}</span>
             </button>
+
+            
           </div>
         </section>
+
+        <div class="tag-filters">
+          <span class="tag-filter-label">Tags:</span>
+          <button class="tag-filter active" type="button" data-tag-filter="all" > Alle </button> 
+          ${allTags.map((tag) => ` <button class="tag-filter" type="button" data-tag-filter="${escapeHtml(tag)}" > #${escapeHtml(tag)} </button> `).join("")} 
+        </div>
+        <br>
+
 
         <section class="template-grid" id="template-grid">
           ${renderTemplates(builtin, "builtin")}
@@ -232,12 +286,18 @@ function renderTemplates(
   type: "templates" | "builtin" | "custom",
 ) {
   return templates
-    .map(
-      ([name, content]) => `
+    .map(([name, content]) => {
+      const tags = getTags(content);
+
+      return `
         <article
           class="template-card"
           data-type="${type}"
           data-name="${escapeHtml(name).toLowerCase()}"
+          data-tags="${escapeHtml(tags.join("|").toLowerCase())}"
+          tabindex="0"
+          role="button"
+          aria-label="Template ${escapeHtml(name)} öffnen"
         >
           <div class="card-header">
             <div class="template-icon">
@@ -246,9 +306,32 @@ function renderTemplates(
 
             <div class="template-info">
               <h2>${escapeHtml(name)}</h2>
+
               <span class="badge ${type}">
                 ${type === "builtin" ? "Built-in" : "Template"}
               </span>
+
+              ${
+                tags.length
+                  ? `
+                    <div class="template-tags">
+                      ${tags
+                        .map(
+                          (tag) => `
+                            <button
+                              class="tag"
+                              type="button"
+                              data-tag="${escapeHtml(tag)}"
+                            >
+                              #${escapeHtml(tag)}
+                            </button>
+                          `,
+                        )
+                        .join("")}
+                    </div>
+                  `
+                  : ""
+              }
             </div>
           </div>
 
@@ -262,13 +345,14 @@ function renderTemplates(
             <button
               class="copy-button"
               data-content="${encodeURIComponent(content)}"
+              type="button"
             >
               Copy
             </button>
           </div>
         </article>
-      `,
-    )
+      `;
+    })
     .join("");
 }
 
@@ -276,9 +360,19 @@ function setupSelector(el: HTMLDivElement) {
   const search = el.querySelector<HTMLInputElement>("#template-search");
   const cards = [...el.querySelectorAll<HTMLElement>(".template-card")];
   const filters = [...el.querySelectorAll<HTMLButtonElement>(".filter")];
+  const tagFilters = [...el.querySelectorAll<HTMLButtonElement>(".tag-filter")];
   const emptyState = el.querySelector<HTMLElement>("#empty-state");
 
+  const modal = el.querySelector<HTMLDialogElement>("#template-modal");
+  const modalTitle = el.querySelector<HTMLElement>("#modal-title");
+  const modalContent = el.querySelector<HTMLElement>("#modal-content");
+  const modalTags = el.querySelector<HTMLElement>("#modal-tags");
+  const modalSize = el.querySelector<HTMLElement>("#modal-size");
+  const modalClose = el.querySelector<HTMLButtonElement>("#modal-close");
+  const modalCopy = el.querySelector<HTMLButtonElement>("#modal-copy");
+
   let activeFilter = "all";
+  let activeTag = "all";
 
   function update() {
     const query = search?.value.trim().toLowerCase() ?? "";
@@ -290,7 +384,12 @@ function setupSelector(el: HTMLDivElement) {
       const matchesFilter =
         activeFilter === "all" || card.dataset.type === activeFilter;
 
-      const show = matchesSearch && matchesFilter;
+      const cardTags = card.dataset.tags?.split("|").filter(Boolean) ?? [];
+
+      const matchesTag =
+        activeTag === "all" || cardTags.includes(activeTag.toLowerCase());
+
+      const show = matchesSearch && matchesFilter && matchesTag;
 
       card.hidden = !show;
 
@@ -304,11 +403,15 @@ function setupSelector(el: HTMLDivElement) {
     }
   }
 
+  // Suche
   search?.addEventListener("input", update);
 
+  // Built-in / Custom / Alle
   filters.forEach((button) => {
     button.addEventListener("click", () => {
-      filters.forEach((item) => item.classList.remove("active"));
+      filters.forEach((item) => {
+        item.classList.remove("active");
+      });
 
       button.classList.add("active");
 
@@ -318,6 +421,39 @@ function setupSelector(el: HTMLDivElement) {
     });
   });
 
+  // Tag-Filter
+  tagFilters.forEach((button) => {
+    button.addEventListener("click", () => {
+      tagFilters.forEach((item) => {
+        item.classList.remove("active");
+      });
+
+      button.classList.add("active");
+
+      activeTag = button.dataset.tagFilter ?? "all";
+
+      update();
+    });
+  });
+
+  // Klick auf einen Tag direkt auf einer Template-Karte
+  el.querySelectorAll<HTMLButtonElement>(".tag").forEach((button) => {
+    button.addEventListener("click", () => {
+      const tag = button.dataset.tag;
+
+      if (!tag) {
+        return;
+      }
+
+      const filter = el.querySelector<HTMLButtonElement>(
+        `.tag-filter[data-tag-filter="${CSS.escape(tag)}"]`,
+      );
+
+      filter?.click();
+    });
+  });
+
+  // Copy
   el.querySelectorAll<HTMLButtonElement>(".copy-button").forEach((button) => {
     button.addEventListener("click", async () => {
       const content = decodeURIComponent(button.dataset.content ?? "");
@@ -332,6 +468,72 @@ function setupSelector(el: HTMLDivElement) {
         button.textContent = original;
       }, 1200);
     });
+  });
+
+  // Template-Modal
+  cards.forEach((card) => {
+    card.addEventListener("click", (event) => {
+      const target = event.target as HTMLElement;
+
+      // Buttons innerhalb der Card sollen ihre eigene Funktion behalten
+      if (target.closest(".copy-button") || target.closest(".tag")) {
+        return;
+      }
+
+      const title = card.querySelector("h2")?.textContent ?? "Template";
+      const content = card.querySelector("pre")?.textContent ?? "";
+      const tags = [...card.querySelectorAll<HTMLButtonElement>(".tag")]
+        .map((tag) => tag.textContent?.trim() ?? "")
+        .filter(Boolean);
+
+      if (!modal || !modalTitle || !modalContent) {
+        return;
+      }
+
+      modalTitle.textContent = title;
+      modalContent.textContent = content;
+
+      if (modalSize) {
+        modalSize.textContent = `${content.length.toLocaleString()} Zeichen`;
+      }
+
+      if (modalTags) {
+        modalTags.innerHTML = tags
+          .map((tag) => `<span class="modal-tag">${escapeHtml(tag)}</span>`)
+          .join("");
+      }
+
+      if (modalCopy) {
+        modalCopy.dataset.content = encodeURIComponent(content);
+        modalCopy.textContent = "Copy";
+      }
+
+      modal.showModal();
+    });
+  });
+
+  modalClose?.addEventListener("click", () => {
+    modal?.close();
+  });
+
+  // Klick auf den Hintergrund schließt das Modal
+  modal?.addEventListener("click", (event) => {
+    if (event.target === modal) {
+      modal.close();
+    }
+  });
+
+  // Copy innerhalb des Modals
+  modalCopy?.addEventListener("click", async () => {
+    const content = decodeURIComponent(modalCopy.dataset.content ?? "");
+
+    await navigator.clipboard.writeText(content);
+
+    modalCopy.textContent = "Copied ✓";
+
+    setTimeout(() => {
+      modalCopy.textContent = "Copy";
+    }, 1200);
   });
 }
 
@@ -350,4 +552,29 @@ function formatJson(content: string): string {
   } catch {
     return content;
   }
+}
+
+function getTags(content: string): string[] {
+  try {
+    const parsed = JSON.parse(content);
+    if (Array.isArray(parsed.tags)) {
+      return parsed.tags
+        .filter((tag: any): tag is string => typeof tag === "string")
+        .map((tag: string) => tag.trim())
+        .filter(Boolean);
+    }
+    return [];
+  } catch {
+    return [];
+  }
+}
+
+function getAllTags(templates: [string, string][]): string[] {
+  const tags = new Set<string>();
+  for (const [, content] of templates) {
+    for (const tag of getTags(content)) {
+      tags.add(tag);
+    }
+  }
+  return [...tags].sort((a, b) => a.localeCompare(b));
 }

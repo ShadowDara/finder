@@ -512,3 +512,278 @@ input {
     grid-template-columns: 1fr;
   }
 }
+
+/* Tags */
+
+.tag-filters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+
+  width: 100%;
+  padding: 8px 10px 2px;
+
+  border-top: 1px solid #27272a;
+}
+
+.tag-filter-label {
+  margin-right: 4px;
+
+  color: #52525b;
+
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.tag-filter {
+  display: inline-flex;
+  align-items: center;
+
+  height: 27px;
+
+  padding: 0 9px;
+
+  border: 1px solid #27272a;
+  border-radius: 7px;
+
+  background: #18181b;
+  color: #71717a;
+
+  font-size: 11px;
+  font-weight: 550;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.tag-filter:hover {
+  border-color: #3f3f46;
+  background: #27272a;
+  color: #d4d4d8;
+}
+
+.tag-filter.active {
+  border-color: rgba(129, 140, 248, 0.35);
+  background: rgba(129, 140, 248, 0.12);
+  color: #a5b4fc;
+}
+
+.tag-filter.active:hover {
+  border-color: rgba(129, 140, 248, 0.5);
+  background: rgba(129, 140, 248, 0.18);
+}
+
+
+/* Tags auf den Template-Karten */
+
+.template-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+
+  margin-top: 7px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+
+  height: 21px;
+
+  padding: 0 6px;
+
+  border: 1px solid #27272a;
+  border-radius: 5px;
+
+  background: #18181b;
+  color: #71717a;
+
+  font-size: 10px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.tag:hover {
+  border-color: rgba(129, 140, 248, 0.35);
+  background: rgba(129, 140, 248, 0.08);
+  color: #a5b4fc;
+}
+
+.template-card {
+  cursor: pointer;
+}
+
+.template-card:focus-visible {
+  outline: 2px solid #a78bfa;
+  outline-offset: 3px;
+}
+
+.template-modal {
+  width: min(900px, calc(100vw - 2rem));
+  max-width: 900px;
+  max-height: calc(100vh - 2rem);
+
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+
+  background: #111114;
+  color: #f4f4f5;
+
+  box-shadow:
+    0 25px 80px rgba(0, 0, 0, 0.65),
+    0 0 0 1px rgba(139, 92, 246, 0.08);
+}
+
+.template-modal::backdrop {
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(5px);
+}
+
+.modal-card {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 2rem);
+}
+
+.modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+
+  padding: 1.25rem 1.5rem;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.modal-header h2 {
+  margin: 0.3rem 0 0;
+  font-size: 1.35rem;
+  line-height: 1.2;
+}
+
+.modal-close {
+  display: grid;
+  place-items: center;
+
+  width: 34px;
+  height: 34px;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 9px;
+
+  background: rgba(255, 255, 255, 0.04);
+  color: #a1a1aa;
+
+  font-size: 1.4rem;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.modal-close:hover {
+  background: rgba(139, 92, 246, 0.15);
+  border-color: rgba(139, 92, 246, 0.4);
+  color: #c4b5fd;
+}
+
+.modal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+
+  padding: 1rem 1.5rem 0;
+}
+
+.modal-tag {
+  padding: 0.3rem 0.6rem;
+
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  border-radius: 999px;
+
+  background: rgba(139, 92, 246, 0.08);
+  color: #c4b5fd;
+
+  font-size: 0.75rem;
+}
+
+.modal-code {
+  overflow: auto;
+
+  margin: 1rem 1.5rem;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+
+  background: #09090b;
+}
+
+.modal-code pre {
+  margin: 0;
+  padding: 1.25rem;
+
+  min-height: 200px;
+
+  color: #d4d4d8;
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  font-size: 0.8rem;
+  line-height: 1.65;
+
+  white-space: pre;
+}
+
+.modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  padding: 0.9rem 1.5rem 1.25rem;
+
+  color: #71717a;
+  font-size: 0.75rem;
+}
+
+@media (max-width: 700px) {
+  .template-modal {
+    width: calc(100vw - 1rem);
+    max-height: calc(100vh - 1rem);
+    border-radius: 14px;
+  }
+
+  .modal-header {
+    padding: 1rem;
+  }
+
+  .modal-tags {
+    padding: 0.75rem 1rem 0;
+  }
+
+  .modal-code {
+    margin: 0.75rem 1rem;
+  }
+
+  .modal-footer {
+    padding: 0.75rem 1rem 1rem;
+  }
+}
