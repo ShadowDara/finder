@@ -45,7 +45,7 @@ func getSearchRoots() []string {
 // Search is performed asynchronously across all available drives/roots
 // for improved performance, especially with multiple drives.
 func Find(folderstruct structure.Folder, output_type string) {
-	if output_type != "clear" {
+	if output_type != "clear" && output_type != "json" {
 		fmt.Printf("Description: %s\n", folderstruct.Description)
 
 		// If Version is to old
@@ -96,7 +96,7 @@ func Find(folderstruct structure.Folder, output_type string) {
 
 	// Calculate elapsed time
 	elapsed := time.Since(start).Seconds()
-	if output_type != "clear" {
+	if output_type != "clear" && output_type != "json" {
 		fmt.Printf("Search by finder took: %.4f seconds\n", elapsed)
 		fmt.Printf("Found: %.d Results\n", len(matches))
 	}

@@ -15,14 +15,14 @@ import (
 // decode them after the lightweight JSON5 preprocessing step.
 type Folder struct {
 	// To check that to old templates are not used an the user will be informed!
-	MinVersion    string   `json:"min_version,omitempty`
+	MinVersion    string   `json:"min_version,omitempty"`
 	Description   string   `json:"description"`
 	Name          string   `json:"name"`
 	Folders       []Folder `json:"folders"`
-	Files         Files    `json:"files"`        // Only the filename for now
-	Command       string   `json:"command"`      // Optional command to execute after finding directory
-	InvertCommand bool     `json:invert_command` // To change if return code 0 or 1 is required. False is equal to 0
-	Tags          []string `json:tags`           // tags to sort the Templates
+	Files         Files    `json:"files"`          // Only the filename for now
+	Command       string   `json:"command"`        // Optional command to execute after finding directory
+	InvertCommand bool     `json:"invert_command"` // To change if return code 0 or 1 is required. False is equal to 0
+	Tags          []string `json:"tags"`           // tags to sort the Templates
 	DataSize      Size     `json:"size,omitempty"`
 }
 

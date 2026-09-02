@@ -46,7 +46,7 @@ func Search(searchTemplate string, OutputType string, Verbose bool) error {
 		return nil
 	}
 
-	if OutputType != "clear" {
+	if OutputType != "clear" && OutputType != "json" {
 		fmt.Printf("Searching for %s ...\n", templateName)
 	}
 	search.Find(structure.LoadJSON5(string(data)), OutputType)

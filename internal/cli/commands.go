@@ -23,7 +23,10 @@ func HandleCommand(args []string) {
 		"a simple go program to find your files", false)
 
 	// Add option for JSON Output
-	// root.Bool("json", false, "Enable JSON Output", false)
+	root.Bool("json", false, "Enable JSON Output", false, "j")
+
+	// Verbose
+	root.Bool("verbose", false, "Enable Verbose Mode", false, "vv")
 
 	// Add Version Command
 	versionCmd := argparser.NewCommand(
@@ -70,6 +73,10 @@ func HandleCommand(args []string) {
 	// Parse the Arguments
 	cmd := root.Parse(args[1:])
 
+	if cmd.GetBool("json") {
+		finderconfig.OutputType = "json"
+	}
+
 	// Evaluate the Arguments
 	switch cmd {
 	case versionCmd:
@@ -105,7 +112,7 @@ func HandleCommand(args []string) {
 		}
 
 		// Search for tags
-		TagSearch(cmd.Args[0], finderconfig.OutputType, true)
+		TagSearch(cmd.Args[0], finderconfig.OutputType, cmd.GetBool("verbose"))
 	case templateCmd:
 		if len(cmd.Args) <= 0 {
 			root.PrintHelp()
@@ -113,7 +120,7 @@ func HandleCommand(args []string) {
 		}
 
 		// Search the Template
-		Search(cmd.Args[0], finderconfig.OutputType, true)
+		Search(cmd.Args[0], finderconfig.OutputType, cmd.GetBool("verbose"))
 	default:
 		if len(cmd.Args) <= 0 {
 			banner()
@@ -122,6 +129,6 @@ func HandleCommand(args []string) {
 		}
 
 		// Search the Template
-		Search(cmd.Args[0], finderconfig.OutputType, true)
+		Search(cmd.Args[0], finderconfig.OutputType, cmd.GetBool("verbose"))
 	}
 }
