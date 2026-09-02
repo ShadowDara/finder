@@ -64,5 +64,6 @@
         "vite.config.ts",
         "jest.config.js",
         "README.md"
-    ]
+    ],
+    "tags": ["npm", "web"]
 }

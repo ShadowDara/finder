@@ -10,4 +10,4 @@
 samfile linguist-language=Shell
 
 # HTML DIR
-/frontend/** linguist-vendored
+/cmd/findergen/frontend/** linguist-vendored

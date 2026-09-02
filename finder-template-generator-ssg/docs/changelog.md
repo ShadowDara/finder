@@ -6,17 +6,8 @@ The whole finder CHANGELOG
 
 - added new Templates
 - added a HTML Server with go backend to create and view all templates
-- added json output support to finder, just add `--json` to command
+- added json output support to finder
 - added tags and min version to a lot of the templates
-- the Templates are now saved as minified json
-
-## 0.3.9
-
-- fixed Binary Search
-
-## 0.3.8
-
-- added Checksums
 
 ## 0.3.7
 
@@ -177,12 +168,12 @@ This version brings the biggest improvement since 0.2.0:
 
 Template System & CLI Foundations
 
-## 0.2.0 - 23.01.2026
+# 0.2.0 - 23.01.2026
 
 More Templates
 Better Console Output
 Help Message
 
-## 0.1.0 - 17.11.2025
+# 0.1.0 - 17.11.2025
 
 Programm Init
