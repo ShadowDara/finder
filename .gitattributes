@@ -12,5 +12,5 @@ samfile linguist-language=Shell
 # HTML DIR
 /cmd/findergen/frontend/** linguist-vendored
 
-/finder-template-generator-ssg/pages-ssg-plugin.ts
-/finder-template-generator-ssg/src/templates.js
+/finder-template-generator-ssg/pages-ssg-plugin.ts linguist-vendored
+/finder-template-generator-ssg/src/templates.js linguist-vendored
