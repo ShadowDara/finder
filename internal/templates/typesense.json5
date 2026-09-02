@@ -1,1 +1,1 @@
-{"description":"Typesense open source search engine","files":["docker-compose.yml","typesense.conf"],"folders":[],"name":"*"}
+{"description":"Typesense open source search engine","files":["docker-compose.yml","typesense.conf"],"folders":[],"min_version":"0.3.14","name":"*"}

@@ -1,4 +1,3 @@
-// Struct for WebGL Project
 {
     "description": "WebGL web graphics project",
     "name": "*",
@@ -12,5 +11,12 @@
     "files": [
         "index.html",
         "*.js"
-    ]
+    ],
+    "tags": [
+        "web",
+        "js",
+        "ts",
+        "npm"
+    ],
+    "min_version": "0.3.14"
 }

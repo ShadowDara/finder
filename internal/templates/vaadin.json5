@@ -1,1 +1,1 @@
-{"description":"Vaadin Java web framework","files":["pom.xml","*.java"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}
+{"description":"Vaadin Java web framework","files":["pom.xml","*.java"],"folders":[{"files":[],"folders":[],"name":"src"}],"min_version":"0.3.14","name":"*","tags":["java"]}

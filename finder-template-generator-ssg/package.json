@@ -5,10 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && node postbuild.js",
+    "build": "node prebuild.js && tsc -b && vite build && node postbuild.js",
     "preview": "vite preview",
     "dev:static": "vite --mode static",
-    "build:static": "tsc -b && vite build --mode static",
+    "build:static": "node prebuild.js && tsc -b && vite build --mode static",
     "previwq:static": "vite preview --mode static"
   },
   "devDependencies": {

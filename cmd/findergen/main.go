@@ -1,14 +1,19 @@
 package main
 
 import (
+	"context"
 	"embed"
 	"encoding/json"
-	"fmt"
 	"io/fs"
 	"log"
 	"net/http"
+	"os"
+	"path/filepath"
+	"strconv"
+	"strings"
 	"time"
 
+	"github.com/shadowdara/finder/internal/config"
 	"github.com/shadowdara/finder/internal/finderversion"
 	"github.com/shadowdara/finder/internal/templates"
 	"github.com/shadowdara/finder/pub/json5"
@@ -16,6 +21,21 @@ import (
 
 //go:embed frontend/***
 var frontend embed.FS
+
+// Function to create a file
+func saveTemplate(name string, content string) error {
+	dir, err := templates.GetCustomTemplatePath()
+	if err != nil {
+		return err
+	}
+
+	if err := os.MkdirAll(dir, 0o755); err != nil {
+		return err
+	}
+
+	filePath := filepath.Join(dir, name)
+	return os.WriteFile(filePath, []byte(content), 0o644)
+}
 
 func loggingMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -68,6 +88,14 @@ func writeTemplateJSON(w http.ResponseWriter, name string, source string, raw []
 }
 
 func main() {
+	path, err := templates.GetCustomPath()
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	config := config.LoadConfig(path + "/" + "config.json5")
+
+	server := &http.Server{Addr: ":" + strconv.Itoa(config.Port)}
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/api/info", func(w http.ResponseWriter, r *http.Request) {
@@ -82,6 +110,41 @@ func main() {
 			"version":   finderversion.Version,
 			"buildtime": finderversion.BuildTime,
 		})
+	})
+
+	mux.HandleFunc("/api/stop", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+
+		json.NewEncoder(w).Encode(map[string]string{
+			"status": "ok",
+		})
+
+		log.Println("Call /api/stop")
+		log.Println("Stopping Server")
+
+		go func() {
+			if err := server.Shutdown(context.Background()); err != nil {
+				log.Printf("failed to stop server: %v", err)
+			}
+		}()
+	})
+
+	mux.HandleFunc("/api/config", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+
+		if err := json.NewEncoder(w).Encode(config); err != nil {
+			log.Printf("failed to encode config response: %v", err)
+		}
 	})
 
 	mux.HandleFunc("/api/health", func(w http.ResponseWriter, r *http.Request) {
@@ -103,24 +166,37 @@ func main() {
 			return
 		}
 
-		var data map[string]interface{}
+		var payload struct {
+			Name    string          `json:"name"`
+			Content json.RawMessage `json:"content"`
+		}
 
-		if err := json.NewDecoder(r.Body).Decode(&data); err != nil {
+		if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
+			log.Printf("template create: invalid JSON: %v", err)
 			http.Error(w, "Invalid JSON", http.StatusBadRequest)
 			return
 		}
 
-		pretty, _ := json.MarshalIndent(data, "", "  ")
+		if payload.Name == "" {
+			http.Error(w, "Missing name", http.StatusBadRequest)
+			return
+		}
 
-		fmt.Println("=== TEMPLATE RECEIVED ===")
-		fmt.Println(string(pretty))
-		fmt.Println("=========================")
+		if !strings.HasSuffix(payload.Name, ".json5") {
+			payload.Name += ".json5"
+		}
+
+		if err := saveTemplate(payload.Name, string(payload.Content)); err != nil {
+			log.Printf("template create: failed to save %q: %v", payload.Name, err)
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusCreated)
 
 		json.NewEncoder(w).Encode(map[string]string{
-			"message": "template created",
+			"status": "ok",
 		})
 	})
 
@@ -290,11 +366,12 @@ func main() {
 
 	mux.Handle("/", http.FileServer(http.FS(staticFS)))
 
-	log.Println("Server listening on :8080")
+	log.Println("Server listening on :" + strconv.Itoa(config.Port))
 
 	handler := corsMiddleware(loggingMiddleware(mux))
 
-	if err := http.ListenAndServe(":8080", handler); err != nil {
+	server.Handler = handler
+	if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		log.Fatal(err)
 	}
 }

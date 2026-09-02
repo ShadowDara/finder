@@ -112,7 +112,11 @@ export function renderCreator(app: HTMLDivElement) {
       }
 
       const result = await response.text();
-      console.log("Template saved:", result || "OK");
+      if (JSON.parse(result)["status"] == "ok") {
+        alert("File created!");
+      } else {
+        alert("Could not create file!");
+      }
     } catch (error) {
       console.error("Could not save template:", error);
     }

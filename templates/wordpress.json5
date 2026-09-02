@@ -1,4 +1,3 @@
-// Struct for a WordPress Theme/Plugin
 {
     "description": "WordPress theme or plugin project",
     "name": "*",
@@ -6,5 +5,10 @@
     "files": [
         "functions.php",
         "style.css"
-    ]
+    ],
+    "tags": [
+        "web",
+        "php"
+    ],
+    "min_version": "0.3.14"
 }

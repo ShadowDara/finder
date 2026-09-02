@@ -33,7 +33,7 @@ export default function render(el: HTMLDivElement) {
         <main class="viewer">
           <header class="viewer-header">
             <div>
-              <span class="eyebrow">TEMPLATE VIEWER</span> / <span class="eyebrow"><a href="../creator">Template Creator</a></span> / <span class="eyebrow"><a href="../">Home</a></span>
+              <span class="eyebrow">TEMPLATE VIEWER</span> / <span class="eyebrow"><a href="../creator">TEMPLATE CREATOR</a></span> / <span class="eyebrow"><a href="../">HOME</a></span>
               <h1>Templates</h1>
               <p>
                 Durchsuche und erkunde alle verfügbaren Templates.
@@ -145,7 +145,7 @@ function renderTemplates(
           </div>
 
           <div class="code-preview">
-            <pre>${escapeHtml(content)}</pre>
+            <pre>${escapeHtml(formatJson(content))}</pre>
           </div>
 
           <div class="card-footer">
@@ -234,4 +234,12 @@ function escapeHtml(value: string): string {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
+}
+
+function formatJson(content: string): string {
+  try {
+    return JSON.stringify(JSON.parse(content), null, 2);
+  } catch {
+    return content;
+  }
 }

@@ -45,6 +45,24 @@ func getAvailableDrives() []string {
 	return drives
 }
 
+func GetCustomPath() (string, error) {
+	// Try to load from home directory
+	homeDir, err := os.UserHomeDir()
+	if err == nil {
+		return filepath.Join(homeDir, ".finder"), nil
+	}
+	return "nil", err
+}
+
+func GetCustomTemplatePath() (string, error) {
+	// Try to load from home directory
+	homeDir, err := os.UserHomeDir()
+	if err == nil {
+		return filepath.Join(homeDir, ".finder", "templates"), nil
+	}
+	return "nil", err
+}
+
 // LoadUserTemplates loads custom templates from user directories and returns
 // a map of template names to their raw bytes. User templates can be placed in:
 //   - ~/.finder/templates/
@@ -55,14 +73,13 @@ func getAvailableDrives() []string {
 func LoadUserTemplates() (map[string][]byte, error) {
 	userTemplates := make(map[string][]byte)
 
-	// Try to load from home directory
-	homeDir, err := os.UserHomeDir()
+	homePath, err := GetCustomTemplatePath()
 	if err == nil {
-		homePath := filepath.Join(homeDir, ".finder", "templates")
 		if err := loadTemplatesFromDir(homePath, userTemplates); err != nil {
-			// Log but don't fail if home dir can't be read
 			fmt.Fprintf(os.Stderr, "Warning: could not read user templates from %s: %v\n", homePath, err)
 		}
+	} else {
+		fmt.Fprintf(os.Stderr, "Warning: could not determine home template path: %v\n", err)
 	}
 
 	// Try to load from current directory (.finder/templates/)

@@ -1,1 +1,1 @@
-{"description":"Vite next generation build tool","files":["vite.config.ts","package.json"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}
+{"description":"Vite next generation build tool","files":["vite.config.ts","package.json"],"folders":[{"files":[],"folders":[],"name":"src"}],"min_version":"0.3.14","name":"*","tags":["web","npm","js","ts"]}
