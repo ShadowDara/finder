@@ -1,1 +1,1 @@
-{"description":"Robot Framework automation testing","files":["*.robot"],"folders":[{"files":[],"folders":[],"name":"tests"}],"name":"*"}
+{"description":"Robot Framework automation testing","files":["*.robot"],"folders":[{"files":[],"folders":[],"name":"tests"}],"min_version":"0.3.16","name":"*"}

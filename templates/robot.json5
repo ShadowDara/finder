@@ -1,4 +1,3 @@
-// Struct for a Robot Framework
 {
     "description": "Robot Framework automation testing",
     "name": "*",
@@ -11,5 +10,6 @@
     ],
     "files": [
         "*.robot"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

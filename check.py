@@ -53,5 +53,5 @@ for json_file in folder.glob("*.json5"):
     except Exception as e:
         print(f"Fehler bei {json_file.name}: {e}")
 
-print(f"\nWrong JSON {wrong} from {all}")
-print(f"Templates without tags {notags} from {all - wrong} Working")
+print(f"\nTemplates with wrong JSON {wrong} from {all}")
+print(f"Templates without tags {notags} from {all - wrong} Working Templates")
