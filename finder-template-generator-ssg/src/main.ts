@@ -1,4 +1,5 @@
 import { pages } from "virtual:pages";
+import { render404, render404_2, render404_3 } from "./404";
 
 declare global {
   interface Window {
@@ -22,32 +23,7 @@ async function main() {
 
   // Special 404 page supplied by the dev server.
   if (id === "__404__") {
-    const pageLinks = Object.keys(pages)
-      .filter((pageId) => pageId !== "__404__")
-      .map(
-        (pageId) => `
-        <li>
-          <a href="${pageId === "index" ? "/" : `/${pageId}`}">
-            ${pageId}
-          </a>
-        </li>
-      `,
-      )
-      .join("");
-
-    app.innerHTML = `
-    <main>
-      <h1>404</h1>
-      <p>Page not found.</p>
-
-      <h2>Available pages</h2>
-      <ul>
-        ${pageLinks}
-      </ul>
-
-      <a href="/">Go home</a>
-    </main>
-  `;
+    render404_2(app, pages);
 
     return;
   }
@@ -57,13 +33,7 @@ async function main() {
   if (!page) {
     console.error(`[pages] Unknown page id: ${id}`);
 
-    app.innerHTML = `
-      <main>
-        <h1>404</h1>
-        <p>Page "${id}" not found.</p>
-        <a href="/">Go home</a>
-      </main>
-    `;
+    render404_3(app, id);
 
     return;
   }
@@ -99,16 +69,6 @@ async function main() {
 }
 
 main();
-
-function render404(app: HTMLElement) {
-  app.innerHTML = `
-      <main>
-        <h1>404</h1>
-        <p>No page id was provided.</p>
-        <a href="/">Go home</a>
-      </main>
-    `;
-}
 
 function loadStyles(styles: string[]) {
   if (import.meta.env.DEV) {

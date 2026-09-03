@@ -26,11 +26,11 @@ export default defineConfig(({ mode }) => ({
     }),
     pagesPlugin({
       styles: {
-        changelog: ["/src/markdownstyle.css"],
-        index: ["/src/markdownstyle.css"],
-        readme: ["/src/markdownstyle.css"],
+        changelog: ["/src/markdownrootstyle.css"],
+        index: ["/src/markdownrootstyle.css"],
+        readme: ["/src/markdownrootstyle.css"],
+        configeditor: ["/src/markdownstyle.css"],
       },
-      // relativePaths: true,
       extensions: [".ts", ".tsx"],
       prettyUrls: true,
       pagesDir: "pages",
@@ -40,8 +40,8 @@ export default defineConfig(({ mode }) => ({
       title: (id) => {
         const titles: Record<string, string> = {
           index: "Finder",
-          "viewer/index": "Template Viewer",
-          about: "About",
+          viewer: "Template Viewer",
+          configeditor: "Finder Config Editor",
         };
 
         return titles[id] ?? "Finder";

@@ -9,6 +9,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/shadowdara/finder/internal/cache"
 	"github.com/shadowdara/finder/internal/finderversion"
 	"github.com/shadowdara/finder/internal/structure"
 	"github.com/shadowdara/finder/pub/goansi"
@@ -44,7 +45,7 @@ func getSearchRoots() []string {
 //
 // Search is performed asynchronously across all available drives/roots
 // for improved performance, especially with multiple drives.
-func Find(folderstruct structure.Folder, output_type string) {
+func Find(folderstruct structure.Folder, output_type string, name string, doCache bool) {
 	if output_type != "clear" && output_type != "json" {
 		fmt.Printf("Description: %s\n", folderstruct.Description)
 
@@ -116,6 +117,15 @@ func Find(folderstruct structure.Folder, output_type string) {
 	case "clear":
 		for _, m := range matches {
 			fmt.Println(m)
+		}
+	}
+
+	// add the cache files
+	if doCache {
+		cache.SaveCache(name, matches)
+
+		if output_type != "clear" && output_type != "json" {
+			fmt.Printf("Wrote Cache for template %s", name)
 		}
 	}
 }

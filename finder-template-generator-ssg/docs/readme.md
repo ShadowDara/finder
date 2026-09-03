@@ -16,6 +16,7 @@ Maybe
 
 [![Build Status](https://github.com/ShadowDara/finder/actions/workflows/release.yml/badge.svg)](https://github.com/ShadowDara/finder/actions/workflows/release.yml)
 [![Build Check](https://github.com/ShadowDara/finder/actions/workflows/buildcheck.yml/badge.svg)](https://github.com/ShadowDara/finder/actions/workflows/buildcheck.yml)
+[![Deploy GitHub Pages](https://github.com/ShadowDara/finder/actions/workflows/deploywebpage.yml/badge.svg)](https://github.com/ShadowDara/finder/actions/workflows/deploywebpage.yml)
 [![GitHub contributors](https://img.shields.io/github/contributors/shadowdara/finder)](https://github.com/shadowdara/finder/graphs/contributors)
 [![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/m/shadowdara/finder)](https://github.com/shadowdara/finder/commits)
 [![GitHub all releases](https://img.shields.io/github/downloads/shadowdara/finder/total?logo=github)](https://github.com/shadowdara/finder/releases)
@@ -41,7 +42,7 @@ Feel although free to submit Templates via Issues!
 - Supports user templates in the OS-specific configuration folder.
 - Lightweight, tested, and easy to extend.
 - **Finder can although be used to search single files and is a lot faster
-than Windows Search just to say**
+  than Windows Search just to say**
 
 ## Requirements
 
@@ -87,11 +88,10 @@ Templates are JSON5 files with fields such as `name`, `files`, and
 `folders`. A simple template to find Git repositories looks like:
 
 ```json
+// Template for Git
 {
-    "name": "*",
-    "folders": [
-        { "name": ".git" }
-    ],
+  "name": "*",
+  "folders": [{ "name": ".git" }]
 }
 ```
 
@@ -99,19 +99,18 @@ And a full template looks like this. Empty Value are not required
 in the Template. The `description` will be displayed in the program
 when searching for the Template and although when displaying all
 templates. The `command` runs in the Structure Directory after the
-Structure is found. The Entrywill only be added is the `command` 
+Structure is found. The Entrywill only be added is the `command`
 returns `0` when `invert_command` is `false`, else `1`.
 
 ```json
+// Template for Git
 {
-    "name": "*",
-    "description": "",
-    "folders": [
-        { "name": ".git" }
-    ],
-    "files": [],
-    "command": "",
-    "invert_command": false
+  "name": "*",
+  "description": "",
+  "folders": [{ "name": ".git" }],
+  "files": [],
+  "command": "",
+  "invert_command": false
 }
 ```
 
@@ -122,6 +121,27 @@ returns `0` when `invert_command` is `false`, else `1`.
 - macOS: `~/Library/Application Support/finder` -->
 
 Then call `finder <template-name>` to use them.
+
+## Config
+
+In Version **v0.3.15** and heigher, finder has a global config in `~/.finder/config.json5`. In case the file doesnt exist, it will result in the default config with looks like this:
+
+```json
+// And it supports comments
+{
+  "port": 8080,
+  "cache": true,
+
+  // Use git as a database to safe the cache data (maybe cool)
+  // for stats or etc (idk)
+  // You dont have to use it obviously
+  "create_cache_db": false
+}
+```
+
+## Mistakes
+
+I thing i would change is to use raw JSON for the templates instead of JSON with comments, which i called JSON5 back then, but it is no real JSON5.
 
 ## Development
 
@@ -154,7 +174,7 @@ go run ./cmd/finder check
 
 - Found a missing or inaccurate template? Please open an issue.
 - Add new templates via PR. Keep them in JSON5 and provide a short
-    description of what the template matches.
+  description of what the template matches.
 
 ## Roadmap / Ideas
 
@@ -178,6 +198,6 @@ the prototype for finder.
 
 ## Info Video
 
-(*a Youtube Video*)
+(_a Youtube Video_)
 
 [![INFO Video 1 about Finder](https://img.youtube.com/vi/oIRgAYv-mOA/0.jpg)](https://www.youtube.com/watch?v=oIRgAYv-mOA)

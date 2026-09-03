@@ -17,7 +17,7 @@ import (
 )
 
 // Function to search for a Template
-func Search(searchTemplate string, OutputType string, Verbose bool) error {
+func Search(searchTemplate string, OutputType string, Verbose bool, cache bool) error {
 	if Verbose {
 		fmt.Printf("%sStruct Finder %s%s - Buildtime: %s\n", color.Green, finderversion.Version, color.Reset, finderversion.BuildTime)
 	}
@@ -49,7 +49,7 @@ func Search(searchTemplate string, OutputType string, Verbose bool) error {
 	if OutputType != "clear" && OutputType != "json" {
 		fmt.Printf("Searching for %s ...\n", templateName)
 	}
-	search.Find(structure.LoadJSON5(string(data)), OutputType)
+	search.Find(structure.LoadJSON5(string(data)), OutputType, templateName, cache)
 
 	return nil
 }

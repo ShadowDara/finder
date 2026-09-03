@@ -14,3 +14,4 @@ coverage
 finder-template-generator-ssg/stats.html
 /finder-template-generator-ssg/dist-static
 findergen.exe~
+finder-template-generator-ssg/tsconfig.tsbuildinfo

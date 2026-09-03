@@ -1,6 +1,11 @@
 # CHANGELOG
 
-The whole finder CHANGELOG
+_The whole finder CHANGELOG_
+
+## Newest Version : prob 0.3.16
+
+- added cache creation
+- addec config editor
 
 ## 0.3.15 - 02.09.2025
 

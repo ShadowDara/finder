@@ -108,6 +108,7 @@ func main() {
 	server := &http.Server{Addr: ":" + strconv.Itoa(PORT)}
 	mux := http.NewServeMux()
 
+	// Server Data
 	mux.HandleFunc("/api/info", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet {
 			http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)

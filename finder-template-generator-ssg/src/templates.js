@@ -202,6 +202,7 @@ export default {
       "*.apib"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "appcelerator.json5": {
@@ -216,6 +217,7 @@ export default {
         "name": "Resources"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "appium.json5": {
@@ -230,6 +232,7 @@ export default {
         "name": "test"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "appveyor.json5": {
@@ -247,6 +250,7 @@ export default {
       "docker-compose.yml"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "arduino.json5": {
@@ -279,6 +283,7 @@ export default {
         "name": "audio"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "astro.json5": {
@@ -307,6 +312,7 @@ export default {
       "asyncapi.yaml"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "auth0.json5": {
@@ -315,6 +321,7 @@ export default {
       "auth0.json"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "authelia.json5": {
@@ -323,6 +330,7 @@ export default {
       "configuration.yml"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "automatic1111.json5": {
@@ -349,6 +357,7 @@ export default {
         "name": "outputs"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "aws-cdk.json5": {
@@ -397,7 +406,12 @@ export default {
         "name": "src"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "web",
+      "rust"
+    ]
   },
   "azure.json5": {
     "description": "Azure DevOps project",
@@ -405,6 +419,7 @@ export default {
       "azure-pipelines.yml"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "babylonjs.json5": {
@@ -440,6 +455,7 @@ export default {
         "name": "js"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "bark.json5": {
@@ -458,6 +474,7 @@ export default {
         "name": "audio"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "bazel.json5": {
@@ -467,6 +484,7 @@ export default {
       "WORKSPACE"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "beam.json5": {
@@ -486,6 +504,7 @@ export default {
         "name": "pipelines"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "behat.json5": {
@@ -500,6 +519,7 @@ export default {
         "name": "features"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "bevy.json5": {
@@ -547,6 +567,7 @@ export default {
         "name": "analysis"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "blender.json5": {
@@ -571,6 +592,7 @@ export default {
         "name": "pages"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "blockly.json5": {
@@ -579,6 +601,7 @@ export default {
       "*.xml"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "boost.json5": {
@@ -597,6 +620,7 @@ export default {
         "name": "boost"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "bottle.json5": {
@@ -606,6 +630,7 @@ export default {
       "requirements.txt"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "builder.json5": {
@@ -614,6 +639,7 @@ export default {
       ".builderio"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "bun.json5": {
@@ -647,6 +673,7 @@ export default {
         "name": "cadence"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "capacitor.json5": {
@@ -662,6 +689,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "cassandra.json5": {
@@ -671,6 +699,7 @@ export default {
       "cassandra.yaml"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "cesiumjs.json5": {
@@ -685,6 +714,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "chef.json5": {
@@ -699,6 +729,7 @@ export default {
         "name": "cookbooks"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "chrome-extension.json5": {
@@ -708,6 +739,7 @@ export default {
       "popup.html"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "circleci.json5": {
@@ -722,6 +754,7 @@ export default {
         "name": ".circleci"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "citus.json5": {
@@ -1655,6 +1688,26 @@ export default {
       "requirements.txt"
     ],
     "folders": [],
+    "name": "*"
+  },
+  "finder.json5": {
+    "description": "a Folder Struct for a Project with custom finder templates",
+    "folders": [
+      {
+        "folders": [
+          {
+            "files": [
+              {
+                "name": "*.json5"
+              }
+            ],
+            "name": "templates"
+          }
+        ],
+        "name": ".finder"
+      }
+    ],
+    "min_version": "0.3.14",
     "name": "*"
   },
   "firebase.json5": {
@@ -4366,6 +4419,7 @@ export default {
       "*.lua"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*",
     "tags": [
       "game-engine"
@@ -4383,6 +4437,7 @@ export default {
         "name": "tests"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "rocket.json5": {
@@ -4398,7 +4453,12 @@ export default {
         "name": "src"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "rust",
+      "web"
+    ]
   },
   "rocksdb.json5": {
     "description": "RocksDB embedded database",
@@ -4406,6 +4466,7 @@ export default {
       "Makefile"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "ros.json5": {
@@ -4497,6 +4558,16 @@ export default {
     "tags": [
       "game-engine"
     ]
+  },
+  "samfile.json5": {
+    "description": "a Folder Struct for a Project which uses samfiles",
+    "files": [
+      {
+        "name": "samfile"
+      }
+    ],
+    "min_version": "0.3.14",
+    "name": "*"
   },
   "sanity.json5": {
     "description": "Sanity.io content management",
@@ -4894,6 +4965,7 @@ export default {
         "name": "supabase"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "superset-viz.json5": {
@@ -4912,6 +4984,7 @@ export default {
         "name": "dashboards"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "superset.json5": {
@@ -4920,6 +4993,7 @@ export default {
       "docker-compose.yml"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "svelte.json5": {
@@ -4936,6 +5010,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "sveltekit.json5": {
@@ -4952,7 +5027,11 @@ export default {
         "name": "src"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "web"
+    ]
   },
   "swagger.json5": {
     "description": "API documentation with Swagger UI",
@@ -4961,6 +5040,7 @@ export default {
       "openapi.yaml"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "swift.json5": {
@@ -4975,6 +5055,7 @@ export default {
         "name": "Sources"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "tally.json5": {
@@ -4983,6 +5064,7 @@ export default {
       "form.json"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "tauri-mobile.json5": {
@@ -4997,6 +5079,7 @@ export default {
         "name": "src-tauri"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "tauri2.json5": {
@@ -5009,7 +5092,9 @@ export default {
         "name": "src"
       },
       {
-        "files": [],
+        "files": [
+          "Cargo.toml"
+        ],
         "folders": [
           {
             "name": "src"
@@ -5037,6 +5122,7 @@ export default {
         "name": "models"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "terraform.json5": {
@@ -5046,6 +5132,7 @@ export default {
       "terraform.tfvars"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "thesis.json5": {
@@ -5082,6 +5169,7 @@ export default {
         "name": "data"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "threejs.json5": {
@@ -5109,6 +5197,7 @@ export default {
       "*.thrift"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "tidb.json5": {
@@ -5117,6 +5206,7 @@ export default {
       "docker-compose.yml"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "tide.json5": {
@@ -5131,7 +5221,12 @@ export default {
         "name": "src"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "rust",
+      "web"
+    ]
   },
   "timescaledb.json5": {
     "description": "TimescaleDB time-series database",
@@ -5140,6 +5235,7 @@ export default {
       "schema.sql"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "together.json5": {
@@ -5157,6 +5253,7 @@ export default {
         "name": "models"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "tokio.json5": {
@@ -5171,7 +5268,11 @@ export default {
         "name": "src"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "rust"
+    ]
   },
   "tonic.json5": {
     "description": "Tonic Rust gRPC framework",
@@ -5186,7 +5287,11 @@ export default {
         "name": "src"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "rust"
+    ]
   },
   "travisci.json5": {
     "description": "Travis CI continuous integration",
@@ -5194,6 +5299,7 @@ export default {
       ".travis.yml"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "trpc.json5": {
@@ -5209,6 +5315,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "truffle.json5": {
@@ -5241,6 +5348,7 @@ export default {
         "name": "test"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "turbo.json5": {
@@ -5256,6 +5364,7 @@ export default {
         "name": "packages"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "typesense.json5": {
@@ -5344,6 +5453,7 @@ export default {
       "credentials.json"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "vectordb.json5": {
@@ -5374,6 +5484,7 @@ export default {
         "name": "scripts"
       }
     ],
+    "min_version": "0.3.15",
     "name": "*"
   },
   "vercel-edge.json5": {
@@ -5429,6 +5540,7 @@ export default {
       "victorops.yml"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "vite.json5": {
@@ -5459,6 +5571,7 @@ export default {
       "docker-compose.yml"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "vitest.json5": {
@@ -5498,6 +5611,7 @@ export default {
         "name": "models"
       }
     ],
+    "min_version": "0.3.15",
     "name": "*"
   },
   "voila.json5": {
@@ -5515,6 +5629,7 @@ export default {
         "name": "notebooks"
       }
     ],
+    "min_version": "0.3.15",
     "name": "*"
   },
   "VS.json5": {
@@ -5600,6 +5715,7 @@ export default {
         "name": "tests"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "wandb.json5": {
@@ -5618,6 +5734,7 @@ export default {
         "name": "logs"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "warp.json5": {
@@ -5632,6 +5749,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "wasi.json5": {
@@ -5651,6 +5769,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "wasm.json5": {
@@ -5660,6 +5779,7 @@ export default {
       "Cargo.toml"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "wasmtime.json5": {
@@ -5677,6 +5797,7 @@ export default {
         "name": "modules"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "web3.json5": {
@@ -5692,6 +5813,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "webflow.json5": {
@@ -5700,6 +5822,7 @@ export default {
       "*.webflow"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "webgameengine.json5": {
@@ -5781,6 +5904,7 @@ export default {
         "name": "transcripts"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "wordpress.json5": {
@@ -5809,6 +5933,7 @@ export default {
         "name": "Tests"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "xen.json5": {
@@ -5818,6 +5943,7 @@ export default {
       "Makefile"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "yarn-workspace.json5": {
@@ -5852,7 +5978,12 @@ export default {
         "name": "src"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "web",
+      "rust"
+    ]
   },
   "zeromq.json5": {
     "description": "ZeroMQ messaging framework",
@@ -5866,7 +5997,11 @@ export default {
         "name": "src"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "npm"
+    ]
   },
   "_default.json5": {
     "description": "A little Description for the Struct which gets Display when the Struct is searched. The File Starts with a # to be the first in the List",

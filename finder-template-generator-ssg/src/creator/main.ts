@@ -28,7 +28,7 @@ export function renderCreator(app: HTMLDivElement) {
   const template = params.get("template");
   const filname = params.get("filename");
 
-  if (import.meta.env.MODE != "static") {
+  if (import.meta.env.MODE == "backend") {
     servermode = true;
   }
 

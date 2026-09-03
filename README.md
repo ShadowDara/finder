@@ -16,6 +16,7 @@ Maybe
 
 [![Build Status](https://github.com/ShadowDara/finder/actions/workflows/release.yml/badge.svg)](https://github.com/ShadowDara/finder/actions/workflows/release.yml)
 [![Build Check](https://github.com/ShadowDara/finder/actions/workflows/buildcheck.yml/badge.svg)](https://github.com/ShadowDara/finder/actions/workflows/buildcheck.yml)
+[![Deploy GitHub Pages](https://github.com/ShadowDara/finder/actions/workflows/deploywebpage.yml/badge.svg)](https://github.com/ShadowDara/finder/actions/workflows/deploywebpage.yml)
 [![GitHub contributors](https://img.shields.io/github/contributors/shadowdara/finder)](https://github.com/shadowdara/finder/graphs/contributors)
 [![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/m/shadowdara/finder)](https://github.com/shadowdara/finder/commits)
 [![GitHub all releases](https://img.shields.io/github/downloads/shadowdara/finder/total?logo=github)](https://github.com/shadowdara/finder/releases)
@@ -129,9 +130,16 @@ In Version **v0.3.15** and heigher, finder has a global config in `~/.finder/con
 // And it supports comments
 {
   "port": 8080,
-  "cache": true
+  "cache": true,
+
+  // Use git as a database to safe the cache data (maybe cool)
+  // for stats or etc (idk)
+  // You dont have to use it obviously
+  "create_cache_db": false
 }
 ```
+
+For more and detailed Information check out the config editor [here](https://shadowdara.github.io/finder/configeditor)
 
 ## Mistakes
 

@@ -16,7 +16,9 @@ func NewConfig() Config {
 }
 
 type SavedConfig struct {
-	Port int `json:"port"`
+	Port          int  `json:"port"`
+	Cache         bool `json:"cache"`
+	CreateCacheDB bool `json:"create_cache_db"`
 	// Host  string `json:"host"`
 	// Debug bool   `json:"debug"`
 }
@@ -24,7 +26,9 @@ type SavedConfig struct {
 func LoadConfig(path string) SavedConfig {
 	config := SavedConfig{
 		// deine Default-Werte
-		Port: 8080,
+		Port:          8080,
+		Cache:         false,
+		CreateCacheDB: false,
 		// Host:  "localhost",
 		// Debug: false,
 	}

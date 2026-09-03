@@ -10,7 +10,13 @@
   --md-accent: #3b5bdb;
   --md-blockquote: #6b7280;
 }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 body {
+  margin: 0;
   background: var(--md-bg);
   color: var(--md-color);
 }

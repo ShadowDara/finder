@@ -1,0 +1,264 @@
+body {
+  /* background-color: #0b100f; */
+}
+
+.configeditor-page {
+  display: flex;
+  /* flex-direction: column; */
+  gap: 16px;
+  width: 100%;
+}
+
+#configeditor,
+#desc {
+  width: 100%;
+}
+
+#configeditor {
+  margin-top: 1%;
+}
+
+.cfg-editor {
+  --cfg-bg: #101114;
+  --cfg-surface: #17181c;
+  --cfg-border: #2a2c33;
+  --cfg-text: #e7e8ea;
+  --cfg-muted: #9a9ca3;
+  --cfg-accent: #6c8cff;
+  --cfg-accent-text: #0b0c10;
+  --cfg-danger: #ff6b6b;
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    sans-serif;
+  color: var(--cfg-text);
+  background: var(--cfg-bg);
+  border: 1px solid var(--cfg-border);
+  border-radius: 12px;
+  padding: 20px;
+  max-width: 720px;
+}
+.cfg-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.cfg-title {
+  margin: 0 0 4px;
+  font-size: 1.25rem;
+}
+.cfg-editor-desc {
+  margin: 0;
+  color: var(--cfg-muted);
+  font-size: 0.875rem;
+}
+.cfg-actions {
+  display: flex;
+  gap: 8px;
+}
+.cfg-btn {
+  background: var(--cfg-surface);
+  color: var(--cfg-text);
+  border: 1px solid var(--cfg-border);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+.cfg-btn:hover {
+  border-color: var(--cfg-accent);
+}
+.cfg-btn-primary {
+  background: var(--cfg-accent);
+  color: var(--cfg-accent-text);
+  border-color: var(--cfg-accent);
+  font-weight: 600;
+}
+.cfg-status {
+  font-size: 0.85rem;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: var(--cfg-surface);
+  border: 1px solid var(--cfg-border);
+}
+.cfg-status[data-kind="error"] {
+  color: var(--cfg-danger);
+  border-color: var(--cfg-danger);
+}
+.cfg-status[data-kind="success"] {
+  color: #7ee29a;
+  border-color: #2f5e42;
+}
+.cfg-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 8px;
+}
+.cfg-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cfg-field-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.cfg-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.cfg-required {
+  color: var(--cfg-danger);
+  margin-left: 2px;
+}
+.cfg-desc {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--cfg-muted);
+}
+.cfg-default {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--cfg-muted);
+}
+.cfg-default code {
+  background: var(--cfg-surface);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+.cfg-warning {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #e2b93b;
+}
+.cfg-input {
+  background: var(--cfg-surface);
+  color: var(--cfg-text);
+  border: 1px solid var(--cfg-border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 0.9rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+.cfg-input:focus {
+  outline: none;
+  border-color: var(--cfg-accent);
+}
+.cfg-textarea {
+  resize: vertical;
+}
+.cfg-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+}
+.cfg-reset-btn {
+  background: none;
+  border: 1px solid var(--cfg-border);
+  color: var(--cfg-muted);
+  border-radius: 6px;
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  line-height: 1;
+}
+.cfg-reset-btn:hover {
+  color: var(--cfg-text);
+  border-color: var(--cfg-accent);
+}
+.cfg-color-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.cfg-color-swatch {
+  width: 40px;
+  height: 34px;
+  padding: 2px;
+  background: var(--cfg-surface);
+  border: 1px solid var(--cfg-border);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.cfg-switch {
+  position: relative;
+  display: inline-flex;
+  width: 42px;
+  height: 24px;
+  cursor: pointer;
+}
+.cfg-switch input {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+}
+.cfg-switch-track {
+  position: absolute;
+  inset: 0;
+  background: var(--cfg-border);
+  border-radius: 999px;
+  transition: background 0.15s;
+}
+.cfg-switch-track::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.15s;
+}
+.cfg-switch input:checked + .cfg-switch-track {
+  background: var(--cfg-accent);
+}
+.cfg-switch input:checked + .cfg-switch-track::after {
+  transform: translateX(18px);
+}
+.cfg-group {
+  border: 1px solid var(--cfg-border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin: 0;
+}
+.cfg-group-legend {
+  padding: 0 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.cfg-group-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 8px;
+}
+.cfg-preview {
+  margin-top: 16px;
+}
+.cfg-preview summary {
+  cursor: pointer;
+  color: var(--cfg-muted);
+  font-size: 0.85rem;
+}
+.cfg-json-preview {
+  background: var(--cfg-surface);
+  border: 1px solid var(--cfg-border);
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 0.8rem;
+  overflow: auto;
+  max-height: 260px;
+}

@@ -2,12 +2,15 @@ package cli
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/shadowdara/finder/pub/argparser"
 
+	"github.com/shadowdara/finder/internal/cache/db"
 	"github.com/shadowdara/finder/internal/config"
 	"github.com/shadowdara/finder/internal/finderversion"
 	"github.com/shadowdara/finder/internal/search/binarycheck"
+	"github.com/shadowdara/finder/internal/templates"
 )
 
 // HandleCommand is the main entry point for CLI command processing.
@@ -18,6 +21,14 @@ func HandleCommand(args []string) {
 
 	finderconfig = config.NewConfig()
 
+	path, err := templates.GetCustomPath()
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	// Config in the UserRoot
+	config := config.LoadConfig(path + "/" + "config.json5")
+
 	// NEW
 	root := argparser.NewCommand("finder",
 		"a simple go program to find your files", false)
@@ -27,6 +38,12 @@ func HandleCommand(args []string) {
 
 	// Verbose
 	root.Bool("verbose", false, "Enable Verbose Mode", false, "vv")
+
+	// Cache
+	root.Bool("cache", false, "Use the Cache", false, "c")
+
+	// Create Cache DB
+	root.Bool("create-cache-db", false, "Create a Git DB from the cache data", false, "ccd")
 
 	// Add Version Command
 	versionCmd := argparser.NewCommand(
@@ -77,6 +94,18 @@ func HandleCommand(args []string) {
 		finderconfig.OutputType = "json"
 	}
 
+	cachearg := cmd.GetBool("cache")
+
+	if !config.Cache {
+		config.Cache = cachearg
+	}
+
+	cachedbarg := cmd.GetBool("create-cache-db")
+
+	if !config.CreateCacheDB {
+		config.CreateCacheDB = cachedbarg
+	}
+
 	// Evaluate the Arguments
 	switch cmd {
 	case versionCmd:
@@ -120,7 +149,12 @@ func HandleCommand(args []string) {
 		}
 
 		// Search the Template
-		Search(cmd.Args[0], finderconfig.OutputType, cmd.GetBool("verbose"))
+		Search(cmd.Args[0], finderconfig.OutputType, cmd.GetBool("verbose"), config.Cache)
+
+		// Safe Git Database
+		if config.CreateCacheDB && config.Cache {
+			db.SaveDB()
+		}
 	default:
 		if len(cmd.Args) <= 0 {
 			Banner()
@@ -129,6 +163,11 @@ func HandleCommand(args []string) {
 		}
 
 		// Search the Template
-		Search(cmd.Args[0], finderconfig.OutputType, cmd.GetBool("verbose"))
+		Search(cmd.Args[0], finderconfig.OutputType, cmd.GetBool("verbose"), config.Cache)
+
+		// Safe Git Database
+		if config.CreateCacheDB && config.Cache {
+			db.SaveDB()
+		}
 	}
 }

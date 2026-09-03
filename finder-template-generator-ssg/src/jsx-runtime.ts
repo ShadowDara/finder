@@ -1,6 +1,8 @@
+// Custom JSX Runtime for the SSG Plugin
+
 const HTML = Symbol("html");
 
-interface HtmlValue {
+export interface HtmlValue {
   readonly [HTML]: true;
   readonly value: string;
   toString(): string;
@@ -115,4 +117,14 @@ function escapeText(value: string): string {
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
+}
+
+/**
+ * Erzeugt einen HtmlValue aus rohem String OHNE Escaping.
+ * Nur für vertrauenswürdigen Inhalt verwenden (eigenes CSS/JS, nie User-Input!).
+ * Damit lässt sich z.B. ein <script>{raw(js)}</script> einbetten, ohne
+ * dass `<`/`>`/`&` im JS/CSS kaputt escaped werden.
+ */
+export function raw(value: string): HtmlValue {
+  return createHtml(value);
 }

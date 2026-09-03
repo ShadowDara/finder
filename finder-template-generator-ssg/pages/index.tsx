@@ -3,7 +3,7 @@ import { jsx, Fragment } from "../src/jsx-runtime";
 export default function render(el: HTMLDivElement) {
   el.innerHTML = (
     <>
-      <article className="markdown">
+      <article class="markdown">
         <h1 id="finder-server">Finder Server</h1>
 
         <ul>
@@ -12,6 +12,9 @@ export default function render(el: HTMLDivElement) {
           </li>
           <li>
             <a href="./viewer">Template Viewer</a>
+          </li>
+          <li>
+            <a href="./configeditor">Config Editor</a>
           </li>
         </ul>
 
@@ -29,14 +32,14 @@ export default function render(el: HTMLDivElement) {
           </li>
         </ul>
 
-        {import.meta.env.MODE != "static" && (
+        {import.meta.env.MODE == "backend" && (
           <button id="stop">Stop Server</button>
         )}
       </article>
     </>
   );
 
-  if (import.meta.env.MODE != "static") {
+  if (import.meta.env.MODE == "backend") {
     let adress = "/api/stop";
 
     if (import.meta.env.DEV) {
