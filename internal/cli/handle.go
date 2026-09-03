@@ -7,6 +7,8 @@ import (
 
 	"text/tabwriter"
 
+	"github.com/shadowdara/finder/internal/cache"
+	"github.com/shadowdara/finder/internal/cache/db"
 	"github.com/shadowdara/finder/internal/finderversion"
 	"github.com/shadowdara/finder/internal/loader"
 	"github.com/shadowdara/finder/internal/search"
@@ -17,7 +19,23 @@ import (
 )
 
 // Function to search for a Template
-func Search(searchTemplate string, OutputType string, Verbose bool, cache bool) error {
+func Search(searchTemplate string, OutputType string, Verbose bool, createCache bool, useCache bool, createCacheDB bool) error {
+	if useCache {
+		data, err := cache.LoadCache(searchTemplate)
+		if err != nil {
+			fmt.Println("Could not load the cache")
+			return err
+		}
+
+		fmt.Printf("Cache created at %s", data.Timestamp)
+
+		for _, name := range data.Paths {
+			fmt.Printf("%s\n", name)
+		}
+
+		return nil
+	}
+
 	if Verbose {
 		fmt.Printf("%sStruct Finder %s%s - Buildtime: %s\n", color.Green, finderversion.Version, color.Reset, finderversion.BuildTime)
 	}
@@ -49,7 +67,12 @@ func Search(searchTemplate string, OutputType string, Verbose bool, cache bool) 
 	if OutputType != "clear" && OutputType != "json" {
 		fmt.Printf("Searching for %s ...\n", templateName)
 	}
-	search.Find(structure.LoadJSON5(string(data)), OutputType, templateName, cache)
+	search.Find(structure.LoadJSON5(string(data)), OutputType, templateName, createCache)
+
+	// Safe Git Database
+	if createCacheDB && createCache {
+		db.SaveDB()
+	}
 
 	return nil
 }

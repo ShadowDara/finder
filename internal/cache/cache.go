@@ -60,3 +60,26 @@ func SaveCache(name string, paths []string) error {
 
 	return saveJSON(path, cache)
 }
+
+// Load the Cache data, name is the of the template
+func LoadCache(name string) (CacheFile, error) {
+	var cacheVal CacheFile
+
+	cachepath, err := GetCachePath()
+	if err != nil {
+		return cacheVal, err
+	}
+
+	path := filepath.Join(cachepath, name+".json")
+
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return cacheVal, err
+	}
+
+	if err := json.Unmarshal(data, &cacheVal); err != nil {
+		return cacheVal, err
+	}
+
+	return cacheVal, nil
+}

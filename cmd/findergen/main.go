@@ -14,6 +14,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/shadowdara/finder/internal/cache"
 	"github.com/shadowdara/finder/internal/config"
 	"github.com/shadowdara/finder/internal/finderversion"
 	"github.com/shadowdara/finder/internal/templates"
@@ -108,7 +109,7 @@ func main() {
 	server := &http.Server{Addr: ":" + strconv.Itoa(PORT)}
 	mux := http.NewServeMux()
 
-	// Server Data
+	// Server Info
 	mux.HandleFunc("/api/info", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet {
 			http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
@@ -123,6 +124,7 @@ func main() {
 		})
 	})
 
+	// Stop Server
 	mux.HandleFunc("/api/stop", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet {
 			http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
@@ -145,6 +147,7 @@ func main() {
 		}()
 	})
 
+	// Get Server config
 	mux.HandleFunc("/api/config", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet {
 			http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
@@ -158,6 +161,7 @@ func main() {
 		}
 	})
 
+	// Server Health
 	mux.HandleFunc("/api/health", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet {
 			http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
@@ -171,6 +175,7 @@ func main() {
 		})
 	})
 
+	// Create a Template
 	mux.HandleFunc("/api/template/create", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodPost {
 			http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
@@ -211,6 +216,7 @@ func main() {
 		})
 	})
 
+	// View all Templates names
 	mux.HandleFunc("/api/template/viewall", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet {
 			http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
@@ -248,6 +254,7 @@ func main() {
 		}
 	})
 
+	// Load every Template with its content
 	mux.HandleFunc("/api/template/load/all", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet {
 			http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
@@ -321,6 +328,7 @@ func main() {
 		}
 	})
 
+	// Load a custom User Template
 	mux.HandleFunc("/api/template/load/custom", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet {
 			http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
@@ -348,6 +356,7 @@ func main() {
 		writeTemplateJSON(w, name, "custom", data)
 	})
 
+	// Load a builtin template
 	mux.HandleFunc("/api/template/load/builtin", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet {
 			http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
@@ -367,6 +376,37 @@ func main() {
 		}
 
 		writeTemplateJSON(w, name, "builtin", data)
+	})
+
+	// Load a template cache by its name
+	mux.HandleFunc("/api/template/load/cache", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+			return
+		}
+
+		name := r.URL.Query().Get("name")
+		if name == "" {
+			http.Error(w, "Missing template name", http.StatusBadRequest)
+			return
+		}
+
+		data, err := cache.LoadCache(name)
+		if err != nil {
+			http.Error(w, "Template not found", http.StatusNotFound)
+			return
+		}
+
+		response := map[string]interface{}{
+			"date":      data.Timestamp,
+			"locations": data.Paths,
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+
+		if err := json.NewEncoder(w).Encode(response); err != nil {
+			log.Printf("failed to encode template response: %v", err)
+		}
 	})
 
 	// Embedded frontend

@@ -1,3 +1,5 @@
+// CLi package for finder, not for the other binaries
+
 package cli
 
 import (
@@ -6,7 +8,6 @@ import (
 
 	"github.com/shadowdara/finder/pub/argparser"
 
-	"github.com/shadowdara/finder/internal/cache/db"
 	"github.com/shadowdara/finder/internal/config"
 	"github.com/shadowdara/finder/internal/finderversion"
 	"github.com/shadowdara/finder/internal/search/binarycheck"
@@ -39,8 +40,11 @@ func HandleCommand(args []string) {
 	// Verbose
 	root.Bool("verbose", false, "Enable Verbose Mode", false, "vv")
 
-	// Cache
-	root.Bool("cache", false, "Use the Cache", false, "c")
+	// Create Cache
+	root.Bool("create-cache", false, "Create the Cache", false, "cc")
+
+	// Load Cache
+	root.Bool("cache", false, "Use the already existing Cache", false, "c")
 
 	// Create Cache DB
 	root.Bool("create-cache-db", false, "Create a Git DB from the cache data", false, "ccd")
@@ -94,7 +98,7 @@ func HandleCommand(args []string) {
 		finderconfig.OutputType = "json"
 	}
 
-	cachearg := cmd.GetBool("cache")
+	cachearg := cmd.GetBool("create-cache")
 
 	if !config.Cache {
 		config.Cache = cachearg
@@ -149,12 +153,7 @@ func HandleCommand(args []string) {
 		}
 
 		// Search the Template
-		Search(cmd.Args[0], finderconfig.OutputType, cmd.GetBool("verbose"), config.Cache)
-
-		// Safe Git Database
-		if config.CreateCacheDB && config.Cache {
-			db.SaveDB()
-		}
+		Search(cmd.Args[0], finderconfig.OutputType, cmd.GetBool("verbose"), config.Cache, cmd.GetBool("cache"), cmd.GetBool("create-cache-db"))
 	default:
 		if len(cmd.Args) <= 0 {
 			Banner()
@@ -163,11 +162,6 @@ func HandleCommand(args []string) {
 		}
 
 		// Search the Template
-		Search(cmd.Args[0], finderconfig.OutputType, cmd.GetBool("verbose"), config.Cache)
-
-		// Safe Git Database
-		if config.CreateCacheDB && config.Cache {
-			db.SaveDB()
-		}
+		Search(cmd.Args[0], finderconfig.OutputType, cmd.GetBool("verbose"), config.Cache, cmd.GetBool("cache"), cmd.GetBool("create-cache-db"))
 	}
 }
