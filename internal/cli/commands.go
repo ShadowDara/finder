@@ -32,7 +32,7 @@ func HandleCommand(args []string) {
 
 	// NEW
 	root := argparser.NewCommand("finder",
-		"a simple go program to find your files", false)
+		"a simple go program to find your files via file structures", false)
 
 	// Add option for JSON Output
 	root.Bool("json", false, "Enable JSON Output", false, "j")

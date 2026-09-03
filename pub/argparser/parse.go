@@ -7,6 +7,8 @@ import (
 	"strings"
 
 	"text/tabwriter"
+
+	"github.com/shadowdara/finder/pub/goansi"
 )
 
 // Flag represents a single CLI option.
@@ -314,7 +316,7 @@ func (c *Command) GetBool(name string) bool {
 func (c *Command) PrintHelp() {
 	full := c.fullCommandPath()
 
-	fmt.Printf("Usage:\n  %s [options]\n\n", full)
+	fmt.Printf("%s%sUsage:%s\n  %s%s%s [subcommands] [options]\n\n", goansi.BOLD, goansi.UNDERLINED, goansi.END, goansi.BOLD, full, goansi.END)
 
 	if c.Description != "" {
 		fmt.Println(c.Description)
@@ -325,7 +327,7 @@ func (c *Command) PrintHelp() {
 
 	// Subcommands
 	if len(c.Subcommands) > 0 {
-		fmt.Fprintln(w, "Subcommands:")
+		fmt.Fprintf(w, "%s%sSubcommands:%s\n", goansi.BOLD, goansi.UNDERLINED, goansi.END)
 		for _, sub := range c.Subcommands {
 			if sub.Hidden {
 				continue
@@ -336,9 +338,11 @@ func (c *Command) PrintHelp() {
 				aliasStr = fmt.Sprintf(" (%s)", strings.Join(sub.Aliases, ", "))
 			}
 
-			fmt.Fprintf(w, "  %s%s\t%s\n",
+			fmt.Fprintf(w, "  %s%s%s%s\t%s\n",
+				goansi.BOLD,
 				sub.Name,
 				aliasStr,
+				goansi.END,
 				sub.Description,
 			)
 		}
@@ -347,7 +351,7 @@ func (c *Command) PrintHelp() {
 
 	// Flags
 	if len(c.Flags) > 0 {
-		fmt.Fprintln(w, "Options:")
+		fmt.Fprintf(w, "%s%sOptions:%s\n", goansi.BOLD, goansi.UNDERLINED, goansi.END)
 		for _, f := range c.Flags {
 			aliasStr := ""
 			if len(f.Aliases) > 0 {
@@ -359,10 +363,12 @@ func (c *Command) PrintHelp() {
 				req = " [required]"
 			}
 
-			fmt.Fprintf(w, "  --%s%s%s\t%s\n",
+			fmt.Fprintf(w, "  %s--%s%s%s%s\t%s\n",
+				goansi.BOLD,
 				f.Name,
 				aliasStr,
 				req,
+				goansi.END,
 				f.Usage,
 			)
 		}
