@@ -22,20 +22,8 @@ func parseCliArgs() Conf {
 	// Port
 	root.Number("port", 0, "Change the Server Port", false, "p")
 
-	// help
-	helpCmd := argparser.NewCommand("help",
-		"shows help", true, "--help", "h", "-h")
-
-	root.AddSubcommand(helpCmd)
-
 	// Parse the Arguments
 	cmd := root.Parse(os.Args[1:])
-
-	switch cmd {
-	case helpCmd:
-		root.PrintHelp()
-		os.Exit(0)
-	}
 
 	newconf.port = int(cmd.GetNumber("port"))
 

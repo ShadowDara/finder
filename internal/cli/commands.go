@@ -35,10 +35,10 @@ func HandleCommand(args []string) {
 		"a simple go program to find your files via file structures", false)
 
 	// Add option for JSON Output
-	root.Bool("json", false, "Enable JSON Output", false, "j")
+	root.GlobalBool("json", false, "Enable JSON Output", "j")
 
 	// Verbose
-	root.Bool("verbose", false, "Enable Verbose Mode", false, "vv")
+	root.GlobalBool("verbose", false, "Enable Verbose Mode", "vv")
 
 	// Create Cache
 	root.Bool("create-cache", false, "Create the Cache", false, "cc")
@@ -57,6 +57,15 @@ func HandleCommand(args []string) {
 	templateCmd := argparser.NewCommand("template",
 		"to search for a template - for the case that the name for a template is overwritten by another argument name",
 		false, "tpl")
+
+	// Create Cache
+	templateCmd.Bool("create-cache", false, "Create the Cache", false, "cc")
+
+	// Load Cache
+	templateCmd.Bool("cache", false, "Use the already existing Cache", false, "c")
+
+	// Create Cache DB
+	templateCmd.Bool("create-cache-db", false, "Create a Git DB from the cache data", false, "ccd")
 
 	// Check Command
 	checkCmd := argparser.NewCommand("check",
@@ -78,10 +87,6 @@ func HandleCommand(args []string) {
 	binarySearchCmd := argparser.NewCommand(
 		"-b", "search for executables in path", false)
 
-	// help
-	helpCmd := argparser.NewCommand("help",
-		"shows help", true, "--help", "h", "-h")
-
 	root.AddSubcommand(versionCmd)
 	root.AddSubcommand(templateCmd)
 	root.AddSubcommand(checkCmd)
@@ -89,7 +94,6 @@ func HandleCommand(args []string) {
 	root.AddSubcommand(tagsCmd)
 	root.AddSubcommand(tagSearchCmd)
 	root.AddSubcommand(binarySearchCmd)
-	root.AddSubcommand(helpCmd)
 
 	// Parse the Arguments
 	cmd := root.Parse(args[1:])
@@ -124,10 +128,6 @@ func HandleCommand(args []string) {
 	case tagsCmd:
 		// Tags
 		Tags()
-	case helpCmd:
-		// Help
-		Banner()
-		root.PrintHelp()
 
 	case binarySearchCmd:
 		if len(cmd.Args) > 0 {
