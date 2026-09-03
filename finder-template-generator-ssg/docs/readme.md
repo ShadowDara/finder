@@ -139,6 +139,8 @@ In Version **v0.3.15** and heigher, finder has a global config in `~/.finder/con
 }
 ```
 
+For more and detailed Information check out the config editor [here](https://shadowdara.github.io/finder/configeditor)
+
 ## Mistakes
 
 I thing i would change is to use raw JSON for the templates instead of JSON with comments, which i called JSON5 back then, but it is no real JSON5.

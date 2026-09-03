@@ -1,5 +1,6 @@
 import { pages } from "virtual:pages";
-import { render404, render404_2, render404_3 } from "./404";
+import { ErrorPage, render404, render404_2, render404_3 } from "./404";
+import { loadStyles } from "./jsx-runtime";
 
 declare global {
   interface Window {
@@ -58,38 +59,8 @@ async function main() {
   } catch (error) {
     console.error(`[pages] Failed to load page "${id}"`, error);
 
-    app.innerHTML = `
-      <main>
-        <h1>Failed to load page</h1>
-        <p>Could not load "${id}".</p>
-        <a href="/">Go home</a>
-      </main>
-    `;
+    ErrorPage(app, id);
   }
 }
 
 main();
-
-function loadStyles(styles: string[]) {
-  if (import.meta.env.DEV) {
-    console.log("[pages] loading styles:", styles);
-  }
-
-  for (const href of styles) {
-    const url = new URL(href, import.meta.url).href;
-
-    if (
-      document.head.querySelector(`link[data-page-style="${CSS.escape(url)}"]`)
-    ) {
-      continue;
-    }
-
-    const link = document.createElement("link");
-
-    link.rel = "stylesheet";
-    link.href = url;
-    link.dataset.pageStyle = url;
-
-    document.head.appendChild(link);
-  }
-}

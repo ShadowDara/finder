@@ -47,3 +47,13 @@ export function render404_3(app: HTMLElement, id: string) {
     </main>
   );
 }
+
+export function ErrorPage(app: HTMLElement, id: string) {
+  app.innerHTML = (
+    <main>
+      <h1>Failed to load page</h1>
+      <p>Could not load "${id}".</p>
+      <a href="/">Go home</a>
+    </main>
+  );
+}
