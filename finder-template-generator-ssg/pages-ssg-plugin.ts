@@ -112,6 +112,12 @@ export interface PagesPluginOptions {
    * @default false
    */
   relativePaths?: boolean;
+
+  /**
+   * Bundle all pages into a single JS file.
+   * @default false
+   */
+  singleBundle?: boolean;
 }
 
 export interface PageRenderContext {
@@ -149,6 +155,7 @@ let resolvedStyles = new Map<string, string>();
 const DEFAULT_EXTENSIONS = [".ts", ".tsx"];
 
 export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
+  const singleBundle = options.singleBundle ?? false;
   const relativePath = options.relativePaths ?? false;
   const addRawMarkdown = options.addRawMarkdown ?? false;
   const pagesDirOpt = options.pagesDir ?? "pages";
@@ -650,6 +657,23 @@ declare module "virtual:pages" {
         res.setHeader("Content-Type", "text/html; charset=utf-8");
         res.end(transformed);
       });
+    },
+
+    // for single bundle
+    config() {
+      if (!singleBundle) {
+        return {};
+      }
+
+      return {
+        build: {
+          rollupOptions: {
+            output: {
+              inlineDynamicImports: true,
+            },
+          },
+        },
+      };
     },
 
     async transform(code, id) {
