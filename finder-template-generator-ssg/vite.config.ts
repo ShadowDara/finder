@@ -55,9 +55,9 @@ export default defineConfig(({ mode }) => ({
       input: "src/main.ts",
       output: {
         entryFileNames: "assets/index.js",
-        chunkFileNames: "assets/[name]-[hash].js",
+        chunkFileNames: "assets/[name].js",
         assetFileNames: (assetInfo) => {
-          return "assets/[name]-[hash][extname]";
+          return "assets/[name][extname]";
         },
       },
     },
