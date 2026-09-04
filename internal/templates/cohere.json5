@@ -1,1 +1,1 @@
-{"description":"Cohere language model API integration","files":["cohere.config.yaml","requirements.txt"],"folders":[{"files":["*.py"],"folders":[],"name":"src"}],"name":"*"}
+{"description":"Cohere language model API integration","files":["cohere.config.yaml","requirements.txt"],"folders":[{"files":["*.py"],"folders":[],"name":"src"}],"min_version":"0.3.16","name":"*"}

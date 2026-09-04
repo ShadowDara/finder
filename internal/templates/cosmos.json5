@@ -1,1 +1,1 @@
-{"description":"Cosmos SDK blockchain development framework","files":["go.mod","go.sum","Makefile"],"folders":[{"files":["*.go"],"folders":[],"name":"x"}],"name":"*"}
+{"description":"Cosmos SDK blockchain development framework","files":["go.mod","go.sum","Makefile"],"folders":[{"files":["*.go"],"folders":[],"name":"x"}],"min_version":"0.3.16","name":"*"}

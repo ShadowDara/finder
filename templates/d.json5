@@ -1,4 +1,3 @@
-// Struct for a D Programming Project
 {
     "description": "D programming language project",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "dub.json",
         "*.d"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

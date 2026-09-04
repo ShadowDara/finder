@@ -1,4 +1,3 @@
-// Struct for a COBOL Project
 {
     "description": "COBOL legacy business application",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "*.cob",
         "*.cobol"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

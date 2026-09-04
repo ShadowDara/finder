@@ -1,4 +1,3 @@
-// Decentralized Finance (DeFi) smart contract
 {
     "description": "Decentralized Finance (DeFi) smart contract project",
     "name": "*",
@@ -6,17 +5,23 @@
         {
             "name": "contracts",
             "folders": [],
-            "files": ["*.sol"]
+            "files": [
+                "*.sol"
+            ]
         },
         {
             "name": "tests",
             "folders": [],
-            "files": ["*.ts", "*.js"]
+            "files": [
+                "*.ts",
+                "*.js"
+            ]
         }
     ],
     "files": [
         "hardhat.config.ts",
         "truffle-config.js",
         ".env.defi"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

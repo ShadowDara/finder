@@ -1,4 +1,3 @@
-// Struct for a dbt Project
 {
     "description": "dbt data transformation",
     "name": "*",
@@ -11,5 +10,6 @@
     ],
     "files": [
         "dbt_project.yml"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

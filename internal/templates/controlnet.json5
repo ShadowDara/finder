@@ -1,1 +1,1 @@
-{"description":"ControlNet conditional control for image generation","files":["controlnet.config.yaml","requirements.txt"],"folders":[{"files":["*.safetensors","*.ckpt"],"folders":[],"name":"models"}],"name":"*"}
+{"description":"ControlNet conditional control for image generation","files":["controlnet.config.yaml","requirements.txt"],"folders":[{"files":["*.safetensors","*.ckpt"],"folders":[],"name":"models"}],"min_version":"0.3.16","name":"*"}

@@ -1,4 +1,3 @@
-// Struct for a Deno Project
 {
     "description": "Deno JavaScript/TypeScript runtime",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "deno.json",
         "*.ts"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

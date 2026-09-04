@@ -1,4 +1,3 @@
-// Midjourney or DALL-E integration
 {
     "description": "Midjourney or DALL-E AI image generation integration",
     "name": "*",
@@ -6,12 +5,16 @@
         {
             "name": "images",
             "folders": [],
-            "files": ["*.png", "*.jpg"]
+            "files": [
+                "*.png",
+                "*.jpg"
+            ]
         }
     ],
     "files": [
         "api.config.yaml",
         "requirements.txt",
         ".env.dalle"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

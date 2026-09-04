@@ -1,1 +1,1 @@
-{"description":"dbt data transformation","files":["dbt_project.yml"],"folders":[{"files":[],"folders":[],"name":"models"}],"name":"*"}
+{"description":"dbt data transformation","files":["dbt_project.yml"],"folders":[{"files":[],"folders":[],"name":"models"}],"min_version":"0.3.16","name":"*"}

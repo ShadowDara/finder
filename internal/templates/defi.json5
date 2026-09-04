@@ -1,1 +1,1 @@
-{"description":"Decentralized Finance (DeFi) smart contract project","files":["hardhat.config.ts","truffle-config.js",".env.defi"],"folders":[{"files":["*.sol"],"folders":[],"name":"contracts"},{"files":["*.ts","*.js"],"folders":[],"name":"tests"}],"name":"*"}
+{"description":"Decentralized Finance (DeFi) smart contract project","files":["hardhat.config.ts","truffle-config.js",".env.defi"],"folders":[{"files":["*.sol"],"folders":[],"name":"contracts"},{"files":["*.ts","*.js"],"folders":[],"name":"tests"}],"min_version":"0.3.16","name":"*"}

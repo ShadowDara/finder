@@ -1,4 +1,3 @@
-// Struct for a Cucumber BDD Project
 {
     "description": "Cucumber behavior-driven development",
     "name": "*",
@@ -11,5 +10,6 @@
     ],
     "files": [
         "*.feature"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

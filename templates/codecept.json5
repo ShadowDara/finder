@@ -1,4 +1,3 @@
-// Struct for a Codecept Project
 {
     "description": "CodeceptJS end-to-end testing",
     "name": "*",
@@ -11,5 +10,6 @@
     ],
     "files": [
         "codecept.conf.js"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

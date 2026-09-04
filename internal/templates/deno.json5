@@ -1,1 +1,1 @@
-{"description":"Deno JavaScript/TypeScript runtime","files":["deno.json","*.ts"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}
+{"description":"Deno JavaScript/TypeScript runtime","files":["deno.json","*.ts"],"folders":[{"files":[],"folders":[],"name":"src"}],"min_version":"0.3.16","name":"*"}

@@ -1,4 +1,3 @@
-// Struct for a Defold Game Engine Project
 {
     "description": "Defold game engine project",
     "name": "*",
@@ -11,5 +10,6 @@
     ],
     "files": [
         "game.project"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

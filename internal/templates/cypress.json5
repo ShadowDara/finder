@@ -1,1 +1,1 @@
-{"description":"Cypress end-to-end testing","files":["cypress.config.ts","package.json"],"folders":[{"files":[],"folders":[],"name":"cypress"}],"name":"*"}
+{"description":"Cypress end-to-end testing","files":["cypress.config.ts","package.json"],"folders":[{"files":[],"folders":[],"name":"cypress"}],"min_version":"0.3.16","name":"*"}

@@ -1,1 +1,1 @@
-{"description":"CodeceptJS end-to-end testing","files":["codecept.conf.js"],"folders":[{"files":[],"folders":[],"name":"tests"}],"name":"*"}
+{"description":"CodeceptJS end-to-end testing","files":["codecept.conf.js"],"folders":[{"files":[],"folders":[],"name":"tests"}],"min_version":"0.3.16","name":"*"}

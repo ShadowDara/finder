@@ -1,1 +1,1 @@
-{"description":"ComfyUI node-based UI for image generation","files":["web/workflows.json","requirements.txt"],"folders":[{"files":["*.py"],"folders":[],"name":"custom_nodes"},{"files":["*.png","*.jpg"],"folders":[],"name":"output"}],"name":"*"}
+{"description":"ComfyUI node-based UI for image generation","files":["web/workflows.json","requirements.txt"],"folders":[{"files":["*.py"],"folders":[],"name":"custom_nodes"},{"files":["*.png","*.jpg"],"folders":[],"name":"output"}],"min_version":"0.3.16","name":"*"}

@@ -1,4 +1,3 @@
-// Cohere language models
 {
     "description": "Cohere language model API integration",
     "name": "*",
@@ -6,11 +5,14 @@
         {
             "name": "src",
             "folders": [],
-            "files": ["*.py"]
+            "files": [
+                "*.py"
+            ]
         }
     ],
     "files": [
         "cohere.config.yaml",
         "requirements.txt"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

@@ -1,4 +1,3 @@
-// ComfyUI node-based workflow
 {
     "description": "ComfyUI node-based UI for image generation",
     "name": "*",
@@ -6,16 +5,22 @@
         {
             "name": "custom_nodes",
             "folders": [],
-            "files": ["*.py"]
+            "files": [
+                "*.py"
+            ]
         },
         {
             "name": "output",
             "folders": [],
-            "files": ["*.png", "*.jpg"]
+            "files": [
+                "*.png",
+                "*.jpg"
+            ]
         }
     ],
     "files": [
         "web/workflows.json",
         "requirements.txt"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

@@ -1,1 +1,1 @@
-{"description":"DAO governance smart contracts","files":["*.sol","package.json"],"folders":[{"files":[],"folders":[],"name":"contracts"}],"name":"*"}
+{"description":"DAO governance smart contracts","files":["*.sol","package.json"],"folders":[{"files":[],"folders":[],"name":"contracts"}],"min_version":"0.3.16","name":"*"}

@@ -1,1 +1,1 @@
-{"description":"Dagster data orchestration","files":["pyproject.toml","requirements.txt"],"folders":[{"files":[],"folders":[],"name":"dagster_project"}],"name":"*"}
+{"description":"Dagster data orchestration","files":["pyproject.toml","requirements.txt"],"folders":[{"files":[],"folders":[],"name":"dagster_project"}],"min_version":"0.3.16","name":"*"}

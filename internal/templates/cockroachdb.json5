@@ -1,1 +1,1 @@
-{"description":"CockroachDB distributed database","files":["docker-compose.yml"],"folders":[],"name":"*"}
+{"description":"CockroachDB distributed database","files":["docker-compose.yml"],"folders":[],"min_version":"0.3.16","name":"*"}

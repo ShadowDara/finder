@@ -1,1 +1,1 @@
-{"description":"Crystal programming language project","files":["shard.yml","*.cr"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}
+{"description":"Crystal programming language project","files":["shard.yml","*.cr"],"folders":[{"files":[],"folders":[],"name":"src"}],"min_version":"0.3.16","name":"*"}
