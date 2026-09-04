@@ -70,8 +70,9 @@ func Search(searchTemplate string, OutputType string, Verbose bool, createCache 
 	search.Find(structure.LoadJSON5(string(data)), OutputType, templateName, createCache)
 
 	// Safe Git Database
-	if createCacheDB && createCache {
+	if createCacheDB {
 		db.SaveDB()
+		fmt.Println("Saved Git Cache DB")
 	}
 
 	return nil

@@ -139,7 +139,7 @@ In Version **v0.3.15** and heigher, finder has a global config in `~/.finder/con
 }
 ```
 
-For more and detailed Information check out the config editor [here](https://shadowdara.github.io/finder/configeditor)
+For more and detailed Information and more config values check out the config editor [here](https://shadowdara.github.io/finder/configeditor)
 
 ## Mistakes
 

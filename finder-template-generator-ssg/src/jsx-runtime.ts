@@ -20,17 +20,40 @@ export function jsx(
     });
   }
 
+  const booleanHtmlAttributes = new Set([
+    "disabled",
+    "checked",
+    "selected",
+    "readonly",
+    "required",
+    "multiple",
+    "hidden",
+    "autofocus",
+    "open",
+  ]);
+
   const attributes = Object.entries(props ?? {})
     .filter(([key]) => key !== "children" && key !== "key")
     .map(([key, value]) => {
-      if (value == null || value === false) {
+      if (value == null) {
         return "";
       }
 
       const attribute = key === "className" ? "class" : key;
 
-      if (value === true) {
-        return ` ${attribute}`;
+      // Echte HTML-Boolean-Attribute: Präsenz = wahr, sonst weglassen.
+      if (typeof value === "boolean" && booleanHtmlAttributes.has(attribute)) {
+        return value ? ` ${attribute}` : "";
+      }
+
+      // Alles andere (inkl. data-*/aria-*) bekommt immer einen expliziten
+      // String-Wert, damit z.B. dataset.nested === "false" verlässlich geht.
+      if (typeof value === "boolean") {
+        return ` ${attribute}="${value}"`;
+      }
+
+      if (value === false) {
+        return "";
       }
 
       return ` ${attribute}="${escapeAttribute(String(value))}"`;
@@ -152,4 +175,13 @@ export function loadStyles(styles: string[]) {
 
     document.head.appendChild(link);
   }
+}
+
+export function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }

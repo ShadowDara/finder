@@ -9,9 +9,11 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/shadowdara/finder/internal/cache"
@@ -91,6 +93,8 @@ func writeTemplateJSON(w http.ResponseWriter, name string, source string, raw []
 
 func main() {
 	argconf := parseCliArgs()
+
+	log.SetFlags(log.LstdFlags | log.Lmicroseconds)
 
 	fmt.Println("Run with help for more Infos")
 
@@ -407,6 +411,73 @@ func main() {
 		if err := json.NewEncoder(w).Encode(response); err != nil {
 			log.Printf("failed to encode template response: %v", err)
 		}
+	})
+
+	// Create Cache for every Template, do not use it, it will make your pc slow
+	mux.HandleFunc("/api/template/create/cache/all", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+			return
+		}
+
+		templateNames, userTemplates, err := templates.LoadAllWithUserTemplates()
+		if err != nil {
+			http.Error(w, "Failed to load templates", http.StatusInternalServerError)
+			return
+		}
+
+		builtin := make([]string, 0)
+		custom := make([]string, 0)
+
+		for _, name := range templateNames {
+			if _, exists := userTemplates[name]; exists {
+				custom = append(custom, name)
+			} else {
+				builtin = append(builtin, name)
+			}
+		}
+
+		set := make(map[string]struct{})
+
+		for _, name := range builtin {
+			set[name] = struct{}{}
+		}
+
+		for _, name := range custom {
+			set[name] = struct{}{}
+		}
+
+		sem := make(chan struct{}, config.FinderInstances)
+		var wg sync.WaitGroup
+
+		for name := range set {
+			wg.Add(1)
+
+			go func(name string) {
+				defer wg.Done()
+
+				sem <- struct{}{}
+				defer func() { <-sem }()
+
+				log.Printf("Searching for %s", name)
+
+				cmd := exec.Command("finder", name)
+
+				_, err := cmd.CombinedOutput()
+				if err != nil {
+					log.Printf("Error searching %s: %v", name, err)
+					return
+				}
+
+				log.Printf("Finished %s", name)
+			}(name)
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+
+		json.NewEncoder(w).Encode(map[string]string{
+			"status": "ok",
+		})
 	})
 
 	// Embedded frontend

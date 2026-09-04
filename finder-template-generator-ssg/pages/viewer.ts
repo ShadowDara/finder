@@ -1,5 +1,7 @@
 import "./viewer.css";
 import builtinTemplates from "../src/templates.js";
+import { escapeHtml } from "../src/jsx-runtime.js";
+import { SERVER_ADRESS } from "../src/vars.js";
 
 export interface ServerResponse {
   count_templates: number;
@@ -13,7 +15,7 @@ export interface ServerResponse {
 let adress = "/api/template/load/all";
 
 if (import.meta.env.DEV) {
-  adress = "http://localhost:8080/api/template/load/all";
+  adress = SERVER_ADRESS + "/api/template/load/all";
 }
 
 const isStatic = import.meta.env.MODE === "static";
@@ -297,6 +299,8 @@ function renderTemplates(
         `../creator?template=${encodeURIComponent(content)}` +
         `&filename=${encodeURIComponent(name)}`;
 
+      const cacheUrl = `../cacheviewer?name=${encodeURIComponent(name)}`;
+
       return `
         <article
           class="template-card"
@@ -349,6 +353,8 @@ function renderTemplates(
 
           <div class="card-footer">
             <span>${content.length.toLocaleString()} Zeichen</span>
+
+            ${import.meta.env.MODE == "backend" ? `<a href="${cacheUrl}" class="copy-button">View Cache</a>` : ""}
 
             <a href="${editUrl}" class="copy-button">Edit</a>
 
@@ -554,15 +560,6 @@ function setupSelector(el: HTMLDivElement) {
       modalCopy.textContent = "Copy";
     }, 1200);
   });
-}
-
-function escapeHtml(value: string): string {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
 }
 
 function formatJson(content: string): string {

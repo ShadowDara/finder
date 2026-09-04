@@ -10,6 +10,7 @@ import {
   removeFolder,
   serializeFolder,
 } from "./state";
+import { SERVER_ADRESS } from "../vars";
 
 export function renderCreator(app: HTMLDivElement) {
   type Selection = { kind: "folder" | "file"; id: string } | null;
@@ -106,7 +107,7 @@ export function renderCreator(app: HTMLDivElement) {
     let adress = "/api/template";
 
     if (import.meta.env.DEV) {
-      adress = "http://localhost:8080/api/template/create";
+      adress = SERVER_ADRESS + "/api/template/create";
     }
 
     try {

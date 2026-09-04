@@ -16,19 +16,23 @@ func NewConfig() Config {
 }
 
 type SavedConfig struct {
-	Port          int  `json:"port"`
-	Cache         bool `json:"cache"`
+	// Server Port
+	Port int `json:"port"`
+	// Save the Cache
+	Cache bool `json:"cache"`
+	// Create Cache Git DB
 	CreateCacheDB bool `json:"create_cache_db"`
-	// Host  string `json:"host"`
-	// Debug bool   `json:"debug"`
+	// How instances of finder at the same time by create cache for all
+	FinderInstances int `json:"finder_instances"`
 }
 
 func LoadConfig(path string) SavedConfig {
 	config := SavedConfig{
 		// deine Default-Werte
-		Port:          8080,
-		Cache:         false,
-		CreateCacheDB: false,
+		Port:            8080,
+		Cache:           false,
+		CreateCacheDB:   false,
+		FinderInstances: 8,
 		// Host:  "localhost",
 		// Debug: false,
 	}

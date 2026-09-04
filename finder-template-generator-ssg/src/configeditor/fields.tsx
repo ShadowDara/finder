@@ -26,15 +26,6 @@ export function getFieldRenderer(type: string): FieldRenderer | undefined {
   return registry.get(type);
 }
 
-export function escapeHtml(value: string): string {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
-
 export function asHtml(value: HtmlValue | string): HtmlValue {
   return typeof value === "string" ? raw(value) : value;
 }

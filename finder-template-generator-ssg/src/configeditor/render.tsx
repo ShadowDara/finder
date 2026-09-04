@@ -33,6 +33,14 @@ const schema: ConfigSchema = {
       label: "Create Cache Database",
       default: false,
     },
+    {
+      key: "finder_instances",
+      type: "number",
+      label: "Finder Instances",
+      default: 8,
+      min: 1,
+      max: 1000,
+    },
     // { key: "debug", type: "boolean", label: "Debug-Modus", default: false },
     // {
     //   key: "logLevel",

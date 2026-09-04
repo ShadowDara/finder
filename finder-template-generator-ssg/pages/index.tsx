@@ -1,4 +1,5 @@
 import { jsx, Fragment } from "../src/jsx-runtime";
+import { SERVER_ADRESS } from "../src/vars";
 
 export default function render(el: HTMLDivElement) {
   el.innerHTML = (
@@ -16,6 +17,11 @@ export default function render(el: HTMLDivElement) {
           <li>
             <a href="./configeditor">Config Editor</a>
           </li>
+          {import.meta.env.MODE == "backend" && (
+            <li>
+              <a href="./cacheviewer">Cache Viewer</a>
+            </li>
+          )}
         </ul>
 
         <p>
@@ -43,7 +49,7 @@ export default function render(el: HTMLDivElement) {
     let adress = "/api/stop";
 
     if (import.meta.env.DEV) {
-      adress = "http://localhost:8080/api/stop";
+      adress = SERVER_ADRESS + "/api/stop";
     }
 
     const stop = document.getElementById("stop");

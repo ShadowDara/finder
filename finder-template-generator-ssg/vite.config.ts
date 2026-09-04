@@ -30,6 +30,7 @@ export default defineConfig(({ mode }) => ({
         index: ["/src/markdownrootstyle.css"],
         readme: ["/src/markdownrootstyle.css"],
         configeditor: ["/src/markdownstyle.css"],
+        "docs/config": ["/src/markdownstyle.css"],
       },
       extensions: [".ts", ".tsx"],
       prettyUrls: true,

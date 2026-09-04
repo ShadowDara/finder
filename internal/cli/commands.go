@@ -87,6 +87,9 @@ func HandleCommand(args []string) {
 	binarySearchCmd := argparser.NewCommand(
 		"-b", "search for executables in path", false)
 
+	// Config Path
+	configpathCmd := argparser.NewCommand("cp", "Get the path to the global config", false)
+
 	root.AddSubcommand(versionCmd)
 	root.AddSubcommand(templateCmd)
 	root.AddSubcommand(checkCmd)
@@ -94,6 +97,7 @@ func HandleCommand(args []string) {
 	root.AddSubcommand(tagsCmd)
 	root.AddSubcommand(tagSearchCmd)
 	root.AddSubcommand(binarySearchCmd)
+	root.AddSubcommand(configpathCmd)
 
 	// Parse the Arguments
 	cmd := root.Parse(args[1:])
@@ -116,6 +120,8 @@ func HandleCommand(args []string) {
 
 	// Evaluate the Arguments
 	switch cmd {
+	case configpathCmd:
+		fmt.Printf("%s\n", path+"/"+"config.json5")
 	case versionCmd:
 		// Version
 		fmt.Printf("%s\n", finderversion.Version)
@@ -153,7 +159,7 @@ func HandleCommand(args []string) {
 		}
 
 		// Search the Template
-		Search(cmd.Args[0], finderconfig.OutputType, cmd.GetBool("verbose"), config.Cache, cmd.GetBool("cache"), cmd.GetBool("create-cache-db"))
+		Search(cmd.Args[0], finderconfig.OutputType, cmd.GetBool("verbose"), config.Cache, cmd.GetBool("cache"), config.CreateCacheDB)
 	default:
 		if len(cmd.Args) <= 0 {
 			Banner()
@@ -162,6 +168,6 @@ func HandleCommand(args []string) {
 		}
 
 		// Search the Template
-		Search(cmd.Args[0], finderconfig.OutputType, cmd.GetBool("verbose"), config.Cache, cmd.GetBool("cache"), cmd.GetBool("create-cache-db"))
+		Search(cmd.Args[0], finderconfig.OutputType, cmd.GetBool("verbose"), config.Cache, cmd.GetBool("cache"), config.CreateCacheDB)
 	}
 }
