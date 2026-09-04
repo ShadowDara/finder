@@ -8,7 +8,7 @@ export default function render(el: HTMLDivElement) {
   el.innerHTML = (
     <main className="configeditor-page">
       <div id="configeditor"></div>
-      <iframe src="./docs/config" frameborder="0" class="md-iframe"></iframe>
+      <iframe src="../docs/config" frameborder="0" class="md-iframe"></iframe>
     </main>
   );
 
