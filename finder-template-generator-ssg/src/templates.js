@@ -763,6 +763,7 @@ export default {
       "docker-compose.yml"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "claude.json5": {
@@ -800,6 +801,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "cloudflare-workers.json5": {
@@ -849,6 +851,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "cockroachdb.json5": {
@@ -857,6 +860,7 @@ export default {
       "docker-compose.yml"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "codecept.json5": {
@@ -871,6 +875,7 @@ export default {
         "name": "tests"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "cohere.json5": {
@@ -888,6 +893,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "comfyui.json5": {
@@ -913,6 +919,7 @@ export default {
         "name": "output"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "conda.json5": {
@@ -922,6 +929,7 @@ export default {
       "environment.yaml"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "contentful.json5": {
@@ -931,6 +939,7 @@ export default {
       "package.json"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "controlnet.json5": {
@@ -949,6 +958,7 @@ export default {
         "name": "models"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "CopperCube.json5": {
@@ -978,6 +988,7 @@ export default {
         "name": "x"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "couchdb.json5": {
@@ -986,6 +997,7 @@ export default {
       "docker-compose.yml"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "cpp.json5": {
@@ -1016,6 +1028,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "cucumber.json5": {
@@ -1030,6 +1043,7 @@ export default {
         "name": "features"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "cypress.json5": {
@@ -1045,6 +1059,7 @@ export default {
         "name": "cypress"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "d.json5": {
@@ -1060,6 +1075,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "dagster.json5": {
@@ -1075,6 +1091,7 @@ export default {
         "name": "dagster_project"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "dalle.json5": {
@@ -1094,6 +1111,7 @@ export default {
         "name": "images"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "dao.json5": {
@@ -1109,6 +1127,7 @@ export default {
         "name": "contracts"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "dapp.json5": {
@@ -1124,6 +1143,7 @@ export default {
         "name": "contracts"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "dart.json5": {
@@ -1202,6 +1222,7 @@ export default {
       "docker-compose.yml"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "dbt-analytics.json5": {
@@ -1235,6 +1256,7 @@ export default {
         "name": "macros"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "dbt.json5": {
@@ -1249,6 +1271,7 @@ export default {
         "name": "models"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "defi.json5": {
@@ -1275,6 +1298,7 @@ export default {
         "name": "tests"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "defold.json5": {
@@ -1289,6 +1313,7 @@ export default {
         "name": "assets"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "deno.json5": {
@@ -1304,6 +1329,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "dgraph.json5": {

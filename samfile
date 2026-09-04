@@ -2,3 +2,7 @@
 parse:
     SHELL .\\tester
     RUN python check.py
+
+install:
+    RUN go install ./cmd/finder
+    RUN go install ./cmd/findergen
