@@ -72,7 +72,9 @@ func Search(searchTemplate string, OutputType string, Verbose bool, createCache 
 	// Safe Git Database
 	if createCacheDB {
 		db.SaveDB()
-		fmt.Println("Saved Git Cache DB")
+		if OutputType != "clear" && OutputType != "json" {
+			fmt.Println("Saved Git Cache DB")
+		}
 	}
 
 	return nil
