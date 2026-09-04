@@ -489,6 +489,7 @@ func main() {
 	mux.Handle("/", http.FileServer(http.FS(staticFS)))
 
 	log.Println("Server listening on :" + strconv.Itoa(PORT))
+	log.Println("open http://localhost:" + strconv.Itoa(PORT) + " in your browser!")
 
 	handler := corsMiddleware(loggingMiddleware(mux))
 

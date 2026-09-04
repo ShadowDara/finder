@@ -17,11 +17,11 @@ export default function render(el: HTMLDivElement) {
           <li>
             <a href="./configeditor">Config Editor</a>
           </li>
-          {import.meta.env.MODE == "backend" && (
+          {/* {import.meta.env.MODE == "backend" && (
             <li>
               <a href="./cacheviewer">Cache Viewer</a>
             </li>
-          )}
+          )} */}
         </ul>
 
         <p>
