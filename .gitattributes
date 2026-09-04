@@ -9,6 +9,9 @@
 # mark samfile as shell
 samfile linguist-language=Shell
 
+go.work linguist-language=Shell
+go.mod linguist-language=Shell
+
 # HTML DIR
 /cmd/findergen/frontend/** linguist-vendored
 
