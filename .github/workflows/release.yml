@@ -107,7 +107,7 @@ jobs:
       - name: Generate SHA256 checksums
         run: |
           cd release
-          sha256sum * > SHA256SUMS
+          sha256sum * > SHA256SUMS.txt
 
       - name: Extract release notes from CHANGELOG
         id: changelog
