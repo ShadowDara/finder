@@ -58,6 +58,7 @@ type Command struct {
 	Subcommands map[string]*Command // Registered subcommands
 	Parent      *Command            // Parent command (used to build full path)
 	Args        []string            // Positional arguments
+	PassThrough bool                 // If true, preserve all parsed arguments unchanged
 }
 
 // NewCommand creates a new Command.
@@ -267,6 +268,11 @@ func (c *Command) findSubcommand(key string) *Command {
 //
 //	app --verbose user
 func (c *Command) Parse(args []string) *Command {
+	if c.PassThrough {
+		c.Args = append(c.Args, args...)
+		return c
+	}
+
 	for i := 0; i < len(args); i++ {
 		arg := args[i]
 
