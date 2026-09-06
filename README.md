@@ -19,11 +19,15 @@ Maybe
 [![Deploy GitHub Pages](https://github.com/ShadowDara/finder/actions/workflows/deploywebpage.yml/badge.svg)](https://github.com/ShadowDara/finder/actions/workflows/deploywebpage.yml)
 [![GitHub contributors](https://img.shields.io/github/contributors/shadowdara/finder)](https://github.com/shadowdara/finder/graphs/contributors)
 [![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/m/shadowdara/finder)](https://github.com/shadowdara/finder/commits)
+[![Last Commit](https://badges.ws/github/last-commit/shadowdara/finder)](https://github.com/shadowdara/finder/commits)
 [![GitHub all releases](https://img.shields.io/github/downloads/shadowdara/finder/total?logo=github)](https://github.com/shadowdara/finder/releases)
 [![GitHub release (with filter)](https://img.shields.io/github/v/release/shadowdara/finder?logo=github)](https://github.com/shadowdara/finder/releases)
 [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/shadowdara/finder?logo=github)](https://github.com/shadowdara/finder.git)
+[![GitHub repo size](https://img.shields.io/github/repo-size/shadowdara/finder?logo=github)](https://github.com/shadowdara/finder.git)
 ![GitHub Repo stars](https://img.shields.io/github/stars/shadowdara/finder)
 ![GitHub forks](https://img.shields.io/github/forks/shadowdara/finder)
+![Maintained](https://badges.ws/maintenance/yes/2026)
+![Handmade](https://badges.ws/handmade)
 
 Finder is a small command-line tool written in Go to locate projects
 based on predefined folder/file structure templates.
