@@ -1,28 +1,14 @@
 {
   "main": {
-    "id": "20723d75daed79a9",
+    "id": "3733d0e1a8f4666c",
     "type": "split",
     "children": [
       {
-        "id": "bffb809a8da2fc97",
+        "id": "7050ac1578fb7003",
         "type": "tabs",
         "children": [
           {
-            "id": "53f41b8c2e7dd963",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Relationships-in-2026.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Relationships-in-2026"
-            }
-          },
-          {
-            "id": "201e550e1d083305",
+            "id": "dec4c4c96e95f58f",
             "type": "leaf",
             "state": {
               "type": "excalidraw",
@@ -32,33 +18,22 @@
               "icon": "excalidraw-icon",
               "title": "Map"
             }
-          },
-          {
-            "id": "31cfd40d87d19a53",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "Neuer Tab"
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
   },
   "left": {
-    "id": "0e81906ecd9ec0b7",
+    "id": "12e640574ed4c37a",
     "type": "split",
     "children": [
       {
-        "id": "752603a44acd8bf4",
+        "id": "42759ca3580fcef2",
         "type": "tabs",
         "children": [
           {
-            "id": "01c310c35171c272",
+            "id": "1bf56d7ddc5bd79d",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -73,7 +48,7 @@
             }
           },
           {
-            "id": "8a0f64db6959ce5b",
+            "id": "038798ea3df2d556",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -86,40 +61,43 @@
                 "sortOrder": "alphabetical"
               },
               "icon": "lucide-search",
-              "title": "Search"
+              "title": "Suchen"
             }
           },
           {
-            "id": "358e04de62a084fd",
+            "id": "155873caf6c13652",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
-              "state": {},
+              "state": {
+                "showSearch": false,
+                "searchQuery": ""
+              },
               "icon": "lucide-bookmark",
-              "title": "Bookmarks"
+              "title": "Lesezeichen"
             }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 300
   },
   "right": {
-    "id": "1c763e4e223adfe7",
+    "id": "c30d0c38c41fc0b2",
     "type": "split",
     "children": [
       {
-        "id": "b2c126c0751f0b81",
+        "id": "2b6b7a3680da0a50",
         "type": "tabs",
         "children": [
           {
-            "id": "e2ac84add258e418",
+            "id": "29bbef9606228837",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "FinderVideo.md",
+                "file": "Map.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -129,25 +107,25 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for FinderVideo"
+              "title": "Rückverweise"
             }
           },
           {
-            "id": "06283edce6ffe287",
+            "id": "16a9c654fcb96ca2",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "FinderVideo.md",
+                "file": "Map.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from FinderVideo"
+              "title": "Ausgehende Links"
             }
           },
           {
-            "id": "5f2253a8037d1ca6",
+            "id": "981e44651570ff1f",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -162,7 +140,7 @@
             }
           },
           {
-            "id": "0d2d006dd308e5c8",
+            "id": "b307fb92231c5517",
             "type": "leaf",
             "state": {
               "type": "all-properties",
@@ -172,22 +150,22 @@
                 "searchQuery": ""
               },
               "icon": "lucide-archive",
-              "title": "All properties"
+              "title": "Alle Eigenschaften"
             }
           },
           {
-            "id": "d859a30fc19fe57f",
+            "id": "1e00425fae9746e3",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "FinderVideo.md",
+                "file": "Map.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of FinderVideo"
+              "title": "Gliederung"
             }
           }
         ]
@@ -209,32 +187,10 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "201e550e1d083305",
+  "active": "dec4c4c96e95f58f",
   "lastOpenFiles": [
     "IDEAS.md",
-    "FinderVideo.md",
-    "Finder/Map.md",
-    "Finder/Infos/CHANGELOG.md",
-    "Finder/Infos/CUSTOM_TEMPLATES.md",
-    "Finder/Infos/IDEAS.md",
-    "Finder/Infos/README.md",
-    "Finder/Docs/index.md",
-    "Finder/Docs/config.md",
-    "Finder/Docs",
-    "Finder/Infos",
-    "Finder",
-    "Excalidraw/Drawing 2026-09-06 20.35.00.excalidraw",
-    "Excalidraw/Drawing 2026-09-06 20.35.00.excalidraw - Kopie.md",
-    "BeziVideo.md",
-    "Relationships-in-2026.md",
-    "Excalidraw",
-    "Story-Nexo-Knichts-5.md",
-    "Untitled.base",
-    "YT-Stuff/Finder-Showcase/README.md",
-    "YT-Stuff/Finder-Showcase",
-    "YT-Stuff/BeziGame/README.md",
-    "YT-Stuff/BeziGame",
-    "YT-Stuff",
-    "Welcome.md"
+    "README.md",
+    "Map.md"
   ]
 }

@@ -3,7 +3,9 @@
     "*.json5": "jsonc"
   },
   "files.exclude": {
-    // "**/*.exe": true,
-    "**/.obsidian/": true
+    "**/*.exe": true,
+    "**/.obsidian/": true,
+    "Map.md": true,
+    ".zed": true
   },
 }

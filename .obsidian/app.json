@@ -1,3 +1,6 @@
 {
-  "spellcheck": false
+  "spellcheck": false,
+  "useMarkdownLinks": true,
+  "alwaysUpdateLinks": true,
+  "newLinkFormat": "relative"
 }
