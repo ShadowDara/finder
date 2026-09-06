@@ -189,8 +189,12 @@
   },
   "active": "dec4c4c96e95f58f",
   "lastOpenFiles": [
-    "IDEAS.md",
+    "CHANGELOG.md",
+    "Map.md",
+    "tags.txt",
     "README.md",
-    "Map.md"
+    "finder-template-generator-ssg/pages/viewer.tsx",
+    "finder-template-generator-ssg/vite.config.ts.timestamp-1788730286123-1b8c66ae9790b.mjs",
+    "IDEAS.md"
   ]
 }
