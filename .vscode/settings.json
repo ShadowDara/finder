@@ -7,6 +7,6 @@
     "**/.obsidian/": true,
     "Map.md": true,
     ".zed": true,
-    "dub": true
+    // "dub": true
   },
 }
