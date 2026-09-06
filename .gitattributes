@@ -19,3 +19,5 @@ go.mod linguist-language=Shell
 /finder-template-generator-ssg/src/jsx-runtime.ts linguist-vendored
 /finder-template-generator-ssg/src/templates.js linguist-vendored
 /finder-template-generator-ssg/public/install.sh
+
+/.obsidian/** linguist-vendored
