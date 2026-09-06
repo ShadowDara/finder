@@ -219,6 +219,25 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
     return `${base}/${normalizedAsset}`;
   }
 
+  async function preparePages() {
+    pages = [...scanPages(), ...(await scanDocs())].sort((a, b) =>
+      a.id.localeCompare(b.id),
+    );
+
+    for (const page of pages) {
+      if (page.type !== "component") {
+        continue;
+      }
+
+      page.buildData = await loadBuildData(page);
+
+      console.log(
+        `[vite-plugin-pages-ssg] Build data loaded: ${page.id}`,
+        page.buildData,
+      );
+    }
+  }
+
   async function scanDocs(): Promise<PageEntry[]> {
     const root = path.resolve(config.root, docsDir);
 
@@ -298,6 +317,13 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
         }
 
         if (
+          entry.name.endsWith(".build.ts") ||
+          entry.name.endsWith(".build.tsx")
+        ) {
+          continue;
+        }
+
+        if (
           entry.isFile() &&
           extensions.includes(path.extname(entry.name).toLowerCase())
         ) {
@@ -334,6 +360,15 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
   }
 
   function createVirtualModule(): string {
+    console.log(
+      "[vite-plugin-pages-ssg] Creating virtual module",
+      pages.map((p) => ({
+        id: p.id,
+        type: p.type,
+        buildData: p.type === "component" ? p.buildData : undefined,
+      })),
+    );
+
     const styleImports = new Map<string, string>();
 
     for (const page of pages) {
@@ -404,7 +439,7 @@ declare module "virtual:pages" {
 
   export interface PageModule {
     /** Called with the mount element on the client. */
-    default: (el: HTMLElement) => void | Promise<void>;
+    default: (el: HTMLElement, data?: unknown) => void | Promise<void>;
 
     /** Executed only during the Vite build in Node.js. */
     build?: () => unknown | Promise<unknown>;
@@ -482,9 +517,8 @@ declare module "virtual:pages" {
 
     async configResolved(resolvedConfig) {
       config = resolvedConfig;
-      pages = [...scanPages(), ...(await scanDocs())].sort((a, b) =>
-        a.id.localeCompare(b.id),
-      );
+
+      await preparePages();
 
       console.log(`[vite-plugin-pages-ssg] Found ${pages.length} page(s)`);
       for (const page of pages) {
@@ -526,9 +560,7 @@ declare module "virtual:pages" {
       const pagesRoot = getPagesDir();
       const docsRoot = path.resolve(config.root, docsDir);
 
-      pages = [...scanPages(), ...(await scanDocs())].sort((a, b) =>
-        a.id.localeCompare(b.id),
-      );
+      await preparePages();
 
       console.log(
         "[vite-plugin-pages-ssg] DEV PAGES:",
@@ -555,9 +587,7 @@ declare module "virtual:pages" {
           return;
         }
 
-        pages = [...scanPages(), ...(await scanDocs())].sort((a, b) =>
-          a.id.localeCompare(b.id),
-        );
+        await preparePages();
 
         const mod = server.moduleGraph.getModuleById(
           RESOLVED_VIRTUAL_MODULE_ID,
@@ -733,19 +763,6 @@ declare module "virtual:pages" {
           resolvedStyles.set(style, resolved.id);
         }
       }
-
-      // Build-Time-Code ausführen
-      for (const page of pages) {
-        if (page.type !== "component") {
-          continue;
-        }
-
-        page.buildData = await loadBuildData(page);
-
-        if (page.buildData !== undefined) {
-          console.log(`[vite-plugin-pages-ssg] Build data loaded: ${page.id}`);
-        }
-      }
     },
 
     async generateBundle(_outputOptions, bundle) {
@@ -876,24 +893,24 @@ async function loadBuildData(page: PageEntry): Promise<unknown> {
     return null;
   }
 
-  const fileUrl = pathToFileURL(path.resolve(page.source)).href;
+  const buildFile = page.source.replace(/\.(tsx?|jsx?)$/, ".build.$1");
 
-  let module;
+  if (!fs.existsSync(buildFile)) {
+    return null;
+  }
 
   try {
-    module = await tsImport(fileUrl, import.meta.url);
+    const fileUrl = pathToFileURL(buildFile).href;
+    const module = await tsImport(fileUrl, import.meta.url);
+
+    if (typeof module.build !== "function") {
+      return null;
+    }
+
+    return await module.build();
   } catch (error) {
-    console.warn(
-      `[vite-plugin-pages-ssg] Could not load "${page.source}", skipping build().`,
-      error,
+    throw new Error(
+      `[vite-plugin-pages-ssg] Failed to execute build() for "${page.id}":\n${String(error)}`,
     );
-    return null;
   }
-
-  if (typeof module.build !== "function") {
-    return null;
-  }
-
-  // Fehler innerhalb von build() NICHT verschlucken
-  return await module.build();
 }

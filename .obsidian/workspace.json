@@ -20,6 +20,20 @@
             }
           },
           {
+            "id": "65f88c83ff1b9a71",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "CHANGELOG.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "CHANGELOG"
+            }
+          },
+          {
             "id": "6f70e89766d5d15b",
             "type": "leaf",
             "state": {
@@ -29,20 +43,6 @@
               },
               "icon": "lucide-file",
               "title": "README"
-            }
-          },
-          {
-            "id": "5c6c15dd1e05f499",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "dub/SSG Plugin Build Time Code.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "SSG Plugin Build Time Code"
             }
           }
         ]
@@ -215,26 +215,25 @@
   },
   "active": "dec4c4c96e95f58f",
   "lastOpenFiles": [
-    "finder-template-generator-ssg/pages/test.tsx",
-    "finder-template-generator-ssg/pages/products.tsx",
-    "finder-template-generator-ssg/vite.config.ts.timestamp-1788733551292-6d1a88da3a221.mjs",
-    "finder-template-generator-ssg/data/about.json",
-    "finder-template-generator-ssg/vite.config.ts.timestamp-1788733438749-73af69634b0b1.mjs",
-    "finder-template-generator-ssg/vite.config.ts.timestamp-1788733322999-1c238a94ccb9c.mjs",
-    "finder-template-generator-ssg/vite.config.ts.timestamp-1788733258081-6ebce6056f5f.mjs",
-    "finder-template-generator-ssg/data/products.json",
-    "finder-template-generator-ssg/data",
-    "dub/jsxruntime",
-    "dub/ssgplugin",
+    "CHANGELOG.md",
+    "Map.md",
+    "tags.txt",
+    "dub/SSG Plugin Build Time Code.md",
+    "finder-template-generator-ssg/dist/assets/products.js",
+    "finder-template-generator-ssg/vite.config.ts.timestamp-1788735036347-fefe7525e2937.mjs",
+    "finder-template-generator-ssg/vite.config.ts.timestamp-1788735002370-04f0876ae650b.mjs",
+    "finder-template-generator-ssg/vite.config.ts.timestamp-1788734983676-1c4333b981afb.mjs",
+    "finder-template-generator-ssg/pages/products.build.tsx",
+    "finder-template-generator-ssg/vite.config.ts.timestamp-1788734861249-29d9d78499bcc.mjs",
+    "finder-template-generator-ssg/vite.config.ts.timestamp-1788734844919-6d75932c49582.mjs",
+    "finder-template-generator-ssg/vite.config.ts.timestamp-1788734828346-87b0befdeefd1.mjs",
+    "finder-template-generator-ssg/vite.config.ts.timestamp-1788734789170-705502c5fc226.mjs",
     "finder-template-generator-ssg/node_modules/tsx/node_modules/@esbuild/win32-x64/README.md",
     "finder-template-generator-ssg/node_modules/tsx/node_modules/esbuild/README.md",
     "finder-template-generator-ssg/node_modules/tsx/node_modules/esbuild/LICENSE.md",
     "finder-template-generator-ssg/node_modules/tsx/README.md",
-    "Map.md",
-    "dub/SSG Plugin Build Time Code.md",
     "CUSTOM_TEMPLATES.md",
     "README.md",
-    "CHANGELOG.md",
     "IDEAS.md"
   ]
 }

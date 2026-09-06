@@ -4,7 +4,7 @@ declare module "virtual:pages" {
 
   export interface PageModule {
     /** Called with the mount element on the client. */
-    default: (el: HTMLElement) => void | Promise<void>;
+    default: (el: HTMLElement, data?: unknown) => void | Promise<void>;
 
     /** Executed only during the Vite build in Node.js. */
     build?: () => unknown | Promise<unknown>;

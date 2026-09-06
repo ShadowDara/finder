@@ -1,3 +1,5 @@
+// for the lib
+
 // Custom JSX Runtime for the SSG Plugin
 
 const HTML = Symbol("html");

@@ -48,12 +48,16 @@ export function render404_3(app: HTMLElement, id: string) {
   );
 }
 
-export function ErrorPage(app: HTMLElement, id: string) {
+export function ErrorPage(app: HTMLElement, id: string, error: unknown) {
+  console.error(`[pages] Failed to load page "${id}"`, error);
+
   app.innerHTML = (
     <main>
       <h1>Failed to load page</h1>
       <p>Could not load "${id}".</p>
       <a href="/">Go home</a>
+      <pre>{`[pages] Failed to load page "${id}"`}</pre>
+      <pre>{error}</pre>
     </main>
   );
 }

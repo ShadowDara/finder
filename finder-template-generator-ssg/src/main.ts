@@ -55,11 +55,9 @@ async function main() {
 
     const module = await page.load();
 
-    await module.default(app);
+    await module.default(app, page.data);
   } catch (error) {
-    console.error(`[pages] Failed to load page "${id}"`, error);
-
-    ErrorPage(app, id);
+    ErrorPage(app, id, error);
   }
 }
 

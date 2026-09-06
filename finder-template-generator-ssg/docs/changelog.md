@@ -7,6 +7,8 @@ _The whole finder CHANGELOG_
 - added cache creation
 - added config editor
 - added cache viewer
+- Moved every site on the finder website to TSX instead
+  of TS (template viewer) - 06.09.2026
 
 ## 0.3.15 - 02.09.2025
 
@@ -16,15 +18,25 @@ _The whole finder CHANGELOG_
 - added tags and min version to a lot of the templates
 - the Templates are now saved as minified json
 
-## 0.3.9
+## 0.3.14 - 25.06.2026
+
+## 0.3.13 - 22.06.2026
+
+## 0.3.12 - 22.06.2026
+
+## 0.3.11 - 10.04.2026
+
+## 0.3.10 - 10.04.2026
+
+## 0.3.9 - 09.04.2026
 
 - fixed Binary Search
 
-## 0.3.8
+## 0.3.8 - 27.02.2026
 
 - added Checksums
 
-## 0.3.7
+## 0.3.7 - 24.02.2026
 
 - only for releasing
 
@@ -192,3 +204,7 @@ Help Message
 ## 0.1.0 - 17.11.2025
 
 Programm Init
+
+## 0.0.0 - 30.11.2025
+
+the start
