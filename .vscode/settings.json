@@ -6,6 +6,7 @@
     "**/*.exe": true,
     "**/.obsidian/": true,
     "Map.md": true,
-    ".zed": true
+    ".zed": true,
+    "dub": true
   },
 }
