@@ -6,16 +6,19 @@ import (
 	"os"
 
 	"github.com/shadowdara/finder/public/scratch"
+	"github.com/shadowdara/finder/public/scratch/config"
 )
 
 func main() {
-	if err := scratchWorkflow(); err != nil {
+	conf, _ := config.Load("scratch.config.yaml")
+
+	if err := scratchWorkflow(conf); err != nil {
 		log.Fatal(err)
 	}
 }
 
-func scratchWorkflow() error {
-	project, err := scratch.ParseFile("simple/project.json")
+func scratchWorkflow(conf config.Config) error {
+	project, err := scratch.ParseFile(conf.Indir + "/project.json")
 	// project, err := scratch.ParseFile("Monster-Clicker/project.json")
 	if err != nil {
 		return err
@@ -52,7 +55,7 @@ func scratchWorkflow() error {
 			// fmt.Println(cpp)
 			// fmt.Println("===================================")
 
-			err = os.WriteFile("export/main.cpp", []byte(cpp), 0644)
+			err = os.WriteFile(conf.ScriptPath, []byte(scratch.GenShellScript(cpp, conf)), 0644)
 			if err != nil {
 				panic(err)
 			}

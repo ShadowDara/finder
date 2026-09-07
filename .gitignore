@@ -10,3 +10,8 @@ coverage
 *.dummy.json5
 /scratch/minmalraylibproj/.vs
 /scratch/minmalraylibproj/out
+/scratch/export/.vs
+/scratch/export/out
+/scratch/export/thirdparty
+scratch/script.sh
+scratch/export/src/main.cpp
