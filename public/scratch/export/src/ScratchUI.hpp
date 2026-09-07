@@ -1,5 +1,7 @@
 #pragma once
 
+#include <atomic>
+
 #include <raylib.h>
 
 class ScratchUI
@@ -8,7 +10,7 @@ public:
     void update();
     void draw();
 
-    bool running = false;
+    std::atomic<bool> running = false;
     bool startRequested = false;
 
 private:

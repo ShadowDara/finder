@@ -62,41 +62,33 @@ func (g *CPPGenerator) Generate(project *Project) string {
 		clickIndex++
 	}
 
-	g.writeLine("static void startScript()")
-	g.writeLine("{")
-	g.indent++
-
-	g.writeLine("log(\"Green flag clicked!\");")
 	spriteIndex := 0
-	for _, target := range project.Targets {
+	for targetIndex, target := range project.Targets {
+		g.writeLine(fmt.Sprintf("static void startScript%d()", targetIndex))
+		g.writeLine("{")
+		g.indent++
+		g.writeLine("log(\"Green flag clicked!\");")
+
 		if target.IsStage {
 			g.currentStage = &target
-			g.currentSounds = target.Sounds
-			for id, block := range target.Blocks {
-				if block.TopLevel {
-					g.generateScript(ParseScript(target.Blocks, id))
-				}
-			}
-			continue
+		} else {
+			g.currentStage = nil
+			g.currentSpriteIdx = spriteIndex
+			spriteIndex++
 		}
-
-		g.currentStage = nil
 		g.currentSounds = target.Sounds
-		g.currentSpriteIdx = spriteIndex
+
 		for id, block := range target.Blocks {
-			if !block.TopLevel || block.Opcode == "event_whenthisspriteclicked" {
+			if !block.TopLevel || (!target.IsStage && block.Opcode == "event_whenthisspriteclicked") {
 				continue
 			}
-
-			script := ParseScript(target.Blocks, id)
-			g.generateScript(script)
+			g.generateScript(ParseScript(target.Blocks, id))
 		}
-		spriteIndex++
-	}
 
-	g.indent--
-	g.writeLine("}")
-	g.writeLine("")
+		g.indent--
+		g.writeLine("}")
+		g.writeLine("")
+	}
 
 	g.writeLine("void ScratchRuntime::loadAssets()")
 	g.writeLine("{")
@@ -177,7 +169,9 @@ func (g *CPPGenerator) Generate(project *Project) string {
 
 	g.writeLine("runtime.loadAssets();")
 
-	g.writeLine("runtime.setStartCallback(startScript);")
+	for targetIndex := range project.Targets {
+		g.writeLine(fmt.Sprintf("runtime.addStartCallback(startScript%d);", targetIndex))
+	}
 	g.writeLine("runtime.setStopCallback(stopScript);")
 	spriteIndex = 0
 	for _, target := range project.Targets {

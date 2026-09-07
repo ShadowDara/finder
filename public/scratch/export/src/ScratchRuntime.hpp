@@ -2,6 +2,7 @@
 
 #include <functional>
 #include <string>
+#include <thread>
 #include <unordered_map>
 #include <vector>
 
@@ -31,6 +32,7 @@ public:
 
     void loadAssets();
     void setStartCallback(ScriptCallback callback);
+    void addStartCallback(ScriptCallback callback);
     void setStopCallback(ScriptCallback callback);
     void setSpriteClickCallback(size_t index, ScriptCallback callback);
     bool waitUntil(const std::function<bool()> &condition);
@@ -51,6 +53,8 @@ public:
 
 private:
     ScriptCallback startCallback = nullptr;
+    std::vector<ScriptCallback> startCallbacks;
+    std::vector<std::thread> scriptThreads;
     ScriptCallback stopCallback = nullptr;
     std::vector<ScriptCallback> spriteClickCallbacks;
 };

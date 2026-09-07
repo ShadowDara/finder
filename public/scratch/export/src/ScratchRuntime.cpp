@@ -37,8 +37,23 @@ void ScratchRuntime::update()
     {
         ui.startRequested = false;
 
-        if (startCallback != nullptr)
-            startCallback();
+        ui.running = false;
+        for (auto &thread : scriptThreads)
+        {
+            if (thread.joinable())
+                thread.join();
+        }
+        scriptThreads.clear();
+        ui.running = true;
+
+        for (auto callback : startCallbacks)
+        {
+            if (callback != nullptr)
+                scriptThreads.emplace_back(callback);
+        }
+
+        if (startCallbacks.empty() && startCallback != nullptr)
+            scriptThreads.emplace_back(startCallback);
     }
 
     if (!ui.running)
@@ -50,6 +65,11 @@ void ScratchRuntime::update()
 void ScratchRuntime::setStartCallback(ScriptCallback callback)
 {
     startCallback = callback;
+}
+
+void ScratchRuntime::addStartCallback(ScriptCallback callback)
+{
+    startCallbacks.push_back(callback);
 }
 
 void ScratchRuntime::setStopCallback(ScriptCallback callback)
@@ -66,63 +86,23 @@ void ScratchRuntime::setSpriteClickCallback(size_t index, ScriptCallback callbac
 
 bool ScratchRuntime::waitUntil(const std::function<bool()> &condition)
 {
-    while (!condition() && !WindowShouldClose())
+    while (!condition() && ui.running)
     {
-        ui.update();
-
-        if (ui.startRequested)
-        {
-            ui.startRequested = false;
-            return false;
-        }
-
-        if (!ui.running)
-            return false;
-
-        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-        {
-            Vector2 mouse = GetMousePosition();
-            for (size_t index = 0; index < sprites.size(); ++index)
-            {
-                if (index < spriteClickCallbacks.size() && sprites[index].containsPoint(mouse) && spriteClickCallbacks[index] != nullptr)
-                    spriteClickCallbacks[index]();
-            }
-        }
-
-        BeginDrawing();
-        ClearBackground(RAYWHITE);
-        draw();
-        EndDrawing();
-        PollInputEvents();
+        std::this_thread::yield();
     }
 
-    return !WindowShouldClose();
+    return ui.running;
 }
 
 bool ScratchRuntime::waitSeconds(double seconds)
 {
     const double endTime = GetTime() + seconds;
-    while (GetTime() < endTime && !WindowShouldClose())
+    while (GetTime() < endTime && ui.running)
     {
-        ui.update();
-
-        if (ui.startRequested)
-        {
-            ui.startRequested = false;
-            return false;
-        }
-
-        if (!ui.running)
-            return false;
-
-        BeginDrawing();
-        ClearBackground(RAYWHITE);
-        draw();
-        EndDrawing();
-        PollInputEvents();
+        std::this_thread::yield();
     }
 
-    return !WindowShouldClose();
+    return ui.running;
 }
 
 void ScratchRuntime::draw()
@@ -153,6 +133,13 @@ void ScratchRuntime::draw()
 
 void ScratchRuntime::shutdown()
 {
+    ui.running = false;
+    for (auto &thread : scriptThreads)
+    {
+        if (thread.joinable())
+            thread.join();
+    }
+
     background.unloadCostume();
 
     for (auto &backdrop : backdrops)
