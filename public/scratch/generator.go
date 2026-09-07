@@ -18,28 +18,56 @@ func (g *CPPGenerator) Generate(script *Script) string {
 	g.output.Reset()
 	g.indent = 0
 
-	g.writeLine("#include <raylib.h>")
-	g.writeLine("#include <iostream>")
+	g.writeLine("#include <cmath>")
+	g.writeLine("#include \"ScratchRuntime.hpp\"")
 	g.writeLine("")
-	g.writeLine("int main() {")
-	g.indent++
 
-	g.writeLine("InitWindow(800, 600, \"Scratch Project\");")
-	g.writeLine("SetTargetFPS(60);")
+	g.writeLine("ScratchRuntime runtime;")
 	g.writeLine("")
+
+	g.writeLine("static void startScript()")
+	g.writeLine("{")
+	g.indent++
 
 	g.generateScript(script)
 
-	g.writeLine("while (!WindowShouldClose()) {")
+	g.indent--
+	g.writeLine("}")
+	g.writeLine("")
+
+	g.writeLine("int main()")
+	g.writeLine("{")
 	g.indent++
+
+	g.writeLine(
+		`runtime.init(800, 600, "Scratch Project");`,
+	)
+
+	g.writeLine("")
+
+	g.writeLine("startScript();")
+	g.writeLine("")
+
+	g.writeLine("while (!runtime.shouldClose())")
+	g.writeLine("{")
+	g.indent++
+
+	g.writeLine("runtime.update();")
+	g.writeLine("")
 
 	g.writeLine("BeginDrawing();")
 	g.writeLine("ClearBackground(RAYWHITE);")
 
+	g.writeLine("runtime.draw();")
+
+	g.writeLine("EndDrawing();")
+
 	g.indent--
 	g.writeLine("}")
 
-	g.writeLine("CloseWindow();")
+	g.writeLine("")
+
+	g.writeLine("runtime.shutdown();")
 	g.writeLine("return 0;")
 
 	g.indent--
@@ -58,13 +86,16 @@ func (g *CPPGenerator) generateNode(node *Node) {
 	switch node.Opcode {
 
 	case "event_whenflagclicked":
-		// Der Hat selbst erzeugt erstmal keinen C++ Code.
+		// Hat erzeugt keinen direkten C++ Code.
 
 	case "motion_movesteps":
 		g.generateMoveSteps(node)
 
 	case "motion_turnright":
 		g.generateTurnRight(node)
+
+	case "motion_turnleft":
+		g.generateTurnLeft(node)
 
 	case "looks_say":
 		g.generateSay(node)
@@ -82,6 +113,7 @@ func (g *CPPGenerator) generateNode(node *Node) {
 
 func (g *CPPGenerator) generateMoveSteps(node *Node) {
 	value, ok := node.Inputs["STEPS"]
+
 	if !ok {
 		g.writeLine("// motion_movesteps: missing STEPS")
 		return
@@ -90,13 +122,14 @@ func (g *CPPGenerator) generateMoveSteps(node *Node) {
 	expr := g.generateValue(value)
 
 	g.writeLine(fmt.Sprintf(
-		"spriteX += %s;",
+		"runtime.sprite.moveSteps(%s);",
 		expr,
 	))
 }
 
 func (g *CPPGenerator) generateTurnRight(node *Node) {
 	value, ok := node.Inputs["DEGREES"]
+
 	if !ok {
 		g.writeLine("// motion_turnright: missing DEGREES")
 		return
@@ -105,7 +138,23 @@ func (g *CPPGenerator) generateTurnRight(node *Node) {
 	expr := g.generateValue(value)
 
 	g.writeLine(fmt.Sprintf(
-		"spriteDirection += %s;",
+		"runtime.sprite.turnRight(%s);",
+		expr,
+	))
+}
+
+func (g *CPPGenerator) generateTurnLeft(node *Node) {
+	value, ok := node.Inputs["DEGREES"]
+
+	if !ok {
+		g.writeLine("// motion_turnleft: missing DEGREES")
+		return
+	}
+
+	expr := g.generateValue(value)
+
+	g.writeLine(fmt.Sprintf(
+		"runtime.sprite.turnLeft(%s);",
 		expr,
 	))
 }
@@ -117,10 +166,7 @@ func (g *CPPGenerator) generateValue(value Value) string {
 		return fmt.Sprintf("%g", value.Number)
 
 	case ValueString:
-		return fmt.Sprintf(
-			"%q",
-			value.String,
-		)
+		return fmt.Sprintf("%q", value.String)
 
 	case ValueBool:
 		if value.Bool {
@@ -133,6 +179,10 @@ func (g *CPPGenerator) generateValue(value Value) string {
 		return value.Name
 
 	case ValueBlock:
+		if value.Block == nil {
+			return "0"
+		}
+
 		return g.generateExpression(value.Block)
 
 	default:
@@ -179,21 +229,6 @@ func (g *CPPGenerator) binaryOperator(
 	)
 }
 
-func (g *CPPGenerator) generateSay(node *Node) {
-	value, ok := node.Inputs["MESSAGE"]
-	if !ok {
-		g.writeLine("// looks_say: missing MESSAGE")
-		return
-	}
-
-	message := g.generateValue(value)
-
-	g.writeLine(fmt.Sprintf(
-		"std::cout << %s << std::endl;",
-		message,
-	))
-}
-
 func (g *CPPGenerator) generateRepeat(node *Node) {
 	times, ok := node.Inputs["TIMES"]
 
@@ -205,10 +240,11 @@ func (g *CPPGenerator) generateRepeat(node *Node) {
 	expr := g.generateValue(times)
 
 	g.writeLine(fmt.Sprintf(
-		"for (int i = 0; i < %s; i++) {",
+		"for (int i = 0; i < %s; ++i)",
 		expr,
 	))
 
+	g.writeLine("{")
 	g.indent++
 
 	for _, child := range node.Children["SUBSTACK"] {
@@ -216,8 +252,23 @@ func (g *CPPGenerator) generateRepeat(node *Node) {
 	}
 
 	g.indent--
-
 	g.writeLine("}")
+}
+
+func (g *CPPGenerator) generateSay(node *Node) {
+	value, ok := node.Inputs["MESSAGE"]
+
+	if !ok {
+		g.writeLine("// looks_say: missing MESSAGE")
+		return
+	}
+
+	expr := g.generateValue(value)
+
+	g.writeLine(fmt.Sprintf(
+		"TraceLog(LOG_INFO, \"Scratch say: %%s\", %s);",
+		expr,
+	))
 }
 
 func (g *CPPGenerator) writeLine(line string) {

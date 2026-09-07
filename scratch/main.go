@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/shadowdara/finder/public/scratch"
 )
@@ -46,10 +47,15 @@ func scratchWorkflow() error {
 
 			cpp := generator.Generate(script)
 
-			fmt.Println()
-			fmt.Println("========== GENERATED C++ ==========")
-			fmt.Println(cpp)
-			fmt.Println("===================================")
+			// fmt.Println()
+			// fmt.Println("========== GENERATED C++ ==========")
+			// fmt.Println(cpp)
+			// fmt.Println("===================================")
+
+			err = os.WriteFile("export/main.cpp", []byte(cpp), 0644)
+			if err != nil {
+				panic(err)
+			}
 		}
 	}
 

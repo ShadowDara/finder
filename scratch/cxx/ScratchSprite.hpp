@@ -1,3 +1,7 @@
+#pragma once
+
+#include <raylib.h>
+
 class ScratchSprite
 {
 public:
@@ -9,17 +13,7 @@ public:
 
     void moveSteps(float steps);
     void turnRight(float degrees);
+    void turnLeft(float degrees);
 
     void draw() const;
-};
-
-class ScratchRuntime
-{
-public:
-    void init();
-    void update();
-    void draw();
-    void shutdown();
-
-    ScratchSprite sprite;
 };
