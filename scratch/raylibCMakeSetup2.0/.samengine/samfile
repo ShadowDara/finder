@@ -1,0 +1,70 @@
+# A new samfile, write your scripts here
+#
+# INFO
+# You have to use tabs here, not spaces.
+# If you use spaces, the samfile will not work.
+# Make sure to configure your editor accordingly.
+
+
+# Move the license file to the build folder
+license:
+    MV index.html build/license.html
+
+
+# Create dev files for building for the web
+dev:
+    echo Starting Dev Server via NPM
+    echo the web build can now be played in the browser
+    echo
+    echo INFO The webbuild has to be build before via web_build.bat
+    echo and the DEV Server has to be installed via NPM
+    echo
+    echo Open the Dev Server in your browser via the following link:
+    echo http://localhost:8080/mygame.html
+    echo
+    SHELLWIN start http://localhost:8080/mygame.html
+    SHELL npm run dev
+    PROMPT
+
+# Make the webbuild
+webbuild:
+    echo INFO
+    echo you need to have emscripten installed for that!
+    echo
+    echo ==========================================
+    echo Delete old build!
+    echo ==========================================
+    RM build
+
+    echo
+    echo ==========================================
+    echo Configure CMAKE project with emcmake ...
+    echo ==========================================
+    SHELL emcmake cmake -B build
+
+    echo
+    echo ==========================================
+    echo Build Project...
+    echo ==========================================
+    SHELL emmake cmake --build build -j
+    SHELL npm run generate
+    SHELL npm run movlicense
+
+    echo
+    echo ==========================================
+    echo Finished!
+    echo ==========================================
+
+    PROMPT
+
+
+# Make the build for Linux
+build:
+    RUN cmake -S . -B build
+    RUN cmake --build build
+
+
+# Make the release build for Linux
+release:
+    RUN cmake -S . -B build -DCMAKE_BUILD_TYPE=release
+    RUN cmake --build build

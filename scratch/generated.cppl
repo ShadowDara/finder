@@ -1,0 +1,139 @@
+
+#include "engine.h"
+#include <vector>
+
+int score = 0;
+
+// Broadcasts
+
+struct Task
+{
+    int state;
+    bool finished;
+    int loopCounter;
+    Uint32 waitUntil;
+    bool waitBroadcast;
+    void (*func)(Task *);
+};
+
+std::vector<Task *> tasks;
+
+void task_zhENLcNvAyyMO(Task *t)
+{
+    switch (t->state)
+    {
+    case 0:
+        t->state = 1;
+        break;
+    case 1:
+        switchBackdrop("Savanna");
+        t->state = 2;
+        break;
+    case 2:
+        score = 0;
+        t->state = 3;
+        break;
+    case 3:
+        if (!((score > 100)))
+            return;
+        t->state = 4;
+        break;
+    case 4:
+        playSound("metal pipe falling Earrape but its in reverse");
+        t->state = 5;
+        break;
+    case 5:
+        t->loopCounter = 0;
+        t->state = 6;
+        break;
+    case 6:
+        if (t->loopCounter >= 19)
+        {
+            t->state = 7;
+            break;
+        }
+        nextBackdrop();
+        t->waitUntil = SDL_GetTicks() + 170;
+        return;
+        t->loopCounter++;
+        t->state = 6;
+        break;
+    case 7:
+        t->state = 6;
+        break;
+    }
+}
+
+void task_vDa7qDPh3OSM(Task *t)
+{
+    switch (t->state)
+    {
+    case 8:
+        t->state = 9;
+        break;
+    case 9:
+        // unsupported looks_show
+        t->state = 10;
+        break;
+    case 10:
+        // unsupported motion_gotoxy
+        t->state = 11;
+        break;
+    case 11:
+        // unsupported looks_sayforsecs
+        t->state = 12;
+        break;
+    case 12:
+        // unsupported looks_sayforsecs
+        t->state = 13;
+        break;
+    case 13:
+        if (!((score > 100)))
+            return;
+        t->state = 14;
+        break;
+    case 14:
+        // unsupported looks_hide
+        t->state = 15;
+        break;
+    }
+}
+
+void task_RSddN9FMM5FHV8(Task *t)
+{
+    switch (t->state)
+    {
+    case 15:
+        if (!isSpriteClicked("Click-Objet"))
+            return;
+        t->state = 16;
+        break;
+    case 16:
+        score += 1;
+        t->state = 17;
+        break;
+    }
+}
+
+void runScheduler()
+{
+    for (auto t : tasks)
+    {
+        if (!t->finished)
+        {
+            t->func(t);
+        }
+    }
+
+    // RESET BROADCASTS
+}
+
+void setup()
+{
+
+    tasks.push_back(new Task{0, false, 0, 0, false, &task_zhENLcNvAyyMO});
+
+    tasks.push_back(new Task{0, false, 0, 0, false, &task_vDa7qDPh3OSM});
+
+    tasks.push_back(new Task{0, false, 0, 0, false, &task_RSddN9FMM5FHV8});
+}

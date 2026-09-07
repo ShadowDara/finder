@@ -1,0 +1,6 @@
+# handle samfile as shell
+samfile linguist-language=Shell
+
+thirdparty/** linguist-vendored
+
+include/json.hpp linguist-vendored

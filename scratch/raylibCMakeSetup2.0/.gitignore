@@ -1,0 +1,18 @@
+/out
+bin/
+build/
+/.vs
+.idea/
+CMakeSettings.json
+Makefile
+
+.samengine/links.md
+.samengine/links.txt
+
+node_modules/
+bun.lock
+
+# Minisite export
+index.html
+pages/links.md
+build-web

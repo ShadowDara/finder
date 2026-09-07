@@ -1,0 +1,2 @@
+Scratch Game Compiler TODO
+- opening the ZIP Folder

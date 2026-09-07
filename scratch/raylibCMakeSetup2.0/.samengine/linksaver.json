@@ -1,0 +1,61 @@
+{
+  "projectname": "raylibCmakeSetup2.0",
+  "pretty": true,
+  "links": [
+    {
+      "name": "raylibCmakeTemplate",
+      "link": "https://github.com/meemknight/raylibCmakeSetup",
+      "description": "Plug and raylib + imgui already configured for you 🙀! You don't even need to know CMake!",
+      "license": "None",
+      "author": "meemknight",
+      "licenselink": "/",
+      "showinlist": true,
+      "changenotice": true
+    },
+    {
+      "name": "Raylib6.xTemplate",
+      "link": "https://github.com/raysan5/raylib-game-template",
+      "description": "A small template to start your raylib game",
+      "license": "Zlib license",
+      "author": "Ramon Santamaria (@raysan5)",
+      "licenselink": "https://github.com/raysan5/raylib-game-template/blob/9529e0eeb6c6205ad5d65026d398b8862e2c26cf/LICENSE",
+      "showinlist": true,
+      "changenotice": true
+    },
+    {
+      "name": "CmakeSetup",
+      "link": "https://github.com/meemknight/cmakeSetup",
+      "description": "This is a CMake setup that loads glfw, OpenGL, stb_image, stb_truetype, and a custom 2d library. It works both on Windows and Linux.",
+      "license": "None",
+      "author": "meemknight",
+      "licenselink": "/",
+      "showinlist": true,
+      "changenotice": true
+    },
+    {
+      "name": "Raylibsetup2.0",
+      "link": "https://github.com/ShadowDara/raylibCMakeSetup2.0",
+      "description": "The Cmake template for raylib with export and tools!",
+      "license": "MIT",
+      "author": "Shadowdara",
+      "licenselink": "https://mit-license.org/",
+      "showinlist": true,
+      "changenotice": true
+    },
+    {
+      "name": "Kenney Light Pack",
+      "link": "https://www.kenney.nl/assets/light-masks",
+      "description": "light masks pack",
+      "license": "CC0",
+      "author": "Kenney.nl?",
+      "licenselink": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "showinlist": true,
+      "changenotice": false
+    }
+  ],
+  "links2": [],
+  "links3": [
+    "resources/License.txt"
+  ],
+  "note": "This file was generated with linksaver from seg from the samengine project. https://samengine.js.org or https://github.com/shadowdara/seg"
+}
