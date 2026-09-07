@@ -113,7 +113,8 @@ echo ""
 echo "to get started run"
 echo ""
 echo "cd $EXPORT_PATH && chmod +x clone.sh && ./clone.sh && cat README.txt"
-`, conf.Outdir,
+`,
+		conf.Outdir,
 		conf.Indir,
 		conf.CacheDir,
 		exportFile("CMakeSettings.json"),
