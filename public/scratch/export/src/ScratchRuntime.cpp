@@ -69,6 +69,16 @@ bool ScratchRuntime::waitUntil(const std::function<bool()> &condition)
     while (!condition() && !WindowShouldClose())
     {
         ui.update();
+
+        if (ui.startRequested)
+        {
+            ui.startRequested = false;
+            return false;
+        }
+
+        if (!ui.running)
+            return false;
+
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
         {
             Vector2 mouse = GetMousePosition();
@@ -95,6 +105,15 @@ bool ScratchRuntime::waitSeconds(double seconds)
     while (GetTime() < endTime && !WindowShouldClose())
     {
         ui.update();
+
+        if (ui.startRequested)
+        {
+            ui.startRequested = false;
+            return false;
+        }
+
+        if (!ui.running)
+            return false;
 
         BeginDrawing();
         ClearBackground(RAYWHITE);
