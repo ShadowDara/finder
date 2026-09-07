@@ -10,6 +10,9 @@ _The whole finder CHANGELOG_
 - Moved every site on the finder website to TSX instead
   of TS (template viewer) - 06.09.2026
 - add code to the ssg plugin which runs on build time - 07.09.2026
+- the search function should return an array of
+  the found content instead of priting it directly,
+  so the output can be formatted elsewhere. - 07.09.2026
 
 ## 0.3.15 - 02.09.2025
 

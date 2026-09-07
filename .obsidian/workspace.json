@@ -8,18 +8,6 @@
         "type": "tabs",
         "children": [
           {
-            "id": "dec4c4c96e95f58f",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "Map.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "Map"
-            }
-          },
-          {
             "id": "65f88c83ff1b9a71",
             "type": "leaf",
             "state": {
@@ -46,19 +34,7 @@
             }
           },
           {
-            "id": "33850fb96f064b9b",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "Map.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "Map"
-            }
-          },
-          {
-            "id": "2c0d57fd591db223",
+            "id": "e91533ab6a3d6c5c",
             "type": "leaf",
             "state": {
               "type": "excalidraw",
@@ -70,7 +46,7 @@
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -238,20 +214,24 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "2c0d57fd591db223",
+  "active": "e91533ab6a3d6c5c",
   "lastOpenFiles": [
-    "tags.txt",
+    "cmd/findergen/frontend/findermap.svg",
+    "finder-template-generator-ssg/dist/findermap.svg",
+    "finder-template-generator-ssg/vite.config.ts.timestamp-1788781793917-42c2f1a7f39bd.mjs",
+    "finder-template-generator-ssg/vite.config.ts.timestamp-1788781645767-a1caade28b50f.mjs",
+    "finder-template-generator-ssg/vite.config.ts.timestamp-1788781546299-8becaf97a0faa.mjs",
+    "finder-template-generator-ssg/public/findermap.svg",
+    "CHANGELOG.md",
     "Map.md",
+    "tags.md",
+    "tags.txt",
     "finder-template-generator-ssg/vite.config.ts.timestamp-1788772920182-b464a59d2e105.mjs",
     "finder-template-generator-ssg/vite.config.ts.timestamp-1788772881023-c4de9d4623cc2.mjs",
     "finder-template-generator-ssg/vite.config.ts.timestamp-1788772868311-ee81ab0dfa3fc.mjs",
     "finder-template-generator-ssg/vite.config.ts.timestamp-1788772838008-f470017d4218.mjs",
     "finder-template-generator-ssg/vite.config.ts.timestamp-1788772824293-e5c57c26f72c7.mjs",
     "finder-template-generator-ssg/vite.config.ts.timestamp-1788772787726-b140a70b4d6ff.mjs",
-    "finder-template-generator-ssg/dist/assets/viewer.js",
-    "finder-template-generator-ssg/dist/assets/viewer.css",
-    "finder-template-generator-ssg/dist/assets/products.js",
-    "CHANGELOG.md",
     "dub/SSG Plugin Build Time Code.md",
     "finder-template-generator-ssg/node_modules/tsx/node_modules/@esbuild/win32-x64/README.md",
     "finder-template-generator-ssg/node_modules/tsx/node_modules/esbuild/README.md",
