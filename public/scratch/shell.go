@@ -56,7 +56,11 @@ cat > $EXPORT_PATH/README.txt <<'EOF'
 EOF
 
 echo "Run clone.sh to get the remaining dependencies for CMake, or read README.txt"
-`, conf.Outdir, ScratchRuntime, ScratchRuntimeH, ScratchSprite, ScratchSpriteH, CMakeLists, CloneScript, README, cpp)
+echo ""
+echo "to get started run"
+echo ""
+echo "cd $EXPORT_PATH && chmod +x clone.sh && ./clone.sh && cat README.txt"
+`, conf.Outdir, ScratchRuntime, ScratchRuntimeH, ScratchSprite, ScratchSpriteH, CMakeLists, CloneScript, cpp, README)
 
 	return shells
 }
