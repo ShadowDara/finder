@@ -117,9 +117,17 @@ export interface PagesPluginOptions {
 
   /**
    * Bundle all pages into a single JS file.
+   *
    * @default false
    */
   singleBundle?: boolean;
+
+  /**
+   * More detailed output
+   *
+   * @default false
+   */
+  verbose?: boolean;
 }
 
 export interface PageRenderContext {
@@ -160,6 +168,7 @@ let resolvedStyles = new Map<string, string>();
 const DEFAULT_EXTENSIONS = [".ts", ".tsx"];
 
 export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
+  const verbose = options.verbose ?? false;
   const singleBundle = options.singleBundle ?? false;
   const relativePath = options.relativePaths ?? false;
   const addRawMarkdown = options.addRawMarkdown ?? false;
@@ -231,10 +240,12 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
 
       page.buildData = await loadBuildData(page);
 
-      console.log(
-        `[vite-plugin-pages-ssg] Build data loaded: ${page.id}`,
-        page.buildData,
-      );
+      if (verbose) {
+        console.log(
+          `[vite-plugin-pages-ssg] Build data loaded: ${page.id}`,
+          page.buildData,
+        );
+      }
     }
   }
 
@@ -360,14 +371,16 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
   }
 
   function createVirtualModule(): string {
-    console.log(
-      "[vite-plugin-pages-ssg] Creating virtual module",
-      pages.map((p) => ({
-        id: p.id,
-        type: p.type,
-        buildData: p.type === "component" ? p.buildData : undefined,
-      })),
-    );
+    if (verbose) {
+      console.log(
+        "[vite-plugin-pages-ssg] Creating virtual module",
+        pages.map((p) => ({
+          id: p.id,
+          type: p.type,
+          buildData: p.type === "component" ? p.buildData : undefined,
+        })),
+      );
+    }
 
     const styleImports = new Map<string, string>();
 
@@ -574,14 +587,16 @@ declare module "virtual:pages" {
 
       await preparePages();
 
-      console.log(
-        "[vite-plugin-pages-ssg] DEV PAGES:",
-        pages.map((p) => ({
-          id: p.id,
-          type: p.type,
-          source: p.source,
-        })),
-      );
+      if (verbose) {
+        console.log(
+          "[vite-plugin-pages-ssg] DEV PAGES:",
+          pages.map((p) => ({
+            id: p.id,
+            type: p.type,
+            source: p.source,
+          })),
+        );
+      }
 
       server.watcher.add(pagesRoot);
       server.watcher.add(docsRoot);
