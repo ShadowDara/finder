@@ -26,6 +26,9 @@ func (g *CPPGenerator) Generate(project *Project) string {
 	g.writeLine("#include \"ScratchRuntime.hpp\"")
 	g.writeLine("#include <raylib.h>")
 	g.writeLine("#include \"Logger.hpp\"")
+	g.writeLine("#if defined(PLATFORM_WEB)")
+	g.writeLine("#include <emscripten/emscripten.h>")
+	g.writeLine("#endif")
 	g.writeLine("")
 
 	g.writeLine("// little runtime for the project")
@@ -162,14 +165,34 @@ func (g *CPPGenerator) Generate(project *Project) string {
 	g.writeLine("}")
 	g.writeLine("")
 
+	g.writeLine("static void gameFrame()")
+	g.writeLine("{")
+	g.indent++
+	g.writeLine("if (runtime.shouldClose())")
+	g.writeLine("{")
+	g.indent++
+	g.writeLine("runtime.shutdown();")
+	g.writeLine("#if defined(PLATFORM_WEB)")
+	g.writeLine("emscripten_cancel_main_loop();")
+	g.writeLine("#endif")
+	g.writeLine("return;")
+	g.indent--
+	g.writeLine("}")
+	g.writeLine("")
+	g.writeLine("runtime.update();")
+	g.writeLine("")
+	g.writeLine("BeginDrawing();")
+	g.writeLine("ClearBackground(RAYWHITE);")
+	g.writeLine("runtime.draw();")
+	g.writeLine("EndDrawing();")
+	g.indent--
+	g.writeLine("}")
+	g.writeLine("")
+
 	g.writeLine("int main()")
 	g.writeLine("{")
 	g.indent++
-
-	g.writeLine(
-		`runtime.init(800, 600, "Scratch Project", 60);`,
-	)
-
+	g.writeLine(`runtime.init(800, 600, "Scratch Project", 60);`)
 	g.writeLine("runtime.loadAssets();")
 
 	for targetIndex := range project.Targets {
@@ -186,26 +209,13 @@ func (g *CPPGenerator) Generate(project *Project) string {
 	}
 	g.writeLine("")
 
+	g.writeLine("#if defined(PLATFORM_WEB)")
+	g.writeLine("emscripten_set_main_loop(gameFrame, 0, 1);")
+	g.writeLine("#else")
 	g.writeLine("while (!runtime.shouldClose())")
-	g.writeLine("{")
-	g.indent++
-
-	g.writeLine("runtime.update();")
-	g.writeLine("")
-
-	g.writeLine("BeginDrawing();")
-	g.writeLine("ClearBackground(RAYWHITE);")
-
-	g.writeLine("runtime.draw();")
-
-	g.writeLine("EndDrawing();")
-
-	g.indent--
-	g.writeLine("}")
-
-	g.writeLine("")
-
+	g.writeLine("    gameFrame();")
 	g.writeLine("runtime.shutdown();")
+	g.writeLine("#endif")
 	g.writeLine("return 0;")
 
 	g.indent--
