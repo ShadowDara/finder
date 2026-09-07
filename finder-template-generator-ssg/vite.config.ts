@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import { pagesPlugin } from "./pages-ssg-plugin";
 import { visualizer } from "rollup-plugin-visualizer";
 import { buildSize } from "./size-plugin";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig(({ mode }) => ({
   base: mode === "static" ? "/finder/" : "./",
@@ -19,6 +20,7 @@ export default defineConfig(({ mode }) => ({
     },
   },
   plugins: [
+    tailwindcss(),
     visualizer({
       filename: "./stats.html",
       open: true,

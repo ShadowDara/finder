@@ -7,6 +7,7 @@ import {
   renderMarkdown,
 } from "./404";
 import { loadStyles } from "./jsx-runtime";
+import "./base.css";
 
 declare global {
   interface Window {
