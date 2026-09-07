@@ -12,7 +12,7 @@ func main() {
 }
 
 func scratchWorkflow() {
-	project, err := scratch.ParseFile("Monster-CLicker/project.json")
+	project, err := scratch.ParseFile("simple/project.json")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -27,4 +27,41 @@ func scratchWorkflow() {
 	}
 
 	fmt.Printf("Compiling Scratch Project Version %s\n", project.Meta.Semver)
+
+	for _, target := range project.Targets {
+		fmt.Println(target.Name)
+
+		for id, block := range target.Blocks {
+			fmt.Println(id, block.Opcode)
+		}
+	}
+
+	for _, target := range project.Targets {
+		for _, block := range buildScript(target.Blocks, "kGLFnWElQ@n}H$()yi)r") {
+			fmt.Println(block.Opcode)
+		}
+	}
+
+}
+
+func buildScript(
+	blocks map[string]scratch.Block,
+	start string,
+) []*scratch.Block {
+	var result []*scratch.Block
+
+	current := start
+
+	for current != "" {
+		block, ok := blocks[current]
+		if !ok {
+			break
+		}
+
+		result = append(result, &block)
+
+		current = block.Next
+	}
+
+	return result
 }
