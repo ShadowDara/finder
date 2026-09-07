@@ -1,5 +1,6 @@
 #pragma once
 
+#include <functional>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -28,6 +29,8 @@ public:
     void loadAssets();
     void setStartCallback(ScriptCallback callback);
     void setStopCallback(ScriptCallback callback);
+    void setSpriteClickCallback(size_t index, ScriptCallback callback);
+    void waitUntil(const std::function<bool()> &condition);
     void update();
     void draw();
     void shutdown();
@@ -41,4 +44,5 @@ public:
 private:
     ScriptCallback startCallback = nullptr;
     ScriptCallback stopCallback = nullptr;
+    std::vector<ScriptCallback> spriteClickCallbacks;
 };

@@ -68,4 +68,25 @@ void ScratchSprite::draw() const
             rotationCenterY},
         -direction + 90.0f,
         WHITE);
+
+    if (sayUntil > GetTime())
+    {
+        DrawRectangle(static_cast<int>(x) - 10, static_cast<int>(y) - 60, 180, 28, WHITE);
+        DrawRectangleLines(static_cast<int>(x) - 10, static_cast<int>(y) - 60, 180, 28, BLACK);
+        DrawText(sayMessage.c_str(), static_cast<int>(x), static_cast<int>(y) - 54, 16, BLACK);
+    }
+}
+
+void ScratchSprite::sayForSeconds(const char *message, double seconds)
+{
+    sayMessage = message;
+    sayUntil = GetTime() + seconds;
+}
+
+bool ScratchSprite::containsPoint(Vector2 point) const
+{
+    if (!visible || costume.id == 0)
+        return false;
+
+    return CheckCollisionPointRec(point, Rectangle{x, y, static_cast<float>(costume.width), static_cast<float>(costume.height)});
 }

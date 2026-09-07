@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 #include <raylib.h>
 
 class ScratchSprite
@@ -9,6 +11,8 @@ public:
     float y = 0.0f;
     float direction = 90.0f;
     bool visible = true;
+    std::string sayMessage;
+    double sayUntil = 0.0;
 
     Texture2D costume{};
     float rotationCenterX = 0.0f;
@@ -25,4 +29,6 @@ public:
     void unloadCostume();
 
     void draw() const;
+    void sayForSeconds(const char *message, double seconds);
+    bool containsPoint(Vector2 point) const;
 };

@@ -38,6 +38,26 @@ func (g *CPPGenerator) Generate(project *Project) string {
 	g.writeLine("}")
 	g.writeLine("")
 
+	clickIndex := 0
+	for _, target := range project.Targets {
+		if target.IsStage {
+			continue
+		}
+		g.currentSpriteIdx = clickIndex
+		g.writeLine(fmt.Sprintf("static void sprite%dClickedScript()", clickIndex))
+		g.writeLine("{")
+		g.indent++
+		for id, block := range target.Blocks {
+			if block.TopLevel && block.Opcode == "event_whenthisspriteclicked" {
+				g.generateScript(ParseScript(target.Blocks, id))
+			}
+		}
+		g.indent--
+		g.writeLine("}")
+		g.writeLine("")
+		clickIndex++
+	}
+
 	g.writeLine("static void startScript()")
 	g.writeLine("{")
 	g.indent++
@@ -51,7 +71,7 @@ func (g *CPPGenerator) Generate(project *Project) string {
 
 		g.currentSpriteIdx = spriteIndex
 		for id, block := range target.Blocks {
-			if !block.TopLevel {
+			if !block.TopLevel || block.Opcode == "event_whenthisspriteclicked" {
 				continue
 			}
 
@@ -134,6 +154,14 @@ func (g *CPPGenerator) Generate(project *Project) string {
 
 	g.writeLine("runtime.setStartCallback(startScript);")
 	g.writeLine("runtime.setStopCallback(stopScript);")
+	spriteIndex = 0
+	for _, target := range project.Targets {
+		if target.IsStage {
+			continue
+		}
+		g.writeLine(fmt.Sprintf("runtime.setSpriteClickCallback(%d, sprite%dClickedScript);", spriteIndex, spriteIndex))
+		spriteIndex++
+	}
 	g.writeLine("")
 
 	g.writeLine("while (!runtime.shouldClose())")
@@ -216,6 +244,15 @@ func (g *CPPGenerator) generateNode(node *Node) {
 
 	case "looks_say":
 		g.generateSay(node)
+
+	case "looks_sayforsecs":
+		g.generateSayForSeconds(node)
+
+	case "event_whenthisspriteclicked":
+		// The callback wrapper handles this hat.
+
+	case "control_wait_until":
+		g.generateWaitUntil(node)
 
 	case "looks_show":
 		g.writeLine(fmt.Sprintf("runtime.sprite(%d).visible = true;", g.currentSpriteIdx))
@@ -401,6 +438,15 @@ func (g *CPPGenerator) generateExpression(node *Node) string {
 	case "operator_divide":
 		return g.binaryOperator(node, "/")
 
+	case "operator_gt":
+		return g.binaryOperator(node, ">")
+
+	case "operator_lt":
+		return g.binaryOperator(node, "<")
+
+	case "operator_equals":
+		return g.binaryOperator(node, "==")
+
 	default:
 		return "0"
 	}
@@ -465,6 +511,25 @@ func (g *CPPGenerator) generateSay(node *Node) {
 		"TraceLog(LOG_INFO, \"Scratch say: %%s\", %s);",
 		expr,
 	))
+}
+
+func (g *CPPGenerator) generateSayForSeconds(node *Node) {
+	message, messageOK := node.Inputs["MESSAGE"]
+	seconds, secondsOK := node.Inputs["SECS"]
+	if !messageOK || !secondsOK {
+		g.warnMissingInput("looks_sayforsecs", "MESSAGE or SECS")
+		return
+	}
+	g.writeLine(fmt.Sprintf("runtime.sprite(%d).sayForSeconds(%s, %s);", g.currentSpriteIdx, g.generateValue(message), g.generateValue(seconds)))
+}
+
+func (g *CPPGenerator) generateWaitUntil(node *Node) {
+	condition, ok := node.Inputs["CONDITION"]
+	if !ok {
+		g.warnMissingInput("control_wait_until", "CONDITION")
+		return
+	}
+	g.writeLine(fmt.Sprintf("runtime.waitUntil([&]() { return %s; });", g.generateValue(condition)))
 }
 
 func (g *CPPGenerator) writeLine(line string) {

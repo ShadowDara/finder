@@ -21,6 +21,16 @@ void ScratchRuntime::update()
 {
     ui.update();
 
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+    {
+        Vector2 mouse = GetMousePosition();
+        for (size_t index = 0; index < sprites.size(); ++index)
+        {
+            if (index < spriteClickCallbacks.size() && sprites[index].containsPoint(mouse) && spriteClickCallbacks[index] != nullptr)
+                spriteClickCallbacks[index]();
+        }
+    }
+
     if (ui.startRequested)
     {
         ui.startRequested = false;
@@ -43,6 +53,21 @@ void ScratchRuntime::setStartCallback(ScriptCallback callback)
 void ScratchRuntime::setStopCallback(ScriptCallback callback)
 {
     stopCallback = callback;
+}
+
+void ScratchRuntime::setSpriteClickCallback(size_t index, ScriptCallback callback)
+{
+    if (spriteClickCallbacks.size() <= index)
+        spriteClickCallbacks.resize(index + 1, nullptr);
+    spriteClickCallbacks[index] = callback;
+}
+
+void ScratchRuntime::waitUntil(const std::function<bool()> &condition)
+{
+    while (!condition())
+    {
+        PollInputEvents();
+    }
 }
 
 void ScratchRuntime::draw()
