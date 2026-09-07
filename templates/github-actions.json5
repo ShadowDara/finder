@@ -1,4 +1,3 @@
-// Struct for a GitHub Actions Workflow
 {
     "description": "GitHub Actions CI/CD workflow",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "*.yml",
         "*.yaml"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

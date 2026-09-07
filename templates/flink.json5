@@ -1,4 +1,3 @@
-// Struct for an Apache Flink Project
 {
     "description": "Apache Flink stream processing",
     "name": "*",
@@ -11,5 +10,6 @@
     ],
     "files": [
         "pom.xml"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

@@ -1,4 +1,3 @@
-// Struct for a Dojo Project
 {
     "description": "Dojo JavaScript framework",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         ".dojorc",
         "package.json"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

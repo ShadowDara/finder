@@ -1,4 +1,3 @@
-// Struct for an Elasticsearch Project
 {
     "description": "Elasticsearch search and analytics project",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "docker-compose.yml",
         "*.json"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

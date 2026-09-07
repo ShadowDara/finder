@@ -1,4 +1,3 @@
-// Struct for a Gin Project
 {
     "description": "Gin web framework for Go",
     "name": "*",
@@ -12,5 +11,10 @@
     "files": [
         "main.go",
         "go.mod"
-    ]
+    ],
+    "tags": [
+        "web",
+        "go"
+    ],
+    "min_version": "0.3.16"
 }

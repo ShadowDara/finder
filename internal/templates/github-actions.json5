@@ -1,1 +1,1 @@
-{"description":"GitHub Actions CI/CD workflow","files":["*.yml","*.yaml"],"folders":[{"files":[],"folders":[],"name":".github/workflows"}],"name":"*"}
+{"description":"GitHub Actions CI/CD workflow","files":["*.yml","*.yaml"],"folders":[{"files":[],"folders":[],"name":".github/workflows"}],"min_version":"0.3.16","name":"*"}

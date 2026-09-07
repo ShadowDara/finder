@@ -7,7 +7,7 @@
         "project.godot"
     ],
     "tags": [
-        "game-engine"
+        "game-engine", "C#"
     ],
     "min_version": "0.3.14"
 }

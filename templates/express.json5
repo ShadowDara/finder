@@ -1,4 +1,3 @@
-// Struct for an Express.js Project
 {
     "description": "Express.js Node.js web framework",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "app.js",
         "package.json"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

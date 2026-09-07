@@ -1,4 +1,3 @@
-// A default struct to find git Repositories
 {
     "name": "*",
     "description": "Finds all git repositories",
@@ -8,5 +7,6 @@
         {
             "name": ".git"
         }
-    ]
+    ],
+    "tags": ["db", "git"]
 }

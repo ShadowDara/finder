@@ -1,4 +1,3 @@
-// Eleven Labs voice synthesis
 {
     "description": "Eleven Labs text-to-speech voice synthesis API",
     "name": "*",
@@ -6,12 +5,16 @@
         {
             "name": "voices",
             "folders": [],
-            "files": ["*.wav", "*.mp3"]
+            "files": [
+                "*.wav",
+                "*.mp3"
+            ]
         }
     ],
     "files": [
         "elevenlabs.config.yaml",
         "requirements.txt",
         ".env.elevenlabs"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

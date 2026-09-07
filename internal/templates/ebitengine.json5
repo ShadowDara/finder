@@ -1,1 +1,1 @@
-{"description":"Ebitengine Go game framework","files":["main.go","go.mod"],"folders":[{"files":[],"folders":[],"name":"images"}],"name":"*"}
+{"description":"Ebitengine Go game framework","files":["main.go","go.mod"],"folders":[{"files":[],"folders":[],"name":"images"}],"min_version":"0.3.16","name":"*","tags":["game-engine","go"]}

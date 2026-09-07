@@ -1,1 +1,1 @@
-{"description":"Grails Groovy web framework","files":["build.gradle","grails-app"],"folders":[{"files":[],"folders":[],"name":"grails-app"}],"name":"*"}
+{"description":"Grails Groovy web framework","files":["build.gradle","grails-app"],"folders":[{"files":[],"folders":[],"name":"grails-app"}],"min_version":"0.3.16","name":"*","tags":["web"]}

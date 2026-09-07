@@ -1,1 +1,1 @@
-{"description":"GraphQL API project","files":["*.graphql","package.json"],"folders":[{"files":[],"folders":[],"name":"schema"}],"name":"*"}
+{"description":"GraphQL API project","files":["*.graphql","package.json"],"folders":[{"files":[],"folders":[],"name":"schema"}],"min_version":"0.3.16","name":"*"}

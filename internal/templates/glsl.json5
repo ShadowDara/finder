@@ -1,1 +1,1 @@
-{"description":"GLSL shader programming","files":["*.glsl","*.frag","*.vert"],"folders":[],"name":"*"}
+{"description":"GLSL shader programming","files":["*.glsl","*.frag","*.vert"],"folders":[],"min_version":"0.3.16","name":"*"}

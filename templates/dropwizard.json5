@@ -1,4 +1,3 @@
-// Struct for a Dropwizard Project
 {
     "description": "Dropwizard Java framework",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "pom.xml",
         "config.yml"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

@@ -1,4 +1,3 @@
-// Struct for an Apache Hadoop Project
 {
     "description": "Apache Hadoop big data framework",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "pom.xml",
         "*.java"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

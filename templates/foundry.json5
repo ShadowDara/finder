@@ -1,4 +1,3 @@
-// Foundry Rust Ethereum development
 {
     "description": "Foundry Rust-based Ethereum smart contract toolkit",
     "name": "*",
@@ -6,17 +5,25 @@
         {
             "name": "src",
             "folders": [],
-            "files": ["*.sol"]
+            "files": [
+                "*.sol"
+            ]
         },
         {
             "name": "test",
             "folders": [],
-            "files": ["*.sol"]
+            "files": [
+                "*.sol"
+            ]
         }
     ],
     "files": [
         "foundry.toml",
         "Cargo.toml",
         ".env.foundry"
-    ]
+    ],
+    "tags": [
+        "rust"
+    ],
+    "min_version": "0.3.16"
 }

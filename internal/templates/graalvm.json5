@@ -1,1 +1,1 @@
-{"description":"GraalVM polyglot virtual machine project","files":["pom.xml","graalvm.config.yaml","mx.py"],"folders":[{"files":["*.java","*.js","*.py"],"folders":[],"name":"polyglot"}],"name":"*"}
+{"description":"GraalVM polyglot virtual machine project","files":["pom.xml","graalvm.config.yaml","mx.py"],"folders":[{"files":["*.java","*.js","*.py"],"folders":[],"name":"polyglot"}],"min_version":"0.3.16","name":"*"}

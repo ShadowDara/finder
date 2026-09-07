@@ -1,4 +1,3 @@
-// Struct for an Elixir Project
 {
     "description": "Elixir programming language project",
     "name": "*",
@@ -11,5 +10,6 @@
     ],
     "files": [
         "mix.exs"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

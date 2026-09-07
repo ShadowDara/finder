@@ -1,4 +1,3 @@
-// Struct for a Fortran Project
 {
     "description": "Fortran programming language",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "*.f90",
         "*.f95"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

@@ -1,1 +1,1 @@
-{"description":"Fireworks.ai fast model inference API","files":["fireworks.config.yaml","requirements.txt"],"folders":[{"files":["*.py"],"folders":[],"name":"src"}],"name":"*"}
+{"description":"Fireworks.ai fast model inference API","files":["fireworks.config.yaml","requirements.txt"],"folders":[{"files":["*.py"],"folders":[],"name":"src"}],"min_version":"0.3.16","name":"*"}

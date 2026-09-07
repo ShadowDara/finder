@@ -1,4 +1,3 @@
-// Struct for a Godot GDExtension
 {
     "description": "Godot GDExtension C++ bindings",
     "name": "*",
@@ -11,5 +10,9 @@
     ],
     "files": [
         "project.godot"
-    ]
+    ],
+    "tags": [
+        "game-engine"
+    ],
+    "min_version": "0.3.16"
 }

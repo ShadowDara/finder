@@ -1338,6 +1338,7 @@ export default {
       "docker-compose.yml"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "did.json5": {
@@ -1346,6 +1347,7 @@ export default {
       "did.json"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "dioxus.json5": {
@@ -1361,6 +1363,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "directus.json5": {
@@ -1369,6 +1372,7 @@ export default {
       ".env"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "django.json5": {
@@ -1424,6 +1428,7 @@ export default {
         "name": "docs"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "dojo.json5": {
@@ -1439,6 +1444,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "dotnet.json5": {
@@ -1465,6 +1471,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "drupal.json5": {
@@ -1480,6 +1487,7 @@ export default {
         "name": "modules"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "duckdb.json5": {
@@ -1497,6 +1505,7 @@ export default {
         "name": "queries"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "dynamodb.json5": {
@@ -1505,6 +1514,7 @@ export default {
       "dynamodb-local.sh"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "ebitengine.json5": {
@@ -1520,7 +1530,12 @@ export default {
         "name": "images"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "game-engine",
+      "go"
+    ]
   },
   "elasticsearch.json5": {
     "description": "Elasticsearch search and analytics project",
@@ -1535,6 +1550,7 @@ export default {
         "name": "data"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "electron.json5": {
@@ -1575,6 +1591,7 @@ export default {
         "name": "voices"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "eleventy.json5": {
@@ -1590,6 +1607,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "elixir.json5": {
@@ -1604,6 +1622,7 @@ export default {
         "name": "lib"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "elk.json5": {
@@ -1612,6 +1631,7 @@ export default {
       "docker-compose.yml"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "embeddings.json5": {
@@ -1631,6 +1651,7 @@ export default {
         "name": "embeddings"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "ember.json5": {
@@ -1646,6 +1667,7 @@ export default {
         "name": "app"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "encore.json5": {
@@ -1660,6 +1682,7 @@ export default {
         "name": "encore.app"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "erlang.json5": {
@@ -1675,6 +1698,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "expo.json5": {
@@ -1690,6 +1714,7 @@ export default {
         "name": "screens"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "express.json5": {
@@ -1705,6 +1730,7 @@ export default {
         "name": "routes"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "fastapi.json5": {
@@ -1714,6 +1740,7 @@ export default {
       "requirements.txt"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "finder.json5": {
@@ -1749,6 +1776,7 @@ export default {
         "name": "functions"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "firestore.json5": {
@@ -1758,6 +1786,7 @@ export default {
       "firestore.indexes.json"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "fireworks.json5": {
@@ -1775,6 +1804,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "flask.json5": {
@@ -1824,6 +1854,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "flutter.json5": {
@@ -1838,7 +1869,10 @@ export default {
       }
     ],
     "min_version": "0.3.14",
-    "name": "*"
+    "name": "*",
+    "tags": [
+      "dart"
+    ]
   },
   "formspree.json5": {
     "description": "Formspree form backend",
@@ -1846,6 +1880,7 @@ export default {
       "form.json"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "fortran.json5": {
@@ -1861,6 +1896,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "fossil.json5": {
@@ -1869,6 +1905,7 @@ export default {
       ".fossil"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "foundry.json5": {
@@ -1894,7 +1931,11 @@ export default {
         "name": "test"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "rust"
+    ]
   },
   "framer.json5": {
     "description": "Framer design to code platform",
@@ -1902,6 +1943,7 @@ export default {
       "framer.config.js"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "fsharp.json5": {
@@ -1917,6 +1959,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "GameMaker.json5": {
@@ -1942,6 +1985,7 @@ export default {
         "name": "specs"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "gcp.json5": {
@@ -1951,6 +1995,7 @@ export default {
       "*.json"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "gdextension.json5": {
@@ -1965,7 +2010,11 @@ export default {
         "name": "src"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "game-engine"
+    ]
   },
   "gin.json5": {
     "description": "Gin web framework for Go",
@@ -1980,7 +2029,12 @@ export default {
         "name": "routes"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "web",
+      "go"
+    ]
   },
   "git.json5": {
     "description": "Finds all git repositories",
@@ -1991,7 +2045,11 @@ export default {
       }
     ],
     "min_version": "0.3.6",
-    "name": "*"
+    "name": "*",
+    "tags": [
+      "db",
+      "git"
+    ]
   },
   "github-actions.json5": {
     "description": "GitHub Actions CI/CD workflow",
@@ -2006,6 +2064,7 @@ export default {
         "name": ".github/workflows"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "gitlab-ci.json5": {
@@ -2014,6 +2073,7 @@ export default {
       ".gitlab-ci.yml"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "gituncommit.json5": {
@@ -2027,7 +2087,11 @@ export default {
     ],
     "invert_command": false,
     "min_version": "0.3.6",
-    "name": "*"
+    "name": "*",
+    "tags": [
+      "git",
+      "db"
+    ]
   },
   "glsl.json5": {
     "description": "GLSL shader programming",
@@ -2037,6 +2101,7 @@ export default {
       "*.vert"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "go.json5": {
@@ -2060,7 +2125,8 @@ export default {
     "min_version": "0.3.14",
     "name": "*",
     "tags": [
-      "game-engine"
+      "game-engine",
+      "C#"
     ]
   },
   "godot.json5": {
@@ -2100,6 +2166,7 @@ export default {
         "name": "client"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "graalvm.json5": {
@@ -2120,6 +2187,7 @@ export default {
         "name": "polyglot"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "gradio.json5": {
@@ -2139,7 +2207,11 @@ export default {
         "name": "models"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "python"
+    ]
   },
   "gradle.json5": {
     "description": "a Struct for Gradle Projects with Java and etc ...",
@@ -2164,6 +2236,7 @@ export default {
       "provisioning"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "grails.json5": {
@@ -2179,7 +2252,11 @@ export default {
         "name": "grails-app"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "web"
+    ]
   },
   "graphql-api.json5": {
     "description": "GraphQL API server project",
@@ -2194,6 +2271,7 @@ export default {
         "name": "schema"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "graphql.json5": {
@@ -2209,6 +2287,7 @@ export default {
         "name": "schema"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "great-expectations.json5": {
@@ -2227,6 +2306,7 @@ export default {
         "name": "expectations"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "grok.json5": {
@@ -2278,6 +2358,7 @@ export default {
         "name": "proto"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "gtk.json5": {
@@ -2304,6 +2385,7 @@ export default {
         "name": "ui"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "hadoop.json5": {
@@ -2319,6 +2401,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "hardhat.json5": {
@@ -2353,6 +2436,7 @@ export default {
         "name": "scripts"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "haskell.json5": {
@@ -2368,6 +2452,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "hasura.json5": {
@@ -2376,6 +2461,7 @@ export default {
       "docker-compose.yml"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "hbase.json5": {
@@ -2390,6 +2476,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "heroku.json5": {
@@ -2438,6 +2525,7 @@ export default {
         "name": "scripts"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "hugo.json5": {
@@ -2466,6 +2554,7 @@ export default {
       "package.json"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "hypothesis.json5": {
@@ -2481,6 +2570,7 @@ export default {
         "name": "tests"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "ibis.json5": {

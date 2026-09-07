@@ -1,1 +1,1 @@
-{"description":"Hypothesis property-based testing","files":["requirements.txt","conftest.py"],"folders":[{"files":[],"folders":[],"name":"tests"}],"name":"*"}
+{"description":"Hypothesis property-based testing","files":["requirements.txt","conftest.py"],"folders":[{"files":[],"folders":[],"name":"tests"}],"min_version":"0.3.16","name":"*"}

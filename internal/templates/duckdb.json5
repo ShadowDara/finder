@@ -1,1 +1,1 @@
-{"description":"DuckDB embedded SQL database for analytics","files":["duckdb.config.yaml","requirements.txt"],"folders":[{"files":["*.sql"],"folders":[],"name":"queries"}],"name":"*"}
+{"description":"DuckDB embedded SQL database for analytics","files":["duckdb.config.yaml","requirements.txt"],"folders":[{"files":["*.sql"],"folders":[],"name":"queries"}],"min_version":"0.3.16","name":"*"}

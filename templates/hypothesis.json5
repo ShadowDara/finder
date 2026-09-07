@@ -1,4 +1,3 @@
-// Struct for a Hypothesis Testing Framework
 {
     "description": "Hypothesis property-based testing",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "requirements.txt",
         "conftest.py"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

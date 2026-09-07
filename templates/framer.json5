@@ -1,9 +1,9 @@
-// Struct for a Framer Project
 {
     "description": "Framer design to code platform",
     "name": "*",
     "folders": [],
     "files": [
         "framer.config.js"
-    ]
+    ],
+    "min_version": "0.3.16"
 }
