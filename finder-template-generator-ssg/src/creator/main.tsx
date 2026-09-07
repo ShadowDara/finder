@@ -1,3 +1,4 @@
+import { jsx } from "../jsx-runtime";
 import type { Existence, FolderJSON, FolderNode } from "./types";
 import {
   findFile,
@@ -34,67 +35,100 @@ export function renderCreator(app: HTMLDivElement) {
   }
 
   if (servermode) {
-    createbutton = `<button id="btn-save" class="btn btn-ghost" type="button">Save JSON to file</button>`;
+    createbutton = (
+      <button id="btn-save" class="btn btn-ghost" type="button">
+        Save JSON to file
+      </button>
+    );
   }
 
-  app.innerHTML = `
-  <div class="shell">
-    <header class="topbar">
-      <div class="brand">
-        <span class="brand-mark">finder</span>
-        <span class="brand-sep">/</span>
-        <span class="brand-sub">template builder</span>
-        <span class="brand-sep">/</span>
-        <span class="brand-sub"><a href="../viewer/" >TEMPLATE VIEWER</a></span>
-        <span class="brand-sep">/</span>
-        <span class="brand-sub"><a href="../" >HOME</a></span>
-      </div>
-      <div class="topbar-actions">
-        <button id="btn-import" class="btn btn-ghost" type="button">Import JSON</button>
-        <button id="btn-copy" class="btn btn-ghost" type="button">Copy JSON</button>
-        ${createbutton}
-        <button id="btn-download" class="btn btn-primary" type="button">Download template.json</button>
-      </div>
-    </header>
-
-    <main class="workspace">
-      <section class="pane pane-tree">
-        <div class="pane-head">
-          <h2>Structure</h2>
-          <button id="btn-add-root-file" class="icon-btn" type="button" title="Add file to root">+ file</button>
+  app.innerHTML = (
+    <div class="shell">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark">finder</span>
+          <span class="brand-sep">/</span>
+          <span class="brand-sub">template builder</span>
+          <span class="brand-sep">/</span>
+          <span class="brand-sub">
+            <a href="../viewer/">TEMPLATE VIEWER</a>
+          </span>
+          <span class="brand-sep">/</span>
+          <span class="brand-sub">
+            <a href="../">HOME</a>
+          </span>
         </div>
-        <div id="tree" class="tree"></div>
-      </section>
-
-      <section class="pane pane-inspector">
-        <div class="pane-head">
-          <h2>Inspector</h2>
+        <div class="topbar-actions">
+          <button id="btn-import" class="btn btn-ghost" type="button">
+            Import JSON
+          </button>
+          <button id="btn-copy" class="btn btn-ghost" type="button">
+            Copy JSON
+          </button>
+          {createbutton}
+          <button id="btn-download" class="btn btn-primary" type="button">
+            Download template.json
+          </button>
         </div>
-        <div id="inspector" class="inspector"></div>
-      </section>
+      </header>
 
-      <section class="pane pane-preview">
-        <div class="pane-head">
-          <h2>JSON output</h2>
-        </div>
-        <pre id="preview" class="preview"></pre>
-      </section>
-    </main>
+      <main class="workspace">
+        <section class="pane pane-tree">
+          <div class="pane-head">
+            <h2>Structure</h2>
+            <button
+              id="btn-add-root-file"
+              class="icon-btn"
+              type="button"
+              title="Add file to root"
+            >
+              + file
+            </button>
+          </div>
+          <div id="tree" class="tree"></div>
+        </section>
 
-    <dialog id="import-dialog" class="import-dialog">
-      <form method="dialog" class="import-form">
-        <h3>Import a template</h3>
-        <p class="hint">Paste an existing folder-template JSON (or JSON5) document. It replaces the current tree.</p>
-        <textarea id="import-text" rows="14" spellcheck="false" placeholder='{ "name": "root", "files": [...] }'></textarea>
-        <p id="import-error" class="import-error"></p>
-        <div class="import-actions">
-          <button id="import-cancel" class="btn btn-ghost" type="button">Cancel</button>
-          <button id="import-confirm" class="btn btn-primary" type="button">Replace tree</button>
-        </div>
-      </form>
-    </dialog>
-  </div>
-`;
+        <section class="pane pane-inspector">
+          <div class="pane-head">
+            <h2>Inspector</h2>
+          </div>
+          <div id="inspector" class="inspector"></div>
+        </section>
+
+        <section class="pane pane-preview">
+          <div class="pane-head">
+            <h2>JSON output</h2>
+          </div>
+          <pre id="preview" class="preview"></pre>
+        </section>
+      </main>
+
+      <dialog id="import-dialog" class="import-dialog">
+        <form method="dialog" class="import-form">
+          <h3>Import a template</h3>
+          <p class="hint">
+            Paste an existing folder-template JSON (or JSON5) document. It
+            replaces the current tree.
+          </p>
+          <textarea
+            id="import-text"
+            rows="14"
+            spellcheck="false"
+            placeholder='{ "name": "root", "files": [...] }'
+          ></textarea>
+          <p id="import-error" class="import-error"></p>
+          <div class="import-actions">
+            <button id="import-cancel" class="btn btn-ghost" type="button">
+              Cancel
+            </button>
+            <button id="import-confirm" class="btn btn-primary" type="button">
+              Replace tree
+            </button>
+          </div>
+        </form>
+      </dialog>
+    </div>
+  );
 
   async function saveTemplateToBackend(name: string): Promise<void> {
     const payload: { name: string; content: FolderJSON } = {

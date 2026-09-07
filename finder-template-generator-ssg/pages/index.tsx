@@ -36,9 +36,6 @@ export default function render(el: HTMLDivElement) {
           <li>
             <a href="./readme">README</a>
           </li>
-          <li>
-            <a href="./findermap.svg">Finder Map</a>
-          </li>
         </ul>
 
         {import.meta.env.MODE == "backend" && (

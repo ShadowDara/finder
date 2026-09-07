@@ -150,14 +150,14 @@ function renderData(el: HTMLDivElement, data: LocationsResponse) {
           </div>
           {raw(
             drives
-              .map(
-                (drive) => `
-              <div class="loc-stat">
-                <strong>${items.filter((i) => i.drive === drive).length}</strong>
-                <span>${escapeHtml(drive)}</span>
-              </div>
-            `,
-              )
+              .map((drive) => (
+                <div class="loc-stat">
+                  <strong>
+                    ${items.filter((i) => i.drive === drive).length}
+                  </strong>
+                  <span>${escapeHtml(drive)}</span>
+                </div>
+              ))
               .join(""),
           )}
           <div class="loc-stat">
@@ -188,13 +188,16 @@ function renderData(el: HTMLDivElement, data: LocationsResponse) {
           </button>
           {raw(
             drives
-              .map(
-                (drive) => `
-              <button class="loc-filter" data-drive-filter="${escapeHtml(drive)}" type="button">
-                ${escapeHtml(drive)} <span>${items.filter((i) => i.drive === drive).length}</span>
-              </button>
-            `,
-              )
+              .map((drive) => (
+                <button
+                  class="loc-filter"
+                  data-drive-filter="${escapeHtml(drive)}"
+                  type="button"
+                >
+                  ${escapeHtml(drive)}{" "}
+                  <span>${items.filter((i) => i.drive === drive).length}</span>
+                </button>
+              ))
               .join(""),
           )}
         </div>
