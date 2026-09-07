@@ -2,6 +2,7 @@ package scratch
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -105,9 +106,12 @@ func (g *CPPGenerator) Generate(project *Project) string {
 			if !ok {
 				continue
 			}
-			value, ok := variable[1].(float64)
-			if ok {
+			if value, ok := variableNumber(variable[1]); ok {
 				g.writeLine(fmt.Sprintf("runtime.variable(%q) = %g;", name, value))
+			} else {
+				g.warnUnsupported("non-numeric variable: " + name)
+				g.writeLine(fmt.Sprintf("logWarning(%q);", "Non-numeric variable reset to 0: "+name))
+				g.writeLine(fmt.Sprintf("runtime.variable(%q) = 0;", name))
 			}
 		}
 	}
@@ -198,6 +202,18 @@ func (g *CPPGenerator) Generate(project *Project) string {
 	g.writeLine("}")
 
 	return g.output.String()
+}
+
+func variableNumber(value any) (float64, bool) {
+	switch value := value.(type) {
+	case float64:
+		return value, true
+	case string:
+		parsed, err := strconv.ParseFloat(value, 64)
+		return parsed, err == nil
+	default:
+		return 0, false
+	}
 }
 
 func (g *CPPGenerator) generateBackground(target Target) {
