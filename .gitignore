@@ -8,3 +8,5 @@ imgui.ini
 coverage
 
 *.dummy.json5
+/scratch/minmalraylibproj/.vs
+/scratch/minmalraylibproj/out

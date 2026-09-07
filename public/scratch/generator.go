@@ -41,7 +41,7 @@ func (g *CPPGenerator) Generate(script *Script) string {
 	g.indent++
 
 	g.writeLine(
-		`runtime.init(800, 600, "Scratch Project");`,
+		`runtime.init(800, 600, "Scratch Project", 60);`,
 	)
 
 	g.writeLine("")
