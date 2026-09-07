@@ -508,9 +508,9 @@ func (g *CPPGenerator) binaryOperator(
 
 	return fmt.Sprintf(
 		"(%s %s %s)",
-		g.generateValue(left),
+		g.generateNumericValue(left),
 		operator,
-		g.generateValue(right),
+		g.generateNumericValue(right),
 	)
 }
 
