@@ -1,8 +1,6 @@
 package scratch
 
-import (
-	"fmt"
-)
+import "strconv"
 
 type Script struct {
 	Blocks []*Node
@@ -35,6 +33,8 @@ func parseBlock(
 
 	// Inputs parsen
 	for name, input := range block.Inputs {
+		// fmt.Printf("DEBUG INPUT %s: %#v\n", name, input)
+
 		value := parseInput(blocks, input)
 
 		if value.Kind != ValueInvalid {
@@ -104,18 +104,6 @@ func ParseScript(
 	}
 
 	return script
-}
-
-func PrintNode(node *Node, indent string) {
-	fmt.Println(indent + node.Opcode)
-
-	for name, children := range node.Children {
-		fmt.Println(indent + "  " + name)
-
-		for _, child := range children {
-			PrintNode(child, indent+"    ")
-		}
-	}
 }
 
 func ParseChain(
@@ -239,25 +227,40 @@ func parseLiteral(values []any) Value {
 		return Value{Kind: ValueInvalid}
 	}
 
-	value := values[1]
+	raw, ok := values[1].([]any)
+	if !ok || len(raw) < 2 {
+		return Value{Kind: ValueInvalid}
+	}
 
-	switch v := value.(type) {
-	case float64:
-		return Value{
-			Kind:   ValueNumber,
-			Number: v,
+	// Scratch primitive type
+	primitiveType, ok := raw[0].(float64)
+	if !ok {
+		return Value{Kind: ValueInvalid}
+	}
+
+	value := raw[1]
+
+	switch int(primitiveType) {
+	case 4:
+		if v, ok := value.(string); ok {
+			number, err := strconv.ParseFloat(v, 64)
+			if err != nil {
+				return Value{Kind: ValueInvalid}
+			}
+
+			return Value{
+				Kind:   ValueNumber,
+				Number: number,
+			}
 		}
 
-	case string:
-		return Value{
-			Kind:   ValueString,
-			String: v,
-		}
-
-	case bool:
-		return Value{
-			Kind: ValueBool,
-			Bool: v,
+	case 10:
+		// String
+		if v, ok := value.(string); ok {
+			return Value{
+				Kind:   ValueString,
+				String: v,
+			}
 		}
 	}
 
