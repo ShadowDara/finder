@@ -24,6 +24,7 @@ Maybe
 [![GitHub release (with filter)](https://img.shields.io/github/v/release/shadowdara/finder?logo=github)](https://github.com/shadowdara/finder/releases)
 [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/shadowdara/finder?logo=github)](https://github.com/shadowdara/finder.git)
 [![GitHub repo size](https://img.shields.io/github/repo-size/shadowdara/finder?logo=github)](https://github.com/shadowdara/finder.git)
+[![Lang Count](https://badges.ws/github/lang-count/shadowdara/finder)](https://github.com/shadowdara/finder.git)
 ![GitHub Repo stars](https://img.shields.io/github/stars/shadowdara/finder)
 ![GitHub forks](https://img.shields.io/github/forks/shadowdara/finder)
 ![Maintained](https://badges.ws/maintenance/yes/2026)
