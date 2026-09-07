@@ -7,4 +7,15 @@ class Handler(SimpleHTTPRequestHandler):
         self.send_header("Cross-Origin-Embedder-Policy", "require-corp")
         super().end_headers()
 
-HTTPServer(("localhost", 8000), Handler).serve_forever()
+
+server = HTTPServer(("localhost", 8000), Handler)
+
+try:
+    print("Server läuft auf http://localhost:8000")
+    print("Ctrl+C zum Beenden")
+    server.serve_forever()
+except KeyboardInterrupt:
+    print("\nServer wird beendet...")
+finally:
+    server.server_close()
+    print("Server beendet.")
