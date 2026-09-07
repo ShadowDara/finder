@@ -76,6 +76,21 @@ func CompileTargetAssets(
 		fmt.Println()
 	}
 
+	for _, sound := range target.Sounds {
+		input := filepath.Join(projectDir, sound.MD5Ext)
+		if _, err := os.Stat(input); err != nil {
+			return fmt.Errorf("sound not found: %s", input)
+		}
+
+		output := filepath.Join(outputDir, sound.MD5Ext)
+		if err := os.MkdirAll(outputDir, 0755); err != nil {
+			return fmt.Errorf("create sound asset directory: %w", err)
+		}
+		if err := copyFile(input, output); err != nil {
+			return fmt.Errorf("copy sound %q: %w", sound.Name, err)
+		}
+	}
+
 	return nil
 }
 

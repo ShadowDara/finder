@@ -181,7 +181,14 @@ double ScratchRuntime::unsupportedValue(const char *opcode)
 
 void ScratchRuntime::loadSound(const char *name, const char *path)
 {
-    sounds[name] = LoadSound(path);
+    Sound sound = LoadSound(path);
+    if (sound.frameCount == 0)
+    {
+        logWarning(std::string("Could not load sound: ") + path);
+        return;
+    }
+
+    sounds[name] = sound;
 }
 
 void ScratchRuntime::playSound(const char *name)
