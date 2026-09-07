@@ -16,3 +16,4 @@ finder-template-generator-ssg/stats.html
 findergen.exe~
 finder-template-generator-ssg/tsconfig.tsbuildinfo
 /.samengine/bin
+/.vs
