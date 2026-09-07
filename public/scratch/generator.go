@@ -83,7 +83,12 @@ func (g *CPPGenerator) Generate(target Target, script *Script) string {
 	g.writeLine("{")
 	g.indent++
 
+	g.writeLine("if (runtime.ui.running)")
+	g.writeLine("{")
+	g.indent++
 	g.writeLine("runtime.update();")
+	g.indent--
+	g.writeLine("}")
 	g.writeLine("")
 
 	g.writeLine("BeginDrawing();")
