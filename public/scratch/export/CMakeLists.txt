@@ -69,7 +69,7 @@ endif()
 
 if(EMSCRIPTEN)
     set(PLATFORM Web CACHE STRING "" FORCE)
-	target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC PLATFORM_WEB=1)
+	add_compile_definitions(PLATFORM_WEB=1)
 
     add_link_options(
         -sUSE_GLFW=3
