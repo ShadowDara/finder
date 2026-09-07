@@ -262,7 +262,7 @@ func parseLiteral(values []any) Value {
 	value := raw[1]
 
 	switch int(primitiveType) {
-	case 4:
+	case 4, 5, 6:
 		if v, ok := value.(string); ok {
 			number, err := strconv.ParseFloat(v, 64)
 			if err != nil {

@@ -19,6 +19,7 @@ public:
     std::vector<ScratchSprite> backdrops;
     size_t currentBackdrop = 0;
     std::unordered_map<std::string, double> variables;
+    std::unordered_map<std::string, Sound> sounds;
 
     ScratchUI ui;
 
@@ -44,6 +45,8 @@ public:
     ScratchSprite &sprite(size_t index);
     double &variable(const char *name);
     double unsupportedValue(const char *opcode);
+    void loadSound(const char *name, const char *path);
+    void playSound(const char *name);
 
 private:
     ScriptCallback startCallback = nullptr;

@@ -11,6 +11,7 @@ type CPPGenerator struct {
 	output           strings.Builder
 	currentSpriteIdx int
 	currentStage     *Target
+	currentSounds    []Sound
 }
 
 func NewCPPGenerator() *CPPGenerator {
@@ -46,6 +47,7 @@ func (g *CPPGenerator) Generate(project *Project) string {
 			continue
 		}
 		g.currentSpriteIdx = clickIndex
+		g.currentSounds = target.Sounds
 		g.writeLine(fmt.Sprintf("static void sprite%dClickedScript()", clickIndex))
 		g.writeLine("{")
 		g.indent++
@@ -69,6 +71,7 @@ func (g *CPPGenerator) Generate(project *Project) string {
 	for _, target := range project.Targets {
 		if target.IsStage {
 			g.currentStage = &target
+			g.currentSounds = target.Sounds
 			for id, block := range target.Blocks {
 				if block.TopLevel {
 					g.generateScript(ParseScript(target.Blocks, id))
@@ -78,6 +81,7 @@ func (g *CPPGenerator) Generate(project *Project) string {
 		}
 
 		g.currentStage = nil
+		g.currentSounds = target.Sounds
 		g.currentSpriteIdx = spriteIndex
 		for id, block := range target.Blocks {
 			if !block.TopLevel || block.Opcode == "event_whenthisspriteclicked" {
@@ -113,6 +117,15 @@ func (g *CPPGenerator) Generate(project *Project) string {
 				g.writeLine(fmt.Sprintf("logWarning(%q);", "Non-numeric variable reset to 0: "+name))
 				g.writeLine(fmt.Sprintf("runtime.variable(%q) = 0;", name))
 			}
+		}
+	}
+	for _, target := range project.Targets {
+		for _, sound := range target.Sounds {
+			g.writeLine(fmt.Sprintf(
+				"runtime.loadSound(%q, RESOURCES_PATH \"%s\");",
+				sound.Name,
+				sound.MD5Ext,
+			))
 		}
 	}
 
@@ -270,6 +283,9 @@ func (g *CPPGenerator) generateNode(node *Node) {
 
 	case "looks_sayforsecs":
 		g.generateSayForSeconds(node)
+
+	case "sound_play":
+		g.generatePlaySound(node)
 
 	case "looks_switchbackdropto":
 		g.generateSwitchBackdrop(node)
@@ -564,6 +580,36 @@ func (g *CPPGenerator) generateSayForSeconds(node *Node) {
 		return
 	}
 	g.writeLine(fmt.Sprintf("runtime.sprite(%d).sayForSeconds(%s, %s);", g.currentSpriteIdx, g.generateValue(message), g.generateValue(seconds)))
+}
+
+func (g *CPPGenerator) generatePlaySound(node *Node) {
+	value, ok := node.Inputs["SOUND_MENU"]
+	if !ok || value.Block == nil {
+		g.warnMissingInput("sound_play", "SOUND_MENU")
+		return
+	}
+
+	fields := value.Block.Fields["SOUND_MENU"]
+	if len(fields) == 0 {
+		g.warnMissingInput("sound_play", "SOUND_MENU name")
+		return
+	}
+
+	name, ok := fields[0].(string)
+	if !ok {
+		g.warnMissingInput("sound_play", "SOUND_MENU name")
+		return
+	}
+
+	for _, sound := range g.currentSounds {
+		if sound.Name == name {
+			g.writeLine(fmt.Sprintf("runtime.playSound(%q);", name))
+			return
+		}
+	}
+
+	g.warnUnsupported("sound: " + name)
+	g.writeLine(fmt.Sprintf("logWarning(%q);", "Unknown sound: "+name))
 }
 
 func (g *CPPGenerator) generateSwitchBackdrop(node *Node) {

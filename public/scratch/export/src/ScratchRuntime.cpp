@@ -14,6 +14,8 @@ void ScratchRuntime::init(
         height,
         title);
 
+    InitAudioDevice();
+
     SetTargetFPS(FPS);
 }
 
@@ -124,6 +126,12 @@ void ScratchRuntime::shutdown()
     {
         sprite.unloadCostume();
     }
+
+    for (auto &sound : sounds)
+        UnloadSound(sound.second);
+
+    CloseAudioDevice();
+
     CloseWindow();
 }
 
@@ -146,6 +154,23 @@ double ScratchRuntime::unsupportedValue(const char *opcode)
 {
     logWarning(std::string("Unsupported Scratch value: ") + opcode);
     return 0.0;
+}
+
+void ScratchRuntime::loadSound(const char *name, const char *path)
+{
+    sounds[name] = LoadSound(path);
+}
+
+void ScratchRuntime::playSound(const char *name)
+{
+    auto sound = sounds.find(name);
+    if (sound == sounds.end())
+    {
+        logWarning(std::string("Sound not loaded: ") + name);
+        return;
+    }
+
+    PlaySound(sound->second);
 }
 
 void ScratchRuntime::setBackdrop(size_t index)
