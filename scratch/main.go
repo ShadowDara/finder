@@ -34,6 +34,26 @@ func scratchWorkflow(conf config.Config) error {
 
 		fmt.Println("Target:", target.Name)
 
+		err := scratch.CompileTargetAssets(
+			target,
+			"simple",
+			conf.CacheDir+"/assets",
+		)
+
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+
+	fmt.Println()
+
+	for _, target := range project.Targets {
+		if target.IsStage {
+			continue
+		}
+
+		fmt.Println("Target:", target.Name)
+
 		for id, block := range target.Blocks {
 			if !block.TopLevel {
 				continue

@@ -22,6 +22,7 @@ func GenShellScript(cpp string, conf config.Config) string {
 
 EXPORT_PATH=%s
 IMPORT_PATH=%s
+CACHEDIR=%s
 
 # Clear
 rm -rf $EXPORT_PATH
@@ -72,6 +73,10 @@ EOF
 
 # Copy Images and other files
 cp -r $IMPORT_PATH/** $EXPORT_PATH/resources
+cp -r $CACHEDIR/** $EXPORT_PATH/resources
+
+# Delete SVG Files
+find ./$EXPORT_PATH/resources -type f -name "*.svg" -delete
 
 echo "Run clone.sh to get the remaining dependencies for CMake, or read README.txt"
 echo ""
@@ -80,6 +85,7 @@ echo ""
 echo "cd $EXPORT_PATH && chmod +x clone.sh && ./clone.sh && cat README.txt"
 `, conf.Outdir,
 		conf.Indir,
+		conf.CacheDir,
 		exportFile("src/ScratchRuntime.cpp"),
 		exportFile("src/ScratchRuntime.hpp"),
 		exportFile("src/ScratchSprite.cpp"),

@@ -1,2 +1,5 @@
+# Scracth Compiler Config
+
 indir: "simple"
 outdir: "export2"
+cachedir: "scratchcache"

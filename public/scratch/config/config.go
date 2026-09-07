@@ -13,6 +13,7 @@ type Config struct {
 	Indir      string `yaml:"indir"`
 	Outdir     string `yaml:"outdir"`
 	ScriptPath string `yaml:"scriptpath"`
+	CacheDir   string `yaml:"cachedir"`
 }
 
 type ServerConfig struct {
@@ -36,6 +37,7 @@ func Default() Config {
 		Indir:      "input",
 		Outdir:     "output",
 		ScriptPath: "script.sh",
+		CacheDir:   "scratchcache",
 	}
 }
 
