@@ -319,3 +319,9 @@ var CloneScript = `
 
 git clone --depth 1 --single-branch -b scratch-dependencies-cmake https://github.com/shadowdara/finder.git thirdparty
 `
+
+var README = `
+Scratch to C++ Compiler
+
+build with cmake, emscripten is configured too, but must be installed
+`
