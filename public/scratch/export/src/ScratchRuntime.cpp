@@ -46,16 +46,31 @@ void ScratchRuntime::setStopCallback(ScriptCallback callback)
 
 void ScratchRuntime::draw()
 {
+    background.draw();
+
     for (auto &sprite : sprites)
     {
         sprite.draw();
     }
 
     ui.draw();
+
+    auto score = variables.find("score");
+    if (score != variables.end())
+    {
+        const int boxWidth = 150;
+        const int boxX = GetScreenWidth() - boxWidth - 12;
+        DrawRectangle(boxX, 8, boxWidth, 34, WHITE);
+        DrawRectangleLines(boxX, 8, boxWidth, 34, DARKGRAY);
+        DrawText("score", boxX + 8, 12, 16, DARKGRAY);
+        DrawText(TextFormat("%g", score->second), boxX + 82, 12, 16, BLACK);
+    }
 }
 
 void ScratchRuntime::shutdown()
 {
+    background.unloadCostume();
+
     for (auto &sprite : sprites)
     {
         sprite.unloadCostume();
@@ -71,4 +86,9 @@ bool ScratchRuntime::shouldClose() const
 ScratchSprite &ScratchRuntime::sprite(size_t index)
 {
     return sprites[index];
+}
+
+double &ScratchRuntime::variable(const char *name)
+{
+    return variables[name];
 }

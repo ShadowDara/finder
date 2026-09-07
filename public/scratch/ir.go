@@ -217,6 +217,13 @@ func parseInput(
 			Kind:  ValueBlock,
 			Block: node,
 		}
+
+	case 12:
+		if len(values) >= 2 {
+			if name, ok := values[1].(string); ok {
+				return Value{Kind: ValueVariable, Name: name}
+			}
+		}
 	}
 
 	return Value{Kind: ValueInvalid}

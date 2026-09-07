@@ -68,10 +68,26 @@ func (g *CPPGenerator) Generate(project *Project) string {
 	g.writeLine("void ScratchRuntime::loadAssets()")
 	g.writeLine("{")
 	g.indent++
+	for _, target := range project.Targets {
+		for _, variable := range target.Variables {
+			if len(variable) < 2 {
+				continue
+			}
+			name, ok := variable[0].(string)
+			if !ok {
+				continue
+			}
+			value, ok := variable[1].(float64)
+			if ok {
+				g.writeLine(fmt.Sprintf("runtime.variable(%q) = %g;", name, value))
+			}
+		}
+	}
 
 	spriteIndex = 0
 	for _, target := range project.Targets {
 		if target.IsStage {
+			g.generateBackground(target)
 			continue
 		}
 
@@ -82,6 +98,7 @@ func (g *CPPGenerator) Generate(project *Project) string {
 		g.writeLine(fmt.Sprintf("runtime.sprite(%d).visible = %t;", spriteIndex, target.Visible))
 
 		if len(target.Costumes) == 0 {
+			spriteIndex++
 			continue
 		}
 
@@ -147,6 +164,27 @@ func (g *CPPGenerator) Generate(project *Project) string {
 	return g.output.String()
 }
 
+func (g *CPPGenerator) generateBackground(target Target) {
+	if len(target.Costumes) == 0 {
+		return
+	}
+
+	costumeIndex := target.CurrentCostume
+	if costumeIndex < 0 || costumeIndex >= len(target.Costumes) {
+		costumeIndex = 0
+	}
+
+	costume := target.Costumes[costumeIndex]
+	g.writeLine("runtime.background.x = 400;")
+	g.writeLine("runtime.background.y = 300;")
+	g.writeLine(fmt.Sprintf(
+		"runtime.background.loadCostume(RESOURCES_PATH \"%s\", %g, %g);",
+		assetFilename(costume),
+		costume.RotationCenterX,
+		costume.RotationCenterY,
+	))
+}
+
 func assetFilename(costume Costume) string {
 	if costume.DataFormat == "svg" {
 		return costume.AssetID + ".png"
@@ -179,22 +217,66 @@ func (g *CPPGenerator) generateNode(node *Node) {
 	case "looks_say":
 		g.generateSay(node)
 
+	case "data_setvariableto":
+		g.generateSetVariable(node)
+
+	case "data_changevariableby":
+		g.generateChangeVariable(node)
+
 	case "control_repeat":
 		g.generateRepeat(node)
 
 	default:
+		g.warnUnsupported(node.Opcode)
 		g.writeLine(fmt.Sprintf(
-			"// TODO: %s",
-			node.Opcode,
+			"logWarning(%q);",
+			"Unsupported Scratch block: "+node.Opcode,
 		))
 	}
+}
+
+func (g *CPPGenerator) warnUnsupported(opcode string) {
+	fmt.Printf("\033[33m[WARN]\033[0m unsupported Scratch block: %s\n", opcode)
+}
+
+func (g *CPPGenerator) warnMissingInput(opcode string, input string) {
+	message := fmt.Sprintf("%s: missing input %s", opcode, input)
+	fmt.Printf("\033[33m[WARN]\033[0m %s\n", message)
+	g.writeLine(fmt.Sprintf("logWarning(%q);", message))
+}
+
+func (g *CPPGenerator) generateSetVariable(node *Node) {
+	name := variableName(node)
+	value, ok := node.Inputs["VALUE"]
+	if name == "" || !ok {
+		return
+	}
+	g.writeLine(fmt.Sprintf("runtime.variable(%q) = %s;", name, g.generateValue(value)))
+}
+
+func (g *CPPGenerator) generateChangeVariable(node *Node) {
+	name := variableName(node)
+	value, ok := node.Inputs["VALUE"]
+	if name == "" || !ok {
+		return
+	}
+	g.writeLine(fmt.Sprintf("runtime.variable(%q) += %s;", name, g.generateValue(value)))
+}
+
+func variableName(node *Node) string {
+	field, ok := node.Fields["VARIABLE"]
+	if !ok || len(field) == 0 {
+		return ""
+	}
+	name, _ := field[0].(string)
+	return name
 }
 
 func (g *CPPGenerator) generateMoveSteps(node *Node) {
 	value, ok := node.Inputs["STEPS"]
 
 	if !ok {
-		g.writeLine("// motion_movesteps: missing STEPS")
+		g.warnMissingInput("motion_movesteps", "STEPS")
 		return
 	}
 
@@ -211,7 +293,7 @@ func (g *CPPGenerator) generateTurnRight(node *Node) {
 	value, ok := node.Inputs["DEGREES"]
 
 	if !ok {
-		g.writeLine("// motion_turnright: missing DEGREES")
+		g.warnMissingInput("motion_turnright", "DEGREES")
 		return
 	}
 
@@ -228,7 +310,7 @@ func (g *CPPGenerator) generateTurnLeft(node *Node) {
 	value, ok := node.Inputs["DEGREES"]
 
 	if !ok {
-		g.writeLine("// motion_turnleft: missing DEGREES")
+		g.warnMissingInput("motion_turnleft", "DEGREES")
 		return
 	}
 
@@ -315,7 +397,7 @@ func (g *CPPGenerator) generateRepeat(node *Node) {
 	times, ok := node.Inputs["TIMES"]
 
 	if !ok {
-		g.writeLine("// control_repeat: missing TIMES")
+		g.warnMissingInput("control_repeat", "TIMES")
 		return
 	}
 
@@ -341,7 +423,7 @@ func (g *CPPGenerator) generateSay(node *Node) {
 	value, ok := node.Inputs["MESSAGE"]
 
 	if !ok {
-		g.writeLine("// looks_say: missing MESSAGE")
+		g.warnMissingInput("looks_say", "MESSAGE")
 		return
 	}
 

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+#include <unordered_map>
 #include <vector>
 
 #include "ScratchSprite.hpp"
@@ -12,6 +14,8 @@ public:
 
     // Sprites
     std::vector<ScratchSprite> sprites;
+    ScratchSprite background;
+    std::unordered_map<std::string, double> variables;
 
     ScratchUI ui;
 
@@ -31,6 +35,7 @@ public:
     bool shouldClose() const;
 
     ScratchSprite &sprite(size_t index);
+    double &variable(const char *name);
 
 private:
     ScriptCallback startCallback = nullptr;
