@@ -181,6 +181,18 @@ double ScratchRuntime::unsupportedValue(const char *opcode)
 
 void ScratchRuntime::loadSound(const char *name, const char *path)
 {
+    if (!IsAudioDeviceReady())
+    {
+        logWarning("Audio device is not ready");
+        return;
+    }
+
+    if (!FileExists(path))
+    {
+        logWarning(std::string("Sound file does not exist: ") + path);
+        return;
+    }
+
     Sound sound = LoadSound(path);
     if (sound.frameCount == 0)
     {
