@@ -39,6 +39,11 @@ void ScratchRuntime::setStartCallback(ScriptCallback callback)
     startCallback = callback;
 }
 
+void ScratchRuntime::setStopCallback(ScriptCallback callback)
+{
+    stopCallback = callback;
+}
+
 void ScratchRuntime::draw()
 {
     sprite.draw();

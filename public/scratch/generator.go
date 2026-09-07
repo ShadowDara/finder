@@ -21,15 +21,27 @@ func (g *CPPGenerator) Generate(target Target, script *Script) string {
 	g.writeLine("#include <cmath>")
 	g.writeLine("#include \"ScratchRuntime.hpp\"")
 	g.writeLine("#include <raylib.h>")
+	g.writeLine("#include \"Logger.hpp\"")
 	g.writeLine("")
 
 	g.writeLine("ScratchRuntime runtime;")
+	g.writeLine("")
+
+	g.writeLine("static void stopScript()")
+	g.writeLine("{")
+	g.indent++
+
+	g.writeLine("log(\"Red flag clicked!\");")
+
+	g.indent--
+	g.writeLine("}")
 	g.writeLine("")
 
 	g.writeLine("static void startScript()")
 	g.writeLine("{")
 	g.indent++
 
+	g.writeLine("log(\"Green flag clicked!\");")
 	g.generateScript(script)
 
 	g.indent--
@@ -63,9 +75,8 @@ func (g *CPPGenerator) Generate(target Target, script *Script) string {
 
 	g.writeLine("runtime.loadAssets();")
 
-	g.writeLine("")
-
-	g.writeLine("startScript();")
+	g.writeLine("runtime.setStartCallback(startScript);")
+	g.writeLine("runtime.setStopCallback(stopScript);")
 	g.writeLine("")
 
 	g.writeLine("while (!runtime.shouldClose())")

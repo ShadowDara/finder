@@ -81,7 +81,9 @@ func scratchWorkflow(conf config.Config) error {
 			}
 
 			fmt.Println()
-			fmt.Println("Generated new project shell script")
+			fmt.Println("Generated new project shell script. Run:")
+			fmt.Println()
+			fmt.Printf("chmod +x %s && ./%s\n", conf.ScriptPath, conf.ScriptPath)
 		}
 	}
 

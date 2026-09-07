@@ -19,6 +19,7 @@ public:
 
     void loadAssets();
     void setStartCallback(ScriptCallback callback);
+    void setStopCallback(ScriptCallback callback);
     void update();
     void draw();
     void shutdown();
@@ -27,4 +28,5 @@ public:
 
 private:
     ScriptCallback startCallback = nullptr;
+    ScriptCallback stopCallback = nullptr;
 };

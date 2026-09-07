@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"image"
 	"image/png"
+	"math"
 	"os"
 	"path/filepath"
 
@@ -93,19 +94,33 @@ func SVGToPNG(
 	width int,
 	height int,
 ) error {
-	icon, err := oksvg.ReadIcon(
-		input,
-		0,
-	)
+	icon, err := oksvg.ReadIcon(input, 0)
 	if err != nil {
 		return fmt.Errorf("read svg: %w", err)
 	}
 
+	// Ursprüngliche SVG-Größe
+	srcW := icon.ViewBox.W
+	srcH := icon.ViewBox.H
+
+	// Faktor, der das komplette SVG innerhalb von width × height hält
+	scale := math.Min(
+		float64(width)/srcW,
+		float64(height)/srcH,
+	)
+
+	dstW := srcW * scale
+	dstH := srcH * scale
+
+	// Zentrieren
+	x := (float64(width) - dstW) / 2
+	y := (float64(height) - dstH) / 2
+
 	icon.SetTarget(
-		0,
-		0,
-		float64(width),
-		float64(height),
+		x,
+		y,
+		dstW,
+		dstH,
 	)
 
 	img := image.NewRGBA(
@@ -125,35 +140,20 @@ func SVGToPNG(
 		scanner,
 	)
 
-	icon.Draw(
-		dasher,
-		1,
-	)
+	icon.Draw(dasher, 1)
 
-	if err := os.MkdirAll(
-		filepath.Dir(output),
-		0755,
-	); err != nil {
-		return fmt.Errorf(
-			"create output directory: %w",
-			err,
-		)
+	if err := os.MkdirAll(filepath.Dir(output), 0755); err != nil {
+		return fmt.Errorf("create output directory: %w", err)
 	}
 
 	file, err := os.Create(output)
 	if err != nil {
-		return fmt.Errorf(
-			"create png: %w",
-			err,
-		)
+		return fmt.Errorf("create png: %w", err)
 	}
 	defer file.Close()
 
 	if err := png.Encode(file, img); err != nil {
-		return fmt.Errorf(
-			"encode png: %w",
-			err,
-		)
+		return fmt.Errorf("encode png: %w", err)
 	}
 
 	return nil
