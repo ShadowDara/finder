@@ -217,6 +217,15 @@ func (g *CPPGenerator) generateNode(node *Node) {
 	case "looks_say":
 		g.generateSay(node)
 
+	case "looks_show":
+		g.writeLine(fmt.Sprintf("runtime.sprite(%d).visible = true;", g.currentSpriteIdx))
+
+	case "looks_hide":
+		g.writeLine(fmt.Sprintf("runtime.sprite(%d).visible = false;", g.currentSpriteIdx))
+
+	case "motion_gotoxy":
+		g.generateGoToXY(node)
+
 	case "data_setvariableto":
 		g.generateSetVariable(node)
 
@@ -288,6 +297,26 @@ func (g *CPPGenerator) generateMoveSteps(node *Node) {
 		"runtime.sprite(%d).moveSteps(%s);",
 		g.currentSpriteIdx,
 		expr,
+	))
+}
+
+func (g *CPPGenerator) generateGoToXY(node *Node) {
+	x, xOK := node.Inputs["X"]
+	y, yOK := node.Inputs["Y"]
+	if !xOK || !yOK {
+		g.warnMissingInput("motion_gotoxy", "X or Y")
+		return
+	}
+
+	g.writeLine(fmt.Sprintf(
+		"runtime.sprite(%d).x = %s;",
+		g.currentSpriteIdx,
+		g.generateValue(x),
+	))
+	g.writeLine(fmt.Sprintf(
+		"runtime.sprite(%d).y = %s;",
+		g.currentSpriteIdx,
+		g.generateValue(y),
 	))
 }
 
