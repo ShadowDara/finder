@@ -9,6 +9,7 @@ public:
     void draw();
 
     bool running = false;
+    bool startRequested = false;
 
 private:
     Rectangle startButton{

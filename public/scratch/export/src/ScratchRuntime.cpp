@@ -20,10 +20,23 @@ void ScratchRuntime::update()
 {
     ui.update();
 
+    if (ui.startRequested)
+    {
+        ui.startRequested = false;
+
+        if (startCallback != nullptr)
+            startCallback();
+    }
+
     if (!ui.running)
         return;
 
     // Hier läuft später dein generiertes Scratch-Update.
+}
+
+void ScratchRuntime::setStartCallback(ScriptCallback callback)
+{
+    startCallback = callback;
 }
 
 void ScratchRuntime::draw()

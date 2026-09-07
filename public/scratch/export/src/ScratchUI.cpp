@@ -10,6 +10,7 @@ void ScratchUI::update()
     if (CheckCollisionPointRec(mouse, startButton))
     {
         running = true;
+        startRequested = true;
     }
 
     if (CheckCollisionPointRec(mouse, stopButton))
