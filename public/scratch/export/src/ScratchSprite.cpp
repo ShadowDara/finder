@@ -1,5 +1,6 @@
 #include "ScratchSprite.hpp"
 
+#include <algorithm>
 #include <cmath>
 
 void ScratchSprite::moveSteps(float steps)
@@ -51,8 +52,15 @@ void ScratchSprite::draw() const
     if (!visible || costume.id == 0)
         return;
 
-    const float screenX = GetScreenWidth() * 0.5f + x;
-    const float screenY = GetScreenHeight() * 0.5f - y;
+    constexpr float stageWidth = 480.0f;
+    constexpr float stageHeight = 360.0f;
+    const float scale = std::min(
+        GetScreenWidth() / stageWidth,
+        GetScreenHeight() / stageHeight);
+    const float stageLeft = (GetScreenWidth() - stageWidth * scale) * 0.5f;
+    const float stageTop = (GetScreenHeight() - stageHeight * scale) * 0.5f;
+    const float screenX = stageLeft + (stageWidth * 0.5f + x) * scale;
+    const float screenY = stageTop + (stageHeight * 0.5f - y) * scale;
 
     DrawTexturePro(
         costume,
@@ -64,11 +72,11 @@ void ScratchSprite::draw() const
         Rectangle{
             screenX,
             screenY,
-            static_cast<float>(costume.width),
-            static_cast<float>(costume.height)},
+            static_cast<float>(costume.width) * scale,
+            static_cast<float>(costume.height) * scale},
         Vector2{
-            rotationCenterX,
-            rotationCenterY},
+            rotationCenterX * scale,
+            rotationCenterY * scale},
         -direction + 90.0f,
         WHITE);
 
@@ -85,10 +93,18 @@ void ScratchSprite::drawAsBackground() const
     if (!visible || costume.id == 0)
         return;
 
+    constexpr float stageWidth = 480.0f;
+    constexpr float stageHeight = 360.0f;
+    const float scale = std::min(
+        GetScreenWidth() / stageWidth,
+        GetScreenHeight() / stageHeight);
+    const float stageLeft = (GetScreenWidth() - stageWidth * scale) * 0.5f;
+    const float stageTop = (GetScreenHeight() - stageHeight * scale) * 0.5f;
+
     DrawTexturePro(
         costume,
         Rectangle{0, 0, static_cast<float>(costume.width), static_cast<float>(costume.height)},
-        Rectangle{0, 0, static_cast<float>(GetScreenWidth()), static_cast<float>(GetScreenHeight())},
+        Rectangle{stageLeft, stageTop, stageWidth * scale, stageHeight * scale},
         Vector2{0, 0},
         0.0f,
         WHITE);
@@ -105,7 +121,14 @@ bool ScratchSprite::containsPoint(Vector2 point) const
     if (!visible || costume.id == 0)
         return false;
 
-    const float screenX = GetScreenWidth() * 0.5f + x - rotationCenterX;
-    const float screenY = GetScreenHeight() * 0.5f - y - rotationCenterY;
-    return CheckCollisionPointRec(point, Rectangle{screenX, screenY, static_cast<float>(costume.width), static_cast<float>(costume.height)});
+    constexpr float stageWidth = 480.0f;
+    constexpr float stageHeight = 360.0f;
+    const float scale = std::min(
+        GetScreenWidth() / stageWidth,
+        GetScreenHeight() / stageHeight);
+    const float stageLeft = (GetScreenWidth() - stageWidth * scale) * 0.5f;
+    const float stageTop = (GetScreenHeight() - stageHeight * scale) * 0.5f;
+    const float screenX = stageLeft + (stageWidth * 0.5f + x) * scale - rotationCenterX * scale;
+    const float screenY = stageTop + (stageHeight * 0.5f - y) * scale - rotationCenterY * scale;
+    return CheckCollisionPointRec(point, Rectangle{screenX, screenY, static_cast<float>(costume.width) * scale, static_cast<float>(costume.height) * scale});
 }
