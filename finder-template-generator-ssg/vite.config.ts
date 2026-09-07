@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import { pagesPlugin } from "./pages-ssg-plugin";
 import { visualizer } from "rollup-plugin-visualizer";
+import { buildSize } from "./size-plugin";
 
 export default defineConfig(({ mode }) => ({
   base: mode === "static" ? "/finder/" : "./",
@@ -33,10 +34,7 @@ export default defineConfig(({ mode }) => ({
         "docs/config": ["/src/markdownrootstyle.css"],
         "docs/index": ["/src/markdownrootstyle.css"],
       },
-      extensions: [".ts", ".tsx"],
       prettyUrls: true,
-      pagesDir: "pages",
-      docsDir: "docs",
       entry: "src/main.ts",
       minify: true,
       title: (id) => {
@@ -49,6 +47,7 @@ export default defineConfig(({ mode }) => ({
         return titles[id] ?? "Finder";
       },
     }),
+    buildSize(),
   ],
   build: {
     rollupOptions: {

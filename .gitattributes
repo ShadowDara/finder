@@ -15,6 +15,7 @@ go.mod linguist-language=Shell
 # HTML DIR
 /cmd/findergen/frontend/** linguist-vendored
 
+/finder-template-generator-ssg/size-plugin.ts linguist-vendored
 /finder-template-generator-ssg/pages-ssg-plugin.ts linguist-vendored
 /finder-template-generator-ssg/src/jsx-runtime.ts linguist-vendored
 /finder-template-generator-ssg/src/jsx.d.ts linguist-vendored

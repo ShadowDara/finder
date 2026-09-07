@@ -20,6 +20,7 @@
     "@eslint/js": "^10.0.1",
     "@types/html-minifier-terser": "^7.0.2",
     "@types/node": "^26.4.0",
+    "chalk": "^6.0.0",
     "eslint": "^10.9.1",
     "html-minifier-terser": "^7.2.0",
     "rollup-plugin-visualizer": "^7.1.1",

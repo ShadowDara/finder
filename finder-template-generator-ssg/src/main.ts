@@ -1,5 +1,11 @@
 import { pages } from "virtual:pages";
-import { ErrorPage, render404, render404_2, render404_3 } from "./404";
+import {
+  ErrorPage,
+  render404,
+  render404_2,
+  render404_3,
+  renderMarkdown,
+} from "./404";
 import { loadStyles } from "./jsx-runtime";
 
 declare global {
@@ -43,12 +49,7 @@ async function main() {
     loadStyles(page.styles);
 
     if (page.type === "markdown") {
-      app.innerHTML = `
-      <a href="../">Home</a>
-      <article class="markdown">
-        ${page.html}
-      </article>
-    `;
+      renderMarkdown(app, page);
 
       return;
     }

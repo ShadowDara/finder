@@ -1,5 +1,7 @@
+// Prob buildin Pages later (but they can be overwritten)
+
 import { PageEntry } from "virtual:pages";
-import { jsx } from "../src/jsx-runtime";
+import { jsx, Fragment } from "../src/jsx-runtime";
 
 // Render the 404 Page
 export function render404(app: HTMLElement) {
@@ -60,4 +62,15 @@ export function ErrorPage(app: HTMLElement, id: string, error: unknown) {
       <pre>{error}</pre>
     </main>
   );
+}
+
+export function renderMarkdown(app: HTMLElement, page: PageEntry) {
+  if (page.type === "markdown") {
+    app.innerHTML = (
+      <>
+        <a href="../">Home</a>
+        <article class="markdown">{page.html}</article>
+      </>
+    );
+  }
 }
