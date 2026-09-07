@@ -145,18 +145,28 @@ void ScratchRuntime::updateTasks()
     for (size_t index = 0; index < tasks.size();)
     {
         auto &task = tasks[index];
+
+        if (!task.handle || task.handle.done())
+        {
+            if (task.handle)
+                task.handle.destroy();
+            tasks.erase(tasks.begin() + static_cast<std::ptrdiff_t>(index));
+            continue;
+        }
+
         bool ready = !task.condition && task.resumeAt < 0.0;
         if (task.condition)
             ready = task.condition();
         else if (task.resumeAt >= 0.0)
             ready = GetTime() >= task.resumeAt;
 
-        if (ready)
+        if (ready && !task.handle.done())
             task.handle.resume();
 
-        if (task.handle.done())
+        if (!task.handle || task.handle.done())
         {
-            task.handle.destroy();
+            if (task.handle)
+                task.handle.destroy();
             tasks.erase(tasks.begin() + static_cast<std::ptrdiff_t>(index));
         }
         else
