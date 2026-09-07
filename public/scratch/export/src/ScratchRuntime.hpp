@@ -1,11 +1,13 @@
 #pragma once
 
 #include "ScratchSprite.hpp"
+#include "ScratchUI.hpp"
 
 class ScratchRuntime
 {
 public:
     ScratchSprite sprite;
+    ScratchUI ui;
 
     void init(
         int width,
@@ -13,6 +15,7 @@ public:
         const char *title,
         int FPS);
 
+    void loadAssets();
     void update();
     void draw();
     void shutdown();

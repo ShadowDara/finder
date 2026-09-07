@@ -25,11 +25,21 @@ IMPORT_PATH=%s
 CACHEDIR=%s
 
 # Clear
-rm -rf $EXPORT_PATH
+#rm -rf $EXPORT_PATH
 
 mkdir -p $EXPORT_PATH
 mkdir -p $EXPORT_PATH/src
 mkdir -p $EXPORT_PATH/resources
+
+touch $EXPORT_PATH/src/ScratchUI.cpp
+cat > $EXPORT_PATH/src/ScratchUI.cpp <<'EOF'
+%s
+EOF
+
+touch $EXPORT_PATH/src/ScratchUI.hpp
+cat > $EXPORT_PATH/src/ScratchUI.hpp <<'EOF'
+%s
+EOF
 
 touch $EXPORT_PATH/src/ScratchRuntime.cpp
 cat > $EXPORT_PATH/src/ScratchRuntime.cpp <<'EOF'
@@ -73,7 +83,7 @@ EOF
 
 # Copy Images and other files
 cp -r $IMPORT_PATH/** $EXPORT_PATH/resources
-cp -r $CACHEDIR/** $EXPORT_PATH/resources
+cp -r $CACHEDIR/assets/** $EXPORT_PATH/resources
 
 # Delete SVG Files
 find ./$EXPORT_PATH/resources -type f -name "*.svg" -delete
@@ -86,6 +96,8 @@ echo "cd $EXPORT_PATH && chmod +x clone.sh && ./clone.sh && cat README.txt"
 `, conf.Outdir,
 		conf.Indir,
 		conf.CacheDir,
+		exportFile("src/ScratchUI.cpp"),
+		exportFile("src/ScratchUI.hpp"),
 		exportFile("src/ScratchRuntime.cpp"),
 		exportFile("src/ScratchRuntime.hpp"),
 		exportFile("src/ScratchSprite.cpp"),

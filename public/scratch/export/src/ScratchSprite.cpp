@@ -26,14 +26,46 @@ void ScratchSprite::turnLeft(float degrees)
         direction += 360.0f;
 }
 
+void ScratchSprite::loadCostume(
+    const char *path,
+    float rotationCenterX,
+    float rotationCenterY)
+{
+    unloadCostume();
+    costume = LoadTexture(path);
+    this->rotationCenterX = rotationCenterX;
+    this->rotationCenterY = rotationCenterY;
+}
+
+void ScratchSprite::unloadCostume()
+{
+    if (costume.id != 0)
+    {
+        UnloadTexture(costume);
+        costume = {};
+    }
+}
+
 void ScratchSprite::draw() const
 {
     if (costume.id == 0)
         return;
 
-    DrawTexture(
+    DrawTexturePro(
         costume,
-        static_cast<int>(x),
-        static_cast<int>(y),
+        Rectangle{
+            0,
+            0,
+            static_cast<float>(costume.width),
+            static_cast<float>(costume.height)},
+        Rectangle{
+            x,
+            y,
+            static_cast<float>(costume.width),
+            static_cast<float>(costume.height)},
+        Vector2{
+            rotationCenterX,
+            rotationCenterY},
+        -direction + 90.0f,
         WHITE);
 }

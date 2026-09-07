@@ -21,11 +21,6 @@ func CompileTargetAssets(
 		fmt.Println("Format:", costume.DataFormat)
 		fmt.Println("Asset:", costume.MD5Ext)
 
-		if costume.DataFormat != "svg" {
-			continue
-		}
-
-		// SVG-Datei im Scratch-Projekt
 		input := filepath.Join(
 			projectDir,
 			costume.MD5Ext,
@@ -38,11 +33,24 @@ func CompileTargetAssets(
 			)
 		}
 
-		// PNG-Dateiname
-		output := filepath.Join(
-			outputDir,
-			target.Name+"_"+costume.Name+".png",
-		)
+		outputName := costume.MD5Ext
+		if costume.DataFormat == "svg" {
+			outputName = costume.AssetID + ".png"
+		}
+
+		output := filepath.Join(outputDir, outputName)
+
+		if costume.DataFormat != "svg" {
+			if err := os.MkdirAll(outputDir, 0755); err != nil {
+				return fmt.Errorf("create asset directory: %w", err)
+			}
+
+			if err := copyFile(input, output); err != nil {
+				return fmt.Errorf("copy costume %q: %w", costume.Name, err)
+			}
+
+			continue
+		}
 
 		fmt.Println("SVG:", input)
 		fmt.Println("PNG:", output)
@@ -68,6 +76,15 @@ func CompileTargetAssets(
 	}
 
 	return nil
+}
+
+func copyFile(input, output string) error {
+	data, err := os.ReadFile(input)
+	if err != nil {
+		return err
+	}
+
+	return os.WriteFile(output, data, 0644)
 }
 
 func SVGToPNG(

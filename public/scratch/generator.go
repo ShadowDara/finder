@@ -14,7 +14,7 @@ func NewCPPGenerator() *CPPGenerator {
 	return &CPPGenerator{}
 }
 
-func (g *CPPGenerator) Generate(script *Script) string {
+func (g *CPPGenerator) Generate(target Target, script *Script) string {
 	g.output.Reset()
 	g.indent = 0
 
@@ -36,6 +36,23 @@ func (g *CPPGenerator) Generate(script *Script) string {
 	g.writeLine("}")
 	g.writeLine("")
 
+	g.writeLine("void ScratchRuntime::loadAssets()")
+	g.writeLine("{")
+	g.indent++
+
+	for _, costume := range target.Costumes {
+		g.writeLine(fmt.Sprintf(
+			"sprite.loadCostume(RESOURCES_PATH \"%s\", %g, %g);",
+			assetFilename(costume),
+			costume.RotationCenterX,
+			costume.RotationCenterY,
+		))
+	}
+
+	g.indent--
+	g.writeLine("}")
+	g.writeLine("")
+
 	g.writeLine("int main()")
 	g.writeLine("{")
 	g.indent++
@@ -43,6 +60,8 @@ func (g *CPPGenerator) Generate(script *Script) string {
 	g.writeLine(
 		`runtime.init(800, 600, "Scratch Project", 60);`,
 	)
+
+	g.writeLine("runtime.loadAssets();")
 
 	g.writeLine("")
 
@@ -75,6 +94,14 @@ func (g *CPPGenerator) Generate(script *Script) string {
 	g.writeLine("}")
 
 	return g.output.String()
+}
+
+func assetFilename(costume Costume) string {
+	if costume.DataFormat == "svg" {
+		return costume.AssetID + ".png"
+	}
+
+	return costume.MD5Ext
 }
 
 func (g *CPPGenerator) generateScript(script *Script) {

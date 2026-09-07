@@ -18,21 +18,24 @@ void ScratchRuntime::init(
 
 void ScratchRuntime::update()
 {
+    ui.update();
+
+    if (!ui.running)
+        return;
+
+    // Hier läuft später dein generiertes Scratch-Update.
 }
 
 void ScratchRuntime::draw()
 {
     sprite.draw();
+
+    ui.draw();
 }
 
 void ScratchRuntime::shutdown()
 {
-    if (sprite.costume.id != 0)
-    {
-        UnloadTexture(sprite.costume);
-        sprite.costume = {};
-    }
-
+    sprite.unloadCostume();
     CloseWindow();
 }
 

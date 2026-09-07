@@ -68,7 +68,7 @@ func scratchWorkflow(conf config.Config) error {
 
 			generator := scratch.NewCPPGenerator()
 
-			cpp := generator.Generate(script)
+			cpp := generator.Generate(target, script)
 
 			// fmt.Println()
 			// fmt.Println("========== GENERATED C++ ==========")
