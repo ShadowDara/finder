@@ -53,6 +53,10 @@ write_if_changed "$EXPORT_PATH/package.json" <<'EOF'
 %s
 EOF
 
+write_if_changed "$EXPORT_PATH/package-lock.json" <<'EOF'
+%s
+EOF
+
 write_if_changed "$EXPORT_PATH/LICENSE" <<'EOF'
 %s
 EOF
@@ -135,6 +139,7 @@ echo "cd $EXPORT_PATH && chmod +x clone.sh && ./clone.sh && cat README.txt"
 		conf.CacheDir,
 		exportFile("samfile"),
 		exportFile("package.json"),
+		exportFile("package-lock.json"),
 		exportFile("LICENSE"),
 		exportFile("minishell.html"),
 		exportFile("CMakeSettings.json"),

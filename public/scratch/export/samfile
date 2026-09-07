@@ -6,21 +6,19 @@ webbuild:
     echo ==========================================
     echo Delete old build!
     echo ==========================================
-    RM build
+    RM webbuild
 
     echo
     echo ==========================================
     echo Configure CMAKE project with emcmake ...
     echo ==========================================
-    SHELL emcmake cmake -B build
+    SHELL emcmake cmake -B webbuild
 
     echo
     echo ==========================================
     echo Build Project...
     echo ==========================================
-    SHELL emmake cmake --build build -j
-    SHELL npm run generate
-    SHELL npm run movlicense
+    SHELL emmake cmake --build webbuild -j
 
     echo
     echo ==========================================

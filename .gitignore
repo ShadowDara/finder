@@ -17,3 +17,4 @@ scratch/script.sh
 scratch/export/src/main.cpp
 /scratch/export2
 /scratch/scratchcache
+/public/scratch/export/node_modules

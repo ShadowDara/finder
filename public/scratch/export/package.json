@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "---",
   "scripts": {
-    "dev": "npx http-server build"
+    "dev": "npx http-server build",
+    "build": "npx seg webbuild"
   },
   "author": [
     "meemknight",
@@ -12,6 +13,6 @@
   "license": "MIT",
   "devDependencies": {
     "http-server": "14.1.1",
-    "@shadowdara/seg": "0.2.6"
+    "@shadowdara/seg": "0.2.4"
   }
 }

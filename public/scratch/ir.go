@@ -190,20 +190,23 @@ func parseInput(
 			return Value{Kind: ValueInvalid}
 		}
 
-		id, ok := values[1].(string)
-		if !ok {
-			return Value{Kind: ValueInvalid}
+		if id, ok := values[1].(string); ok {
+			node := parseBlock(blocks, id)
+			if node == nil {
+				return Value{Kind: ValueInvalid}
+			}
+
+			return Value{
+				Kind:  ValueBlock,
+				Block: node,
+			}
 		}
 
-		node := parseBlock(blocks, id)
-		if node == nil {
-			return Value{Kind: ValueInvalid}
+		if nested, ok := values[1].([]any); ok {
+			return parseInput(blocks, nested)
 		}
 
-		return Value{
-			Kind:  ValueBlock,
-			Block: node,
-		}
+		return Value{Kind: ValueInvalid}
 
 	case 3:
 		// Block + Shadow
@@ -211,20 +214,23 @@ func parseInput(
 			return Value{Kind: ValueInvalid}
 		}
 
-		id, ok := values[1].(string)
-		if !ok {
-			return Value{Kind: ValueInvalid}
+		if id, ok := values[1].(string); ok {
+			node := parseBlock(blocks, id)
+			if node == nil {
+				return Value{Kind: ValueInvalid}
+			}
+
+			return Value{
+				Kind:  ValueBlock,
+				Block: node,
+			}
 		}
 
-		node := parseBlock(blocks, id)
-		if node == nil {
-			return Value{Kind: ValueInvalid}
+		if nested, ok := values[1].([]any); ok {
+			return parseInput(blocks, nested)
 		}
 
-		return Value{
-			Kind:  ValueBlock,
-			Block: node,
-		}
+		return Value{Kind: ValueInvalid}
 
 	case 12:
 		if len(values) >= 2 {
