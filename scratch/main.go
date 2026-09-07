@@ -59,6 +59,9 @@ func scratchWorkflow(conf config.Config) error {
 			if err != nil {
 				panic(err)
 			}
+
+			fmt.Println()
+			fmt.Println("Generated new project shell script")
 		}
 	}
 
