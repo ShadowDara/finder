@@ -1,0 +1,30 @@
+# Make the webbuild
+webbuild:
+    echo INFO
+    echo you need to have emscripten installed for that!
+    echo
+    echo ==========================================
+    echo Delete old build!
+    echo ==========================================
+    RM build
+
+    echo
+    echo ==========================================
+    echo Configure CMAKE project with emcmake ...
+    echo ==========================================
+    SHELL emcmake cmake -B build
+
+    echo
+    echo ==========================================
+    echo Build Project...
+    echo ==========================================
+    SHELL emmake cmake --build build -j
+    SHELL npm run generate
+    SHELL npm run movlicense
+
+    echo
+    echo ==========================================
+    echo Finished!
+    echo ==========================================
+
+    PROMPT
