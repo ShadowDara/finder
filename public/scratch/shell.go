@@ -21,9 +21,14 @@ func GenShellScript(cpp string, conf config.Config) string {
 #!/bin/bash
 
 EXPORT_PATH=%s
+IMPORT_PATH=%s
+
+# Clear
+rm -rf $EXPORT_PATH
 
 mkdir -p $EXPORT_PATH
 mkdir -p $EXPORT_PATH/src
+mkdir -p $EXPORT_PATH/resources
 
 touch $EXPORT_PATH/src/ScratchRuntime.cpp
 cat > $EXPORT_PATH/src/ScratchRuntime.cpp <<'EOF'
@@ -65,12 +70,16 @@ cat > $EXPORT_PATH/README.txt <<'EOF'
 %s
 EOF
 
+# Copy Images and other files
+cp -r $IMPORT_PATH/** $EXPORT_PATH/resources
+
 echo "Run clone.sh to get the remaining dependencies for CMake, or read README.txt"
 echo ""
 echo "to get started run"
 echo ""
 echo "cd $EXPORT_PATH && chmod +x clone.sh && ./clone.sh && cat README.txt"
 `, conf.Outdir,
+		conf.Indir,
 		exportFile("src/ScratchRuntime.cpp"),
 		exportFile("src/ScratchRuntime.hpp"),
 		exportFile("src/ScratchSprite.cpp"),
