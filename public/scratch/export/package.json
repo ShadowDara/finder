@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "---",
   "scripts": {
-    "dev": "npx http-server build",
+    "dev": "npx http-server webbuild",
     "build": "npx seg webbuild"
   },
   "author": [

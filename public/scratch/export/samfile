@@ -20,6 +20,8 @@ webbuild:
     echo ==========================================
     SHELL emmake cmake --build webbuild -j
 
+    CP resources webbuild/resources
+
     echo
     echo ==========================================
     echo Finished!
