@@ -22,48 +22,58 @@ func parseBlock(
 	id string,
 ) *Node {
 	block, ok := blocks[id]
-
 	if !ok {
 		return nil
 	}
 
 	node := &Node{
 		Opcode:   block.Opcode,
-		Inputs:   block.Inputs,
+		Inputs:   make(map[string]Value),
 		Fields:   block.Fields,
 		Children: make(map[string][]*Node),
 	}
 
+	// Inputs parsen
 	for name, input := range block.Inputs {
-		childID := getBlockID(input)
+		value := parseInput(blocks, input)
 
-		if childID == "" {
-			continue
+		if value.Kind != ValueInvalid {
+			node.Inputs[name] = value
 		}
 
-		children := ParseChain(blocks, childID)
+		// SUBSTACK, SUBSTACK2 usw.
+		if childID := getBlockID(input); childID != "" {
+			children := ParseChain(blocks, childID)
 
-		if len(children) > 0 {
-			node.Children[name] = children
+			if len(children) > 0 {
+				node.Children[name] = children
+			}
 		}
 	}
 
 	return node
 }
+
 func getBlockID(input any) string {
 	values, ok := input.([]any)
-
 	if !ok || len(values) < 2 {
 		return ""
 	}
 
-	id, ok := values[1].(string)
-
+	// Input-Typ
+	inputType, ok := values[0].(float64)
 	if !ok {
 		return ""
 	}
 
-	return id
+	switch int(inputType) {
+	case 2, 3:
+		if id, ok := values[1].(string); ok {
+			return id
+		}
+	}
+
+	return ""
 }
 
 func ParseScript(
@@ -138,7 +148,9 @@ func ParseChain(
 type ValueKind int
 
 const (
-	ValueNumber ValueKind = iota
+	ValueInvalid ValueKind = iota
+
+	ValueNumber
 	ValueString
 	ValueBool
 	ValueVariable
@@ -161,34 +173,93 @@ func parseInput(
 	input any,
 ) Value {
 	values, ok := input.([]any)
+	if !ok || len(values) == 0 {
+		return Value{Kind: ValueInvalid}
+	}
 
+	inputType, ok := values[0].(float64)
 	if !ok {
-		return Value{}
+		return Value{Kind: ValueInvalid}
 	}
-
-	if len(values) == 0 {
-		return Value{}
-	}
-
-	// Scratch input type
-	inputType, _ := values[0].(float64)
 
 	switch int(inputType) {
+
 	case 1:
+		// Literal
 		return parseLiteral(values)
 
 	case 2:
-		if len(values) >= 2 {
-			if id, ok := values[1].(string); ok {
-				node := parseBlock(blocks, id)
+		// Reporter-Block
+		if len(values) < 2 {
+			return Value{Kind: ValueInvalid}
+		}
 
-				return Value{
-					Kind:  ValueBlock,
-					Block: node,
-				}
-			}
+		id, ok := values[1].(string)
+		if !ok {
+			return Value{Kind: ValueInvalid}
+		}
+
+		node := parseBlock(blocks, id)
+		if node == nil {
+			return Value{Kind: ValueInvalid}
+		}
+
+		return Value{
+			Kind:  ValueBlock,
+			Block: node,
+		}
+
+	case 3:
+		// Block + Shadow
+		if len(values) < 2 {
+			return Value{Kind: ValueInvalid}
+		}
+
+		id, ok := values[1].(string)
+		if !ok {
+			return Value{Kind: ValueInvalid}
+		}
+
+		node := parseBlock(blocks, id)
+		if node == nil {
+			return Value{Kind: ValueInvalid}
+		}
+
+		return Value{
+			Kind:  ValueBlock,
+			Block: node,
 		}
 	}
 
-	return Value{}
+	return Value{Kind: ValueInvalid}
+}
+
+func parseLiteral(values []any) Value {
+	if len(values) < 2 {
+		return Value{Kind: ValueInvalid}
+	}
+
+	value := values[1]
+
+	switch v := value.(type) {
+	case float64:
+		return Value{
+			Kind:   ValueNumber,
+			Number: v,
+		}
+
+	case string:
+		return Value{
+			Kind:   ValueString,
+			String: v,
+		}
+
+	case bool:
+		return Value{
+			Kind: ValueBool,
+			Bool: v,
+		}
+	}
+
+	return Value{Kind: ValueInvalid}
 }
