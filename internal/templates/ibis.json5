@@ -1,1 +1,1 @@
-{"description":"Ibis Python dataframe API for data analytics","files":["ibis.config.yaml","requirements.txt"],"folders":[{"files":["*.py"],"folders":[],"name":"scripts"}],"name":"*"}
+{"description":"Ibis Python dataframe API for data analytics","files":["ibis.config.yaml","requirements.txt"],"folders":[{"files":["*.py"],"folders":[],"name":"scripts"}],"min_version":"0.3.16","name":"*","tags":["python"]}

@@ -2588,7 +2588,11 @@ export default {
         "name": "scripts"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "python"
+    ]
   },
   "idea.json5": {
     "description": "a Folder Struct for Jetbrains Idea Projects",
@@ -2598,6 +2602,7 @@ export default {
         "name": ".idea"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "imgui.json5": {
@@ -2616,6 +2621,7 @@ export default {
         "name": "imgui"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "influxdb.json5": {
@@ -2625,6 +2631,7 @@ export default {
       "influxdb.conf"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "ionic.json5": {
@@ -4610,6 +4617,7 @@ export default {
         "name": "launch"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "rtdb.json5": {
@@ -4618,13 +4626,18 @@ export default {
       "database.rules.json"
     ],
     "folders": [],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "db"
+    ]
   },
   "ruby.json5": {
     "files": [
       "Gemfile"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "rush.json5": {
@@ -4640,6 +4653,7 @@ export default {
         "name": "apps"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "rust.json5": {
@@ -4648,7 +4662,11 @@ export default {
       "Cargo.lock"
     ],
     "folders": [],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "rust"
+    ]
   },
   "salt.json5": {
     "description": "SaltStack infrastructure automation",
@@ -4662,6 +4680,7 @@ export default {
         "name": "salt"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "samengine.json5": {
@@ -4683,7 +4702,10 @@ export default {
       }
     ],
     "min_version": "0.3.14",
-    "name": "*"
+    "name": "*",
+    "tags": [
+      "samfile"
+    ]
   },
   "sanity.json5": {
     "description": "Sanity.io content management",
@@ -4698,6 +4720,7 @@ export default {
         "name": "schemas"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "scala.json5": {
@@ -4713,7 +4736,11 @@ export default {
         "name": "src"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "scala"
+    ]
   },
   "scheme.json5": {
     "description": "Scheme programming language",
@@ -4722,6 +4749,7 @@ export default {
       "*.ss"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "scratch.json5": {
@@ -4730,6 +4758,7 @@ export default {
       "*.sb3"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*",
     "tags": [
       "game-engine"
@@ -4748,6 +4777,7 @@ export default {
         "name": "tests"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "semantic-scholar.json5": {
@@ -4766,6 +4796,7 @@ export default {
         "name": "data"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "serverless.json5": {
@@ -4781,6 +4812,7 @@ export default {
         "name": "functions"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "shiny.json5": {
@@ -4801,6 +4833,7 @@ export default {
         "name": "app"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "sinatra.json5": {
@@ -4810,7 +4843,11 @@ export default {
       "Gemfile"
     ],
     "folders": [],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "web"
+    ]
   },
   "sln.json5": {
     "description": "Struct for Visual Studio Projects",
@@ -4822,6 +4859,7 @@ export default {
         "name": ".vs"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "solidity.json5": {
@@ -4837,6 +4875,7 @@ export default {
         "name": "contracts"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "solidstart.json5": {
@@ -4852,6 +4891,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "solr.json5": {
@@ -4861,6 +4901,7 @@ export default {
       "solrconfig.xml"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "sonarqube.json5": {
@@ -4869,6 +4910,7 @@ export default {
       "sonar-project.properties"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "spark-sql.json5": {
@@ -4894,6 +4936,7 @@ export default {
         "name": "scripts"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "spark.json5": {
@@ -4909,6 +4952,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "spring-boot.json5": {
@@ -4924,7 +4968,12 @@ export default {
         "name": "src"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "java",
+      "web"
+    ]
   },
   "spring.json5": {
     "description": "Java Spring Framework project",
@@ -4939,7 +4988,11 @@ export default {
         "name": "src"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "java"
+    ]
   },
   "sqlite.json5": {
     "description": "SQLite database project",
@@ -4948,7 +5001,11 @@ export default {
       "*.sqlite"
     ],
     "folders": [],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "db"
+    ]
   },
   "stablediffusion.json5": {
     "description": "Stable Diffusion AI image generation model",
@@ -4974,6 +5031,7 @@ export default {
         "name": "prompts"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "steamlib.json5": {
@@ -5013,6 +5071,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "storm.json5": {
@@ -5027,6 +5086,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "strapi.json5": {

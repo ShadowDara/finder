@@ -1,1 +1,1 @@
-{"description":"Dear ImGui immediate mode graphical user interface","files":["CMakeLists.txt","imgui.ini"],"folders":[{"files":["*.cpp","*.h"],"folders":[],"name":"imgui"}],"name":"*"}
+{"description":"Dear ImGui immediate mode graphical user interface","files":["CMakeLists.txt","imgui.ini"],"folders":[{"files":["*.cpp","*.h"],"folders":[],"name":"imgui"}],"min_version":"0.3.16","name":"*"}
