@@ -15,7 +15,8 @@ Maybe
 # finder
 
 [![Build Status](https://github.com/ShadowDara/finder/actions/workflows/release.yml/badge.svg)](https://github.com/ShadowDara/finder/actions/workflows/release.yml)
-[![Build Check](https://github.com/ShadowDara/finder/actions/workflows/buildcheck.yml/badge.svg)](https://github.com/ShadowDara/finder/actions/workflows/buildcheck.yml)
+[![Build Check](https://github.com/ShadowDara/finder/actions/workflows/buildcheck.yml/badge.svg?branch=main)](https://github.com/ShadowDara/finder/actions/workflows/buildcheck.yml)
+[![Build Check](https://github.com/ShadowDara/finder/actions/workflows/buildcheck.yml/badge.svg?branch=develop)](https://github.com/ShadowDara/finder/actions/workflows/buildcheck.yml)
 [![Deploy GitHub Pages](https://github.com/ShadowDara/finder/actions/workflows/deploywebpage.yml/badge.svg)](https://github.com/ShadowDara/finder/actions/workflows/deploywebpage.yml)
 [![GitHub contributors](https://img.shields.io/github/contributors/shadowdara/finder)](https://github.com/shadowdara/finder/graphs/contributors)
 [![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/m/shadowdara/finder)](https://github.com/shadowdara/finder/commits)
