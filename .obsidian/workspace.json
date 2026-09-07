@@ -44,8 +44,33 @@
               "icon": "lucide-file",
               "title": "README"
             }
+          },
+          {
+            "id": "33850fb96f064b9b",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "Map.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "Map"
+            }
+          },
+          {
+            "id": "2c0d57fd591db223",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "Map.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "Map"
+            }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -213,8 +238,10 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "dec4c4c96e95f58f",
+  "active": "2c0d57fd591db223",
   "lastOpenFiles": [
+    "tags.txt",
+    "Map.md",
     "finder-template-generator-ssg/vite.config.ts.timestamp-1788772920182-b464a59d2e105.mjs",
     "finder-template-generator-ssg/vite.config.ts.timestamp-1788772881023-c4de9d4623cc2.mjs",
     "finder-template-generator-ssg/vite.config.ts.timestamp-1788772868311-ee81ab0dfa3fc.mjs",
@@ -224,10 +251,7 @@
     "finder-template-generator-ssg/dist/assets/viewer.js",
     "finder-template-generator-ssg/dist/assets/viewer.css",
     "finder-template-generator-ssg/dist/assets/products.js",
-    "finder-template-generator-ssg/dist/assets/markdownstyle.css",
-    "finder-template-generator-ssg/dist/assets/markdownrootstyle.css",
     "CHANGELOG.md",
-    "Map.md",
     "dub/SSG Plugin Build Time Code.md",
     "finder-template-generator-ssg/node_modules/tsx/node_modules/@esbuild/win32-x64/README.md",
     "finder-template-generator-ssg/node_modules/tsx/node_modules/esbuild/README.md",
