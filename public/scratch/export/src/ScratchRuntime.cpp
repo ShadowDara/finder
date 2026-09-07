@@ -66,13 +66,31 @@ void ScratchRuntime::waitUntil(const std::function<bool()> &condition)
 {
     while (!condition())
     {
+        ui.update();
+        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+        {
+            Vector2 mouse = GetMousePosition();
+            for (size_t index = 0; index < sprites.size(); ++index)
+            {
+                if (index < spriteClickCallbacks.size() && sprites[index].containsPoint(mouse) && spriteClickCallbacks[index] != nullptr)
+                    spriteClickCallbacks[index]();
+            }
+        }
+
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+        draw();
+        EndDrawing();
         PollInputEvents();
     }
 }
 
 void ScratchRuntime::draw()
 {
-    background.draw();
+    if (!backdrops.empty())
+        backdrops[currentBackdrop].draw();
+    else
+        background.draw();
 
     for (auto &sprite : sprites)
     {
@@ -96,6 +114,9 @@ void ScratchRuntime::draw()
 void ScratchRuntime::shutdown()
 {
     background.unloadCostume();
+
+    for (auto &backdrop : backdrops)
+        backdrop.unloadCostume();
 
     for (auto &sprite : sprites)
     {
@@ -123,4 +144,16 @@ double ScratchRuntime::unsupportedValue(const char *opcode)
 {
     logWarning(std::string("Unsupported Scratch value: ") + opcode);
     return 0.0;
+}
+
+void ScratchRuntime::setBackdrop(size_t index)
+{
+    if (index < backdrops.size())
+        currentBackdrop = index;
+}
+
+void ScratchRuntime::nextBackdrop()
+{
+    if (!backdrops.empty())
+        currentBackdrop = (currentBackdrop + 1) % backdrops.size();
 }

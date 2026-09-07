@@ -173,6 +173,14 @@ func parseInput(
 	switch int(inputType) {
 
 	case 1:
+		if len(values) >= 2 {
+			if id, ok := values[1].(string); ok {
+				if node := parseBlock(blocks, id); node != nil {
+					return Value{Kind: ValueBlock, Block: node}
+				}
+			}
+		}
+
 		// Literal
 		return parseLiteral(values)
 

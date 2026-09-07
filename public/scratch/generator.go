@@ -9,6 +9,7 @@ type CPPGenerator struct {
 	indent           int
 	output           strings.Builder
 	currentSpriteIdx int
+	currentStage     *Target
 }
 
 func NewCPPGenerator() *CPPGenerator {
@@ -66,9 +67,16 @@ func (g *CPPGenerator) Generate(project *Project) string {
 	spriteIndex := 0
 	for _, target := range project.Targets {
 		if target.IsStage {
+			g.currentStage = &target
+			for id, block := range target.Blocks {
+				if block.TopLevel {
+					g.generateScript(ParseScript(target.Blocks, id))
+				}
+			}
 			continue
 		}
 
+		g.currentStage = nil
 		g.currentSpriteIdx = spriteIndex
 		for id, block := range target.Blocks {
 			if !block.TopLevel || block.Opcode == "event_whenthisspriteclicked" {
@@ -197,20 +205,19 @@ func (g *CPPGenerator) generateBackground(target Target) {
 		return
 	}
 
-	costumeIndex := target.CurrentCostume
-	if costumeIndex < 0 || costumeIndex >= len(target.Costumes) {
-		costumeIndex = 0
+	for _, costume := range target.Costumes {
+		g.writeLine("runtime.backdrops.emplace_back();")
+		g.writeLine(fmt.Sprintf(
+			"runtime.backdrops.back().loadCostume(RESOURCES_PATH \"%s\", %g, %g);",
+			assetFilename(costume),
+			costume.RotationCenterX,
+			costume.RotationCenterY,
+		))
 	}
 
-	costume := target.Costumes[costumeIndex]
-	g.writeLine("runtime.background.x = 400;")
-	g.writeLine("runtime.background.y = 300;")
-	g.writeLine(fmt.Sprintf(
-		"runtime.background.loadCostume(RESOURCES_PATH \"%s\", %g, %g);",
-		assetFilename(costume),
-		costume.RotationCenterX,
-		costume.RotationCenterY,
-	))
+	if target.CurrentCostume >= 0 && target.CurrentCostume < len(target.Costumes) {
+		g.writeLine(fmt.Sprintf("runtime.setBackdrop(%d);", target.CurrentCostume))
+	}
 }
 
 func assetFilename(costume Costume) string {
@@ -247,6 +254,12 @@ func (g *CPPGenerator) generateNode(node *Node) {
 
 	case "looks_sayforsecs":
 		g.generateSayForSeconds(node)
+
+	case "looks_switchbackdropto":
+		g.generateSwitchBackdrop(node)
+
+	case "looks_nextbackdrop":
+		g.writeLine("runtime.nextBackdrop();")
 
 	case "event_whenthisspriteclicked":
 		// The callback wrapper handles this hat.
@@ -521,6 +534,41 @@ func (g *CPPGenerator) generateSayForSeconds(node *Node) {
 		return
 	}
 	g.writeLine(fmt.Sprintf("runtime.sprite(%d).sayForSeconds(%s, %s);", g.currentSpriteIdx, g.generateValue(message), g.generateValue(seconds)))
+}
+
+func (g *CPPGenerator) generateSwitchBackdrop(node *Node) {
+	if g.currentStage == nil {
+		g.warnUnsupported("looks_switchbackdropto outside Stage")
+		g.writeLine("logWarning(\"looks_switchbackdropto outside Stage\");")
+		return
+	}
+
+	value, ok := node.Inputs["BACKDROP"]
+	if !ok || value.Block == nil {
+		g.warnMissingInput("looks_switchbackdropto", "BACKDROP")
+		return
+	}
+
+	fields := value.Block.Fields["BACKDROP"]
+	if len(fields) == 0 {
+		g.warnMissingInput("looks_switchbackdropto", "BACKDROP name")
+		return
+	}
+	name, ok := fields[0].(string)
+	if !ok {
+		g.warnMissingInput("looks_switchbackdropto", "BACKDROP name")
+		return
+	}
+
+	for index, costume := range g.currentStage.Costumes {
+		if costume.Name == name {
+			g.writeLine(fmt.Sprintf("runtime.setBackdrop(%d);", index))
+			return
+		}
+	}
+
+	g.warnUnsupported("backdrop: " + name)
+	g.writeLine(fmt.Sprintf("logWarning(%q);", "Unknown backdrop: "+name))
 }
 
 func (g *CPPGenerator) generateWaitUntil(node *Node) {

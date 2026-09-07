@@ -28,10 +28,6 @@ func scratchWorkflow(conf config.Config) error {
 	fmt.Printf("Targets: %d\n\n", len(project.Targets))
 
 	for _, target := range project.Targets {
-		if target.IsStage {
-			continue
-		}
-
 		fmt.Println("Target:", target.Name)
 
 		err := scratch.CompileTargetAssets(

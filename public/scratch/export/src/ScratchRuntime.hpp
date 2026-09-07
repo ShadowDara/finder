@@ -16,6 +16,8 @@ public:
     // Sprites
     std::vector<ScratchSprite> sprites;
     ScratchSprite background;
+    std::vector<ScratchSprite> backdrops;
+    size_t currentBackdrop = 0;
     std::unordered_map<std::string, double> variables;
 
     ScratchUI ui;
@@ -31,6 +33,8 @@ public:
     void setStopCallback(ScriptCallback callback);
     void setSpriteClickCallback(size_t index, ScriptCallback callback);
     void waitUntil(const std::function<bool()> &condition);
+    void setBackdrop(size_t index);
+    void nextBackdrop();
     void update();
     void draw();
     void shutdown();
