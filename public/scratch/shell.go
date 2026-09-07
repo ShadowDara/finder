@@ -31,6 +31,11 @@ mkdir -p $EXPORT_PATH
 mkdir -p $EXPORT_PATH/src
 mkdir -p $EXPORT_PATH/resources
 
+touch $EXPORT_PATH/src/colors.hpp
+cat > $EXPORT_PATH/src/colors.hpp <<'EOF'
+%s
+EOF
+
 touch $EXPORT_PATH/src/Logger.cpp
 cat > $EXPORT_PATH/src/Logger.cpp <<'EOF'
 %s
@@ -106,6 +111,7 @@ echo "cd $EXPORT_PATH && chmod +x clone.sh && ./clone.sh && cat README.txt"
 `, conf.Outdir,
 		conf.Indir,
 		conf.CacheDir,
+		exportFile("src/colors.hpp"),
 		exportFile("src/Logger.cpp"),
 		exportFile("src/Logger.hpp"),
 		exportFile("src/ScratchUI.cpp"),

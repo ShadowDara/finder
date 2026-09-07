@@ -249,6 +249,7 @@ func (g *CPPGenerator) generateSetVariable(node *Node) {
 	name := variableName(node)
 	value, ok := node.Inputs["VALUE"]
 	if name == "" || !ok {
+		g.warnMissingInput("data_setvariableto", "VARIABLE or VALUE")
 		return
 	}
 	g.writeLine(fmt.Sprintf("runtime.variable(%q) = %s;", name, g.generateValue(value)))
@@ -258,6 +259,7 @@ func (g *CPPGenerator) generateChangeVariable(node *Node) {
 	name := variableName(node)
 	value, ok := node.Inputs["VALUE"]
 	if name == "" || !ok {
+		g.warnMissingInput("data_changevariableby", "VARIABLE or VALUE")
 		return
 	}
 	g.writeLine(fmt.Sprintf("runtime.variable(%q) += %s;", name, g.generateValue(value)))
@@ -340,7 +342,7 @@ func (g *CPPGenerator) generateValue(value Value) string {
 		return "false"
 
 	case ValueVariable:
-		return value.Name
+		return fmt.Sprintf("runtime.variable(%q)", value.Name)
 
 	case ValueBlock:
 		if value.Block == nil {
@@ -350,7 +352,8 @@ func (g *CPPGenerator) generateValue(value Value) string {
 		return g.generateExpression(value.Block)
 
 	default:
-		return "0"
+		g.warnUnsupported("invalid value")
+		return `runtime.unsupportedValue("invalid value")`
 	}
 }
 

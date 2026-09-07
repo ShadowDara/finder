@@ -1,4 +1,5 @@
 #include "ScratchRuntime.hpp"
+#include "Logger.hpp"
 
 #include <raylib.h>
 
@@ -91,4 +92,10 @@ ScratchSprite &ScratchRuntime::sprite(size_t index)
 double &ScratchRuntime::variable(const char *name)
 {
     return variables[name];
+}
+
+double ScratchRuntime::unsupportedValue(const char *opcode)
+{
+    logWarning(std::string("Unsupported Scratch value: ") + opcode);
+    return 0.0;
 }

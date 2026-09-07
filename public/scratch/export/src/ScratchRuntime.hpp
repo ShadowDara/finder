@@ -36,6 +36,7 @@ public:
 
     ScratchSprite &sprite(size_t index);
     double &variable(const char *name);
+    double unsupportedValue(const char *opcode);
 
 private:
     ScriptCallback startCallback = nullptr;
