@@ -4,13 +4,17 @@ import { resolve } from "node:path";
 import type { Plugin } from "vite";
 
 export function buildSize(): Plugin {
+  let outDir: string;
+
   return {
     name: "build-size",
     apply: "build",
 
-    closeBundle() {
-      const outDir = resolve(process.cwd(), "dist");
+    configResolved(config) {
+      outDir = config.build.outDir;
+    },
 
+    closeBundle() {
       let total = 0;
       let gzip = 0;
       let brotli = 0;

@@ -29,6 +29,7 @@ Maybe
 ![GitHub forks](https://img.shields.io/github/forks/shadowdara/finder)
 ![Maintained](https://badges.ws/maintenance/yes/2026)
 ![Handmade](https://badges.ws/handmade)
+[![Go Reference](https://pkg.go.dev/badge/github.com/shadowdara/finder)](https://pkg.go.dev/github.com/shadowdara/finder)
 
 Finder is a small command-line tool written in Go to locate projects
 based on predefined folder/file structure templates.
