@@ -28,6 +28,7 @@ func (g *CPPGenerator) Generate(project *Project) string {
 	g.writeLine("#include \"Logger.hpp\"")
 	g.writeLine("")
 
+	g.writeLine("// little runtime for the project")
 	g.writeLine("ScratchRuntime runtime;")
 	g.writeLine("")
 
