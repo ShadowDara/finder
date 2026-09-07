@@ -1,1 +1,1 @@
-{"description":"Rush monorepo project","files":["rush.json","package.json"],"folders":[{"files":[],"folders":[],"name":"apps"}],"name":"*"}
+{"description":"Rush monorepo project","files":["rush.json","package.json"],"folders":[{"files":[],"folders":[],"name":"apps"}],"min_version":"0.3.16","name":"*"}

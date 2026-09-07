@@ -1,1 +1,1 @@
-{"description":"Ethereum smart contract project","files":["hardhat.config.js","*.sol"],"folders":[{"files":[],"folders":[],"name":"contracts"}],"name":"*"}
+{"description":"Ethereum smart contract project","files":["hardhat.config.js","*.sol"],"folders":[{"files":[],"folders":[],"name":"contracts"}],"min_version":"0.3.16","name":"*"}

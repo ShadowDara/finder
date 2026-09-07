@@ -1,4 +1,3 @@
-// Struct for a Sanity CMS Project
 {
     "description": "Sanity.io content management",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "sanity.config.ts",
         "package.json"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

@@ -1,4 +1,3 @@
-// Struct for a Spring Boot Project
 {
     "description": "Java Spring Boot web application",
     "name": "*",
@@ -12,5 +11,10 @@
     "files": [
         "pom.xml",
         "*.java"
-    ]
+    ],
+    "tags": [
+        "java",
+        "web"
+    ],
+    "min_version": "0.3.16"
 }

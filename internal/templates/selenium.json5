@@ -1,1 +1,1 @@
-{"description":"Selenium web automation testing","files":["requirements.txt","conftest.py"],"folders":[{"files":[],"folders":[],"name":"tests"}],"name":"*"}
+{"description":"Selenium web automation testing","files":["requirements.txt","conftest.py"],"folders":[{"files":[],"folders":[],"name":"tests"}],"min_version":"0.3.16","name":"*"}

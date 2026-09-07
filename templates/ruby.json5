@@ -1,8 +1,8 @@
-// Struct for a Ruby Project
 {
     "name": "*",
     "folders": [],
     "files": [
         "Gemfile"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

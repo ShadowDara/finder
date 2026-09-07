@@ -1,1 +1,1 @@
-{"description":"Java Spring Boot web application","files":["pom.xml","*.java"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}
+{"description":"Java Spring Boot web application","files":["pom.xml","*.java"],"folders":[{"files":[],"folders":[],"name":"src"}],"min_version":"0.3.16","name":"*","tags":["java","web"]}

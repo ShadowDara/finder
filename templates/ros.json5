@@ -1,4 +1,3 @@
-// ROS Robotic Operating System
 {
     "description": "ROS Robot Operating System middleware",
     "name": "*",
@@ -6,17 +5,24 @@
         {
             "name": "src",
             "folders": [],
-            "files": ["*.cpp", "*.py"]
+            "files": [
+                "*.cpp",
+                "*.py"
+            ]
         },
         {
             "name": "launch",
             "folders": [],
-            "files": ["*.launch", "*.xml"]
+            "files": [
+                "*.launch",
+                "*.xml"
+            ]
         }
     ],
     "files": [
         "package.xml",
         "CMakeLists.txt",
         "setup.py"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

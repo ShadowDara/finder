@@ -1,1 +1,1 @@
-{"description":"Stable Diffusion AI image generation model","files":["config.yaml","requirements.txt"],"folders":[{"files":["*.safetensors","*.ckpt"],"folders":[],"name":"models"},{"files":["*.txt","*.json"],"folders":[],"name":"prompts"}],"name":"*"}
+{"description":"Stable Diffusion AI image generation model","files":["config.yaml","requirements.txt"],"folders":[{"files":["*.safetensors","*.ckpt"],"folders":[],"name":"models"},{"files":["*.txt","*.json"],"folders":[],"name":"prompts"}],"min_version":"0.3.16","name":"*"}
