@@ -1,0 +1,11 @@
+class Sprite
+{
+public:
+    float x;
+    float y;
+    float direction;
+
+    void move(float steps);
+    void turnRight(float degrees);
+    void draw();
+};

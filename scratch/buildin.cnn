@@ -1,0 +1,17 @@
+#include "buildin.hnn"
+
+void Sprite::move(float steps)
+{
+    float angle = (direction - 90.0f) * DEG2RAD;
+
+    x += cosf(angle) * steps;
+    y += sinf(angle) * steps;
+}
+
+void Sprite::turnRight(float degrees)
+{
+}
+
+void Sprite::draw()
+{
+}
