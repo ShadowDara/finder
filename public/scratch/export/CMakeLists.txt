@@ -70,8 +70,9 @@ endif()
 if (EMSCRIPTEN)
     set(PLATFORM Web CACHE STRING "" FORCE)
 	
-	# important linker flags
-	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s USE_GLFW=3 -s ASSERTIONS=1 -s WASM=1 -s ASYNCIFY -s GL_ENABLE_GET_PROC_ADDRESS=1")
+	# Threads are used by the cooperative Scratch script scheduler.
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
+	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pthread -s USE_GLFW=3 -s ASSERTIONS=1 -s WASM=1 -s USE_PTHREADS=1 -s PTHREAD_POOL_SIZE=4 -s GL_ENABLE_GET_PROC_ADDRESS=1")
 	
     set(CMAKE_EXECUTABLE_SUFFIX ".html")
 endif()
