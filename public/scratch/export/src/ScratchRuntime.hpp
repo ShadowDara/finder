@@ -34,6 +34,7 @@ public:
     void setStopCallback(ScriptCallback callback);
     void setSpriteClickCallback(size_t index, ScriptCallback callback);
     bool waitUntil(const std::function<bool()> &condition);
+    bool waitSeconds(double seconds);
     void setBackdrop(size_t index);
     void nextBackdrop();
     void update();

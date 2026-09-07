@@ -299,6 +299,9 @@ func (g *CPPGenerator) generateNode(node *Node) {
 	case "control_wait_until":
 		g.generateWaitUntil(node)
 
+	case "control_wait":
+		g.generateWait(node)
+
 	case "looks_show":
 		g.writeLine(fmt.Sprintf("runtime.sprite(%d).visible = true;", g.currentSpriteIdx))
 
@@ -481,6 +484,14 @@ func (g *CPPGenerator) generateNumericValue(value Value) string {
 func (g *CPPGenerator) generateExpression(node *Node) string {
 	switch node.Opcode {
 
+	case "data_variable":
+		name := variableName(node)
+		if name == "" {
+			g.warnMissingInput("data_variable", "VARIABLE")
+			return `runtime.unsupportedValue("data_variable without name")`
+		}
+		return fmt.Sprintf("runtime.variable(%q)", name)
+
 	case "operator_add":
 		return g.binaryOperator(node, "+")
 
@@ -503,7 +514,8 @@ func (g *CPPGenerator) generateExpression(node *Node) string {
 		return g.binaryOperator(node, "==")
 
 	default:
-		return "0"
+		g.warnUnsupported("value block: " + node.Opcode)
+		return fmt.Sprintf("runtime.unsupportedValue(%q)", "Unsupported Scratch value: "+node.Opcode)
 	}
 }
 
@@ -519,6 +531,7 @@ func (g *CPPGenerator) binaryOperator(
 	right, rightOK := node.Inputs[rightName]
 
 	if !leftOK || !rightOK {
+		g.warnMissingInput("operator_"+operator, "left or right operand")
 		return "0"
 	}
 
@@ -654,6 +667,19 @@ func (g *CPPGenerator) generateWaitUntil(node *Node) {
 		return
 	}
 	g.writeLine(fmt.Sprintf("if (!runtime.waitUntil([&]() { return %s; })) return;", g.generateValue(condition)))
+}
+
+func (g *CPPGenerator) generateWait(node *Node) {
+	duration, ok := node.Inputs["DURATION"]
+	if !ok {
+		g.warnMissingInput("control_wait", "DURATION")
+		return
+	}
+
+	g.writeLine(fmt.Sprintf(
+		"if (!runtime.waitSeconds(%s)) return;",
+		g.generateNumericValue(duration),
+	))
 }
 
 func (g *CPPGenerator) writeLine(line string) {

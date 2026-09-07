@@ -89,6 +89,23 @@ bool ScratchRuntime::waitUntil(const std::function<bool()> &condition)
     return !WindowShouldClose();
 }
 
+bool ScratchRuntime::waitSeconds(double seconds)
+{
+    const double endTime = GetTime() + seconds;
+    while (GetTime() < endTime && !WindowShouldClose())
+    {
+        ui.update();
+
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+        draw();
+        EndDrawing();
+        PollInputEvents();
+    }
+
+    return !WindowShouldClose();
+}
+
 void ScratchRuntime::draw()
 {
     if (!backdrops.empty())
