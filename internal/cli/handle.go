@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"os"
@@ -27,11 +28,11 @@ func Search(searchTemplate string, OutputType string, Verbose bool, createCache 
 			return err
 		}
 
-		fmt.Printf("Cache created at %s", data.Timestamp)
-
-		for _, name := range data.Paths {
-			fmt.Printf("%s\n", name)
+		if OutputType != "clear" && OutputType != "json" {
+			fmt.Printf("Cache created at %s", data.Timestamp)
 		}
+
+		PrintResults(data.Paths, OutputType)
 
 		return nil
 	}
@@ -67,7 +68,8 @@ func Search(searchTemplate string, OutputType string, Verbose bool, createCache 
 	if OutputType != "clear" && OutputType != "json" {
 		fmt.Printf("Searching for %s ...\n", templateName)
 	}
-	search.Find(structure.LoadJSON5(string(data)), OutputType, templateName, createCache)
+	matches := search.Find(structure.LoadJSON5(string(data)), OutputType, templateName, createCache)
+	PrintResults(matches, OutputType)
 
 	// Safe Git Database
 	if createCacheDB {
@@ -78,6 +80,26 @@ func Search(searchTemplate string, OutputType string, Verbose bool, createCache 
 	}
 
 	return nil
+}
+
+func PrintResults(matches []string, OutputType string) { // Print
+	switch OutputType {
+	case "normal":
+		fmt.Println("# Found:")
+		for _, m := range matches {
+			fmt.Println(m)
+		}
+		fmt.Println("# End of the List")
+	case "json":
+		enc := json.NewEncoder(os.Stdout)
+		if err := enc.Encode(matches); err != nil {
+			fmt.Println("JSON encoding error:", err)
+		}
+	case "clear":
+		for _, m := range matches {
+			fmt.Println(m)
+		}
+	}
 }
 
 // Function to search for tags

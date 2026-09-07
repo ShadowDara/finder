@@ -1,7 +1,6 @@
 package search
 
 import (
-	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -45,7 +44,7 @@ func getSearchRoots() []string {
 //
 // Search is performed asynchronously across all available drives/roots
 // for improved performance, especially with multiple drives.
-func Find(folderstruct structure.Folder, output_type string, name string, doCache bool) {
+func Find(folderstruct structure.Folder, output_type string, name string, doCache bool) []string {
 	if output_type != "clear" && output_type != "json" {
 		fmt.Printf("Description: %s\n", folderstruct.Description)
 
@@ -102,24 +101,6 @@ func Find(folderstruct structure.Folder, output_type string, name string, doCach
 		fmt.Printf("Found: %.d Results\n", len(matches))
 	}
 
-	switch output_type {
-	case "normal":
-		fmt.Println("# Found:")
-		for _, m := range matches {
-			fmt.Println(m)
-		}
-		fmt.Println("# End of the List")
-	case "json":
-		enc := json.NewEncoder(os.Stdout)
-		if err := enc.Encode(matches); err != nil {
-			fmt.Println("JSON encoding error:", err)
-		}
-	case "clear":
-		for _, m := range matches {
-			fmt.Println(m)
-		}
-	}
-
 	// add the cache files
 	if doCache {
 		cache.SaveCache(name, matches)
@@ -128,4 +109,6 @@ func Find(folderstruct structure.Folder, output_type string, name string, doCach
 			fmt.Printf("Wrote Cache for template %s", name)
 		}
 	}
+
+	return matches
 }
