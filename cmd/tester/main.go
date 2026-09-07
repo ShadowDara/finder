@@ -72,7 +72,7 @@ func main() {
 		}
 
 		count++
-		fmt.Printf("converted %s -> %s\n", name, outPath)
+		// fmt.Printf("converted %s -> %s\n", name, outPath)
 	}
 
 	fmt.Printf("done: %d templates converted\n", count)
