@@ -65,7 +65,7 @@ func (g *CPPGenerator) Generate(target Target, script *Script) string {
 
 	g.writeLine("")
 
-	g.writeLine("runtime.setStartCallback(startScript);")
+	g.writeLine("startScript();")
 	g.writeLine("")
 
 	g.writeLine("while (!runtime.shouldClose())")
