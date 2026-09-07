@@ -1,2 +1,11 @@
-Scratch Game Compiler TODO
-- opening the ZIP Folder
+Thread Ideas
+
+Der aktuelle `std::thread`-Ansatz sollte nicht weiter ausgebaut werden. Für Scratch ist ein **kooperativer Scheduler im Main-Thread** besser:
+
+- Jeder Script-Task besitzt einen Programmzähler.
+- `wait` speichert nur eine Ablaufzeit.
+- `wait until` speichert nur eine Bedingung.
+- Pro Frame wird jeder Task ein Stück weiter ausgeführt.
+- Alle Raylib- und Runtime-Zugriffe bleiben im Main-Thread.
+- Keine Mutexes, keine PThreads, kein Web-Thread-Problem.
+Der aktuelle Code funktioniert deshalb eventuell auf Desktop zufällig, ist aber für WebAssembly und parallele Sprite-Scripts nicht zuverlässig.
