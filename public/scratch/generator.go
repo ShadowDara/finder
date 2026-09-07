@@ -49,7 +49,7 @@ func (g *CPPGenerator) Generate(project *Project) string {
 		}
 		g.currentSpriteIdx = clickIndex
 		g.currentSounds = target.Sounds
-		g.writeLine(fmt.Sprintf("static void sprite%dClickedScript()", clickIndex))
+		g.writeLine(fmt.Sprintf("static ScriptTask sprite%dClickedScript()", clickIndex))
 		g.writeLine("{")
 		g.indent++
 		for id, block := range target.Blocks {
@@ -57,6 +57,7 @@ func (g *CPPGenerator) Generate(project *Project) string {
 				g.generateScript(ParseScript(target.Blocks, id))
 			}
 		}
+		g.writeLine("co_return;")
 		g.indent--
 		g.writeLine("}")
 		g.writeLine("")
@@ -65,7 +66,7 @@ func (g *CPPGenerator) Generate(project *Project) string {
 
 	spriteIndex := 0
 	for targetIndex, target := range project.Targets {
-		g.writeLine(fmt.Sprintf("static void startScript%d()", targetIndex))
+		g.writeLine(fmt.Sprintf("static ScriptTask startScript%d()", targetIndex))
 		g.writeLine("{")
 		g.indent++
 		g.writeLine("log(\"Green flag clicked!\");")
@@ -86,6 +87,7 @@ func (g *CPPGenerator) Generate(project *Project) string {
 			g.generateScript(ParseScript(target.Blocks, id))
 		}
 
+		g.writeLine("co_return;")
 		g.indent--
 		g.writeLine("}")
 		g.writeLine("")
@@ -661,7 +663,7 @@ func (g *CPPGenerator) generateWaitUntil(node *Node) {
 		g.warnMissingInput("control_wait_until", "CONDITION")
 		return
 	}
-	g.writeLine(fmt.Sprintf("if (!runtime.waitUntil([&]() { return %s; })) return;", g.generateValue(condition)))
+	g.writeLine(fmt.Sprintf("co_await runtime.waitUntil([&]() { return %s; });", g.generateValue(condition)))
 }
 
 func (g *CPPGenerator) generateWait(node *Node) {
@@ -672,7 +674,7 @@ func (g *CPPGenerator) generateWait(node *Node) {
 	}
 
 	g.writeLine(fmt.Sprintf(
-		"if (!runtime.waitSeconds(%s)) return;",
+		"co_await runtime.waitSeconds(%s);",
 		g.generateNumericValue(duration),
 	))
 }

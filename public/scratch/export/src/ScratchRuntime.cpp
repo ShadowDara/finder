@@ -29,7 +29,7 @@ void ScratchRuntime::update()
         for (size_t index = 0; index < sprites.size(); ++index)
         {
             if (index < spriteClickCallbacks.size() && sprites[index].containsPoint(mouse) && spriteClickCallbacks[index] != nullptr)
-                spriteClickCallbacks[index]();
+                launch(spriteClickCallbacks[index]());
         }
     }
 
@@ -38,28 +38,26 @@ void ScratchRuntime::update()
         ui.startRequested = false;
 
         ui.running = false;
-        for (auto &thread : scriptThreads)
-        {
-            if (thread.joinable())
-                thread.join();
-        }
-        scriptThreads.clear();
+        cancelTasks();
         ui.running = true;
 
         for (auto callback : startCallbacks)
         {
             if (callback != nullptr)
-                scriptThreads.emplace_back(callback);
+                launch(callback());
         }
 
         if (startCallbacks.empty() && startCallback != nullptr)
-            scriptThreads.emplace_back(startCallback);
+            launch(startCallback());
     }
 
     if (!ui.running)
+    {
+        cancelTasks();
         return;
+    }
 
-    // Hier läuft später dein generiertes Scratch-Update.
+    updateTasks();
 }
 
 void ScratchRuntime::setStartCallback(ScriptCallback callback)
@@ -84,25 +82,95 @@ void ScratchRuntime::setSpriteClickCallback(size_t index, ScriptCallback callbac
     spriteClickCallbacks[index] = callback;
 }
 
-bool ScratchRuntime::waitUntil(const std::function<bool()> &condition)
+ScratchRuntime::WaitUntilAwaiter ScratchRuntime::waitUntil(std::function<bool()> condition)
 {
-    while (!condition() && ui.running)
-    {
-        std::this_thread::yield();
-    }
-
-    return ui.running;
+    return WaitUntilAwaiter{this, std::move(condition)};
 }
 
-bool ScratchRuntime::waitSeconds(double seconds)
+ScratchRuntime::WaitSecondsAwaiter ScratchRuntime::waitSeconds(double seconds)
 {
-    const double endTime = GetTime() + seconds;
-    while (GetTime() < endTime && ui.running)
-    {
-        std::this_thread::yield();
-    }
+    return WaitSecondsAwaiter{this, seconds};
+}
 
-    return ui.running;
+void ScratchRuntime::WaitUntilAwaiter::await_suspend(std::coroutine_handle<> handle)
+{
+    runtime->suspendUntil(handle, std::move(condition));
+}
+
+void ScratchRuntime::WaitSecondsAwaiter::await_suspend(std::coroutine_handle<> handle)
+{
+    runtime->suspendFor(handle, seconds);
+}
+
+void ScratchRuntime::launch(ScriptTask task)
+{
+    auto handle = task.release();
+    if (handle && !handle.done())
+    {
+        tasks.push_back(TaskState{handle});
+        handle.resume();
+    }
+    else if (handle)
+        handle.destroy();
+}
+
+void ScratchRuntime::suspendUntil(std::coroutine_handle<> handle, std::function<bool()> condition)
+{
+    for (auto &task : tasks)
+    {
+        if (task.handle == handle)
+        {
+            task.condition = std::move(condition);
+            task.resumeAt = -1.0;
+            return;
+        }
+    }
+}
+
+void ScratchRuntime::suspendFor(std::coroutine_handle<> handle, double seconds)
+{
+    for (auto &task : tasks)
+    {
+        if (task.handle == handle)
+        {
+            task.condition = {};
+            task.resumeAt = GetTime() + seconds;
+            return;
+        }
+    }
+}
+
+void ScratchRuntime::updateTasks()
+{
+    for (size_t index = 0; index < tasks.size();)
+    {
+        auto &task = tasks[index];
+        bool ready = !task.condition && task.resumeAt < 0.0;
+        if (task.condition)
+            ready = task.condition();
+        else if (task.resumeAt >= 0.0)
+            ready = GetTime() >= task.resumeAt;
+
+        if (ready)
+            task.handle.resume();
+
+        if (task.handle.done())
+        {
+            task.handle.destroy();
+            tasks.erase(tasks.begin() + static_cast<std::ptrdiff_t>(index));
+        }
+        else
+        {
+            ++index;
+        }
+    }
+}
+
+void ScratchRuntime::cancelTasks()
+{
+    for (auto &task : tasks)
+        task.handle.destroy();
+    tasks.clear();
 }
 
 void ScratchRuntime::draw()
@@ -134,11 +202,7 @@ void ScratchRuntime::draw()
 void ScratchRuntime::shutdown()
 {
     ui.running = false;
-    for (auto &thread : scriptThreads)
-    {
-        if (thread.joinable())
-            thread.join();
-    }
+    cancelTasks();
 
     background.unloadCostume();
 

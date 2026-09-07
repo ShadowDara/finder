@@ -70,16 +70,9 @@ endif()
 if(EMSCRIPTEN)
     set(PLATFORM Web CACHE STRING "" FORCE)
 
-    # Emscripten pthreads
-    add_compile_options(-pthread)
-
     add_link_options(
-        -pthread
         -sUSE_GLFW=3
         -sASSERTIONS=1
-		-sASYNCIFY
-		-sEXPORTED_RUNTIME_METHODS=HEAPF32
-        -sPTHREAD_POOL_SIZE=4
         -sGL_ENABLE_GET_PROC_ADDRESS=1
     )
 
@@ -89,10 +82,6 @@ endif()
 
 #Add raylib, and here you would add other libraries if needed!
 add_subdirectory(thirdparty/raylib-5.0)
-
-if(EMSCRIPTEN)
-    target_compile_options(raylib PRIVATE -pthread)
-endif()
 
 add_subdirectory(thirdparty/imgui-docking)
 add_subdirectory(thirdparty/rlImGui)

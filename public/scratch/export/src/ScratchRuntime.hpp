@@ -1,18 +1,56 @@
 #pragma once
 
+#include <coroutine>
+#include <cstddef>
 #include <functional>
 #include <string>
-#include <thread>
+#include <utility>
 #include <unordered_map>
 #include <vector>
 
 #include "ScratchSprite.hpp"
 #include "ScratchUI.hpp"
 
+class ScriptTask
+{
+public:
+    using Handle = std::coroutine_handle<>;
+
+    struct promise_type
+    {
+        using PromiseHandle = std::coroutine_handle<promise_type>;
+        ScriptTask get_return_object() { return ScriptTask{PromiseHandle::from_promise(*this)}; }
+        std::suspend_always initial_suspend() const noexcept { return {}; }
+        std::suspend_always final_suspend() const noexcept { return {}; }
+        void return_void() const noexcept {}
+        void unhandled_exception() const noexcept {}
+    };
+
+    explicit ScriptTask(Handle handle) : handle(handle) {}
+    ScriptTask(const ScriptTask &) = delete;
+    ScriptTask &operator=(const ScriptTask &) = delete;
+    ScriptTask(ScriptTask &&other) noexcept : handle(other.handle) { other.handle = {}; }
+    ~ScriptTask()
+    {
+        if (handle)
+            handle.destroy();
+    }
+
+    Handle release()
+    {
+        Handle released = handle;
+        handle = {};
+        return released;
+    }
+
+private:
+    Handle handle;
+};
+
 class ScratchRuntime
 {
 public:
-    using ScriptCallback = void (*)();
+    using ScriptCallback = ScriptTask (*)();
 
     // Sprites
     std::vector<ScratchSprite> sprites;
@@ -35,8 +73,26 @@ public:
     void addStartCallback(ScriptCallback callback);
     void setStopCallback(ScriptCallback callback);
     void setSpriteClickCallback(size_t index, ScriptCallback callback);
-    bool waitUntil(const std::function<bool()> &condition);
-    bool waitSeconds(double seconds);
+    struct WaitUntilAwaiter
+    {
+        ScratchRuntime *runtime;
+        std::function<bool()> condition;
+        bool await_ready() const { return condition(); }
+        void await_suspend(std::coroutine_handle<> handle);
+        void await_resume() const noexcept {}
+    };
+
+    struct WaitSecondsAwaiter
+    {
+        ScratchRuntime *runtime;
+        double seconds;
+        bool await_ready() const { return seconds <= 0.0; }
+        void await_suspend(std::coroutine_handle<> handle);
+        void await_resume() const noexcept {}
+    };
+
+    WaitUntilAwaiter waitUntil(std::function<bool()> condition);
+    WaitSecondsAwaiter waitSeconds(double seconds);
     void setBackdrop(size_t index);
     void nextBackdrop();
     void update();
@@ -52,9 +108,22 @@ public:
     void playSound(const char *name);
 
 private:
+    struct TaskState
+    {
+        std::coroutine_handle<> handle;
+        std::function<bool()> condition;
+        double resumeAt = -1.0;
+    };
+
+    void launch(ScriptTask task);
+    void suspendUntil(std::coroutine_handle<> handle, std::function<bool()> condition);
+    void suspendFor(std::coroutine_handle<> handle, double seconds);
+    void updateTasks();
+    void cancelTasks();
+
     ScriptCallback startCallback = nullptr;
     std::vector<ScriptCallback> startCallbacks;
-    std::vector<std::thread> scriptThreads;
+    std::vector<TaskState> tasks;
     ScriptCallback stopCallback = nullptr;
     std::vector<ScriptCallback> spriteClickCallbacks;
 };
