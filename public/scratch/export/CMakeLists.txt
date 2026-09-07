@@ -51,17 +51,17 @@ if (EMSCRIPTEN)
 endif()
 
 
-add_subdirectory(thirdparty/glad)				#opengl loader
-add_subdirectory(thirdparty/stb_image)			#loading immaged
-add_subdirectory(thirdparty/stb_truetype)		#loading ttf files
+#add_subdirectory(thirdparty/glad)				#opengl loader
+#add_subdirectory(thirdparty/stb_image)			#loading immaged
+#add_subdirectory(thirdparty/stb_truetype)		#loading ttf files
 #add_subdirectory(thirdparty/enet-1.3.17)		#networking
-add_subdirectory(thirdparty/glm)				#math
+#add_subdirectory(thirdparty/glm)				#math
 #add_subdirectory(thirdparty/imgui-docking)		#ui
 #----------V-----------------------V------------#my libraries								
 
 # Doesnt work yet in the web export				
 #add_subdirectory(thirdparty/safeSave)			#saving data, designed for gamedev. It also makes backups so the player won't loose saves.
-add_subdirectory(thirdparty/profilerLib)		#profiling, just a simpe library for measuring elapsed time
+#add_subdirectory(thirdparty/profilerLib)		#profiling, just a simpe library for measuring elapsed time
 
 #add_subdirectory(thirdparty/gl2d)				#2D rendering library
 #add_subdirectory(thirdparty/glui)		
@@ -123,8 +123,6 @@ if(MSVC) # If using the VS compiler...
 
 	#YOU CAN REMOVE THE CONSOLE WITH THIS LINE! YOU CAN EVEN DO AN IF PRODUCTION_BUILD TO REMOVE IT ONLY IN PRODUCTION BUILDS
 	#set_target_properties("${CMAKE_PROJECT_NAME}" PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup") #no console
-	
-
 
 endif()
 
@@ -135,9 +133,6 @@ endif()
 
 
 target_include_directories("${CMAKE_PROJECT_NAME}" PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include/")
-target_include_directories("${CMAKE_PROJECT_NAME}" PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include/platform")
-target_include_directories("${CMAKE_PROJECT_NAME}" PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include/gameLayer")
-
 
 
 # linking in the web export
@@ -147,11 +142,11 @@ if (EMSCRIPTEN)
 		raylib
 		imgui
 		rlimgui
-		glm
+		#glm
 		#stb_image
 		#stb_truetype
 		#profilerLib
-		glad
+		#glad
 	)
 	
 	target_link_options(mygame PRIVATE
@@ -164,11 +159,11 @@ else()
 		raylib_static
 		imgui
 		rlimgui
-		glm
-		glad
-		stb_image
-		stb_truetype
-		profilerLib
+		#glm
+		#glad
+		#stb_image
+		#stb_truetype
+		#profilerLib
 
 		#ADD enet version! also don't forget to uncomment enet from above
 		# enet
