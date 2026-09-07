@@ -34,6 +34,7 @@ export default defineConfig(({ mode }) => ({
         "docs/config": ["/src/markdownrootstyle.css"],
         "docs/index": ["/src/markdownrootstyle.css"],
       },
+      // splitMarkdown: true,
       prettyUrls: true,
       entry: "src/main.ts",
       minify: true,

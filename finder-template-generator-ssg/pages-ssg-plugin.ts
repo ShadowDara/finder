@@ -6,6 +6,10 @@ import { minify } from "html-minifier-terser";
 import { parseMarkdown } from "@shadowdara/dlib";
 import { transformWithEsbuild } from "vite";
 import { tsImport } from "tsx/esm/api";
+import { escapeHtml } from "./src/jsx-runtime";
+
+const MARKDOWN_PREFIX = "virtual:page-markdown:";
+const RESOLVED_MARKDOWN_PREFIX = "\0" + MARKDOWN_PREFIX;
 
 const VIRTUAL_MODULE_ID = "virtual:pages";
 const RESOLVED_VIRTUAL_MODULE_ID = "\0" + VIRTUAL_MODULE_ID;
@@ -128,6 +132,14 @@ export interface PagesPluginOptions {
    * @default false
    */
   verbose?: boolean;
+
+  /**
+   * Put each compiled Markdown page into its own dynamically loaded chunk
+   * instead of embedding all Markdown HTML into the main bundle.
+   *
+   * @default false
+   */
+  splitMarkdown?: boolean;
 }
 
 export interface PageRenderContext {
@@ -168,6 +180,7 @@ let resolvedStyles = new Map<string, string>();
 const DEFAULT_EXTENSIONS = [".ts", ".tsx"];
 
 export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
+  const splitMarkdown = options.splitMarkdown ?? false;
   const verbose = options.verbose ?? false;
   const singleBundle = options.singleBundle ?? false;
   const relativePath = options.relativePaths ?? false;
@@ -413,6 +426,21 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
           .join(", ");
 
         if (page.type === "markdown") {
+          const styles = page.styles
+            .map((style) => styleImports.get(style)!)
+            .join(", ");
+
+          if (splitMarkdown) {
+            const markdownModuleId = `${MARKDOWN_PREFIX}${page.id}`;
+
+            return `  ${JSON.stringify(page.id)}: {
+    id: ${JSON.stringify(page.id)},
+    type: "markdown",
+    load: () => import(${JSON.stringify(markdownModuleId)}),
+    styles: [${styles}]
+  }`;
+          }
+
           const markdownField = addRawMarkdown
             ? `markdown: ${JSON.stringify(page.markdown ?? "")},`
             : "";
@@ -486,6 +514,14 @@ declare module "virtual:pages" {
     markdown?: string;
     html: string;
     styles: string[];
+    load: () => Promise<{
+    default: {
+      id: string;
+      type: "markdown";
+      markdown?: string;
+      html: string;
+    };
+  }>;
   }
 
   export type PageEntry = ComponentPage | MarkdownPage;
@@ -560,6 +596,10 @@ declare module "virtual:pages" {
         return RESOLVED_VIRTUAL_MODULE_ID;
       }
 
+      if (id.startsWith(MARKDOWN_PREFIX)) {
+        return RESOLVED_MARKDOWN_PREFIX + id.slice(MARKDOWN_PREFIX.length);
+      }
+
       if (id.startsWith(STYLE_PREFIX)) {
         return RESOLVED_STYLE_PREFIX + id.slice(STYLE_PREFIX.length);
       }
@@ -570,6 +610,28 @@ declare module "virtual:pages" {
     load(id) {
       if (id === RESOLVED_VIRTUAL_MODULE_ID) {
         return createVirtualModule();
+      }
+
+      if (id.startsWith(RESOLVED_MARKDOWN_PREFIX)) {
+        const pageId = id.slice(RESOLVED_MARKDOWN_PREFIX.length);
+        const page = pages.find(
+          (page) => page.type === "markdown" && page.id === pageId,
+        );
+
+        if (!page) {
+          throw new Error(
+            `[vite-plugin-pages-ssg] Markdown page not found: ${pageId}`,
+          );
+        }
+
+        return `
+      export default ${JSON.stringify({
+        id: page.id,
+        type: "markdown",
+        ...(addRawMarkdown ? { markdown: page.markdown ?? "" } : {}),
+        html: page.html ?? "",
+      })};
+    `;
       }
 
       if (id.startsWith(RESOLVED_STYLE_PREFIX)) {
@@ -868,15 +930,6 @@ declare module "virtual:pages" {
       }
     },
   };
-}
-
-function escapeHtml(value: string): string {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
 }
 
 function getPageId(url: string, pages: PageEntry[]): string {
