@@ -20,6 +20,7 @@ func (g *CPPGenerator) Generate(script *Script) string {
 
 	g.writeLine("#include <cmath>")
 	g.writeLine("#include \"ScratchRuntime.hpp\"")
+	g.writeLine("#include <raylib.h>")
 	g.writeLine("")
 
 	g.writeLine("ScratchRuntime runtime;")

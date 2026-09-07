@@ -1,5 +1,6 @@
 #include <cmath>
 #include "ScratchRuntime.hpp"
+#include <raylib.h>
 
 ScratchRuntime runtime;
 
