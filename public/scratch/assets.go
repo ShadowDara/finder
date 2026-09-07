@@ -56,12 +56,24 @@ func CompileTargetAssets(
 		fmt.Println("SVG:", input)
 		fmt.Println("PNG:", output)
 
+		// Stage backdrops use the virtual stage size. Sprite costumes keep
+		// their natural SVG dimensions so Scratch rotation centers remain valid.
+		width, height := 480, 360
+		if !target.IsStage {
+			icon, readErr := oksvg.ReadIcon(input, 0)
+			if readErr != nil {
+				return fmt.Errorf("read sprite SVG %q: %w", costume.Name, readErr)
+			}
+			width = maxInt(1, int(math.Ceil(icon.ViewBox.W)))
+			height = maxInt(1, int(math.Ceil(icon.ViewBox.H)))
+		}
+
 		// SVG -> PNG
 		err := SVGToPNG(
 			input,
 			output,
-			480,
-			360,
+			width,
+			height,
 		)
 
 		if err != nil {
@@ -92,6 +104,13 @@ func CompileTargetAssets(
 	}
 
 	return nil
+}
+
+func maxInt(left, right int) int {
+	if left > right {
+		return left
+	}
+	return right
 }
 
 func copyFile(input, output string) error {
