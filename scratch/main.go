@@ -36,7 +36,7 @@ func scratchWorkflow(conf config.Config) error {
 
 		err := scratch.CompileTargetAssets(
 			target,
-			"simple",
+			conf.Indir,
 			conf.CacheDir+"/assets",
 		)
 

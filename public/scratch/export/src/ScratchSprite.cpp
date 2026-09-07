@@ -12,18 +12,18 @@ void ScratchSprite::moveSteps(float steps)
 
 void ScratchSprite::turnRight(float degrees)
 {
-    direction -= degrees;
-
-    if (direction < 0.0f)
-        direction += 360.0f;
-}
-
-void ScratchSprite::turnLeft(float degrees)
-{
     direction += degrees;
 
     if (direction >= 360.0f)
         direction -= 360.0f;
+}
+
+void ScratchSprite::turnLeft(float degrees)
+{
+    direction -= degrees;
+
+    if (direction < 0.0f)
+        direction += 360.0f;
 }
 
 void ScratchSprite::loadCostume(

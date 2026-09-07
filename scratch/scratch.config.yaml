@@ -1,5 +1,6 @@
 # Scracth Compiler Config
 
-indir: "simple"
+# indir: "simple"
+indir: "Monster-Clicker"
 outdir: "export2"
 cachedir: "scratchcache"
