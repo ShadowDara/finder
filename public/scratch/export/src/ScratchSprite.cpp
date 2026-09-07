@@ -48,7 +48,7 @@ void ScratchSprite::unloadCostume()
 
 void ScratchSprite::draw() const
 {
-    if (costume.id == 0)
+    if (!visible || costume.id == 0)
         return;
 
     DrawTexturePro(

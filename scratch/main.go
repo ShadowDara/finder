@@ -47,45 +47,17 @@ func scratchWorkflow(conf config.Config) error {
 
 	fmt.Println()
 
-	for _, target := range project.Targets {
-		if target.IsStage {
-			continue
-		}
+	generator := scratch.NewCPPGenerator()
+	cpp := generator.Generate(project)
 
-		fmt.Println("Target:", target.Name)
-
-		for id, block := range target.Blocks {
-			if !block.TopLevel {
-				continue
-			}
-
-			script := scratch.ParseScript(
-				target.Blocks,
-				id,
-			)
-
-			scratch.PrintNode(script.Blocks[0], "  ")
-
-			generator := scratch.NewCPPGenerator()
-
-			cpp := generator.Generate(target, script)
-
-			// fmt.Println()
-			// fmt.Println("========== GENERATED C++ ==========")
-			// fmt.Println(cpp)
-			// fmt.Println("===================================")
-
-			err = os.WriteFile(conf.ScriptPath, []byte(scratch.GenShellScript(cpp, conf)), 0644)
-			if err != nil {
-				panic(err)
-			}
-
-			fmt.Println()
-			fmt.Println("Generated new project shell script. Run:")
-			fmt.Println()
-			fmt.Printf("chmod +x %s && ./%s\n", conf.ScriptPath, conf.ScriptPath)
-		}
+	err = os.WriteFile(conf.ScriptPath, []byte(scratch.GenShellScript(cpp, conf)), 0644)
+	if err != nil {
+		return err
 	}
+
+	fmt.Println("Generated new project shell script. Run:")
+	fmt.Println()
+	fmt.Printf("chmod +x %s && ./%s\n", conf.ScriptPath, conf.ScriptPath)
 
 	return nil
 }

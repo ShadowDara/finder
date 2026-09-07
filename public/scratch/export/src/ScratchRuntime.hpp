@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #include "ScratchSprite.hpp"
 #include "ScratchUI.hpp"
 
@@ -8,7 +10,9 @@ class ScratchRuntime
 public:
     using ScriptCallback = void (*)();
 
-    ScratchSprite sprite;
+    // Sprites
+    std::vector<ScratchSprite> sprites;
+
     ScratchUI ui;
 
     void init(
@@ -25,6 +29,8 @@ public:
     void shutdown();
 
     bool shouldClose() const;
+
+    ScratchSprite &sprite(size_t index);
 
 private:
     ScriptCallback startCallback = nullptr;

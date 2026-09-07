@@ -46,18 +46,29 @@ void ScratchRuntime::setStopCallback(ScriptCallback callback)
 
 void ScratchRuntime::draw()
 {
-    sprite.draw();
+    for (auto &sprite : sprites)
+    {
+        sprite.draw();
+    }
 
     ui.draw();
 }
 
 void ScratchRuntime::shutdown()
 {
-    sprite.unloadCostume();
+    for (auto &sprite : sprites)
+    {
+        sprite.unloadCostume();
+    }
     CloseWindow();
 }
 
 bool ScratchRuntime::shouldClose() const
 {
     return WindowShouldClose();
+}
+
+ScratchSprite &ScratchRuntime::sprite(size_t index)
+{
+    return sprites[index];
 }

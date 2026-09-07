@@ -6,15 +6,16 @@ import (
 )
 
 type CPPGenerator struct {
-	indent int
-	output strings.Builder
+	indent           int
+	output           strings.Builder
+	currentSpriteIdx int
 }
 
 func NewCPPGenerator() *CPPGenerator {
 	return &CPPGenerator{}
 }
 
-func (g *CPPGenerator) Generate(target Target, script *Script) string {
+func (g *CPPGenerator) Generate(project *Project) string {
 	g.output.Reset()
 	g.indent = 0
 
@@ -42,7 +43,23 @@ func (g *CPPGenerator) Generate(target Target, script *Script) string {
 	g.indent++
 
 	g.writeLine("log(\"Green flag clicked!\");")
-	g.generateScript(script)
+	spriteIndex := 0
+	for _, target := range project.Targets {
+		if target.IsStage {
+			continue
+		}
+
+		g.currentSpriteIdx = spriteIndex
+		for id, block := range target.Blocks {
+			if !block.TopLevel {
+				continue
+			}
+
+			script := ParseScript(target.Blocks, id)
+			g.generateScript(script)
+		}
+		spriteIndex++
+	}
 
 	g.indent--
 	g.writeLine("}")
@@ -52,13 +69,36 @@ func (g *CPPGenerator) Generate(target Target, script *Script) string {
 	g.writeLine("{")
 	g.indent++
 
-	for _, costume := range target.Costumes {
+	spriteIndex = 0
+	for _, target := range project.Targets {
+		if target.IsStage {
+			continue
+		}
+
+		g.writeLine("runtime.sprites.emplace_back();")
+		g.writeLine(fmt.Sprintf("runtime.sprite(%d).x = %g;", spriteIndex, target.X))
+		g.writeLine(fmt.Sprintf("runtime.sprite(%d).y = %g;", spriteIndex, target.Y))
+		g.writeLine(fmt.Sprintf("runtime.sprite(%d).direction = %g;", spriteIndex, target.Direction))
+		g.writeLine(fmt.Sprintf("runtime.sprite(%d).visible = %t;", spriteIndex, target.Visible))
+
+		if len(target.Costumes) == 0 {
+			continue
+		}
+
+		costumeIndex := target.CurrentCostume
+		if costumeIndex < 0 || costumeIndex >= len(target.Costumes) {
+			costumeIndex = 0
+		}
+
+		costume := target.Costumes[costumeIndex]
 		g.writeLine(fmt.Sprintf(
-			"sprite.loadCostume(RESOURCES_PATH \"%s\", %g, %g);",
+			"runtime.sprite(%d).loadCostume(RESOURCES_PATH \"%s\", %g, %g);",
+			spriteIndex,
 			assetFilename(costume),
 			costume.RotationCenterX,
 			costume.RotationCenterY,
 		))
+		spriteIndex++
 	}
 
 	g.indent--
@@ -161,7 +201,8 @@ func (g *CPPGenerator) generateMoveSteps(node *Node) {
 	expr := g.generateValue(value)
 
 	g.writeLine(fmt.Sprintf(
-		"runtime.sprite.moveSteps(%s);",
+		"runtime.sprite(%d).moveSteps(%s);",
+		g.currentSpriteIdx,
 		expr,
 	))
 }
@@ -177,7 +218,8 @@ func (g *CPPGenerator) generateTurnRight(node *Node) {
 	expr := g.generateValue(value)
 
 	g.writeLine(fmt.Sprintf(
-		"runtime.sprite.turnRight(%s);",
+		"runtime.sprite(%d).turnRight(%s);",
+		g.currentSpriteIdx,
 		expr,
 	))
 }
@@ -193,7 +235,8 @@ func (g *CPPGenerator) generateTurnLeft(node *Node) {
 	expr := g.generateValue(value)
 
 	g.writeLine(fmt.Sprintf(
-		"runtime.sprite.turnLeft(%s);",
+		"runtime.sprite(%d).turnLeft(%s);",
+		g.currentSpriteIdx,
 		expr,
 	))
 }
