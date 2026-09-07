@@ -51,6 +51,7 @@ class ScratchRuntime
 {
 public:
     using ScriptCallback = ScriptTask (*)();
+    using EventCallback = void (*)();
 
     // Sprites
     std::vector<ScratchSprite> sprites;
@@ -71,7 +72,7 @@ public:
     void loadAssets();
     void setStartCallback(ScriptCallback callback);
     void addStartCallback(ScriptCallback callback);
-    void setStopCallback(ScriptCallback callback);
+    void setStopCallback(EventCallback callback);
     void setSpriteClickCallback(size_t index, ScriptCallback callback);
     struct WaitUntilAwaiter
     {
@@ -124,6 +125,6 @@ private:
     ScriptCallback startCallback = nullptr;
     std::vector<ScriptCallback> startCallbacks;
     std::vector<TaskState> tasks;
-    ScriptCallback stopCallback = nullptr;
+    EventCallback stopCallback = nullptr;
     std::vector<ScriptCallback> spriteClickCallbacks;
 };

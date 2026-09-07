@@ -70,7 +70,7 @@ void ScratchRuntime::addStartCallback(ScriptCallback callback)
     startCallbacks.push_back(callback);
 }
 
-void ScratchRuntime::setStopCallback(ScriptCallback callback)
+void ScratchRuntime::setStopCallback(EventCallback callback)
 {
     stopCallback = callback;
 }
