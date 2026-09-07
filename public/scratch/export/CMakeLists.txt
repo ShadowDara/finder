@@ -67,19 +67,33 @@ endif()
 #add_subdirectory(thirdparty/glui)		
 
 
-if (EMSCRIPTEN)
+if(EMSCRIPTEN)
     set(PLATFORM Web CACHE STRING "" FORCE)
-	
-	# Threads are used by the cooperative Scratch script scheduler.
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
-	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pthread -s USE_GLFW=3 -s ASSERTIONS=1 -s WASM=1 -s USE_PTHREADS=1 -s PTHREAD_POOL_SIZE=4 -s GL_ENABLE_GET_PROC_ADDRESS=1")
-	
+
+    # Emscripten pthreads
+    add_compile_options(-pthread)
+
+    add_link_options(
+        -pthread
+        -sUSE_GLFW=3
+        -sASSERTIONS=1
+		-sASYNCIFY
+		-sEXPORTED_RUNTIME_METHODS=HEAPF32
+        -sPTHREAD_POOL_SIZE=4
+        -sGL_ENABLE_GET_PROC_ADDRESS=1
+    )
+
     set(CMAKE_EXECUTABLE_SUFFIX ".html")
 endif()
 
 
 #Add raylib, and here you would add other libraries if needed!
 add_subdirectory(thirdparty/raylib-5.0)
+
+if(EMSCRIPTEN)
+    target_compile_options(raylib PRIVATE -pthread)
+endif()
+
 add_subdirectory(thirdparty/imgui-docking)
 add_subdirectory(thirdparty/rlImGui)
 

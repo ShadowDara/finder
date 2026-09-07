@@ -45,6 +45,10 @@ mkdir -p $EXPORT_PATH
 mkdir -p $EXPORT_PATH/src
 mkdir -p $EXPORT_PATH/resources
 
+write_if_changed "$EXPORT_PATH/server.py" <<'EOF'
+%s
+EOF
+
 write_if_changed "$EXPORT_PATH/launch.vs.json" <<'EOF'
 %s
 EOF
@@ -141,6 +145,7 @@ echo "cd $EXPORT_PATH && chmod +x clone.sh && ./clone.sh && cat README.txt"
 		conf.Outdir,
 		conf.Indir,
 		conf.CacheDir,
+		exportFile("server.py"),
 		exportFile("launch.vs.json"),
 		exportFile("samfile"),
 		exportFile("package.json"),
