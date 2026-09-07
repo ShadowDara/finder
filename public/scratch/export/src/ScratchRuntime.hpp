@@ -32,7 +32,7 @@ public:
     void setStartCallback(ScriptCallback callback);
     void setStopCallback(ScriptCallback callback);
     void setSpriteClickCallback(size_t index, ScriptCallback callback);
-    void waitUntil(const std::function<bool()> &condition);
+    bool waitUntil(const std::function<bool()> &condition);
     void setBackdrop(size_t index);
     void nextBackdrop();
     void update();

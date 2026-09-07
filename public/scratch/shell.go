@@ -24,6 +24,20 @@ EXPORT_PATH=%s
 IMPORT_PATH=%s
 CACHEDIR=%s
 
+write_if_changed() {
+    file="$1"
+    tmp="$(mktemp)"
+
+    cat > "$tmp"
+
+    if ! cmp -s "$tmp" "$file"; then
+        mkdir -p "$(dirname "$file")"
+        mv "$tmp" "$file"
+    else
+        rm "$tmp"
+    fi
+}
+
 # Clear
 #rm -rf $EXPORT_PATH
 
@@ -31,73 +45,71 @@ mkdir -p $EXPORT_PATH
 mkdir -p $EXPORT_PATH/src
 mkdir -p $EXPORT_PATH/resources
 
-touch $EXPORT_PATH/CMakeSettings.json
-cat > $EXPORT_PATH/CMakeSettings.json <<'EOF'
+write_if_changed "$EXPORT_PATH/package.json" <<'EOF'
 %s
 EOF
 
-touch $EXPORT_PATH/src/colors.hpp
-cat > $EXPORT_PATH/src/colors.hpp <<'EOF'
+write_if_changed "$EXPORT_PATH/LICENSE" <<'EOF'
 %s
 EOF
 
-touch $EXPORT_PATH/src/Logger.cpp
-cat > $EXPORT_PATH/src/Logger.cpp <<'EOF'
+write_if_changed "$EXPORT_PATH/minishell.html" <<'EOF'
 %s
 EOF
 
-touch $EXPORT_PATH/src/Logger.hpp
-cat > $EXPORT_PATH/src/Logger.hpp <<'EOF'
+write_if_changed "$EXPORT_PATH/CMakeSettings.json" <<'EOF'
 %s
 EOF
 
-touch $EXPORT_PATH/src/ScratchUI.cpp
-cat > $EXPORT_PATH/src/ScratchUI.cpp <<'EOF'
+write_if_changed "$EXPORT_PATH/src/colors.hpp" <<'EOF'
 %s
 EOF
 
-touch $EXPORT_PATH/src/ScratchUI.hpp
-cat > $EXPORT_PATH/src/ScratchUI.hpp <<'EOF'
+write_if_changed "$EXPORT_PATH/src/Logger.cpp" <<'EOF'
 %s
 EOF
 
-touch $EXPORT_PATH/src/ScratchRuntime.cpp
-cat > $EXPORT_PATH/src/ScratchRuntime.cpp <<'EOF'
+write_if_changed "$EXPORT_PATH/src/Logger.hpp" <<'EOF'
 %s
 EOF
 
-touch $EXPORT_PATH/src/ScratchRuntime.hpp
-cat > $EXPORT_PATH/src/ScratchRuntime.hpp <<'EOF'
+write_if_changed "$EXPORT_PATH/src/ScratchUI.cpp" <<'EOF'
 %s
 EOF
 
-touch $EXPORT_PATH/src/ScratchSprite.cpp
-cat > $EXPORT_PATH/src/ScratchSprite.cpp <<'EOF'
+write_if_changed "$EXPORT_PATH/src/ScratchUI.hpp" <<'EOF'
 %s
 EOF
 
-touch $EXPORT_PATH/src/ScratchSprite.hpp
-cat > $EXPORT_PATH/src/ScratchSprite.hpp <<'EOF'
+write_if_changed "$EXPORT_PATH/src/ScratchRuntime.cpp" <<'EOF'
 %s
 EOF
 
-touch $EXPORT_PATH/CMakeLists.txt
-cat > $EXPORT_PATH/CMakeLists.txt <<'EOF'
+write_if_changed "$EXPORT_PATH/src/ScratchRuntime.hpp" <<'EOF'
 %s
 EOF
 
-touch $EXPORT_PATH/clone.sh
-cat > $EXPORT_PATH/clone.sh <<'EOF'
+write_if_changed "$EXPORT_PATH/src/ScratchSprite.cpp" <<'EOF'
 %s
 EOF
 
-touch $EXPORT_PATH/src/main.cpp
-cat > $EXPORT_PATH/src/main.cpp <<'EOF'
+write_if_changed "$EXPORT_PATH/src/ScratchSprite.hpp" <<'EOF'
 %s
 EOF
 
-touch $EXPORT_PATH/README.txt
-cat > $EXPORT_PATH/README.txt <<'EOF'
+write_if_changed "$EXPORT_PATH/CMakeLists.txt" <<'EOF'
+%s
+EOF
+
+write_if_changed "$EXPORT_PATH/clone.sh" <<'EOF'
+%s
+EOF
+
+write_if_changed "$EXPORT_PATH/src/main.cpp" <<'EOF'
+%s
+EOF
+
+write_if_changed "$EXPORT_PATH/README.txt" <<'EOF'
 %s
 EOF
 
@@ -117,6 +129,9 @@ echo "cd $EXPORT_PATH && chmod +x clone.sh && ./clone.sh && cat README.txt"
 		conf.Outdir,
 		conf.Indir,
 		conf.CacheDir,
+		exportFile("package.json"),
+		exportFile("LICENSE"),
+		exportFile("minishell.html"),
 		exportFile("CMakeSettings.json"),
 		exportFile("src/colors.hpp"),
 		exportFile("src/Logger.cpp"),

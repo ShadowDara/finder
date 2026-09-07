@@ -62,9 +62,9 @@ void ScratchRuntime::setSpriteClickCallback(size_t index, ScriptCallback callbac
     spriteClickCallbacks[index] = callback;
 }
 
-void ScratchRuntime::waitUntil(const std::function<bool()> &condition)
+bool ScratchRuntime::waitUntil(const std::function<bool()> &condition)
 {
-    while (!condition())
+    while (!condition() && !WindowShouldClose())
     {
         ui.update();
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
@@ -83,14 +83,16 @@ void ScratchRuntime::waitUntil(const std::function<bool()> &condition)
         EndDrawing();
         PollInputEvents();
     }
+
+    return !WindowShouldClose();
 }
 
 void ScratchRuntime::draw()
 {
     if (!backdrops.empty())
-        backdrops[currentBackdrop].draw();
+        backdrops[currentBackdrop].drawAsBackground();
     else
-        background.draw();
+        background.drawAsBackground();
 
     for (auto &sprite : sprites)
     {

@@ -495,8 +495,12 @@ func (g *CPPGenerator) binaryOperator(
 	node *Node,
 	operator string,
 ) string {
-	left, leftOK := node.Inputs["NUM1"]
-	right, rightOK := node.Inputs["NUM2"]
+	leftName, rightName := "NUM1", "NUM2"
+	if node.Opcode == "operator_gt" || node.Opcode == "operator_lt" || node.Opcode == "operator_equals" {
+		leftName, rightName = "OPERAND1", "OPERAND2"
+	}
+	left, leftOK := node.Inputs[leftName]
+	right, rightOK := node.Inputs[rightName]
 
 	if !leftOK || !rightOK {
 		return "0"
@@ -603,7 +607,7 @@ func (g *CPPGenerator) generateWaitUntil(node *Node) {
 		g.warnMissingInput("control_wait_until", "CONDITION")
 		return
 	}
-	g.writeLine(fmt.Sprintf("runtime.waitUntil([&]() { return %s; });", g.generateValue(condition)))
+	g.writeLine(fmt.Sprintf("if (!runtime.waitUntil([&]() { return %s; })) return;", g.generateValue(condition)))
 }
 
 func (g *CPPGenerator) writeLine(line string) {

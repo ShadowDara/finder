@@ -29,6 +29,7 @@ public:
     void unloadCostume();
 
     void draw() const;
+    void drawAsBackground() const;
     void sayForSeconds(const char *message, double seconds);
     bool containsPoint(Vector2 point) const;
 };
