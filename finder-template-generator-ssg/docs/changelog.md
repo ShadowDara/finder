@@ -19,6 +19,7 @@ _The whole finder CHANGELOG_
 - renamed checksums file in the release from `SHA256SUMS` to `SHA256SUMS.txt`
 - added some helpfule vite plugins
 - added file content checksum check
+- fixed that to old template warning because it showed up the finder and the template where in the same version
 
 ## 0.3.15 - 02.09.2025
 

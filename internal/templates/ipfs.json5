@@ -1,1 +1,1 @@
-{"description":"IPFS distributed file system","files":["ipfs.config"],"folders":[],"name":"*"}
+{"description":"IPFS distributed file system","files":["ipfs.config"],"folders":[],"min_version":"0.3.16","name":"*"}

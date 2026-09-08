@@ -1,4 +1,3 @@
-// Struct for a Jest Testing Framework
 {
     "description": "Jest JavaScript testing framework",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "jest.config.js",
         "package.json"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

@@ -1,1 +1,1 @@
-{"description":"HashiCorp Nomad container orchestration","files":["*.nomad"],"folders":[],"name":"*"}
+{"description":"HashiCorp Nomad container orchestration","files":["*.nomad"],"folders":[],"min_version":"0.3.16","name":"*"}

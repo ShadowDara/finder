@@ -1,4 +1,3 @@
-// Struct for a Nim Project
 {
     "description": "Nim programming language project",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "*.nim",
         "*.nimble"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

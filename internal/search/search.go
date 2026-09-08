@@ -106,7 +106,7 @@ func Find(folderstruct structure.Folder, output_type string, name string, doCach
 		cache.SaveCache(name, matches)
 
 		if output_type != "clear" && output_type != "json" {
-			fmt.Printf("Wrote Cache for template %s", name)
+			fmt.Printf("Wrote Cache for template %s\n", name)
 		}
 	}
 

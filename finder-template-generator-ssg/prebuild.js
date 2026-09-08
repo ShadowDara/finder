@@ -1,5 +1,6 @@
 import { copyFile } from "fs/promises";
 
+await copyFile("./../AGENTS.md", "./data/agents.md");
 await copyFile("./../CHANGELOG.md", "./docs/changelog.md");
 await copyFile("./../README.md", "./docs/readme.md");
 await copyFile("./../install.sh", "./public/install.sh");

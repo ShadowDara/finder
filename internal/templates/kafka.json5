@@ -1,1 +1,1 @@
-{"description":"Apache Kafka stream processing project","files":["docker-compose.yml"],"folders":[{"files":[],"folders":[],"name":"config"}],"name":"*"}
+{"description":"Apache Kafka stream processing project","files":["docker-compose.yml"],"folders":[{"files":[],"folders":[],"name":"config"}],"min_version":"0.3.16","name":"*"}

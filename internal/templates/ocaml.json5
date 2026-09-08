@@ -1,1 +1,1 @@
-{"description":"OCaml functional programming","files":["dune-project","*.ml"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}
+{"description":"OCaml functional programming","files":["dune-project","*.ml"],"folders":[{"files":[],"folders":[],"name":"src"}],"min_version":"0.3.16","name":"*"}

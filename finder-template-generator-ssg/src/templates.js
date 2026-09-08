@@ -2647,6 +2647,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "ipfs.json5": {
@@ -2655,6 +2656,7 @@ export default {
       "ipfs.config"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "ipld.json5": {
@@ -2663,6 +2665,7 @@ export default {
       "*.ipld"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "jaeger.json5": {
@@ -2680,6 +2683,7 @@ export default {
       "settings.gradle"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "java-maven.json5": {
@@ -2694,7 +2698,11 @@ export default {
         "name": "src"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "java"
+    ]
   },
   "jekyll.json5": {
     "files": [
@@ -2705,7 +2713,8 @@ export default {
     "min_version": "0.3.14",
     "name": "*",
     "tags": [
-      "web"
+      "web",
+      "ruby"
     ]
   },
   "jenkins.json5": {
@@ -2714,6 +2723,7 @@ export default {
       "Jenkinsfile"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "jest.json5": {
@@ -2729,6 +2739,7 @@ export default {
         "name": "__tests__"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "jsonld.json5": {
@@ -2738,6 +2749,7 @@ export default {
       "context.json"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "julia.json5": {
@@ -2753,6 +2765,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "junit.json5": {
@@ -2767,6 +2780,7 @@ export default {
         "name": "src/test"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "jupyter.json5": {
@@ -2782,6 +2796,7 @@ export default {
         "name": "notebooks"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "kafka.json5": {
@@ -2796,6 +2811,7 @@ export default {
         "name": "config"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "keycloak.json5": {
@@ -3412,7 +3428,12 @@ export default {
         "name": "bin"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "game-engine",
+      "C++"
+    ]
   },
   "nativescript.json5": {
     "description": "NativeScript mobile application",
@@ -3427,6 +3448,7 @@ export default {
         "name": "app"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "nats.json5": {
@@ -3436,6 +3458,7 @@ export default {
       "nats.conf"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "neo4j.json5": {
@@ -3445,7 +3468,11 @@ export default {
       "*.cypher"
     ],
     "folders": [],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "db"
+    ]
   },
   "nestjs.json5": {
     "description": "NestJS Node.js framework",
@@ -3460,6 +3487,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "netlify.json5": {
@@ -3468,6 +3496,7 @@ export default {
       "netlify.toml"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "newrelic.json5": {
@@ -3477,6 +3506,7 @@ export default {
       "newrelic.yml"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "next.json5": {
@@ -3492,6 +3522,7 @@ export default {
         "name": "app"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "nft.json5": {
@@ -3522,6 +3553,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "nomad.json5": {
@@ -3530,6 +3562,7 @@ export default {
       "*.nomad"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "npm.json5": {
@@ -3537,6 +3570,7 @@ export default {
       "package.json"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "nuxt.json5": {
@@ -3552,6 +3586,7 @@ export default {
         "name": "pages"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "objc.json5": {
@@ -3562,6 +3597,7 @@ export default {
       "*.h"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "obsidian.json5": {
@@ -3587,6 +3623,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "oci.json5": {
@@ -3596,6 +3633,7 @@ export default {
       "*.oci"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "okta.json5": {
@@ -3604,6 +3642,7 @@ export default {
       "okta.config.js"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "ollama.json5": {
@@ -3632,6 +3671,7 @@ export default {
         "name": "api"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "openai.json5": {
@@ -3663,6 +3703,7 @@ export default {
         "name": "prompts"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "openapi-codegen.json5": {
@@ -3677,6 +3718,7 @@ export default {
         "name": "generated"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "openapi.json5": {
@@ -3686,6 +3728,7 @@ export default {
       "swagger.json"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "opennext.json5": {
@@ -3694,6 +3737,7 @@ export default {
       "open-next.config.ts"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "openrl.json5": {
@@ -3711,6 +3755,7 @@ export default {
         "name": "agent"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "otel.json5": {

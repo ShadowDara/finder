@@ -114,7 +114,7 @@ export function renderCreator(app: HTMLDivElement) {
             id="import-text"
             rows="14"
             spellcheck="false"
-            placeholder='{ "name": "root", "files": [...] }'
+            placeholder='{ "name": "*", "files": [...] }'
           ></textarea>
           <p id="import-error" class="import-error"></p>
           <div class="import-actions">

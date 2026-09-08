@@ -1,4 +1,3 @@
-// Struct for an OpenAPI Codegen Project
 {
     "description": "OpenAPI code generator",
     "name": "*",
@@ -11,5 +10,6 @@
     ],
     "files": [
         "openapi.yaml"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

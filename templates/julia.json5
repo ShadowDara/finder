@@ -1,4 +1,3 @@
-// Struct for a Julia Programming Project
 {
     "description": "Julia programming language project",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "Project.toml",
         "*.jl"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

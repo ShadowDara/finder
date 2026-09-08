@@ -41,7 +41,7 @@ export function newFolder(name = "new-folder"): FolderNode {
 }
 
 export function newRoot(): FolderNode {
-  const root = newFolder("root");
+  const root = newFolder("*");
   root.minVersion = "0.1.0";
   root.description = "Describe what this template matches";
   return root;

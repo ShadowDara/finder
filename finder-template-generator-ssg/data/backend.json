@@ -1,53 +1,58 @@
 {
-  "generatedAt": "2026-09-08T13:29:47.755Z",
+  "generatedAt": "2026-09-08T17:00:47.559Z",
   "total": {
-    "files": 33,
-    "bytes": 212222,
-    "kilobytes": 207.25,
-    "megabytes": 0.2
+    "files": 37,
+    "bytes": 397688,
+    "kilobytes": 388.37,
+    "megabytes": 0.38
   },
   "byExtension": [
     {
       "extension": ".js",
-      "files": 9,
-      "bytes": 158428,
-      "percentage": 74.65
+      "files": 11,
+      "bytes": 341044,
+      "percentage": 85.76
     },
     {
       "extension": ".css",
-      "files": 10,
-      "bytes": 37833,
-      "percentage": 17.83
+      "files": 11,
+      "bytes": 40120,
+      "percentage": 10.09
     },
     {
       "extension": ".txt",
       "files": 1,
-      "bytes": 9705,
-      "percentage": 4.57
+      "bytes": 9764,
+      "percentage": 2.46
     },
     {
       "extension": ".html",
-      "files": 12,
-      "bytes": 4512,
-      "percentage": 2.13
+      "files": 13,
+      "bytes": 5016,
+      "percentage": 1.26
     },
     {
       "extension": ".sh",
       "files": 1,
       "bytes": 1744,
-      "percentage": 0.82
+      "percentage": 0.44
     }
   ],
   "files": [
     {
-      "path": "assets/samfile.js",
-      "extension": ".js",
-      "bytes": 82431
-    },
-    {
       "path": "assets/index.js",
       "extension": ".js",
-      "bytes": 26781
+      "bytes": 165637
+    },
+    {
+      "path": "assets/jquery.module.js",
+      "extension": ".js",
+      "bytes": 79107
+    },
+    {
+      "path": "assets/_main_entry.js",
+      "extension": ".js",
+      "bytes": 39830
     },
     {
       "path": "assets/creator.js",
@@ -57,17 +62,17 @@
     {
       "path": "assets/markdowneditor.js",
       "extension": ".js",
-      "bytes": 12012
+      "bytes": 12018
     },
     {
       "path": "dependencies.txt",
       "extension": ".txt",
-      "bytes": 9705
+      "bytes": 9764
     },
     {
       "path": "assets/configeditor.js",
       "extension": ".js",
-      "bytes": 8953
+      "bytes": 8959
     },
     {
       "path": "assets/viewer.css",
@@ -77,12 +82,17 @@
     {
       "path": "assets/viewer.js",
       "extension": ".js",
-      "bytes": 7245
+      "bytes": 7251
     },
     {
       "path": "assets/creator.css",
       "extension": ".css",
       "bytes": 4783
+    },
+    {
+      "path": "assets/tellraw.js",
+      "extension": ".js",
+      "bytes": 4650
     },
     {
       "path": "assets/home.css",
@@ -92,7 +102,7 @@
     {
       "path": "assets/cacheviewer.js",
       "extension": ".js",
-      "bytes": 4568
+      "bytes": 4574
     },
     {
       "path": "assets/configeditor.css",
@@ -105,6 +115,11 @@
       "bytes": 3675
     },
     {
+      "path": "assets/samfile.js",
+      "extension": ".js",
+      "bytes": 3292
+    },
+    {
       "path": "assets/samfile.css",
       "extension": ".css",
       "bytes": 3255
@@ -112,12 +127,17 @@
     {
       "path": "assets/home.js",
       "extension": ".js",
-      "bytes": 3023
+      "bytes": 3029
     },
     {
       "path": "assets/main.css",
       "extension": ".css",
-      "bytes": 2969
+      "bytes": 2997
+    },
+    {
+      "path": "assets/tellraw.css",
+      "extension": ".css",
+      "bytes": 2259
     },
     {
       "path": "assets/markdownrootstyle.css",
@@ -140,69 +160,69 @@
       "bytes": 1744
     },
     {
-      "path": "assets/index2.js",
-      "extension": ".js",
-      "bytes": 718
+      "path": "tools/minecraft/tellraw/index.html",
+      "extension": ".html",
+      "bytes": 432
     },
     {
       "path": "tools/markdowneditor/index.html",
       "extension": ".html",
-      "bytes": 421
+      "bytes": 427
     },
     {
       "path": "configeditor/index.html",
       "extension": ".html",
-      "bytes": 416
+      "bytes": 422
     },
     {
       "path": "cacheviewer/index.html",
       "extension": ".html",
-      "bytes": 400
+      "bytes": 406
     },
     {
       "path": "viewer/index.html",
       "extension": ".html",
-      "bytes": 399
+      "bytes": 405
     },
     {
       "path": "creator/index.html",
       "extension": ".html",
-      "bytes": 392
+      "bytes": 398
     },
     {
       "path": "samfile/index.html",
       "extension": ".html",
-      "bytes": 392
+      "bytes": 398
     },
     {
       "path": "home/index.html",
       "extension": ".html",
-      "bytes": 386
+      "bytes": 392
     },
     {
       "path": "docs/config/index.html",
       "extension": ".html",
-      "bytes": 350
+      "bytes": 356
     },
     {
       "path": "docs/index.html",
       "extension": ".html",
-      "bytes": 343
+      "bytes": 349
     },
     {
       "path": "changelog/index.html",
       "extension": ".html",
-      "bytes": 342
+      "bytes": 348
     },
     {
       "path": "readme/index.html",
       "extension": ".html",
-      "bytes": 339
+      "bytes": 345
     },
     {
       "path": "index.html",
       "extension": ".html",
-      "bytes": 332
+      "bytes": 338
     }
   ]
 }

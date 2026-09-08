@@ -11,6 +11,7 @@ import licenseChecker from "license-checker";
 import eslint from "vite-plugin-eslint";
 import yaml from "@rollup/plugin-yaml";
 import { buildStats } from "./vite-plugin-build-stats";
+import { markdownLint } from "./md-linter-plugin";
 
 function dependenciesPlugin(outDir: string) {
   return {
@@ -58,6 +59,7 @@ function dependenciesPlugin(outDir: string) {
 
 export default defineConfig(({ mode }) => {
   const name = mode === "static" ? "gh-pages" : "backend";
+  const statsname = mode === "static" ? "static-stats.html" : "stats.html";
   const outDir = mode === "static" ? "dist-static" : "dist";
   return {
     base: mode === "static" ? "/finder/" : "./",
@@ -75,6 +77,16 @@ export default defineConfig(({ mode }) => {
       },
     },
     plugins: [
+      markdownLint({
+        maxLineLength: 72,
+
+        ignore: [
+          "docs/generated/**",
+          "README.md",
+          "**/CHANGELOG.md",
+          "dist-static/**",
+        ],
+      }),
       yaml(),
       // eslint(),
       string({ include: "**/*.html" }),
@@ -82,7 +94,7 @@ export default defineConfig(({ mode }) => {
       dependenciesPlugin(outDir),
       tailwindcss(),
       visualizer({
-        filename: "./stats.html",
+        filename: "./" + statsname,
         open: true,
         gzipSize: true,
         brotliSize: true,
@@ -120,7 +132,7 @@ export default defineConfig(({ mode }) => {
         // Single shared entry — every generated HTML page loads this bundle.
         input: "src/main.ts",
         output: {
-          entryFileNames: "assets/index.js",
+          entryFileNames: "assets/_main_entry.js",
           chunkFileNames: "assets/[name].js",
           assetFileNames: (_assetInfo) => {
             return "assets/[name][extname]";

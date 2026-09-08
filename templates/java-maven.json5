@@ -1,4 +1,3 @@
-// Struct for a Java Maven Project
 {
     "description": "Java project with Maven build tool",
     "name": "*",
@@ -11,5 +10,9 @@
     ],
     "files": [
         "pom.xml"
-    ]
+    ],
+    "tags": [
+        "java"
+    ],
+    "min_version": "0.3.16"
 }

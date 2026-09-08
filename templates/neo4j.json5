@@ -1,4 +1,3 @@
-// Struct for a Neo4j Graph Database
 {
     "description": "Neo4j graph database",
     "name": "*",
@@ -6,5 +5,9 @@
     "files": [
         "docker-compose.yml",
         "*.cypher"
-    ]
+    ],
+    "tags": [
+        "db"
+    ],
+    "min_version": "0.3.16"
 }

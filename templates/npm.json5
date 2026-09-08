@@ -1,8 +1,8 @@
-// Struct for a NPM Project
 {
     "name": "*",
     "folders": [],
     "files": [
         "package.json"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

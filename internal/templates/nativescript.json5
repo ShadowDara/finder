@@ -1,1 +1,1 @@
-{"description":"NativeScript mobile application","files":["nativescript.config.ts","package.json"],"folders":[{"files":[],"folders":[],"name":"app"}],"name":"*"}
+{"description":"NativeScript mobile application","files":["nativescript.config.ts","package.json"],"folders":[{"files":[],"folders":[],"name":"app"}],"min_version":"0.3.16","name":"*"}

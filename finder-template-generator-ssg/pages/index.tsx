@@ -1,7 +1,8 @@
 import { jsx, Fragment } from "../src/jsx-runtime";
 import { SERVER_ADRESS } from "../src/vars";
+import hljs from "highlight.js/lib/common";
 
-export default function render(el: HTMLDivElement) {
+export default function render(el: HTMLDivElement, data: string) {
   el.innerHTML = (
     <>
       <article class="markdown">
@@ -41,9 +42,21 @@ export default function render(el: HTMLDivElement) {
         {import.meta.env.MODE == "backend" && (
           <button id="stop">Stop Server</button>
         )}
+
+        <h2>Agents.md</h2>
+        <p>
+          A Markdown file to explain your AI how to write templates for finder!
+        </p>
+        <pre>
+          <code class="language-md">{data}</code>
+        </pre>
       </article>
     </>
   );
+
+  el.querySelectorAll("pre code").forEach((block) => {
+    hljs.highlightElement(block as HTMLElement);
+  });
 
   if (import.meta.env.MODE == "backend") {
     let adress = "/api/stop";
