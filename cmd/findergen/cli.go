@@ -19,11 +19,11 @@ func parseCliArgs() Conf {
 
 	// NEW
 	root := argparser.NewCommand("findergen",
-		"the http server for finder to create and view templates", false)
+		"the http server for finder to create and view templates", "Check out github for more infos or the finder website:\nhttps://github.com/shadowdara/finder\nhttps://shadowdara.github.io/finder", false)
 
 	// Add Version Command
 	versionCmd := argparser.NewCommand(
-		"--version", "to get the Version of the Program", false, "-v", "v", "version")
+		"--version", "to get the Version of the Program", "", false, "-v", "v", "version")
 
 	// Port
 	root.Number("port", 0, "Change the Server Port", false, "p")
