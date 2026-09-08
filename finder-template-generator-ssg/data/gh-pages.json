@@ -1,41 +1,41 @@
 {
-  "generatedAt": "2026-09-08T12:11:14.657Z",
+  "generatedAt": "2026-09-08T13:29:55.200Z",
   "total": {
-    "files": 30,
-    "bytes": 260671,
-    "kilobytes": 254.56,
-    "megabytes": 0.25
+    "files": 33,
+    "bytes": 276387,
+    "kilobytes": 269.91,
+    "megabytes": 0.26
   },
   "byExtension": [
     {
       "extension": ".js",
-      "files": 8,
-      "bytes": 209402,
-      "percentage": 80.33
+      "files": 9,
+      "bytes": 222447,
+      "percentage": 80.48
     },
     {
       "extension": ".css",
-      "files": 9,
-      "bytes": 35589,
-      "percentage": 13.65
+      "files": 10,
+      "bytes": 37833,
+      "percentage": 13.69
     },
     {
       "extension": ".txt",
       "files": 1,
       "bytes": 9705,
-      "percentage": 3.72
+      "percentage": 3.51
     },
     {
       "extension": ".html",
-      "files": 11,
-      "bytes": 4231,
-      "percentage": 1.62
+      "files": 12,
+      "bytes": 4658,
+      "percentage": 1.69
     },
     {
       "extension": ".sh",
       "files": 1,
       "bytes": 1744,
-      "percentage": 0.67
+      "percentage": 0.63
     }
   ],
   "files": [
@@ -52,12 +52,17 @@
     {
       "path": "assets/index.js",
       "extension": ".js",
-      "bytes": 26314
+      "bytes": 26570
+    },
+    {
+      "path": "assets/markdowneditor.js",
+      "extension": ".js",
+      "bytes": 12012
     },
     {
       "path": "assets/creator.js",
       "extension": ".js",
-      "bytes": 11162
+      "bytes": 11939
     },
     {
       "path": "dependencies.txt",
@@ -120,6 +125,11 @@
       "bytes": 2246
     },
     {
+      "path": "assets/markdowneditor.css",
+      "extension": ".css",
+      "bytes": 2244
+    },
+    {
       "path": "assets/markdownstyle.css",
       "extension": ".css",
       "bytes": 2196
@@ -138,6 +148,11 @@
       "path": "configeditor/index.html",
       "extension": ".html",
       "bytes": 431
+    },
+    {
+      "path": "tools/markdowneditor/index.html",
+      "extension": ".html",
+      "bytes": 427
     },
     {
       "path": "cacheviewer/index.html",

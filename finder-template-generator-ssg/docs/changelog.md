@@ -18,6 +18,7 @@ _The whole finder CHANGELOG_
 - updated some templates
 - renamed checksums file in the release from `SHA256SUMS` to `SHA256SUMS.txt`
 - added some helpfule vite plugins
+- added file content checksum check
 
 ## 0.3.15 - 02.09.2025
 

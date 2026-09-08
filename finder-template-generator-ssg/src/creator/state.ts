@@ -1,4 +1,5 @@
 import type {
+  Checksum,
   Existence,
   FileJSON,
   FileNode,
@@ -15,7 +16,13 @@ export function nextId(): string {
 }
 
 export function newFile(name = "new-file.txt"): FileNode {
-  return { id: nextId(), name, existence: "required", size: null };
+  return {
+    id: nextId(),
+    name,
+    existence: "required",
+    size: null,
+    checksums: null,
+  };
 }
 
 export function newFolder(name = "new-folder"): FolderNode {
@@ -53,7 +60,7 @@ export function findFolder(root: FolderNode, id: string): FolderNode | null {
 /** Find the file with `fileId` plus the folder that directly contains it. */
 export function findFile(
   root: FolderNode,
-  fileId: string
+  fileId: string,
 ): { folder: FolderNode; file: FileNode } | null {
   for (const file of root.files) {
     if (file.id === fileId) return { folder: root, file };
@@ -84,7 +91,9 @@ export function removeFile(root: FolderNode, fileId: string): boolean {
   return root.folders.some((child) => removeFile(child, fileId));
 }
 
-function serializeSize(size: SizeConstraint | null): SizeConstraint | undefined {
+function serializeSize(
+  size: SizeConstraint | null,
+): SizeConstraint | undefined {
   if (!size) return undefined;
   if (size.min === undefined && size.max === undefined) return undefined;
   const out: SizeConstraint = {};
@@ -105,6 +114,24 @@ export function serializeFile(file: FileNode): FileJSON {
   }
   const size = serializeSize(file.size);
   if (size) out.size = size;
+  const checksums = serializeChecksums(file.checksums);
+  if (checksums) out.checksums = checksums;
+  return out;
+}
+
+function serializeChecksums(
+  checksums: FileNode["checksums"],
+): Partial<Checksum> | undefined {
+  if (!checksums) return undefined;
+
+  const out: Partial<Checksum> = {};
+  const sha256 = checksums.sha256.trim();
+  const sha512 = checksums.sha512.trim();
+
+  if (sha256) out.sha256 = sha256;
+  if (sha512) out.sha512 = sha512;
+
+  if (Object.keys(out).length === 0) return undefined;
   return out;
 }
 
@@ -133,7 +160,13 @@ function parseFiles(raw: unknown): FileNode[] {
   if (!Array.isArray(raw)) return [];
   return raw.map((entry) => {
     if (typeof entry === "string") {
-      return { id: nextId(), name: entry, existence: "required", size: null };
+      return {
+        id: nextId(),
+        name: entry,
+        existence: "required",
+        size: null,
+        checksums: null,
+      };
     }
     const e = entry as FileJSON;
     return {
@@ -141,6 +174,12 @@ function parseFiles(raw: unknown): FileNode[] {
       name: e.name ?? "",
       existence: e.existence ?? "required",
       size: e.size ? { min: e.size.min, max: e.size.max } : null,
+      checksums: e.checksums
+        ? {
+            sha256: e.checksums.sha256 ?? "",
+            sha512: e.checksums.sha512 ?? "",
+          }
+        : null,
     };
   });
 }

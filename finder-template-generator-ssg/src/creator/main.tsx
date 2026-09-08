@@ -1,5 +1,5 @@
 import { jsx } from "../jsx-runtime";
-import type { Existence, FolderJSON, FolderNode } from "./types";
+import type { Existence, FileNode, FolderJSON, FolderNode } from "./types";
 import {
   findFile,
   findFolder,
@@ -435,6 +435,37 @@ export function renderCreator(app: HTMLDivElement) {
     return container;
   }
 
+  function checksumFields(
+    checksums: FileNode["checksums"],
+    onChange: (value: FileNode["checksums"]) => void,
+  ): HTMLDivElement {
+    const container = document.createElement("div");
+    container.className = "checksum-fields";
+
+    const sha256 = textInput(
+      checksums?.sha256 ?? "",
+      (value) => emit(value, sha512.value),
+      "SHA-256 checksum",
+    );
+    const sha512 = textInput(
+      checksums?.sha512 ?? "",
+      (value) => emit(sha256.value, value),
+      "SHA-512 checksum",
+    );
+
+    function emit(sha256Value: string, sha512Value: string): void {
+      const next = {
+        sha256: sha256Value.trim(),
+        sha512: sha512Value.trim(),
+      };
+      onChange(next.sha256 || next.sha512 ? next : null);
+    }
+
+    container.appendChild(sha256);
+    container.appendChild(sha512);
+    return container;
+  }
+
   function renderInspector(): void {
     inspectorEl.innerHTML = "";
 
@@ -547,6 +578,7 @@ export function renderCreator(app: HTMLDivElement) {
           }),
         ),
       );
+
       return;
     }
 
@@ -593,6 +625,17 @@ export function renderCreator(app: HTMLDivElement) {
           renderTree();
           renderPreview();
         }),
+      ),
+    );
+
+    inspectorEl.appendChild(
+      labeled(
+        "Checksums",
+        checksumFields(file.checksums, (checksums) => {
+          file.checksums = checksums;
+          renderPreview();
+        }),
+        "Optional SHA-256 or SHA-512 checksum.",
       ),
     );
   }

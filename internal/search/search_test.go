@@ -37,7 +37,7 @@ func TestFind_NormalOutput(t *testing.T) {
 	}
 
 	output := captureSearchOutput(func() {
-		Find(folder, "normal")
+		Find(folder, "normal", "", false)
 	})
 
 	if !strings.Contains(output, "Description: Test Folder") {
@@ -60,7 +60,7 @@ func TestFind_ClearOutput(t *testing.T) {
 	}
 
 	output := captureSearchOutput(func() {
-		Find(folder, "clear")
+		Find(folder, "clear", "", false)
 	})
 
 	// Clear output should not include description
@@ -78,7 +78,7 @@ func TestFind_JSONOutput(t *testing.T) {
 	}
 
 	output := captureSearchOutput(func() {
-		Find(folder, "json")
+		Find(folder, "json", "", false)
 	})
 
 	// JSON output should be valid JSON array

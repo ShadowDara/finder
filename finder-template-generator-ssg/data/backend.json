@@ -1,41 +1,41 @@
 {
-  "generatedAt": "2026-09-08T12:10:55.834Z",
+  "generatedAt": "2026-09-08T13:29:47.755Z",
   "total": {
-    "files": 30,
-    "bytes": 196506,
-    "kilobytes": 191.9,
-    "megabytes": 0.19
+    "files": 33,
+    "bytes": 212222,
+    "kilobytes": 207.25,
+    "megabytes": 0.2
   },
   "byExtension": [
     {
       "extension": ".js",
-      "files": 8,
-      "bytes": 145377,
-      "percentage": 73.98
+      "files": 9,
+      "bytes": 158428,
+      "percentage": 74.65
     },
     {
       "extension": ".css",
-      "files": 9,
-      "bytes": 35589,
-      "percentage": 18.11
+      "files": 10,
+      "bytes": 37833,
+      "percentage": 17.83
     },
     {
       "extension": ".txt",
       "files": 1,
       "bytes": 9705,
-      "percentage": 4.94
+      "percentage": 4.57
     },
     {
       "extension": ".html",
-      "files": 11,
-      "bytes": 4091,
-      "percentage": 2.08
+      "files": 12,
+      "bytes": 4512,
+      "percentage": 2.13
     },
     {
       "extension": ".sh",
       "files": 1,
       "bytes": 1744,
-      "percentage": 0.89
+      "percentage": 0.82
     }
   ],
   "files": [
@@ -47,12 +47,17 @@
     {
       "path": "assets/index.js",
       "extension": ".js",
-      "bytes": 26519
+      "bytes": 26781
     },
     {
       "path": "assets/creator.js",
       "extension": ".js",
-      "bytes": 11920
+      "bytes": 12697
+    },
+    {
+      "path": "assets/markdowneditor.js",
+      "extension": ".js",
+      "bytes": 12012
     },
     {
       "path": "dependencies.txt",
@@ -120,6 +125,11 @@
       "bytes": 2246
     },
     {
+      "path": "assets/markdowneditor.css",
+      "extension": ".css",
+      "bytes": 2244
+    },
+    {
       "path": "assets/markdownstyle.css",
       "extension": ".css",
       "bytes": 2196
@@ -133,6 +143,11 @@
       "path": "assets/index2.js",
       "extension": ".js",
       "bytes": 718
+    },
+    {
+      "path": "tools/markdowneditor/index.html",
+      "extension": ".html",
+      "bytes": 421
     },
     {
       "path": "configeditor/index.html",

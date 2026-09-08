@@ -16,6 +16,13 @@ export interface FileNode {
   name: string;
   existence: Existence;
   size: SizeConstraint | null;
+  checksums: Checksum | null;
+}
+
+/** Checksum node */
+export interface Checksum {
+  sha256: string;
+  sha512: string;
 }
 
 /** Editable folder-node (tree). `id` is UI-only bookkeeping, stripped on export. */
@@ -44,6 +51,7 @@ export interface FileJSON {
   name: string;
   existence?: Existence;
   size?: SizeConstraint;
+  checksums?: Partial<Checksum>;
 }
 
 export interface FolderJSON {
