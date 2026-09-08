@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-09-08T17:55:55.635Z",
+  "generatedAt": "2026-09-08T18:02:31.157Z",
   "total": {
     "files": 37,
-    "bytes": 303037,
-    "kilobytes": 295.93,
+    "bytes": 303111,
+    "kilobytes": 296.01,
     "megabytes": 0.29
   },
   "byExtension": [
     {
       "extension": ".js",
       "files": 11,
-      "bytes": 246262,
-      "percentage": 81.26
+      "bytes": 246336,
+      "percentage": 81.27
     },
     {
       "extension": ".css",
@@ -112,7 +112,7 @@
     {
       "path": "assets/home.js",
       "extension": ".js",
-      "bytes": 3347
+      "bytes": 3421
     },
     {
       "path": "assets/samfile.js",
