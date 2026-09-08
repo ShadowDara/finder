@@ -1,7 +1,6 @@
 import { defineConfig } from "vite";
 import { pagesPlugin } from "./pages-ssg-plugin";
 import { visualizer } from "rollup-plugin-visualizer";
-import { buildSize } from "./size-plugin";
 import tailwindcss from "@tailwindcss/vite";
 import path from "node:path";
 import viteRemove from "unplugin-remove/vite";
@@ -11,13 +10,14 @@ import fs from "node:fs";
 import licenseChecker from "license-checker";
 import eslint from "vite-plugin-eslint";
 import yaml from "@rollup/plugin-yaml";
+import { buildStats } from "./vite-plugin-build-stats";
 
 function dependenciesPlugin(outDir: string) {
   return {
     name: "dependencies-list",
 
-    async closeBundle() {
-      const reportPath = path.join(outDir, "dependencies.txt");
+    async buildStart() {
+      const reportPath = path.join("public", "dependencies.txt");
 
       const dependencies = await new Promise<
         Record<
@@ -57,6 +57,7 @@ function dependenciesPlugin(outDir: string) {
 }
 
 export default defineConfig(({ mode }) => {
+  const name = mode === "static" ? "gh-pages" : "backend";
   const outDir = mode === "static" ? "dist-static" : "dist";
   return {
     base: mode === "static" ? "/finder/" : "./",
@@ -79,7 +80,6 @@ export default defineConfig(({ mode }) => {
       string({ include: "**/*.html" }),
       DevTools(),
       dependenciesPlugin(outDir),
-      buildSize(),
       tailwindcss(),
       visualizer({
         filename: "./stats.html",
@@ -113,6 +113,7 @@ export default defineConfig(({ mode }) => {
       viteRemove({
         /* options */
       }),
+      buildStats({ filename: "../data/" + name + ".json" }),
     ],
     build: {
       rollupOptions: {

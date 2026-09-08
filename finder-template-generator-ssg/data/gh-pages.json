@@ -1,0 +1,193 @@
+{
+  "generatedAt": "2026-09-08T11:51:19.363Z",
+  "total": {
+    "files": 30,
+    "bytes": 181170,
+    "kilobytes": 176.92,
+    "megabytes": 0.17
+  },
+  "byExtension": [
+    {
+      "extension": ".js",
+      "files": 8,
+      "bytes": 129901,
+      "percentage": 71.7
+    },
+    {
+      "extension": ".css",
+      "files": 9,
+      "bytes": 35589,
+      "percentage": 19.64
+    },
+    {
+      "extension": ".txt",
+      "files": 1,
+      "bytes": 9705,
+      "percentage": 5.36
+    },
+    {
+      "extension": ".html",
+      "files": 11,
+      "bytes": 4231,
+      "percentage": 2.34
+    },
+    {
+      "extension": ".sh",
+      "files": 1,
+      "bytes": 1744,
+      "percentage": 0.96
+    }
+  ],
+  "files": [
+    {
+      "path": "assets/viewer.js",
+      "extension": ".js",
+      "bytes": 73450
+    },
+    {
+      "path": "assets/index.js",
+      "extension": ".js",
+      "bytes": 26034
+    },
+    {
+      "path": "assets/creator.js",
+      "extension": ".js",
+      "bytes": 11162
+    },
+    {
+      "path": "dependencies.txt",
+      "extension": ".txt",
+      "bytes": 9705
+    },
+    {
+      "path": "assets/configeditor.js",
+      "extension": ".js",
+      "bytes": 8953
+    },
+    {
+      "path": "assets/viewer.css",
+      "extension": ".css",
+      "bytes": 7875
+    },
+    {
+      "path": "assets/creator.css",
+      "extension": ".css",
+      "bytes": 4783
+    },
+    {
+      "path": "assets/home.css",
+      "extension": ".css",
+      "bytes": 4618
+    },
+    {
+      "path": "assets/configeditor.css",
+      "extension": ".css",
+      "bytes": 3972
+    },
+    {
+      "path": "assets/cacheviewer.css",
+      "extension": ".css",
+      "bytes": 3675
+    },
+    {
+      "path": "assets/cacheviewer.js",
+      "extension": ".js",
+      "bytes": 3493
+    },
+    {
+      "path": "assets/samfile.css",
+      "extension": ".css",
+      "bytes": 3255
+    },
+    {
+      "path": "assets/samfile.js",
+      "extension": ".js",
+      "bytes": 3210
+    },
+    {
+      "path": "assets/home.js",
+      "extension": ".js",
+      "bytes": 3023
+    },
+    {
+      "path": "assets/main.css",
+      "extension": ".css",
+      "bytes": 2969
+    },
+    {
+      "path": "assets/markdownrootstyle.css",
+      "extension": ".css",
+      "bytes": 2246
+    },
+    {
+      "path": "assets/markdownstyle.css",
+      "extension": ".css",
+      "bytes": 2196
+    },
+    {
+      "path": "install.sh",
+      "extension": ".sh",
+      "bytes": 1744
+    },
+    {
+      "path": "assets/index2.js",
+      "extension": ".js",
+      "bytes": 576
+    },
+    {
+      "path": "configeditor/index.html",
+      "extension": ".html",
+      "bytes": 431
+    },
+    {
+      "path": "cacheviewer/index.html",
+      "extension": ".html",
+      "bytes": 415
+    },
+    {
+      "path": "viewer/index.html",
+      "extension": ".html",
+      "bytes": 414
+    },
+    {
+      "path": "creator/index.html",
+      "extension": ".html",
+      "bytes": 407
+    },
+    {
+      "path": "samfile/index.html",
+      "extension": ".html",
+      "bytes": 407
+    },
+    {
+      "path": "home/index.html",
+      "extension": ".html",
+      "bytes": 401
+    },
+    {
+      "path": "docs/config/index.html",
+      "extension": ".html",
+      "bytes": 354
+    },
+    {
+      "path": "docs/index.html",
+      "extension": ".html",
+      "bytes": 353
+    },
+    {
+      "path": "changelog/index.html",
+      "extension": ".html",
+      "bytes": 352
+    },
+    {
+      "path": "readme/index.html",
+      "extension": ".html",
+      "bytes": 349
+    },
+    {
+      "path": "index.html",
+      "extension": ".html",
+      "bytes": 348
+    }
+  ]
+}

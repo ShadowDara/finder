@@ -36,7 +36,7 @@ export interface PagesPluginOptions {
   /**
    * File extensions that count as a page.
    *
-   * @default [".ts", ".tsx"]
+   * @default [".ts", ".tsx", ".js", ".jsx"]
    */
   extensions?: string[];
 
@@ -178,7 +178,7 @@ interface PageEntry {
 
 let resolvedStyles = new Map<string, string>();
 
-const DEFAULT_EXTENSIONS = [".ts", ".tsx"];
+const DEFAULT_EXTENSIONS = [".ts", ".tsx", ".js", ".jsx"];
 
 export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
   const splitMarkdown = options.splitMarkdown ?? false;
@@ -900,10 +900,18 @@ declare module "virtual:pages" {
 
         let styleTag = "";
 
-        if (pageChunk?.type === "chunk" && pageChunk.viteMetadata) {
-          const cssFiles = [...pageChunk.viteMetadata.importedCss];
+        const cssFiles = new Set<string>(
+          jsChunk.viteMetadata?.importedCss ?? [],
+        );
 
-          styleTag = cssFiles
+        if (pageChunk?.type === "chunk" && pageChunk.viteMetadata) {
+          for (const cssFile of pageChunk.viteMetadata.importedCss) {
+            cssFiles.add(cssFile);
+          }
+        }
+
+        if (cssFiles.size > 0) {
+          styleTag = [...cssFiles]
             .map((cssFile) => {
               const cssPath = getAssetPath(htmlFileName, cssFile);
 
