@@ -1,4 +1,3 @@
-// Struct for a Scratch Project
 {
     "description": "Scratch visual programming",
     "name": "*",
@@ -6,5 +5,8 @@
     "files": [
         "*.sb3"
     ],
-    "tags": ["game-engine"]
+    "tags": [
+        "game-engine"
+    ],
+    "min_version": "0.3.16"
 }

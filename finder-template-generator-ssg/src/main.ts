@@ -1,12 +1,8 @@
 import { pages } from "virtual:pages";
-import {
-  ErrorPage,
-  render404,
-  render404_2,
-  render404_3,
-  renderMarkdown,
-} from "./404";
+import { ErrorPage, render404, render404_2, render404_3 } from "./404";
 import { loadStyles } from "./jsx-runtime";
+import "./base.css";
+import { renderMarkdown } from "./markdown";
 
 declare global {
   interface Window {

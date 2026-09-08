@@ -1,4 +1,3 @@
-// Struct for a Documentation Project
 {
     "description": "Project documentation (Sphinx, MkDocs, etc)",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "*.md",
         "mkdocs.yml"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

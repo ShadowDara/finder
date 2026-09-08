@@ -1,1 +1,1 @@
-{"description":"SonarQube code quality analysis","files":["sonar-project.properties"],"folders":[],"name":"*"}
+{"description":"SonarQube code quality analysis","files":["sonar-project.properties"],"folders":[],"min_version":"0.3.16","name":"*"}

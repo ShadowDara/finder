@@ -1,1 +1,1 @@
-{"description":"Amazon DynamoDB NoSQL database","files":["dynamodb-local.sh"],"folders":[],"name":"*"}
+{"description":"Amazon DynamoDB NoSQL database","files":["dynamodb-local.sh"],"folders":[],"min_version":"0.3.16","name":"*"}

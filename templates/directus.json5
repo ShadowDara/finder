@@ -1,9 +1,9 @@
-// Struct for a Directus Project
 {
     "description": "Directus headless CMS",
     "name": "*",
     "folders": [],
     "files": [
         ".env"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

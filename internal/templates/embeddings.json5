@@ -1,1 +1,1 @@
-{"description":"Text or image embedding models project","files":["embedding.config.yaml","requirements.txt"],"folders":[{"files":["*.npy","*.pkl","*.bin"],"folders":[],"name":"embeddings"}],"name":"*"}
+{"description":"Text or image embedding models project","files":["embedding.config.yaml","requirements.txt"],"folders":[{"files":["*.npy","*.pkl","*.bin"],"folders":[],"name":"embeddings"}],"min_version":"0.3.16","name":"*"}

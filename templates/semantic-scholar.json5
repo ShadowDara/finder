@@ -1,4 +1,3 @@
-// Semantic Scholar search API
 {
     "description": "Semantic Scholar research paper API",
     "name": "*",
@@ -6,11 +5,15 @@
         {
             "name": "data",
             "folders": [],
-            "files": ["*.json", "*.csv"]
+            "files": [
+                "*.json",
+                "*.csv"
+            ]
         }
     ],
     "files": [
         "scholar.config.yaml",
         "requirements.txt"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

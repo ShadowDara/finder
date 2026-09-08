@@ -1,1 +1,1 @@
-{"description":"ELK Stack logging and monitoring","files":["docker-compose.yml"],"folders":[],"name":"*"}
+{"description":"ELK Stack logging and monitoring","files":["docker-compose.yml"],"folders":[],"min_version":"0.3.16","name":"*"}

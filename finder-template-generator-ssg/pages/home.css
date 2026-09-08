@@ -13,9 +13,13 @@
   --display: "Space Grotesk", var(--sans);
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
-html { color-scheme: dark; }
+html {
+  color-scheme: dark;
+}
 
 body {
   margin: 0;
@@ -25,7 +29,9 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-a { color: inherit; }
+a {
+  color: inherit;
+}
 
 .wrap {
   max-width: 1040px;
@@ -65,8 +71,12 @@ a { color: inherit; }
   color: var(--text-dim);
 }
 
-.nav-links a { text-decoration: none; }
-.nav-links a:hover { color: var(--text); }
+.nav-links a {
+  text-decoration: none;
+}
+.nav-links a:hover {
+  color: var(--text);
+}
 
 /* ---------- Hero ---------- */
 .hero {
@@ -83,8 +93,9 @@ a { color: inherit; }
   transform: translateX(-50%);
   width: 620px;
   height: 420px;
-  background: radial-gradient(closest-side, rgba(255, 180, 84, 0.16), transparent 70%),
-              radial-gradient(closest-side, rgba(255, 107, 157, 0.12), transparent 72%);
+  background:
+    radial-gradient(closest-side, rgba(255, 180, 84, 0.16), transparent 70%),
+    radial-gradient(closest-side, rgba(255, 107, 157, 0.12), transparent 72%);
   pointer-events: none;
   z-index: 0;
 }
@@ -138,7 +149,7 @@ h1.title {
 /* ---------- Terminal ---------- */
 .terminal {
   position: relative;
-  max-width: 560px;
+  max-width: 1200px;
   margin: 0 auto 24px;
   background: var(--bg-raised);
   border: 1px solid var(--border);
@@ -172,8 +183,13 @@ h1.title {
   font-size: 14.5px;
 }
 
-.terminal-body code { color: #d7dce5; }
-.terminal-body .prompt { color: var(--accent-a); margin-right: 10px; }
+.terminal-body code {
+  color: #d7dce5;
+}
+.terminal-body .prompt {
+  color: var(--accent-a);
+  margin-right: 10px;
+}
 
 .copy-btn {
   flex-shrink: 0;
@@ -185,11 +201,19 @@ h1.title {
   font-family: var(--mono);
   font-size: 12px;
   cursor: pointer;
-  transition: color 0.15s ease, border-color 0.15s ease;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
 }
 
-.copy-btn:hover { color: var(--text); border-color: #3a4051; }
-.copy-btn:focus-visible { outline: 2px solid var(--accent-a); outline-offset: 2px; }
+.copy-btn:hover {
+  color: var(--text);
+  border-color: #3a4051;
+}
+.copy-btn:focus-visible {
+  outline: 2px solid var(--accent-a);
+  outline-offset: 2px;
+}
 
 /* ---------- OS downloads ---------- */
 .os-row {
@@ -212,10 +236,15 @@ h1.title {
   color: var(--text);
   font-size: 14px;
   text-decoration: none;
-  transition: border-color 0.15s ease, transform 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    transform 0.15s ease;
 }
 
-.os-btn:hover { border-color: #3a4051; transform: translateY(-1px); }
+.os-btn:hover {
+  border-color: #3a4051;
+  transform: translateY(-1px);
+}
 
 .os-btn.primary {
   background: linear-gradient(120deg, var(--accent-a), var(--accent-b));
@@ -274,15 +303,28 @@ footer {
   font-size: 13px;
 }
 
-footer a { text-decoration: none; }
-footer a:hover { color: var(--text); }
+footer a {
+  text-decoration: none;
+}
+footer a:hover {
+  color: var(--text);
+}
 
 @media (max-width: 720px) {
-  .features { grid-template-columns: 1fr; }
-  .nav-links { display: none; }
-  .terminal-body { flex-direction: column; align-items: stretch; }
+  .features {
+    grid-template-columns: 1fr;
+  }
+  .nav-links {
+    display: none;
+  }
+  .terminal-body {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .os-btn { transition: none; }
+  .os-btn {
+    transition: none;
+  }
 }

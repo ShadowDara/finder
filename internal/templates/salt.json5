@@ -1,1 +1,1 @@
-{"description":"SaltStack infrastructure automation","files":["top.sls"],"folders":[{"files":[],"folders":[],"name":"salt"}],"name":"*"}
+{"description":"SaltStack infrastructure automation","files":["top.sls"],"folders":[{"files":[],"folders":[],"name":"salt"}],"min_version":"0.3.16","name":"*"}

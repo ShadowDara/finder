@@ -1,4 +1,3 @@
-// Struct for an Ebitengine Project
 {
     "description": "Ebitengine Go game framework",
     "name": "*",
@@ -12,5 +11,10 @@
     "files": [
         "main.go",
         "go.mod"
-    ]
+    ],
+    "tags": [
+        "game-engine",
+        "go"
+    ],
+    "min_version": "0.3.16"
 }

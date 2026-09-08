@@ -1,4 +1,3 @@
-// Struct for an Encore Project
 {
     "description": "Encore backend development platform",
     "name": "*",
@@ -11,5 +10,6 @@
     ],
     "files": [
         "encore.gen.cue"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

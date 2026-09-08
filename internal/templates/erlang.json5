@@ -1,1 +1,1 @@
-{"description":"Erlang concurrent programming","files":["rebar.config","*.erl"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}
+{"description":"Erlang concurrent programming","files":["rebar.config","*.erl"],"folders":[{"files":[],"folders":[],"name":"src"}],"min_version":"0.3.16","name":"*"}

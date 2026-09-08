@@ -12,9 +12,15 @@ import (
 // optional		wird ignoriert -> but that would be pretty useless ngl
 
 type File struct {
-	Name      string `json:"name"`
-	Existence string `json:"existence,omitempty"`
-	DataSize  Size   `json:"size,omitempty"`
+	Name      string   `json:"name"`
+	Existence string   `json:"existence,omitempty"`
+	DataSize  Size     `json:"size,omitempty"`
+	Checksums Checksum `json:"checksums,omitempty"`
+}
+
+type Checksum struct {
+	Sha256 string `json:"sha256"`
+	Sha512 string `json:"sha512"`
 }
 
 type Files []File

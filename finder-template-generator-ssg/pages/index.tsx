@@ -1,7 +1,7 @@
-import { jsx, Fragment } from "../src/jsx-runtime";
+import { jsx, Fragment, raw } from "../src/jsx-runtime";
 import { SERVER_ADRESS } from "../src/vars";
 
-export default function render(el: HTMLDivElement) {
+export default function render(el: HTMLDivElement, data: string) {
   el.innerHTML = (
     <>
       <article class="markdown">
@@ -41,6 +41,24 @@ export default function render(el: HTMLDivElement) {
         {import.meta.env.MODE == "backend" && (
           <button id="stop">Stop Server</button>
         )}
+
+        <h2>Agents.md</h2>
+        <p>
+          A Markdown file to explain your AI how to write templates for finder!
+        </p>
+        {raw(data)}
+
+        <h2>Tools</h2>
+        <ul>
+          <li>
+            <a href="./tools/markdowneditor">Markdown Editor</a>
+          </li>
+          <li>
+            <a href="./tools/minecraft/tellraw">
+              Minecraft Tellraw Updater to SNBT
+            </a>
+          </li>
+        </ul>
       </article>
     </>
   );

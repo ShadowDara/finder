@@ -1,1 +1,1 @@
-{"description":"Haskell programming language project","files":["stack.yaml","package.yaml"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}
+{"description":"Haskell programming language project","files":["stack.yaml","package.yaml"],"folders":[{"files":[],"folders":[],"name":"src"}],"min_version":"0.3.16","name":"*"}

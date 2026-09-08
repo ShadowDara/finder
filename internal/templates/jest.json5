@@ -1,1 +1,1 @@
-{"description":"Jest JavaScript testing framework","files":["jest.config.js","package.json"],"folders":[{"files":[],"folders":[],"name":"__tests__"}],"name":"*"}
+{"description":"Jest JavaScript testing framework","files":["jest.config.js","package.json"],"folders":[{"files":[],"folders":[],"name":"__tests__"}],"min_version":"0.3.16","name":"*"}

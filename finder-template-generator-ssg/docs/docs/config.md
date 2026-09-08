@@ -6,8 +6,8 @@ Port for the findergen server to view and create templates.
 
 ## Cache
 
-When set to true, the results of will be saved as a cache and can then be
-used afterwards
+When set to true, the results of will be saved as a cache and can then
+be used afterwards
 
 ## Create Cache Database
 
@@ -16,5 +16,5 @@ Git is required for this.
 
 ## Finder Instances
 
-Finder instances which will run at the same time when creating cache for all
-templates
+Finder instances which will run at the same time when creating cache
+for all templates

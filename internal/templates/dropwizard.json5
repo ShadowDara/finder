@@ -1,1 +1,1 @@
-{"description":"Dropwizard Java framework","files":["pom.xml","config.yml"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}
+{"description":"Dropwizard Java framework","files":["pom.xml","config.yml"],"folders":[{"files":[],"folders":[],"name":"src"}],"min_version":"0.3.16","name":"*"}

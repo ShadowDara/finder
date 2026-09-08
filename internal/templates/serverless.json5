@@ -1,1 +1,1 @@
-{"description":"Serverless functions (AWS Lambda, etc)","files":["serverless.yml","package.json"],"folders":[{"files":[],"folders":[],"name":"functions"}],"name":"*"}
+{"description":"Serverless functions (AWS Lambda, etc)","files":["serverless.yml","package.json"],"folders":[{"files":[],"folders":[],"name":"functions"}],"min_version":"0.3.16","name":"*"}

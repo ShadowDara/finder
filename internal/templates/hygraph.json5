@@ -1,1 +1,1 @@
-{"description":"Hygraph headless CMS","files":["hygraph.config.ts","package.json"],"folders":[],"name":"*"}
+{"description":"Hygraph headless CMS","files":["hygraph.config.ts","package.json"],"folders":[],"min_version":"0.3.16","name":"*"}

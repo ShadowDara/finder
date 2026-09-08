@@ -1,1 +1,1 @@
-{"description":"Foundry Rust-based Ethereum smart contract toolkit","files":["foundry.toml","Cargo.toml",".env.foundry"],"folders":[{"files":["*.sol"],"folders":[],"name":"src"},{"files":["*.sol"],"folders":[],"name":"test"}],"name":"*"}
+{"description":"Foundry Rust-based Ethereum smart contract toolkit","files":["foundry.toml","Cargo.toml",".env.foundry"],"folders":[{"files":["*.sol"],"folders":[],"name":"src"},{"files":["*.sol"],"folders":[],"name":"test"}],"min_version":"0.3.16","name":"*","tags":["rust"]}

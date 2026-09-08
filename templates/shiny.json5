@@ -1,4 +1,3 @@
-// Shiny interactive web apps (Python/R)
 {
     "description": "Shiny interactive web application framework for Python/R",
     "name": "*",
@@ -6,7 +5,10 @@
         {
             "name": "app",
             "folders": [],
-            "files": ["*.py", "*.R"]
+            "files": [
+                "*.py",
+                "*.R"
+            ]
         }
     ],
     "files": [
@@ -14,5 +16,6 @@
         "app.R",
         "requirements.txt",
         "rsconnect"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

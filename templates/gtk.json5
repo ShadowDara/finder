@@ -1,4 +1,3 @@
-// GTK GUI toolkit
 {
     "description": "GTK graphical user interface toolkit",
     "name": "*",
@@ -6,16 +5,23 @@
         {
             "name": "src",
             "folders": [],
-            "files": ["*.c", "*.h"]
+            "files": [
+                "*.c",
+                "*.h"
+            ]
         },
         {
             "name": "ui",
             "folders": [],
-            "files": ["*.ui", "*.glade"]
+            "files": [
+                "*.ui",
+                "*.glade"
+            ]
         }
     ],
     "files": [
         "meson.build",
         "CMakeLists.txt"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

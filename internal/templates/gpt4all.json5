@@ -1,1 +1,1 @@
-{"description":"GPT4All local LLM execution environment","files":["gpt4all.config.json","requirements.txt","setup.py"],"folders":[{"files":["*.gguf","*.bin"],"folders":[],"name":"models"},{"files":["*.py","*.js"],"folders":[],"name":"client"}],"name":"*"}
+{"description":"GPT4All local LLM execution environment","files":["gpt4all.config.json","requirements.txt","setup.py"],"folders":[{"files":["*.gguf","*.bin"],"folders":[],"name":"models"},{"files":["*.py","*.js"],"folders":[],"name":"client"}],"min_version":"0.3.16","name":"*"}

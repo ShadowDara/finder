@@ -1,1 +1,1 @@
-{"description":"Project documentation (Sphinx, MkDocs, etc)","files":["*.md","mkdocs.yml"],"folders":[{"files":[],"folders":[],"name":"docs"}],"name":"*"}
+{"description":"Project documentation (Sphinx, MkDocs, etc)","files":["*.md","mkdocs.yml"],"folders":[{"files":[],"folders":[],"name":"docs"}],"min_version":"0.3.16","name":"*"}

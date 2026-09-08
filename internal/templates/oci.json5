@@ -1,1 +1,1 @@
-{"description":"Open Container Initiative image","files":["Dockerfile","*.oci"],"folders":[],"name":"*"}
+{"description":"Open Container Initiative image","files":["Dockerfile","*.oci"],"folders":[],"min_version":"0.3.16","name":"*"}

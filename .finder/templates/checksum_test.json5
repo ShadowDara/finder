@@ -1,0 +1,13 @@
+{
+  "name": "*",
+  "description": "test for checksums",
+  "files": [
+    {
+      "name": "*",
+      "checksums": {
+        "sha256": "26be688daf71f2c8e64eecfa7fdf7d1f3649b6aae80dbb686ec3a9beb9def05b"
+      }
+    }
+  ],
+  "min_version": "0.3.16"
+}

@@ -1,4 +1,3 @@
-// Struct for a Gauge Framework
 {
     "description": "Gauge test automation framework",
     "name": "*",
@@ -11,5 +10,6 @@
     ],
     "files": [
         "manifest.json"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

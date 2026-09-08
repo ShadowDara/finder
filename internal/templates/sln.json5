@@ -1,1 +1,1 @@
-{"description":"Struct for Visual Studio Projects","files":["*.sln"],"folders":[{"name":".vs"}],"name":"*"}
+{"description":"Struct for Visual Studio Projects","files":["*.sln"],"folders":[{"name":".vs"}],"min_version":"0.3.16","name":"*"}

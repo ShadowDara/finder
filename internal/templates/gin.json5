@@ -1,1 +1,1 @@
-{"description":"Gin web framework for Go","files":["main.go","go.mod"],"folders":[{"files":[],"folders":[],"name":"routes"}],"name":"*"}
+{"description":"Gin web framework for Go","files":["main.go","go.mod"],"folders":[{"files":[],"folders":[],"name":"routes"}],"min_version":"0.3.16","name":"*","tags":["web","go"]}

@@ -1,4 +1,3 @@
-// Struct for a Grails Project
 {
     "description": "Grails Groovy web framework",
     "name": "*",
@@ -12,5 +11,9 @@
     "files": [
         "build.gradle",
         "grails-app"
-    ]
+    ],
+    "tags": [
+        "web"
+    ],
+    "min_version": "0.3.16"
 }

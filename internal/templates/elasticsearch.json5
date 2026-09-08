@@ -1,1 +1,1 @@
-{"description":"Elasticsearch search and analytics project","files":["docker-compose.yml","*.json"],"folders":[{"files":[],"folders":[],"name":"data"}],"name":"*"}
+{"description":"Elasticsearch search and analytics project","files":["docker-compose.yml","*.json"],"folders":[{"files":[],"folders":[],"name":"data"}],"min_version":"0.3.16","name":"*"}

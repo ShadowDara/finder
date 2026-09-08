@@ -1,4 +1,3 @@
-// Great Expectations data validation
 {
     "description": "Great Expectations data validation and testing framework",
     "name": "*",
@@ -6,11 +5,15 @@
         {
             "name": "expectations",
             "folders": [],
-            "files": ["*.json", "*.yml"]
+            "files": [
+                "*.json",
+                "*.yml"
+            ]
         }
     ],
     "files": [
         "great_expectations.yml",
         "requirements.txt"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

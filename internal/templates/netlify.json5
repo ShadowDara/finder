@@ -1,1 +1,1 @@
-{"description":"Netlify deployment configuration","files":["netlify.toml"],"folders":[],"name":"*"}
+{"description":"Netlify deployment configuration","files":["netlify.toml"],"folders":[],"min_version":"0.3.16","name":"*"}

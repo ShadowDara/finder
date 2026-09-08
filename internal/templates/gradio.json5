@@ -1,1 +1,1 @@
-{"description":"Gradio Python library for machine learning demos and UIs","files":["app.py","requirements.txt","gradio.config.json"],"folders":[{"files":["*.pkl","*.h5"],"folders":[],"name":"models"}],"name":"*"}
+{"description":"Gradio Python library for machine learning demos and UIs","files":["app.py","requirements.txt","gradio.config.json"],"folders":[{"files":["*.pkl","*.h5"],"folders":[],"name":"models"}],"min_version":"0.3.16","name":"*","tags":["python"]}

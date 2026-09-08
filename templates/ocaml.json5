@@ -1,4 +1,3 @@
-// Struct for an OCaml Project
 {
     "description": "OCaml functional programming",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "dune-project",
         "*.ml"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

@@ -1,1 +1,1 @@
-{"description":"Google Cloud Firestore database","files":["firestore.rules","firestore.indexes.json"],"folders":[],"name":"*"}
+{"description":"Google Cloud Firestore database","files":["firestore.rules","firestore.indexes.json"],"folders":[],"min_version":"0.3.16","name":"*"}

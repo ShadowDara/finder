@@ -1,1 +1,1 @@
-{"description":"Jenkins CI/CD pipeline","files":["Jenkinsfile"],"folders":[],"name":"*"}
+{"description":"Jenkins CI/CD pipeline","files":["Jenkinsfile"],"folders":[],"min_version":"0.3.16","name":"*"}

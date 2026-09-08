@@ -10,5 +10,6 @@
         "pubspec.yaml",
         "analysis_options.yaml"
     ],
-    "min_version": "0.3.14"
+    "min_version": "0.3.14",
+    "tags": ["dart"]
 }

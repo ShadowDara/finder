@@ -1,1 +1,1 @@
-{"description":"gRPC project","files":["*.proto"],"folders":[{"files":[],"folders":[],"name":"proto"}],"name":"*"}
+{"description":"gRPC project","files":["*.proto"],"folders":[{"files":[],"folders":[],"name":"proto"}],"min_version":"0.3.16","name":"*"}

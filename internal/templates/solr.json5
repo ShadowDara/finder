@@ -1,1 +1,1 @@
-{"description":"Apache Solr search engine","files":["docker-compose.yml","solrconfig.xml"],"folders":[],"name":"*"}
+{"description":"Apache Solr search engine","files":["docker-compose.yml","solrconfig.xml"],"folders":[],"min_version":"0.3.16","name":"*"}

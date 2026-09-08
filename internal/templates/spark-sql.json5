@@ -1,1 +1,1 @@
-{"description":"Apache Spark SQL distributed SQL query engine","files":["spark-sql.config.yaml","requirements.txt"],"folders":[{"files":["*.sql"],"folders":[],"name":"sql"},{"files":["*.py","*.scala"],"folders":[],"name":"scripts"}],"name":"*"}
+{"description":"Apache Spark SQL distributed SQL query engine","files":["spark-sql.config.yaml","requirements.txt"],"folders":[{"files":["*.sql"],"folders":[],"name":"sql"},{"files":["*.py","*.scala"],"folders":[],"name":"scripts"}],"min_version":"0.3.16","name":"*"}

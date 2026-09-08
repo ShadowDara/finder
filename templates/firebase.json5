@@ -1,4 +1,3 @@
-// Struct for a Firebase Project
 {
     "description": "Firebase backend project",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "firebase.json",
         ".firebaserc"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

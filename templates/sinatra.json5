@@ -1,4 +1,3 @@
-// Struct for a Sinatra Project
 {
     "description": "Sinatra lightweight Ruby web framework",
     "name": "*",
@@ -6,5 +5,9 @@
     "files": [
         "app.rb",
         "Gemfile"
-    ]
+    ],
+    "tags": [
+        "web"
+    ],
+    "min_version": "0.3.16"
 }

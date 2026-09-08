@@ -1,4 +1,3 @@
-// Struct for a Stencil Project
 {
     "description": "Stencil web components compiler",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "stencil.config.ts",
         "package.json"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

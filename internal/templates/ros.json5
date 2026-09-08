@@ -1,1 +1,1 @@
-{"description":"ROS Robot Operating System middleware","files":["package.xml","CMakeLists.txt","setup.py"],"folders":[{"files":["*.cpp","*.py"],"folders":[],"name":"src"},{"files":["*.launch","*.xml"],"folders":[],"name":"launch"}],"name":"*"}
+{"description":"ROS Robot Operating System middleware","files":["package.xml","CMakeLists.txt","setup.py"],"folders":[{"files":["*.cpp","*.py"],"folders":[],"name":"src"},{"files":["*.launch","*.xml"],"folders":[],"name":"launch"}],"min_version":"0.3.16","name":"*"}

@@ -1,4 +1,3 @@
-// Struct for a NativeScript Project
 {
     "description": "Godot NativeScript C++ scripting",
     "name": "*",
@@ -11,5 +10,10 @@
     ],
     "files": [
         "project.godot"
-    ]
+    ],
+    "tags": [
+        "game-engine",
+        "C++"
+    ],
+    "min_version": "0.3.16"
 }

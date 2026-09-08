@@ -1,1 +1,1 @@
-{"description":"OpenAPI code generator","files":["openapi.yaml"],"folders":[{"files":[],"folders":[],"name":"generated"}],"name":"*"}
+{"description":"OpenAPI code generator","files":["openapi.yaml"],"folders":[{"files":[],"folders":[],"name":"generated"}],"min_version":"0.3.16","name":"*"}

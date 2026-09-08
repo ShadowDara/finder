@@ -1,1 +1,1 @@
-{"description":"Jupyter Notebook data science project","files":["*.ipynb","requirements.txt"],"folders":[{"files":[],"folders":[],"name":"notebooks"}],"name":"*"}
+{"description":"Jupyter Notebook data science project","files":["*.ipynb","requirements.txt"],"folders":[{"files":[],"folders":[],"name":"notebooks"}],"min_version":"0.3.16","name":"*"}

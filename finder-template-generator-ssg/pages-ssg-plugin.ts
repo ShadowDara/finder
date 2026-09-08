@@ -6,6 +6,11 @@ import { minify } from "html-minifier-terser";
 import { parseMarkdown } from "@shadowdara/dlib";
 import { transformWithEsbuild } from "vite";
 import { tsImport } from "tsx/esm/api";
+import { escapeHtml } from "./src/jsx-runtime";
+import hljs from "highlight.js/lib/common";
+
+const MARKDOWN_PREFIX = "virtual:page-markdown:";
+const RESOLVED_MARKDOWN_PREFIX = "\0" + MARKDOWN_PREFIX;
 
 const VIRTUAL_MODULE_ID = "virtual:pages";
 const RESOLVED_VIRTUAL_MODULE_ID = "\0" + VIRTUAL_MODULE_ID;
@@ -31,7 +36,7 @@ export interface PagesPluginOptions {
   /**
    * File extensions that count as a page.
    *
-   * @default [".ts", ".tsx"]
+   * @default [".ts", ".tsx", ".js", ".jsx"]
    */
   extensions?: string[];
 
@@ -128,6 +133,21 @@ export interface PagesPluginOptions {
    * @default false
    */
   verbose?: boolean;
+
+  /**
+   * Put each compiled Markdown page into its own dynamically loaded chunk
+   * instead of embedding all Markdown HTML into the main bundle.
+   *
+   * @default false
+   */
+  splitMarkdown?: boolean;
+
+  /**
+   * Ignored Pathnames
+   *
+   * @default ["/@", "/node_modules/", "/src/"]
+   */
+  ignoredPathnames?: string[];
 }
 
 export interface PageRenderContext {
@@ -165,9 +185,17 @@ interface PageEntry {
 
 let resolvedStyles = new Map<string, string>();
 
-const DEFAULT_EXTENSIONS = [".ts", ".tsx"];
+const DEFAULT_EXTENSIONS = [".ts", ".tsx", ".js", ".jsx"];
 
 export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
+  const ignoredPathnames = [
+    "/@",
+    "/node_modules/",
+    "/src/",
+    "/__devframes_plugin_terminals/",
+    ...(options.ignoredPathnames ?? []),
+  ].filter((prefix, index, prefixes) => prefixes.indexOf(prefix) === index);
+  const splitMarkdown = options.splitMarkdown ?? false;
   const verbose = options.verbose ?? false;
   const singleBundle = options.singleBundle ?? false;
   const relativePath = options.relativePaths ?? false;
@@ -278,7 +306,18 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
           const id = relativePath.replace(/\\/g, "/").replace(/\.md$/i, "");
 
           const markdown = fs.readFileSync(fullPath, "utf8");
-          let html = parseMarkdown(markdown, { sanitize: false }) as string;
+          let html = parseMarkdown(markdown, {
+            sanitize: false,
+            highlight(code, language) {
+              if (!hljs.getLanguage(language)) {
+                return code;
+              }
+
+              return hljs.highlight(code, {
+                language,
+              }).value;
+            },
+          });
 
           if (options.minify) {
             html = await minify(html, {
@@ -413,6 +452,21 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
           .join(", ");
 
         if (page.type === "markdown") {
+          const styles = page.styles
+            .map((style) => styleImports.get(style)!)
+            .join(", ");
+
+          if (splitMarkdown) {
+            const markdownModuleId = `${MARKDOWN_PREFIX}${page.id}`;
+
+            return `  ${JSON.stringify(page.id)}: {
+    id: ${JSON.stringify(page.id)},
+    type: "markdown",
+    load: () => import(${JSON.stringify(markdownModuleId)}),
+    styles: [${styles}]
+  }`;
+          }
+
           const markdownField = addRawMarkdown
             ? `markdown: ${JSON.stringify(page.markdown ?? "")},`
             : "";
@@ -486,6 +540,14 @@ declare module "virtual:pages" {
     markdown?: string;
     html: string;
     styles: string[];
+    load: () => Promise<{
+    default: {
+      id: string;
+      type: "markdown";
+      markdown?: string;
+      html: string;
+    };
+  }>;
   }
 
   export type PageEntry = ComponentPage | MarkdownPage;
@@ -560,6 +622,10 @@ declare module "virtual:pages" {
         return RESOLVED_VIRTUAL_MODULE_ID;
       }
 
+      if (id.startsWith(MARKDOWN_PREFIX)) {
+        return RESOLVED_MARKDOWN_PREFIX + id.slice(MARKDOWN_PREFIX.length);
+      }
+
       if (id.startsWith(STYLE_PREFIX)) {
         return RESOLVED_STYLE_PREFIX + id.slice(STYLE_PREFIX.length);
       }
@@ -570,6 +636,28 @@ declare module "virtual:pages" {
     load(id) {
       if (id === RESOLVED_VIRTUAL_MODULE_ID) {
         return createVirtualModule();
+      }
+
+      if (id.startsWith(RESOLVED_MARKDOWN_PREFIX)) {
+        const pageId = id.slice(RESOLVED_MARKDOWN_PREFIX.length);
+        const page = pages.find(
+          (page) => page.type === "markdown" && page.id === pageId,
+        );
+
+        if (!page) {
+          throw new Error(
+            `[vite-plugin-pages-ssg] Markdown page not found: ${pageId}`,
+          );
+        }
+
+        return `
+      export default ${JSON.stringify({
+        id: page.id,
+        type: "markdown",
+        ...(addRawMarkdown ? { markdown: page.markdown ?? "" } : {}),
+        html: page.html ?? "",
+      })};
+    `;
       }
 
       if (id.startsWith(RESOLVED_STYLE_PREFIX)) {
@@ -649,11 +737,7 @@ declare module "virtual:pages" {
         const pathname = url.split("?")[0].split("#")[0];
 
         // Vite internals
-        if (
-          pathname.startsWith("/@") ||
-          pathname.startsWith("/node_modules/") ||
-          pathname.startsWith("/src/")
-        ) {
+        if (ignoredPathnames.some((prefix) => pathname.startsWith(prefix))) {
           return next();
         }
 
@@ -826,10 +910,18 @@ declare module "virtual:pages" {
 
         let styleTag = "";
 
-        if (pageChunk?.type === "chunk" && pageChunk.viteMetadata) {
-          const cssFiles = [...pageChunk.viteMetadata.importedCss];
+        const cssFiles = new Set<string>(
+          jsChunk.viteMetadata?.importedCss ?? [],
+        );
 
-          styleTag = cssFiles
+        if (pageChunk?.type === "chunk" && pageChunk.viteMetadata) {
+          for (const cssFile of pageChunk.viteMetadata.importedCss) {
+            cssFiles.add(cssFile);
+          }
+        }
+
+        if (cssFiles.size > 0) {
+          styleTag = [...cssFiles]
             .map((cssFile) => {
               const cssPath = getAssetPath(htmlFileName, cssFile);
 
@@ -868,15 +960,6 @@ declare module "virtual:pages" {
       }
     },
   };
-}
-
-function escapeHtml(value: string): string {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
 }
 
 function getPageId(url: string, pages: PageEntry[]): string {

@@ -1,9 +1,9 @@
-// Struct for a SonarQube Project
 {
     "description": "SonarQube code quality analysis",
     "name": "*",
     "folders": [],
     "files": [
         "sonar-project.properties"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

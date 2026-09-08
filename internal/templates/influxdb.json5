@@ -1,1 +1,1 @@
-{"description":"InfluxDB time-series database","files":["docker-compose.yml","influxdb.conf"],"folders":[],"name":"*"}
+{"description":"InfluxDB time-series database","files":["docker-compose.yml","influxdb.conf"],"folders":[],"min_version":"0.3.16","name":"*"}

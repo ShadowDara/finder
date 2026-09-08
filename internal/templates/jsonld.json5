@@ -1,1 +1,1 @@
-{"description":"JSON-LD linked data","files":["*.jsonld","context.json"],"folders":[],"name":"*"}
+{"description":"JSON-LD linked data","files":["*.jsonld","context.json"],"folders":[],"min_version":"0.3.16","name":"*"}

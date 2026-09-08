@@ -1,4 +1,3 @@
-// Struct for a SQLite Project
 {
     "description": "SQLite database project",
     "name": "*",
@@ -6,5 +5,9 @@
     "files": [
         "*.db",
         "*.sqlite"
-    ]
+    ],
+    "tags": [
+        "db"
+    ],
+    "min_version": "0.3.16"
 }

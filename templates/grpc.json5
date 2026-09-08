@@ -1,4 +1,3 @@
-// Struct for a gRPC Project
 {
     "description": "gRPC project",
     "name": "*",
@@ -11,5 +10,6 @@
     ],
     "files": [
         "*.proto"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

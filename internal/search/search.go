@@ -49,7 +49,7 @@ func Find(folderstruct structure.Folder, output_type string, name string, doCach
 		fmt.Printf("Description: %s\n", folderstruct.Description)
 
 		// If Version is to old
-		if /*folderstruct.MinVersion != "0.0.0" && */ !version.IsNewer(finderversion.Version, folderstruct.MinVersion) {
+		if /*folderstruct.MinVersion != "0.0.0" && */ version.IsNewer(folderstruct.MinVersion, finderversion.Version) {
 			fmt.Printf("%s[WARNING] Your Version of finder is maybe to old for this Template! Something could go wrong!%s\n", goansi.YELLOW, goansi.END)
 		}
 	}
@@ -106,7 +106,7 @@ func Find(folderstruct structure.Folder, output_type string, name string, doCach
 		cache.SaveCache(name, matches)
 
 		if output_type != "clear" && output_type != "json" {
-			fmt.Printf("Wrote Cache for template %s", name)
+			fmt.Printf("Wrote Cache for template %s\n", name)
 		}
 	}
 

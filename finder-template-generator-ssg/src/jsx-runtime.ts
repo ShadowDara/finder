@@ -144,6 +144,15 @@ function escapeText(value: string): string {
     .replace(/>/g, "&gt;");
 }
 
+export function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 /**
  * Erzeugt einen HtmlValue aus rohem String OHNE Escaping.
  * Nur für vertrauenswürdigen Inhalt verwenden (eigenes CSS/JS, nie User-Input!).
@@ -177,13 +186,4 @@ export function loadStyles(styles: string[]) {
 
     document.head.appendChild(link);
   }
-}
-
-export function escapeHtml(value: string): string {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
 }

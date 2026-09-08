@@ -38,6 +38,14 @@ declare module "virtual:pages" {
     markdown?: string;
     html: string;
     styles: string[];
+    load: () => Promise<{
+    default: {
+      id: string;
+      type: "markdown";
+      markdown?: string;
+      html: string;
+    };
+  }>;
   }
 
   export type PageEntry = ComponentPage | MarkdownPage;

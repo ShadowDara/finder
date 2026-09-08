@@ -1,12 +1,17 @@
 package search
 
 import (
+	"crypto/sha256"
+	"crypto/sha512"
+	"encoding/hex"
+	"io"
 	"io/fs"
 	"os"
 	"os/exec"
 	"path"
 	"path/filepath"
 	"runtime"
+	"strings"
 
 	"github.com/shadowdara/finder/internal/structure"
 )
@@ -45,7 +50,8 @@ func matchFolderTemplate(dirPath string, template structure.Folder) bool {
 
 	// Check files with existence logic
 	for _, file := range template.Files {
-		exists := matchAny(filesMap, file.Name)
+		matchingFiles := matchingFileNames(filesMap, file.Name)
+		exists := len(matchingFiles) > 0
 
 		switch file.Existence {
 		case "required", "":
@@ -62,19 +68,26 @@ func matchFolderTemplate(dirPath string, template structure.Folder) bool {
 			}
 		}
 
-		// Größenprüfung nur wenn Datei existiert
-		if exists && (file.DataSize.Min > 0 || file.DataSize.Max > 0) {
-			for name := range filesMap {
-				ok, _ := path.Match(file.Name, name)
-				if ok {
-					info, err := os.Stat(filepath.Join(dirPath, name))
-					if err != nil {
-						return false
-					}
-					if !checkSize(info.Size(), file.DataSize) {
-						return false
-					}
+		// Size and checksum constraints apply only to existing matching files.
+		if exists && (file.DataSize.Min > 0 || file.DataSize.Max > 0 ||
+			file.Checksums.Sha256 != "" || file.Checksums.Sha512 != "") {
+			matchedConstraints := false
+			for _, name := range matchingFiles {
+				info, err := os.Stat(filepath.Join(dirPath, name))
+				if err != nil || !checkSize(info.Size(), file.DataSize) {
+					continue
 				}
+
+				if !checkChecksums(filepath.Join(dirPath, name), file.Checksums) {
+					continue
+				}
+
+				matchedConstraints = true
+				break
+			}
+
+			if !matchedConstraints {
+				return false
 			}
 		}
 	}
@@ -96,6 +109,45 @@ func matchFolderTemplate(dirPath string, template structure.Folder) bool {
 	}
 
 	return true
+}
+
+func matchingFileNames(files map[string]bool, pattern string) []string {
+	matching := make([]string, 0)
+	for name := range files {
+		ok, err := path.Match(pattern, name)
+		if err == nil && ok {
+			matching = append(matching, name)
+		}
+	}
+	return matching
+}
+
+func checkChecksums(filePath string, checksums structure.Checksum) bool {
+	if checksums.Sha256 == "" && checksums.Sha512 == "" {
+		return true
+	}
+
+	file, err := os.Open(filePath)
+	if err != nil {
+		return false
+	}
+	defer file.Close()
+
+	sha256Hash := sha256.New()
+	sha512Hash := sha512.New()
+	if _, err := io.Copy(io.MultiWriter(sha256Hash, sha512Hash), file); err != nil {
+		return false
+	}
+
+	if checksums.Sha256 != "" && !strings.EqualFold(
+		hex.EncodeToString(sha256Hash.Sum(nil)), strings.TrimSpace(checksums.Sha256),
+	) {
+		return false
+	}
+
+	return checksums.Sha512 == "" || strings.EqualFold(
+		hex.EncodeToString(sha512Hash.Sum(nil)), strings.TrimSpace(checksums.Sha512),
+	)
 }
 
 // matchAny returns true if at least one entry in the provided map matches

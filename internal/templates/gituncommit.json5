@@ -1,1 +1,1 @@
-{"command":"git status --porcelain","description":"Finds all git repositories with uncommited Changes","files":[],"folders":[{"name":".git"}],"invert_command":false,"min_version":"0.3.6","name":"*"}
+{"command":"git status --porcelain","description":"Finds all git repositories with uncommited Changes","files":[],"folders":[{"name":".git"}],"invert_command":false,"min_version":"0.3.6","name":"*","tags":["git","db"]}

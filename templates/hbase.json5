@@ -1,4 +1,3 @@
-// Struct for a Hadoop Ecosystem Project
 {
     "description": "Hadoop/HBase distributed computing",
     "name": "*",
@@ -11,5 +10,6 @@
     ],
     "files": [
         "pom.xml"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

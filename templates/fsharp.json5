@@ -1,4 +1,3 @@
-// Struct for an F# Project
 {
     "description": "F# functional programming",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "*.fsproj",
         "*.fs"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

@@ -1,1 +1,1 @@
-{"description":"SQLite database project","files":["*.db","*.sqlite"],"folders":[],"name":"*"}
+{"description":"SQLite database project","files":["*.db","*.sqlite"],"folders":[],"min_version":"0.3.16","name":"*","tags":["db"]}

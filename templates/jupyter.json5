@@ -1,4 +1,3 @@
-// Struct for a Jupyter Notebook Project
 {
     "description": "Jupyter Notebook data science project",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "*.ipynb",
         "requirements.txt"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

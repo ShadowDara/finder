@@ -12,9 +12,11 @@ function detectOs(): Os {
 }
 
 const installCommands: Record<Os, string> = {
-  mac: "curl -fsSL https://finder.sh/install | sh",
-  linux: "curl -fsSL https://finder.sh/install | sh",
-  windows: 'powershell -c "irm finder.sh/install.ps1 | iex"',
+  mac: "curl -fsSL https://raw.githubusercontent.com/ShadowDara/finder/refs/heads/main/install.sh | sh",
+  linux:
+    "curl -fsSL https://raw.githubusercontent.com/ShadowDara/finder/refs/heads/main/install.sh | sh",
+  windows:
+    'powershell -c "irm raw.githubusercontent.com/ShadowDara/finder/refs/heads/main/install.ps1 | iex"',
 };
 
 function Nav() {
@@ -70,20 +72,16 @@ function OsRow({ current }: { current: Os }) {
     windows: "Windows",
     linux: "Linux",
   };
-  const order: Os[] = [
-    current,
-    ...(["mac", "windows", "linux"] as Os[]).filter((o) => o !== current),
-  ];
 
   return (
     <div class="os-row">
-      {order.map((os, i) => (
-        <a
-          class={i === 0 ? "os-btn primary" : "os-btn"}
-          href={`#download-${os}`}
+      {(["mac", "windows", "linux"] as Os[]).map((os) => (
+        <button
+          class={`os-btn ${os === current ? "primary" : ""}`}
+          data-os={os}
         >
           Download for {labels[os]}
-        </a>
+        </button>
       ))}
     </div>
   );
@@ -91,22 +89,28 @@ function OsRow({ current }: { current: Os }) {
 
 function Hero() {
   const os = detectOs();
+
   return (
     <section class="hero wrap">
       <div class="glow"></div>
+
       <div class="eyebrow">
         <span class="dot"></span>v2.4 — jetzt mit Fuzzy-Preview
       </div>
+
       <h1 class="title">
         Finde jede Datei,
         <br />
         <span class="grad">bevor du fertig getippt hast.</span>
       </h1>
+
       <p class="subtitle">
         Finder ist eine native Desktop-Suche, die Dateiinhalte, Metadaten und
         Ordnerstrukturen in Echtzeit indiziert — ganz ohne Cloud.
       </p>
+
       <Terminal os={os} />
+
       <OsRow current={os} />
     </section>
   );
@@ -181,6 +185,32 @@ function App() {
 
 export default function render(el: HTMLDivElement) {
   el.innerHTML = <App></App>;
+
+  const terminalCommand = el.querySelector("code");
+  const osButtons = el.querySelectorAll<HTMLButtonElement>(".os-btn");
+
+  osButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const os = button.dataset.os as Os;
+      const command = installCommands[os];
+
+      if (!terminalCommand) return;
+
+      terminalCommand.innerHTML = (
+        <>
+          <span class="prompt">$</span>
+          {command}
+        </>
+      );
+
+      osButtons.forEach((btn) => {
+        btn.classList.remove("primary");
+      });
+
+      button.classList.add("primary");
+    });
+  });
+
   el.innerHTML = (
     <>
       <h1>Soon</h1>

@@ -1,1 +1,1 @@
-{"description":"Hasura instant GraphQL API","files":["docker-compose.yml"],"folders":[],"name":"*"}
+{"description":"Hasura instant GraphQL API","files":["docker-compose.yml"],"folders":[],"min_version":"0.3.16","name":"*"}

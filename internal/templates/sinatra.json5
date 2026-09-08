@@ -1,1 +1,1 @@
-{"description":"Sinatra lightweight Ruby web framework","files":["app.rb","Gemfile"],"folders":[],"name":"*"}
+{"description":"Sinatra lightweight Ruby web framework","files":["app.rb","Gemfile"],"folders":[],"min_version":"0.3.16","name":"*","tags":["web"]}

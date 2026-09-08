@@ -13,6 +13,14 @@ _The whole finder CHANGELOG_
 - the search function should return an array of
   the found content instead of priting it directly,
   so the output can be formatted elsewhere. - 07.09.2026
+- added size plugin for the frontend
+- added syntax highliting for the markdown codeblocks
+- updated some templates
+- renamed checksums file in the release from `SHA256SUMS` to `SHA256SUMS.txt`
+- added some helpfule vite plugins
+- added file content checksum check
+- fixed that to old template warning because it showed up the finder and the template where in the same version
+- added SHA512 checksums
 
 ## 0.3.15 - 02.09.2025
 

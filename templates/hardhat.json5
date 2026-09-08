@@ -1,4 +1,3 @@
-// Hardhat Ethereum development environment
 {
     "description": "Hardhat Ethereum smart contract development framework",
     "name": "*",
@@ -6,22 +5,31 @@
         {
             "name": "contracts",
             "folders": [],
-            "files": ["*.sol"]
+            "files": [
+                "*.sol"
+            ]
         },
         {
             "name": "test",
             "folders": [],
-            "files": ["*.ts", "*.js"]
+            "files": [
+                "*.ts",
+                "*.js"
+            ]
         },
         {
             "name": "scripts",
             "folders": [],
-            "files": ["*.ts", "*.js"]
+            "files": [
+                "*.ts",
+                "*.js"
+            ]
         }
     ],
     "files": [
         "hardhat.config.ts",
         "hardhat.config.js",
         "package.json"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

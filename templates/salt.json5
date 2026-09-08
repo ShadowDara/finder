@@ -1,4 +1,3 @@
-// Struct for Salt Infrastructure
 {
     "description": "SaltStack infrastructure automation",
     "name": "*",
@@ -11,5 +10,6 @@
     ],
     "files": [
         "top.sls"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

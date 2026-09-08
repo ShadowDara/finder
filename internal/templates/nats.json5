@@ -1,1 +1,1 @@
-{"description":"NATS messaging system","files":["docker-compose.yml","nats.conf"],"folders":[],"name":"*"}
+{"description":"NATS messaging system","files":["docker-compose.yml","nats.conf"],"folders":[],"min_version":"0.3.16","name":"*"}

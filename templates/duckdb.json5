@@ -1,16 +1,18 @@
-// DuckDB analytics database
 {
     "description": "DuckDB embedded SQL database for analytics",
-    name: "*",
-    folders: [
+    "name": "*",
+    "folders": [
         {
-            name: "queries",
-            folders: [],
-            files: ["*.sql"]
+            "name": "queries",
+            "folders": [],
+            "files": [
+                "*.sql"
+            ]
         }
     ],
-    files: [
+    "files": [
         "duckdb.config.yaml",
         "requirements.txt"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

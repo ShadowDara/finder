@@ -1,1 +1,1 @@
-{"description":"Grafana monitoring and visualization","files":["docker-compose.yml","provisioning"],"folders":[],"name":"*"}
+{"description":"Grafana monitoring and visualization","files":["docker-compose.yml","provisioning"],"folders":[],"min_version":"0.3.16","name":"*"}

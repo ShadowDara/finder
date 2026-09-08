@@ -49,7 +49,7 @@ for json_file in folder.glob("*.json5"):
             notags += 1
 
     except json.JSONDecodeError:
-        print(f"Übersprungen (ungültiges JSON): {json_file.name}")
+        pass
     except Exception as e:
         print(f"Fehler bei {json_file.name}: {e}")
 

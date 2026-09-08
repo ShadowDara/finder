@@ -109,6 +109,11 @@ jobs:
           cd release
           sha256sum * > SHA256SUMS.txt
 
+      - name: Generate SHA512 checksums
+        run: |
+          cd release
+          sha512sum * > SHA512SUMS.txt
+
       - name: Extract release notes from CHANGELOG
         id: changelog
         run: |

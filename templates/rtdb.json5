@@ -1,9 +1,12 @@
-// Struct for a Realtime Database Project
 {
     "description": "Firebase Realtime Database",
     "name": "*",
     "folders": [],
     "files": [
         "database.rules.json"
-    ]
+    ],
+    "tags": [
+        "db"
+    ],
+    "min_version": "0.3.16"
 }

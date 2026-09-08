@@ -1,1 +1,1 @@
-{"description":"Ollama local language model inference server","files":["Modelfile",".ollama","docker-compose.yml","requirements.txt"],"folders":[{"files":["Modelfile","*.bin"],"folders":[],"name":"models"},{"files":["*.py","*.js"],"folders":[],"name":"api"}],"name":"*"}
+{"description":"Ollama local language model inference server","files":["Modelfile",".ollama","docker-compose.yml","requirements.txt"],"folders":[{"files":["Modelfile","*.bin"],"folders":[],"name":"models"},{"files":["*.py","*.js"],"folders":[],"name":"api"}],"min_version":"0.3.16","name":"*"}

@@ -1,1 +1,1 @@
-{"description":"Semantic Scholar research paper API","files":["scholar.config.yaml","requirements.txt"],"folders":[{"files":["*.json","*.csv"],"folders":[],"name":"data"}],"name":"*"}
+{"description":"Semantic Scholar research paper API","files":["scholar.config.yaml","requirements.txt"],"folders":[{"files":["*.json","*.csv"],"folders":[],"name":"data"}],"min_version":"0.3.16","name":"*"}

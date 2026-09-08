@@ -1,4 +1,3 @@
-// Struct for a Haskell Project
 {
     "description": "Haskell programming language project",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "stack.yaml",
         "package.yaml"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

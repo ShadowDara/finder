@@ -1,4 +1,3 @@
-// Struct for an Erlang Project
 {
     "description": "Erlang concurrent programming",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "rebar.config",
         "*.erl"
-    ]
+    ],
+    "min_version": "0.3.16"
 }
