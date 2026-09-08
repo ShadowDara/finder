@@ -1,23 +1,23 @@
 {
-  "generatedAt": "2026-09-08T21:06:48.346Z",
+  "generatedAt": "2026-09-08T21:50:35.348Z",
   "total": {
     "files": 40,
-    "bytes": 246477,
-    "kilobytes": 240.7,
+    "bytes": 246691,
+    "kilobytes": 240.91,
     "megabytes": 0.24
   },
   "byExtension": [
     {
       "extension": ".js",
       "files": 12,
-      "bytes": 186028,
-      "percentage": 75.47
+      "bytes": 186242,
+      "percentage": 75.5
     },
     {
       "extension": ".css",
       "files": 12,
       "bytes": 43531,
-      "percentage": 17.66
+      "percentage": 17.65
     },
     {
       "extension": ".txt",
@@ -77,7 +77,7 @@
     {
       "path": "assets/viewer.js",
       "extension": ".js",
-      "bytes": 7250
+      "bytes": 7464
     },
     {
       "path": "assets/creator.css",

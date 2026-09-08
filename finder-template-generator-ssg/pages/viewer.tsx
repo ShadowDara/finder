@@ -22,10 +22,22 @@ const isStatic = import.meta.env.MODE === "static";
 
 export default function render(el: HTMLDivElement) {
   if (isStatic) {
-    renderStatic(el);
-  } else {
-    renderServer(el);
+    const builtin: [string, string][] = Object.entries(builtinTemplates).map(
+      ([name, content]) => [name, JSON.stringify(content)],
+    );
+
+    renderViewer(el, {
+      templates: builtin,
+      builtin,
+      custom: [],
+      count_templates: builtin.length,
+      count_buildin_templates: builtin.length,
+      count_custom_templates: 0,
+    });
+    return;
   }
+
+  void renderServer(el);
 }
 
 let popup = (
@@ -68,13 +80,18 @@ let popup = (
   </dialog>
 );
 
-function renderStatic(el: HTMLDivElement) {
-  // templates.js enthält Objekte, Viewer erwartet Strings
-  const builtin: [string, string][] = Object.entries(builtinTemplates).map(
-    ([name, content]) => [name, JSON.stringify(content)],
-  );
-
-  const allTags = getAllTags(builtin);
+function renderViewer(
+  el: HTMLDivElement,
+  data: {
+    templates: [string, string][];
+    builtin: [string, string][];
+    custom: [string, string][];
+    count_templates: number;
+    count_buildin_templates: number;
+    count_custom_templates: number;
+  },
+) {
+  const allTags = getAllTags(data.templates);
 
   el.innerHTML = (
     <>
@@ -91,32 +108,32 @@ function renderStatic(el: HTMLDivElement) {
               <a href="../">HOME</a>
             </span>
             <h1>Templates</h1>
-            <p>Durchsuche und erkunde alle verfügbaren Templates.</p>
+            <p>
+              {isStatic
+                ? "Browse and explore all available templates."
+                : "Search and explore all available templates."}
+            </p>
           </div>
 
           <div class="stats">
-            {isStatic ? (
-              ""
-            ) : (
+            {!isStatic ? (
               <div class="stat">
-                <strong>{builtin.length}</strong>
+                <strong>{data.count_templates}</strong>
                 <span>Templates</span>
               </div>
-            )}
+            ) : null}
 
             <div class="stat">
-              <strong>{builtin.length}</strong>
+              <strong>{data.count_buildin_templates}</strong>
               <span>Built-in</span>
             </div>
 
-            {isStatic ? (
-              ""
-            ) : (
+            {!isStatic ? (
               <div class="stat">
-                <strong>0</strong>
+                <strong>{data.count_custom_templates}</strong>
                 <span>Custom</span>
               </div>
-            )}
+            ) : null}
           </div>
         </header>
 
@@ -126,32 +143,37 @@ function renderStatic(el: HTMLDivElement) {
             <input
               id="template-search"
               type="search"
-              placeholder="Templates suchen..."
+              placeholder="Search templates..."
               autocomplete="off"
             />
           </div>
 
           <div class="filters">
             <button class="filter active" data-filter="all">
-              Alle
-              <span>{builtin.length}</span>
+              All
+              <span>{data.templates.length}</span>
             </button>
 
-            {isStatic ? (
-              ""
-            ) : (
-              <button class="filter" data-filter="builtin">
-                Built-in
-                <span>{builtin.length}</span>
-              </button>
-            )}
+            {!isStatic ? (
+              <>
+                <button class="filter" data-filter="builtin">
+                  Built-in
+                  <span>{data.builtin.length}</span>
+                </button>
+
+                <button class="filter" data-filter="custom">
+                  Custom
+                  <span>{data.custom.length}</span>
+                </button>
+              </>
+            ) : null}
           </div>
         </section>
 
         <div class="tag-filters">
           <span class="tag-filter-label">Tags:</span>
           <button class="tag-filter active" type="button" data-tag-filter="all">
-            Alle
+            All
           </button>
           {allTags.map((tag) => (
             <button
@@ -166,13 +188,14 @@ function renderStatic(el: HTMLDivElement) {
         <br />
 
         <section class="template-grid" id="template-grid">
-          {renderTemplates(builtin, "builtin")}
+          {renderTemplates(data.builtin, "builtin")}
+          {!isStatic ? renderTemplates(data.custom, "custom") : null}
         </section>
 
         <div class="empty-state" id="empty-state" hidden>
           <div class="empty-icon">⌕</div>
-          <h2>Keine Templates gefunden</h2>
-          <p>Versuche einen anderen Suchbegriff.</p>
+          <h2>No templates found</h2>
+          <p>Try a different search term.</p>
         </div>
       </main>
     </>
@@ -191,114 +214,14 @@ async function renderServer(el: HTMLDivElement) {
 
     const data = (await response.json()) as ServerResponse;
 
-    const templates = Object.entries(data.templates);
-    const builtin = Object.entries(data.builtin);
-    const custom = Object.entries(data.custom);
-
-    const allTags = getAllTags(templates);
-
-    el.innerHTML = (
-      <>
-        {popup}
-        <main class="viewer">
-          <header class="viewer-header">
-            <div>
-              <span class="eyebrow">TEMPLATE VIEWER</span> /
-              <span class="eyebrow">
-                <a href="../creator">TEMPLATE CREATOR</a>
-              </span>
-              /
-              <span class="eyebrow">
-                <a href="../">HOME</a>
-              </span>
-              <h1>Templates</h1>
-              <p>Durchsuche und erkunde alle verfügbaren Templates.</p>
-            </div>
-
-            <div class="stats">
-              <div class="stat">
-                <strong>{data.count_templates}</strong>
-                <span>Templates</span>
-              </div>
-
-              <div class="stat">
-                <strong>{data.count_buildin_templates}</strong>
-                <span>Built-in</span>
-              </div>
-
-              <div class="stat">
-                <strong>{data.count_custom_templates}</strong>
-                <span>Custom</span>
-              </div>
-            </div>
-          </header>
-
-          <section class="toolbar">
-            <div class="search">
-              <span>⌕</span>
-              <input
-                id="template-search"
-                type="search"
-                placeholder="Templates suchen..."
-                autocomplete="off"
-              />
-            </div>
-
-            <div class="filters">
-              <button class="filter active" data-filter="all">
-                Alle
-                <span>{templates.length}</span>
-              </button>
-
-              <button class="filter" data-filter="builtin">
-                Built-in
-                <span>{builtin.length}</span>
-              </button>
-
-              <button class="filter" data-filter="custom">
-                Custom
-                <span>{custom.length}</span>
-              </button>
-            </div>
-          </section>
-
-          <div class="tag-filters">
-            <span class="tag-filter-label">Tags:</span>
-            <button
-              class="tag-filter active"
-              type="button"
-              data-tag-filter="all"
-            >
-              Alle
-            </button>
-
-            {allTags.map((tag) => (
-              <button
-                class="tag-filter"
-                type="button"
-                data-tag-filter={escapeHtml(tag)}
-              >
-                {escapeHtml(tag)}
-              </button>
-            ))}
-          </div>
-          <br />
-
-          <section class="template-grid" id="template-grid">
-            {renderTemplates(builtin, "builtin")}
-            {renderTemplates(custom, "custom")}
-          </section>
-
-          <div class="empty-state" id="empty-state" hidden>
-            <div class="empty-icon">⌕</div>
-            <h2>Keine Templates gefunden</h2>
-            <p>Versuche einen anderen Suchbegriff.</p>
-          </div>
-        </main>
-      </>
-    );
-
-    setupSelector(el);
+    renderViewer(el, {
+      templates: Object.entries(data.templates),
+      builtin: Object.entries(data.builtin),
+      custom: Object.entries(data.custom),
+      count_templates: data.count_templates,
+      count_buildin_templates: data.count_buildin_templates,
+      count_custom_templates: data.count_custom_templates,
+    });
   } catch (error) {
     console.error(error);
 
@@ -306,8 +229,8 @@ async function renderServer(el: HTMLDivElement) {
       <main class="viewer error">
         <div class="error-card">
           <span class="eyebrow">ERROR</span>
-          <h1>Templates konnten nicht geladen werden.</h1>
-          <p>Der Template-Server ist momentan nicht erreichbar.</p>
+          <h1>Templates could not be loaded.</h1>
+          <p>The template server is currently not reachable.</p>
         </div>
       </main>
     );
@@ -335,7 +258,7 @@ function renderTemplates(
         data-tags={escapeHtml(tags.join("|").toLowerCase())}
         tabindex="0"
         role="button"
-        aria-label={`Template ${escapeHtml(name)} öffnen`}
+        aria-label={`Template ${escapeHtml(name)} open`}
       >
         <div class="card-header">
           <div class="template-icon">{type === "builtin" ? "★" : "◇"}</div>

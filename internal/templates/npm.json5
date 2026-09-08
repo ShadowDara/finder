@@ -1,1 +1,1 @@
-{"files":["package.json"],"folders":[],"min_version":"0.3.16","name":"*"}
+{"description":"NPM package template","files":["package.json"],"folders":[],"min_version":"0.3.16","name":"*","tags":["npm","node","package"]}

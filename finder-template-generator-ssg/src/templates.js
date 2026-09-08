@@ -3594,12 +3594,18 @@ export default {
     "name": "*"
   },
   "npm.json5": {
+    "description": "NPM package template",
     "files": [
       "package.json"
     ],
     "folders": [],
     "min_version": "0.3.16",
-    "name": "*"
+    "name": "*",
+    "tags": [
+      "npm",
+      "node",
+      "package"
+    ]
   },
   "nuxt.json5": {
     "description": "Nuxt.js Vue.js full-stack framework",
