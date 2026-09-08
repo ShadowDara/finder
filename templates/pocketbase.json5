@@ -1,4 +1,3 @@
-// Struct for a Pocketbase Project
 {
     "description": "Pocketbase backend as a service",
     "name": "*",
@@ -11,5 +10,6 @@
     ],
     "files": [
         "pb_schema.json"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

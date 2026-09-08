@@ -1,1 +1,1 @@
-{"description":"Pandas data analysis library","files":["requirements.txt","*.py"],"folders":[],"name":"*"}
+{"description":"Pandas data analysis library","files":["requirements.txt","*.py"],"folders":[],"min_version":"0.3.16","name":"*"}

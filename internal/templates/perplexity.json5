@@ -1,1 +1,1 @@
-{"description":"Perplexity AI API integration","files":["perplexity.config.yaml","requirements.txt"],"folders":[{"files":["*.json"],"folders":[],"name":"queries"}],"name":"*"}
+{"description":"Perplexity AI API integration","files":["perplexity.config.yaml","requirements.txt"],"folders":[{"files":["*.json"],"folders":[],"name":"queries"}],"min_version":"0.3.16","name":"*"}

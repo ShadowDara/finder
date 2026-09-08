@@ -1,1 +1,1 @@
-{"description":"Perl programming language project","files":["Makefile.PL","*.pl"],"folders":[{"files":[],"folders":[],"name":"lib"}],"name":"*"}
+{"description":"Perl programming language project","files":["Makefile.PL","*.pl"],"folders":[{"files":[],"folders":[],"name":"lib"}],"min_version":"0.3.16","name":"*"}

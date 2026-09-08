@@ -1,4 +1,3 @@
-// Struct for a MonoGame Project
 {
     "description": "MonoGame C# game framework",
     "name": "*",
@@ -11,5 +10,10 @@
     ],
     "files": [
         "*.csproj"
-    ]
+    ],
+    "tags": [
+        "game-engine",
+        "C#"
+    ],
+    "min_version": "0.3.16"
 }

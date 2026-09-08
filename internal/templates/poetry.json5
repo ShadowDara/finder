@@ -1,1 +1,1 @@
-{"description":"Poetry Python dependency manager","files":["pyproject.toml","poetry.lock"],"folders":[],"name":"*"}
+{"description":"Poetry Python dependency manager","files":["pyproject.toml","poetry.lock"],"folders":[],"min_version":"0.3.16","name":"*"}

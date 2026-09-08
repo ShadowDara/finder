@@ -1,4 +1,3 @@
-// Mistral AI API
 {
     "description": "Mistral AI language model API",
     "name": "*",
@@ -6,12 +5,16 @@
         {
             "name": "src",
             "folders": [],
-            "files": ["*.py", "*.ts"]
+            "files": [
+                "*.py",
+                "*.ts"
+            ]
         }
     ],
     "files": [
         "mistral.config.yaml",
         "requirements.txt",
         ".env.mistral"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

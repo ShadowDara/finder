@@ -1,4 +1,3 @@
-// Struct for a Loom Project
 {
     "description": "Loom WebAssembly runtime",
     "name": "*",
@@ -11,5 +10,6 @@
     ],
     "files": [
         "Cargo.toml"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

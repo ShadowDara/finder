@@ -1,1 +1,1 @@
-{"description":"Panel framework for building web applications with Python","files":["panel.config.yaml","requirements.txt","app.py"],"folders":[{"files":["*.py"],"folders":[],"name":"src"}],"name":"*"}
+{"description":"Panel framework for building web applications with Python","files":["panel.config.yaml","requirements.txt","app.py"],"folders":[{"files":["*.py"],"folders":[],"name":"src"}],"min_version":"0.3.16","name":"*"}

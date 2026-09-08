@@ -1,4 +1,3 @@
-// Struct for a Pandas Project
 {
     "description": "Pandas data analysis library",
     "name": "*",
@@ -6,5 +5,6 @@
     "files": [
         "requirements.txt",
         "*.py"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

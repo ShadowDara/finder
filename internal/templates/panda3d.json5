@@ -1,1 +1,1 @@
-{"description":"Panda3D game engine","files":["main.py"],"folders":[{"files":[],"folders":[],"name":"models"}],"name":"*"}
+{"description":"Panda3D game engine","files":["main.py"],"folders":[{"files":[],"folders":[],"name":"models"}],"min_version":"0.3.16","name":"*","tags":["game-engine","python"]}

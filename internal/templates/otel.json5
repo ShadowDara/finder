@@ -1,1 +1,1 @@
-{"description":"OpenTelemetry observability framework","files":["otel-collector-config.yml"],"folders":[],"name":"*"}
+{"description":"OpenTelemetry observability framework","files":["otel-collector-config.yml"],"folders":[],"min_version":"0.3.16","name":"*"}

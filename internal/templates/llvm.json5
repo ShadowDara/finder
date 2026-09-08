@@ -1,1 +1,1 @@
-{"description":"LLVM compiler infrastructure and toolchain","files":["CMakeLists.txt","llvm.config","README.md"],"folders":[{"files":["*.cpp","*.h"],"folders":[],"name":"lib"},{"files":["*.cpp"],"folders":[],"name":"tools"}],"name":"*"}
+{"description":"LLVM compiler infrastructure and toolchain","files":["CMakeLists.txt","llvm.config","README.md"],"folders":[{"files":["*.cpp","*.h"],"folders":[],"name":"lib"},{"files":["*.cpp"],"folders":[],"name":"tools"}],"min_version":"0.3.16","name":"*"}

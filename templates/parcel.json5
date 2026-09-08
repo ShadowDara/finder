@@ -1,4 +1,3 @@
-// Struct for a Parcel Project
 {
     "description": "Parcel zero-config bundler",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "package.json",
         ".parcelrc"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

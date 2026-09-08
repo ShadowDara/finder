@@ -1,4 +1,3 @@
-// Perplexity AI search
 {
     "description": "Perplexity AI API integration",
     "name": "*",
@@ -6,11 +5,14 @@
         {
             "name": "queries",
             "folders": [],
-            "files": ["*.json"]
+            "files": [
+                "*.json"
+            ]
         }
     ],
     "files": [
         "perplexity.config.yaml",
         "requirements.txt"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

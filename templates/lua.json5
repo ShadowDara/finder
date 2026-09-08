@@ -1,4 +1,3 @@
-// Struct for a Lua Project
 {
     "description": "Lua programming language project",
     "name": "*",
@@ -11,5 +10,6 @@
     ],
     "files": [
         "*.lua"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

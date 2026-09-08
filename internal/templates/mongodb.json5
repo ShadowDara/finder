@@ -1,1 +1,1 @@
-{"description":"MongoDB NoSQL database project","files":["docker-compose.yml"],"folders":[{"files":[],"folders":[],"name":"schemas"}],"name":"*"}
+{"description":"MongoDB NoSQL database project","files":["docker-compose.yml"],"folders":[{"files":[],"folders":[],"name":"schemas"}],"min_version":"0.3.16","name":"*"}

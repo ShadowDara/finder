@@ -1,4 +1,3 @@
-// Struct for a Mapbox Project
 {
     "description": "Mapbox mapping platform",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "package.json",
         ".mapboxrc"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

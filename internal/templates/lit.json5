@@ -1,1 +1,1 @@
-{"description":"Lit web components framework","files":["package.json","*.ts"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}
+{"description":"Lit web components framework","files":["package.json","*.ts"],"folders":[{"files":[],"folders":[],"name":"src"}],"min_version":"0.3.16","name":"*"}

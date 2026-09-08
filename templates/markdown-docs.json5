@@ -1,4 +1,3 @@
-// Struct for a Markdown Documentation Site
 {
     "description": "Markdown documentation website",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "README.md",
         "*.md"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

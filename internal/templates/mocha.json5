@@ -1,1 +1,1 @@
-{"description":"Mocha JavaScript test framework","files":[".mocharc.json","package.json"],"folders":[{"files":[],"folders":[],"name":"test"}],"name":"*"}
+{"description":"Mocha JavaScript test framework","files":[".mocharc.json","package.json"],"folders":[{"files":[],"folders":[],"name":"test"}],"min_version":"0.3.16","name":"*"}

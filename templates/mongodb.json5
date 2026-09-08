@@ -1,4 +1,3 @@
-// Struct for a MongoDB Project
 {
     "description": "MongoDB NoSQL database project",
     "name": "*",
@@ -11,5 +10,6 @@
     ],
     "files": [
         "docker-compose.yml"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

@@ -10,6 +10,7 @@ import (
 	"os/exec"
 	"path"
 	"path/filepath"
+	"regexp"
 	"runtime"
 	"strings"
 
@@ -18,15 +19,14 @@ import (
 
 // matchFolderTemplate checks whether the directory at dirPath matches the
 // provided template. Matching includes name pattern, required files and
-// required subfolders. Wildcards in template fields are supported via
-// path.Match.
+// required subfolders. Template names support both Go glob patterns and full
+// regular expressions for compatibility with existing and new templates.
 func matchFolderTemplate(dirPath string, template structure.Folder) bool {
 	// Check folder name if provided
 	dirName := filepath.Base(dirPath)
 
 	if template.Name != "" {
-		ok, err := path.Match(template.Name, dirName)
-		if err != nil || !ok {
+		if !matchesPattern(template.Name, dirName) {
 			return false
 		}
 	}
@@ -111,11 +111,26 @@ func matchFolderTemplate(dirPath string, template structure.Folder) bool {
 	return true
 }
 
+func matchesPattern(pattern string, name string) bool {
+	if pattern == "" {
+		return false
+	}
+	if pattern == name {
+		return true
+	}
+
+	if ok, err := regexp.MatchString(pattern, name); err == nil {
+		return ok
+	}
+
+	ok, err := path.Match(pattern, name)
+	return err == nil && ok
+}
+
 func matchingFileNames(files map[string]bool, pattern string) []string {
 	matching := make([]string, 0)
 	for name := range files {
-		ok, err := path.Match(pattern, name)
-		if err == nil && ok {
+		if matchesPattern(pattern, name) {
 			matching = append(matching, name)
 		}
 	}
@@ -151,16 +166,15 @@ func checkChecksums(filePath string, checksums structure.Checksum) bool {
 }
 
 // matchAny returns true if at least one entry in the provided map matches
-// the pattern. Exact match is checked first, then path.Match is used for
-// wildcard matching.
+// the pattern. Exact matches are checked first, then regex matching is used,
+// and glob matching remains as a fallback for existing templates.
 func matchAny(entries map[string]bool, pattern string) bool {
 	if entries[pattern] {
 		return true
 	}
 
 	for name := range entries {
-		ok, _ := path.Match(pattern, name)
-		if ok {
+		if matchesPattern(pattern, name) {
 			return true
 		}
 	}

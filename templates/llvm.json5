@@ -1,4 +1,3 @@
-// LLVM compiler infrastructure
 {
     "description": "LLVM compiler infrastructure and toolchain",
     "name": "*",
@@ -6,17 +5,23 @@
         {
             "name": "lib",
             "folders": [],
-            "files": ["*.cpp", "*.h"]
+            "files": [
+                "*.cpp",
+                "*.h"
+            ]
         },
         {
             "name": "tools",
             "folders": [],
-            "files": ["*.cpp"]
+            "files": [
+                "*.cpp"
+            ]
         }
     ],
     "files": [
         "CMakeLists.txt",
         "llvm.config",
         "README.md"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

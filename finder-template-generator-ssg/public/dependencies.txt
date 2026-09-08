@@ -161,7 +161,7 @@ fast-levenshtein@2.0.6 -- MIT
 fdir@6.5.0 -- MIT
 file-entry-cache@8.0.0 -- MIT
 find-up@5.0.0 -- MIT
-finder-template-generator@0.3.16 -- UNLICENSED
+finder-template-generator@0.3.17 -- UNLICENSED
 flat-cache@4.0.1 -- MIT
 flatted@3.4.4 -- ISC
 fs.realpath@1.0.0 -- ISC

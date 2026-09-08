@@ -1,1 +1,1 @@
-{"description":"MonoGame C# game framework","files":["*.csproj"],"folders":[{"files":[],"folders":[],"name":"Content"}],"name":"*"}
+{"description":"MonoGame C# game framework","files":["*.csproj"],"folders":[{"files":[],"folders":[],"name":"Content"}],"min_version":"0.3.16","name":"*","tags":["game-engine","C#"]}

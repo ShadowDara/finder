@@ -1,4 +1,3 @@
-// Move language blockchain (Aptos, Sui)
 {
     "description": "Move programming language blockchain project (Aptos, Sui)",
     "name": "*",
@@ -6,11 +5,14 @@
         {
             "name": "sources",
             "folders": [],
-            "files": ["*.move"]
+            "files": [
+                "*.move"
+            ]
         }
     ],
     "files": [
         "Move.toml",
         "Move.lock"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

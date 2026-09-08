@@ -1,1 +1,1 @@
-{"description":"MLflow open-source machine learning lifecycle platform","files":["mlflow.yaml","requirements.txt",".mlflow"],"folders":[{"files":["*.pkl","*.pt"],"folders":[],"name":"models"},{"files":["*.json"],"folders":[],"name":"experiments"}],"name":"*"}
+{"description":"MLflow open-source machine learning lifecycle platform","files":["mlflow.yaml","requirements.txt",".mlflow"],"folders":[{"files":["*.pkl","*.pt"],"folders":[],"name":"models"},{"files":["*.json"],"folders":[],"name":"experiments"}],"min_version":"0.3.16","name":"*"}

@@ -259,6 +259,48 @@ func TestMatchAny_WildcardMatch(t *testing.T) {
 	}
 }
 
+func TestMatchAny_RegexMatch(t *testing.T) {
+	entries := map[string]bool{
+		"alpha.txt": true,
+		"beta.md":   true,
+		"gamma.js":  true,
+	}
+
+	if !matchAny(entries, `^alpha\..+$`) {
+		t.Errorf("expected regex match for '^alpha\\..+$'")
+	}
+}
+
+func TestMatchFolderTemplate_RegexMatch(t *testing.T) {
+	tempDir := t.TempDir()
+	testDir := filepath.Join(tempDir, "project-123")
+	if err := os.Mkdir(testDir, 0755); err != nil {
+		t.Fatalf("failed to create test dir: %v", err)
+	}
+
+	if err := os.WriteFile(filepath.Join(testDir, "main.py"), []byte("print('hi')\n"), 0644); err != nil {
+		t.Fatalf("failed to create test file: %v", err)
+	}
+
+	if err := os.Mkdir(filepath.Join(testDir, "src"), 0755); err != nil {
+		t.Fatalf("failed to create src dir: %v", err)
+	}
+
+	template := structure.Folder{
+		Name: `^project-[0-9]+$`,
+		Files: structure.Files{
+			{Name: `^main\.py$`, Existence: "required"},
+		},
+		Folders: []structure.Folder{
+			{Name: `^src$`},
+		},
+	}
+
+	if !matchFolderTemplate(testDir, template) {
+		t.Errorf("expected regex-based file and folder names to match")
+	}
+}
+
 func TestMatchAny_NoMatch(t *testing.T) {
 	entries := map[string]bool{
 		"file.txt": true,

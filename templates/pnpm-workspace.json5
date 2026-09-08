@@ -1,4 +1,3 @@
-// Struct for a Pnpm Workspace Project
 {
     "description": "Pnpm workspace monorepo",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "pnpm-workspace.yaml",
         "package.json"
-    ]
+    ],
+    "min_version": "0.3.16"
 }
