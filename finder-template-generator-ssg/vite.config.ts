@@ -10,6 +10,7 @@ import { string } from "rollup-plugin-string";
 import fs from "node:fs";
 import licenseChecker from "license-checker";
 import eslint from "vite-plugin-eslint";
+import yaml from "@rollup/plugin-yaml";
 
 function dependenciesPlugin(outDir: string) {
   return {
@@ -73,6 +74,7 @@ export default defineConfig(({ mode }) => {
       },
     },
     plugins: [
+      yaml(),
       // eslint(),
       string({ include: "**/*.html" }),
       DevTools(),
