@@ -6,7 +6,12 @@ export default function render(el: HTMLDivElement) {
   el.innerHTML = (
     <main class="regexcreator-page">
       <header class="intro">
-        <h1>Regex-Generator</h1>
+        <h1>
+          <span>Regex-Generator</span> /{" "}
+          <span>
+            <a href="../">Home</a>
+          </span>
+        </h1>
         <p>
           Zwei Wortlisten werden zu einem Muster verrechnet: alles aus der
           ersten Liste passt, alles aus der zweiten nicht.
@@ -23,7 +28,7 @@ export default function render(el: HTMLDivElement) {
               spellcheck="false"
               placeholder="ein Wort pro Zeile"
             >
-              cat car cart dog do
+              cat{"\n"}car{"\n"}cart{"\n"}dog{"\n"}do
             </textarea>
           </div>
 
@@ -40,7 +45,7 @@ export default function render(el: HTMLDivElement) {
               spellcheck="false"
               placeholder="ein Wort pro Zeile"
             >
-              cot cats dot
+              cot{"\n"}cats{"\n"}dot
             </textarea>
           </div>
         </section>

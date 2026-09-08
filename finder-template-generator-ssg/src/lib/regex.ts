@@ -31,7 +31,7 @@ function createNode(): TrieNode {
 
 /** Escaped ein einzelnes Zeichen für sichere Verwendung in RegExp */
 function escapeRegexChar(ch: string): string {
-  return ch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return ch.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 /** Baut aus einem Array von Strings einen Trie */
@@ -60,7 +60,7 @@ function buildTrie(words: readonly string[]): TrieNode {
  *  - optionale Verzweigungen (wenn Knoten selbst Wortende ist) mit `?`
  */
 function trieToFragment(node: TrieNode): string {
-  if (node.children.size === 0) return '';
+  if (node.children.size === 0) return "";
 
   const branchParts: string[] = [];
   const singleChars: string[] = [];
@@ -72,8 +72,10 @@ function trieToFragment(node: TrieNode): string {
       singleChars.push(escapeRegexChar(key));
     } else {
       const subFragment = trieToFragment(child);
-      const wrapped = subFragment.includes('|') ? `(?:${subFragment})` : subFragment;
-      const optional = child.isEnd ? '?' : '';
+      const wrapped = subFragment.includes("|")
+        ? `(?:${subFragment})`
+        : subFragment;
+      const optional = child.isEnd ? "?" : "";
       branchParts.push(`${escapeRegexChar(key)}${wrapped}${optional}`);
     }
   }
@@ -81,10 +83,10 @@ function trieToFragment(node: TrieNode): string {
   if (singleChars.length === 1) {
     branchParts.push(singleChars[0]);
   } else if (singleChars.length > 1) {
-    branchParts.push(`[${singleChars.join('')}]`);
+    branchParts.push(`[${singleChars.join("")}]`);
   }
 
-  return branchParts.join('|');
+  return branchParts.join("|");
 }
 
 /** Erzeugt aus einer Wortliste ein Regex-Fragment (oder null bei leerer Liste) */
@@ -109,23 +111,35 @@ export interface GenerateRegexOptions {
 export function generateRegex(
   accept: readonly string[],
   disallow: readonly string[] = [],
-  options: GenerateRegexOptions = {}
+  options: GenerateRegexOptions = {},
 ): RegExp {
-  const acceptFragment = wordsToFragment(accept);
-  if (!acceptFragment) {
-    throw new Error('accept-Array darf nicht leer sein.');
+  if (accept.length === 0) {
+    throw new Error("accept-Array darf nicht leer sein.");
   }
 
-  const disallowFragment = wordsToFragment(disallow);
+  const flags = options.flags ?? "";
+  const ignoreCase = flags.includes("i");
 
-  // Boolesche Verknüpfung: Accept AND NOT Disallow
-  const negativeLookahead = disallowFragment
-    ? `(?!^(?:${disallowFragment})$)`
-    : '';
+  const disallowSet = new Set(
+    disallow.map((word) => (ignoreCase ? word.toLocaleLowerCase() : word)),
+  );
 
-  const pattern = `^${negativeLookahead}(?:${acceptFragment})$`;
+  const effectiveAccept = accept.filter((word) => {
+    const key = ignoreCase ? word.toLocaleLowerCase() : word;
+    return !disallowSet.has(key);
+  });
 
-  return new RegExp(pattern, options.flags ?? '');
+  if (effectiveAccept.length === 0) {
+    throw new Error("Alle akzeptierten Wörter werden abgelehnt.");
+  }
+
+  const acceptFragment = wordsToFragment(effectiveAccept);
+
+  if (!acceptFragment) {
+    throw new Error("Keine gültigen akzeptierten Wörter.");
+  }
+
+  return new RegExp(`^(?:${acceptFragment})$`, flags);
 }
 
 // // ------------------------------------------------------------

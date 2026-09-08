@@ -1,41 +1,41 @@
 {
-  "generatedAt": "2026-09-08T20:08:46.922Z",
+  "generatedAt": "2026-09-08T21:07:19.231Z",
   "total": {
-    "files": 37,
-    "bytes": 303337,
-    "kilobytes": 296.23,
-    "megabytes": 0.29
+    "files": 40,
+    "bytes": 312338,
+    "kilobytes": 305.02,
+    "megabytes": 0.3
   },
   "byExtension": [
     {
       "extension": ".js",
-      "files": 11,
-      "bytes": 246562,
-      "percentage": 81.28
+      "files": 12,
+      "bytes": 251731,
+      "percentage": 80.6
     },
     {
       "extension": ".css",
-      "files": 11,
-      "bytes": 40121,
-      "percentage": 13.23
+      "files": 12,
+      "bytes": 43531,
+      "percentage": 13.94
     },
     {
       "extension": ".txt",
       "files": 1,
       "bytes": 9764,
-      "percentage": 3.22
+      "percentage": 3.13
     },
     {
       "extension": ".html",
-      "files": 13,
-      "bytes": 5146,
-      "percentage": 1.7
+      "files": 14,
+      "bytes": 5568,
+      "percentage": 1.78
     },
     {
       "extension": ".sh",
       "files": 1,
       "bytes": 1744,
-      "percentage": 0.57
+      "percentage": 0.56
     }
   ],
   "files": [
@@ -47,12 +47,12 @@
     {
       "path": "assets/viewer.js",
       "extension": ".js",
-      "bytes": 74229
+      "bytes": 75146
     },
     {
       "path": "assets/main_entry.js",
       "extension": ".js",
-      "bytes": 44555
+      "bytes": 44814
     },
     {
       "path": "assets/markdowneditor.js",
@@ -100,6 +100,11 @@
       "bytes": 3972
     },
     {
+      "path": "assets/regexcreator.js",
+      "extension": ".js",
+      "bytes": 3933
+    },
+    {
       "path": "assets/cacheviewer.css",
       "extension": ".css",
       "bytes": 3675
@@ -113,6 +118,11 @@
       "path": "assets/home.js",
       "extension": ".js",
       "bytes": 3421
+    },
+    {
+      "path": "assets/regexcreator.css",
+      "extension": ".css",
+      "bytes": 3410
     },
     {
       "path": "assets/samfile.js",
@@ -157,7 +167,7 @@
     {
       "path": "assets/index.js",
       "extension": ".js",
-      "bytes": 899
+      "bytes": 959
     },
     {
       "path": "configeditor/index.html",
@@ -173,6 +183,11 @@
       "path": "tools/minecraft/tellraw/index.html",
       "extension": ".html",
       "bytes": 428
+    },
+    {
+      "path": "regexcreator/index.html",
+      "extension": ".html",
+      "bytes": 422
     },
     {
       "path": "cacheviewer/index.html",
