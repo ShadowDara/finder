@@ -1,29 +1,29 @@
 {
-  "generatedAt": "2026-09-08T17:17:57.896Z",
+  "generatedAt": "2026-09-08T17:55:55.635Z",
   "total": {
     "files": 37,
-    "bytes": 302717,
-    "kilobytes": 295.62,
+    "bytes": 303037,
+    "kilobytes": 295.93,
     "megabytes": 0.29
   },
   "byExtension": [
     {
       "extension": ".js",
       "files": 11,
-      "bytes": 245943,
-      "percentage": 81.25
+      "bytes": 246262,
+      "percentage": 81.26
     },
     {
       "extension": ".css",
       "files": 11,
-      "bytes": 40120,
-      "percentage": 13.25
+      "bytes": 40121,
+      "percentage": 13.24
     },
     {
       "extension": ".txt",
       "files": 1,
       "bytes": 9764,
-      "percentage": 3.23
+      "percentage": 3.22
     },
     {
       "extension": ".html",
@@ -92,7 +92,7 @@
     {
       "path": "assets/home.css",
       "extension": ".css",
-      "bytes": 4618
+      "bytes": 4619
     },
     {
       "path": "assets/configeditor.css",
@@ -110,6 +110,11 @@
       "bytes": 3498
     },
     {
+      "path": "assets/home.js",
+      "extension": ".js",
+      "bytes": 3347
+    },
+    {
       "path": "assets/samfile.js",
       "extension": ".js",
       "bytes": 3291
@@ -118,11 +123,6 @@
       "path": "assets/samfile.css",
       "extension": ".css",
       "bytes": 3255
-    },
-    {
-      "path": "assets/home.js",
-      "extension": ".js",
-      "bytes": 3028
     },
     {
       "path": "assets/main.css",
