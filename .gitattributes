@@ -19,6 +19,7 @@ go.mod linguist-language=go
 /finder-template-generator-ssg/vite-pluginbuild-stats.ts linguist-vendored
 /finder-template-generator-ssg/pages-ssg-plugin.ts linguist-vendored
 
+/finder-template-generator-ssg/src/pages.d.ts linguist-vendored
 /finder-template-generator-ssg/src/jsx-runtime.ts linguist-vendored
 /finder-template-generator-ssg/src/jsx.d.ts linguist-vendored
 
