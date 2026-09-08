@@ -82,11 +82,11 @@ function renderStatic(el: HTMLDivElement) {
       <main class="viewer">
         <header class="viewer-header">
           <div>
-            <span class="eyebrow">TEMPLATE VIEWER</span> /
+            <span class="eyebrow">TEMPLATE VIEWER</span> /{" "}
             <span class="eyebrow">
               <a href="../creator">TEMPLATE CREATOR</a>
             </span>{" "}
-            /
+            /{" "}
             <span class="eyebrow">
               <a href="../">HOME</a>
             </span>
