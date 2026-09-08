@@ -7,6 +7,7 @@ import { parseMarkdown } from "@shadowdara/dlib";
 import { transformWithEsbuild } from "vite";
 import { tsImport } from "tsx/esm/api";
 import { escapeHtml } from "./src/jsx-runtime";
+import hljs from "highlight.js/lib/common";
 
 const MARKDOWN_PREFIX = "virtual:page-markdown:";
 const RESOLVED_MARKDOWN_PREFIX = "\0" + MARKDOWN_PREFIX;
@@ -291,7 +292,18 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
           const id = relativePath.replace(/\\/g, "/").replace(/\.md$/i, "");
 
           const markdown = fs.readFileSync(fullPath, "utf8");
-          let html = parseMarkdown(markdown, { sanitize: false }) as string;
+          let html = parseMarkdown(markdown, {
+            sanitize: false,
+            highlight(code, language) {
+              if (!hljs.getLanguage(language)) {
+                return code;
+              }
+
+              return hljs.highlight(code, {
+                language,
+              }).value;
+            },
+          });
 
           if (options.minify) {
             html = await minify(html, {
