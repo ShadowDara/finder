@@ -132,7 +132,7 @@ export default defineConfig(({ mode }) => {
         // Single shared entry — every generated HTML page loads this bundle.
         input: "src/main.ts",
         output: {
-          entryFileNames: "assets/_main_entry.js",
+          entryFileNames: "assets/main_entry.js",
           chunkFileNames: "assets/[name].js",
           assetFileNames: (_assetInfo) => {
             return "assets/[name][extname]";

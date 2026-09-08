@@ -1,6 +1,5 @@
-import { jsx, Fragment } from "../src/jsx-runtime";
+import { jsx, Fragment, raw } from "../src/jsx-runtime";
 import { SERVER_ADRESS } from "../src/vars";
-import hljs from "highlight.js/lib/common";
 
 export default function render(el: HTMLDivElement, data: string) {
   el.innerHTML = (
@@ -47,16 +46,10 @@ export default function render(el: HTMLDivElement, data: string) {
         <p>
           A Markdown file to explain your AI how to write templates for finder!
         </p>
-        <pre>
-          <code class="language-md">{data}</code>
-        </pre>
+        {raw(data)}
       </article>
     </>
   );
-
-  el.querySelectorAll("pre code").forEach((block) => {
-    hljs.highlightElement(block as HTMLElement);
-  });
 
   if (import.meta.env.MODE == "backend") {
     let adress = "/api/stop";
