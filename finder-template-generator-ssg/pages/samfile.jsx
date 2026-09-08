@@ -1,6 +1,7 @@
 import { escapeHtml, jsx, raw, Fragment } from "../src/jsx-runtime";
 import { genSamfile, genSamfileJson } from "../src/samfile/gen";
 import "./samfile.css"
+import { $ } from "jquery"
 
 export default function render(el) {
   el.innerHTML = (
@@ -27,6 +28,9 @@ export default function render(el) {
       <button id="copybtn">Copy Content</button>
     </>
   );
+
+  // changed the page name
+  $("title").text("Samfile Generator");
 
   const input = document.getElementById("input");
   const text = document.getElementById("text");

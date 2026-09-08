@@ -141,6 +141,13 @@ export interface PagesPluginOptions {
    * @default false
    */
   splitMarkdown?: boolean;
+
+  /**
+   * Ignored Pathnames
+   *
+   * @default ["/@", "/node_modules/", "/src/"]
+   */
+  ignoredPathnames?: string[];
 }
 
 export interface PageRenderContext {
@@ -181,6 +188,13 @@ let resolvedStyles = new Map<string, string>();
 const DEFAULT_EXTENSIONS = [".ts", ".tsx", ".js", ".jsx"];
 
 export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
+  const ignoredPathnames = [
+    "/@",
+    "/node_modules/",
+    "/src/",
+    "/__devframes_plugin_terminals/",
+    ...(options.ignoredPathnames ?? []),
+  ].filter((prefix, index, prefixes) => prefixes.indexOf(prefix) === index);
   const splitMarkdown = options.splitMarkdown ?? false;
   const verbose = options.verbose ?? false;
   const singleBundle = options.singleBundle ?? false;
@@ -723,11 +737,7 @@ declare module "virtual:pages" {
         const pathname = url.split("?")[0].split("#")[0];
 
         // Vite internals
-        if (
-          pathname.startsWith("/@") ||
-          pathname.startsWith("/node_modules/") ||
-          pathname.startsWith("/src/")
-        ) {
+        if (ignoredPathnames.some((prefix) => pathname.startsWith(prefix))) {
           return next();
         }
 

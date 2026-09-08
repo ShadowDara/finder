@@ -1,7 +1,7 @@
 // Prob buildin Pages later (but they can be overwritten)
 
 import { PageEntry } from "virtual:pages";
-import { jsx } from "../src/jsx-runtime";
+import { jsx, raw } from "../src/jsx-runtime";
 
 // Render the 404 Page
 export function render404(app: HTMLElement) {
@@ -22,7 +22,7 @@ export function render404_2(
     .filter((pageId) => pageId !== "__404__")
     .map((pageId) => (
       <li>
-        <a href={pageId === "index" ? "/" : `/${pageId}`}>${pageId}</a>
+        <a href={pageId === "index" ? "/" : `/${pageId}`}>{pageId}</a>
       </li>
     ))
     .join("");
@@ -33,7 +33,7 @@ export function render404_2(
       <p>Page not found.</p>
 
       <h2>Available pages</h2>
-      <ul>{pageLinks}</ul>
+      <ul>{raw(pageLinks)}</ul>
 
       <a href="/">Go home</a>
     </main>

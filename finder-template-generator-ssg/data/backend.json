@@ -1,48 +1,53 @@
 {
-  "generatedAt": "2026-09-08T11:51:13.094Z",
+  "generatedAt": "2026-09-08T12:10:55.834Z",
   "total": {
     "files": 30,
-    "bytes": 117005,
-    "kilobytes": 114.26,
-    "megabytes": 0.11
+    "bytes": 196506,
+    "kilobytes": 191.9,
+    "megabytes": 0.19
   },
   "byExtension": [
     {
       "extension": ".js",
       "files": 8,
-      "bytes": 65876,
-      "percentage": 56.3
+      "bytes": 145377,
+      "percentage": 73.98
     },
     {
       "extension": ".css",
       "files": 9,
       "bytes": 35589,
-      "percentage": 30.42
+      "percentage": 18.11
     },
     {
       "extension": ".txt",
       "files": 1,
       "bytes": 9705,
-      "percentage": 8.29
+      "percentage": 4.94
     },
     {
       "extension": ".html",
       "files": 11,
       "bytes": 4091,
-      "percentage": 3.5
+      "percentage": 2.08
     },
     {
       "extension": ".sh",
       "files": 1,
       "bytes": 1744,
-      "percentage": 1.49
+      "percentage": 0.89
     }
   ],
   "files": [
     {
+      "path": "assets/samfile.js",
+      "extension": ".js",
+      "bytes": 82431
+    },
+    {
       "path": "assets/index.js",
       "extension": ".js",
-      "bytes": 26239
+      "bytes": 26519
     },
     {
       "path": "assets/creator.js",
@@ -98,11 +103,6 @@
       "path": "assets/samfile.css",
       "extension": ".css",
       "bytes": 3255
-    },
-    {
-      "path": "assets/samfile.js",
-      "extension": ".js",
-      "bytes": 3210
     },
     {
       "path": "assets/home.js",
