@@ -8,12 +8,8 @@ import viteRemove from "unplugin-remove/vite";
 import { DevTools } from "@vitejs/devtools";
 import { string } from "rollup-plugin-string";
 import fs from "node:fs";
-import { execFile } from "node:child_process";
-import { promisify } from "node:util";
 import licenseChecker from "license-checker";
 import eslint from "vite-plugin-eslint";
-
-const execFileAsync = promisify(execFile);
 
 function dependenciesPlugin(outDir: string) {
   return {
