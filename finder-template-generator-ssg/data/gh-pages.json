@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-09-08T18:07:59.021Z",
+  "generatedAt": "2026-09-08T20:08:46.922Z",
   "total": {
     "files": 37,
-    "bytes": 303306,
-    "kilobytes": 296.2,
+    "bytes": 303337,
+    "kilobytes": 296.23,
     "megabytes": 0.29
   },
   "byExtension": [
     {
       "extension": ".js",
       "files": 11,
-      "bytes": 246531,
+      "bytes": 246562,
       "percentage": 81.28
     },
     {
@@ -52,7 +52,7 @@
     {
       "path": "assets/main_entry.js",
       "extension": ".js",
-      "bytes": 44524
+      "bytes": 44555
     },
     {
       "path": "assets/markdowneditor.js",
