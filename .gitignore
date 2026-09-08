@@ -17,3 +17,4 @@ findergen.exe~
 finder-template-generator-ssg/tsconfig.tsbuildinfo
 /.samengine/bin
 /.vs
+/finder-template-generator-ssg/third_party_licenses
