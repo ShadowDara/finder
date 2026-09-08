@@ -1,23 +1,23 @@
 {
-  "generatedAt": "2026-09-08T18:02:31.157Z",
+  "generatedAt": "2026-09-08T18:07:59.021Z",
   "total": {
     "files": 37,
-    "bytes": 303111,
-    "kilobytes": 296.01,
+    "bytes": 303306,
+    "kilobytes": 296.2,
     "megabytes": 0.29
   },
   "byExtension": [
     {
       "extension": ".js",
       "files": 11,
-      "bytes": 246336,
-      "percentage": 81.27
+      "bytes": 246531,
+      "percentage": 81.28
     },
     {
       "extension": ".css",
       "files": 11,
       "bytes": 40121,
-      "percentage": 13.24
+      "percentage": 13.23
     },
     {
       "extension": ".txt",
@@ -35,7 +35,7 @@
       "extension": ".sh",
       "files": 1,
       "bytes": 1744,
-      "percentage": 0.58
+      "percentage": 0.57
     }
   ],
   "files": [
@@ -157,7 +157,7 @@
     {
       "path": "assets/index.js",
       "extension": ".js",
-      "bytes": 704
+      "bytes": 899
     },
     {
       "path": "configeditor/index.html",

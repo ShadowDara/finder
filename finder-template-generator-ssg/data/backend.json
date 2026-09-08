@@ -1,23 +1,23 @@
 {
-  "generatedAt": "2026-09-08T18:02:20.097Z",
+  "generatedAt": "2026-09-08T18:07:47.658Z",
   "total": {
     "files": 37,
-    "bytes": 238176,
-    "kilobytes": 232.59,
+    "bytes": 238371,
+    "kilobytes": 232.78,
     "megabytes": 0.23
   },
   "byExtension": [
     {
       "extension": ".js",
       "files": 11,
-      "bytes": 181544,
-      "percentage": 76.22
+      "bytes": 181739,
+      "percentage": 76.24
     },
     {
       "extension": ".css",
       "files": 11,
       "bytes": 40121,
-      "percentage": 16.85
+      "percentage": 16.83
     },
     {
       "extension": ".txt",
@@ -157,7 +157,7 @@
     {
       "path": "assets/index.js",
       "extension": ".js",
-      "bytes": 846
+      "bytes": 1041
     },
     {
       "path": "tools/minecraft/tellraw/index.html",

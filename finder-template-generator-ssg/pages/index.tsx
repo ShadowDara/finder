@@ -47,6 +47,18 @@ export default function render(el: HTMLDivElement, data: string) {
           A Markdown file to explain your AI how to write templates for finder!
         </p>
         {raw(data)}
+
+        <h2>Tools</h2>
+        <ul>
+          <li>
+            <a href="./tools/markdowneditor">Markdown Editor</a>
+          </li>
+          <li>
+            <a href="./tools/minecraft/tellraw">
+              Minecraft Tellraw Updater to SNBT
+            </a>
+          </li>
+        </ul>
       </article>
     </>
   );
