@@ -22,8 +22,9 @@ die()  { err "$*"; exit 1; }
 # Konfiguration (generiert aus der TS-Config)
 # ============================================================
 APP_NAME='finder'
-APP_VERSION='v0.3.16'
+APP_VERSION='latest'
 APP_HOMEPAGE='https://github.com/shadowdara/finder'
+LATEST_VERSION_URL='https://api.github.com/repos/shadowdara/finder/releases/latest'
 ARCHIVE_URL_TEMPLATE='https://github.com/shadowdara/finder/releases/download/{version}/finder_{version}_{os}_{arch}.tar.gz'
 ARCHIVE_TYPE='tar.gz'
 ANIMATIONS_ENABLED=1
@@ -72,6 +73,34 @@ detect_arch() {
 
 OS="$(detect_os)"
 ARCH="$(detect_arch)"
+
+# ============================================================
+# Version auflösen (optional: "latest" von GitHub holen)
+# ============================================================
+resolve_latest_version() {
+  if [ "$APP_VERSION" != "latest" ]; then
+    return
+  fi
+  if [ -z "$LATEST_VERSION_URL" ]; then
+    die "APP_VERSION='latest' aber keine LATEST_VERSION_URL konfiguriert."
+  fi
+  local api_url="$LATEST_VERSION_URL"
+  local tag=""
+  if command -v curl >/dev/null 2>&1; then
+    tag="$(curl -fsSL "$api_url" 2>/dev/null | grep '"tag_name":' | head -1 | sed -E 's/.*"([^"]+)".*/\1/')"
+  elif command -v wget >/dev/null 2>&1; then
+    tag="$(wget -qO- "$api_url" 2>/dev/null | grep '"tag_name":' | head -1 | sed -E 's/.*"([^"]+)".*/\1/')"
+  else
+    die "APP_VERSION='latest' aber weder curl noch wget gefunden."
+  fi
+  if [ -z "$tag" ]; then
+    die "Konnte neueste Version nicht von $LATEST_VERSION_URL ermitteln."
+  fi
+  APP_VERSION="$tag"
+  ok "Neueste Version erkannt: $APP_VERSION"
+}
+
+resolve_latest_version
 
 # ============================================================
 # Spinner / Ladeanimation
@@ -125,6 +154,7 @@ Verwendung: $0 [optionen]
 Optionen:
   -y, --yes               Nicht-interaktive Installation (Standardtyp)
   -t, --type <id>         Installationstyp wählen (siehe --list)
+      --latest            Neueste Version automatisch von GitHub ermitteln
       --prefix <dir>      Zielverzeichnis (Standard: $INSTALL_PREFIX_DEFAULT)
       --no-animation      Ladeanimationen deaktivieren
       --animation         Ladeanimationen erzwingen
@@ -152,6 +182,7 @@ list_options() {
 while [ $# -gt 0 ]; do
   case "$1" in
     -y|--yes) NONINTERACTIVE=1; shift ;;
+    --latest) APP_VERSION="latest"; shift ;;
     -t|--type) SELECTED_OPTION="${2:-}"; NONINTERACTIVE=1; shift 2 ;;
     --type=*) SELECTED_OPTION="${1#*=}"; NONINTERACTIVE=1; shift ;;
     --prefix) INSTALL_PREFIX="${2:-}"; shift 2 ;;
@@ -416,5 +447,6 @@ if [ -n "$APP_HOMEPAGE" ]; then
 fi
 
 # Base64 of the input values for the generator
-so you dont have to type it all again
-#$$$eyJhcHBOYW1lIjoiZmluZGVyIiwidmVyc2lvbiI6InYwLjMuMTYiLCJob21lcGFnZSI6Imh0dHBzOi8vZ2l0aHViLmNvbS9zaGFkb3dkYXJhL2ZpbmRlciIsImFyY2hpdmUiOnsidXJsIjoiaHR0cHM6Ly9naXRodWIuY29tL3NoYWRvd2RhcmEvZmluZGVyL3JlbGVhc2VzL2Rvd25sb2FkL3t2ZXJzaW9ufS9maW5kZXJfe3ZlcnNpb259X3tvc31fe2FyY2h9LnRhci5neiIsInR5cGUiOiJ0YXIuZ3oifSwiYmluYXJpZXMiOlt7ImFyY2hpdmVQYXRoIjoiZmluZGVyIiwidGFyZ2V0TmFtZSI6ImZpbmRlciJ9LHsiYXJjaGl2ZVBhdGgiOiJmaW5kZXJnZW4iLCJ0YXJnZXROYW1lIjoiZmluZGVyZ2VuIn0seyJhcmNoaXZlUGF0aCI6ImNzZiIsInRhcmdldE5hbWUiOiJjc2YifV0sImFuaW1hdGlvbnMiOnRydWV9
+# so you dont have to type it all again
+#
+#$$$eyJhcHBOYW1lIjoiZmluZGVyIiwidmVyc2lvbiI6ImxhdGVzdCIsImhvbWVwYWdlIjoiaHR0cHM6Ly9naXRodWIuY29tL3NoYWRvd2RhcmEvZmluZGVyIiwibGF0ZXN0VmVyc2lvblVybCI6Imh0dHBzOi8vYXBpLmdpdGh1Yi5jb20vcmVwb3Mvc2hhZG93ZGFyYS9maW5kZXIvcmVsZWFzZXMvbGF0ZXN0IiwiYXJjaGl2ZSI6eyJ1cmwiOiJodHRwczovL2dpdGh1Yi5jb20vc2hhZG93ZGFyYS9maW5kZXIvcmVsZWFzZXMvZG93bmxvYWQve3ZlcnNpb259L2ZpbmRlcl97dmVyc2lvbn1fe29zfV97YXJjaH0udGFyLmd6IiwidHlwZSI6InRhci5neiJ9LCJiaW5hcmllcyI6W3siYXJjaGl2ZVBhdGgiOiJmaW5kZXIiLCJ0YXJnZXROYW1lIjoiZmluZGVyIn0seyJhcmNoaXZlUGF0aCI6ImZpbmRlcmdlbiIsInRhcmdldE5hbWUiOiJmaW5kZXJnZW4ifSx7ImFyY2hpdmVQYXRoIjoiY3NmIiwidGFyZ2V0TmFtZSI6ImNzZiJ9XSwiYW5pbWF0aW9ucyI6dHJ1ZX0=

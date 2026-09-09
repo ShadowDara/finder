@@ -86,6 +86,13 @@ export interface InstallerConfig {
   animations?: boolean;
   /** Optionale Homepage-URL, wird am Ende ausgegeben. */
   homepage?: string;
+  /**
+   * Optional. Wenn gesetzt und version="latest", wird beim Ausführen des
+   * Skripts die neueste Version von dieser URL ermittelt (GitHub API).
+   * Beispiel: "https://api.github.com/repos/shadowdara/finder/releases/latest"
+   * Wird automatisch erkannt wenn homepage ein GitHub-Repo ist.
+   */
+  latestVersionUrl?: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -124,6 +131,7 @@ export function generateInstallerScript(config: InstallerConfig): string {
     defaultInstallDir,
     animations = true,
     homepage,
+    latestVersionUrl,
   } = config;
 
   if (!appName || !version) {
@@ -168,6 +176,7 @@ export function generateInstallerScript(config: InstallerConfig): string {
     `APP_NAME=${bashStringLiteral(appName)}`,
     `APP_VERSION=${bashStringLiteral(version)}`,
     `APP_HOMEPAGE=${bashStringLiteral(homepage || "")}`,
+    `LATEST_VERSION_URL=${bashStringLiteral(latestVersionUrl || "")}`,
     `ARCHIVE_URL_TEMPLATE=${bashStringLiteral(archive.url)}`,
     `ARCHIVE_TYPE=${bashStringLiteral(archive.type)}`,
     `ANIMATIONS_ENABLED=${animations ? 1 : 0}`,
@@ -272,6 +281,34 @@ OS="$(detect_os)"
 ARCH="$(detect_arch)"
 
 # ============================================================
+# Version auflösen (optional: "latest" von GitHub holen)
+# ============================================================
+resolve_latest_version() {
+  if [ "$APP_VERSION" != "latest" ]; then
+    return
+  fi
+  if [ -z "$LATEST_VERSION_URL" ]; then
+    die "APP_VERSION='latest' aber keine LATEST_VERSION_URL konfiguriert."
+  fi
+  local api_url="$LATEST_VERSION_URL"
+  local tag=""
+  if command -v curl >/dev/null 2>&1; then
+    tag="$(curl -fsSL "$api_url" 2>/dev/null | grep '"tag_name":' | head -1 | sed -E 's/.*"([^"]+)".*/\1/')"
+  elif command -v wget >/dev/null 2>&1; then
+    tag="$(wget -qO- "$api_url" 2>/dev/null | grep '"tag_name":' | head -1 | sed -E 's/.*"([^"]+)".*/\1/')"
+  else
+    die "APP_VERSION='latest' aber weder curl noch wget gefunden."
+  fi
+  if [ -z "$tag" ]; then
+    die "Konnte neueste Version nicht von $LATEST_VERSION_URL ermitteln."
+  fi
+  APP_VERSION="$tag"
+  ok "Neueste Version erkannt: $APP_VERSION"
+}
+
+resolve_latest_version
+
+# ============================================================
 # Spinner / Ladeanimation
 # ============================================================
 animations_active() {
@@ -323,6 +360,7 @@ Verwendung: $0 [optionen]
 Optionen:
   -y, --yes               Nicht-interaktive Installation (Standardtyp)
   -t, --type <id>         Installationstyp wählen (siehe --list)
+      --latest            Neueste Version automatisch von GitHub ermitteln
       --prefix <dir>      Zielverzeichnis (Standard: $INSTALL_PREFIX_DEFAULT)
       --no-animation      Ladeanimationen deaktivieren
       --animation         Ladeanimationen erzwingen
@@ -350,6 +388,7 @@ list_options() {
 while [ $# -gt 0 ]; do
   case "$1" in
     -y|--yes) NONINTERACTIVE=1; shift ;;
+    --latest) APP_VERSION="latest"; shift ;;
     -t|--type) SELECTED_OPTION="µ{2:-}"; NONINTERACTIVE=1; shift 2 ;;
     --type=*) SELECTED_OPTION="µ{1#*=}"; NONINTERACTIVE=1; shift ;;
     --prefix) INSTALL_PREFIX="µ{2:-}"; shift 2 ;;

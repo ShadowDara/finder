@@ -373,6 +373,45 @@ footer.note {
   line-height: 1.6;
 }
 
+/* ---------- Verwendung / Tipps ---------- */
+section.card h3 {
+  margin: 1rem 0 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+}
+
+section.card p {
+  margin: 0 0 0.6rem;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+section.card pre {
+  margin: 0 0 0.7rem;
+  padding: 0.6rem 0.8rem;
+  background: var(--term-bg);
+  border-radius: var(--radius);
+  overflow-x: auto;
+}
+
+section.card pre code {
+  color: var(--term-text);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+section.card code {
+  font-family: var(--mono);
+  font-size: 0.82em;
+  border-radius: 2px;
+  padding: 0.05rem 0.3rem;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
 @media (max-width: 560px) {
   body {
     padding: 0;

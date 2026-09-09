@@ -235,6 +235,8 @@ function collectConfig(dom: {
   archiveType: HTMLSelectElement;
   installDir: HTMLInputElement;
   animations: HTMLInputElement;
+  useLatest: HTMLInputElement;
+  latestVersionUrl: HTMLInputElement;
   binariesContainer: HTMLElement;
   envContainer: HTMLElement;
   optionsContainer: HTMLElement;
@@ -245,8 +247,9 @@ function collectConfig(dom: {
       "App-Name fehlt. Ohne Namen kann kein Skript entstehen.",
     );
 
+  const useLatest = dom.useLatest.checked;
   const version = dom.version.value.trim();
-  if (!version)
+  if (!useLatest && !version)
     throw new ValidationError("Version fehlt. Trag z.B. 1.0.0 ein.");
 
   const archiveUrl = dom.archiveUrl.value.trim();
@@ -264,8 +267,9 @@ function collectConfig(dom: {
 
   return {
     appName,
-    version,
+    version: useLatest ? "latest" : version,
     homepage: dom.homepage.value.trim() || undefined,
+    latestVersionUrl: dom.latestVersionUrl.value.trim() || undefined,
     archive: {
       url: archiveUrl,
       type: dom.archiveType.value as "tar.gz" | "zip",
@@ -353,18 +357,28 @@ function applyConfigToForm(
     archiveType: HTMLSelectElement;
     installDir: HTMLInputElement;
     animations: HTMLInputElement;
+    useLatest: HTMLInputElement;
+    latestVersionUrl: HTMLInputElement;
     binariesContainer: HTMLElement;
     envContainer: HTMLElement;
     optionsContainer: HTMLElement;
   },
 ): void {
+  const isLatest = config.version === "latest";
   dom.appName.value = config.appName || "";
-  dom.version.value = config.version || "";
+  dom.version.value = isLatest ? "" : config.version || "";
+  dom.version.disabled = isLatest;
   dom.homepage.value = config.homepage || "";
   dom.archiveUrl.value = config.archive?.url || "";
   dom.archiveType.value = config.archive?.type || "tar.gz";
   dom.installDir.value = config.defaultInstallDir || "";
   dom.animations.checked = config.animations ?? true;
+  dom.useLatest.checked = isLatest;
+  dom.latestVersionUrl.value = config.latestVersionUrl || "";
+  {
+    const sec = dom.latestVersionUrl.closest("section") as HTMLElement | null;
+    if (sec) sec.style.display = isLatest ? "" : "none";
+  }
 
   clearContainer(dom.binariesContainer);
   const binaries = config.binaries || [];
@@ -531,10 +545,34 @@ export default function buildPage(app: HTMLElement): void {
           <input type="checkbox" id="animations" checked /> Ladeanimation im
           Skript
         </label>
+        <label class="checkbox-field">
+          <input type="checkbox" id="useLatest" /> Neueste Version verwenden
+          (latest)
+        </label>
         <button type="button" class="btn-primary" id="generate">
           install.sh generieren
         </button>
       </div>
+
+      <section class="card" id="latestSection" style="display:none;">
+        <h2>Neueste Version</h2>
+        <p class="hint">
+          Wenn aktiviert, wird beim Ausführen des Skripts die neueste Version
+          automatisch von der API ermittelt. Das Skript muss dabei online sein.
+        </p>
+        <div class="field-grid">
+          <label class="field wide">
+            <span>
+              GitHub API URL (optional, wird erkannt wenn Homepage gesetzt)
+            </span>
+            <input
+              type="text"
+              id="latestVersionUrl"
+              placeholder="https://api.github.com/repos/shadowdara/finder/releases/latest"
+            />
+          </label>
+        </div>
+      </section>
 
       <section class="card">
         <h2>Konfiguration speichern / laden</h2>
@@ -595,6 +633,93 @@ export default function buildPage(app: HTMLElement): void {
         </div>
       </div>
 
+      <section class="card">
+        <h2>Verwendung / Tipps</h2>
+        <p class="hint">
+          So führst du das generierte Skript aus und was es dabei tut.
+        </p>
+
+        <h3>Ausführen</h3>
+        <p>
+          Nach dem Generieren kannst du das Skript direkt im Terminal
+          ausführen. Am einfachsten mit:
+        </p>
+        <pre><code>sh install.sh</code></pre>
+        <p>
+          Oder erst ausführbar machen und dann starten (Linux/macOS):
+        </p>
+        <pre><code>chmod +x install.sh
+./install.sh</code></pre>
+        <p>
+          Das Skript lädt das passende Archiv für dein System (Linux/macOS und
+          Architektur) herunter, entpackt es und installiert die Binaries nach{" "}
+          <code>$HOME/.local/&lt;app&gt;/bin</code>. Anschließend trägt es diesen
+          Ordner in den PATH deiner Shell-RC ein (z.B.{" "}
+          <code>~/.bashrc</code> oder <code>~/.zshrc</code>).
+        </p>
+
+        <h3>Nach der Installation</h3>
+        <p>
+          Damit der PATH-Update wirkt, starte eine neue Shell oder lade deine
+          Konfiguration neu:
+        </p>
+        <pre><code>source ~/.bashrc</code></pre>
+        <p>Danach sollte der Befehl direkt verfügbar sein:</p>
+        <pre><code>&lt;app&gt; --help</code></pre>
+
+        <h3>Installationstypen wählen</h3>
+        <p>
+          Wenn du mehrere Installationsoptionen (Install Options) eingetragen
+          hast, fragt das Skript interaktiv nach, welche Variante installiert
+          werden soll. Für eine automatisierte Installation kannst du den Typ
+          direkt angeben:
+        </p>
+        <pre><code>sh install.sh -t minimal</code></pre>
+        <p>Alle verfügbaren Typen anzeigen:</p>
+        <pre><code>sh install.sh --list</code></pre>
+
+        <h3>Neueste Version installieren</h3>
+        <p>
+          Ist "Neueste Version verwenden (latest)" aktiviert, ermittelt das
+          Skript beim Ausführen die aktuellste Version automatisch von der
+          GitHub-API. Alternativ kannst du das auch manuell erzwingen:
+        </p>
+        <pre><code>sh install.sh --latest</code></pre>
+
+        <h3>Zielverzeichnis ändern</h3>
+        <p>Standard ist <code>$HOME/.local/&lt;app&gt;</code>. Mit <code>--prefix</code> kannst du ein anderes Ziel wählen:</p>
+        <pre><code>sh install.sh --prefix /opt/mein-app</code></pre>
+
+        <h3>Ohne Ladeanimation</h3>
+        <p>
+          In Skripten oder CI-Umgebungen (ohne TTY) werden Animationen
+          automatisch deaktiviert. Du kannst sie aber auch explizit abschalten:
+        </p>
+        <pre><code>sh install.sh --no-animation</code></pre>
+
+        <h3>Per curl direkt installieren</h3>
+        <p>
+          Wenn du das Skript irgendwo gehostet hast, kann man es direkt von
+          dort ausführen, ohne es erst herunterzuladen:
+        </p>
+        <pre><code>curl -fsSL https://example.com/install.sh | sh</code></pre>
+        <p>
+          Achtung: Bei dieser Variante läuft das Skript ohne TTY, also
+          automatisch nicht-interaktiv (es wird der erste Installationstyp
+          verwendet).
+        </p>
+
+        <h3>Konfiguration wiederherstellen</h3>
+        <p>
+          Das generierte Skript enthält am Ende einen Kommentar-Block mit der
+          Konfiguration als Base64 (Markierung <code>#$$$</code>). Fügst du
+          diesen Block (oder nur den Base64-String) oben im Feld "Konfiguration
+          speichern / laden" ein und klickst auf "Importieren", werden alle
+          Felder wiederhergestellt – so kannst du das Setup später erneut
+          anpassen oder auf einem anderen Rechner weiterverwenden.
+        </p>
+      </section>
+
       <footer class="note">
         Wird lokal im Browser erzeugt. Keine Daten verlassen diese Seite.
       </footer>
@@ -635,6 +760,29 @@ export default function buildPage(app: HTMLElement): void {
     errorBanner.classList.remove("visible");
   }
 
+  // --- "Neueste Version" Toggle ---
+  const useLatestCheckbox = qs<HTMLInputElement>(app, "#useLatest");
+  const latestSection = qs<HTMLElement>(app, "#latestSection");
+  const latestUrlField = qs<HTMLInputElement>(app, "#latestVersionUrl");
+
+  useLatestCheckbox.addEventListener("change", () => {
+    latestSection.style.display = useLatestCheckbox.checked ? "" : "none";
+    qs<HTMLInputElement>(app, "#version").disabled = useLatestCheckbox.checked;
+  });
+
+  // Auto-Erkennung: Wenn die Homepage ein GitHub-Repo ist, API-URL vorschlagen
+  const homepageField = qs<HTMLInputElement>(app, "#homepage");
+  homepageField.addEventListener("change", () => {
+    if (useLatestCheckbox.checked && !latestUrlField.value.trim()) {
+      const match = homepageField.value
+        .trim()
+        .match(/^https?:\/\/github\.com\/([^/]+)\/([^/]+)\/?$/);
+      if (match) {
+        latestUrlField.value = `https://api.github.com/repos/${match[1]}/${match[2]}/releases/latest`;
+      }
+    }
+  });
+
   // Aktuelle Formularwerte als InstallerConfig sammeln (ohne generieren).
   function currentConfig(): InstallerConfig {
     return collectConfig({
@@ -645,6 +793,8 @@ export default function buildPage(app: HTMLElement): void {
       archiveType: qs<HTMLSelectElement>(app, "#archiveType"),
       installDir: qs<HTMLInputElement>(app, "#installDir"),
       animations: qs<HTMLInputElement>(app, "#animations"),
+      useLatest: qs<HTMLInputElement>(app, "#useLatest"),
+      latestVersionUrl: qs<HTMLInputElement>(app, "#latestVersionUrl"),
       binariesContainer,
       envContainer,
       optionsContainer,
@@ -674,6 +824,8 @@ export default function buildPage(app: HTMLElement): void {
         archiveType: qs<HTMLSelectElement>(app, "#archiveType"),
         installDir: qs<HTMLInputElement>(app, "#installDir"),
         animations: qs<HTMLInputElement>(app, "#animations"),
+        useLatest: qs<HTMLInputElement>(app, "#useLatest"),
+        latestVersionUrl: qs<HTMLInputElement>(app, "#latestVersionUrl"),
         binariesContainer,
         envContainer,
         optionsContainer,
