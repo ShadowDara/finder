@@ -10,9 +10,6 @@ Maybe
 ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr/shadowdara/finder?logo=github)
 [![GitHub top language](https://img.shields.io/github/languages/top/shadowdara/finder?logo=go&label=)](https://github.com/shadowdara/finder/)
 
-docker build -t finderinstall .
-docker run --rm -it finderinstall
-
 -->
 
 # finder

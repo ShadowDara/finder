@@ -91,3 +91,5 @@ if [[ ":$PATH:" != *":$INSTALL_DIR:"* ]]; then
     echo "export PATH=\"\$PATH:$INSTALL_DIR\"" >> "$HOME/.bashrc"
     export PATH="$PATH:$INSTALL_DIR"
 fi
+
+source ~/.bashrc
