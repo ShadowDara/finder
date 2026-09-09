@@ -1,4 +1,4 @@
-import { jsx, raw, Fragment } from "../../src/jsx-runtime";
+import { jsx, Fragment } from "../../src/jsx-runtime";
 import {
   generateInstallerScript,
   type BinarySpec,
@@ -278,6 +278,141 @@ function collectConfig(dom: {
   };
 }
 
+// ---------------------------------------------------------------------------
+// 6b) Base64 JSON Import / Export (UTF-8 safe)
+// ---------------------------------------------------------------------------
+
+function toBase64Utf8(str: string): string {
+  const bytes = new TextEncoder().encode(str);
+  let bin = "";
+  bytes.forEach((b) => (bin += String.fromCharCode(b)));
+  return btoa(bin);
+}
+
+function fromBase64Utf8(b64: string): string {
+  const bin = atob(b64.trim());
+  const bytes = Uint8Array.from(bin, (c) => c.charCodeAt(0));
+  return new TextDecoder().decode(bytes);
+}
+
+function configToBase64(config: InstallerConfig): string {
+  return toBase64Utf8(JSON.stringify(config));
+}
+
+function base64ToConfig(b64: string): InstallerConfig {
+  const text = b64.trim();
+  if (!text) throw new ValidationError("Kein Base64-String eingefügt.");
+
+  // Erlaubt sowohl rohen Base64 als auch den Footer eines generierten
+  // Skripts: alles ab dem Marker "#$$$" (inkl. Marker) wird verwendet.
+  const markerIndex = text.lastIndexOf("#$$$");
+  const encoded =
+    markerIndex !== -1 ? text.slice(markerIndex + 4).trim() : text;
+
+  let json: string;
+  try {
+    json = fromBase64Utf8(encoded);
+  } catch {
+    throw new ValidationError("Ungültiger Base64-String.");
+  }
+
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(json);
+  } catch {
+    throw new ValidationError("Ungültiges JSON im Base64-String.");
+  }
+
+  if (!parsed || typeof parsed !== "object")
+    throw new ValidationError("Ungültiges JSON im Base64-String.");
+  return parsed as InstallerConfig;
+}
+
+// Generiert das fertige Skript inkl. Konfigurations-Footer:
+// die letzte Zeile ist "#$$$<base64>" und reist so im Skript mit.
+function buildInstallScript(config: InstallerConfig): string {
+  return (
+    generateInstallerScript(config) +
+    "\n# Base64 of the input values for the generator\nso you dont have to type it all again\n#$$$" +
+    configToBase64(config) +
+    "\n"
+  );
+}
+
+function clearContainer(container: HTMLElement): void {
+  container.innerHTML = "";
+}
+
+function applyConfigToForm(
+  config: InstallerConfig,
+  dom: {
+    appName: HTMLInputElement;
+    version: HTMLInputElement;
+    homepage: HTMLInputElement;
+    archiveUrl: HTMLInputElement;
+    archiveType: HTMLSelectElement;
+    installDir: HTMLInputElement;
+    animations: HTMLInputElement;
+    binariesContainer: HTMLElement;
+    envContainer: HTMLElement;
+    optionsContainer: HTMLElement;
+  },
+): void {
+  dom.appName.value = config.appName || "";
+  dom.version.value = config.version || "";
+  dom.homepage.value = config.homepage || "";
+  dom.archiveUrl.value = config.archive?.url || "";
+  dom.archiveType.value = config.archive?.type || "tar.gz";
+  dom.installDir.value = config.defaultInstallDir || "";
+  dom.animations.checked = config.animations ?? true;
+
+  clearContainer(dom.binariesContainer);
+  const binaries = config.binaries || [];
+  if (binaries.length === 0) {
+    dom.binariesContainer.appendChild(createBinaryRow("", ""));
+  } else {
+    for (const b of binaries) {
+      const row = createBinaryRow(b.archivePath || "", b.targetName || "");
+      const prefix = row.getAttribute("data-os-prefix") || "";
+      if (b.os && b.os.length === 1) {
+        qs<HTMLInputElement>(row, `[name="${prefix}-linux"]`).checked =
+          b.os[0] === "linux";
+        qs<HTMLInputElement>(row, `[name="${prefix}-darwin"]`).checked =
+          b.os[0] === "darwin";
+      }
+      dom.binariesContainer.appendChild(row);
+    }
+  }
+
+  clearContainer(dom.envContainer);
+  for (const e of config.envVars || []) {
+    const row = createEnvRow();
+    qs<HTMLInputElement>(row, ".env-name").value = e.name || "";
+    qs<HTMLInputElement>(row, ".env-value").value = e.value || "";
+    qs<HTMLInputElement>(row, ".env-append").checked = !!e.append;
+    const prefix = row.getAttribute("data-os-prefix") || "";
+    if (e.os && e.os.length === 1) {
+      qs<HTMLInputElement>(row, `[name="${prefix}-linux"]`).checked =
+        e.os[0] === "linux";
+      qs<HTMLInputElement>(row, `[name="${prefix}-darwin"]`).checked =
+        e.os[0] === "darwin";
+    }
+    dom.envContainer.appendChild(row);
+  }
+
+  clearContainer(dom.optionsContainer);
+  for (const o of config.installOptions || []) {
+    const row = createOptionRow();
+    qs<HTMLInputElement>(row, ".opt-id").value = o.id || "";
+    qs<HTMLInputElement>(row, ".opt-label").value = o.label || "";
+    qs<HTMLInputElement>(row, ".opt-desc").value = o.description || "";
+    qs<HTMLInputElement>(row, ".opt-binaries").value = (o.binaries || []).join(
+      ", ",
+    );
+    dom.optionsContainer.appendChild(row);
+  }
+}
+
 export default function buildPage(app: HTMLElement): void {
   app.innerHTML = (
     <>
@@ -398,6 +533,34 @@ export default function buildPage(app: HTMLElement): void {
         </button>
       </div>
 
+      <section class="card">
+        <h2>Konfiguration speichern / laden</h2>
+        <p class="hint">
+          Exportiert alle Felder als Base64-kodierten JSON-String (UTF-8 sicher)
+          oder lädt sie daraus wieder zurück.
+        </p>
+        <label class="field wide">
+          <span>Base64 (Import / Export)</span>
+          <textarea
+            id="b64Field"
+            rows="3"
+            spellcheck="false"
+            placeholder="Paste einen Base64-String hier ein und klicke auf Import"
+          ></textarea>
+        </label>
+        <div class="actions">
+          <button type="button" class="btn-term" id="importB64">
+            Importieren
+          </button>
+          <button type="button" class="btn-term" id="exportB64">
+            Exportieren
+          </button>
+          <button type="button" class="btn-term" id="clearB64">
+            Feld leeren
+          </button>
+        </div>
+      </section>
+
       <div class="error-banner" id="errorBanner"></div>
 
       <div class="output">
@@ -469,10 +632,38 @@ export default function buildPage(app: HTMLElement): void {
     errorBanner.classList.remove("visible");
   }
 
-  qs<HTMLButtonElement>(app, "#generate").addEventListener("click", () => {
+  // Aktuelle Formularwerte als InstallerConfig sammeln (ohne generieren).
+  function currentConfig(): InstallerConfig {
+    return collectConfig({
+      appName: qs<HTMLInputElement>(app, "#appName"),
+      version: qs<HTMLInputElement>(app, "#version"),
+      homepage: qs<HTMLInputElement>(app, "#homepage"),
+      archiveUrl: qs<HTMLInputElement>(app, "#archiveUrl"),
+      archiveType: qs<HTMLSelectElement>(app, "#archiveType"),
+      installDir: qs<HTMLInputElement>(app, "#installDir"),
+      animations: qs<HTMLInputElement>(app, "#animations"),
+      binariesContainer,
+      envContainer,
+      optionsContainer,
+    });
+  }
+
+  const b64Field = qs<HTMLTextAreaElement>(app, "#b64Field");
+
+  qs<HTMLButtonElement>(app, "#exportB64").addEventListener("click", () => {
     clearError();
     try {
-      const config = collectConfig({
+      b64Field.value = configToBase64(currentConfig());
+    } catch (e) {
+      showError(e instanceof Error ? e.message : String(e));
+    }
+  });
+
+  qs<HTMLButtonElement>(app, "#importB64").addEventListener("click", () => {
+    clearError();
+    try {
+      const config = base64ToConfig(b64Field.value);
+      applyConfigToForm(config, {
         appName: qs<HTMLInputElement>(app, "#appName"),
         version: qs<HTMLInputElement>(app, "#version"),
         homepage: qs<HTMLInputElement>(app, "#homepage"),
@@ -484,8 +675,21 @@ export default function buildPage(app: HTMLElement): void {
         envContainer,
         optionsContainer,
       });
+    } catch (e) {
+      showError(e instanceof Error ? e.message : String(e));
+    }
+  });
 
-      currentScript = generateInstallerScript(config);
+  qs<HTMLButtonElement>(app, "#clearB64").addEventListener("click", () => {
+    b64Field.value = "";
+  });
+
+  qs<HTMLButtonElement>(app, "#generate").addEventListener("click", () => {
+    clearError();
+    try {
+      const config = currentConfig();
+
+      currentScript = buildInstallScript(config);
       currentAppName = config.appName;
 
       outputBody.innerHTML = <pre></pre>;
