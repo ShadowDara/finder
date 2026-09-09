@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-09-09T13:32:40.010Z",
+  "generatedAt": "2026-09-09T14:03:43.833Z",
   "total": {
     "files": 50,
-    "bytes": 253189,
-    "kilobytes": 247.25,
+    "bytes": 253226,
+    "kilobytes": 247.29,
     "megabytes": 0.24
   },
   "byExtension": [
     {
       "extension": ".js",
       "files": 17,
-      "bytes": 189534,
+      "bytes": 189571,
       "percentage": 74.86
     },
     {
@@ -29,7 +29,7 @@
       "extension": ".html",
       "files": 18,
       "bytes": 6824,
-      "percentage": 2.7
+      "percentage": 2.69
     },
     {
       "extension": ".sh",
@@ -172,7 +172,7 @@
     {
       "path": "assets/worlds.js",
       "extension": ".js",
-      "bytes": 1141
+      "bytes": 1139
     },
     {
       "path": "assets/index.js",
@@ -282,7 +282,7 @@
     {
       "path": "assets/mcappheader.js",
       "extension": ".js",
-      "bytes": 264
+      "bytes": 303
     },
     {
       "path": "assets/about.js",

@@ -16,6 +16,9 @@ export default function render() {
             <li>
               <a href="./about">About</a>
             </li>
+            <li>
+              <a href="../">|-|</a>
+            </li>
           </ul>
         </nav>
       </header>
