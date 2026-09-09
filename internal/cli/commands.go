@@ -32,7 +32,7 @@ func HandleCommand(args []string) {
 
 	// NEW
 	root := argparser.NewCommand("finder",
-		"a simple go program to find your files via file structures", false)
+		"a simple go program to find your files via file structures", "Check out github for more infos or the finder website:\nhttps://github.com/shadowdara/finder\nhttps://shadowdara.github.io/finder", false)
 
 	// Add option for JSON Output
 	root.GlobalBool("json", false, "Enable JSON Output", "j")
@@ -51,12 +51,12 @@ func HandleCommand(args []string) {
 
 	// Add Version Command
 	versionCmd := argparser.NewCommand(
-		"--version", "to get the Version of the Program", false, "-v", "v", "version")
+		"--version", "to get the Version of the Program", "", false, "-v", "v", "version")
 
 	// Temaplte Command
 	templateCmd := argparser.NewCommand("template",
 		"to search for a template - for the case that the name for a template is overwritten by another argument name",
-		false, "tpl")
+		"", false, "tpl")
 
 	// Create Cache
 	templateCmd.Bool("create-cache", false, "Create the Cache", false, "cc")
@@ -69,26 +69,26 @@ func HandleCommand(args []string) {
 
 	// Check Command
 	checkCmd := argparser.NewCommand("check",
-		"to check all available Templates if their syntax is correct", false)
+		"to check all available Templates if their syntax is correct", "", false)
 
 	// list, ls Command
 	listCmd := argparser.NewCommand("list",
-		"list all available templates", false, "ls")
+		"list all available templates", "", false, "ls")
 
 	// tags, tag Command
 	tagsCmd := argparser.NewCommand("tags",
-		"show all tags in the console", false, "tag")
+		"show all tags in the console", "", false, "tag")
 
 	// Tag Search
 	tagSearchCmd := argparser.NewCommand("-t",
-		"search for tags with the next argument", false)
+		"search for tags with the next argument", "", false)
 
 	// BinarySearch
 	binarySearchCmd := argparser.NewCommand(
-		"-b", "search for executables in path", false)
+		"-b", "search for executables in path", "", false)
 
 	// Config Path
-	configpathCmd := argparser.NewCommand("cp", "Get the path to the global config", false)
+	configpathCmd := argparser.NewCommand("cp", "Get the path to the global config", "", false)
 
 	root.AddSubcommand(versionCmd)
 	root.AddSubcommand(templateCmd)

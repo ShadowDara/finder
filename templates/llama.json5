@@ -1,4 +1,3 @@
-// Llama 2 or Llama model project
 {
     "description": "Meta Llama 2 or Llama language model project",
     "name": "*",
@@ -6,17 +5,23 @@
         {
             "name": "checkpoints",
             "folders": [],
-            "files": ["*.pt", "*.pth"]
+            "files": [
+                "*.pt",
+                "*.pth"
+            ]
         },
         {
             "name": "scripts",
             "folders": [],
-            "files": ["*.py"]
+            "files": [
+                "*.py"
+            ]
         }
     ],
     "files": [
         "llama.config.json",
         "requirements.txt",
         "params.json"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

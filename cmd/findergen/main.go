@@ -11,6 +11,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"strconv"
 	"strings"
 	"sync"
@@ -19,7 +20,9 @@ import (
 	"github.com/shadowdara/finder/internal/cache"
 	"github.com/shadowdara/finder/internal/config"
 	"github.com/shadowdara/finder/internal/finderversion"
+	"github.com/shadowdara/finder/internal/mcapp"
 	"github.com/shadowdara/finder/internal/templates"
+	"github.com/shadowdara/finder/pub/fsd"
 	"github.com/shadowdara/finder/pub/json5"
 )
 
@@ -128,6 +131,23 @@ func main() {
 		})
 	})
 
+	// System Info
+	mux.HandleFunc("/api/system", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+
+		json.NewEncoder(w).Encode(map[string]any{
+			"go_version": runtime.Version(),
+			"os":         runtime.GOOS,
+			"arch":       runtime.GOARCH,
+			"cpus":       runtime.NumCPU(),
+		})
+	})
+
 	// Stop Server
 	mux.HandleFunc("/api/stop", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet {
@@ -177,6 +197,40 @@ func main() {
 		json.NewEncoder(w).Encode(map[string]string{
 			"status": "ok",
 		})
+	})
+
+	// Open a folder in the system's file explorer
+	mux.HandleFunc("/api/openfolder", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+			return
+		}
+
+		path := r.URL.Query().Get("path")
+
+		if path == "" {
+			http.Error(w, "Missing path", http.StatusBadRequest)
+			return
+		}
+
+		if err := fsd.OpenFolder(path); err != nil {
+			log.Printf("openfolder: %v", err)
+			http.Error(w, "Failed to open folder", http.StatusInternalServerError)
+			return
+		}
+
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		w.WriteHeader(http.StatusOK)
+
+		fmt.Fprint(w, `
+        <html>
+        <head><title>Folder Opened</title></head>
+        <body>
+            <script>window.close();</script>
+            <p>Folder opened - Tab is closing or close it manually if this didn't work!</p>
+        </body>
+        </html>
+    `)
 	})
 
 	// Create a Template
@@ -479,6 +533,33 @@ func main() {
 			"status": "ok",
 		})
 	})
+
+	// mcapp handler
+
+	// worlds handler
+	mux.HandleFunc("/api/mcapp/worlds", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+			return
+		}
+
+		worlds := mcapp.LoadWorlds()
+
+		w.Header().Set("Content-Type", "application/json")
+
+		json.NewEncoder(w).Encode(worlds)
+	})
+
+	webcachePath := filepath.Join(path, "webcache")
+
+	// Static files from the webcache
+	mux.Handle(
+		"/___static___/webcache/",
+		http.StripPrefix(
+			"/___static___/webcache/",
+			http.FileServer(http.Dir(webcachePath)),
+		),
+	)
 
 	// Embedded frontend
 	staticFS, err := fs.Sub(frontend, "frontend")

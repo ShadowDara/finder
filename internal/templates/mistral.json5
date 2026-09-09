@@ -1,1 +1,1 @@
-{"description":"Mistral AI language model API","files":["mistral.config.yaml","requirements.txt",".env.mistral"],"folders":[{"files":["*.py","*.ts"],"folders":[],"name":"src"}],"name":"*"}
+{"description":"Mistral AI language model API","files":["mistral.config.yaml","requirements.txt",".env.mistral"],"folders":[{"files":["*.py","*.ts"],"folders":[],"name":"src"}],"min_version":"0.3.16","name":"*"}

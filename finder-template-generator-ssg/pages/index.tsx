@@ -17,6 +17,9 @@ export default function render(el: HTMLDivElement, data: string) {
           <li>
             <a href="./configeditor">Config Editor</a>
           </li>
+          <li>
+            <a href="./regexcreator">Regex Creator</a>
+          </li>
           {/* {import.meta.env.MODE == "backend" && (
             <li>
               <a href="./cacheviewer">Cache Viewer</a>

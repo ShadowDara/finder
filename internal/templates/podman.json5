@@ -1,1 +1,1 @@
-{"description":"Podman container management","files":["Containerfile","podman-compose.yml"],"folders":[],"name":"*"}
+{"description":"Podman container management","files":["Containerfile","podman-compose.yml"],"folders":[],"min_version":"0.3.16","name":"*"}

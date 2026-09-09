@@ -3016,6 +3016,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "llama.json5": {
@@ -3042,6 +3043,7 @@ export default {
         "name": "scripts"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "llvm.json5": {
@@ -3068,6 +3070,7 @@ export default {
         "name": "tools"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "loom.json5": {
@@ -3082,6 +3085,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "lua.json5": {
@@ -3096,6 +3100,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "makecode.json5": {
@@ -3104,6 +3109,7 @@ export default {
       "*.json"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "mapbox.json5": {
@@ -3119,6 +3125,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "markdown-docs.json5": {
@@ -3134,6 +3141,7 @@ export default {
         "name": "content"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "marko.json5": {
@@ -3149,6 +3157,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "matlab.json5": {
@@ -3158,6 +3167,7 @@ export default {
       "*.mlx"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "mcdatapack.json5": {
@@ -3212,6 +3222,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "metabase.json5": {
@@ -3220,6 +3231,7 @@ export default {
       "docker-compose.yml"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "microservices.json5": {
@@ -3243,6 +3255,7 @@ export default {
       "level.dat"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "mistral.json5": {
@@ -3262,6 +3275,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "mlflow.json5": {
@@ -3288,6 +3302,7 @@ export default {
         "name": "experiments"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "mocha.json5": {
@@ -3303,6 +3318,7 @@ export default {
         "name": "test"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "modal.json5": {
@@ -3321,6 +3337,7 @@ export default {
         "name": "functions"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "mongodb.json5": {
@@ -3335,6 +3352,7 @@ export default {
         "name": "schemas"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "monogame.json5": {
@@ -3349,7 +3367,12 @@ export default {
         "name": "Content"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "game-engine",
+      "C#"
+    ]
   },
   "monorepo.json5": {
     "description": "Monorepo project (multiple packages)",
@@ -3364,6 +3387,7 @@ export default {
         "name": "packages"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "motioncanvas.json5": {
@@ -3379,6 +3403,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "move.json5": {
@@ -3396,6 +3421,7 @@ export default {
         "name": "sources"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "mysql.json5": {
@@ -3411,6 +3437,7 @@ export default {
         "name": "migrations"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*",
     "tags": [
       "sql"
@@ -3538,6 +3565,7 @@ export default {
         "name": "contracts"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "nim.json5": {
@@ -3566,12 +3594,18 @@ export default {
     "name": "*"
   },
   "npm.json5": {
+    "description": "NPM package template",
     "files": [
       "package.json"
     ],
     "folders": [],
     "min_version": "0.3.16",
-    "name": "*"
+    "name": "*",
+    "tags": [
+      "npm",
+      "node",
+      "package"
+    ]
   },
   "nuxt.json5": {
     "description": "Nuxt.js Vue.js full-stack framework",
@@ -3764,6 +3798,7 @@ export default {
       "otel-collector-config.yml"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "pagerduty.json5": {
@@ -3772,6 +3807,7 @@ export default {
       "pagerduty.yml"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "panda3d.json5": {
@@ -3786,7 +3822,12 @@ export default {
         "name": "models"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "game-engine",
+      "python"
+    ]
   },
   "pandas.json5": {
     "description": "Pandas data analysis library",
@@ -3795,6 +3836,7 @@ export default {
       "*.py"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "panel.json5": {
@@ -3813,6 +3855,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "parcel.json5": {
@@ -3828,6 +3871,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "payload.json5": {
@@ -3843,6 +3887,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "perl.json5": {
@@ -3858,6 +3903,7 @@ export default {
         "name": "lib"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "perplexity.json5": {
@@ -3875,6 +3921,7 @@ export default {
         "name": "queries"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "perseus.json5": {
@@ -3987,6 +4034,7 @@ export default {
         "name": "tests"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "pnpm-workspace.json5": {
@@ -4002,6 +4050,7 @@ export default {
         "name": "packages"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "pocketbase.json5": {
@@ -4016,6 +4065,7 @@ export default {
         "name": "pb_migrations"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "podman.json5": {
@@ -4025,6 +4075,7 @@ export default {
       "podman-compose.yml"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "poetry.json5": {
@@ -4034,6 +4085,7 @@ export default {
       "poetry.lock"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "polars.json5": {
@@ -4061,6 +4113,7 @@ export default {
       "docker-compose.yml"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "postgrest.json5": {
@@ -4069,6 +4122,7 @@ export default {
       "postgrest.conf"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "prefect.json5": {
@@ -4087,6 +4141,7 @@ export default {
         "name": "flows"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "presto.json5": {

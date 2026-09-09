@@ -1,1 +1,1 @@
-{"description":"MySQL database project","files":["docker-compose.yml","*.sql"],"folders":[{"files":[],"folders":[],"name":"migrations"}],"name":"*","tags":["sql"]}
+{"description":"MySQL database project","files":["docker-compose.yml","*.sql"],"folders":[{"files":[],"folders":[],"name":"migrations"}],"min_version":"0.3.16","name":"*","tags":["sql"]}

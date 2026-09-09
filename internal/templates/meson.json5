@@ -1,1 +1,1 @@
-{"description":"Meson build system project","files":["meson.build"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}
+{"description":"Meson build system project","files":["meson.build"],"folders":[{"files":[],"folders":[],"name":"src"}],"min_version":"0.3.16","name":"*"}

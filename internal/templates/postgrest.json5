@@ -1,1 +1,1 @@
-{"description":"PostgREST automatic API","files":["postgrest.conf"],"folders":[],"name":"*"}
+{"description":"PostgREST automatic API","files":["postgrest.conf"],"folders":[],"min_version":"0.3.16","name":"*"}

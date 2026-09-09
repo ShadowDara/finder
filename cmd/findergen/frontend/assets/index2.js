@@ -1,0 +1,1 @@
+import{j as l,F as e}from"./main_entry.js";import{r as n}from"./mcappheader.js";function o(r){r.innerHTML=l(e,null,l(n,null),l("main",null,l("h1",null,"MC APP"),l("p",null,"This is the Homepage of the Server"),l("h3",null,"Features"),l("ul",null,l("li",null,l("a",{href:"./info"},"Info")),l("li",null,l("a",{href:"./worlds"},"World Searcher")))))}export{o as default};

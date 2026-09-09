@@ -1,9 +1,9 @@
-// Struct for a MakeCode Project
 {
     "description": "Microsoft MakeCode block programming",
     "name": "*",
     "folders": [],
     "files": [
         "*.json"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

@@ -1,4 +1,3 @@
-// Struct for NFT Collection Project
 {
     "description": "NFT smart contract collection",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "*.sol",
         "hardhat.config.js"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

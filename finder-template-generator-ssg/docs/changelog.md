@@ -2,7 +2,11 @@
 
 _The whole finder CHANGELOG_
 
-## Newest Version : prob 0.3.16
+## Newest prob 0.3.17
+
+- added regex support
+
+## 0.3.16 - 08.09.2026
 
 - added cache creation
 - added config editor

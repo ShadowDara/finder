@@ -53,28 +53,31 @@ type Command struct {
 	Hidden      bool     // If true, command is hidden from help output
 	Aliases     []string // Alternative names (e.g. "rm" for "remove")
 	Description string   // Description shown in help output
+	Descend     string   // Additional lines displayed at the end of help output
 
 	Flags       map[string]*Flag    // Registered flags
 	Subcommands map[string]*Command // Registered subcommands
 	Parent      *Command            // Parent command (used to build full path)
 	Args        []string            // Positional arguments
-	PassThrough bool                 // If true, preserve all parsed arguments unchanged
+	PassThrough bool                // If true, preserve all parsed arguments unchanged
 }
 
 // NewCommand creates a new Command.
 //
 // Parameters:
 //
-//	name     → command name
-//	desc     → description for help output
-//	hidden   → whether the command should be hidden
-//	aliases  → optional aliases
-func NewCommand(name, desc string, hidden bool, aliases ...string) *Command {
+//		name     → command name
+//		desc     → description for help output
+//	 	descend  → lines which are displayed at the end of the help output
+//		hidden   → whether the command should be hidden
+//		aliases  → optional aliases
+func NewCommand(name, desc string, descend string, hidden bool, aliases ...string) *Command {
 	cmd := &Command{
 		Name:        name,
 		Hidden:      hidden,
 		Aliases:     aliases,
 		Description: desc,
+		Descend:     descend,
 		Flags:       make(map[string]*Flag),
 		Subcommands: make(map[string]*Command),
 	}
@@ -504,6 +507,8 @@ func (c *Command) PrintHelp() {
 
 		fmt.Fprintln(w)
 	}
+
+	fmt.Println(c.Descend)
 
 	w.Flush()
 }

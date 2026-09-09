@@ -1,4 +1,3 @@
-// Struct for a Panda3D Project
 {
     "description": "Panda3D game engine",
     "name": "*",
@@ -11,5 +10,10 @@
     ],
     "files": [
         "main.py"
-    ]
+    ],
+    "tags": [
+        "game-engine",
+        "python"
+    ],
+    "min_version": "0.3.16"
 }

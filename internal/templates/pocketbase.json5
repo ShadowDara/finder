@@ -1,1 +1,1 @@
-{"description":"Pocketbase backend as a service","files":["pb_schema.json"],"folders":[{"files":[],"folders":[],"name":"pb_migrations"}],"name":"*"}
+{"description":"Pocketbase backend as a service","files":["pb_schema.json"],"folders":[{"files":[],"folders":[],"name":"pb_migrations"}],"min_version":"0.3.16","name":"*"}

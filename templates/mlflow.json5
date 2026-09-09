@@ -1,4 +1,3 @@
-// MLflow machine learning lifecycle
 {
     "description": "MLflow open-source machine learning lifecycle platform",
     "name": "*",
@@ -6,17 +5,23 @@
         {
             "name": "models",
             "folders": [],
-            "files": ["*.pkl", "*.pt"]
+            "files": [
+                "*.pkl",
+                "*.pt"
+            ]
         },
         {
             "name": "experiments",
             "folders": [],
-            "files": ["*.json"]
+            "files": [
+                "*.json"
+            ]
         }
     ],
     "files": [
         "mlflow.yaml",
         "requirements.txt",
         ".mlflow"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

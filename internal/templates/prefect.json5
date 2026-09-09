@@ -1,1 +1,1 @@
-{"description":"Prefect modern data workflow automation","files":["prefect.yaml","requirements.txt",".prefect"],"folders":[{"files":["*.py"],"folders":[],"name":"flows"}],"name":"*"}
+{"description":"Prefect modern data workflow automation","files":["prefect.yaml","requirements.txt",".prefect"],"folders":[{"files":["*.py"],"folders":[],"name":"flows"}],"min_version":"0.3.16","name":"*"}

@@ -1,4 +1,3 @@
-// Struct for a Meson Build Project
 {
     "description": "Meson build system project",
     "name": "*",
@@ -11,5 +10,6 @@
     ],
     "files": [
         "meson.build"
-    ]
+    ],
+    "min_version": "0.3.16"
 }
