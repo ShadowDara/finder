@@ -59,9 +59,6 @@ func makeWorld(dir string) World {
 	fileName := fmt.Sprintf("%s_%s.png", safeBase, hashPart)
 	iconTarget := filepath.Join(iconsDir, fileName)
 
-	fmt.Println(icon)
-	fmt.Println(iconTarget)
-
 	// Icon kopieren, wenn es existiert
 	if _, err := os.Stat(icon); err != nil {
 		fmt.Printf("Icon nicht gefunden: %s (%v)\n", icon, err)

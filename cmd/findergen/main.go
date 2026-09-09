@@ -213,8 +213,6 @@ func main() {
 			return
 		}
 
-		log.Printf("openfolder path = %q", path)
-
 		if err := fsd.OpenFolder(path); err != nil {
 			log.Printf("openfolder: %v", err)
 			http.Error(w, "Failed to open folder", http.StatusInternalServerError)
