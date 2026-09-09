@@ -206,39 +206,33 @@ func main() {
 			return
 		}
 
-		var payload struct {
-			Path string `json:"path"`
-		}
+		path := r.URL.Query().Get("path")
 
-		if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
-			log.Printf("openfolder: invalid JSON: %v", err)
-			http.Error(w, "Invalid JSON", http.StatusBadRequest)
+		if path == "" {
+			http.Error(w, "Missing path", http.StatusBadRequest)
 			return
 		}
 
-		err := fsd.OpenFolder(payload.Path)
+		log.Printf("openfolder path = %q", path)
 
-		if err != nil {
+		if err := fsd.OpenFolder(path); err != nil {
+			log.Printf("openfolder: %v", err)
 			http.Error(w, "Failed to open folder", http.StatusInternalServerError)
 			return
-		} else {
-			// HTML mit Auto-Close zurückgeben
-			w.Header().Set("Content-Type", "text/html")
-			w.WriteHeader(http.StatusOK)
-			fmt.Fprintf(w, `
+		}
+
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		w.WriteHeader(http.StatusOK)
+
+		fmt.Fprint(w, `
         <html>
-			<head>
-				<title>Folder Opened</title>
-			</head>
-            <body>
-                <script>
-                    window.close();
-                </script>
-                <p>Folder opened - Tab is closing or close it manually if this didnt work!</p>
-            </body>
+        <head><title>Folder Opened</title></head>
+        <body>
+            <script>window.close();</script>
+            <p>Folder opened - Tab is closing or close it manually if this didn't work!</p>
+        </body>
         </html>
     `)
-		}
 	})
 
 	// Create a Template

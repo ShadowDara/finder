@@ -80,7 +80,7 @@ export default function render(el) {
           <>
             <td>
               <img
-                src={`/___static___/webcache/icons/${iconPath}`}
+                src={serveraddress + `/___static___/webcache/${iconPath}`}
                 width="32"
               />
             </td>
@@ -88,7 +88,10 @@ export default function render(el) {
             <td>{world.last_modified}</td>
             <td>{size}</td>
             <td>
-              <a target="_blanc" href={`/api/openfolder?path=${webpath}`}>
+              <a
+                target="_blanc"
+                href={serveraddress + `/api/openfolder?path=${webpath}`}
+              >
                 {path}
               </a>
             </td>

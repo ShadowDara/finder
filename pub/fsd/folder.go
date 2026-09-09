@@ -10,23 +10,20 @@ import (
 )
 
 func OpenFolder(path string) error {
-	var cmd *exec.Cmd
-
 	switch runtime.GOOS {
 	case "windows":
-		// Explorer öffnen
-		cmd = exec.Command("explorer", path)
+		cmd := exec.Command("cmd", "/c", "start", "", path)
+		return cmd.Start()
+
 	case "darwin":
-		// macOS Finder öffnen
-		cmd = exec.Command("open", path)
+		return exec.Command("open", path).Start()
+
 	case "linux":
-		// Linux: Standard-Dateimanager
-		cmd = exec.Command("xdg-open", path)
+		return exec.Command("xdg-open", path).Start()
+
 	default:
 		return fmt.Errorf("OS %s wird nicht unterstützt", runtime.GOOS)
 	}
-
-	return cmd.Start()
 }
 
 func OpenBrowser(url string) {
