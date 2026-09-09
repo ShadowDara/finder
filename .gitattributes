@@ -9,18 +9,22 @@
 # mark samfile as shell
 samfile linguist-language=Shell
 
-go.work linguist-language=Shell
-go.mod linguist-language=Shell
+go.work linguist-language=go
+go.mod linguist-language=go
 
 # HTML DIR
 /cmd/findergen/frontend/** linguist-vendored
 
-/finder-template-generator-ssg/size-plugin.ts linguist-vendored
+/finder-template-generator-ssg/md-linter-plugin.ts linguist-vendored
+/finder-template-generator-ssg/vite-pluginbuild-stats.ts linguist-vendored
 /finder-template-generator-ssg/pages-ssg-plugin.ts linguist-vendored
+
+/finder-template-generator-ssg/src/pages.d.ts linguist-vendored
 /finder-template-generator-ssg/src/jsx-runtime.ts linguist-vendored
 /finder-template-generator-ssg/src/jsx.d.ts linguist-vendored
 
 /finder-template-generator-ssg/src/templates.js linguist-vendored
-/finder-template-generator-ssg/public/install.sh
+
+/finder-template-generator-ssg/public/install.sh linguist-vendored
 
 /.obsidian/** linguist-vendored
