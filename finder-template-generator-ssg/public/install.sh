@@ -86,3 +86,8 @@ echo
 echo "Finder installed successfully!"
 echo
 echo "  $INSTALL_DIR/finder"
+
+if [[ ":$PATH:" != *":$INSTALL_DIR:"* ]]; then
+    echo "export PATH=\"\$PATH:$INSTALL_DIR\"" >> "$HOME/.bashrc"
+    export PATH="$PATH:$INSTALL_DIR"
+fi

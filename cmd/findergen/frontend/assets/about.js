@@ -1,0 +1,1 @@
+import{j as n,F as l}from"./main_entry.js";import{r as o}from"./mcappheader.js";function m(r){r.innerHTML=n(l,null,n(o,null),n("main",null,n("h1",null,"About"),n("p",null,"Some Infos about the Programm")))}export{m as default};

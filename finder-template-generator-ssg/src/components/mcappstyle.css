@@ -1,0 +1,163 @@
+/* Sans-Serif */
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  /* modern, sehr clean */
+  font-family: "Roboto", sans-serif;
+  /* Standard in Android */
+  font-family: "Open Sans", sans-serif;
+  /* neutral, gut lesbar */
+  font-family: "Lato", sans-serif;
+  /* elegant, weich */
+  font-family: "Poppins", sans-serif;
+  /* rund, modern */
+}
+
+/* --- Header Styles --- */
+header {
+  background-color: #2c3e50;
+  /* dunkles Blau/Grau */
+  color: white;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+header nav ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  /* Abstand zwischen den Links */
+  margin: 0;
+  padding: 0;
+}
+
+header nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+
+header nav ul li a:hover {
+  color: #1abc9c;
+  /* Highlight-Farbe beim Hover */
+}
+
+/* --- Main Content Styles --- */
+main {
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+  background-color: #ecf0f1;
+  min-height: 100vh;
+}
+
+/* --- Table Styles --- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+
+table thead {
+  background-color: #616161;
+  color: white;
+}
+
+table th,
+table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #bdc3c7;
+}
+
+table th {
+  font-weight: bold;
+}
+
+table tbody tr:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+/* Optional: Alternate row colors */
+table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+table tbody tr:nth-child(even):hover {
+  background-color: #f9f9f9;
+}
+
+a {
+  color: #007e0d;
+}
+
+a:hover {
+  color: #0059c0;
+}
+
+/* Darkmode */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #121212;
+    color: #e0e0e0;
+  }
+
+  header {
+    background: #1f1f1f;
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+  }
+
+  main {
+    background: #000000;
+  }
+
+  table {
+    background: #1e1e1e;
+    border-color: #333;
+  }
+
+  table thead {
+    background-color: #303030;
+    color: white;
+  }
+
+  table th,
+  table td {
+    border-bottom: 1px solid #0f0f0f;
+  }
+
+  table tbody tr:hover {
+    background-color: #3e3e3e;
+    cursor: pointer;
+  }
+
+  /* Optional: Alternate row colors */
+  table tbody tr:nth-child(even) {
+    background-color: #000000;
+  }
+
+  table tbody tr:nth-child(even):hover {
+    background-color: #3e3e3e;
+  }
+
+  a {
+    color: rgb(17, 255, 41);
+  }
+
+  a:hover {
+  }
+}
