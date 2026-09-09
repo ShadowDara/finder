@@ -36,11 +36,30 @@ body {
   box-shadow: 6px 6px 0 rgba(38, 37, 31, 0.08);
 }
 
-h1 {
-  margin: 0;
+.tool-header {
   padding: 1.5rem 1.25rem 0.5rem;
+}
+
+.tool-header h1 {
+  margin: 0.25rem 0 0;
   font-size: 1.35rem;
   font-weight: 700;
+}
+
+.tool-eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.tool-eyebrow a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.tool-eyebrow a:hover {
+  color: var(--accent);
 }
 
 .tool-grid {

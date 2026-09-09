@@ -1,41 +1,41 @@
 {
-  "generatedAt": "2026-09-09T14:56:27.325Z",
+  "generatedAt": "2026-09-09T21:48:12.643Z",
   "total": {
-    "files": 50,
-    "bytes": 253488,
-    "kilobytes": 247.55,
-    "megabytes": 0.24
+    "files": 56,
+    "bytes": 289231,
+    "kilobytes": 282.45,
+    "megabytes": 0.28
   },
   "byExtension": [
     {
       "extension": ".js",
-      "files": 17,
-      "bytes": 189778,
-      "percentage": 74.87
+      "files": 19,
+      "bytes": 217762,
+      "percentage": 75.29
     },
     {
       "extension": ".css",
-      "files": 13,
-      "bytes": 45130,
-      "percentage": 17.8
+      "files": 15,
+      "bytes": 52046,
+      "percentage": 17.99
     },
     {
       "extension": ".txt",
       "files": 1,
       "bytes": 9765,
-      "percentage": 3.85
+      "percentage": 3.38
     },
     {
       "extension": ".html",
-      "files": 18,
-      "bytes": 6824,
-      "percentage": 2.69
+      "files": 20,
+      "bytes": 7647,
+      "percentage": 2.64
     },
     {
       "extension": ".sh",
       "files": 1,
-      "bytes": 1991,
-      "percentage": 0.79
+      "bytes": 2011,
+      "percentage": 0.7
     }
   ],
   "files": [
@@ -47,7 +47,12 @@
     {
       "path": "assets/main_entry.js",
       "extension": ".js",
-      "bytes": 45931
+      "bytes": 46323
+    },
+    {
+      "path": "assets/installscript.js",
+      "extension": ".js",
+      "bytes": 26361
     },
     {
       "path": "assets/creator.js",
@@ -67,7 +72,7 @@
     {
       "path": "assets/configeditor.js",
       "extension": ".js",
-      "bytes": 8958
+      "bytes": 9039
     },
     {
       "path": "assets/viewer.css",
@@ -80,6 +85,11 @@
       "bytes": 7464
     },
     {
+      "path": "assets/installscript.css",
+      "extension": ".css",
+      "bytes": 5155
+    },
+    {
       "path": "assets/creator.css",
       "extension": ".css",
       "bytes": 4781
@@ -87,7 +97,7 @@
     {
       "path": "assets/tellraw.js",
       "extension": ".js",
-      "bytes": 4649
+      "bytes": 4685
     },
     {
       "path": "assets/home.css",
@@ -137,7 +147,7 @@
     {
       "path": "assets/main.css",
       "extension": ".css",
-      "bytes": 2992
+      "bytes": 3011
     },
     {
       "path": "assets/tellraw.css",
@@ -162,7 +172,12 @@
     {
       "path": "install.sh",
       "extension": ".sh",
-      "bytes": 1991
+      "bytes": 2011
+    },
+    {
+      "path": "assets/index.css",
+      "extension": ".css",
+      "bytes": 1742
     },
     {
       "path": "assets/mcappheader.css",
@@ -170,14 +185,19 @@
       "bytes": 1636
     },
     {
+      "path": "assets/index.js",
+      "extension": ".js",
+      "bytes": 1146
+    },
+    {
       "path": "assets/worlds.js",
       "extension": ".js",
       "bytes": 1139
     },
     {
-      "path": "assets/index.js",
+      "path": "assets/index3.js",
       "extension": ".js",
-      "bytes": 1101
+      "bytes": 1069
     },
     {
       "path": "assets/info.js",
@@ -193,6 +213,11 @@
       "path": "tools/markdowneditor/index.html",
       "extension": ".html",
       "bytes": 426
+    },
+    {
+      "path": "tools/installscript/index.html",
+      "extension": ".html",
+      "bytes": 424
     },
     {
       "path": "configeditor/index.html",
@@ -213,6 +238,11 @@
       "path": "viewer/index.html",
       "extension": ".html",
       "bytes": 404
+    },
+    {
+      "path": "tools/index.html",
+      "extension": ".html",
+      "bytes": 399
     },
     {
       "path": "creator/index.html",

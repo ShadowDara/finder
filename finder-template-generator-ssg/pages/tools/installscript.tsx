@@ -333,7 +333,7 @@ function base64ToConfig(b64: string): InstallerConfig {
 function buildInstallScript(config: InstallerConfig): string {
   return (
     generateInstallerScript(config) +
-    "\n# Base64 of the input values for the generator\nso you dont have to type it all again\n#$$$" +
+    "\n# Base64 of the input values for the generator\n# so you dont have to type it all again\n#\n#$$$" +
     configToBase64(config) +
     "\n"
   );
@@ -417,6 +417,9 @@ export default function buildPage(app: HTMLElement): void {
   app.innerHTML = (
     <>
       <div class="runner">
+        <span>
+          <a href="../../">HOME</a>
+        </span>
         <span>INSTALLER-MAKER(1)</span>
         <span>Installer Generator</span>
         <span>INSTALLER-MAKER(1)</span>

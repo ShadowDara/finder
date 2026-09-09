@@ -28,7 +28,12 @@ const tools = [
 export default function render(el) {
   el.innerHTML = (
     <>
-      <h1>Tools</h1>
+      <div class="tool-header">
+        <span class="tool-eyebrow">
+          <a href="../">HOME</a>
+        </span>
+        <h1>Tools</h1>
+      </div>
       <div class="tool-grid">
         {tools.map((tool) => (
           <a class="tool-card" href={tool.href}>

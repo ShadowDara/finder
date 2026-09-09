@@ -1,41 +1,41 @@
 {
-  "generatedAt": "2026-09-09T14:56:36.548Z",
+  "generatedAt": "2026-09-09T21:48:24.556Z",
   "total": {
-    "files": 50,
-    "bytes": 319325,
-    "kilobytes": 311.84,
-    "megabytes": 0.3
+    "files": 56,
+    "bytes": 355077,
+    "kilobytes": 346.75,
+    "megabytes": 0.34
   },
   "byExtension": [
     {
       "extension": ".js",
-      "files": 17,
-      "bytes": 255435,
-      "percentage": 79.99
+      "files": 19,
+      "bytes": 283407,
+      "percentage": 79.82
     },
     {
       "extension": ".css",
-      "files": 13,
-      "bytes": 45130,
-      "percentage": 14.13
+      "files": 15,
+      "bytes": 52046,
+      "percentage": 14.66
     },
     {
       "extension": ".txt",
       "files": 1,
       "bytes": 9765,
-      "percentage": 3.06
+      "percentage": 2.75
     },
     {
       "extension": ".html",
-      "files": 18,
-      "bytes": 7004,
-      "percentage": 2.19
+      "files": 20,
+      "bytes": 7848,
+      "percentage": 2.21
     },
     {
       "extension": ".sh",
       "files": 1,
-      "bytes": 1991,
-      "percentage": 0.62
+      "bytes": 2011,
+      "percentage": 0.57
     }
   ],
   "files": [
@@ -52,7 +52,12 @@
     {
       "path": "assets/main_entry.js",
       "extension": ".js",
-      "bytes": 45679
+      "bytes": 46059
+    },
+    {
+      "path": "assets/installscript.js",
+      "extension": ".js",
+      "bytes": 26361
     },
     {
       "path": "assets/markdowneditor.js",
@@ -72,12 +77,17 @@
     {
       "path": "assets/configeditor.js",
       "extension": ".js",
-      "bytes": 8958
+      "bytes": 9039
     },
     {
       "path": "assets/viewer.css",
       "extension": ".css",
       "bytes": 7871
+    },
+    {
+      "path": "assets/installscript.css",
+      "extension": ".css",
+      "bytes": 5155
     },
     {
       "path": "assets/creator.css",
@@ -87,7 +97,7 @@
     {
       "path": "assets/tellraw.js",
       "extension": ".js",
-      "bytes": 4649
+      "bytes": 4685
     },
     {
       "path": "assets/home.css",
@@ -137,7 +147,7 @@
     {
       "path": "assets/main.css",
       "extension": ".css",
-      "bytes": 2992
+      "bytes": 3011
     },
     {
       "path": "assets/tellraw.css",
@@ -162,7 +172,12 @@
     {
       "path": "install.sh",
       "extension": ".sh",
-      "bytes": 1991
+      "bytes": 2011
+    },
+    {
+      "path": "assets/index.css",
+      "extension": ".css",
+      "bytes": 1742
     },
     {
       "path": "assets/mcappheader.css",
@@ -175,9 +190,14 @@
       "bytes": 1139
     },
     {
+      "path": "assets/index3.js",
+      "extension": ".js",
+      "bytes": 1069
+    },
+    {
       "path": "assets/index.js",
       "extension": ".js",
-      "bytes": 959
+      "bytes": 1004
     },
     {
       "path": "assets/info.js",
@@ -193,6 +213,11 @@
       "path": "tools/markdowneditor/index.html",
       "extension": ".html",
       "bytes": 432
+    },
+    {
+      "path": "tools/installscript/index.html",
+      "extension": ".html",
+      "bytes": 430
     },
     {
       "path": "tools/minecraft/tellraw/index.html",
@@ -213,6 +238,11 @@
       "path": "viewer/index.html",
       "extension": ".html",
       "bytes": 419
+    },
+    {
+      "path": "tools/index.html",
+      "extension": ".html",
+      "bytes": 414
     },
     {
       "path": "creator/index.html",

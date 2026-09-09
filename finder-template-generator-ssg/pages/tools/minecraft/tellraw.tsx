@@ -23,8 +23,8 @@ export default function App(el: HTMLElement) {
   el.innerHTML = (
     <main>
       <p>
-        Tellraw Converter from JSON to SNBT to Update it for newer Minecraft
-        Versions
+        <a href="../../../">HOME</a> - Tellraw Converter from JSON to SNBT to
+        Update it for newer Minecraft Versions
       </p>
 
       <section class="text-editor">
