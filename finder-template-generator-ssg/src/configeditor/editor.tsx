@@ -117,6 +117,9 @@ export function setupConfigEditor(
 
   function setPath(obj: any, path: string, value: unknown) {
     const parts = path.split(".");
+    const blockedKeys = new Set(["__proto__", "constructor", "prototype"]);
+    if (parts.some((part) => blockedKeys.has(part))) return;
+
     let cur = obj;
     for (let i = 0; i < parts.length - 1; i++) {
       const p = parts[i];
