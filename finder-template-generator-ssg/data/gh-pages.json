@@ -1,41 +1,41 @@
 {
-  "generatedAt": "2026-09-08T21:50:43.911Z",
+  "generatedAt": "2026-09-09T13:32:47.957Z",
   "total": {
-    "files": 40,
-    "bytes": 312540,
-    "kilobytes": 305.21,
+    "files": 50,
+    "bytes": 319026,
+    "kilobytes": 311.55,
     "megabytes": 0.3
   },
   "byExtension": [
     {
       "extension": ".js",
-      "files": 12,
-      "bytes": 251933,
-      "percentage": 80.61
+      "files": 17,
+      "bytes": 255191,
+      "percentage": 79.99
     },
     {
       "extension": ".css",
-      "files": 12,
-      "bytes": 43531,
-      "percentage": 13.93
+      "files": 13,
+      "bytes": 45169,
+      "percentage": 14.16
     },
     {
       "extension": ".txt",
       "files": 1,
       "bytes": 9764,
-      "percentage": 3.12
+      "percentage": 3.06
     },
     {
       "extension": ".html",
-      "files": 14,
-      "bytes": 5568,
-      "percentage": 1.78
+      "files": 18,
+      "bytes": 7004,
+      "percentage": 2.2
     },
     {
       "extension": ".sh",
       "files": 1,
-      "bytes": 1744,
-      "percentage": 0.56
+      "bytes": 1898,
+      "percentage": 0.59
     }
   ],
   "files": [
@@ -52,7 +52,7 @@
     {
       "path": "assets/main_entry.js",
       "extension": ".js",
-      "bytes": 44814
+      "bytes": 45474
     },
     {
       "path": "assets/markdowneditor.js",
@@ -162,12 +162,27 @@
     {
       "path": "install.sh",
       "extension": ".sh",
-      "bytes": 1744
+      "bytes": 1898
+    },
+    {
+      "path": "assets/mcappheader.css",
+      "extension": ".css",
+      "bytes": 1638
+    },
+    {
+      "path": "assets/worlds.js",
+      "extension": ".js",
+      "bytes": 1141
     },
     {
       "path": "assets/index.js",
       "extension": ".js",
       "bytes": 959
+    },
+    {
+      "path": "assets/info.js",
+      "extension": ".js",
+      "bytes": 596
     },
     {
       "path": "configeditor/index.html",
@@ -215,12 +230,37 @@
       "bytes": 406
     },
     {
+      "path": "assets/index2.js",
+      "extension": ".js",
+      "bytes": 369
+    },
+    {
+      "path": "mcapp/worlds/index.html",
+      "extension": ".html",
+      "bytes": 360
+    },
+    {
       "path": "docs/config/index.html",
       "extension": ".html",
       "bytes": 359
     },
     {
+      "path": "mcapp/about/index.html",
+      "extension": ".html",
+      "bytes": 359
+    },
+    {
+      "path": "mcapp/index.html",
+      "extension": ".html",
+      "bytes": 359
+    },
+    {
       "path": "docs/index.html",
+      "extension": ".html",
+      "bytes": 358
+    },
+    {
+      "path": "mcapp/info/index.html",
       "extension": ".html",
       "bytes": 358
     },
@@ -238,6 +278,16 @@
       "path": "index.html",
       "extension": ".html",
       "bytes": 353
+    },
+    {
+      "path": "assets/mcappheader.js",
+      "extension": ".js",
+      "bytes": 264
+    },
+    {
+      "path": "assets/about.js",
+      "extension": ".js",
+      "bytes": 228
     }
   ]
 }

@@ -20,6 +20,7 @@ import (
 	"github.com/shadowdara/finder/internal/cache"
 	"github.com/shadowdara/finder/internal/config"
 	"github.com/shadowdara/finder/internal/finderversion"
+	"github.com/shadowdara/finder/internal/mcapp"
 	"github.com/shadowdara/finder/internal/templates"
 	"github.com/shadowdara/finder/pub/fsd"
 	"github.com/shadowdara/finder/pub/json5"
@@ -539,6 +540,22 @@ func main() {
 		json.NewEncoder(w).Encode(map[string]string{
 			"status": "ok",
 		})
+	})
+
+	// mcapp handler
+
+	// worlds handler
+	mux.HandleFunc("/api/mcapp/worlds", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+			return
+		}
+
+		worlds := mcapp.LoadWorlds()
+
+		w.Header().Set("Content-Type", "application/json")
+
+		json.NewEncoder(w).Encode(worlds)
 	})
 
 	webcachePath := filepath.Join(path, "webcache")

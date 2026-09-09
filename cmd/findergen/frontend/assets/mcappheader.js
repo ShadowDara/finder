@@ -1,1 +1,1 @@
-import{j as l,F as r}from"./main_entry.js";function u(){return l(r,null,l("header",null,l("nav",null,l("ul",null,l("li",null,l("a",{href:"/"},"Home")),l("li",null,l("a",{href:"/worlds"},"Worlds")),l("li",null,l("a",{href:"/about"},"About"))))))}export{u as r};
+import{j as l,F as r}from"./main_entry.js";function u(){return l(r,null,l("header",null,l("nav",null,l("ul",null,l("li",null,l("a",{href:"./"},"Home")),l("li",null,l("a",{href:"./worlds"},"Worlds")),l("li",null,l("a",{href:"./about"},"About"))))))}export{u as r};

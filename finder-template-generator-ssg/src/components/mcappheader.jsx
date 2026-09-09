@@ -8,13 +8,13 @@ export default function render() {
         <nav>
           <ul>
             <li>
-              <a href="/">Home</a>
+              <a href="./">Home</a>
             </li>
             <li>
-              <a href="/worlds">Worlds</a>
+              <a href="./worlds">Worlds</a>
             </li>
             <li>
-              <a href="/about">About</a>
+              <a href="./about">About</a>
             </li>
           </ul>
         </nav>

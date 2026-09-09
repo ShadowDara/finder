@@ -12,23 +12,23 @@ export default function render(el) {
         <h3>Features</h3>
         <ul>
           <li>
-            <a href="/info">Info</a>
+            <a href="./info">Info</a>
           </li>
           <li>
-            <a href="/worlds">World Searcher</a>
+            <a href="./worlds">World Searcher</a>
+          </li>
+          {/* <li>
+            <a href="./datapacks">Datapacks</a>
           </li>
           <li>
-            <a href="/datapacks">Datapacks</a>
+            <a href="./resource_packs">Resource Packs</a>
           </li>
           <li>
-            <a href="/resource_packs">Resource Packs</a>
+            <a href="./datapack_creator">Datapack Creator</a>
           </li>
           <li>
-            <a href="/datapack_creator">Datapack Creator</a>
-          </li>
-          <li>
-            <a href="/resource_pack_creator">Resource Pack Creator</a>
-          </li>
+            <a href="./resource_pack_creator">Resource Pack Creator</a>
+          </li> */}
         </ul>
       </main>
     </>

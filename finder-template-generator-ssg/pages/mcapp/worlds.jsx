@@ -23,15 +23,21 @@ export default function render(el) {
     </>
   );
 
-  document.addEventListener("DOMContentLoaded", async () => {
+  async function loadWorlds() {
     try {
       // System-Info laden (falls du OS später noch brauchst)
-      const sysRes = await fetch("/api/mcapp/system");
+      let serveraddress = "";
+
+      if (import.meta.env.DEV) {
+        serveraddress = "http://localhost:8080";
+      }
+
+      const sysRes = await fetch(serveraddress + "/api/system");
       const sys = await sysRes.json();
       const windows = sys.os === "windows";
 
       // Welten laden
-      const res = await fetch("/api/mcapp/worlds");
+      const res = await fetch(serveraddress + "/api/mcapp/worlds");
       const worlds = await res.json(); // jetzt []World structs mit path, icon, name
 
       const tbody = document.getElementById("world-list");
@@ -73,7 +79,10 @@ export default function render(el) {
         tr.innerHTML = (
           <>
             <td>
-              <img src={`/___static___/webcache/${iconPath}`} width="32" />
+              <img
+                src={`/___static___/webcache/icons/${iconPath}`}
+                width="32"
+              />
             </td>
             <td>{lastFolder}</td>
             <td>{world.last_modified}</td>
@@ -91,5 +100,7 @@ export default function render(el) {
     } catch (err) {
       console.error("Fehler beim Laden:", err);
     }
-  });
+  }
+
+  loadWorlds();
 }
