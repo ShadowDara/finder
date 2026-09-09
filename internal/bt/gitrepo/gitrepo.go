@@ -405,7 +405,19 @@ func restoreZip(archive, destination string) error {
 		return err
 	}
 	for _, file := range reader.File {
-		target := filepath.Join(destination, filepath.FromSlash(file.Name))
+		if file.Name == "" {
+			return fmt.Errorf("unsicherer ZIP-Pfad erkannt: %s", file.Name)
+		}
+		entryPath := filepath.Clean(filepath.FromSlash(file.Name))
+		if entryPath == "." || entryPath == ".." ||
+			strings.HasPrefix(entryPath, ".."+string(os.PathSeparator)) ||
+			strings.Contains(entryPath, string(os.PathSeparator)+".."+string(os.PathSeparator)) ||
+			strings.HasSuffix(entryPath, string(os.PathSeparator)+"..") ||
+			filepath.IsAbs(entryPath) ||
+			filepath.VolumeName(entryPath) != "" {
+			return fmt.Errorf("unsicherer ZIP-Pfad erkannt: %s", file.Name)
+		}
+		target := filepath.Join(destination, entryPath)
 		resolved, err := filepath.Abs(target)
 		if err != nil {
 			return err
