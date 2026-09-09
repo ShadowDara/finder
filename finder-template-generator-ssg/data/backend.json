@@ -1,29 +1,29 @@
 {
-  "generatedAt": "2026-09-09T14:03:43.833Z",
+  "generatedAt": "2026-09-09T14:56:27.325Z",
   "total": {
     "files": 50,
-    "bytes": 253226,
-    "kilobytes": 247.29,
+    "bytes": 253488,
+    "kilobytes": 247.55,
     "megabytes": 0.24
   },
   "byExtension": [
     {
       "extension": ".js",
       "files": 17,
-      "bytes": 189571,
-      "percentage": 74.86
+      "bytes": 189778,
+      "percentage": 74.87
     },
     {
       "extension": ".css",
       "files": 13,
-      "bytes": 45169,
-      "percentage": 17.84
+      "bytes": 45130,
+      "percentage": 17.8
     },
     {
       "extension": ".txt",
       "files": 1,
-      "bytes": 9764,
-      "percentage": 3.86
+      "bytes": 9765,
+      "percentage": 3.85
     },
     {
       "extension": ".html",
@@ -34,20 +34,20 @@
     {
       "extension": ".sh",
       "files": 1,
-      "bytes": 1898,
-      "percentage": 0.75
+      "bytes": 1991,
+      "percentage": 0.79
     }
   ],
   "files": [
     {
       "path": "assets/jquery.module.js",
       "extension": ".js",
-      "bytes": 79107
+      "bytes": 79109
     },
     {
       "path": "assets/main_entry.js",
       "extension": ".js",
-      "bytes": 45726
+      "bytes": 45931
     },
     {
       "path": "assets/creator.js",
@@ -62,7 +62,7 @@
     {
       "path": "dependencies.txt",
       "extension": ".txt",
-      "bytes": 9764
+      "bytes": 9765
     },
     {
       "path": "assets/configeditor.js",
@@ -72,7 +72,7 @@
     {
       "path": "assets/viewer.css",
       "extension": ".css",
-      "bytes": 7875
+      "bytes": 7871
     },
     {
       "path": "assets/viewer.js",
@@ -82,7 +82,7 @@
     {
       "path": "assets/creator.css",
       "extension": ".css",
-      "bytes": 4783
+      "bytes": 4781
     },
     {
       "path": "assets/tellraw.js",
@@ -92,7 +92,7 @@
     {
       "path": "assets/home.css",
       "extension": ".css",
-      "bytes": 4619
+      "bytes": 4615
     },
     {
       "path": "assets/cacheviewer.js",
@@ -102,7 +102,7 @@
     {
       "path": "assets/configeditor.css",
       "extension": ".css",
-      "bytes": 3972
+      "bytes": 3970
     },
     {
       "path": "assets/regexcreator.js",
@@ -122,7 +122,7 @@
     {
       "path": "assets/regexcreator.css",
       "extension": ".css",
-      "bytes": 3410
+      "bytes": 3406
     },
     {
       "path": "assets/samfile.js",
@@ -132,22 +132,17 @@
     {
       "path": "assets/samfile.css",
       "extension": ".css",
-      "bytes": 3255
+      "bytes": 3253
     },
     {
       "path": "assets/main.css",
       "extension": ".css",
-      "bytes": 2997
+      "bytes": 2992
     },
     {
       "path": "assets/tellraw.css",
       "extension": ".css",
-      "bytes": 2259
-    },
-    {
-      "path": "assets/markdownrootstyle.css",
-      "extension": ".css",
-      "bytes": 2246
+      "bytes": 2249
     },
     {
       "path": "assets/markdowneditor.css",
@@ -155,19 +150,24 @@
       "bytes": 2244
     },
     {
+      "path": "assets/markdownrootstyle.css",
+      "extension": ".css",
+      "bytes": 2244
+    },
+    {
       "path": "assets/markdownstyle.css",
       "extension": ".css",
-      "bytes": 2196
+      "bytes": 2194
     },
     {
       "path": "install.sh",
       "extension": ".sh",
-      "bytes": 1898
+      "bytes": 1991
     },
     {
       "path": "assets/mcappheader.css",
       "extension": ".css",
-      "bytes": 1638
+      "bytes": 1636
     },
     {
       "path": "assets/worlds.js",
