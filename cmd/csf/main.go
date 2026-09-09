@@ -14,20 +14,20 @@ import (
 
 func ParseArgs() {
 	// Main Command
-	root := argparser.NewCommand("csf", "a simple build helping tool", false)
+	root := argparser.NewCommand("csf", "a simple build helping tool", "Check out github for more infos or the finder website:\nhttps://github.com/shadowdara/finder\nhttps://shadowdara.github.io/finder", false)
 
 	root.String("tag", "", "Tag you want to add to a Git Repo", false, "t")
 	root.Bool("bin", false, "Add the script shortcuts to your terminal path", false)
 	// root.Bool("compile", false, "Compile the Scripts from the Config File", false)
 
-	compileCMD := argparser.NewCommand("compile", "Compile the Scripts from json file", false)
-	goinstall := argparser.NewCommand("goinstall", "Install a go programm with CGO", false)
-	executeCMD := argparser.NewCommand("x", "Execute on of the scripts", false)
+	compileCMD := argparser.NewCommand("compile", "Compile the Scripts from json file", "", false)
+	goinstall := argparser.NewCommand("goinstall", "Install a go programm with CGO", "", false)
+	executeCMD := argparser.NewCommand("x", "Execute on of the scripts", "", false)
 	executeCMD.PassThrough = true
 
-	gitrepoCMD := argparser.NewCommand("gitrepo", "pack/restore nested .git folders of sub-repositories", false)
-	packCMD := argparser.NewCommand("pack", "Pack a git repo into a base64 file", false)
-	restoreCMD := argparser.NewCommand("restore", "restore a git repo from a base64 file", false)
+	gitrepoCMD := argparser.NewCommand("gitrepo", "pack/restore nested .git folders of sub-repositories", "", false)
+	packCMD := argparser.NewCommand("pack", "Pack a git repo into a base64 file", "", false)
+	restoreCMD := argparser.NewCommand("restore", "restore a git repo from a base64 file", "", false)
 	packCMD.String("output", "./git-archives", "Output directory", false, "o")
 	packCMD.Bool("encrypt", false, "Encrypt the archive with AES-256", false)
 	packCMD.Bool("base64", false, "Also encode the archive as Base64", false)
