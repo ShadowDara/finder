@@ -31,13 +31,26 @@ export function initConfigEditor(
 
   function setPath(obj: any, path: string, value: unknown) {
     const parts = path.split(".");
+    const isUnsafeKey = (key: string) =>
+      key === "__proto__" || key === "constructor" || key === "prototype";
+
     let cur = obj;
     for (let i = 0; i < parts.length - 1; i++) {
       const p = parts[i];
+      if (isUnsafeKey(p)) {
+        throw new Error(`initConfigEditor: Unsicherer Pfad-Segmentname "${p}".`);
+      }
       if (typeof cur[p] !== "object" || cur[p] === null) cur[p] = {};
       cur = cur[p];
     }
-    cur[parts[parts.length - 1]] = value;
+
+    const last = parts[parts.length - 1];
+    if (isUnsafeKey(last)) {
+      throw new Error(
+        `initConfigEditor: Unsicherer finaler Pfad-Segmentname "${last}".`,
+      );
+    }
+    cur[last] = value;
   }
 
   function readField(
