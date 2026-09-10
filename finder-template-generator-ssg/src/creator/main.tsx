@@ -540,8 +540,10 @@ export function renderCreator(app: HTMLDivElement, version: string) {
       const notePreview = document.createElement("code");
       notePreview.className = "note-base64-preview";
 
+      const noteFolder = folder; // narrowed non-null reference for closures
+
       function renderNotePreview(): void {
-        const encoded = encodeMarkdownNote(folder.markdownNote);
+        const encoded = encodeMarkdownNote(noteFolder.markdownNote);
         notePreview.textContent = encoded ? `mdnote_base64: "${encoded}"` : "";
       }
 
@@ -613,8 +615,9 @@ export function renderCreator(app: HTMLDivElement, version: string) {
 
       // Re-render the Base64 note preview after every full inspector render
       // (the note field is only shown for the root node).
-      const notePreviewEl =
-        inspectorEl.querySelector<HTMLElement>(".note-base64-preview");
+      const notePreviewEl = inspectorEl.querySelector<HTMLElement>(
+        ".note-base64-preview",
+      );
       if (notePreviewEl) {
         const encoded = encodeMarkdownNote(
           (findFolder(root, selection.id) ?? root).markdownNote,
