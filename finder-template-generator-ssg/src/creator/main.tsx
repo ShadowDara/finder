@@ -138,7 +138,7 @@ export function renderCreator(app: HTMLDivElement) {
 
     console.log(payload);
 
-    let adress = "/api/template";
+    let adress = "/api/template/create";
 
     if (import.meta.env.DEV) {
       adress = SERVER_ADRESS + "/api/template/create";
