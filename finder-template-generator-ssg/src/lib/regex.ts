@@ -14,8 +14,15 @@
  *      generiert (gemeinsame Präfixe werden zusammengefasst,
  *      einzelne Buchstaben zu Zeichenklassen [abc] verschmolzen).
  *   2. Das disallow-Fragment als negatives Lookahead (?!...)
- *      vor das accept-Fragment gesetzt -> das ist die "UND NICHT"
- *      Verknüpfung.
+ *      mit passender Verankerung pro Modus vor das accept-Fragment
+ *      gesetzt -> das ist die "UND NICHT"-Verknüpfung.
+ *
+ * Modi (options.mode):
+ *   - "exact"      -> ganze Zeichenkette muss einem Wort entsprechen
+ *   - "startsWith" -> Zeichenkette beginnt mit einem Wort
+ *   - "endsWith"   -> Zeichenkette endet mit einem Wort, z.B. für
+ *                     Datei-Endungen wie ".jpg" / ".jpeg"
+ *   - "contains"   -> Zeichenkette enthält ein Wort irgendwo
  * ------------------------------------------------------------
  */
 
@@ -97,16 +104,56 @@ function wordsToFragment(words: readonly string[] | undefined): string | null {
   return fragment || null;
 }
 
+export type MatchMode = "exact" | "startsWith" | "endsWith" | "contains";
+
 export interface GenerateRegexOptions {
   /** zusätzliche RegExp-Flags, z.B. 'i' für case-insensitive */
   flags?: string;
+  /**
+   * Wie das Muster auf die Zeichenkette angewendet wird.
+   * Standard: "exact".
+   */
+  mode?: MatchMode;
+}
+
+/**
+ * Setzt Accept-Fragment, Disallow-Fragment (als negatives Lookahead)
+ * und Modus zu einem vollständigen RegExp-Quelltext zusammen.
+ */
+function assembleRegex(
+  mode: MatchMode,
+  acceptFragment: string,
+  disallowFragment: string | null,
+): string {
+  const dis = disallowFragment ? `(?:${disallowFragment})` : null;
+
+  switch (mode) {
+    case "startsWith": {
+      const guard = dis ? `^(?!${dis})` : "^";
+      return `${guard}(?:${acceptFragment})`;
+    }
+    case "endsWith": {
+      // Negation: Zeichenkette darf NICHT mit einem disallow-Wort enden.
+      const guard = dis ? `^(?![\\s\\S]*${dis}$)` : "";
+      return `${guard}(?:${acceptFragment})$`;
+    }
+    case "contains": {
+      const guard = dis ? `^(?![\\s\\S]*${dis})` : "";
+      return `${guard}(?:${acceptFragment})`;
+    }
+    case "exact":
+    default: {
+      const guard = dis ? `^(?!${dis}$)` : "^";
+      return `${guard}(?:${acceptFragment})$`;
+    }
+  }
 }
 
 /**
  * Hauptfunktion.
  * @param accept   Strings, die der Regex akzeptieren soll
  * @param disallow Strings, die der Regex ablehnen soll
- * @param options  optionale Einstellungen (z.B. RegExp-Flags)
+ * @param options  optionale Einstellungen (Flags, Modus)
  */
 export function generateRegex(
   accept: readonly string[],
@@ -119,6 +166,7 @@ export function generateRegex(
 
   const flags = options.flags ?? "";
   const ignoreCase = flags.includes("i");
+  const mode = options.mode ?? "exact";
 
   const disallowSet = new Set(
     disallow.map((word) => (ignoreCase ? word.toLocaleLowerCase() : word)),
@@ -139,7 +187,12 @@ export function generateRegex(
     throw new Error("Keine gültigen akzeptierten Wörter.");
   }
 
-  return new RegExp(`^(?:${acceptFragment})$`, flags);
+  const disallowFragment = wordsToFragment(disallow);
+
+  return new RegExp(
+    assembleRegex(mode, acceptFragment, disallowFragment),
+    flags,
+  );
 }
 
 // // ------------------------------------------------------------
