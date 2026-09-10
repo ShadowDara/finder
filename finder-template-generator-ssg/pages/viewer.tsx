@@ -1,4 +1,5 @@
 import { escapeHtml, jsx, raw, Fragment } from "../src/jsx-runtime";
+import { parseMarkdown } from "@shadowdara/dlib";
 import "./viewer.css";
 import builtinTemplates from "../src/templates.js";
 import { SERVER_ADRESS } from "../src/vars.js";
@@ -63,6 +64,13 @@ let popup = (
 
       <div class="modal-code">
         <pre id="modal-content"></pre>
+      </div>
+
+      <div class="modal-markdown" id="modal-markdown" hidden>
+        <div class="modal-markdown-head">
+          <span class="eyebrow">MARKDOWN NOTE</span>
+        </div>
+        <article class="markdown-note"></article>
       </div>
 
       <div class="modal-footer">
@@ -327,6 +335,9 @@ function setupSelector(el: HTMLDivElement) {
   const modalCopy = el.querySelector<HTMLButtonElement>("#modal-copy");
   const modalEdit = el.querySelector<HTMLAnchorElement>("#modal-edit");
 
+  const modalMarkdown = el.querySelector<HTMLElement>("#modal-markdown");
+  const modalMarkdownNote = el.querySelector<HTMLElement>(".markdown-note");
+
   let activeFilter = "all";
   let activeTag = "all";
 
@@ -461,6 +472,36 @@ function setupSelector(el: HTMLDivElement) {
       modalEdit.href =
         `../creator?template=${encodeURIComponent(templateJson)}` +
         `&filename=${encodeURIComponent(title)}`;
+    }
+
+    // Optional Markdown note: parsed from the raw template JSON. The note is
+    // stored Base64-encoded (field mdnote_base64) so it survives plain-JSON.
+    let markdownHtml = "";
+    try {
+      const parsed = JSON.parse(content);
+      const note64 = parsed?.mdnote_base64;
+      if (typeof note64 === "string" && note64.length > 0) {
+        // UTF-8-safe Base64 decoding (btoa/atob cannot handle non-Latin1).
+        const binary = atob(note64);
+        const bytes = new Uint8Array(binary.length);
+        for (let i = 0; i < binary.length; i++) {
+          bytes[i] = binary.charCodeAt(i);
+        }
+        const markdown = new TextDecoder().decode(bytes);
+        markdownHtml = parseMarkdown(markdown);
+      }
+    } catch {
+      markdownHtml = "";
+    }
+
+    if (modalMarkdown && modalMarkdownNote) {
+      if (markdownHtml) {
+        modalMarkdown.hidden = false;
+        modalMarkdownNote.innerHTML = raw(markdownHtml).toString();
+      } else {
+        modalMarkdown.hidden = true;
+        modalMarkdownNote.innerHTML = "";
+      }
     }
 
     modal.showModal();
