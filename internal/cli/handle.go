@@ -20,7 +20,7 @@ import (
 )
 
 // Function to search for a Template
-func Search(searchTemplate string, OutputType string, Verbose bool, createCache bool, useCache bool, createCacheDB bool) error {
+func Search(searchTemplate string, OutputType string, Verbose bool, createCache bool, useCache bool, createCacheDB bool, cachecount bool) error {
 	if useCache {
 		data, err := cache.LoadCache(searchTemplate)
 		if err != nil {
@@ -28,11 +28,7 @@ func Search(searchTemplate string, OutputType string, Verbose bool, createCache 
 			return err
 		}
 
-		if OutputType != "clear" && OutputType != "json" {
-			fmt.Printf("Cache created at %s", data.Timestamp)
-		}
-
-		PrintResults(data.Paths, OutputType)
+		PrintResults(data.Paths, OutputType, cachecount)
 
 		return nil
 	}
@@ -69,7 +65,7 @@ func Search(searchTemplate string, OutputType string, Verbose bool, createCache 
 		fmt.Printf("Searching for %s ...\n", templateName)
 	}
 	matches := search.Find(structure.LoadJSON5(string(data)), OutputType, templateName, createCache)
-	PrintResults(matches, OutputType)
+	PrintResults(matches, OutputType, cachecount)
 
 	// Safe Git Database
 	if createCacheDB {
@@ -82,7 +78,23 @@ func Search(searchTemplate string, OutputType string, Verbose bool, createCache 
 	return nil
 }
 
-func PrintResults(matches []string, OutputType string) { // Print
+func PrintResults(matches []string, OutputType string, count bool) {
+	if count {
+		switch OutputType {
+		case "json":
+			{
+				fmt.Printf("{\"count\": %d}\n", len(matches))
+			}
+		default:
+			{
+				fmt.Printf("%d", len(matches))
+			}
+		}
+
+		return
+	}
+
+	// Print
 	switch OutputType {
 	case "normal":
 		fmt.Println("# Found:")
