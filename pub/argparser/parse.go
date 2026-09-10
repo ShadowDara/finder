@@ -370,7 +370,7 @@ func (c *Command) Parse(args []string) *Command {
 
 // GetString returns the value of a string flag.
 func (c *Command) GetString(name string) string {
-	if f := c.findFlag(name); f != nil {
+	if f := c.findAvailableFlag(name); f != nil {
 		return f.StringValue
 	}
 	return ""
@@ -378,7 +378,7 @@ func (c *Command) GetString(name string) string {
 
 // GetNumber returns the value of a number flag.
 func (c *Command) GetNumber(name string) int64 {
-	if f := c.findFlag(name); f != nil {
+	if f := c.findAvailableFlag(name); f != nil {
 		return f.NumberValue
 	}
 	return 0
@@ -386,7 +386,7 @@ func (c *Command) GetNumber(name string) int64 {
 
 // GetBool returns the value of a boolean flag.
 func (c *Command) GetBool(name string) bool {
-	if f := c.findFlag(name); f != nil {
+	if f := c.findAvailableFlag(name); f != nil {
 		return f.BoolValue
 	}
 	return false
