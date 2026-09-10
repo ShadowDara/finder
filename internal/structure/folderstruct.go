@@ -24,20 +24,25 @@ type Folder struct {
 	InvertCommand bool     `json:"invert_command"` // To change if return code 0 or 1 is required. False is equal to 0
 	Tags          []string `json:"tags"`           // tags to sort the Templates
 	DataSize      Size     `json:"size,omitempty"`
+	// Optional Markdown note. Stored Base64-encoded so arbitrary (unicode)
+	// content survives plain-JSON serialization. Displayed e.g. in the web
+	// interface / community template hub.
+	MarkdownNoteBase64 string `json:"mdnote_base64,omitempty"`
 }
 
 // NewFolder constructs a minimal Folder instance with reasonable defaults.
 func NewFolder(foldername string) Folder {
 	return Folder{
-		MinVersion:    "0.0.0",
-		Description:   "",
-		Name:          foldername,
-		Folders:       []Folder{},
-		Files:         Files{},
-		Command:       "",
-		InvertCommand: false,
-		Tags:          []string{},
-		DataSize:      NewSize(),
+		MinVersion:         "0.0.0",
+		Description:        "",
+		Name:               foldername,
+		Folders:            []Folder{},
+		Files:              Files{},
+		Command:            "",
+		InvertCommand:      false,
+		Tags:               []string{},
+		DataSize:           NewSize(),
+		MarkdownNoteBase64: "",
 	}
 }
 

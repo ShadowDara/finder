@@ -37,6 +37,8 @@ export interface FolderNode {
   files: FileNode[];
   folders: FolderNode[];
   size: SizeConstraint | null;
+  /** Raw Markdown note, edited in the UI. Encoded to base64 on export. */
+  markdownNote: string;
 }
 
 /**
@@ -64,4 +66,6 @@ export interface FolderJSON {
   invert_command?: boolean;
   tags?: string[];
   size?: SizeConstraint;
+  /** Optional Markdown note, Base64-encoded (UTF-8). Mirrors Go's mdnote_base64. */
+  mdnote_base64?: string;
 }

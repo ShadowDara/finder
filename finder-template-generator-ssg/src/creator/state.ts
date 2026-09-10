@@ -37,12 +37,13 @@ export function newFolder(name = "new-folder"): FolderNode {
     files: [],
     folders: [],
     size: null,
+    markdownNote: "",
   };
 }
 
-export function newRoot(): FolderNode {
+export function newRoot(version: string): FolderNode {
   const root = newFolder("*");
-  root.minVersion = "0.1.0";
+  root.minVersion = version;
   root.description = "Describe what this template matches";
   return root;
 }
@@ -89,6 +90,32 @@ export function removeFile(root: FolderNode, fileId: string): boolean {
     return true;
   }
   return root.folders.some((child) => removeFile(child, fileId));
+}
+
+/** UTF-8-safe base64 encoding (btoa alone breaks on non-Latin1). */
+export function utf8ToBase64(input: string): string {
+  const bytes = new TextEncoder().encode(input);
+  let binary = "";
+  for (let i = 0; i < bytes.length; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return btoa(binary);
+}
+
+/** Decodes the UTF-8-safe base64 strings produced by utf8ToBase64. */
+export function base64ToUtf8(input: string): string {
+  const binary = atob(input.trim());
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+  return new TextDecoder().decode(bytes);
+}
+
+/** Encode a raw Markdown note to Base64, or undefined if empty. */
+export function encodeMarkdownNote(note: string): string | undefined {
+  const trimmed = note.trim();
+  return trimmed ? utf8ToBase64(trimmed) : undefined;
 }
 
 function serializeSize(
@@ -152,6 +179,12 @@ export function serializeFolder(folder: FolderNode, isRoot = true): FolderJSON {
   const size = serializeSize(folder.size);
   if (size) out.size = size;
 
+  // Only the root carries the markdown note.
+  if (isRoot) {
+    const note64 = encodeMarkdownNote(folder.markdownNote);
+    if (note64) out.mdnote_base64 = note64;
+  }
+
   return out;
 }
 
@@ -185,6 +218,17 @@ function parseFiles(raw: unknown): FileNode[] {
 }
 
 export function parseFolder(raw: FolderJSON): FolderNode {
+  const mdBase64 = (raw as unknown as { mdnote_base64?: unknown })
+    .mdnote_base64;
+  let markdownNote = "";
+  if (typeof mdBase64 === "string" && mdBase64.length > 0) {
+    try {
+      markdownNote = base64ToUtf8(mdBase64);
+    } catch {
+      markdownNote = "";
+    }
+  }
+
   return {
     id: nextId(),
     name: raw.name ?? "",
@@ -196,5 +240,6 @@ export function parseFolder(raw: FolderJSON): FolderNode {
     files: parseFiles((raw as unknown as { files: unknown }).files),
     folders: Array.isArray(raw.folders) ? raw.folders.map(parseFolder) : [],
     size: raw.size ? { min: raw.size.min, max: raw.size.max } : null,
+    markdownNote,
   };
 }

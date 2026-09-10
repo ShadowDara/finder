@@ -1,6 +1,8 @@
 import { jsx } from "../jsx-runtime";
 import type { Existence, FileNode, FolderJSON, FolderNode } from "./types";
 import {
+  base64ToUtf8,
+  encodeMarkdownNote,
   findFile,
   findFolder,
   newFile,
@@ -13,11 +15,11 @@ import {
 } from "./state";
 import { SERVER_ADRESS } from "../vars";
 
-export function renderCreator(app: HTMLDivElement) {
+export function renderCreator(app: HTMLDivElement, version: string) {
   type Selection = { kind: "folder" | "file"; id: string } | null;
 
   let filename: string = "new file";
-  let root: FolderNode = newRoot();
+  let root: FolderNode = newRoot(version);
   let selection: Selection = { kind: "folder", id: root.id };
   let importError: string | null = null;
 
@@ -513,12 +515,42 @@ export function renderCreator(app: HTMLDivElement) {
                 folder.minVersion = v;
                 renderPreview();
               },
-              "0.1.0",
+              version,
             ),
             "Old templates without a matching version will warn the user.",
           ),
         );
       }
+
+      const markdownTextArea = textArea(
+        folder.markdownNote,
+        (v) => {
+          folder.markdownNote = v;
+          renderPreview();
+        },
+        "# Kurze Beschreibung …\n\nOptional: weitere Details zu diesem Template",
+      );
+      markdownTextArea.rows = 6;
+      const noteField = labeled(
+        "Markdown note",
+        markdownTextArea,
+        "Wird als Base64 im Feld mdnote_base64 im JSON gespeichert.",
+      );
+
+      const notePreview = document.createElement("code");
+      notePreview.className = "note-base64-preview";
+
+      function renderNotePreview(): void {
+        const encoded = encodeMarkdownNote(folder.markdownNote);
+        notePreview.textContent = encoded ? `mdnote_base64: "${encoded}"` : "";
+      }
+
+      markdownTextArea.addEventListener("input", () => {
+        renderNotePreview();
+      });
+
+      noteField.appendChild(notePreview);
+      inspectorEl.appendChild(noteField);
 
       inspectorEl.appendChild(
         labeled(
@@ -578,6 +610,19 @@ export function renderCreator(app: HTMLDivElement) {
           }),
         ),
       );
+
+      // Re-render the Base64 note preview after every full inspector render
+      // (the note field is only shown for the root node).
+      const notePreviewEl =
+        inspectorEl.querySelector<HTMLElement>(".note-base64-preview");
+      if (notePreviewEl) {
+        const encoded = encodeMarkdownNote(
+          (findFolder(root, selection.id) ?? root).markdownNote,
+        );
+        notePreviewEl.textContent = encoded
+          ? `mdnote_base64: "${encoded}"`
+          : "";
+      }
 
       return;
     }
@@ -687,6 +732,19 @@ export function renderCreator(app: HTMLDivElement) {
       URL.revokeObjectURL(url);
     });
 
+  // Extract the markdown note from a parsed template so the import dialog
+  // (which uses JSON.parse directly) also gets the decoded note.
+  function applyNoteFromRaw(raw: FolderJSON): void {
+    const rawWithNote = raw as unknown as { mdnote_base64?: unknown };
+    if (typeof rawWithNote.mdnote_base64 === "string") {
+      try {
+        root.markdownNote = base64ToUtf8(rawWithNote.mdnote_base64);
+      } catch {
+        root.markdownNote = "";
+      }
+    }
+  }
+
   document
     .querySelector<HTMLButtonElement>("#btn-import")!
     .addEventListener("click", () => {
@@ -707,6 +765,7 @@ export function renderCreator(app: HTMLDivElement) {
       try {
         const parsed = JSON.parse(importText.value);
         root = parseFolder(parsed);
+        applyNoteFromRaw(parsed);
         selection = { kind: "folder", id: root.id };
         importDialog.close();
         render();
@@ -723,7 +782,9 @@ export function renderCreator(app: HTMLDivElement) {
 
   if (template != null) {
     try {
-      root = parseFolder(JSON.parse(template));
+      const parsed = JSON.parse(template);
+      root = parseFolder(parsed);
+      applyNoteFromRaw(parsed);
       selection = { kind: "folder", id: root.id };
     } catch (error) {
       console.error("Could not load template from URL:", error);
