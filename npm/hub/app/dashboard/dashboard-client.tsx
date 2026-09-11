@@ -105,7 +105,6 @@ export function DashboardClient({
 
       <section style={{ marginTop: 24 }}>
         <h2>{editingId ? 'Template bearbeiten' : 'Neues Template'}</h2>
-        <p><a href="https://shadowdara.github.io/finder/creator" target="_blanc" >Use the template creator here</a></p>
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           <label style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
             Name
