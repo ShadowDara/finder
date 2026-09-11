@@ -19,7 +19,7 @@ services:
 
   uploadpage:
     build:
-      context: ./uploadpage
+      context: ./npm/hub
       dockerfile: ../docker/uploadpage/Dockerfile
     container_name: uploadpage
     ports:
