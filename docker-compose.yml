@@ -1,0 +1,26 @@
+services:
+  findergen:
+    build:
+      context: .
+      dockerfile: docker/findergen/Dockerfile
+    container_name: findergen
+    ports:
+      - "3013:3013"
+
+  template-site:
+    build:
+      context: ./finder-template-generator-ssg
+      dockerfile: ../docker/template-site/Dockerfile
+    container_name: template-site
+    ports:
+      - "3014:3014"
+    depends_on:
+      - findergen
+
+  uploadpage:
+    build:
+      context: ./uploadpage
+      dockerfile: ../docker/uploadpage/Dockerfile
+    container_name: uploadpage
+    ports:
+      - "3015:3015"
