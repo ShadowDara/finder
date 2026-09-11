@@ -20,3 +20,6 @@ finder-template-generator-ssg/tsconfig.tsbuildinfo
 /finder-template-generator-ssg/third_party_licenses
 finder-template-generator-ssg/static-stats.html
 finder.exe~
+/npm/finder-lib/node_modules
+/npm/finder-lib/dist
+*.tgz
