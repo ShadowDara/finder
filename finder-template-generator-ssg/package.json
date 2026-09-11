@@ -16,7 +16,8 @@
     "bb": "npm run build && npm run build:static",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "docker:build": "tsc -b && vite build --mode backend"
+    "docker:build": "tsc -b && vite build --mode backend",
+    "build:staticroot": "tsc -b && vite build --mode staticroot"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

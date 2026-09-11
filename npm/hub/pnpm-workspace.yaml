@@ -3,3 +3,4 @@ minimumReleaseAgeExclude:
   - next
   - nanoid
   - zod
+  - "@shadowdara/finder-lib"

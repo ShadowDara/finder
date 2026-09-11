@@ -47,7 +47,7 @@ export interface Checksums {
 export namespace versions {
   // Version v0.0.0
   export namespace v0_0_0 {
-    export type template = Folder;
+    export type Template = Folder;
 
     export interface Folder {
       name: string;

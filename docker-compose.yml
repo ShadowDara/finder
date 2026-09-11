@@ -17,6 +17,14 @@ services:
     depends_on:
       - findergen
 
+  static-site:
+    build:
+      context: .
+      dockerfile: docker/static-site/Dockerfile
+    container_name: static-site
+    ports:
+      - "3016:3016"
+
   uploadpage:
     build:
       context: ./npm/hub
