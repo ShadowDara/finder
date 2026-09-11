@@ -8,6 +8,10 @@ WORKDIR /app
 
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
+# Prisma-Schema vorab kopieren, damit der postinstall (prisma generate)
+# im deps-Stage funktioniert
+COPY prisma ./prisma
+
 RUN corepack enable && pnpm install --frozen-lockfile
 
 # ---- Build ----
