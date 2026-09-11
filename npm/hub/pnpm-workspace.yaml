@@ -1,3 +1,5 @@
 minimumReleaseAgeExclude:
-  - '@next/*'
+  - "@next/*"
   - next
+  - nanoid
+  - zod
