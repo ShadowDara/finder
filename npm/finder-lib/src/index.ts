@@ -43,9 +43,9 @@ export interface Checksums {
   sha512?: string;
 }
 
-// ALL Versions
+/// ALL Versions
 export namespace versions {
-  // Version v0.0.0
+  /// Version v0.0.0
   export namespace v0_0_0 {
     export type Template = Folder;
 
@@ -56,7 +56,7 @@ export namespace versions {
     }
   }
 
-  // Version v0.3.1
+  /// Version v0.3.1
   export namespace v0_3_1 {
     export interface Template {
       description?: string;
@@ -77,7 +77,7 @@ export namespace versions {
     }
   }
 
-  // Version v0.3.3
+  /// Version v0.3.3
   export namespace v0_3_3 {
     export interface Template {
       description?: string;
@@ -103,7 +103,7 @@ export namespace versions {
     }
   }
 
-  // Version v0.3.6
+  /// Version v0.3.6
   export namespace v0_3_6 {
     export interface Template {
       min_version?: string;
@@ -130,7 +130,7 @@ export namespace versions {
     }
   }
 
-  // Version v0.3.15
+  /// Version v0.3.15
   export namespace v0_3_15 {
     export interface Template {
       min_version?: string;
@@ -167,7 +167,7 @@ export namespace versions {
     }
   }
 
-  // Version v0.3.16
+  /// Version v0.3.16
   export namespace v0_3_16 {
     export interface Template {
       min_version?: string;
@@ -210,7 +210,7 @@ export namespace versions {
     }
   }
 
-  // Version v0.3.17
+  /// Version v0.3.17
   export namespace v0_3_17 {
     export interface Template {
       min_version?: string;
