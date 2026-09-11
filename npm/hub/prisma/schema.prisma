@@ -76,6 +76,7 @@ model Template {
   name      String
   // JSON template stored as a string. Size (max 5KB) is validated in the app layer.
   content   String
+  tags      String[] @default([])
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())

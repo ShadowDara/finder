@@ -50,7 +50,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
   // Scope the update by userId so a user can only modify their own templates.
   const updated = await prisma.template.updateMany({
     where: { id, userId: user.id },
-    data: { name: result.name, content: result.content },
+    data: { name: result.name, content: result.content, tags: result.tags },
   })
 
   if (updated.count === 0) {

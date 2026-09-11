@@ -40,6 +40,7 @@ export async function POST(request: Request) {
     data: {
       name: result.name,
       content: result.content,
+      tags: result.tags,
       userId: session.user.id,
     },
   })

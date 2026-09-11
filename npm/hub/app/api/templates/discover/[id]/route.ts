@@ -13,7 +13,8 @@ export async function GET(_request: Request, context: Context) {
       content: true,
       createdAt: true,
       updatedAt: true,
-      user: { select: { name: true, email: true } },
+      tags: true,
+      user: { select: { id: true, name: true, email: true } },
     },
   })
 

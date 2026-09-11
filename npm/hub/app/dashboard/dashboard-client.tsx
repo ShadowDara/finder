@@ -25,6 +25,7 @@ export function DashboardClient({
   const [editingId, setEditingId] = useState<string | null>(null)
   const [name, setName] = useState('')
   const [content, setContent] = useState('')
+  const [tags, setTags] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
   const [accountError, setAccountError] = useState<string | null>(null)
@@ -36,6 +37,7 @@ export function DashboardClient({
     setEditingId(null)
     setName('')
     setContent('')
+    setTags('')
     setError(null)
   }
 
@@ -57,7 +59,7 @@ export function DashboardClient({
     const res = await fetch(url, {
       method,
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, content }),
+      body: JSON.stringify({ name, content, tags: tags.split(',').map((tag) => tag.trim()).filter(Boolean) }),
     })
 
     const data = await res.json()
@@ -131,6 +133,10 @@ export function DashboardClient({
               onChange={(e) => setName(e.target.value)}
               required
             />
+          </label>
+          <label style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+            Tags (kommagetrennt)
+            <input type="text" value={tags} onChange={(e) => setTags(e.target.value)} placeholder="cli, web, react" />
           </label>
           <label style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
             Inhalt (JSON)
