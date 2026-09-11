@@ -27,6 +27,8 @@ export function DashboardClient({
   const [content, setContent] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
+  const [accountError, setAccountError] = useState<string | null>(null)
+  const [deletingAccount, setDeletingAccount] = useState(false)
 
   const contentBytes = new TextEncoder().encode(content).length
 
@@ -83,6 +85,21 @@ export function DashboardClient({
       setTemplates((prev) => prev.filter((t) => t.id !== id))
       if (editingId === id) resetForm()
     }
+  }
+
+  async function handleDeleteAccount() {
+    if (!window.confirm('Möchtest du deinen Account und alle Templates endgültig löschen?')) return
+    setDeletingAccount(true)
+    setAccountError(null)
+    const response = await fetch('/api/account', { method: 'DELETE' })
+    setDeletingAccount(false)
+    if (!response.ok) {
+      setAccountError('Der Account konnte nicht gelöscht werden.')
+      return
+    }
+    await signOut()
+    router.push('/')
+    router.refresh()
   }
 
   async function handleSignOut() {
@@ -165,6 +182,15 @@ export function DashboardClient({
             ))}
           </ul>
         )}
+      </section>
+
+      <section style={{ marginTop: 48, borderTop: '1px solid', paddingTop: 24 }}>
+        <h2>Account löschen</h2>
+        <p>Diese Aktion löscht deinen Account und alle Templates dauerhaft.</p>
+        {accountError && <p role="alert">{accountError}</p>}
+        <button type="button" onClick={handleDeleteAccount} disabled={deletingAccount}>
+          {deletingAccount ? 'Account wird gelöscht…' : 'Account endgültig löschen'}
+        </button>
       </section>
     </main>
   )

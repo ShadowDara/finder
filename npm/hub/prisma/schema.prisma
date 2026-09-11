@@ -15,6 +15,7 @@ model User {
   email         String     @unique
   emailVerified Boolean    @default(false)
   image         String?
+  recoveryKeyHash String?
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
   sessions      Session[]

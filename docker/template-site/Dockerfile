@@ -13,7 +13,7 @@ RUN npm ci
 
 COPY finder-template-generator-ssg/ .
 
-RUN npm run build
+RUN npm run docker:build
 
 # ---- Runtime-Stage ----
 FROM nginx:alpine
@@ -21,6 +21,6 @@ FROM nginx:alpine
 # Vite-Build-Output nach nginx kopieren
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY docker/template-site/nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 3014
