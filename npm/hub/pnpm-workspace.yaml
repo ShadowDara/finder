@@ -4,3 +4,9 @@ minimumReleaseAgeExclude:
   - nanoid
   - zod
   - "@shadowdara/finder-lib"
+
+onlyBuiltDependencies:
+  - "@prisma/client"
+  - "@prisma/engines"
+  - esbuild
+  - prisma
