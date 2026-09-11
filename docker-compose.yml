@@ -9,8 +9,8 @@ services:
 
   template-site:
     build:
-      context: ./finder-template-generator-ssg
-      dockerfile: ../docker/template-site/Dockerfile
+      context: .
+      dockerfile: docker/template-site/Dockerfile
     container_name: template-site
     ports:
       - "3014:3014"

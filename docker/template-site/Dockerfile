@@ -7,11 +7,11 @@ FROM node:22-alpine AS builder
 WORKDIR /app
 
 # package.json und Lockfile zuerst für besseren Docker-Cache
-COPY package.json package-lock.json ./
+COPY finder-template-generator-ssg/package.json finder-template-generator-ssg/package-lock.json ./
 
 RUN npm ci
 
-COPY . .
+COPY finder-template-generator-ssg/ .
 
 RUN npm run build
 
