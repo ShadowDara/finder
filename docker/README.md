@@ -29,3 +29,11 @@ graph LR
 `depends_on` wartet nur auf den Container-Start, nicht darauf, dass findergen wirklich bereit ist. Falls die API beim ersten Aufruf kurz nicht erreichbar ist, reicht ein Reload — oder ich ergänze einen Healthcheck (`/api/health` existiert ja) mit `condition: service_healthy`, wenn du das möchtest.
 
 Made changes.
+
+```sh
+# start
+docker compose up -d
+
+# stop
+docker compose down
+```

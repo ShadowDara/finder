@@ -25,7 +25,7 @@ export default function SignUpPage() {
       setError('Registrierung fehlgeschlagen. Bitte prüfe deine Angaben.')
       return
     }
-    router.push('/dashboard')
+    router.push(`/verify-email?email=${encodeURIComponent(email)}`)
     router.refresh()
   }
 

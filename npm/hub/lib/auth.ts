@@ -2,6 +2,7 @@ import { betterAuth } from 'better-auth'
 import { prismaAdapter } from 'better-auth/adapters/prisma'
 import { nextCookies } from 'better-auth/next-js'
 import { prisma } from '@/lib/db'
+import { saveLocalMail } from '@/lib/local-mailbox'
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
@@ -17,6 +18,17 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     autoSignIn: true,
+    requireEmailVerification: true,
+    sendResetPassword: async ({ user, url }) => {
+      saveLocalMail({ email: user.email, kind: 'password-reset', url })
+    },
+  },
+  emailVerification: {
+    sendVerificationEmail: async ({ user, url }) => {
+      saveLocalMail({ email: user.email, kind: 'verification', url })
+    },
+    sendOnSignUp: true,
+    autoSignInAfterVerification: true,
   },
   trustedOrigins: [
     ...(process.env.NODE_ENV === 'development'

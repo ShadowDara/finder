@@ -58,6 +58,9 @@ export default function SignInPage() {
         </button>
       </form>
       <p style={{ marginTop: 16 }}>
+        <Link href="/forgot-password">Passwort vergessen?</Link>
+      </p>
+      <p style={{ marginTop: 16 }}>
         Noch kein Account? <Link href="/sign-up">Registrieren</Link>
       </p>
     </main>
