@@ -201,31 +201,30 @@
 
     <script>
       const services = [
-        { name: "findergen", url: "http://findergen:3013" },
-        { name: "template-site", url: "http://template-site:3014" },
-        { name: "uploadpage", url: "http://uploadpage:3015" },
-        { name: "static-site", url: "http://static-site:3016" },
+        { name: "findergen", url: "http://localhost:3013" },
+        { name: "template-site", url: "http://localhost:3014" },
+        { name: "uploadpage", url: "http://localhost:3015" },
+        { name: "static-site", url: "http://localhost:3016" },
       ];
 
-      async function checkService(svc) {
+      function checkService(svc) {
         const el = document.getElementById("status-" + svc.name);
-        try {
-          const res = await fetch(svc.url, {
-            method: "HEAD",
-            mode: "no-cors",
-            signal: AbortSignal.timeout(4000),
-          });
-          // no-cors always returns opaque, treat any response as online
-          el.innerHTML = '<span class="dot online"></span> online';
-        } catch {
-          // try plain fetch (CORS-friendly)
-          try {
-            await fetch(svc.url, { signal: AbortSignal.timeout(4000) });
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 4000);
+
+        fetch(svc.url, {
+          method: "HEAD",
+          mode: "no-cors",
+          signal: controller.signal,
+        })
+          .then(() => {
+            clearTimeout(timeout);
             el.innerHTML = '<span class="dot online"></span> online';
-          } catch {
+          })
+          .catch(() => {
+            clearTimeout(timeout);
             el.innerHTML = '<span class="dot offline"></span> offline';
-          }
-        }
+          });
       }
 
       function checkAll() {
