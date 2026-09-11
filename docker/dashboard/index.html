@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Finder Dashboard</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #0f0f23;
+        color: #e0e0e0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 20px;
+      }
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 8px;
+        color: #00d4ff;
+      }
+      .subtitle {
+        color: #888;
+        margin-bottom: 40px;
+        font-size: 0.95rem;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+        max-width: 900px;
+        width: 100%;
+      }
+      .card {
+        background: #1a1a2e;
+        border: 1px solid #2a2a4a;
+        border-radius: 12px;
+        padding: 28px;
+        transition:
+          transform 0.2s,
+          border-color 0.2s;
+      }
+      .card:hover {
+        transform: translateY(-3px);
+        border-color: #00d4ff44;
+      }
+      .card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 16px;
+      }
+      .card-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+      }
+      .status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.85rem;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #555;
+      }
+      .dot.online {
+        background: #00e676;
+        box-shadow: 0 0 8px #00e67688;
+      }
+      .dot.offline {
+        background: #ff1744;
+        box-shadow: 0 0 8px #ff174488;
+      }
+      .dot.loading {
+        background: #ffab00;
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
+      .card-desc {
+        color: #999;
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+        line-height: 1.5;
+      }
+      .card-link {
+        display: inline-block;
+        padding: 10px 20px;
+        background: #00d4ff18;
+        color: #00d4ff;
+        border: 1px solid #00d4ff44;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: background 0.2s;
+      }
+      .card-link:hover {
+        background: #00d4ff33;
+      }
+      .refresh-bar {
+        margin-top: 40px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #888;
+        font-size: 0.85rem;
+      }
+      .refresh-bar button {
+        padding: 8px 16px;
+        background: #1a1a2e;
+        color: #00d4ff;
+        border: 1px solid #2a2a4a;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        transition: background 0.2s;
+      }
+      .refresh-bar button:hover {
+        background: #2a2a4a;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>&#x1F50D; Finder Dashboard</h1>
+    <p class="subtitle">Service status overview</p>
+
+    <div class="grid">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Findergen</span>
+          <span class="status" id="status-findergen"
+            ><span class="dot loading"></span> checking...</span
+          >
+        </div>
+        <p class="card-desc">Template generator &amp; compiler backend.</p>
+        <a class="card-link" href="http://localhost:3013" target="_blank"
+          >Open Findergen &rarr;</a
+        >
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Template Site</span>
+          <span class="status" id="status-template-site"
+            ><span class="dot loading"></span> checking...</span
+          >
+        </div>
+        <p class="card-desc">Browse &amp; preview all Finder templates.</p>
+        <a class="card-link" href="http://localhost:3014" target="_blank"
+          >Open Template Site &rarr;</a
+        >
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Upload Page</span>
+          <span class="status" id="status-uploadpage"
+            ><span class="dot loading"></span> checking...</span
+          >
+        </div>
+        <p class="card-desc">Upload and manage custom templates.</p>
+        <a class="card-link" href="http://localhost:3015" target="_blank"
+          >Open Upload Page &rarr;</a
+        >
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Static Site</span>
+          <span class="status" id="status-static-site"
+            ><span class="dot loading"></span> checking...</span
+          >
+        </div>
+        <p class="card-desc">Static documentation &amp; project pages.</p>
+        <a class="card-link" href="http://localhost:3016" target="_blank"
+          >Open Static Site &rarr;</a
+        >
+      </div>
+    </div>
+
+    <div class="refresh-bar">
+      <button onclick="checkAll()">Refresh Now</button>
+      <span id="last-check">Checking...</span>
+    </div>
+
+    <script>
+      const services = [
+        { name: "findergen", url: "http://findergen:3013" },
+        { name: "template-site", url: "http://template-site:3014" },
+        { name: "uploadpage", url: "http://uploadpage:3015" },
+        { name: "static-site", url: "http://static-site:3016" },
+      ];
+
+      async function checkService(svc) {
+        const el = document.getElementById("status-" + svc.name);
+        try {
+          const res = await fetch(svc.url, {
+            method: "HEAD",
+            mode: "no-cors",
+            signal: AbortSignal.timeout(4000),
+          });
+          // no-cors always returns opaque, treat any response as online
+          el.innerHTML = '<span class="dot online"></span> online';
+        } catch {
+          // try plain fetch (CORS-friendly)
+          try {
+            await fetch(svc.url, { signal: AbortSignal.timeout(4000) });
+            el.innerHTML = '<span class="dot online"></span> online';
+          } catch {
+            el.innerHTML = '<span class="dot offline"></span> offline';
+          }
+        }
+      }
+
+      function checkAll() {
+        services.forEach((s) => {
+          const el = document.getElementById("status-" + s.name);
+          el.innerHTML = '<span class="dot loading"></span> checking...';
+          checkService(s);
+        });
+        document.getElementById("last-check").textContent =
+          "Last check: " + new Date().toLocaleTimeString();
+      }
+
+      checkAll();
+      setInterval(checkAll, 15000);
+    </script>
+  </body>
+</html>

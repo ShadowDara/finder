@@ -32,3 +32,11 @@ services:
     container_name: uploadpage
     ports:
       - "3015:3015"
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: docker/dashboard/Dockerfile
+    container_name: dashboard
+    ports:
+      - "8080:80"
