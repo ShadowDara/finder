@@ -24,3 +24,4 @@ finder.exe~
 /npm/finder-lib/dist
 *.tgz
 npm/hub/.env
+/node_modules

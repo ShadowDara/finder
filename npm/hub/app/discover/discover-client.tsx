@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import hljs from "highlight.js/lib/common";
 
-
 type T = {
   id: string;
   name: string;
@@ -18,11 +17,11 @@ export default function DiscoverClient() {
   const [tag, setTag] = useState("");
   const [templates, setTemplates] = useState<T[]>([]);
   const [loading, setLoading] = useState(true);
-  
+
   const [selected, setSelected] = useState<(T & { content: string }) | null>(
     null,
   );
-  
+
   const [error, setError] = useState("");
   useEffect(() => {
     const timer = setTimeout(async () => {
@@ -41,7 +40,7 @@ export default function DiscoverClient() {
     }, 250);
     return () => clearTimeout(timer);
   }, [q, tag]);
-  
+
   async function open(id: string) {
     const r = await fetch(`/api/templates/discover/${id}`);
     if (r.ok) setSelected((await r.json()).template);

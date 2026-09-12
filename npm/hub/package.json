@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.3",
+    "@types/highlight.js": "^10.1.0",
     "@types/node": "^24",
     "@types/react": "^19",
     "@types/react-dom": "^19",
