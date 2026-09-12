@@ -44,9 +44,10 @@ COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-# Prisma-Client für den Runtime-Container kopieren
-COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
-COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
+# Hinweis: Der Prisma-Client (inkl. libquery_engine) wird von Next.js
+# (output: "standalone" + outputFileTracing) bereits vollständig in
+# .next/standalone eingebettet — eine separate Kopie ist nicht nötig
+# (unter pnpm existiert node_modules/.prisma nicht als flacher Pfad).
 
 USER nextjs
 
