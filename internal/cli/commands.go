@@ -148,7 +148,7 @@ func HandleCommand(args []string) {
 		Check()
 	case validateCmd:
 		// Validate a single template file
-		Validate(cmd.Args)
+		Validate(cmd.Args, finderconfig.OutputType)
 	case listCmd:
 		// List
 		List()

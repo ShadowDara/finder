@@ -255,6 +255,7 @@ func Check() error {
 	w := tabwriter.NewWriter(os.Stdout, 0, 8, 2, ' ', 0)
 	fmt.Fprintf(w, "%sName%s\t%sSource%s\tDescription\n", goansi.WHITE, goansi.END, goansi.WHITE, goansi.END)
 
+	failed := false
 	for _, templ := range templateNames {
 		// Check for blocked templates
 		blockednames := loader.GetBlockedTemplateNames()
@@ -267,10 +268,37 @@ func Check() error {
 		data, err := templates.JSONtemplateLoaderWithUserTemplates(templ, userTemplates)
 		if err != nil {
 			fmt.Fprintf(w, "%s%s (ERROR)%s\t%s\t%s\n", color.Red, templ, color.Reset, "Error loading", "---")
+			failed = true
 			continue
 		}
 
-		folder := structure.LoadJSON5(string(data))
+		// Parse manually instead of structure.LoadJSON5 (which would
+		// log.Fatalf and abort the whole check without telling us
+		// which template failed and why).
+		validJSON := json.Valid(data)
+		normalized := string(data)
+		if !validJSON {
+			normalized = json5.PreprocessJSON5(normalized)
+		}
+
+		var folder structure.Folder
+		if err := json.Unmarshal([]byte(normalized), &folder); err != nil {
+			fmt.Fprintf(w, "%s%s (ERROR)%s\t%s%s%s\t%s\n",
+				color.Red, templ, color.Reset,
+				"Error parsing", ":", err, color.Reset,
+				"---")
+			failed = true
+			continue
+		}
+
+		if err := folder.Files.Validate(); err != nil {
+			fmt.Fprintf(w, "%s%s (ERROR)%s\t%s%s%s\t%s\n",
+				color.Red, templ, color.Reset,
+				"Invalid template", ":", err, color.Reset,
+				"---")
+			failed = true
+			continue
+		}
 
 		// Determine source (built-in or custom)
 		source := goansi.WHITE + "Built-in" + goansi.END
@@ -283,6 +311,11 @@ func Check() error {
 	}
 
 	w.Flush()
+
+	if failed {
+		fmt.Printf("%sFinished Checking with Errors!%s\n", color.Red, color.Reset)
+		os.Exit(1)
+	}
 	fmt.Printf("%sFinished Checking!%s\n", color.Green, color.Reset)
 	return nil
 }
@@ -293,11 +326,33 @@ func Check() error {
 // but becomes valid after the JSON5 preprocessing step, a warning is
 // printed to inform the user that the template depends on the JSON5
 // preprocessor.
-func Validate(args []string) error {
+//
+// OutputType controls the result format: "json" produces a single
+// machine readable JSON object on stdout, any other value produces the
+// human readable table. In JSON mode the process still exits non-zero
+// if any template failed validation.
+func Validate(args []string, OutputType string) error {
 	templatecount := len(args)
-	fmt.Printf("%sValidating %d Template(s)%s\n", color.Yellow, templatecount, color.Reset)
+	if OutputType != "json" {
+		fmt.Printf("%sValidating %d Template(s)%s\n", color.Yellow, templatecount, color.Reset)
+	}
 
 	if templatecount <= 0 {
+		if OutputType == "json" {
+			out := struct {
+				Valid bool   `json:"valid"`
+				Count int    `json:"count"`
+				Error string `json:"error"`
+				Usage string `json:"usage"`
+			}{
+				Valid: false,
+				Count: 0,
+				Error: "no templates given",
+				Usage: "finder validate <template-file-or-name> [more files ...]",
+			}
+			json.NewEncoder(os.Stdout).Encode(out)
+			os.Exit(1)
+		}
 		fmt.Println("Usage: finder validate <template-file-or-name> [more files ...]")
 		return nil
 	}
@@ -310,12 +365,26 @@ func Validate(args []string) error {
 	}
 
 	failed := false
+	// result of a single template validation
+	type validateResult struct {
+		File    string `json:"file"`
+		Source  string `json:"source"`
+		Valid   bool   `json:"valid"`
+		Error   string `json:"error,omitempty"`
+		JSON5   bool   `json:"json5,omitempty"` // true when JSON5 preprocessor was needed
+		Warning string `json:"warning,omitempty"`
+	}
+	results := []validateResult{}
+
 	w := tabwriter.NewWriter(os.Stdout, 0, 8, 2, ' ', 0)
-	fmt.Fprintf(w, "%sFile%s\t%sResult%s\tWarning\n", goansi.WHITE, goansi.END, goansi.WHITE, goansi.END)
+	if OutputType != "json" {
+		fmt.Fprintf(w, "%sFile%s\t%sResult%s\tWarning\n", goansi.WHITE, goansi.END, goansi.WHITE, goansi.END)
+	}
 
 	for _, arg := range args {
 		name := filepath.Base(arg)
 		displayName := arg
+		res := validateResult{File: displayName}
 
 		// Resolve the template contents: prefer a file on disk
 		// (path given), otherwise fall back to built-in/custom
@@ -325,14 +394,24 @@ func Validate(args []string) error {
 		if _, err := os.Stat(arg); err == nil {
 			data, err = os.ReadFile(arg)
 			if err != nil {
-				fmt.Fprintf(w, "%s%s%s\t%sError reading: %v%s\t%s\n", color.Red, displayName, color.Reset, color.Red, err, color.Reset, "---")
+				res.Valid = false
+				res.Error = fmt.Sprintf("error reading: %v", err)
+				results = append(results, res)
+				if OutputType != "json" {
+					fmt.Fprintf(w, "%s%s%s\t%sError reading: %v%s\t%s\n", color.Red, displayName, color.Reset, color.Red, err, color.Reset, "---")
+				}
 				failed = true
 				continue
 			}
 		} else {
 			data, err = templates.JSONtemplateLoaderWithUserTemplates(name, userTemplates)
 			if err != nil {
-				fmt.Fprintf(w, "%s%s%s\t%sNOT FOUND%s\t%s\n", color.Red, displayName, color.Reset, color.Red, err, color.Reset)
+				res.Valid = false
+				res.Error = fmt.Sprintf("not found: %v", err)
+				results = append(results, res)
+				if OutputType != "json" {
+					fmt.Fprintf(w, "%s%s%s\t%sNOT FOUND%s\t%s\n", color.Red, displayName, color.Reset, color.Red, err, color.Reset)
+				}
 				failed = true
 				continue
 			}
@@ -355,13 +434,23 @@ func Validate(args []string) error {
 
 		var folder structure.Folder
 		if err := json.Unmarshal([]byte(normalized), &folder); err != nil {
-			fmt.Fprintf(w, "%s%s%s\t%sINVALID%s\t%s%v%s\n", color.Red, displayName, color.Reset, color.Red, color.Reset, "---", err, color.Reset)
+			res.Valid = false
+			res.Error = err.Error()
+			results = append(results, res)
+			if OutputType != "json" {
+				fmt.Fprintf(w, "%s%s%s\t%sINVALID%s\t%s%v%s\n", color.Red, displayName, color.Reset, color.Red, color.Reset, "---", err, color.Reset)
+			}
 			failed = true
 			continue
 		}
 
 		if err := folder.Files.Validate(); err != nil {
-			fmt.Fprintf(w, "%s%s%s\t%sINVALID%s\t%s%v%s\n", color.Red, displayName, color.Reset, color.Red, color.Reset, "---", err, color.Reset)
+			res.Valid = false
+			res.Error = err.Error()
+			results = append(results, res)
+			if OutputType != "json" {
+				fmt.Fprintf(w, "%s%s%s\t%sINVALID%s\t%s%v%s\n", color.Red, displayName, color.Reset, color.Red, color.Reset, "---", err, color.Reset)
+			}
 			failed = true
 			continue
 		}
@@ -375,26 +464,54 @@ func Validate(args []string) error {
 			source = "File"
 		}
 
-		var warning string
+		warning := ""
 		if !validJSON {
-			warning = fmt.Sprintf("%sTemplate is not plain JSON - it needs the JSON5 preprocessor to be parsed%s", color.Yellow, color.Reset)
-		} else {
-			warning = "---"
+			warning = "Template is not plain JSON - it needs the JSON5 preprocessor to be parsed"
 		}
 
-		fmt.Fprintf(w, "%s%s%s\t%sOK%s (%s)\t%s\n",
-			color.Cyan, displayName, color.Reset,
-			color.Green, color.Reset, source, warning)
+		res.Valid = true
+		res.Source = source
+		res.JSON5 = !validJSON
+		res.Warning = warning
+		results = append(results, res)
+
+		if OutputType != "json" {
+			fmt.Fprintf(w, "%s%s%s\t%sOK%s (%s)\t%s%s%s\n",
+				color.Cyan, displayName, color.Reset,
+				color.Green, color.Reset, source,
+				color.Yellow, warning, color.Reset)
+		}
 	}
 
-	w.Flush()
+	if OutputType == "json" {
+		// Single JSON object on stdout (machine readable).
+		out := struct {
+			Valid   bool             `json:"valid"`
+			Count   int              `json:"count"`
+			Results []validateResult `json:"results"`
+		}{
+			Valid:   !failed,
+			Count:   len(results),
+			Results: results,
+		}
+		if err := json.NewEncoder(os.Stdout).Encode(out); err != nil {
+			fmt.Println("JSON encoding error:", err)
+		}
+	} else {
+		w.Flush()
+	}
 
 	if failed {
+		if OutputType == "json" {
+			os.Exit(1)
+		}
 		fmt.Printf("%sValidation failed!%s\n", color.Red, color.Reset)
 		os.Exit(1)
 	}
 
-	fmt.Printf("%sValidation complete. All Templates are valid!%s\n", color.Green, color.Reset)
+	if OutputType != "json" {
+		fmt.Printf("%sValidation complete. All Templates are valid!%s\n", color.Green, color.Reset)
+	}
 	return nil
 }
 
