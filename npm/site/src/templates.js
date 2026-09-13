@@ -3316,7 +3316,10 @@ export default {
       }
     ],
     "min_version": "0.3.16",
-    "name": "*"
+    "name": "*",
+    "tags": [
+      "ai"
+    ]
   },
   "mlflow.json5": {
     "description": "MLflow open-source machine learning lifecycle platform",
@@ -3590,7 +3593,10 @@ export default {
       }
     ],
     "min_version": "0.3.16",
-    "name": "*"
+    "name": "*",
+    "tags": [
+      "web"
+    ]
   },
   "nft.json5": {
     "description": "NFT smart contract collection",
@@ -3661,7 +3667,10 @@ export default {
       }
     ],
     "min_version": "0.3.16",
-    "name": "*"
+    "name": "*",
+    "tags": [
+      "web"
+    ]
   },
   "objc.json5": {
     "description": "Objective-C macOS/iOS project",
@@ -4416,6 +4425,7 @@ export default {
         "name": "qml"
       }
     ],
+    "min_version": "0.3.17",
     "name": "*"
   },
   "quarkus.json5": {
@@ -4431,7 +4441,11 @@ export default {
         "name": "src"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.17",
+    "name": "*",
+    "tags": [
+      "java"
+    ]
   },
   "quart.json5": {
     "description": "Quart async Python web framework",
@@ -4440,7 +4454,12 @@ export default {
       "requirements.txt"
     ],
     "folders": [],
-    "name": "*"
+    "min_version": "0.3.17",
+    "name": "*",
+    "tags": [
+      "python",
+      "web"
+    ]
   },
   "qwik.json5": {
     "description": "Qwik web framework",
@@ -4455,6 +4474,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.17",
     "name": "*"
   },
   "r.json5": {
@@ -4470,6 +4490,7 @@ export default {
         "name": "R"
       }
     ],
+    "min_version": "0.3.17",
     "name": "*"
   },
   "rabbitmq.json5": {
@@ -4479,6 +4500,7 @@ export default {
       "rabbitmq.conf"
     ],
     "folders": [],
+    "min_version": "0.3.17",
     "name": "*"
   },
   "rag.json5": {
@@ -4514,6 +4536,7 @@ export default {
         "name": "embeddings"
       }
     ],
+    "min_version": "0.3.17",
     "name": "*"
   },
   "rails.json5": {
@@ -4529,6 +4552,7 @@ export default {
         "name": "app"
       }
     ],
+    "min_version": "0.3.17",
     "name": "*"
   },
   "railway.json5": {
@@ -4537,6 +4561,7 @@ export default {
       "railway.json"
     ],
     "folders": [],
+    "min_version": "0.3.17",
     "name": "*"
   },
   "raku.json5": {
@@ -4546,6 +4571,7 @@ export default {
       "*.raku"
     ],
     "folders": [],
+    "min_version": "0.3.17",
     "name": "*"
   },
   "raml.json5": {
@@ -4554,6 +4580,7 @@ export default {
       "*.raml"
     ],
     "folders": [],
+    "min_version": "0.3.17",
     "name": "*"
   },
   "rapids.json5": {
@@ -4571,6 +4598,7 @@ export default {
         "name": "notebooks"
       }
     ],
+    "min_version": "0.3.17",
     "name": "*"
   },
   "react-native.json5": {
@@ -4586,7 +4614,11 @@ export default {
         "name": "src"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.17",
+    "name": "*",
+    "tags": [
+      "web"
+    ]
   },
   "react.json5": {
     "description": "React JavaScript/TypeScript web application",
@@ -4614,6 +4646,7 @@ export default {
       "*.realm"
     ],
     "folders": [],
+    "min_version": "0.3.17",
     "name": "*"
   },
   "redis.json5": {
@@ -4623,6 +4656,7 @@ export default {
       "docker-compose.yml"
     ],
     "folders": [],
+    "min_version": "0.3.17",
     "name": "*"
   },
   "redwood.json5": {
@@ -4637,7 +4671,11 @@ export default {
         "name": "web"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.17",
+    "name": "*",
+    "tags": [
+      "web"
+    ]
   },
   "remix.json5": {
     "description": "Remix React full-stack framework",
@@ -4652,7 +4690,11 @@ export default {
         "name": "app"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.17",
+    "name": "*",
+    "tags": [
+      "web"
+    ]
   },
   "render.json5": {
     "description": "Render platform as a service",
@@ -4660,6 +4702,7 @@ export default {
       "render.yaml"
     ],
     "folders": [],
+    "min_version": "0.3.17",
     "name": "*"
   },
   "renpy.json5": {
@@ -4704,6 +4747,7 @@ export default {
         "name": "models"
       }
     ],
+    "min_version": "0.3.17",
     "name": "*"
   },
   "rest-api.json5": {
@@ -4719,6 +4763,7 @@ export default {
         "name": "routes"
       }
     ],
+    "min_version": "0.3.17",
     "name": "*"
   },
   "rethinkdb.json5": {
@@ -4727,7 +4772,11 @@ export default {
       "docker-compose.yml"
     ],
     "folders": [],
-    "name": "*"
+    "min_version": "0.3.17",
+    "name": "*",
+    "tags": [
+      "docker"
+    ]
   },
   "roblox.json5": {
     "description": "Roblox game development",
@@ -5296,6 +5345,7 @@ export default {
         "name": "api"
       }
     ],
+    "min_version": "0.3.17",
     "name": "*"
   },
   "streamlit.json5": {
@@ -5321,6 +5371,7 @@ export default {
         "name": ".streamlit"
       }
     ],
+    "min_version": "0.3.17",
     "name": "*"
   },
   "supabase.json5": {

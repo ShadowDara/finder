@@ -1,35 +1,35 @@
 {
-  "generatedAt": "2026-09-13T19:40:03.901Z",
+  "generatedAt": "2026-09-13T20:04:23.477Z",
   "total": {
     "files": 57,
-    "bytes": 394696,
-    "kilobytes": 385.45,
+    "bytes": 395928,
+    "kilobytes": 386.65,
     "megabytes": 0.38
   },
   "byExtension": [
     {
       "extension": ".js",
       "files": 20,
-      "bytes": 318457,
-      "percentage": 80.68
+      "bytes": 319612,
+      "percentage": 80.72
     },
     {
       "extension": ".css",
       "files": 15,
       "bytes": 56648,
-      "percentage": 14.35
+      "percentage": 14.31
     },
     {
       "extension": ".txt",
       "files": 1,
-      "bytes": 9732,
-      "percentage": 2.47
+      "bytes": 9809,
+      "percentage": 2.48
     },
     {
       "extension": ".html",
       "files": 20,
       "bytes": 7848,
-      "percentage": 1.99
+      "percentage": 1.98
     },
     {
       "extension": ".sh",
@@ -47,12 +47,12 @@
     {
       "path": "assets/viewer.js",
       "extension": ".js",
-      "bytes": 76957
+      "bytes": 77569
     },
     {
       "path": "assets/main_entry.js",
       "extension": ".js",
-      "bytes": 66755
+      "bytes": 67298
     },
     {
       "path": "assets/installscript.js",
@@ -72,7 +72,7 @@
     {
       "path": "dependencies.txt",
       "extension": ".txt",
-      "bytes": 9732
+      "bytes": 9809
     },
     {
       "path": "assets/viewer.css",
