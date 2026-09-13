@@ -404,6 +404,10 @@ func restoreZip(archive, destination string) error {
 	if err := os.MkdirAll(destination, 0755); err != nil {
 		return err
 	}
+	rootAbs, err := filepath.Abs(destination)
+	if err != nil {
+		return err
+	}
 	for _, file := range reader.File {
 		if file.Name == "" {
 			return fmt.Errorf("unsicherer ZIP-Pfad erkannt: %s", file.Name)
@@ -417,13 +421,16 @@ func restoreZip(archive, destination string) error {
 			filepath.VolumeName(entryPath) != "" {
 			return fmt.Errorf("unsicherer ZIP-Pfad erkannt: %s", file.Name)
 		}
-		target := filepath.Join(destination, entryPath)
+		target := filepath.Join(rootAbs, entryPath)
 		resolved, err := filepath.Abs(target)
 		if err != nil {
 			return err
 		}
-		root, _ := filepath.Abs(destination)
-		if resolved != root && !strings.HasPrefix(resolved, root+string(os.PathSeparator)) {
+		rel, err := filepath.Rel(rootAbs, resolved)
+		if err != nil {
+			return err
+		}
+		if rel == ".." || strings.HasPrefix(rel, ".."+string(os.PathSeparator)) || filepath.IsAbs(rel) {
 			return fmt.Errorf("unsicherer ZIP-Pfad erkannt: %s", file.Name)
 		}
 		if file.Name == "gitpack.json" {
