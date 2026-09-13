@@ -24,10 +24,10 @@ type Folder struct {
 	InvertCommand bool     `json:"invert_command"` // To change if return code 0 or 1 is required. False is equal to 0
 	Tags          []string `json:"tags"`           // tags to sort the Templates
 	DataSize      Size     `json:"size,omitempty"`
-	// Optional Markdown note. Percent-encoded (like encodeURIComponent, e.g.
-	// newlines become %0A) so arbitrary content survives plain-JSON
-	// serialization as a single line. Displayed e.g. in the web interface /
-	// community template hub.
+	// Optional Markdown note. Stored as a single-line string (whitespace,
+	// including newlines, is collapsed to single spaces) so arbitrary
+	// content survives plain-JSON serialization. Displayed e.g. in the web
+	// interface / community template hub.
 	MarkdownNote string `json:"mdnote,omitempty"`
 }
 

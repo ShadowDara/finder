@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { prettyJson } from "@/lib/utils";
-import { highlightFinderTemplate } from "@/lib/highlight";
+import { TemplateView } from "@/components/template-view";
 
 type TemplateDetail = {
   id: string;
@@ -90,21 +89,7 @@ export function UserClient({ user }: { user: UserData }) {
         )}
       </section>
 
-      {selected && (
-        <div className="modal-backdrop" onClick={() => setSelected(null)}>
-          <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={() => setSelected(null)}>
-              ×
-            </button>
-            <p className="eyebrow">{selected.name}</p>
-            <pre
-              dangerouslySetInnerHTML={{
-                __html: highlightFinderTemplate(prettyJson(selected.content)),
-              }}
-            />
-          </div>
-        </div>
-      )}
+      <TemplateView template={selected} onClose={() => setSelected(null)} />
     </main>
   );
 }

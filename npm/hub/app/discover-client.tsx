@@ -3,9 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { signOut, useSession } from "@/lib/auth-client";
-import { prettyJson } from "@/lib/utils";
-import { highlightFinderTemplate } from "@/lib/highlight";
-import { parseMarkdown } from "@shadowdara/dlib"
+import { TemplateView } from "@/components/template-view";
 
 type T = {
   id: string;
@@ -144,25 +142,7 @@ export default function DiscoverClient() {
           ))}
         </div>
       </section>
-      {selected && (
-        <div className="modal-backdrop" onClick={() => setSelected(null)}>
-          <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={() => setSelected(null)}>
-              ×
-            </button>
-            <p className="eyebrow">{selected.name}</p>
-            <pre
-              dangerouslySetInnerHTML={{
-                __html: highlightFinderTemplate(prettyJson(selected.content)),
-              }}
-            />
-            <div>
-              {parseMarkdown((JSON.parse(selected.content))?.mdnote)}
-
-            </div>
-          </div>
-        </div>
-      )}
+      <TemplateView template={selected} onClose={() => setSelected(null)} />
     </main>
   );
 }
