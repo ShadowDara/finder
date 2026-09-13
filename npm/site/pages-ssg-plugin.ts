@@ -18,6 +18,22 @@ const RESOLVED_VIRTUAL_MODULE_ID = "\0" + VIRTUAL_MODULE_ID;
 const STYLE_PREFIX = "virtual:page-style:";
 const RESOLVED_STYLE_PREFIX = "\0" + STYLE_PREFIX;
 
+/**
+ * Escape `<...>` sequences that are NOT valid HTML tags, so the output can
+ * safely pass through `html-minifier-terser` (which uses a strict HTML
+ * parser). Without this, things like
+ * `Co-authored-by: Copilot <foo@users.noreply.github.com>` survive
+ * `parseMarkdown({ sanitize: false })` as raw text and crash the minifier.
+ *
+ * Heuristic: a `<` is kept as-is only when it starts a plausible tag
+ * (letter, `/`, `!`), otherwise both `<` and its matching `>` are escaped.
+ */
+function escapeBareAngles(html: string): string {
+  return html.replace(/<([^a-zA-Z/!][^>]*)>/g, (_m, inner) => {
+    return `&lt;${inner.replace(/</g, "&lt;")}&gt;`;
+  });
+}
+
 export interface PagesPluginOptions {
   /**
    * Directory containing the page modules (one `.ts`/`.tsx` file per page).
@@ -320,7 +336,7 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
           });
 
           if (options.minify) {
-            html = await minify(html, {
+            html = await minify(escapeBareAngles(html), {
               collapseWhitespace: true,
               removeComments: true,
               removeRedundantAttributes: true,

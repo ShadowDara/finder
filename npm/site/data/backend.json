@@ -1,53 +1,53 @@
 {
-  "generatedAt": "2026-09-13T20:04:13.325Z",
+  "generatedAt": "2026-09-13T20:23:12.767Z",
   "total": {
     "files": 57,
-    "bytes": 328349,
-    "kilobytes": 320.65,
-    "megabytes": 0.31
+    "bytes": 348597,
+    "kilobytes": 340.43,
+    "megabytes": 0.33
   },
   "byExtension": [
     {
       "extension": ".js",
       "files": 20,
-      "bytes": 252234,
-      "percentage": 76.82
+      "bytes": 272482,
+      "percentage": 78.17
     },
     {
       "extension": ".css",
       "files": 15,
       "bytes": 56648,
-      "percentage": 17.25
+      "percentage": 16.25
     },
     {
       "extension": ".txt",
       "files": 1,
       "bytes": 9809,
-      "percentage": 2.99
+      "percentage": 2.81
     },
     {
       "extension": ".html",
       "files": 20,
       "bytes": 7647,
-      "percentage": 2.33
+      "percentage": 2.19
     },
     {
       "extension": ".sh",
       "files": 1,
       "bytes": 2011,
-      "percentage": 0.61
+      "percentage": 0.58
     }
   ],
   "files": [
     {
+      "path": "assets/main_entry.js",
+      "extension": ".js",
+      "bytes": 87805
+    },
+    {
       "path": "assets/jquery.module.js",
       "extension": ".js",
       "bytes": 79109
-    },
-    {
-      "path": "assets/main_entry.js",
-      "extension": ".js",
-      "bytes": 67557
     },
     {
       "path": "assets/installscript.js",

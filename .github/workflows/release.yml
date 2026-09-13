@@ -66,6 +66,7 @@ jobs:
           cp CHANGELOG.md "${PACKAGE_DIR}/"
           cp INFO.txt "${PACKAGE_DIR}/"
           cp LICENSE "${PACKAGE_DIR}/"
+          cp Newest_Changes.md "${PACKAGE_DIR}/"
 
       - uses: actions/upload-artifact@v4
         with:
@@ -114,15 +115,16 @@ jobs:
           cd release
           sha512sum * > SHA512SUMS.txt
 
-      - name: Extract release notes from CHANGELOG
+      - name: Extract release notes from Newest_Changes
         id: changelog
         run: |
-          VERSION=${GITHUB_REF#refs/tags/}
-
-          awk "/^## ${VERSION}/{flag=1; next} /^## /{flag=0} flag" CHANGELOG.md > RELEASE_NOTES.md
+          if [ ! -f Newest_Changes.md ]; then
+            echo "Newest_Changes.md not found - run 'bun generate-changelog.js' and commit it." >&2
+            exit 1
+          fi
 
           echo "RELEASE_BODY<<EOF" >> $GITHUB_OUTPUT
-          cat RELEASE_NOTES.md >> $GITHUB_OUTPUT
+          cat Newest_Changes.md >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Create Release
