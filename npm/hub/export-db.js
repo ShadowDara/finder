@@ -7,9 +7,6 @@ const OUTPUT_FILE = "./database-export.sql";
 
 /**
  * Prisma Model -> Datenbank-Tabelle
- *
- * Die Namen links sind die Prisma-Client-Properties.
- * Die Namen rechts sind die tatsächlichen PostgreSQL-Tabellen.
  */
 const models = [
   {
@@ -73,20 +70,19 @@ function escapeSql(value) {
     return `'${value.toISOString().replace(/'/g, "''")}'`;
   }
 
-  // Array
+  // PostgreSQL Arrays
   if (Array.isArray(value)) {
-    // PostgreSQL String[] / andere Arrays
     const values = value.map((item) => {
       if (item === null || item === undefined) {
         return "NULL";
       }
 
-      return `"${String(item).replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`;
+      const escaped = String(item).replace(/\\/g, "\\\\").replace(/'/g, "''");
+
+      return `'${escaped}'`;
     });
 
-    return `ARRAY[${values
-      .map((value) => value.replace(/^"|"$/g, "'"))
-      .join(", ")}]`;
+    return `ARRAY[${values.join(", ")}]`;
   }
 
   // Objekt / JSON
@@ -102,6 +98,9 @@ function escapeSql(value) {
   return `'${String(value).replace(/'/g, "''")}'`;
 }
 
+/**
+ * SQL-Datei erstellen
+ */
 async function main() {
   let sql = "";
 
@@ -110,8 +109,158 @@ async function main() {
   sql += `-- Generated: ${new Date().toISOString()}\n`;
   sql += "-- ============================================\n\n";
 
-  // Transaktionen sorgen dafür, dass der Import sauber ausgeführt werden kann.
+  // ============================================================
+  // TRANSACTION
+  // ============================================================
+
   sql += "BEGIN;\n\n";
+
+  // ============================================================
+  // EXTENSIONS
+  // ============================================================
+
+  sql += "-- ============================================\n";
+  sql += "-- Extensions\n";
+  sql += "-- ============================================\n\n";
+
+  // CUIDs werden von Prisma bereits in der Anwendung erzeugt.
+  // Für das Schema selbst ist daher keine Extension notwendig.
+
+  // ============================================================
+  // TABLES
+  // ============================================================
+
+  sql += "-- ============================================\n";
+  sql += "-- Create Tables\n";
+  sql += "-- ============================================\n\n";
+
+  // ------------------------------------------------------------
+  // USER
+  // ------------------------------------------------------------
+
+  sql += `CREATE TABLE IF NOT EXISTS "user" (
+  "id" TEXT NOT NULL,
+  "name" TEXT NOT NULL,
+  "email" TEXT NOT NULL,
+  "emailVerified" BOOLEAN NOT NULL DEFAULT FALSE,
+  "image" TEXT,
+  "recoveryKeyHash" TEXT,
+  "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "updatedAt" TIMESTAMP(3) NOT NULL,
+
+  CONSTRAINT "user_pkey" PRIMARY KEY ("id")
+);
+
+`;
+
+  sql += `CREATE UNIQUE INDEX IF NOT EXISTS "user_email_key"
+ON "user" ("email");
+
+`;
+
+  // ------------------------------------------------------------
+  // SESSION
+  // ------------------------------------------------------------
+
+  sql += `CREATE TABLE IF NOT EXISTS "session" (
+  "id" TEXT NOT NULL,
+  "expiresAt" TIMESTAMP(3) NOT NULL,
+  "token" TEXT NOT NULL,
+  "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "updatedAt" TIMESTAMP(3) NOT NULL,
+  "ipAddress" TEXT,
+  "userAgent" TEXT,
+  "userId" TEXT NOT NULL,
+
+  CONSTRAINT "session_pkey" PRIMARY KEY ("id")
+);
+
+`;
+
+  sql += `CREATE UNIQUE INDEX IF NOT EXISTS "session_token_key"
+ON "session" ("token");
+
+`;
+
+  // ------------------------------------------------------------
+  // ACCOUNT
+  // ------------------------------------------------------------
+
+  sql += `CREATE TABLE IF NOT EXISTS "account" (
+  "id" TEXT NOT NULL,
+  "accountId" TEXT NOT NULL,
+  "providerId" TEXT NOT NULL,
+  "userId" TEXT NOT NULL,
+  "accessToken" TEXT,
+  "refreshToken" TEXT,
+  "idToken" TEXT,
+  "accessTokenExpiresAt" TIMESTAMP(3),
+  "refreshTokenExpiresAt" TIMESTAMP(3),
+  "scope" TEXT,
+  "password" TEXT,
+  "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "updatedAt" TIMESTAMP(3) NOT NULL,
+
+  CONSTRAINT "account_pkey" PRIMARY KEY ("id")
+);
+
+`;
+
+  // ------------------------------------------------------------
+  // VERIFICATION
+  // ------------------------------------------------------------
+
+  sql += `CREATE TABLE IF NOT EXISTS "verification" (
+  "id" TEXT NOT NULL,
+  "identifier" TEXT NOT NULL,
+  "value" TEXT NOT NULL,
+  "expiresAt" TIMESTAMP(3) NOT NULL,
+  "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "updatedAt" TIMESTAMP(3) NOT NULL,
+
+  CONSTRAINT "verification_pkey" PRIMARY KEY ("id")
+);
+
+`;
+
+  // ------------------------------------------------------------
+  // TEMPLATE
+  // ------------------------------------------------------------
+
+  sql += `CREATE TABLE IF NOT EXISTS "template" (
+  "id" TEXT NOT NULL,
+  "name" TEXT NOT NULL,
+  "content" TEXT NOT NULL,
+  "tags" TEXT[] NOT NULL DEFAULT ARRAY[]::TEXT[],
+  "userId" TEXT NOT NULL,
+  "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "updatedAt" TIMESTAMP(3) NOT NULL,
+
+  CONSTRAINT "template_pkey" PRIMARY KEY ("id")
+);
+
+`;
+
+  // ============================================================
+  // INDEXES
+  // ============================================================
+
+  sql += "-- ============================================\n";
+  sql += "-- Create Indexes\n";
+  sql += "-- ============================================\n\n";
+
+  sql += `CREATE INDEX IF NOT EXISTS "template_userId_idx"
+ON "template" ("userId");
+
+`;
+
+  // ============================================================
+  // DATA
+  // ============================================================
+
+  sql += "-- ============================================\n";
+  sql += "-- Insert Data\n";
+  sql += "-- ============================================\n\n";
 
   for (const model of models) {
     console.log(`Exportiere ${model.client}...`);
@@ -134,15 +283,14 @@ async function main() {
       continue;
     }
 
-    // Alle Spalten anhand des ersten Datensatzes bestimmen.
     const columns = Object.keys(data[0]);
 
     const columnNames = columns.map(quoteIdentifier).join(", ");
 
-    sql += `-- ============================================\n`;
+    sql += `-- --------------------------------------------\n`;
     sql += `-- Table: ${model.table}\n`;
     sql += `-- Rows: ${data.length}\n`;
-    sql += `-- ============================================\n\n`;
+    sql += `-- --------------------------------------------\n\n`;
 
     for (const row of data) {
       const values = columns.map((column) => escapeSql(row[column])).join(", ");
@@ -153,8 +301,48 @@ async function main() {
     sql += "\n";
   }
 
+  // ============================================================
+  // FOREIGN KEYS
+  // ============================================================
+
+  sql += "-- ============================================\n";
+  sql += "-- Foreign Keys\n";
+  sql += "-- ============================================\n\n";
+
+  sql += `ALTER TABLE "session"
+ADD CONSTRAINT "session_userId_fkey"
+FOREIGN KEY ("userId")
+REFERENCES "user" ("id")
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+`;
+
+  sql += `ALTER TABLE "account"
+ADD CONSTRAINT "account_userId_fkey"
+FOREIGN KEY ("userId")
+REFERENCES "user" ("id")
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+`;
+
+  sql += `ALTER TABLE "template"
+ADD CONSTRAINT "template_userId_fkey"
+FOREIGN KEY ("userId")
+REFERENCES "user" ("id")
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+`;
+
+  // ============================================================
+  // COMMIT
+  // ============================================================
+
   sql += "COMMIT;\n";
 
+  // Datei schreiben
   fs.writeFileSync(OUTPUT_FILE, sql, "utf8");
 
   console.log("\n============================================");
