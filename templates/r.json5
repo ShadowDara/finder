@@ -1,4 +1,3 @@
-// Struct for an R Programming Project
 {
     "description": "R statistical computing project",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "DESCRIPTION",
         "*.R"
-    ]
+    ],
+    "min_version": "0.3.17"
 }

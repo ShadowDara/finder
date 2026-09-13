@@ -1,1 +1,1 @@
-{"description":"Quart async Python web framework","files":["app.py","requirements.txt"],"folders":[],"name":"*"}
+{"description":"Quart async Python web framework","files":["app.py","requirements.txt"],"folders":[],"min_version":"0.3.17","name":"*","tags":["python","web"]}

@@ -12,5 +12,6 @@
         "nuxt.config.ts",
         "package.json"
     ],
-    "min_version": "0.3.16"
+    "min_version": "0.3.16",
+    "tags": ["web"]
 }

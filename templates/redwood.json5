@@ -1,4 +1,3 @@
-// Struct for a Redwood JS Project
 {
     "description": "Redwood full-stack JavaScript framework",
     "name": "*",
@@ -11,5 +10,9 @@
     ],
     "files": [
         "redwood.toml"
-    ]
+    ],
+    "tags": [
+        "web"
+    ],
+    "min_version": "0.3.17"
 }

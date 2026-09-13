@@ -1,1 +1,1 @@
-{"description":"Remix React full-stack framework","files":["remix.config.js","package.json"],"folders":[{"files":[],"folders":[],"name":"app"}],"name":"*"}
+{"description":"Remix React full-stack framework","files":["remix.config.js","package.json"],"folders":[{"files":[],"folders":[],"name":"app"}],"min_version":"0.3.17","name":"*","tags":["web"]}

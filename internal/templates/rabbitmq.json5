@@ -1,1 +1,1 @@
-{"description":"RabbitMQ message broker","files":["docker-compose.yml","rabbitmq.conf"],"folders":[],"name":"*"}
+{"description":"RabbitMQ message broker","files":["docker-compose.yml","rabbitmq.conf"],"folders":[],"min_version":"0.3.17","name":"*"}

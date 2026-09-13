@@ -1,1 +1,1 @@
-{"description":"Replicate AI model API and cloud inference","files":["replicate.config.json","requirements.txt",".env.replicate"],"folders":[{"files":["*.py"],"folders":[],"name":"models"}],"name":"*"}
+{"description":"Replicate AI model API and cloud inference","files":["replicate.config.json","requirements.txt",".env.replicate"],"folders":[{"files":["*.py"],"folders":[],"name":"models"}],"min_version":"0.3.17","name":"*"}

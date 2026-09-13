@@ -16,5 +16,6 @@
         "requirements.txt",
         ".env.mistral"
     ],
-    "min_version": "0.3.16"
+    "min_version": "0.3.16",
+    "tags": ["ai"]
 }
