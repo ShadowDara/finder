@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import hljs from "highlight.js/lib/common";
+import { signOut, useSession } from "@/lib/auth-client";
 
 type T = {
   id: string;
@@ -13,6 +14,7 @@ type T = {
 };
 
 export default function DiscoverClient() {
+  const { data: session } = useSession();
   const [q, setQ] = useState("");
   const [tag, setTag] = useState("");
   const [templates, setTemplates] = useState<T[]>([]);
@@ -23,6 +25,7 @@ export default function DiscoverClient() {
   );
 
   const [error, setError] = useState("");
+
   useEffect(() => {
     const timer = setTimeout(async () => {
       setLoading(true);
@@ -53,10 +56,26 @@ export default function DiscoverClient() {
           finder<span>.</span>
         </Link>
         <nav>
-          <Link href="/sign-in">Anmelden</Link>
-          <Link href="/sign-up" className="button button-dark">
-            Registrieren
-          </Link>
+          {session?.user ? (
+            <>
+              <Link href="/dashboard">Dashboard</Link>
+              <button
+                className="button button-dark"
+                onClick={async () => {
+                  await signOut();
+                }}
+              >
+                Abmelden
+              </button>
+            </>
+          ) : (
+            <>
+              <Link href="/sign-in">Anmelden</Link>
+              <Link href="/sign-up" className="button button-dark">
+                Registrieren
+              </Link>
+            </>
+          )}
         </nav>
       </header>
       <section className="discover-hero">
