@@ -7,31 +7,39 @@ import { parseMarkdown } from "@shadowdara/dlib";
 type TemplateViewProps = {
   template: { id: string; name: string; content: string } | null;
   onClose: () => void;
+  showclose: boolean | null;
 };
 
-export function TemplateView({ template, onClose }: TemplateViewProps) {
-  if (!template) return null;
+export function TemplateView(props: TemplateViewProps) {
+  if (!props.template) return null;
+
+  const mdnote: string | undefined = JSON.parse(props.template.content)?.mdnote;
 
   return (
-    <div className="modal-backdrop" onClick={onClose}>
+    <div className="modal-backdrop" onClick={props.onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close" onClick={onClose}>
-          ×
-        </button>
-        <p className="eyebrow">{template.name}</p>
+        {props.showclose ? (
+          <>
+            <button className="modal-close" onClick={props.onClose}>
+              ×
+            </button>
+            <p className="eyebrow">{props.template.name}</p>
+          </>
+        ) : null}
+
         <pre
           dangerouslySetInnerHTML={{
-            __html: highlightFinderTemplate(prettyJson(template.content)),
+            __html: highlightFinderTemplate(prettyJson(props.template.content)),
           }}
         />
-        <div className="markdown-box">
-          <div
-            className="markdown"
-            dangerouslySetInnerHTML={{
-              __html: parseMarkdown(JSON.parse(template.content)?.mdnote ?? ""),
-            }}
-          />
-        </div>
+        {mdnote ? (
+          <div className="markdown-box">
+            <div
+              className="markdown"
+              dangerouslySetInnerHTML={{ __html: parseMarkdown(mdnote) }}
+            />
+          </div>
+        ) : null}
       </div>
     </div>
   );

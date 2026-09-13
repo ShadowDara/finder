@@ -142,7 +142,11 @@ export default function DiscoverClient() {
           ))}
         </div>
       </section>
-      <TemplateView template={selected} onClose={() => setSelected(null)} />
+      <TemplateView
+        template={selected}
+        onClose={() => setSelected(null)}
+        showclose={true}
+      />
     </main>
   );
 }

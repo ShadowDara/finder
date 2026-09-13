@@ -8,6 +8,9 @@
     "Map.md": true,
     ".zed": true,
     ".vs": true,
-    // "dub": true
+    // "dub": true,
+    "**/node_modules": true,
+    "**/.next": true,
+    "**/*.tgz": true,
   },
 }

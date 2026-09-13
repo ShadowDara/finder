@@ -1,10 +1,29 @@
 "use client";
 
+import { TemplateView } from "@/components/template-view";
 import { signOut } from "@/lib/auth-client";
 import { MAX_TEMPLATE_BYTES } from "@/lib/templates";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+
+const MonacoEditor = dynamic(() => import("@monaco-editor/react"), {
+  ssr: false,
+  loading: () => (
+    <div style={{ border: "1px solid", padding: 12 }}>Editor lädt…</div>
+  ),
+});
+
+// Modul-Konstante: stabile Referenz, damit Re-Renders den Editor nicht neu konfigurieren
+const EDITOR_OPTIONS = {
+  minimap: { enabled: false },
+  fontSize: 15,
+  tabSize: 2,
+  wordWrap: "on",
+  scrollBeyondLastLine: false,
+  automaticLayout: true,
+};
 
 type Template = {
   id: string;
@@ -62,6 +81,12 @@ export function DashboardClient({
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
+
+    if (!content.trim()) {
+      setError("Der Inhalt darf nicht leer sein.");
+      return;
+    }
+
     setSaving(true);
 
     const url = editingId ? `/api/templates/${editingId}` : "/api/templates";
@@ -181,15 +206,17 @@ export function DashboardClient({
               placeholder="cli, web, react"
             />
           </label>
-          <label style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-            Inhalt (JSON)
-            <textarea
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              required
-              rows={10}
-            />
-          </label>
+          {/* <label style={{ display: "flex", flexDirection: "column", gap: 4 }}> */}
+          Inhalt (JSON)
+          <MonacoEditor
+            language="json"
+            height="300px"
+            theme="vs-dark"
+            value={content}
+            onChange={(value) => setContent(value ?? "")}
+            options={EDITOR_OPTIONS}
+          />
+          {/* </label> */}
           <p>
             {contentBytes} / {MAX_TEMPLATE_BYTES} Bytes
           </p>
@@ -250,9 +277,15 @@ export function DashboardClient({
                     </button>
                   </span>
                 </div>
-                <pre style={{ overflowX: "auto", marginTop: 8 }}>
-                  {prettyJson(template.content)}
-                </pre>
+
+                <TemplateView
+                  template={template}
+                  // onClose={() => setSelected(null)}
+                  showclose={false}
+                  // onClose={function (): void {
+                  //   throw new Error("Function not implemented.");
+                  // }}
+                ></TemplateView>
               </li>
             ))}
           </ul>
