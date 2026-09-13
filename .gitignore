@@ -27,3 +27,4 @@ npm/hub/.env
 /node_modules
 npm/hub/next-env.d.ts
 npm/hub/database-export.sql
+.env
