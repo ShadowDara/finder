@@ -1,4 +1,3 @@
-// Struct for a PHP Composer Project
 {
     "description": "PHP project with Composer dependency manager",
     "name": "*",
@@ -6,5 +5,9 @@
     "files": [
         "composer.json",
         "composer.lock"
-    ]
+    ],
+    "tags": [
+        "php"
+    ],
+    "min_version": "0.3.16"
 }

@@ -1,4 +1,3 @@
-// Struct for a Kivy Project
 {
     "description": "Kivy Python mobile framework",
     "name": "*",
@@ -6,5 +5,9 @@
     "files": [
         "main.py",
         "*.kv"
-    ]
+    ],
+    "tags": [
+        "python"
+    ],
+    "min_version": "0.3.16"
 }

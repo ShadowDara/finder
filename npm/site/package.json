@@ -47,6 +47,7 @@
   },
   "dependencies": {
     "@shadowdara/dlib": "^0.0.4",
+    "@shadowdara/finder-lib": "^0.3.17",
     "highlight.js": "^11.12.0",
     "jquery": "^4.0.0",
     "tellraw-parser": "^1.0.2"

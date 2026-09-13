@@ -39,7 +39,10 @@ export function UserClient({ user }: { user: UserData }) {
       <Link href="/discover" className="back-link">
         ← Zur Discover-Seite
       </Link>
-
+      {" | "}
+      <Link href="/dashboard" className="back-link">
+        ← Zur Dashboard-Seite
+      </Link>
       <section className="profile-hero">
         <div className="avatar">
           {(user.name || "U").slice(0, 1).toUpperCase()}
@@ -50,7 +53,6 @@ export function UserClient({ user }: { user: UserData }) {
           <p className="muted">{user.templates.length} öffentliche Templates</p>
         </div>
       </section>
-
       <section>
         <div className="section-heading">
           <div>
@@ -88,7 +90,6 @@ export function UserClient({ user }: { user: UserData }) {
           </div>
         )}
       </section>
-
       <TemplateView template={selected} onClose={() => setSelected(null)} />
     </main>
   );

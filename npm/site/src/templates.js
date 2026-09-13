@@ -2674,7 +2674,9 @@ export default {
       "docker-compose.yml"
     ],
     "folders": [],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": "docker"
   },
   "java-gradle.json5": {
     "description": "Java project with Gradle build tool",
@@ -2820,7 +2822,11 @@ export default {
       "docker-compose.yml"
     ],
     "folders": [],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "docker"
+    ]
   },
   "kivy.json5": {
     "description": "Kivy Python mobile framework",
@@ -2829,7 +2835,11 @@ export default {
       "*.kv"
     ],
     "folders": [],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "python"
+    ]
   },
   "kotlin.json5": {
     "description": "Kotlin programming language project",
@@ -2844,6 +2854,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "ktor.json5": {
@@ -2859,7 +2870,11 @@ export default {
         "name": "src"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "web"
+    ]
   },
   "kubernetes.json5": {
     "description": "Kubernetes container orchestration",
@@ -2874,6 +2889,7 @@ export default {
         "name": "manifests"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "kvm.json5": {
@@ -2883,6 +2899,7 @@ export default {
       "*.qcow2"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "langchain.json5": {
@@ -2917,6 +2934,7 @@ export default {
         "name": "memory"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "laravel.json5": {
@@ -2932,7 +2950,11 @@ export default {
         "name": "app"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "php"
+    ]
   },
   "latex.json5": {
     "description": "LaTeX document project",
@@ -2941,6 +2963,7 @@ export default {
       "*.pdf"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "leptos.json5": {
@@ -2955,7 +2978,12 @@ export default {
         "name": "src"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "rust",
+      "web"
+    ]
   },
   "lerna.json5": {
     "description": "Lerna monorepo project",
@@ -2970,6 +2998,7 @@ export default {
         "name": "packages"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "leveldb.json5": {
@@ -2978,6 +3007,7 @@ export default {
       "package.json"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "libgdx.json5": {
@@ -2992,7 +3022,11 @@ export default {
         "name": "core"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "game-engine"
+    ]
   },
   "lisp.json5": {
     "description": "Lisp programming language",
@@ -3001,6 +3035,7 @@ export default {
       "*.cl"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "lit.json5": {
@@ -3017,7 +3052,10 @@ export default {
       }
     ],
     "min_version": "0.3.16",
-    "name": "*"
+    "name": "*",
+    "tags": [
+      "web"
+    ]
   },
   "llama.json5": {
     "description": "Meta Llama 2 or Llama language model project",
@@ -3208,6 +3246,7 @@ export default {
         "name": ".hg"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "meson.json5": {
@@ -3247,6 +3286,7 @@ export default {
         "name": "services"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "minecraftworld.json5": {
@@ -3936,7 +3976,11 @@ export default {
         "name": "src"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "rust"
+    ]
   },
   "php-composer.json5": {
     "description": "PHP project with Composer dependency manager",
@@ -3945,7 +3989,11 @@ export default {
       "composer.lock"
     ],
     "folders": [],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "php"
+    ]
   },
   "pijul.json5": {
     "description": "Pijul version control system",
@@ -3959,6 +4007,7 @@ export default {
         "name": ".pijul"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "pipenv.json5": {
@@ -3968,6 +4017,7 @@ export default {
       "Pipfile.lock"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "pixelstream.json5": {
@@ -3982,7 +4032,11 @@ export default {
         "name": "Plugins"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "game-engine"
+    ]
   },
   "plasmic.json5": {
     "description": "Plasmic headless visual builder",
@@ -3990,6 +4044,7 @@ export default {
       ".plasmic.json"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "platformio.json5": {
@@ -4004,6 +4059,7 @@ export default {
         "name": "src"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "play.json5": {
@@ -4019,6 +4075,7 @@ export default {
         "name": "app"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "playwright.json5": {
@@ -4104,6 +4161,7 @@ export default {
         "name": "data"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "postgres.json5": {
@@ -4150,6 +4208,7 @@ export default {
       "etc/catalog"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "processing.json5": {
@@ -4158,6 +4217,7 @@ export default {
       "*.pde"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "prolog.json5": {
@@ -4167,6 +4227,7 @@ export default {
       "*.pro"
     ],
     "folders": [],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "prometheus.json5": {
@@ -4176,7 +4237,11 @@ export default {
       "docker-compose.yml"
     ],
     "folders": [],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "docker"
+    ]
   },
   "protobuf.json5": {
     "description": "Protocol Buffers serialization",
@@ -4190,6 +4255,7 @@ export default {
         "name": "proto"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "protractor.json5": {
@@ -4205,6 +4271,7 @@ export default {
         "name": "e2e"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "puppet.json5": {
@@ -4219,6 +4286,7 @@ export default {
         "name": "manifests"
       }
     ],
+    "min_version": "0.3.16",
     "name": "*"
   },
   "pwa.json5": {
@@ -4234,7 +4302,11 @@ export default {
         "name": "src"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "web"
+    ]
   },
   "pygame.json5": {
     "description": "Pygame Python game development",
@@ -4243,7 +4315,12 @@ export default {
       "requirements.txt"
     ],
     "folders": [],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "python",
+      "game-engine"
+    ]
   },
   "pyramid.json5": {
     "description": "Pyramid Python web framework",
@@ -4258,7 +4335,12 @@ export default {
         "name": "myapp"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "python",
+      "web"
+    ]
   },
   "pytest.json5": {
     "description": "Python pytest test suite",
@@ -4273,7 +4355,11 @@ export default {
         "name": "tests"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "python"
+    ]
   },
   "python.json5": {
     "files": [
@@ -4281,7 +4367,11 @@ export default {
       "*.py"
     ],
     "folders": [],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "python"
+    ]
   },
   "pytorch.json5": {
     "description": "PyTorch deep learning project",
@@ -4296,7 +4386,11 @@ export default {
         "name": "models"
       }
     ],
-    "name": "*"
+    "min_version": "0.3.16",
+    "name": "*",
+    "tags": [
+      "python"
+    ]
   },
   "qt.json5": {
     "description": "Qt framework for cross-platform UI development",

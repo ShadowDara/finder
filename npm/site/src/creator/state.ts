@@ -5,7 +5,7 @@ import type {
   FileNode,
   FolderJSON,
   FolderNode,
-  SizeConstraint,
+  Size as SizeConstraint,
 } from "./types";
 
 let counter = 0;
@@ -111,9 +111,9 @@ function serializeSize(
   size: SizeConstraint | null,
 ): SizeConstraint | undefined {
   if (!size) return undefined;
-  if (size.min === undefined && size.max === undefined) return undefined;
+  if (size.mix === undefined && size.max === undefined) return undefined;
   const out: SizeConstraint = {};
-  if (size.min !== undefined) out.min = size.min;
+  if (size.mix !== undefined) out.mix = size.mix;
   if (size.max !== undefined) out.max = size.max;
   return out;
 }
@@ -195,7 +195,7 @@ function parseFiles(raw: unknown): FileNode[] {
       id: nextId(),
       name: e.name ?? "",
       existence: e.existence ?? "required",
-      size: e.size ? { min: e.size.min, max: e.size.max } : null,
+      size: e.size ? { min: e.size.mix, max: e.size.max } : null,
       checksums: e.checksums
         ? {
             sha256: e.checksums.sha256 ?? "",
@@ -223,7 +223,7 @@ export function parseFolder(raw: FolderJSON): FolderNode {
     tags: Array.isArray(raw.tags) ? [...raw.tags] : [],
     files: parseFiles((raw as unknown as { files: unknown }).files),
     folders: Array.isArray(raw.folders) ? raw.folders.map(parseFolder) : [],
-    size: raw.size ? { min: raw.size.min, max: raw.size.max } : null,
+    size: raw.size ? { mix: raw.size.mix, max: raw.size.max } : null,
     markdownNote,
   };
 }

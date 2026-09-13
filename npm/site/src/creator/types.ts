@@ -3,19 +3,18 @@
 // as a simple { min, max } byte range — rename the fields in `serialize.ts`
 // if your real `Size` struct looks different.
 
-export type Existence = "required" | "forbidden" | "optional";
+import { newest } from "@shadowdara/finder-lib";
 
-export interface SizeConstraint {
-  min?: number;
-  max?: number;
-}
+export type Size = newest.Size;
+
+export type Existence = "required" | "forbidden" | "optional";
 
 /** Editable file-node. `id` is UI-only bookkeeping, stripped on export. */
 export interface FileNode {
   id: string;
   name: string;
   existence: Existence;
-  size: SizeConstraint | null;
+  size: Size | null;
   checksums: Checksum | null;
 }
 
@@ -36,7 +35,7 @@ export interface FolderNode {
   tags: string[];
   files: FileNode[];
   folders: FolderNode[];
-  size: SizeConstraint | null;
+  size: Size | null;
   /** Raw Markdown note, edited in the UI. Encoded to base64 on export. */
   markdownNote: string;
 }
@@ -52,7 +51,7 @@ export interface FolderNode {
 export interface FileJSON {
   name: string;
   existence?: Existence;
-  size?: SizeConstraint;
+  size?: Size;
   checksums?: Partial<Checksum>;
 }
 
@@ -65,7 +64,7 @@ export interface FolderJSON {
   command?: string;
   invert_command?: boolean;
   tags?: string[];
-  size?: SizeConstraint;
+  size?: Size;
   /** Optional Markdown note, percent-encoded (like encodeURIComponent). Mirrors Go's mdnote. */
   mdnote?: string;
 }

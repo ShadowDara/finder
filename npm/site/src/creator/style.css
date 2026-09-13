@@ -339,20 +339,77 @@ textarea {
 /* ---------- Preview ---------- */
 
 .pane-preview {
-  background: #f8f9f8;
+  background: #ffffff;
 }
 
 .preview {
   margin: 0;
   padding: 16px;
+  font-weight: bold;
   overflow: auto;
   font-family: var(--mono);
-  font-size: 12.5px;
+  font-size: 14px;
   line-height: 1.6;
-  color: var(--ink);
+  /* color: #d4d4d8; — alt (GitHub Dark), nur für dunklen Hintergrund */
+  /* color: #1f2328; GitHub Light: default text */
   white-space: pre-wrap;
   word-break: break-word;
   overflow-wrap: anywhere;
+  /* background-color: #1c2321; */
+  color: black;
+}
+
+/*
+ * Regex/glob highlighting inside `"name"` values.
+ * Der Preview-Hintergrund ist weiß, daher werden hier dunkle Farben
+ * (GitHub-Light-Palette) verwendet. Die alten hellen Farben sind
+ * auskommentiert und können bei einem dunklen Hintergrund wieder
+ * aktiviert werden.
+ */
+.rx-esc {
+  /* color: #ffa657; — alt: GitHub Dark (hljs-built_in) */
+  color: #b35900; /* escapes & dot — kräftig, gut lesbar auf weiß */
+  font-weight: 600;
+}
+.rx-class {
+  /* color: #79c0ff; — alt: GitHub Dark (hljs-meta) */
+  color: #0550ae; /* character classes — sattes Blau */
+}
+.rx-quant {
+  /* color: #ff7b72; — alt: GitHub Dark (hljs-keyword) */
+  color: #b62324; /* quantifiers — kräftiges Rot */
+  font-weight: 600;
+}
+.rx-anchor {
+  /* color: #d2a8ff; — alt: GitHub Dark (hljs-title) */
+  color: #8250df; /* anchors — Violett */
+  font-weight: 600;
+}
+.rx-group {
+  /* color: #ff7b72; — alt: GitHub Dark (hljs-keyword) */
+  color: #b62324; /* groups — kräftiges Rot */
+}
+.rx-alt {
+  /* color: #ff7b72; — alt: GitHub Dark (hljs-keyword) */
+  color: #b62324; /* alternation — kräftiges Rot */
+  font-weight: 600;
+}
+
+/*
+ * Die `hljs-*`-Tokens (attr/string/number/literal/punctuation) kommen aus
+ * dem global importierten github-dark-Theme und sind für dunkle Hintergründe
+ * gedacht. Für den weißen Preview-Hintergrund werden sie hier auf dunkle,
+ * gut lesbare Farben (GitHub-Light-Palette) überschrieben; die alten Farben
+ * bleiben auskommentiert stehen.
+ */
+
+.hljs-string {
+  /* color: #ff1170; */
+  color: #004cbd;
+}
+.hljs-keyword {
+  /* github-dark liefert  — für weiß zu blass/rosa */
+  color: #ff7b72;
 }
 
 /* ---------- Import dialog ---------- */

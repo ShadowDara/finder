@@ -1,7 +1,6 @@
 package gitdb
 
 import (
-	"bufio"
 	"fmt"
 	"sort"
 	"strconv"
@@ -17,63 +16,6 @@ type RepoData struct {
 	Commits []Commit
 	Trees   []TreeEntry
 	Blobs   []Blob
-}
-
-// SaveCommitsToSQLite speichert Commits in einer SQLite-Datenbank.
-func SaveCommitsToSQLite(repo, dbPath string) error {
-	db, err := sql.Open("sqlite3", dbPath)
-	if err != nil {
-		return fmt.Errorf("konnte SQLite-Datenbank nicht öffnen: %v", err)
-	}
-	defer db.Close()
-
-	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS commits (
-		hash TEXT PRIMARY KEY,
-		author TEXT,
-		date TEXT,
-		message TEXT
-	)`)
-	if err != nil {
-		return fmt.Errorf("konnte Tabelle nicht erstellen: %v", err)
-	}
-
-	return nil
-}
-
-// SaveCommitsToJSON speichert Commits in eine JSON-Datei.
-func SaveCommitsToJSON(repo, jsonPath string) error {
-	entries, err := commitRecords(repo, nil)
-	if err != nil {
-		return fmt.Errorf("konnte Commits nicht abrufen: %v", err)
-	}
-
-	var commits []Commit
-	for _, entry := range entries {
-		fields := strings.Split(entry, string(0x1f))
-		if len(fields) < 4 {
-			continue
-		}
-		commits = append(commits, Commit{
-			Hash:    fields[0],
-			Author:  fields[1],
-			Date:    fields[3],
-			Message: fields[len(fields)-1],
-		})
-	}
-
-	file, err := os.Create(jsonPath)
-	if err != nil {
-		return fmt.Errorf("konnte JSON-Datei nicht erstellen: %v", err)
-	}
-	defer file.Close()
-
-	encoder := json.NewEncoder(file)
-	encoder.SetIndent("", "  ")
-	if err := encoder.Encode(commits); err != nil {
-		return fmt.Errorf("konnte JSON schreiben: %v", err)
-	}
-
-	return nil
 }
 
 // Snapshot scannt das Repository mit der installierten Git-CLI.
@@ -316,7 +258,8 @@ func scanTrees(repo string, commits []Commit) ([]TreeEntry, []Blob, error) {
 			// die auf ältere Objekte zeigen)
 			continue
 		}
-		fentry, ok := parseTreeLine(c.Hash, line)
+		for _, line := range lines {
+			entry, ok := parseTreeLine(c.Hash, line)
 			if !ok {
 				continue
 			}
@@ -325,8 +268,7 @@ func scanTrees(repo string, commits []Commit) ([]TreeEntry, []Blob, error) {
 			if entry.Type == "blob" && isHex(entry.ObjectHash) {
 				if _, seen := blobSeen[entry.ObjectHash]; !seen {
 					blobSeen[entry.ObjectHash] = entry.Size
-					blobs = append(blobs, Blob{Hash: entry.ObjectHash, Size: entry.Size
-					blobs = append(blobs, Blob{Hash: entry.ObjectHash})
+					blobs = append(blobs, Blob{Hash: entry.ObjectHash, Size: entry.Size})
 				}
 			}
 		}
@@ -334,14 +276,7 @@ func scanTrees(repo string, commits []Commit) ([]TreeEntry, []Blob, error) {
 	return entries, blobs, nil
 }
 
-// fillBlobData liest Inhalte und Größen aller Blobs mit git cat-file --batch
-// (eine einzige Verbindung, sehr effizient).
-func fillBlobData(repo string, blobs []Blob) error {
-	stdout, stdin, cmd, err := catFileBatch(repo)
-	if err != nil {
-		return err
-	}
-	deparseTreeLine parst eine Zeile von `git ls-tree -r -l`:
+// parseTreeLine parst eine Zeile von `git ls-tree -r -l`:
 // "<mode> <type> <object> <size>\t<path>".
 func parseTreeLine(commit, line string) (TreeEntry, bool) {
 	line = strings.TrimSuffix(line, "\r")
@@ -382,7 +317,15 @@ func fillBlobData(repo string, blobs []Blob) error {
 		if blobs[i].Hash == "" {
 			continue
 		}
-		if _, err := fmt.Fprintf(stdin, "%s\n", blobs[i].Hashds(header)
+		if _, err := fmt.Fprintf(stdin, "%s\n", blobs[i].Hash); err != nil {
+			return err
+		}
+		header, data, err := batchRead(reader)
+		if err != nil {
+			return err
+		}
+		blobs[i].Size = int64(len(data))
+		fields := strings.Fields(header)
 		if len(fields) >= 2 && fields[1] == "missing" {
 			blobs[i].Data = nil
 			continue

@@ -62,8 +62,10 @@ export namespace versions {
 
     export interface File {
       name?: string;
-      existence?: string;
+      existence?: Existence;
     }
+
+    export type Existence = "required" | "forbidden" | "optional";
   }
 
   /// Version v0.3.6
@@ -89,8 +91,10 @@ export namespace versions {
 
     export interface File {
       name: string;
-      existence?: string;
+      existence?: Existence;
     }
+
+    export type Existence = "required" | "forbidden" | "optional";
   }
 
   /// Version v0.3.15
@@ -118,16 +122,18 @@ export namespace versions {
 
     export interface File {
       name: string;
-      existence?: string;
+      existence?: Existence;
       size?: Size;
     }
 
     export interface Size {
-      mix?: number;
+      min?: number;
       max?: number;
       min_size_type?: string;
       max_size_type?: string;
     }
+
+    export type Existence = "required" | "forbidden" | "optional";
   }
 
   /// Version v0.3.16
@@ -155,13 +161,13 @@ export namespace versions {
 
     export interface File {
       name: string;
-      existence?: string;
+      existence?: Existence;
       size?: Size;
       checksums?: Checksums;
     }
 
     export interface Size {
-      mix?: number;
+      min?: number;
       max?: number;
       min_size_type?: string;
       max_size_type?: string;
@@ -171,6 +177,8 @@ export namespace versions {
       sha256?: string;
       sha512?: string;
     }
+
+    export type Existence = "required" | "forbidden" | "optional";
   }
 
   /// Version v0.3.17
@@ -199,13 +207,13 @@ export namespace versions {
 
     export interface File {
       name: string;
-      existence?: string;
+      existence?: Existence;
       size?: Size;
       checksums?: Checksums;
     }
 
     export interface Size {
-      mix?: number;
+      min?: number;
       max?: number;
       min_size_type?: string;
       max_size_type?: string;
@@ -215,5 +223,7 @@ export namespace versions {
       sha256?: string;
       sha512?: string;
     }
+
+    export type Existence = "required" | "forbidden" | "optional";
   }
 }

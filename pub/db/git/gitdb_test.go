@@ -137,12 +137,13 @@ func TestCommitHashes(t *testing.T) {
 }
 
 func TestParseCommits(t *testing.T) {
-	// Simuliert rev-list --pretty=format-Ausgabe (zeilenbasiert)
+	// Simuliert die Ausgabe von commitRecords: Records sind durch 0x1f
+	// getrennte Felder: hash, author-name, author-email, author-date,
+	// committer-name, committer-email, committer-date, parents, tree, message.
+	sep := "\x1f"
 	lines := []string{
-		"abc123def456abc123def456abc123def456ab", // commit-Header (wird übersprungen)
-		"abc123def456abc123def456abc123def456ab\tMax\tmax@m.de\t2024-01-15T10:00:00+01:00\tEve\teve@e.de\t2024-01-15T10:00:00+01:00\tinit\t\ttree123",
-		"def45678901def45678901def45678901def4567", // commit-Header
-		"def45678901def45678901def45678901def4567\tMax\tmax@m.de\t2024-01-16T12:00:00+01:00\tEve\teve@e.de\t2024-01-16T12:00:00+01:00\tfeat\tabc123def456abc123def456abc123def456ab\ttree456",
+		"abc123def456abc123def456abc123def456ab" + sep + "Max" + sep + "max@m.de" + sep + "2024-01-15T10:00:00+01:00" + sep + "Eve" + sep + "eve@e.de" + sep + "2024-01-15T10:00:00+01:00" + sep + "" + sep + "tree123" + sep + "init",
+		"def45678901def45678901def45678901def4567" + sep + "Max" + sep + "max@m.de" + sep + "2024-01-16T12:00:00+01:00" + sep + "Eve" + sep + "eve@e.de" + sep + "2024-01-16T12:00:00+01:00" + sep + "abc123def456abc123def456abc123def456ab" + sep + "tree456" + sep + "feat",
 	}
 	commits, err := parseCommits(lines)
 	if err != nil {

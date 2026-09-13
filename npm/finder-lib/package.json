@@ -1,19 +1,19 @@
 {
   "name": "@shadowdara/finder-lib",
-  "version": "0.3.16",
+  "version": "0.3.17",
   "description": "lib to parse finder templates in TS",
   "scripts": {
     "build": "tsc"
   },
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./dist/index.js",
+    "./highlight": "./dist/highlight.js"
   },
   "author": "Shadowdara",
   "type": "module",
   "devDependencies": {
     "@types/node": "^25.5.2",
-    "typescript": "^6.0.2",
-    "vitest": "^4.1.11"
+    "typescript": "^6.0.2"
   },
   "license": "Apache-2.0",
   "repository": {

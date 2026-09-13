@@ -1,4 +1,3 @@
-// Struct for a Perseus Project
 {
     "description": "Perseus Rust full-stack framework",
     "name": "*",
@@ -11,5 +10,9 @@
     ],
     "files": [
         "Cargo.toml"
-    ]
+    ],
+    "tags": [
+        "rust"
+    ],
+    "min_version": "0.3.16"
 }

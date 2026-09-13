@@ -1,1 +1,1 @@
-{"description":"Mercurial version control","files":[".hgignore"],"folders":[{"files":[],"folders":[],"name":".hg"}],"name":"*"}
+{"description":"Mercurial version control","files":[".hgignore"],"folders":[{"files":[],"folders":[],"name":".hg"}],"min_version":"0.3.16","name":"*"}

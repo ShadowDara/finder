@@ -1,1 +1,1 @@
-{"description":"Play Framework Java/Scala web framework","files":["build.sbt","conf/routes"],"folders":[{"files":[],"folders":[],"name":"app"}],"name":"*"}
+{"description":"Play Framework Java/Scala web framework","files":["build.sbt","conf/routes"],"folders":[{"files":[],"folders":[],"name":"app"}],"min_version":"0.3.16","name":"*"}

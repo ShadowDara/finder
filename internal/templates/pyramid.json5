@@ -1,1 +1,1 @@
-{"description":"Pyramid Python web framework","files":["setup.py","requirements.txt"],"folders":[{"files":[],"folders":[],"name":"myapp"}],"name":"*"}
+{"description":"Pyramid Python web framework","files":["setup.py","requirements.txt"],"folders":[{"files":[],"folders":[],"name":"myapp"}],"min_version":"0.3.16","name":"*","tags":["python","web"]}

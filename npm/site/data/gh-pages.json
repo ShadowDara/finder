@@ -1,35 +1,35 @@
 {
-  "generatedAt": "2026-09-13T18:14:39.375Z",
+  "generatedAt": "2026-09-13T19:40:03.901Z",
   "total": {
     "files": 57,
-    "bytes": 390830,
-    "kilobytes": 381.67,
-    "megabytes": 0.37
+    "bytes": 394696,
+    "kilobytes": 385.45,
+    "megabytes": 0.38
   },
   "byExtension": [
     {
       "extension": ".js",
       "files": 20,
-      "bytes": 314823,
-      "percentage": 80.55
+      "bytes": 318457,
+      "percentage": 80.68
     },
     {
       "extension": ".css",
       "files": 15,
-      "bytes": 56383,
-      "percentage": 14.43
+      "bytes": 56648,
+      "percentage": 14.35
     },
     {
       "extension": ".txt",
       "files": 1,
-      "bytes": 9765,
-      "percentage": 2.5
+      "bytes": 9732,
+      "percentage": 2.47
     },
     {
       "extension": ".html",
       "files": 20,
       "bytes": 7848,
-      "percentage": 2.01
+      "percentage": 1.99
     },
     {
       "extension": ".sh",
@@ -47,7 +47,7 @@
     {
       "path": "assets/viewer.js",
       "extension": ".js",
-      "bytes": 75835
+      "bytes": 76957
     },
     {
       "path": "assets/main_entry.js",
@@ -62,7 +62,7 @@
     {
       "path": "assets/creator.js",
       "extension": ".js",
-      "bytes": 13152
+      "bytes": 15664
     },
     {
       "path": "assets/markdown.js",
@@ -72,7 +72,7 @@
     {
       "path": "dependencies.txt",
       "extension": ".txt",
-      "bytes": 9765
+      "bytes": 9732
     },
     {
       "path": "assets/viewer.css",
@@ -102,7 +102,7 @@
     {
       "path": "assets/creator.css",
       "extension": ".css",
-      "bytes": 5100
+      "bytes": 5365
     },
     {
       "path": "assets/tellraw.js",

@@ -1,7 +1,7 @@
 "use client";
 
 import { prettyJson } from "@/lib/utils";
-import { highlightFinderTemplate } from "@/lib/highlight";
+import { highlightFinderTemplate } from "@shadowdara/finder-lib/highlight";
 import { parseMarkdown } from "@shadowdara/dlib";
 
 type TemplateViewProps = {

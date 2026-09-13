@@ -1,1 +1,1 @@
-{"description":"Presto/Trino SQL query engine","files":["etc/catalog"],"folders":[],"name":"*"}
+{"description":"Presto/Trino SQL query engine","files":["etc/catalog"],"folders":[],"min_version":"0.3.16","name":"*"}

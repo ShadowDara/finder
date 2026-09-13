@@ -1,4 +1,3 @@
-// Struct for PlatformIO IoT
 {
     "description": "PlatformIO embedded systems development",
     "name": "*",
@@ -11,5 +10,6 @@
     ],
     "files": [
         "platformio.ini"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

@@ -21,8 +21,8 @@ importers:
         specifier: ^0.0.4
         version: 0.0.4
       '@shadowdara/finder-lib':
-        specifier: ^0.3.16
-        version: 0.3.16
+        specifier: 0.3.17
+        version: 0.3.17
       '@vercel/analytics':
         specifier: 1.6.1
         version: 1.6.1(next@16.3.3(@babel/core@7.29.7)(@types/node@24.13.4)(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(react@19.3.0)
@@ -680,8 +680,8 @@ packages:
   '@shadowdara/dlib@0.0.4':
     resolution: {integrity: sha512-eYvqbE0uhTCufVd5NjhYQEIZwJg2qu1DyHu9gVMJQUei0UZyYxe5F+hZYO7Hdr+yD2sm3dWvzZ+fBzVDeySnFg==}
 
-  '@shadowdara/finder-lib@0.3.16':
-    resolution: {integrity: sha512-dh0A5LPUdhhDPFBC3Ra4usf+gLYau+6ogd0fAzMu2ufUW/PJt7oZwPg6NaTPj07JfUid8xN/19vK9FRe3QJ9Fw==}
+  '@shadowdara/finder-lib@0.3.17':
+    resolution: {integrity: sha512-8aOCR273G8vBtp/migYdQHAgD9Uu2ymtX49wfAPA3rfFs+2PooujmvMrRss1O+uJvce3ti0NY13if2UHqv080g==}
 
   '@sindresorhus/merge-streams@4.0.0':
     resolution: {integrity: sha512-tlqY9xq5ukxTUZBmoOp+m61cqwQD5pHJtFY3Mn8CA8ps6yghLH/Hw8UPdqg4OLmFW3IFlcXnQNmo/dh8HzXYIQ==}
@@ -2865,7 +2865,7 @@ snapshots:
 
   '@shadowdara/dlib@0.0.4': {}
 
-  '@shadowdara/finder-lib@0.3.16': {}
+  '@shadowdara/finder-lib@0.3.17': {}
 
   '@sindresorhus/merge-streams@4.0.0': {}
 

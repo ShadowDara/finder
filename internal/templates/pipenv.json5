@@ -1,1 +1,1 @@
-{"description":"Pipenv Python dependency manager","files":["Pipfile","Pipfile.lock"],"folders":[],"name":"*"}
+{"description":"Pipenv Python dependency manager","files":["Pipfile","Pipfile.lock"],"folders":[],"min_version":"0.3.16","name":"*"}

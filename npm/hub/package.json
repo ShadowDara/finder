@@ -1,6 +1,6 @@
 {
   "name": "my-project",
-  "version": "0.1.0",
+  "version": "0.3.17",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -15,7 +15,7 @@
     "@monaco-editor/react": "^4.7.0",
     "@prisma/client": "^6.19.3",
     "@shadowdara/dlib": "^0.0.4",
-    "@shadowdara/finder-lib": "^0.3.16",
+    "@shadowdara/finder-lib": "0.3.17",
     "@vercel/analytics": "1.6.1",
     "better-auth": "^1.7.4",
     "class-variance-authority": "^0.7.1",

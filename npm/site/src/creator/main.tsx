@@ -14,6 +14,8 @@ import {
   serializeFolder,
 } from "./state";
 import { SERVER_ADRESS } from "../vars";
+import { highlightFinderTemplate } from "@shadowdara/finder-lib/highlight";
+// import "highlight.js/styles/github-dark.css";
 
 export function renderCreator(app: HTMLDivElement, version: string) {
   type Selection = { kind: "folder" | "file"; id: string } | null;
@@ -712,7 +714,9 @@ export function renderCreator(app: HTMLDivElement, version: string) {
 
   function renderPreview(): void {
     const json = serializeFolder(root, true);
-    previewEl.textContent = JSON.stringify(json, null, 2);
+    previewEl.innerHTML = highlightFinderTemplate(
+      JSON.stringify(json, null, 2),
+    );
   }
 
   // ---------- Toolbar actions ----------

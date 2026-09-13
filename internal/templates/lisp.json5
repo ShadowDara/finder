@@ -1,1 +1,1 @@
-{"description":"Lisp programming language","files":["*.lisp","*.cl"],"folders":[],"name":"*"}
+{"description":"Lisp programming language","files":["*.lisp","*.cl"],"folders":[],"min_version":"0.3.16","name":"*"}

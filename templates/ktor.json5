@@ -1,4 +1,3 @@
-// Struct for a Ktor Project
 {
     "description": "Ktor Kotlin web framework",
     "name": "*",
@@ -12,5 +11,9 @@
     "files": [
         "build.gradle.kts",
         "*.kt"
-    ]
+    ],
+    "tags": [
+        "web"
+    ],
+    "min_version": "0.3.16"
 }

@@ -161,59 +161,8 @@ func commitRecords(repo string, refs []string) ([]string, error) {
 	return strings.Split(s, "\x1e"), nil
 }
 
-// SaveCommitsToJSON speichert Commits in eine JSON-Datei.
-func SaveCommitsToJSON(repo, jsonPath string) error {
-	entries, err := commitRecords(repo, nil)
-	if err != nil {
-		return fmt.Errorf("konnte Commits nicht abrufen: %v", err)
-	}
-
-	var commits []Commit
-	for _, entry := range entries {
-		fields := strings.Split(entry, string(0x1f))
-		if len(fields) < 4 {
-			continue
-		}
-		commits = append(commits, Commit{
-			Hash:    fields[0],
-			Author:  fields[1],
-			Date:    fields[3],
-			Message: fields[len(fields)-1],
-		})
-	}
-
-	file, err := os.Create(jsonPath)
-	if err != nil {
-		return fmt.Errorf("konnte JSON-Datei nicht erstellen: %v", err)
-	}
-	defer file.Close()
-
-	encoder := json.NewEncoder(file)
-	encoder.SetIndent("", "  ")
-	if err := encoder.Encode(commits); err != nil {
-		return fmt.Errorf("konnte JSON schreiben: %v", err)
-	}
-
-	return nil
-}
-
 // treeLines liefert alle Baum-Einträge eines Commits im Format
 // `git ls-tree -r -l`: "<mode> <type> <object> <size>\t<path>".
-
-// SaveCommitsToSQLite speichert Commits in einer SQLite-Datenbank.
-func SaveCommitsToSQLite(repo, dbPath string) error {
-	db, err := sql.Open("sqlite3", dbPath)
-	if err != nil {
-		return fmt.Errorf("konnte SQLite-Datenbank nicht öffnen: %v", err)
-	}
-	defer db.Close()
-
-	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS commits (
-		hash TEXT PRIMARY KEY,
-		author TEXT,
-		date TEXT,
-		message TEXT
-	)`)
 func treeLines(repo, commit string) ([]string, error) {
 	return rawLines(repo, "ls-tree", "-r", "-l", commit)
 }

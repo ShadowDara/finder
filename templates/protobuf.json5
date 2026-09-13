@@ -1,4 +1,3 @@
-// Struct for a Protocol Buffers Project
 {
     "description": "Protocol Buffers serialization",
     "name": "*",
@@ -11,5 +10,6 @@
     ],
     "files": [
         "*.proto"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

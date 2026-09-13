@@ -1,1 +1,1 @@
-{"description":"Unreal Engine Pixel Streaming","files":["*.uproject"],"folders":[{"files":[],"folders":[],"name":"Plugins"}],"name":"*"}
+{"description":"Unreal Engine Pixel Streaming","files":["*.uproject"],"folders":[{"files":[],"folders":[],"name":"Plugins"}],"min_version":"0.3.16","name":"*","tags":["game-engine"]}
