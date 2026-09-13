@@ -92,30 +92,19 @@ export function removeFile(root: FolderNode, fileId: string): boolean {
   return root.folders.some((child) => removeFile(child, fileId));
 }
 
-/** UTF-8-safe base64 encoding (btoa alone breaks on non-Latin1). */
-export function utf8ToBase64(input: string): string {
-  const bytes = new TextEncoder().encode(input);
-  let binary = "";
-  for (let i = 0; i < bytes.length; i++) {
-    binary += String.fromCharCode(bytes[i]);
-  }
-  return btoa(binary);
-}
-
-/** Decodes the UTF-8-safe base64 strings produced by utf8ToBase64. */
-export function base64ToUtf8(input: string): string {
-  const binary = atob(input.trim());
-  const bytes = new Uint8Array(binary.length);
-  for (let i = 0; i < binary.length; i++) {
-    bytes[i] = binary.charCodeAt(i);
-  }
-  return new TextDecoder().decode(bytes);
-}
-
-/** Encode a raw Markdown note to Base64, or undefined if empty. */
+/**
+ * Encode a raw Markdown note for the JSON file: keeps newlines and other
+ * special characters as percent-escapes (like encodeURIComponent), so the
+ * note survives plain-JSON serialization as one line. Returns undefined
+ * when the note is empty.
+ */
 export function encodeMarkdownNote(note: string): string | undefined {
-  const trimmed = note.trim();
-  return trimmed ? utf8ToBase64(trimmed) : undefined;
+  return note;
+}
+
+/** Decodes the percent-encoded notes produced by encodeMarkdownNote. */
+export function decodeMarkdownNote(note: string): string {
+  return note;
 }
 
 function serializeSize(
@@ -181,8 +170,8 @@ export function serializeFolder(folder: FolderNode, isRoot = true): FolderJSON {
 
   // Only the root carries the markdown note.
   if (isRoot) {
-    const note64 = encodeMarkdownNote(folder.markdownNote);
-    if (note64) out.mdnote_base64 = note64;
+    const note = encodeMarkdownNote(folder.markdownNote);
+    if (note) out.mdnote = note;
   }
 
   return out;
@@ -218,15 +207,10 @@ function parseFiles(raw: unknown): FileNode[] {
 }
 
 export function parseFolder(raw: FolderJSON): FolderNode {
-  const mdBase64 = (raw as unknown as { mdnote_base64?: unknown })
-    .mdnote_base64;
+  const mdnote = (raw as unknown as { mdnote?: unknown }).mdnote;
   let markdownNote = "";
-  if (typeof mdBase64 === "string" && mdBase64.length > 0) {
-    try {
-      markdownNote = base64ToUtf8(mdBase64);
-    } catch {
-      markdownNote = "";
-    }
+  if (typeof mdnote === "string" && mdnote.length > 0) {
+    markdownNote = decodeMarkdownNote(mdnote);
   }
 
   return {

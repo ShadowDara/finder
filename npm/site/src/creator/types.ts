@@ -66,6 +66,6 @@ export interface FolderJSON {
   invert_command?: boolean;
   tags?: string[];
   size?: SizeConstraint;
-  /** Optional Markdown note, Base64-encoded (UTF-8). Mirrors Go's mdnote_base64. */
-  mdnote_base64?: string;
+  /** Optional Markdown note, percent-encoded (like encodeURIComponent). Mirrors Go's mdnote. */
+  mdnote?: string;
 }

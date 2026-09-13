@@ -269,7 +269,7 @@ body {
   color: var(--ink-soft);
 }
 
-.note-base64-preview {
+.note-mdnote-preview {
   display: block;
   font-family: var(--mono);
   font-size: 11px;

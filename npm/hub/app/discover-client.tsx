@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { signOut, useSession } from "@/lib/auth-client";
 import { prettyJson } from "@/lib/utils";
 import { highlightFinderTemplate } from "@/lib/highlight";
+import { parseMarkdown } from "@shadowdara/dlib"
 
 type T = {
   id: string;
@@ -155,6 +156,10 @@ export default function DiscoverClient() {
                 __html: highlightFinderTemplate(prettyJson(selected.content)),
               }}
             />
+            <div>
+              {parseMarkdown((JSON.parse(selected.content))?.mdnote)}
+
+            </div>
           </div>
         </div>
       )}

@@ -3,6 +3,8 @@
 
 // Version which is fitting with the finder version
 
+// export namespace newest = versions.v0_3_17;
+
 export interface Template {
   min_version?: string;
   description?: string;
@@ -13,6 +15,7 @@ export interface Template {
   command?: string;
   invert_command?: boolean;
   size?: Size;
+  mdnote?: string;
 }
 
 export interface Folder {

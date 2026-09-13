@@ -475,20 +475,14 @@ function setupSelector(el: HTMLDivElement) {
     }
 
     // Optional Markdown note: parsed from the raw template JSON. The note is
-    // stored Base64-encoded (field mdnote_base64) so it survives plain-JSON.
+    // percent-encoded (like encodeURIComponent) so newlines survive as
+    // %0A and the note stays one JSON line.
     let markdownHtml = "";
     try {
       const parsed = JSON.parse(content);
-      const note64 = parsed?.mdnote_base64;
-      if (typeof note64 === "string" && note64.length > 0) {
-        // UTF-8-safe Base64 decoding (btoa/atob cannot handle non-Latin1).
-        const binary = atob(note64);
-        const bytes = new Uint8Array(binary.length);
-        for (let i = 0; i < binary.length; i++) {
-          bytes[i] = binary.charCodeAt(i);
-        }
-        const markdown = new TextDecoder().decode(bytes);
-        markdownHtml = parseMarkdown(markdown);
+      const note = parsed?.mdnote;
+      if (typeof note === "string" && note.length > 0) {
+        markdownHtml = parseMarkdown(note);
       }
     } catch {
       markdownHtml = "";

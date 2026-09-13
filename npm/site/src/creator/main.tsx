@@ -1,7 +1,7 @@
 import { jsx } from "../jsx-runtime";
 import type { Existence, FileNode, FolderJSON, FolderNode } from "./types";
 import {
-  base64ToUtf8,
+  decodeMarkdownNote,
   encodeMarkdownNote,
   findFile,
   findFolder,
@@ -534,17 +534,17 @@ export function renderCreator(app: HTMLDivElement, version: string) {
       const noteField = labeled(
         "Markdown note",
         markdownTextArea,
-        "Wird als Base64 im Feld mdnote_base64 im JSON gespeichert.",
+        "Wird percent-encodiert (wie encodeURIComponent, z.B. neue Zeilen als %0A) im Feld mdnote gespeichert.",
       );
 
       const notePreview = document.createElement("code");
-      notePreview.className = "note-base64-preview";
+      notePreview.className = "note-mdnote-preview";
 
       const noteFolder = folder; // narrowed non-null reference for closures
 
       function renderNotePreview(): void {
-        const encoded = encodeMarkdownNote(noteFolder.markdownNote);
-        notePreview.textContent = encoded ? `mdnote_base64: "${encoded}"` : "";
+        const note = encodeMarkdownNote(noteFolder.markdownNote);
+        notePreview.textContent = note ? `mdnote: "${note}"` : "";
       }
 
       markdownTextArea.addEventListener("input", () => {
@@ -613,18 +613,16 @@ export function renderCreator(app: HTMLDivElement, version: string) {
         ),
       );
 
-      // Re-render the Base64 note preview after every full inspector render
+      // Re-render the mdnote preview after every full inspector render
       // (the note field is only shown for the root node).
       const notePreviewEl = inspectorEl.querySelector<HTMLElement>(
-        ".note-base64-preview",
+        ".note-mdnote-preview",
       );
       if (notePreviewEl) {
-        const encoded = encodeMarkdownNote(
+        const note = encodeMarkdownNote(
           (findFolder(root, selection.id) ?? root).markdownNote,
         );
-        notePreviewEl.textContent = encoded
-          ? `mdnote_base64: "${encoded}"`
-          : "";
+        notePreviewEl.textContent = note ? `mdnote: "${note}"` : "";
       }
 
       return;
@@ -736,15 +734,11 @@ export function renderCreator(app: HTMLDivElement, version: string) {
     });
 
   // Extract the markdown note from a parsed template so the import dialog
-  // (which uses JSON.parse directly) also gets the decoded note.
+  // (which uses JSON.parse directly) also gets the note.
   function applyNoteFromRaw(raw: FolderJSON): void {
-    const rawWithNote = raw as unknown as { mdnote_base64?: unknown };
-    if (typeof rawWithNote.mdnote_base64 === "string") {
-      try {
-        root.markdownNote = base64ToUtf8(rawWithNote.mdnote_base64);
-      } catch {
-        root.markdownNote = "";
-      }
+    const rawWithNote = raw as unknown as { mdnote?: unknown };
+    if (typeof rawWithNote.mdnote === "string") {
+      root.markdownNote = decodeMarkdownNote(rawWithNote.mdnote);
     }
   }
 
