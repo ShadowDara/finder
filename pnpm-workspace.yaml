@@ -1,0 +1,4 @@
+packages:
+  - "npm/*"
+minimumReleaseAgeExclude:
+  - '@shadowdara/finder-lib@0.3.17'
