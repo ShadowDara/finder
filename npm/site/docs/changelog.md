@@ -7,6 +7,11 @@ _The whole finder CHANGELOG_
 - added regex support
 - added mcapp minecraft world dashboard
 - fixed buildcheck workflow
+- added markdown notes to the templates which can be viewed in the web UI
+- added command to view count of locations which where found
+- added option to view the cache size
+- updated the regex creator
+- fixed a bug in the argparser lib where global flag where not found in subcommands
 
 ## 0.3.16 - 08.09.2026
 

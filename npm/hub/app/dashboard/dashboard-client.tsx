@@ -6,8 +6,19 @@ import { MAX_TEMPLATE_BYTES } from "@/lib/templates";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { LINK } from "../vars";
+import { prettyJson } from "@/lib/utils";
 
+// Liest die URL-Parameter "template" und "name" für den Creator-Rückweg.
+// Bewusst ohne useSearchParams, damit kein Suspense-Boundary nötig ist.
+function getPrefill(): { name: string; content: string } | null {
+  const params = new URLSearchParams(window.location.search);
+  const templateRaw = params.get("template");
+  const nameParam = params.get("name");
+  if (templateRaw == null || nameParam == null) return null;
+  return { name: nameParam, content: templateRaw };
+}
 const MonacoEditor = dynamic(() => import("@monaco-editor/react"), {
   ssr: false,
   loading: () => (
@@ -29,16 +40,9 @@ type Template = {
   id: string;
   name: string;
   content: string;
+  tags?: string[];
   updatedAt: string;
 };
-
-function prettyJson(content: string): string {
-  try {
-    return JSON.stringify(JSON.parse(content), null, 2);
-  } catch {
-    return content;
-  }
-}
 
 export function DashboardClient({
   userId,
@@ -60,6 +64,33 @@ export function DashboardClient({
   const [saving, setSaving] = useState(false);
   const [accountError, setAccountError] = useState<string | null>(null);
   const [deletingAccount, setDeletingAccount] = useState(false);
+  // Zähler, um den Editor bei Bearbeiten/Reset/URL-Prefill neu zu mounten,
+  // damit defaultValue wirklich übernommen wird (kein Fokus-Verlust).
+  const [editorReset, setEditorReset] = useState(0);
+
+  // URL-Parameter (template & name) beim ersten Mount übernehmen:
+  // - Wenn der Name schon existiert → Bearbeiten-Modus (PUT)
+  // - Sonst → neues Template vorbelegen (POST)
+  useEffect(() => {
+    const prefill = getPrefill();
+    if (!prefill) return;
+
+    const existing = templates.find(
+      (t) => t.name.toLowerCase() === prefill.name.toLowerCase(),
+    );
+    if (existing) {
+      setEditingId(existing.id);
+      setName(existing.name);
+      setContent(prettyJson(prefill.content));
+      setTags(existing.tags?.join(", ") ?? "");
+    } else {
+      setEditingId(null);
+      setName(prefill.name);
+      setContent(prettyJson(prefill.content));
+    }
+    setError(null);
+    setEditorReset((n) => n + 1);
+  }, []); // einmalig beim Mount
 
   const contentBytes = new TextEncoder().encode(content).length;
 
@@ -69,13 +100,16 @@ export function DashboardClient({
     setContent("");
     setTags("");
     setError(null);
+    setEditorReset((n) => n + 1);
   }
 
   function startEdit(template: Template) {
     setEditingId(template.id);
     setName(template.name);
     setContent(prettyJson(template.content));
+    setTags(template.tags?.join(", ") ?? "");
     setError(null);
+    setEditorReset((n) => n + 1);
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -206,17 +240,16 @@ export function DashboardClient({
               placeholder="cli, web, react"
             />
           </label>
-          {/* <label style={{ display: "flex", flexDirection: "column", gap: 4 }}> */}
           Inhalt (JSON)
           <MonacoEditor
+            key={`${editingId ?? "new"}-${editorReset}`}
             language="json"
             height="300px"
             theme="vs-dark"
-            value={content}
+            defaultValue={content}
             onChange={(value) => setContent(value ?? "")}
             options={EDITOR_OPTIONS}
           />
-          {/* </label> */}
           <p>
             {contentBytes} / {MAX_TEMPLATE_BYTES} Bytes
           </p>
@@ -266,6 +299,28 @@ export function DashboardClient({
                 >
                   <strong>{template.name}</strong>
                   <span style={{ display: "flex", gap: 8 }}>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        window.open(
+                          `https://shadowdara.github.io/finder/creator?template=${encodeURIComponent(template.content)}&filename=${encodeURIComponent(template.name)}&origin_link=${encodeURIComponent(LINK + "/dashboard")}`,
+                          "_blank",
+                        )
+                      }
+                    >
+                      Edit in webcreator
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        window.open(
+                          `http://localhost:5173/creator?template=${encodeURIComponent(template.content)}&filename=${encodeURIComponent(template.name)}&origin_link=${encodeURIComponent(LINK + "/dashboard")}`,
+                          "_blank",
+                        )
+                      }
+                    >
+                      Edit in creator
+                    </button>
                     <button type="button" onClick={() => startEdit(template)}>
                       Bearbeiten
                     </button>
@@ -278,14 +333,7 @@ export function DashboardClient({
                   </span>
                 </div>
 
-                <TemplateView
-                  template={template}
-                  // onClose={() => setSelected(null)}
-                  showclose={false}
-                  // onClose={function (): void {
-                  //   throw new Error("Function not implemented.");
-                  // }}
-                ></TemplateView>
+                <TemplateView template={template} showclose={false} />
               </li>
             ))}
           </ul>

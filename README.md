@@ -57,12 +57,12 @@ without recompiling.
 
 The repository contains several binaries:
 
-| Binary | Description |
-| ------ | ----------- |
-| `finder` | Main CLI — search for projects and files using templates |
-| `findergen` | HTTP server & web UI for template management, cache viewer, config editor |
-| `csf` | Build helper — compile scripts, `go install` with CGO, git repo pack/restore |
-| `tester` | Template test tool — validates template files |
+| Binary      | Description                                                                  |
+| ----------- | ---------------------------------------------------------------------------- |
+| `finder`    | Main CLI — search for projects and files using templates                     |
+| `findergen` | HTTP server & web UI for template management, cache viewer, config editor    |
+| `csf`       | Build helper — compile scripts, `go install` with CGO, git repo pack/restore |
+| `tester`    | Template test tool — validates template files                                |
 
 ## Installation
 
@@ -116,32 +116,32 @@ finder git
 
 ### Commands
 
-| Command | Aliases | Description |
-| ------- | ------- | ----------- |
-| `finder <template>` | | Search for projects matching a template |
-| `finder check` | | Validate all built-in and custom templates |
-| `finder list` | `ls` | List all available templates |
-| `finder tags` | `tag` | Show all tags in the console |
-| `finder -t <tag>` | | Search for templates by tag |
-| `finder -b` | | Search for executables in your `$PATH` |
-| `finder cp` | | Print the path to the global config file |
-| `finder version` | `-v`, `v` | Print the current version |
-| `finder template <name>` | `tpl` | Search using an explicit template name |
+| Command                  | Aliases   | Description                                |
+| ------------------------ | --------- | ------------------------------------------ |
+| `finder <template>`      |           | Search for projects matching a template    |
+| `finder check`           |           | Validate all built-in and custom templates |
+| `finder list`            | `ls`      | List all available templates               |
+| `finder tags`            | `tag`     | Show all tags in the console               |
+| `finder -t <tag>`        |           | Search for templates by tag                |
+| `finder -b`              |           | Search for executables in your `$PATH`     |
+| `finder cp`              |           | Print the path to the global config file   |
+| `finder version`         | `-v`, `v` | Print the current version                  |
+| `finder template <name>` | `tpl`     | Search using an explicit template name     |
 
 ### Global flags
 
-| Flag | Aliases | Description |
-| ---- | ------- | ----------- |
-| `--json` | `-j` | Output results as JSON |
-| `--verbose` | `-vv` | Enable verbose output |
+| Flag        | Aliases | Description            |
+| ----------- | ------- | ---------------------- |
+| `--json`    | `-j`    | Output results as JSON |
+| `--verbose` | `-vv`   | Enable verbose output  |
 
 ### Cache flags
 
-| Flag | Aliases | Description |
-| ---- | ------- | ----------- |
-| `--cache` | `-c` | Use the existing cache instead of searching |
-| `--create-cache` | `-cc` | Create a new cache |
-| `--create-cache-db` | `-ccd` | Create a Git database from cache data |
+| Flag                | Aliases | Description                                 |
+| ------------------- | ------- | ------------------------------------------- |
+| `--cache`           | `-c`    | Use the existing cache instead of searching |
+| `--create-cache`    | `-cc`   | Create a new cache                          |
+| `--create-cache-db` | `-ccd`  | Create a Git database from cache data       |
 
 ### Example
 
@@ -179,8 +179,8 @@ Templates are JSON5 files. A minimal template:
 
 ```json5
 {
-  "name": "*",
-  "folders": [{ "name": ".git" }]
+  name: "*",
+  folders: [{ name: ".git" }],
 }
 ```
 
@@ -188,34 +188,34 @@ A full template with all supported fields:
 
 ```json5
 {
-  "min_version": "0.3.6",
-  "description": "My Custom Project Type",
-  "name": "*",
-  "tags": ["node", "typescript"],
-  "folders": [
+  min_version: "0.3.6",
+  description: "My Custom Project Type",
+  name: "*",
+  tags: ["node", "typescript"],
+  folders: [
     {
-      "name": "src",
-      "folders": [],
-      "files": ["index.ts"]
-    }
+      name: "src",
+      folders: [],
+      files: ["index.ts"],
+    },
   ],
-  "files": [
+  files: [
     "package.json",
     {
-      "name": "*.ts",
-      "existence": "required",
-      "size": {
-        "min": 1,
-        "min_size_type": "KB"
-      }
-    }
+      name: "*.ts",
+      existence: "required",
+      size: {
+        min: 1,
+        min_size_type: "KB",
+      },
+    },
   ],
-  "command": "",
-  "invert_command": false,
-  "size": {
-    "min": 10,
-    "min_size_type": "KB"
-  }
+  command: "",
+  invert_command: false,
+  size: {
+    min: 10,
+    min_size_type: "KB",
+  },
 }
 ```
 
@@ -223,11 +223,11 @@ A full template with all supported fields:
 
 Place your own `.json5` template files in:
 
-| OS | Path |
-| -- | ---- |
+| OS      | Path                               |
+| ------- | ---------------------------------- |
 | Windows | `%USERPROFILE%\.finder\templates\` |
-| Linux | `~/.finder/templates/` |
-| macOS | `~/.finder/templates/` |
+| Linux   | `~/.finder/templates/`             |
+| macOS   | `~/.finder/templates/`             |
 
 Or in the project-local directory:
 
@@ -245,11 +245,11 @@ Since **v0.3.17**, every name pattern in a template — the top-level
 `name`, every file `name`, and every folder `name` (including nested
 folders) — is resolved by a **3-tier matching strategy**:
 
-| Priority | Method | Applies when |
-| -------- | ------ | ------------ |
-| 1 | Exact string equality | pattern equals the name verbatim |
-| 2 | Go regex (`regexp.MatchString`) | pattern compiles as a valid regex (RE2) |
-| 3 | Glob (`path.Match`) | pattern is not a valid regex (e.g. `*.ts`) |
+| Priority | Method                          | Applies when                               |
+| -------- | ------------------------------- | ------------------------------------------ |
+| 1        | Exact string equality           | pattern equals the name verbatim           |
+| 2        | Go regex (`regexp.MatchString`) | pattern compiles as a valid regex (RE2)    |
+| 3        | Glob (`path.Match`)             | pattern is not a valid regex (e.g. `*.ts`) |
 
 This means:
 
@@ -264,21 +264,21 @@ Regex patterns work in **all** name fields:
 ```json5
 // top-level name: match folder names like project-42, project-99
 {
-  "name": "^project-[0-9]+$",
-  "min_version": "0.3.17",
-  "files": [
+  name: "^project-[0-9]+$",
+  min_version: "0.3.17",
+  files: [
     {
       // file name: match exactly main.py, app.py, or server.py
-      "name": "^(main|app|server)\\.py$",
-      "existence": "required"
-    }
+      name: "^(main|app|server)\\.py$",
+      existence: "required",
+    },
   ],
-  "folders": [
+  folders: [
     {
       // folder name: match src, lib, or pkg
-      "name": "^(src|lib|pkg)$"
-    }
-  ]
+      name: "^(src|lib|pkg)$",
+    },
+  ],
 }
 ```
 
@@ -297,19 +297,19 @@ used:
 
 ```json5
 {
-  "port": 8080,
-  "cache": false,
-  "create_cache_db": false,
-  "finder_instances": 8
+  port: 8080,
+  cache: false,
+  create_cache_db: false,
+  finder_instances: 8,
 }
 ```
 
-| Key | Type | Default | Description |
-| --- | ---- | ------- | ----------- |
-| `port` | int | `8080` | HTTP server port for `findergen` |
-| `cache` | bool | `false` | Enable cache by default |
-| `create_cache_db` | bool | `false` | Create a Git database from cache data |
-| `finder_instances` | int | `8` | Max parallel instances when creating cache |
+| Key                | Type | Default | Description                                |
+| ------------------ | ---- | ------- | ------------------------------------------ |
+| `port`             | int  | `13420` | HTTP server port for `findergen`           |
+| `cache`            | bool | `false` | Enable cache by default                    |
+| `create_cache_db`  | bool | `false` | Create a Git database from cache data      |
+| `finder_instances` | int  | `8`     | Max parallel instances when creating cache |
 
 For a visual config editor, visit
 [https://shadowdara.github.io/finder/configeditor](https://shadowdara.github.io/finder/configeditor).

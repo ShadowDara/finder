@@ -1,6 +1,7 @@
 import { escapeHtml, jsx, raw, Fragment } from "../../src/jsx-runtime";
 import Header from "../../src/components/mcappheader.jsx";
 import * as f from "../../src/components/mcappstyle.js";
+import { SERVER_ADRESS } from "../../src/vars.js";
 
 export default function render(el) {
   el.innerHTML = (
@@ -29,7 +30,7 @@ export default function render(el) {
       let serveraddress = "";
 
       if (import.meta.env.DEV) {
-        serveraddress = "http://localhost:8080";
+        serveraddress = SERVER_ADRESS;
       }
 
       const sysRes = await fetch(serveraddress + "/api/system");

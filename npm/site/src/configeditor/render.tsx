@@ -17,7 +17,7 @@ const schema: ConfigSchema = {
       key: "port",
       type: "number",
       label: "Port",
-      default: 8080,
+      default: 13420,
       min: 1,
       max: 65535,
     },

@@ -98,11 +98,13 @@ Use:
 
 - `"*"` for any folder name
 - `"my-app"` for exact name
-- `"project-*"` for wildcard matching
+- `"project-*"` for glob wildcard matching
+- `"^project-[0-9]+$"` for regex matching
 
 Important:
 
-- This is checked with glob-like matching, not arbitrary regex.
+- Matching is exact-first, then regex, then glob fallback (see
+  the "Pattern matching" section below).
 - If you want to match all folders, prefer `"*"`.
 
 ### `files` (array)
@@ -278,6 +280,125 @@ Minimum finder version compatibility.
 
 ---
 
+## 3.5) Pattern matching: regex, glob, and exact
+
+Every name pattern in a template — the top-level `name`, every file
+`name`, and every folder `name` (including nested folders) — is
+resolved by the same matching function:
+
+```go
+if pattern == name {
+    return true           // 1) exact string match
+}
+if ok, err := regexp.MatchString(pattern, name); err == nil {
+    return ok             // 2) full Go regex
+}
+ok, err := path.Match(pattern, name)
+return err == nil && ok   // 3) glob fallback
+```
+
+This creates a 3-tier matching strategy:
+
+| Priority | Method                          | Applies when                               |
+| -------- | ------------------------------- | ------------------------------------------ |
+| 1        | exact string equality           | pattern equals the name verbatim           |
+| 2        | Go regex (`regexp.MatchString`) | pattern is a valid regular expression      |
+| 3        | glob (`path.Match`)             | pattern is not a valid regex (e.g. `*.ts`) |
+
+### How to choose a pattern
+
+Because regex is attempted before glob, the same character can mean
+different things depending on the pattern:
+
+- `"*.go"` is not a valid regex, so it is treated as a glob and
+  matches any file ending in `.go`.
+- `"^main\.py$"` is a valid regex (anchored, no wildcard ambiguity),
+  so it matches exactly one name.
+- `"project-*"` is not a valid regex, so it is treated as a glob.
+
+### Go regex syntax (priority 2)
+
+Patterns that compile as a Go regular expression match with full regex
+semantics against the entire entry name. Refer to Go's
+`regexp/syntax` (RE2) for the full language. Useful constructs:
+
+- anchors: `^...$`
+- character classes: `[0-9]`, `[a-zA-Z]`, `[^...]`
+- predefined classes: `\d`, `\w`, `\s` (and uppercase negations)
+- quantifiers: `*`, `+`, `?`, `{m,n}`
+- alternation: `(a|b)`
+- groups: `(abc)`, non-capturing `(?:abc)`
+- escapes: `\.`, `\\`
+
+Examples:
+
+```json5
+// folder names like project-123, project-42 ...
+{ name: "^project-[0-9]+$" }
+```
+
+```json5
+// python entry files: main.py, app.py, ...
+{
+  name: "^(main|app|server)\\.py$",
+  existence: "required",
+}
+```
+
+Note: Go regex is RE2 — no backreferences and no lookahead/lookbehind.
+If your pattern uses those, it fails to compile and falls back to glob.
+
+### Glob syntax (priority 3 fallback)
+
+When a pattern is not a valid regex, it is treated as a glob via Go's
+`path.Match`:
+
+- `*` matches any sequence of non-`/` characters
+- `?` matches any single non-`/` character
+- `[abc]` matches one character from the class
+- `[^abc]` / `[!abc]` matches one character not in the class
+- `\x` escapes the next character
+
+There is no recursive `**` (doublestar) support — `**` does not
+descend into subdirectories.
+
+Examples:
+
+```json5
+"name": "*.ts",
+```
+
+```json5
+"name": "file?.txt",
+```
+
+```json5
+"name": "[abc].go",
+```
+
+### Where these patterns apply
+
+- top-level `name` → the scanned directory name
+- `files[].name` → file names inside the directory
+- `folders[].name` → subfolder names (recursively for nested folders)
+
+Regex patterns work in all of these places. Exact glob patterns like
+`"src"` or `"package.json"` work exactly as before.
+
+### Compatibility note
+
+Regex support was added in finder 0.3.17. If your template relies on
+regex patterns, set:
+
+```json5
+"min_version": "0.3.17"
+```
+
+Templates for older finder versions should keep using glob or exact
+patterns only.
+
+---
+
 ## 4) Matching semantics
 
 A directory is considered a match only if all required conditions are
@@ -336,14 +457,18 @@ Not a huge list of optional files.
 If your project has a `README.md` in many folders, do not require it
 unless it is central to your pattern.
 
-### Use wildcards carefully
+### Use wildcards and regex carefully
 
 ```json5
 "name": "*.git" // if you intended a hidden git folder, this is special-case logic
 ```
 
 Use patterns like `"*"`, `"src"`, `"*.ts"`, `"package.json"` rather
-than complex regex-style expressions.
+than complex regex-style expressions when a simple glob suffices.
+
+When you do need regex (e.g. matching `project-123` with
+`^project-[0-9]+$`), anchor with `^` and `$` to avoid unintended
+matches.
 
 ---
 
@@ -444,6 +569,53 @@ exactly.
 }
 ```
 
+### Example F: regex-matched folder name
+
+```json5
+{
+  description: "Numbered project folder",
+  name: "^project-[0-9]+$",
+  files: [
+    {
+      name: "^(main|app)\\.py$",
+      existence: "required",
+    },
+  ],
+  tags: ["python", "numbered"],
+  min_version: "0.3.17",
+}
+```
+
+This matches folders like `project-123` or `project-42` and requires
+exactly one of `main.py` or `app.py` to be present. The name uses a
+Go regex (RE2) — note the escaped dots `\\.` and anchors `^...$`.
+
+### Example G: regex file pattern with glob fallback
+
+```json5
+{
+  description: "JavaScript project with strict entry points",
+  name: "*",
+  files: [
+    "package.json",
+    {
+      name: "^(index|main|app)\\.(js|ts|jsx|tsx)$",
+      existence: "required",
+    },
+    {
+      name: "\\.env$",
+      existence: "forbidden",
+    },
+  ],
+  tags: ["javascript", "strict"],
+  min_version: "0.3.17",
+}
+```
+
+This requires one of `index.js`, `main.js`, `app.js`, `index.ts`, etc.
+and forbids any file ending in `.env`. Note that `"*.env"` would also
+work as a glob — the regex version is more explicit.
+
 ---
 
 ## 7) Rules for AI-generated Finder templates
@@ -509,17 +681,24 @@ many files.
 
 Prefer the smallest signal that distinguishes the project type.
 
-### Mistake 3: using regex-like expressions instead of glob matching
+### Mistake 3: mixing regex and glob syntax unintentionally
 
-Finder uses glob-like matching through `path.Match`, not full regex.
+Finder tries regex first, then falls back to glob. This is usually
+fine, but remember that a pattern that looks like a regex is treated
+as a regex:
+
+- `"*.ts"` is invalid regex → glob, matches any `.ts` file
+- `"^main\\.py$"` is valid regex → only matches exactly `main.py`
 
 Use:
 
 - `*.ts`
 - `package.json`
 - `src`
+- `^project-[0-9]+$` (regex, only when you need it)
 
-not arbitrary regex syntax.
+Do not write patterns that accidentally compile as a regex and change
+meaning. If in doubt, prefer glob or exact names.
 
 ### Mistake 4: forgetting the `.json5` extension
 

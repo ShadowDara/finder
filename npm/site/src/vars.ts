@@ -1,4 +1,4 @@
-export const SERVER_ADRESS = "http://localhost:8080";
+export const SERVER_ADRESS = "http://localhost:13420";
 
 export let LINK_PREFIX = "/";
 

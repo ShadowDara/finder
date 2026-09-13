@@ -1,16 +1,16 @@
 import { copyFile } from "fs/promises";
 
-await copyFile("./../AGENTS.md", "./data/agents.md");
-await copyFile("./../CHANGELOG.md", "./docs/changelog.md");
-await copyFile("./../README.md", "./docs/readme.md");
-await copyFile("./../install.sh", "./public/install.sh");
+await copyFile("./../../AGENTS.md", "./data/agents.md");
+await copyFile("./../../CHANGELOG.md", "./docs/changelog.md");
+await copyFile("./../../README.md", "./docs/readme.md");
+await copyFile("./../../install.sh", "./public/install.sh");
 
 // Save all templates for static frontend
 
 import { readdir, readFile, writeFile } from "fs/promises";
 import path from "path";
 
-const templatesDir = path.resolve("../internal/templates");
+const templatesDir = path.resolve("../../internal/templates");
 const outputFile = path.resolve("./src/templates.js");
 
 const files = await readdir(templatesDir);

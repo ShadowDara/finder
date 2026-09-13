@@ -32,6 +32,8 @@ export function renderCreator(app: HTMLDivElement, version: string) {
   const template = params.get("template");
   const filname = params.get("filename");
 
+  const origin_link = params.get("origin_link");
+
   if (import.meta.env.MODE == "backend") {
     servermode = true;
   }
@@ -61,6 +63,14 @@ export function renderCreator(app: HTMLDivElement, version: string) {
           </span>
         </div>
         <div class="topbar-actions">
+          <a
+            id="btn-back-to-origin"
+            class="btn btn-ghost"
+            type="button"
+            href={`${origin_link}?template=${encodeURIComponent(JSON.stringify(serializeFolder(root, true)))}&name=${filname}`}
+          >
+            Go back to origin
+          </a>
           <button id="btn-import" class="btn btn-ghost" type="button">
             Import JSON
           </button>
@@ -203,11 +213,23 @@ export function renderCreator(app: HTMLDivElement, version: string) {
     document.querySelector<HTMLTextAreaElement>("#import-text")!;
   const importErrorEl =
     document.querySelector<HTMLParagraphElement>("#import-error")!;
+  const originLinkEl = document.querySelector<HTMLAnchorElement>(
+    "#btn-back-to-origin",
+  );
 
   function render(): void {
     renderTree();
     renderInspector();
     renderPreview();
+    updateOriginLink();
+  }
+
+  // Hält den "Go back to origin"-Link aktuell: Bei jeder Änderung am Baum
+  // wird der Link neu aufgebaut, damit immer der aktuelle (bearbeitete)
+  // root serialisiert wird und nicht der Stand vom ersten Rendering.
+  function updateOriginLink(): void {
+    if (!originLinkEl || !origin_link) return;
+    originLinkEl.href = `${origin_link}?template=${encodeURIComponent(JSON.stringify(serializeFolder(root, true)))}&name=${filname}`;
   }
 
   // ---------- Tree ----------
