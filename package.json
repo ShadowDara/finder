@@ -6,6 +6,7 @@
     "build": "pnpm --filter web build"
   },
   "devDependencies": {
-    "@shadowdara/linguist-js": "*"
+    "@shadowdara/linguist-js": "*",
+    "@shadowdara/seg": "0.2.4"
   }
 }
