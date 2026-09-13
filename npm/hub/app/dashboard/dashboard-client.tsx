@@ -1,120 +1,146 @@
-'use client'
+"use client";
 
-import { signOut } from '@/lib/auth-client'
-import { MAX_TEMPLATE_BYTES } from '@/lib/templates'
-import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { signOut } from "@/lib/auth-client";
+import { MAX_TEMPLATE_BYTES } from "@/lib/templates";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 type Template = {
-  id: string
-  name: string
-  content: string
-  updatedAt: string
-}
+  id: string;
+  name: string;
+  content: string;
+  updatedAt: string;
+};
 
 export function DashboardClient({
+  userId,
   userEmail,
   initialTemplates,
 }: {
-  userEmail: string
-  initialTemplates: Template[]
+  userId: string;
+  userEmail: string;
+  initialTemplates: Template[];
 }) {
-  const router = useRouter()
-  const [templates, setTemplates] = useState<Template[]>(initialTemplates)
+  const router = useRouter();
+  const [templates, setTemplates] = useState<Template[]>(initialTemplates);
 
-  const [editingId, setEditingId] = useState<string | null>(null)
-  const [name, setName] = useState('')
-  const [content, setContent] = useState('')
-  const [tags, setTags] = useState('')
-  const [error, setError] = useState<string | null>(null)
-  const [saving, setSaving] = useState(false)
-  const [accountError, setAccountError] = useState<string | null>(null)
-  const [deletingAccount, setDeletingAccount] = useState(false)
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [name, setName] = useState("");
+  const [content, setContent] = useState("");
+  const [tags, setTags] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [accountError, setAccountError] = useState<string | null>(null);
+  const [deletingAccount, setDeletingAccount] = useState(false);
 
-  const contentBytes = new TextEncoder().encode(content).length
+  const contentBytes = new TextEncoder().encode(content).length;
 
   function resetForm() {
-    setEditingId(null)
-    setName('')
-    setContent('')
-    setTags('')
-    setError(null)
+    setEditingId(null);
+    setName("");
+    setContent("");
+    setTags("");
+    setError(null);
   }
 
   function startEdit(template: Template) {
-    setEditingId(template.id)
-    setName(template.name)
-    setContent(template.content)
-    setError(null)
+    setEditingId(template.id);
+    setName(template.name);
+    setContent(template.content);
+    setError(null);
   }
 
   async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    setError(null)
-    setSaving(true)
+    e.preventDefault();
+    setError(null);
+    setSaving(true);
 
-    const url = editingId ? `/api/templates/${editingId}` : '/api/templates'
-    const method = editingId ? 'PUT' : 'POST'
+    const url = editingId ? `/api/templates/${editingId}` : "/api/templates";
+    const method = editingId ? "PUT" : "POST";
 
     const res = await fetch(url, {
       method,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, content, tags: tags.split(',').map((tag) => tag.trim()).filter(Boolean) }),
-    })
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name,
+        content,
+        tags: tags
+          .split(",")
+          .map((tag) => tag.trim())
+          .filter(Boolean),
+      }),
+    });
 
-    const data = await res.json()
-    setSaving(false)
+    const data = await res.json();
+    setSaving(false);
 
     if (!res.ok) {
-      setError(data.error ?? 'Speichern fehlgeschlagen.')
-      return
+      setError(data.error ?? "Speichern fehlgeschlagen.");
+      return;
     }
 
     const saved: Template = {
       ...data.template,
       updatedAt: data.template.updatedAt,
-    }
+    };
 
     setTemplates((prev) =>
-      editingId ? prev.map((t) => (t.id === saved.id ? saved : t)) : [saved, ...prev],
-    )
-    resetForm()
+      editingId
+        ? prev.map((t) => (t.id === saved.id ? saved : t))
+        : [saved, ...prev],
+    );
+    resetForm();
   }
 
   async function handleDelete(id: string) {
-    const res = await fetch(`/api/templates/${id}`, { method: 'DELETE' })
+    const res = await fetch(`/api/templates/${id}`, { method: "DELETE" });
     if (res.ok) {
-      setTemplates((prev) => prev.filter((t) => t.id !== id))
-      if (editingId === id) resetForm()
+      setTemplates((prev) => prev.filter((t) => t.id !== id));
+      if (editingId === id) resetForm();
     }
   }
 
   async function handleDeleteAccount() {
-    if (!window.confirm('Möchtest du deinen Account und alle Templates endgültig löschen?')) return
-    setDeletingAccount(true)
-    setAccountError(null)
-    const response = await fetch('/api/account', { method: 'DELETE' })
-    setDeletingAccount(false)
+    if (
+      !window.confirm(
+        "Möchtest du deinen Account und alle Templates endgültig löschen?",
+      )
+    )
+      return;
+    setDeletingAccount(true);
+    setAccountError(null);
+    const response = await fetch("/api/account", { method: "DELETE" });
+    setDeletingAccount(false);
     if (!response.ok) {
-      setAccountError('Der Account konnte nicht gelöscht werden.')
-      return
+      setAccountError("Der Account konnte nicht gelöscht werden.");
+      return;
     }
-    await signOut()
-    router.push('/')
-    router.refresh()
+    await signOut();
+    router.push("/");
+    router.refresh();
   }
 
   async function handleSignOut() {
-    await signOut()
-    router.push('/sign-in')
-    router.refresh()
+    await signOut();
+    router.push("/sign-in");
+    router.refresh();
   }
 
   return (
-    <main style={{ maxWidth: 720, margin: '0 auto', padding: 24 }}>
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+    <main style={{ maxWidth: 720, margin: "0 auto", padding: 24 }}>
+      <header
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         <div>
-          <h1>Dashboard</h1>
+          <h1>
+            Dashboard - <Link href="/">Discover</Link> -{" "}
+            <Link href={`/users/${userId}`}>User Page</Link>
+          </h1>
           <p>Angemeldet als {userEmail}</p>
         </div>
         <button type="button" onClick={handleSignOut}>
@@ -123,9 +149,12 @@ export function DashboardClient({
       </header>
 
       <section style={{ marginTop: 24 }}>
-        <h2>{editingId ? 'Template bearbeiten' : 'Neues Template'}</h2>
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          <label style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+        <h2>{editingId ? "Template bearbeiten" : "Neues Template"}</h2>
+        <form
+          onSubmit={handleSubmit}
+          style={{ display: "flex", flexDirection: "column", gap: 12 }}
+        >
+          <label style={{ display: "flex", flexDirection: "column", gap: 4 }}>
             Name
             <input
               type="text"
@@ -134,11 +163,16 @@ export function DashboardClient({
               required
             />
           </label>
-          <label style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+          <label style={{ display: "flex", flexDirection: "column", gap: 4 }}>
             Tags (kommagetrennt)
-            <input type="text" value={tags} onChange={(e) => setTags(e.target.value)} placeholder="cli, web, react" />
+            <input
+              type="text"
+              value={tags}
+              onChange={(e) => setTags(e.target.value)}
+              placeholder="cli, web, react"
+            />
           </label>
-          <label style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+          <label style={{ display: "flex", flexDirection: "column", gap: 4 }}>
             Inhalt (JSON)
             <textarea
               value={content}
@@ -151,9 +185,13 @@ export function DashboardClient({
             {contentBytes} / {MAX_TEMPLATE_BYTES} Bytes
           </p>
           {error && <p role="alert">{error}</p>}
-          <div style={{ display: 'flex', gap: 8 }}>
+          <div style={{ display: "flex", gap: 8 }}>
             <button type="submit" disabled={saving}>
-              {saving ? 'Speichern…' : editingId ? 'Aktualisieren' : 'Erstellen'}
+              {saving
+                ? "Speichern…"
+                : editingId
+                  ? "Aktualisieren"
+                  : "Erstellen"}
             </button>
             {editingId && (
               <button type="button" onClick={resetForm}>
@@ -169,35 +207,65 @@ export function DashboardClient({
         {templates.length === 0 ? (
           <p>Noch keine Templates vorhanden.</p>
         ) : (
-          <ul style={{ display: 'flex', flexDirection: 'column', gap: 16, padding: 0, listStyle: 'none' }}>
+          <ul
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 16,
+              padding: 0,
+              listStyle: "none",
+            }}
+          >
             {templates.map((template) => (
-              <li key={template.id} style={{ border: '1px solid', padding: 12 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <li
+                key={template.id}
+                style={{ border: "1px solid", padding: 12 }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
                   <strong>{template.name}</strong>
-                  <span style={{ display: 'flex', gap: 8 }}>
+                  <span style={{ display: "flex", gap: 8 }}>
                     <button type="button" onClick={() => startEdit(template)}>
                       Bearbeiten
                     </button>
-                    <button type="button" onClick={() => handleDelete(template.id)}>
+                    <button
+                      type="button"
+                      onClick={() => handleDelete(template.id)}
+                    >
                       Löschen
                     </button>
                   </span>
                 </div>
-                <pre style={{ overflowX: 'auto', marginTop: 8 }}>{template.content}</pre>
+                <pre style={{ overflowX: "auto", marginTop: 8 }}>
+                  {template.content}
+                </pre>
               </li>
             ))}
           </ul>
         )}
       </section>
 
-      <section style={{ marginTop: 48, borderTop: '1px solid', paddingTop: 24 }}>
+      <section
+        style={{ marginTop: 48, borderTop: "1px solid", paddingTop: 24 }}
+      >
         <h2>Account löschen</h2>
         <p>Diese Aktion löscht deinen Account und alle Templates dauerhaft.</p>
         {accountError && <p role="alert">{accountError}</p>}
-        <button type="button" onClick={handleDeleteAccount} disabled={deletingAccount}>
-          {deletingAccount ? 'Account wird gelöscht…' : 'Account endgültig löschen'}
+        <button
+          type="button"
+          onClick={handleDeleteAccount}
+          disabled={deletingAccount}
+        >
+          {deletingAccount
+            ? "Account wird gelöscht…"
+            : "Account endgültig löschen"}
         </button>
       </section>
     </main>
-  )
+  );
 }
