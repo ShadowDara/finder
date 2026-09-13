@@ -129,11 +129,13 @@ export namespace versions {
     export interface Size {
       min?: number;
       max?: number;
-      min_size_type?: string;
-      max_size_type?: string;
+      min_size_type?: SizeType;
+      max_size_type?: SizeType;
     }
 
     export type Existence = "required" | "forbidden" | "optional";
+
+    export type SizeType = "B" | "KB" | "MB" | "GB";
   }
 
   /// Version v0.3.16
@@ -169,8 +171,8 @@ export namespace versions {
     export interface Size {
       min?: number;
       max?: number;
-      min_size_type?: string;
-      max_size_type?: string;
+      min_size_type?: SizeType;
+      max_size_type?: SizeType;
     }
 
     export interface Checksums {
@@ -179,6 +181,8 @@ export namespace versions {
     }
 
     export type Existence = "required" | "forbidden" | "optional";
+
+    export type SizeType = "B" | "KB" | "MB" | "GB";
   }
 
   /// Version v0.3.17
@@ -215,8 +219,8 @@ export namespace versions {
     export interface Size {
       min?: number;
       max?: number;
-      min_size_type?: string;
-      max_size_type?: string;
+      min_size_type?: SizeType;
+      max_size_type?: SizeType;
     }
 
     export interface Checksums {
@@ -225,5 +229,7 @@ export namespace versions {
     }
 
     export type Existence = "required" | "forbidden" | "optional";
+
+    export type SizeType = "B" | "KB" | "MB" | "GB";
   }
 }

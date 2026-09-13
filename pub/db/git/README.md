@@ -1,7 +1,7 @@
 # pub/db/git — gitdb
 
 Go-Bibliothek zum Scannen von Git-Repositories über die installierte
-Git-CLI und zum Export nach **SQLite** oder **JSON**.
+Git-CLI und zum Export nach **SQLite**, **SQL-Dump** oder **JSON**.
 
 ## Voraussetzungen
 
@@ -24,6 +24,7 @@ func main() {
     report, err := gitdb.Export(gitdb.ExportOptions{
         RepoPath:   "/pfad/zum/repo",
         SQLitePath: "export.db",     // Optional
+        SQLPath:    "dump.sql",      // Optional: SQL-Dump
         JSONDir:    "./json-export",  // Optional
         WithBlobs:  true,            // Blob-Inhalte mit exportieren
         LimitCommits: 100,           // 0 = unbegrenzt
@@ -45,6 +46,7 @@ func main() {
 | `Export(ExportOptions)`    | Scannt Repo + schreibt alle angegebenen Ziele |
 | `Snapshot(ExportOptions)`  | Scannt Repo, liefert `*RepoData` ohne Export  |
 | `ExportSQLite(path, data)` | Schreibt `*RepoData` in eine SQLite-DB        |
+| `ExportSQL(path, data)`    | Schreibt `*RepoData` als SQL-Dump (`.sql`)    |
 | `ExportJSON(dir, data)`    | Schreibt `*RepoData` als JSON-Dateien         |
 | `ReadBlob(dbPath, hash)`   | Liest einen dekomprimierten Blob aus der DB   |
 | `GitVersion()`             | Liefert die installierte Git-Version          |
@@ -55,15 +57,14 @@ func main() {
 type ExportOptions struct {
     RepoPath     string // Pfad zum Git-Repository (leer = aktuelles Verzeichnis)
     SQLitePath   string // Ziel-Datei für SQLite-Export
+    SQLPath      string // Ziel-Datei für SQL-Dump (*.sql)
     JSONDir      string // Ziel-Verzeichnis für JSON-Export
     WithBlobs    bool   // Blob-Inhalte mit exportieren
     LimitCommits int    // Max. Anzahl Commits (0 = alle)
 }
 ```
 
-## Datenmodell
-
-### Tabellen (SQLite)
+## Datenmodell & SQL-Dump)
 
 | Tabelle        | Beschreibung                               |
 | -------------- | ------------------------------------------ |
@@ -73,6 +74,14 @@ type ExportOptions struct {
 | `parents`      | Commit-Elternbeziehung (M:N)               |
 | `tree_entries` | Alle Datei-Einträge pro Commit             |
 | `blobs`        | Blob-Objekte (Inhalte gzip-komprimiert)    |
+
+Der SQL-Dump (`ExportSQL`) enthält dasselbe Schema wie die SQLite-Tabelle –
+als `CREATE TABLE`- und `INSERT`-Statements, gekapselt in `BEGIN`/`COMMIT`.
+Blob-Inhalte werden wie in SQLite gzip-komprimiert als hex-Literale
+(`X'...'`) geschrieben. Der Dump ist direkt in SQLite importierbar
+(`sqlite3 db.sqlite < dump.sql`).
+| `tree_entries` | Alle Datei-Einträge pro Commit |
+| `blobs` | Blob-Objekte (Inhalte gzip-komprimiert) |
 
 ### JSON-Dateien
 
@@ -108,13 +117,23 @@ report, err := gitdb.Export(gitdb.ExportOptions{
 
 ### Nur JSON, alle Referenzen
 
+````
+
+### Nur SQL-Dump
+
+```go
+report, err := gitdb.Export(gitdb.ExportOptions{
+    RepoPath: ".",
+    SQLPath:  "./dump.sql",
+    WithBlobs: true,
+})
 ```go
 report, err := gitdb.Export(gitdb.ExportOptions{
     RepoPath: ".",
     JSONDir:  "./export",
     WithBlobs: true,
 })
-```
+````
 
 ### Blobs aus SQLite lesen
 

@@ -1,6 +1,6 @@
 // Package gitdb ist eine Go-Bibliothek zum Scannen von Git-Repositories
 // über die auf dem System installierte Git-CLI und zum Export der
-// gescannten Daten nach SQLite oder JSON.
+// gescannten Daten nach SQLite, SQL-Dump oder JSON.
 //
 // # Überblick
 //
@@ -25,6 +25,7 @@
 //			RepoPath:   "./mein-repo",
 //			SQLitePath: "repo.db",
 //			JSONDir:    "./repo-export",
+//			SQLPath:    "repo.sql",
 //			WithBlobs:  true,
 //		}
 //		meta, err := gitdb.Export(opts)
@@ -40,6 +41,9 @@
 // refs, commits, parents, author, committer, tree_entries und blobs.
 // Blob-Inhalte können auf Wunsch inline (gzip-komprimiert) gespeichert
 // oder nur als Metadaten erfasst werden.
+// SQL-Dump (ExportSQL): Eine einzelne .sql-Datei mit demselben Schema,
+// als CREATE TABLE- und INSERT-Statements (BEGIN/COMMIT). Direkt in
+// SQLite importierbar.
 //
 // JSON (ExportJSON): Eine Menge von JSON-Dateien im Ausgabeverzeichnis:
 //

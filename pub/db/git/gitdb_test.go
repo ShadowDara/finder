@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -122,6 +123,34 @@ func TestGzipBytesRoundTrip(t *testing.T) {
 	}
 	if buf.String() != string(original) {
 		t.Errorf("gzip round-trip: got %q, want %q", buf.String(), string(original))
+	}
+}
+
+func TestSQLStr(t *testing.T) {
+	cases := []struct{ in, want string }{
+		{"", "NULL"},
+		{"abc", "'abc'"},
+		{"O'Brien", "'O''Brien'"},
+		{"a'b'c", "'a''b''c'"},
+		{"name with spaces", "'name with spaces'"},
+	}
+	for _, tc := range cases {
+		if got := sqlStr(tc.in); got != tc.want {
+			t.Errorf("sqlStr(%q) = %q, want %q", tc.in, got, tc.want)
+		}
+	}
+}
+
+func TestSQLBlob(t *testing.T) {
+	if got := sqlBlob(nil); got != "NULL" {
+		t.Errorf("sqlBlob(nil) = %q, want NULL", got)
+	}
+	if got := sqlBlob([]byte{}); got != "NULL" {
+		t.Errorf("sqlBlob(empty) = %q, want NULL", got)
+	}
+	// 0x00 0x01 0xFF → "0001ff"
+	if got := sqlBlob([]byte{0x00, 0x01, 0xFF}); got != "X'0001ff'" {
+		t.Errorf("sqlBlob = %q, want X'0001ff'", got)
 	}
 }
 
@@ -387,6 +416,106 @@ func TestExportBothSQLiteAndJSON(t *testing.T) {
 
 	if report.SQLitePath == "" || report.JSONDir == "" {
 		t.Error("beide Pfade sollten gesetzt sein")
+	}
+}
+
+func TestExportSQL(t *testing.T) {
+	if _, err := GitVersion(); err != nil {
+		t.Skip("git nicht installiert")
+	}
+
+	dir := t.TempDir()
+	sqlPath := filepath.Join(dir, "export.sql")
+
+	opts := ExportOptions{
+		RepoPath:     "c:/Users/dara/Documents/GitHub/finder",
+		SQLPath:      sqlPath,
+		WithBlobs:    true,
+		LimitCommits: 2,
+	}
+	report, err := Export(opts)
+	if err != nil {
+		t.Fatalf("Export: %v", err)
+	}
+	if report.SQLPath == "" {
+		t.Error("Report.SQLPath sollte gesetzt sein")
+	}
+
+	// Datei muss existieren und nicht leer sein
+	fi, err := os.Stat(sqlPath)
+	if err != nil {
+		t.Fatalf("SQL-Datei existiert nicht: %v", err)
+	}
+	if fi.Size() == 0 {
+		t.Fatal("SQL-Datei ist leer")
+	}
+
+	content, err := os.ReadFile(sqlPath)
+	if err != nil {
+		t.Fatalf("SQL-Datei lesen: %v", err)
+	}
+	s := string(content)
+
+	// Struktur prüfen
+	for _, want := range []string{
+		"BEGIN;", "COMMIT;",
+		"CREATE TABLE IF NOT EXISTS meta",
+		"CREATE TABLE IF NOT EXISTS refs",
+		"CREATE TABLE IF NOT EXISTS commits",
+		"CREATE TABLE IF NOT EXISTS parents",
+		"CREATE TABLE IF NOT EXISTS tree_entries",
+		"CREATE TABLE IF NOT EXISTS blobs",
+		"INSERT INTO commits",
+		"INSERT INTO refs",
+	} {
+		if !strings.Contains(s, want) {
+			t.Errorf("SQL-Dump enthält nicht %q", want)
+		}
+	}
+
+	// SQLite-kompatibel: Dump in eine frische DB einspielen und Tabellen zählen
+	db, err := sql.Open("sqlite", filepath.Join(dir, "restored.db"))
+	if err != nil {
+		t.Fatalf("DB öffnen: %v", err)
+	}
+	defer db.Close()
+
+	if _, err := db.Exec(s); err != nil {
+		t.Fatalf("SQL-Dump in SQLite einspielen: %v", err)
+	}
+	for _, tbl := range []string{"meta", "refs", "commits", "parents", "tree_entries", "blobs"} {
+		var count int
+		if err := db.QueryRow("SELECT COUNT(*) FROM " + tbl).Scan(&count); err != nil {
+			t.Errorf("Tabelle %s: %v", tbl, err)
+			continue
+		}
+		t.Logf("Tabelle %s: %d Zeilen (restored)", tbl, count)
+	}
+}
+
+func TestExportAllTargets(t *testing.T) {
+	if _, err := GitVersion(); err != nil {
+		t.Skip("git nicht installiert")
+	}
+
+	dir := t.TempDir()
+	opts := ExportOptions{
+		RepoPath:     "c:/Users/dara/Documents/GitHub/finder",
+		SQLitePath:   filepath.Join(dir, "test.db"),
+		SQLPath:      filepath.Join(dir, "dump.sql"),
+		JSONDir:      filepath.Join(dir, "json"),
+		WithBlobs:    true,
+		LimitCommits: 1,
+	}
+	report, err := Export(opts)
+	if err != nil {
+		t.Fatalf("Export: %v", err)
+	}
+	if report.SQLitePath == "" || report.SQLPath == "" || report.JSONDir == "" {
+		t.Error("alle drei Pfade sollten gesetzt sein")
+	}
+	if _, err := os.Stat(report.SQLPath); err != nil {
+		t.Errorf("SQL-Dump fehlt: %v", err)
 	}
 }
 
