@@ -80,6 +80,10 @@ func HandleCommand(args []string) {
 	checkCmd := argparser.NewCommand("check",
 		"to check all available Templates if their syntax is correct", "", false)
 
+	// Validate Command
+	validateCmd := argparser.NewCommand("validate",
+		"to validate a single finder template file", "", false, "val")
+
 	// list, ls Command
 	listCmd := argparser.NewCommand("list",
 		"list all available templates", "", false, "ls")
@@ -105,6 +109,7 @@ func HandleCommand(args []string) {
 	root.AddSubcommand(versionCmd)
 	root.AddSubcommand(templateCmd)
 	root.AddSubcommand(checkCmd)
+	root.AddSubcommand(validateCmd)
 	root.AddSubcommand(listCmd)
 	root.AddSubcommand(tagsCmd)
 	root.AddSubcommand(tagSearchCmd)
@@ -141,6 +146,9 @@ func HandleCommand(args []string) {
 	case checkCmd:
 		// Check
 		Check()
+	case validateCmd:
+		// Validate a single template file
+		Validate(cmd.Args)
 	case listCmd:
 		// List
 		List()

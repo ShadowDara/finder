@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 
 	"text/tabwriter"
 
@@ -17,6 +18,7 @@ import (
 	"github.com/shadowdara/finder/internal/templates"
 	"github.com/shadowdara/finder/pub/color"
 	"github.com/shadowdara/finder/pub/goansi"
+	"github.com/shadowdara/finder/pub/json5"
 )
 
 // Function to search for a Template
@@ -282,6 +284,117 @@ func Check() error {
 
 	w.Flush()
 	fmt.Printf("%sFinished Checking!%s\n", color.Green, color.Reset)
+	return nil
+}
+
+// Validate checks a single finder template file for correctness.
+// The file can be passed as a path (relative or absolute) or as a
+// template name (built-in or custom). If the file is not valid JSON
+// but becomes valid after the JSON5 preprocessing step, a warning is
+// printed to inform the user that the template depends on the JSON5
+// preprocessor.
+func Validate(args []string) error {
+	templatecount := len(args)
+	fmt.Printf("%sValidating %d Template(s)%s\n", color.Yellow, templatecount, color.Reset)
+
+	if templatecount <= 0 {
+		fmt.Println("Usage: finder validate <template-file-or-name> [more files ...]")
+		return nil
+	}
+
+	// Load user templates so custom template names can be resolved and
+	// so we can detect whether a name refers to a built-in template.
+	_, userTemplates, err := templates.LoadAllWithUserTemplates()
+	if err != nil {
+		fmt.Printf("%sWarning: %v%s\n", color.Yellow, err, color.Reset)
+	}
+
+	failed := false
+	w := tabwriter.NewWriter(os.Stdout, 0, 8, 2, ' ', 0)
+	fmt.Fprintf(w, "%sFile%s\t%sResult%s\tWarning\n", goansi.WHITE, goansi.END, goansi.WHITE, goansi.END)
+
+	for _, arg := range args {
+		name := filepath.Base(arg)
+		displayName := arg
+
+		// Resolve the template contents: prefer a file on disk
+		// (path given), otherwise fall back to built-in/custom
+		// template lookup by name.
+		var data []byte
+		fromName := false
+		if _, err := os.Stat(arg); err == nil {
+			data, err = os.ReadFile(arg)
+			if err != nil {
+				fmt.Fprintf(w, "%s%s%s\t%sError reading: %v%s\t%s\n", color.Red, displayName, color.Reset, color.Red, err, color.Reset, "---")
+				failed = true
+				continue
+			}
+		} else {
+			data, err = templates.JSONtemplateLoaderWithUserTemplates(name, userTemplates)
+			if err != nil {
+				fmt.Fprintf(w, "%s%s%s\t%sNOT FOUND%s\t%s\n", color.Red, displayName, color.Reset, color.Red, err, color.Reset)
+				failed = true
+				continue
+			}
+			fromName = true
+		}
+
+		content := string(data)
+
+		// Check whether the raw content is valid JSON (no JSON5 preprocessor needed)
+		validJSON := json.Valid([]byte(content))
+
+		// Load into the folder structure to catch schema/validation
+		// errors. We unmarshal manually (instead of structure.LoadJSON5,
+		// which would log.Fatalf on bad input and abort the whole
+		// command) so every file gets reported.
+		normalized := content
+		if !validJSON {
+			normalized = json5.PreprocessJSON5(content)
+		}
+
+		var folder structure.Folder
+		if err := json.Unmarshal([]byte(normalized), &folder); err != nil {
+			fmt.Fprintf(w, "%s%s%s\t%sINVALID%s\t%s%v%s\n", color.Red, displayName, color.Reset, color.Red, color.Reset, "---", err, color.Reset)
+			failed = true
+			continue
+		}
+
+		if err := folder.Files.Validate(); err != nil {
+			fmt.Fprintf(w, "%s%s%s\t%sINVALID%s\t%s%v%s\n", color.Red, displayName, color.Reset, color.Red, color.Reset, "---", err, color.Reset)
+			failed = true
+			continue
+		}
+
+		source := "Built-in"
+		if fromName {
+			if _, isCustom := userTemplates[name]; isCustom {
+				source = "Custom"
+			}
+		} else {
+			source = "File"
+		}
+
+		var warning string
+		if !validJSON {
+			warning = fmt.Sprintf("%sTemplate is not plain JSON - it needs the JSON5 preprocessor to be parsed%s", color.Yellow, color.Reset)
+		} else {
+			warning = "---"
+		}
+
+		fmt.Fprintf(w, "%s%s%s\t%sOK%s (%s)\t%s\n",
+			color.Cyan, displayName, color.Reset,
+			color.Green, color.Reset, source, warning)
+	}
+
+	w.Flush()
+
+	if failed {
+		fmt.Printf("%sValidation failed!%s\n", color.Red, color.Reset)
+		os.Exit(1)
+	}
+
+	fmt.Printf("%sValidation complete. All Templates are valid!%s\n", color.Green, color.Reset)
 	return nil
 }
 

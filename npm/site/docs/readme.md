@@ -120,6 +120,7 @@ finder git
 | ------------------------ | --------- | ------------------------------------------ |
 | `finder <template>`      |           | Search for projects matching a template    |
 | `finder check`           |           | Validate all built-in and custom templates |
+| `finder validate`        | `val`     | Validate a single template file            |
 | `finder list`            | `ls`      | List all available templates               |
 | `finder tags`            | `tag`     | Show all tags in the console               |
 | `finder -t <tag>`        |           | Search for templates by tag                |
