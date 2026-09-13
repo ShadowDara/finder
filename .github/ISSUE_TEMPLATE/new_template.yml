@@ -1,0 +1,91 @@
+name: 🧩 New Finder Template
+description: Propose or contribute a new Finder template (JSON5)
+title: "[TEMPLATE] <template-name>"
+labels: ["template", "enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for contributing a new Finder template! Templates are JSON5 files that describe a project type so Finder can detect it.
+
+        **Useful references:**
+        - Template authoring guide: [`AGENTS.md`](../../AGENTS.md)
+        - Custom templates guide: [`CUSTOM_TEMPLATES.md`](../../CUSTOM_TEMPLATES.md)
+        - JSON schemas: `.finder/shema/`
+
+  - type: input
+    id: template_name
+    attributes:
+      label: Template name
+      description: The filename without `.json5` becomes the template name, e.g. `my-template`
+      placeholder: "my-template"
+    validations:
+      required: true
+
+  - type: textarea
+    id: template_description
+    attributes:
+      label: Description
+      description: Short human-readable explanation of the project type this template matches
+      placeholder: "A monorepo using pnpm workspaces with apps/ and packages/"
+    validations:
+      required: true
+
+  - type: textarea
+    id: match_signals
+    attributes:
+      label: Match signals
+      description: The smallest set of reliable files and folders that uniquely identify this project type
+      value: |
+        Files:
+        - ...
+
+        Folders:
+        - ...
+    validations:
+      required: true
+
+  - type: input
+    id: tags
+    attributes:
+      label: Suggested tags
+      description: Comma-separated tags for discoverability
+      placeholder: "node, typescript, monorepo"
+
+  - type: textarea
+    id: template_content
+    attributes:
+      label: Template content (JSON5)
+      description: 'Paste the full valid JSON5 template. Use `name: "*"` unless a narrower pattern is necessary.'
+      render: json
+      placeholder: |
+        {
+          description: "My project type",
+          name: "*",
+          files: ["package.json"],
+          tags: ["my-tag"],
+          min_version: "0.3.16",
+        }
+    validations:
+      required: true
+
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation output
+      description: Paste the output of the validation commands below, if possible
+      render: shell
+      placeholder: |
+        ./finder check
+        ./finder <template-name>
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: Valid `.json5` file matching the schema in `.finder/shema/`
+        - label: '`name` set to `"*"` unless a narrower pattern is intentional'
+        - label: Minimal and specific required files/folders — no generic markers
+        - label: Includes a clear `description` and useful `tags`
+        - label: Validated with `./finder check`

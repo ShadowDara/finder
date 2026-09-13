@@ -6,29 +6,61 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to file a bug report! Please answer the questions below.
-  - type: input
+        Thanks for taking the time to file a bug report! Please fill in as much detail as you can.
+
+  - type: textarea
     id: description
     attributes:
       label: Describe the bug
       description: What did you expect to happen? What happened instead?
       placeholder: "Detailed bug description"
+    validations:
       required: true
-  - type: input
+
+  - type: textarea
     id: steps
     attributes:
       label: Steps to Reproduce
       description: Provide step-by-step instructions to reproduce the bug
       placeholder: |
-        1. …
-        2. …
+        1. Run `./finder <template>` in ...
+        2. ...
+    validations:
+      required: true
+
   - type: input
     id: environment
     attributes:
       label: Environment
-      description: OS, version, go version, etc.
+      description: OS, finder version (`./finder --version`), Go version (if building from source)
+      placeholder: "Windows 11, finder 0.3.17, Go 1.22"
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        ## Template-related bug?
+
+        If the bug is about a specific Finder template, please also fill in the sections below.
+
+  - type: input
+    id: template_name
+    attributes:
+      label: Affected template
+      description: Name of the template, e.g. `django` — leave empty if this is not template-related
+      placeholder: "django"
+
+  - type: textarea
+    id: template_content
+    attributes:
+      label: Template file
+      description: Paste the JSON5 template and describe the folder it should have matched (or link to the file)
+      render: json
+
   - type: textarea
     id: logs
     attributes:
       label: Logs / Screenshots
-      description: Paste any error messages or screenshots
+      description: Paste any error messages, terminal output, or screenshots

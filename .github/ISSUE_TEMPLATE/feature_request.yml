@@ -7,23 +7,31 @@ body:
     attributes:
       value: |
         Suggest a new feature or improvement. Please describe why this change is needed.
-  - type: input
+
+        > **Tip:** Looking for a new Finder template? Please use the dedicated **🧩 New Finder Template** issue form instead — it collects everything needed to review a template quickly.
+
+  - type: textarea
     id: goal
     attributes:
       label: What is the goal?
       description: Summarize the suggestion in your own words
+      placeholder: "Finder should be able to detect ..."
+    validations:
       required: true
+
   - type: textarea
     id: motivation
     attributes:
       label: Motivation and Context
       description: Why is this change valuable? What problem does it solve?
+
   - type: textarea
     id: implementation
     attributes:
       label: Possible Implementation
-      description: Optional ideas how this could be implemented
-  - type: input
+      description: Optional ideas on how this could be implemented
+
+  - type: textarea
     id: alternatives
     attributes:
       label: Alternatives considered
