@@ -2,8 +2,10 @@ package cache
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
 
 	"github.com/shadowdara/finder/internal/templates"
@@ -41,6 +43,23 @@ func saveJSON(path string, data any) error {
 	return os.WriteFile(path, jsonData, 0644)
 }
 
+func sanitizeCacheName(name string) (string, error) {
+	if name == "" {
+		return "", fmt.Errorf("cache name is empty")
+	}
+
+	if strings.Contains(name, "/") || strings.Contains(name, "\\") || strings.Contains(name, "..") {
+		return "", fmt.Errorf("invalid cache name")
+	}
+
+	clean := filepath.Clean(name)
+	if clean == "." || clean != name {
+		return "", fmt.Errorf("invalid cache name")
+	}
+
+	return name, nil
+}
+
 // Save the Cache data
 // - name: name of the template file
 // - paths: paths which where found for the template
@@ -51,7 +70,12 @@ func SaveCache(name string, paths []string) error {
 		return err
 	}
 
-	path := filepath.Join(cachepath, name+".json")
+	safeName, err := sanitizeCacheName(name)
+	if err != nil {
+		return err
+	}
+
+	path := filepath.Join(cachepath, safeName+".json")
 
 	var cache CacheFile
 
@@ -70,7 +94,12 @@ func LoadCache(name string) (CacheFile, error) {
 		return cacheVal, err
 	}
 
-	path := filepath.Join(cachepath, name+".json")
+	safeName, err := sanitizeCacheName(name)
+	if err != nil {
+		return cacheVal, err
+	}
+
+	path := filepath.Join(cachepath, safeName+".json")
 
 	data, err := os.ReadFile(path)
 	if err != nil {
