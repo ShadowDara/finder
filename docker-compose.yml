@@ -30,8 +30,12 @@ services:
       context: ./npm/hub
       dockerfile: ../../docker/uploadpage/Dockerfile
     container_name: uploadpage
+    depends_on:
+      - postgres
     ports:
       - "3015:3015"
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?schema=public
 
   dashboard:
     build:
@@ -40,3 +44,23 @@ services:
     container_name: dashboard
     ports:
       - "8080:80"
+
+  # Local Database for testing
+  postgres:
+    image: postgres:18
+    container_name: finder-postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql
+
+volumes:
+  postgres_data:
