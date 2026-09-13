@@ -1,4 +1,4 @@
-# Dockerfile für die statische Template-Site (finder-template-generator-ssg)
+# Dockerfile für die statische Template-Site (npm/site)
 # Reiner Vite/Node-Build ohne Backend — serviert nur statische Dateien auf Port 3016
 
 # ---- Build-Stage ----
@@ -7,11 +7,11 @@ FROM node:22-alpine AS builder
 WORKDIR /app
 
 # package.json und Lockfile zuerst für besseren Docker-Cache
-COPY finder-template-generator-ssg/package.json finder-template-generator-ssg/package-lock.json ./
+COPY npm/site/package.json npm/site/package-lock.json ./
 
 RUN npm ci
 
-COPY finder-template-generator-ssg/ .
+COPY npm/site/ .
 
 # Statischer Root-Build (base: "./", outDir: "dist")
 RUN npm run build:staticroot
