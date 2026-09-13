@@ -1,5 +1,5 @@
-import DiscoverClient from './discover-client'
+import { redirect } from "next/navigation";
 
-export default function DiscoverPage() {
-  return <DiscoverClient />
+export default async function DashboardPage() {
+    redirect("/");
 }
