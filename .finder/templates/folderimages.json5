@@ -1,0 +1,11 @@
+{
+  "name": "*",
+  "description": "search for folders with images",
+  "files": [
+    {
+      "name": "(?:\\.(?:j(?:p(?:eg?|g)|if|fif?|xl)|png|gif|webp|a(?:vif|png)|svg|bmp|ico|tiff|hei[cf]))$"
+    }
+  ],
+  "min_version": "0.3.17",
+  "mdnote_base64": "IyBUZW1wbGF0ZSB0byBzZWFyY2ggYWxsIGltYWdlIGZpbGVzCgojIyMgYmFja3VwIGZvciB0aGUgcmVnZXggY3JlYXRvcjoKCmBgYApleUoySWpveExDSmhJam9pTG1wd1oxeHVMbXB3WldkY2JpNXFjR1ZjYmk1cWFXWmNiaTVxWm1sbVhHNHVhbVpwWEc0dWNHNW5YRzR1WjJsbVhHNHVkMlZpY0Z4dUxtRjJhV1pjYmk1emRtZGNiaTVoY0c1blhHNHVZbTF3WEc0dWFXTnZYRzR1ZEdsbVpseHVMbXA0YkZ4dUxtaGxhV05jYmk1b1pXbG1JaXdpWkNJNklpSXNJbTBpT2lKbGJtUnpWMmwwYUNJc0lta2lPbVpoYkhObGZRPT0KYGBg"
+}

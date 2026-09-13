@@ -1,1 +1,1 @@
-{"description":"Strapi headless CMS","files":["package.json","server.js"],"folders":[{"files":[],"folders":[],"name":"api"}],"name":"*"}
+{"description":"Strapi headless CMS","files":["package.json","server.js"],"folders":[{"files":[],"folders":[],"name":"api"}],"min_version":"0.3.17","name":"*"}

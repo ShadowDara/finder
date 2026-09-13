@@ -1,4 +1,3 @@
-// Struct for a Libgdx Project
 {
     "description": "Libgdx game development framework",
     "name": "*",
@@ -11,5 +10,9 @@
     ],
     "files": [
         "build.gradle"
-    ]
+    ],
+    "tags": [
+        "game-engine"
+    ],
+    "min_version": "0.3.16"
 }

@@ -1,0 +1,66 @@
+services:
+  findergen:
+    build:
+      context: .
+      dockerfile: docker/findergen/Dockerfile
+    container_name: findergen
+    ports:
+      - "3013:3013"
+
+  template-site:
+    build:
+      context: .
+      dockerfile: docker/template-site/Dockerfile
+    container_name: template-site
+    ports:
+      - "3014:3014"
+    depends_on:
+      - findergen
+
+  static-site:
+    build:
+      context: .
+      dockerfile: docker/static-site/Dockerfile
+    container_name: static-site
+    ports:
+      - "3016:3016"
+
+  uploadpage:
+    build:
+      context: ./npm/hub
+      dockerfile: ../../docker/uploadpage/Dockerfile
+    container_name: uploadpage
+    depends_on:
+      - postgres
+    ports:
+      - "3015:3015"
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?schema=public
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: docker/dashboard/Dockerfile
+    container_name: dashboard
+    ports:
+      - "8080:80"
+
+  # Local Database for testing
+  postgres:
+    image: postgres:18
+    container_name: finder-postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql
+
+volumes:
+  postgres_data:

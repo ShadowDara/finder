@@ -1,9 +1,9 @@
-// Struct for Render Deployment
 {
     "description": "Render platform as a service",
     "name": "*",
     "folders": [],
     "files": [
         "render.yaml"
-    ]
+    ],
+    "min_version": "0.3.17"
 }

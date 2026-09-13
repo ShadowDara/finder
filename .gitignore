@@ -20,3 +20,17 @@ finder-template-generator-ssg/tsconfig.tsbuildinfo
 /finder-template-generator-ssg/third_party_licenses
 finder-template-generator-ssg/static-stats.html
 finder.exe~
+/npm/finder-lib/node_modules
+/npm/finder-lib/dist
+*.tgz
+npm/hub/.env
+/node_modules
+npm/hub/next-env.d.ts
+npm/hub/database-export.sql
+.env
+/npm/site/node_modules
+npm/site/stats.html
+npm/site/static-stats.html
+/npm/site/dist
+/npm/site/dist-static
+npm/site/tsconfig.tsbuildinfo

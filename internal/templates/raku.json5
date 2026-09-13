@@ -1,1 +1,1 @@
-{"description":"Raku programming language (Perl 6)","files":["META.json","*.raku"],"folders":[],"name":"*"}
+{"description":"Raku programming language (Perl 6)","files":["META.json","*.raku"],"folders":[],"min_version":"0.3.17","name":"*"}

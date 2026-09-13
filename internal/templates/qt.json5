@@ -1,1 +1,1 @@
-{"description":"Qt framework for cross-platform UI development","files":["CMakeLists.txt",".qmake.stash","*.pro"],"folders":[{"files":["*.cpp","*.h"],"folders":[],"name":"src"},{"files":["*.qml"],"folders":[],"name":"qml"}],"name":"*"}
+{"description":"Qt framework for cross-platform UI development","files":["CMakeLists.txt",".qmake.stash","*.pro"],"folders":[{"files":["*.cpp","*.h"],"folders":[],"name":"src"},{"files":["*.qml"],"folders":[],"name":"qml"}],"min_version":"0.3.17","name":"*"}

@@ -1,4 +1,3 @@
-// Struct for a Strapi Project
 {
     "description": "Strapi headless CMS",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "package.json",
         "server.js"
-    ]
+    ],
+    "min_version": "0.3.17"
 }

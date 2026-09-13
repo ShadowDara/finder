@@ -1,1 +1,1 @@
-{"description":"LevelDB key-value database","files":["package.json"],"folders":[],"name":"*"}
+{"description":"LevelDB key-value database","files":["package.json"],"folders":[],"min_version":"0.3.16","name":"*"}

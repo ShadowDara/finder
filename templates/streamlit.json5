@@ -1,4 +1,3 @@
-// Streamlit data apps
 {
     "description": "Streamlit Python framework for data apps",
     "name": "*",
@@ -6,17 +5,22 @@
         {
             "name": "pages",
             "folders": [],
-            "files": ["*.py"]
+            "files": [
+                "*.py"
+            ]
         },
         {
             "name": ".streamlit",
             "folders": [],
-            "files": ["config.toml"]
+            "files": [
+                "config.toml"
+            ]
         }
     ],
     "files": [
         "app.py",
         "streamlit.app.toml",
         "requirements.txt"
-    ]
+    ],
+    "min_version": "0.3.17"
 }

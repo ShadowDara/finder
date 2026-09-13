@@ -44,9 +44,21 @@
               "icon": "excalidraw-icon",
               "title": "Map"
             }
+          },
+          {
+            "id": "8e1d4bedc8a7f5b5",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "Map.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "Map"
+            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -194,13 +206,23 @@
               "icon": "lucide-list",
               "title": "Gliederung"
             }
+          },
+          {
+            "id": "dd02c789bf2c38a7",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw-sidepanel",
+              "state": {},
+              "icon": "excalidraw-icon",
+              "title": "Excalidraw Sidepanel"
+            }
           }
-        ]
+        ],
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -214,32 +236,54 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "e91533ab6a3d6c5c",
+  "active": "8e1d4bedc8a7f5b5",
   "lastOpenFiles": [
-    "finder-template-generator-ssg/vite.config.ts.timestamp-1788798340923-a41776d588ffd.mjs",
-    "finder-template-generator-ssg/dist/changelog/index.html",
-    "finder-template-generator-ssg/dist/changelog",
-    "finder-template-generator-ssg/dist/configeditor/index.html",
-    "finder-template-generator-ssg/dist/configeditor",
-    "finder-template-generator-ssg/dist/cacheviewer/index.html",
-    "finder-template-generator-ssg/dist/cacheviewer",
-    "finder-template-generator-ssg/dist/assets/viewer.js",
-    "finder-template-generator-ssg/dist/assets/viewer.css",
-    "finder-template-generator-ssg/dist/assets/products.js",
-    "finder-template-generator-ssg/dist/assets/markdownstyle.css",
-    "finder-template-generator-ssg/dist/findermap.svg",
-    "cmd/findergen/frontend/findermap.svg",
-    "finder-template-generator-ssg/public/findermap.svg",
-    "CHANGELOG.md",
-    "Map.md",
-    "tags.md",
-    "dub/SSG Plugin Build Time Code.md",
-    "finder-template-generator-ssg/node_modules/tsx/node_modules/@esbuild/win32-x64/README.md",
-    "finder-template-generator-ssg/node_modules/tsx/node_modules/esbuild/README.md",
-    "finder-template-generator-ssg/node_modules/tsx/node_modules/esbuild/LICENSE.md",
-    "finder-template-generator-ssg/node_modules/tsx/README.md",
-    "CUSTOM_TEMPLATES.md",
-    "README.md",
-    "IDEAS.md"
+    "template-management-system(1)/node_modules/@types/node/domain.d.ts",
+    "template-management-system(1)/node_modules/@types/node/events.d.ts",
+    "template-management-system(1)/node_modules/@types/node/ts5.6/compatibility/float16array.d.ts",
+    "template-management-system(1)/node_modules/@types/node/ts5.6/index.d.ts",
+    "template-management-system(1)/node_modules/@types/node/ts5.6/globals.typedarray.d.ts",
+    "template-management-system(1)/node_modules/@types/node/ts5.6/compatibility",
+    "template-management-system(1)/node_modules/@types/node/ts5.6/buffer.buffer.d.ts",
+    "template-management-system(1)/node_modules/@types/node/ts5.6",
+    "template-management-system(1)/node_modules/@types/node/ts5.7/compatibility/float16array.d.ts",
+    "template-management-system(1)/node_modules/@types/node/ts5.7/index.d.ts",
+    "template-management-system(1)/node_modules/@types/node/ts5.7/compatibility",
+    "template-management-system(1)/node_modules/@tailwindcss/postcss/README.md",
+    "template-management-system(1)/public/placeholder.svg",
+    "template-management-system(1)/public/placeholder.jpg",
+    "template-management-system(1)/public/placeholder-user.jpg",
+    "template-management-system(1)/public/placeholder-logo.svg",
+    "template-management-system(1)/public/placeholder-logo.png",
+    "template-management-system(1)/public/icon-light-32x32.png",
+    "template-management-system(1)/public/icon.svg",
+    "template-management-system(1)/public/icon-dark-32x32.png",
+    "template-management-system(1)/public/apple-icon.png",
+    "uploadpage/node_modules/lucide-react/README.md",
+    "uploadpage/node_modules/class-variance-authority/README.md",
+    "uploadpage/node_modules/date-fns/docs/i18n.md",
+    "uploadpage/node_modules/date-fns/docs/webpack.md",
+    "uploadpage/node_modules/date-fns/docs/unicodeTokens.md",
+    "uploadpage/node_modules/date-fns/docs/timeZones.md",
+    "uploadpage/node_modules/date-fns/docs/gettingStarted.md",
+    "uploadpage/node_modules/date-fns/docs/release.md",
+    "uploadpage/node_modules/date-fns/docs/logotype.svg",
+    "uploadpage/node_modules/date-fns/docs/i18nContributionGuide.md",
+    "uploadpage/node_modules/date-fns/docs/fp.md",
+    "uploadpage/node_modules/date-fns/docs/cdn.md",
+    "uploadpage/node_modules/date-fns/SECURITY.md",
+    "uploadpage/node_modules/date-fns/README.md",
+    "uploadpage/node_modules/date-fns/LICENSE.md",
+    "uploadpage/node_modules/date-fns/CHANGELOG.md",
+    "uploadpage/node_modules/@date-fns/tz/README.md",
+    "uploadpage/node_modules/@date-fns/tz/LICENSE.md",
+    "uploadpage/node_modules/@date-fns/tz/CHANGELOG.md",
+    "uploadpage/node_modules/@standard-schema/spec/README.md",
+    "uploadpage/node_modules/zod/README.md",
+    "uploadpage/node_modules/nanostores/README.md",
+    "uploadpage/node_modules/kysely/README.md",
+    "uploadpage/node_modules/better-call/node_modules/@better-auth/utils/README.md",
+    "uploadpage/node_modules/better-call/README.md",
+    "stuffcanvas.canvas"
   ]
 }

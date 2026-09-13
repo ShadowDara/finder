@@ -1,1 +1,1 @@
-{"description":"PyTorch deep learning project","files":["requirements.txt","*.py"],"folders":[{"files":[],"folders":[],"name":"models"}],"name":"*"}
+{"description":"PyTorch deep learning project","files":["requirements.txt","*.py"],"folders":[{"files":[],"folders":[],"name":"models"}],"min_version":"0.3.16","name":"*","tags":["python"]}

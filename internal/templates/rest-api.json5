@@ -1,1 +1,1 @@
-{"description":"REST API server project","files":["server.js","package.json"],"folders":[{"files":[],"folders":[],"name":"routes"}],"name":"*"}
+{"description":"REST API server project","files":["server.js","package.json"],"folders":[{"files":[],"folders":[],"name":"routes"}],"min_version":"0.3.17","name":"*"}

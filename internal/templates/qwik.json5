@@ -1,1 +1,1 @@
-{"description":"Qwik web framework","files":["qwik.config.ts","package.json"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}
+{"description":"Qwik web framework","files":["qwik.config.ts","package.json"],"folders":[{"files":[],"folders":[],"name":"src"}],"min_version":"0.3.17","name":"*"}

@@ -1,1 +1,1 @@
-{"description":"Kivy Python mobile framework","files":["main.py","*.kv"],"folders":[],"name":"*"}
+{"description":"Kivy Python mobile framework","files":["main.py","*.kv"],"folders":[],"min_version":"0.3.16","name":"*","tags":["python"]}

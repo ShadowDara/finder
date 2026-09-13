@@ -1,0 +1,328 @@
+{
+  "generatedAt": "2026-09-13T20:23:26.926Z",
+  "total": {
+    "files": 57,
+    "bytes": 416176,
+    "kilobytes": 406.42,
+    "megabytes": 0.4
+  },
+  "byExtension": [
+    {
+      "extension": ".js",
+      "files": 20,
+      "bytes": 339860,
+      "percentage": 81.66
+    },
+    {
+      "extension": ".css",
+      "files": 15,
+      "bytes": 56648,
+      "percentage": 13.61
+    },
+    {
+      "extension": ".txt",
+      "files": 1,
+      "bytes": 9809,
+      "percentage": 2.36
+    },
+    {
+      "extension": ".html",
+      "files": 20,
+      "bytes": 7848,
+      "percentage": 1.89
+    },
+    {
+      "extension": ".sh",
+      "files": 1,
+      "bytes": 2011,
+      "percentage": 0.48
+    }
+  ],
+  "files": [
+    {
+      "path": "assets/main_entry.js",
+      "extension": ".js",
+      "bytes": 87546
+    },
+    {
+      "path": "assets/jquery.module.js",
+      "extension": ".js",
+      "bytes": 79109
+    },
+    {
+      "path": "assets/viewer.js",
+      "extension": ".js",
+      "bytes": 77569
+    },
+    {
+      "path": "assets/installscript.js",
+      "extension": ".js",
+      "bytes": 32265
+    },
+    {
+      "path": "assets/creator.js",
+      "extension": ".js",
+      "bytes": 15664
+    },
+    {
+      "path": "assets/markdown.js",
+      "extension": ".js",
+      "bytes": 10726
+    },
+    {
+      "path": "dependencies.txt",
+      "extension": ".txt",
+      "bytes": 9809
+    },
+    {
+      "path": "assets/viewer.css",
+      "extension": ".css",
+      "bytes": 9349
+    },
+    {
+      "path": "assets/configeditor.js",
+      "extension": ".js",
+      "bytes": 9040
+    },
+    {
+      "path": "assets/regexcreator.js",
+      "extension": ".js",
+      "bytes": 6983
+    },
+    {
+      "path": "assets/installscript.css",
+      "extension": ".css",
+      "bytes": 5685
+    },
+    {
+      "path": "assets/regexcreator.css",
+      "extension": ".css",
+      "bytes": 5380
+    },
+    {
+      "path": "assets/creator.css",
+      "extension": ".css",
+      "bytes": 5365
+    },
+    {
+      "path": "assets/tellraw.js",
+      "extension": ".js",
+      "bytes": 4685
+    },
+    {
+      "path": "assets/home.css",
+      "extension": ".css",
+      "bytes": 4615
+    },
+    {
+      "path": "assets/configeditor.css",
+      "extension": ".css",
+      "bytes": 3970
+    },
+    {
+      "path": "assets/cacheviewer.css",
+      "extension": ".css",
+      "bytes": 3675
+    },
+    {
+      "path": "assets/cacheviewer.js",
+      "extension": ".js",
+      "bytes": 3498
+    },
+    {
+      "path": "assets/home.js",
+      "extension": ".js",
+      "bytes": 3421
+    },
+    {
+      "path": "assets/samfile.js",
+      "extension": ".js",
+      "bytes": 3291
+    },
+    {
+      "path": "assets/samfile.css",
+      "extension": ".css",
+      "bytes": 3253
+    },
+    {
+      "path": "assets/main.css",
+      "extension": ".css",
+      "bytes": 3047
+    },
+    {
+      "path": "assets/tellraw.css",
+      "extension": ".css",
+      "bytes": 2249
+    },
+    {
+      "path": "assets/markdowneditor.css",
+      "extension": ".css",
+      "bytes": 2244
+    },
+    {
+      "path": "assets/markdownrootstyle.css",
+      "extension": ".css",
+      "bytes": 2244
+    },
+    {
+      "path": "assets/markdownstyle.css",
+      "extension": ".css",
+      "bytes": 2194
+    },
+    {
+      "path": "install.sh",
+      "extension": ".sh",
+      "bytes": 2011
+    },
+    {
+      "path": "assets/index.css",
+      "extension": ".css",
+      "bytes": 1742
+    },
+    {
+      "path": "assets/mcappheader.css",
+      "extension": ".css",
+      "bytes": 1636
+    },
+    {
+      "path": "assets/markdowneditor.js",
+      "extension": ".js",
+      "bytes": 1355
+    },
+    {
+      "path": "assets/worlds.js",
+      "extension": ".js",
+      "bytes": 1139
+    },
+    {
+      "path": "assets/index3.js",
+      "extension": ".js",
+      "bytes": 1069
+    },
+    {
+      "path": "assets/index.js",
+      "extension": ".js",
+      "bytes": 1004
+    },
+    {
+      "path": "assets/info.js",
+      "extension": ".js",
+      "bytes": 596
+    },
+    {
+      "path": "configeditor/index.html",
+      "extension": ".html",
+      "bytes": 436
+    },
+    {
+      "path": "tools/markdowneditor/index.html",
+      "extension": ".html",
+      "bytes": 432
+    },
+    {
+      "path": "tools/installscript/index.html",
+      "extension": ".html",
+      "bytes": 430
+    },
+    {
+      "path": "tools/minecraft/tellraw/index.html",
+      "extension": ".html",
+      "bytes": 428
+    },
+    {
+      "path": "regexcreator/index.html",
+      "extension": ".html",
+      "bytes": 422
+    },
+    {
+      "path": "cacheviewer/index.html",
+      "extension": ".html",
+      "bytes": 420
+    },
+    {
+      "path": "viewer/index.html",
+      "extension": ".html",
+      "bytes": 419
+    },
+    {
+      "path": "tools/index.html",
+      "extension": ".html",
+      "bytes": 414
+    },
+    {
+      "path": "creator/index.html",
+      "extension": ".html",
+      "bytes": 412
+    },
+    {
+      "path": "samfile/index.html",
+      "extension": ".html",
+      "bytes": 412
+    },
+    {
+      "path": "home/index.html",
+      "extension": ".html",
+      "bytes": 406
+    },
+    {
+      "path": "assets/index2.js",
+      "extension": ".js",
+      "bytes": 369
+    },
+    {
+      "path": "mcapp/worlds/index.html",
+      "extension": ".html",
+      "bytes": 360
+    },
+    {
+      "path": "docs/config/index.html",
+      "extension": ".html",
+      "bytes": 359
+    },
+    {
+      "path": "mcapp/about/index.html",
+      "extension": ".html",
+      "bytes": 359
+    },
+    {
+      "path": "mcapp/index.html",
+      "extension": ".html",
+      "bytes": 359
+    },
+    {
+      "path": "docs/index.html",
+      "extension": ".html",
+      "bytes": 358
+    },
+    {
+      "path": "mcapp/info/index.html",
+      "extension": ".html",
+      "bytes": 358
+    },
+    {
+      "path": "changelog/index.html",
+      "extension": ".html",
+      "bytes": 357
+    },
+    {
+      "path": "readme/index.html",
+      "extension": ".html",
+      "bytes": 354
+    },
+    {
+      "path": "index.html",
+      "extension": ".html",
+      "bytes": 353
+    },
+    {
+      "path": "assets/mcappheader.js",
+      "extension": ".js",
+      "bytes": 303
+    },
+    {
+      "path": "assets/about.js",
+      "extension": ".js",
+      "bytes": 228
+    }
+  ]
+}

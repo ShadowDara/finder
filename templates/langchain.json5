@@ -1,4 +1,3 @@
-// LangChain AI framework
 {
     "description": "LangChain language model orchestration framework",
     "name": "*",
@@ -6,17 +5,24 @@
         {
             "name": "chains",
             "folders": [],
-            "files": ["*.py", "*.json"]
+            "files": [
+                "*.py",
+                "*.json"
+            ]
         },
         {
             "name": "agents",
             "folders": [],
-            "files": ["*.py"]
+            "files": [
+                "*.py"
+            ]
         },
         {
             "name": "memory",
             "folders": [],
-            "files": ["*.py"]
+            "files": [
+                "*.py"
+            ]
         }
     ],
     "files": [
@@ -24,5 +30,6 @@
         "pyproject.toml",
         "requirements.txt",
         ".env.langchain"
-    ]
+    ],
+    "min_version": "0.3.16"
 }

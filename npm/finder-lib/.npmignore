@@ -1,0 +1,11 @@
+src/
+tsconfig.json
+*.tgz
+.npmrc
+
+bun.lock
+
+dist/cli/*.d.ts
+
+*.test.js
+*.test*.d.ts

@@ -1,1 +1,1 @@
-{"description":"Libgdx game development framework","files":["build.gradle"],"folders":[{"files":[],"folders":[],"name":"core"}],"name":"*"}
+{"description":"Libgdx game development framework","files":["build.gradle"],"folders":[{"files":[],"folders":[],"name":"core"}],"min_version":"0.3.16","name":"*","tags":["game-engine"]}

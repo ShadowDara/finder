@@ -1,4 +1,3 @@
-// Struct for an Unreal Pixel Streaming
 {
     "description": "Unreal Engine Pixel Streaming",
     "name": "*",
@@ -11,5 +10,9 @@
     ],
     "files": [
         "*.uproject"
-    ]
+    ],
+    "tags": [
+        "game-engine"
+    ],
+    "min_version": "0.3.16"
 }

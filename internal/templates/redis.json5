@@ -1,1 +1,1 @@
-{"description":"Redis in-memory data store project","files":["redis.conf","docker-compose.yml"],"folders":[],"name":"*"}
+{"description":"Redis in-memory data store project","files":["redis.conf","docker-compose.yml"],"folders":[],"min_version":"0.3.17","name":"*"}

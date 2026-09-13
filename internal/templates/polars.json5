@@ -1,1 +1,1 @@
-{"description":"Polars fast dataframe library written in Rust","files":["requirements.txt","polars.config.yaml"],"folders":[{"files":["*.parquet","*.csv"],"folders":[],"name":"data"}],"name":"*"}
+{"description":"Polars fast dataframe library written in Rust","files":["requirements.txt","polars.config.yaml"],"folders":[{"files":["*.parquet","*.csv"],"folders":[],"name":"data"}],"min_version":"0.3.16","name":"*"}

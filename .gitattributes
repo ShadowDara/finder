@@ -11,6 +11,9 @@ samfile linguist-language=Shell
 
 go.work linguist-language=go
 go.mod linguist-language=go
+go.sum linguist-language=go
+
+docker-compose.yml linguist-language=Dockerfile
 
 # HTML DIR
 /cmd/findergen/frontend/** linguist-vendored

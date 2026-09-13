@@ -1,4 +1,3 @@
-// Struct for a Pygame Project
 {
     "description": "Pygame Python game development",
     "name": "*",
@@ -6,5 +5,10 @@
     "files": [
         "main.py",
         "requirements.txt"
-    ]
+    ],
+    "tags": [
+        "python",
+        "game-engine"
+    ],
+    "min_version": "0.3.16"
 }

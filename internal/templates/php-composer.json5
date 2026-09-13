@@ -1,1 +1,1 @@
-{"description":"PHP project with Composer dependency manager","files":["composer.json","composer.lock"],"folders":[],"name":"*"}
+{"description":"PHP project with Composer dependency manager","files":["composer.json","composer.lock"],"folders":[],"min_version":"0.3.16","name":"*","tags":["php"]}

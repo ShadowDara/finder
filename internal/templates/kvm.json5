@@ -1,1 +1,1 @@
-{"description":"KVM virtual machine management","files":["*.xml","*.qcow2"],"folders":[],"name":"*"}
+{"description":"KVM virtual machine management","files":["*.xml","*.qcow2"],"folders":[],"min_version":"0.3.16","name":"*"}

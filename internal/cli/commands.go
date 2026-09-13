@@ -5,9 +5,12 @@ package cli
 import (
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/shadowdara/finder/pub/argparser"
+	"github.com/shadowdara/finder/pub/fsd"
 
+	"github.com/shadowdara/finder/internal/cache"
 	"github.com/shadowdara/finder/internal/config"
 	"github.com/shadowdara/finder/internal/finderversion"
 	"github.com/shadowdara/finder/internal/search/binarycheck"
@@ -46,6 +49,9 @@ func HandleCommand(args []string) {
 	// Load Cache
 	root.Bool("cache", false, "Use the already existing Cache", false, "c")
 
+	// view cache count
+	root.Bool("count", false, "View the count of how many entries where found", false)
+
 	// Create Cache DB
 	root.Bool("create-cache-db", false, "Create a Git DB from the cache data", false, "ccd")
 
@@ -66,6 +72,9 @@ func HandleCommand(args []string) {
 
 	// Create Cache DB
 	templateCmd.Bool("create-cache-db", false, "Create a Git DB from the cache data", false, "ccd")
+
+	// view cache count
+	templateCmd.Bool("count", false, "View the count of how many entries where found", false)
 
 	// Check Command
 	checkCmd := argparser.NewCommand("check",
@@ -90,6 +99,9 @@ func HandleCommand(args []string) {
 	// Config Path
 	configpathCmd := argparser.NewCommand("cp", "Get the path to the global config", "", false)
 
+	// Cache Size Command
+	cacheSizeCmd := argparser.NewCommand("cache-size", "Calculates the Size of the Finder Cache and prints it to the console", "", false, "cachesize", "cs")
+
 	root.AddSubcommand(versionCmd)
 	root.AddSubcommand(templateCmd)
 	root.AddSubcommand(checkCmd)
@@ -98,6 +110,7 @@ func HandleCommand(args []string) {
 	root.AddSubcommand(tagSearchCmd)
 	root.AddSubcommand(binarySearchCmd)
 	root.AddSubcommand(configpathCmd)
+	root.AddSubcommand(cacheSizeCmd)
 
 	// Parse the Arguments
 	cmd := root.Parse(args[1:])
@@ -135,6 +148,29 @@ func HandleCommand(args []string) {
 		// Tags
 		Tags()
 
+	case cacheSizeCmd:
+		{
+			path, err := cache.GetCachePath()
+			if err != nil {
+				fmt.Println("Error getting cache path:", err)
+				os.Exit(1)
+			}
+
+			size, err := fsd.DirSize(path)
+			if err != nil {
+				fmt.Println("Error calculating cache size:", err)
+				os.Exit(1)
+			}
+
+			// Optional JSON output via the global -j/--json flag.
+			if finderconfig.OutputType == "json" {
+				fmt.Printf("{\"cache_size_bytes\": %d, \"cache_size_mb\": %.2f}\n", size, float64(size)/(1024*1024))
+			} else {
+				fmt.Printf("Cache Size: %.2f MB\n", float64(size)/(1024*1024))
+			}
+			os.Exit(0)
+		}
+
 	case binarySearchCmd:
 		if len(cmd.Args) > 0 {
 			binarycheck.CheckAllBinaries(cmd.Args[0])
@@ -159,7 +195,7 @@ func HandleCommand(args []string) {
 		}
 
 		// Search the Template
-		Search(cmd.Args[0], finderconfig.OutputType, cmd.GetBool("verbose"), config.Cache, cmd.GetBool("cache"), config.CreateCacheDB)
+		Search(cmd.Args[0], finderconfig.OutputType, cmd.GetBool("verbose"), config.Cache, cmd.GetBool("cache"), config.CreateCacheDB, cmd.GetBool("count"))
 	default:
 		if len(cmd.Args) <= 0 {
 			Banner()
@@ -168,6 +204,6 @@ func HandleCommand(args []string) {
 		}
 
 		// Search the Template
-		Search(cmd.Args[0], finderconfig.OutputType, cmd.GetBool("verbose"), config.Cache, cmd.GetBool("cache"), config.CreateCacheDB)
+		Search(cmd.Args[0], finderconfig.OutputType, cmd.GetBool("verbose"), config.Cache, cmd.GetBool("cache"), config.CreateCacheDB, cmd.GetBool("count"))
 	}
 }

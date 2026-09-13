@@ -1,1 +1,1 @@
-{"description":"Python pytest test suite","files":["test_*.py","pytest.ini"],"folders":[{"files":[],"folders":[],"name":"tests"}],"name":"*"}
+{"description":"Python pytest test suite","files":["test_*.py","pytest.ini"],"folders":[{"files":[],"folders":[],"name":"tests"}],"min_version":"0.3.16","name":"*","tags":["python"]}

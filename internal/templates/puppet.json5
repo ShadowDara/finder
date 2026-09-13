@@ -1,1 +1,1 @@
-{"description":"Puppet infrastructure automation","files":["Puppetfile"],"folders":[{"files":[],"folders":[],"name":"manifests"}],"name":"*"}
+{"description":"Puppet infrastructure automation","files":["Puppetfile"],"folders":[{"files":[],"folders":[],"name":"manifests"}],"min_version":"0.3.16","name":"*"}

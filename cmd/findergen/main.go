@@ -274,6 +274,58 @@ func main() {
 		})
 	})
 
+	// Update an existing custom Template
+	mux.HandleFunc("/api/template/update", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodPut {
+			http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+			return
+		}
+
+		var payload struct {
+			Name    string          `json:"name"`
+			Content json.RawMessage `json:"content"`
+		}
+
+		if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
+			log.Printf("template update: invalid JSON: %v", err)
+			http.Error(w, "Invalid JSON", http.StatusBadRequest)
+			return
+		}
+
+		if payload.Name == "" {
+			http.Error(w, "Missing name", http.StatusBadRequest)
+			return
+		}
+
+		if !strings.HasSuffix(payload.Name, ".json5") {
+			payload.Name += ".json5"
+		}
+
+		// Verify that the template is a custom template (not builtin)
+		_, userTemplates, err := templates.LoadAllWithUserTemplates()
+		if err != nil {
+			http.Error(w, "Failed to load templates", http.StatusInternalServerError)
+			return
+		}
+
+		if _, exists := userTemplates[payload.Name]; !exists {
+			http.Error(w, "Template not found or is a builtin template", http.StatusNotFound)
+			return
+		}
+
+		if err := saveTemplate(payload.Name, string(payload.Content)); err != nil {
+			log.Printf("template update: failed to save %q: %v", payload.Name, err)
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+
+		json.NewEncoder(w).Encode(map[string]string{
+			"status": "ok",
+		})
+	})
+
 	// View all Templates names
 	mux.HandleFunc("/api/template/viewall", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet {

@@ -1,4 +1,3 @@
-// Struct for a Qwik Project
 {
     "description": "Qwik web framework",
     "name": "*",
@@ -12,5 +11,6 @@
     "files": [
         "qwik.config.ts",
         "package.json"
-    ]
+    ],
+    "min_version": "0.3.17"
 }

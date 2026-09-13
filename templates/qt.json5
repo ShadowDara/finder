@@ -1,4 +1,3 @@
-// Qt framework cross-platform UI
 {
     "description": "Qt framework for cross-platform UI development",
     "name": "*",
@@ -6,17 +5,23 @@
         {
             "name": "src",
             "folders": [],
-            "files": ["*.cpp", "*.h"]
+            "files": [
+                "*.cpp",
+                "*.h"
+            ]
         },
         {
             "name": "qml",
             "folders": [],
-            "files": ["*.qml"]
+            "files": [
+                "*.qml"
+            ]
         }
     ],
     "files": [
         "CMakeLists.txt",
         ".qmake.stash",
         "*.pro"
-    ]
+    ],
+    "min_version": "0.3.17"
 }

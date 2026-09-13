@@ -1,1 +1,1 @@
-{"description":"Quarkus Java framework","files":["pom.xml","application.properties"],"folders":[{"files":[],"folders":[],"name":"src"}],"name":"*"}
+{"description":"Quarkus Java framework","files":["pom.xml","application.properties"],"folders":[{"files":[],"folders":[],"name":"src"}],"min_version":"0.3.17","name":"*","tags":["java"]}

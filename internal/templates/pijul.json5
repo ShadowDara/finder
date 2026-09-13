@@ -1,1 +1,1 @@
-{"description":"Pijul version control system","files":["pijul.toml"],"folders":[{"files":[],"folders":[],"name":".pijul"}],"name":"*"}
+{"description":"Pijul version control system","files":["pijul.toml"],"folders":[{"files":[],"folders":[],"name":".pijul"}],"min_version":"0.3.16","name":"*"}

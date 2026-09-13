@@ -29,7 +29,7 @@ type SavedConfig struct {
 func LoadConfig(path string) SavedConfig {
 	config := SavedConfig{
 		// deine Default-Werte
-		Port:            8080,
+		Port:            13420,
 		Cache:           false,
 		CreateCacheDB:   false,
 		FinderInstances: 8,

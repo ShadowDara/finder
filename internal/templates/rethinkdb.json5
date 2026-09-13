@@ -1,1 +1,1 @@
-{"description":"RethinkDB real-time database","files":["docker-compose.yml"],"folders":[],"name":"*"}
+{"description":"RethinkDB real-time database","files":["docker-compose.yml"],"folders":[],"min_version":"0.3.17","name":"*","tags":["docker"]}

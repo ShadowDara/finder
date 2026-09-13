@@ -1,0 +1,50 @@
+# ── Version control ──────────────────────────────
+.git
+.gitignore
+
+# ── Node / JS artifacts ─────────────────────────
+**/node_modules
+**/dist
+**/dist-static
+**/.next
+**/.vite
+**/bun.lock
+
+# ── OS & IDE junk ───────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# ── Docs & meta (not needed in any build) ──────
+*.md
+LICENSE
+Credits.txt
+SECURITY.md
+IDEAS.md
+Map.md
+tags.md
+INFO.txt
+CUSTOM_TEMPLATES.md
+
+# ── Dev / CI files ──────────────────────────────
+*.bat
+*.sh
+*.ps1
+Makefile
+docker-compose.yml
+check.py
+test.sh
+test7.sh
+samfile
+
+# ── Docker-Meta (Dockerfiles + nginx.conf bleiben!) ──
+docker/README.md
+
+# ── Build caches ────────────────────────────────
+**/.cache
+**/tsconfig.tsbuildinfo
+**/.eslintcache

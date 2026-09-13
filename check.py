@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 
 
-MIN_VERSION = "0.3.16"
+MIN_VERSION = "0.3.17"
 
 # Ordner, in dem dieses Script liegt
 folder = Path(__file__).parent

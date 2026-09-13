@@ -1,1 +1,1 @@
-{"description":"Protractor Angular E2E testing","files":["protractor.conf.js","package.json"],"folders":[{"files":[],"folders":[],"name":"e2e"}],"name":"*"}
+{"description":"Protractor Angular E2E testing","files":["protractor.conf.js","package.json"],"folders":[{"files":[],"folders":[],"name":"e2e"}],"min_version":"0.3.16","name":"*"}
