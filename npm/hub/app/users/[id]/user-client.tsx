@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import hljs from "highlight.js/lib/common";
 import { prettyJson } from "@/lib/utils";
+import { highlightFinderTemplate } from "@/lib/highlight";
 
 type TemplateDetail = {
   id: string;
@@ -99,9 +99,7 @@ export function UserClient({ user }: { user: UserData }) {
             <p className="eyebrow">{selected.name}</p>
             <pre
               dangerouslySetInnerHTML={{
-                __html: hljs.highlight(prettyJson(selected.content), {
-                  language: "json",
-                }).value,
+                __html: highlightFinderTemplate(prettyJson(selected.content)),
               }}
             />
           </div>

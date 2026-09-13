@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import hljs from "highlight.js/lib/common";
 import { signOut, useSession } from "@/lib/auth-client";
 import { prettyJson } from "@/lib/utils";
+import { highlightFinderTemplate } from "@/lib/highlight";
 
 type T = {
   id: string;
@@ -152,9 +152,7 @@ export default function DiscoverClient() {
             <p className="eyebrow">{selected.name}</p>
             <pre
               dangerouslySetInnerHTML={{
-                __html: hljs.highlight(prettyJson(selected.content), {
-                  language: "json",
-                }).value,
+                __html: highlightFinderTemplate(prettyJson(selected.content)),
               }}
             />
           </div>

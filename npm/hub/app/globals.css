@@ -394,6 +394,30 @@ pre {
   word-break: break-word;
 }
 
+/* Regex/glob highlighting inside `"name"` template values */
+.rx-esc {
+  color: #ffa657; /* escapes & dot: same as hljs-built_in */
+  font-weight: 600;
+}
+.rx-class {
+  color: #79c0ff; /* character classes: same as hljs-meta */
+}
+.rx-quant {
+  color: #ff7b72; /* quantifiers: same as hljs-keyword */
+  font-weight: 600;
+}
+.rx-anchor {
+  color: #d2a8ff; /* anchors: same as hljs-title */
+  font-weight: 600;
+}
+.rx-group {
+  color: #ff7b72; /* groups: same as hljs-keyword */
+}
+.rx-alt {
+  color: #ff7b72; /* alternation: same as hljs-keyword */
+  font-weight: 600;
+}
+
 @media (max-width: 780px) {
   .site-shell {
     padding: 18px 16px 52px;
