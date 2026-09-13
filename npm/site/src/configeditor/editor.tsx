@@ -118,15 +118,26 @@ export function setupConfigEditor(
   function setPath(obj: any, path: string, value: unknown) {
     const parts = path.split(".");
     const blockedKeys = new Set(["__proto__", "constructor", "prototype"]);
-    if (parts.some((part) => blockedKeys.has(part))) return;
+    if (parts.length === 0 || parts.some((part) => blockedKeys.has(part))) return;
 
-    let cur = obj;
+    let cur: any = obj;
     for (let i = 0; i < parts.length - 1; i++) {
       const p = parts[i];
-      if (typeof cur[p] !== "object" || cur[p] === null) cur[p] = {};
+      if (blockedKeys.has(p)) return;
+      if (typeof cur !== "object" || cur === null) return;
+
+      if (!Object.prototype.hasOwnProperty.call(cur, p)) {
+        cur[p] = Object.create(null);
+      } else if (typeof cur[p] !== "object" || cur[p] === null) {
+        cur[p] = Object.create(null);
+      }
       cur = cur[p];
     }
-    cur[parts[parts.length - 1]] = value;
+
+    const last = parts[parts.length - 1];
+    if (blockedKeys.has(last)) return;
+    if (typeof cur !== "object" || cur === null) return;
+    cur[last] = value;
   }
 
   function readField(input: any): unknown {
