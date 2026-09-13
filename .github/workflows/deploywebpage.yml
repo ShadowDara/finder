@@ -24,20 +24,20 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: finder-template-generator-ssg/package-lock.json
+          cache-dependency-path: npm/site/package-lock.json
 
       - name: Install dependencies
         run: npm ci
-        working-directory: finder-template-generator-ssg
+        working-directory: npm/site
 
       - name: Build static site
         run: npm run build:static
-        working-directory: finder-template-generator-ssg
+        working-directory: npm/site
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: ./finder-template-generator-ssg/dist-static
+          path: ./npm/site/dist-static
 
   deploy:
     needs: build
