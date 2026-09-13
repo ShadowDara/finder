@@ -13,6 +13,14 @@ type Template = {
   updatedAt: string;
 };
 
+function prettyJson(content: string): string {
+  try {
+    return JSON.stringify(JSON.parse(content), null, 2);
+  } catch {
+    return content;
+  }
+}
+
 export function DashboardClient({
   userId,
   userEmail,
@@ -47,7 +55,7 @@ export function DashboardClient({
   function startEdit(template: Template) {
     setEditingId(template.id);
     setName(template.name);
-    setContent(template.content);
+    setContent(prettyJson(template.content));
     setError(null);
   }
 
@@ -82,6 +90,7 @@ export function DashboardClient({
 
     const saved: Template = {
       ...data.template,
+      content: data.template.content ?? "",
       updatedAt: data.template.updatedAt,
     };
 
@@ -242,7 +251,7 @@ export function DashboardClient({
                   </span>
                 </div>
                 <pre style={{ overflowX: "auto", marginTop: 8 }}>
-                  {template.content}
+                  {prettyJson(template.content)}
                 </pre>
               </li>
             ))}
