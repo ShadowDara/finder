@@ -18,6 +18,10 @@ type ExportOptions struct {
 	// Dateinamen erzeugt bzw. überschrieben.
 	SQLitePath string
 
+	// SQLPath: wenn nicht leer, wird ein SQL-Dump (CREATE TABLE + INSERT)
+	// in diese .sql-Datei geschrieben.
+	SQLPath string
+
 	// JSONDir: wenn nicht leer, werden die JSON-Dateien in dieses
 	// Verzeichnis geschrieben (wird bei Bedarf angelegt).
 	JSONDir string
@@ -98,14 +102,15 @@ type Report struct {
 	ByteSize   int64    `json:"byte_size"` // Summe der Blob-Größen
 	Elapsed    string   `json:"elapsed"`   // Dauer als String
 	SQLitePath string   `json:"sqlite_path,omitempty"`
+	SQLPath    string   `json:"sql_path,omitempty"`
 	JSONDir    string   `json:"json_dir,omitempty"`
 }
 
 // Export extrahiert das Repository und schreibt alle angegebenen Ziele.
 // mindestens eines von SQLitePath/JSONDir muss gesetzt sein.
 func Export(opts ExportOptions) (*Report, error) {
-	if opts.SQLitePath == "" && opts.JSONDir == "" {
-		return nil, fmt.Errorf("gitdb: Export: weder SQLitePath noch JSONDir gesetzt")
+	if opts.SQLitePath == "" && opts.JSONDir == "" && opts.SQLPath == "" {
+		return nil, fmt.Errorf("gitdb: Export: weder SQLitePath, SQLPath noch JSONDir gesetzt")
 	}
 
 	start := time.Now()
@@ -133,6 +138,13 @@ func Export(opts ExportOptions) (*Report, error) {
 			return nil, err
 		}
 		rep.SQLitePath = opts.SQLitePath
+	}
+
+	if opts.SQLPath != "" {
+		if err := ExportSQL(opts.SQLPath, data); err != nil {
+			return nil, err
+		}
+		rep.SQLPath = opts.SQLPath
 	}
 
 	if opts.JSONDir != "" {
