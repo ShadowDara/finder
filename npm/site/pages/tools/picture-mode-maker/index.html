@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/favicon.ico">
+    <link rel="stylesheet" href="../assets/style.css">
+    <title>GH Picture Mode Maker</title>
+    {{ JS_SCRIPT }}
+    <script defer src="../assets/settings.js"></script>
+</head>
+
+<body>
+    <header>
+        <p><b><a href="/generators"><button>Home</button></a></b></p>
+        <p><b><button id="openInfoBtn">Infos</button></b></p>
+    </header>
+
+    <main>
+        <h1>Picture Mode Maker</h1>
+        <p><a href="../../../../blog/2025/03/23/picture-mode-maker">More Infos here!</a></p>
+        <div class="container">
+            <div class="container-box">
+                <p><b>color sheme:</b> dark</p>
+                <p><b>color sheme:</b> light, no color sheme</p>
+                <p>normal:</p>
+            </div>
+            <div class="container-box">
+                <p><input id="link1"></p>
+                <p><input id="link2"></p>
+                <p><input id="link3"></p>
+            </div>
+        </div>
+        <p><button id="generate">Generate</button></p>
+        <div>
+            <p><div id="output"></div></p>
+        </div>
+        <p><div id="copy-button"></div></p>
+    </main>
+
+    <footer>Made with ❤️ by Shadowdara</footer>
+
+    <div id="infos" class="modal"></div>
+
+</body>
+
+</html>

@@ -1,35 +1,35 @@
 {
-  "generatedAt": "2026-09-14T11:17:44.952Z",
+  "generatedAt": "2026-09-14T11:34:39.009Z",
   "total": {
-    "files": 64,
-    "bytes": 348163,
-    "kilobytes": 340,
+    "files": 69,
+    "bytes": 351109,
+    "kilobytes": 342.88,
     "megabytes": 0.33
   },
   "byExtension": [
     {
       "extension": ".js",
-      "files": 26,
-      "bytes": 274231,
-      "percentage": 78.77
+      "files": 28,
+      "bytes": 276004,
+      "percentage": 78.61
     },
     {
       "extension": ".css",
       "files": 15,
       "bytes": 56648,
-      "percentage": 16.27
+      "percentage": 16.13
     },
     {
       "extension": ".txt",
       "files": 1,
-      "bytes": 9442,
-      "percentage": 2.71
+      "bytes": 9466,
+      "percentage": 2.7
     },
     {
       "extension": ".html",
-      "files": 22,
-      "bytes": 7842,
-      "percentage": 2.25
+      "files": 25,
+      "bytes": 8991,
+      "percentage": 2.56
     }
   ],
   "files": [
@@ -71,7 +71,7 @@
     {
       "path": "dependencies.txt",
       "extension": ".txt",
-      "bytes": 9442
+      "bytes": 9466
     },
     {
       "path": "assets/viewer.css",
@@ -86,7 +86,7 @@
     {
       "path": "assets/main_entry.js",
       "extension": ".js",
-      "bytes": 8001
+      "bytes": 8971
     },
     {
       "path": "assets/viewer.js",
@@ -209,6 +209,11 @@
       "bytes": 1069
     },
     {
+      "path": "assets/page2.js",
+      "extension": ".js",
+      "bytes": 738
+    },
+    {
       "path": "assets/config.js",
       "extension": ".js",
       "bytes": 623
@@ -269,9 +274,24 @@
       "bytes": 397
     },
     {
+      "path": "tools/line_formatter/line_extender/page/index.html",
+      "extension": ".html",
+      "bytes": 395
+    },
+    {
       "path": "home/index.html",
       "extension": ".html",
       "bytes": 391
+    },
+    {
+      "path": "tools/picture-mode-maker/page/index.html",
+      "extension": ".html",
+      "bytes": 379
+    },
+    {
+      "path": "tools/line_formatter/page/index.html",
+      "extension": ".html",
+      "bytes": 375
     },
     {
       "path": "assets/index3.js",
@@ -347,6 +367,11 @@
       "path": "test/ejs/index.html",
       "extension": ".html",
       "bytes": 88
+    },
+    {
+      "path": "assets/page.build.js",
+      "extension": ".js",
+      "bytes": 65
     },
     {
       "path": "assets/page.js",

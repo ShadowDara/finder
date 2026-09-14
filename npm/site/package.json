@@ -23,6 +23,7 @@
     "@eslint/js": "^10.0.1",
     "@rollup/plugin-yaml": "^5.0.0",
     "@tailwindcss/vite": "^4.3.3",
+    "@types/ejs": "^3.1.5",
     "@types/html-minifier-terser": "^7.0.2",
     "@types/jquery": "^4.0.1",
     "@types/license-checker": "^25.0.6",

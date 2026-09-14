@@ -59,6 +59,7 @@
 @tailwindcss/oxide-win32-x64-msvc@4.3.3 -- MIT
 @tailwindcss/oxide@4.3.3 -- MIT
 @tailwindcss/vite@4.3.3 -- MIT
+@types/ejs@3.1.5 -- MIT
 @types/eslint@8.56.12 -- MIT
 @types/esrecurse@4.3.1 -- MIT
 @types/estree@1.0.9 -- MIT

@@ -314,7 +314,7 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
     sourceFile: string,
   ): Promise<string> {
     // `filename` only matters for `include`-relative paths in EJS.
-    return ejs.render(template, data, {
+    return ejs.render(template, data as any, {
       filename: sourceFile,
     });
   }
@@ -498,7 +498,12 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
 
         // Build-data modules (page.build.ts / page.build.js / ...) are not
         // pages themselves — they only feed data into their sibling page.
-        if (/\.build\.(ts|tsx|js|jsx|mjs|cjs)$/i.test(entry.name)) {
+        // Exclude anything that contains `.build.` before the extension.
+        // Examples:
+        //  - page.build.ts
+        //  - page.build.js
+        //  - nested/page.build.tsx
+        if (/\.build\.[^.]+$/i.test(entry.name)) {
           continue;
         }
 
@@ -703,6 +708,19 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
          * client-side entry in the pages map (which would bloat the
          * main bundle). */
         if (page.type === "liquid" || page.type === "ejs") {
+          // Liquid/EJS: Der page.scriptSource wird als eigenständige Seite (component)
+          // behandelt, damit es durch Vite/Rollup gebündelt wird.
+          // Hinweis: die HTML selbst wird weiter als Asset emittiert.
+          if (page.scriptSource) {
+            const scriptId = `__pages_script__:${page.id}`;
+            return `  ${JSON.stringify(page.id)}: {
+    id: ${JSON.stringify(page.id)},
+    type: "component",
+    load: () => import(${JSON.stringify(page.importPath ?? page.scriptSource)}),
+    styles: []
+  }`;
+          }
+
           return null;
         }
 
