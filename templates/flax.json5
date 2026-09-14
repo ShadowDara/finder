@@ -11,5 +11,6 @@
     "tags": [
         "game-engine"
     ],
-    "min_version": "0.3.14"
+    "min_version": "0.3.14",
+    "description": "a project with the flax game engine"
 }

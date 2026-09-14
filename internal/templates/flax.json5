@@ -1,1 +1,1 @@
-{"files":["*.flaxproj"],"folders":[{"name":"Content"}],"min_version":"0.3.14","name":"*","tags":["game-engine"]}
+{"description":"a project with the flax game engine","files":["*.flaxproj"],"folders":[{"name":"Content"}],"min_version":"0.3.14","name":"*","tags":["game-engine"]}

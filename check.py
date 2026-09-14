@@ -11,6 +11,7 @@ wrong = 0
 total = 0
 notags = 0
 noarraytags = 0
+nodesc = 0
 
 
 # ─────────────────────────────────────────────
@@ -75,6 +76,28 @@ for json_file in folder.glob("*.json5"):
 
 
 # ─────────────────────────────────────────────
+# Description
+# ─────────────────────────────────────────────
+
+for json_file in folder.glob("*.json5"):
+    try:
+        with json_file.open("r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        if "description" not in data:
+            print(f"No Description: {json_file.name}")
+            nodesc += 1
+            continue
+
+    except json.JSONDecodeError:
+        # Bereits im ersten Durchlauf gezählt
+        pass
+
+    except Exception as e:
+        print(f"Fehler bei {json_file.name}: {e}")
+
+
+# ─────────────────────────────────────────────
 # Statistik
 # ─────────────────────────────────────────────
 
@@ -87,3 +110,4 @@ print(
     f"Templates where tags is not an array: "
     f"{noarraytags} from {working - notags} templates with tags attribute"
 )
+print(f"{nodesc} Templates without description from {working}")
