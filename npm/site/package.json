@@ -53,9 +53,11 @@
     "@shadowdara/finder-lib": "^0.3.17",
     "ejs": "^6.0.1",
     "highlight.js": "^11.12.0",
+    "i18next": "^26.4.2",
     "jquery": "^4.0.0",
     "liquidjs": "^10.29.0",
     "lucide": "^1.45.0",
+    "samengine": "^1.11.0",
     "tellraw-parser": "^1.0.2"
   }
 }

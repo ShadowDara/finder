@@ -17,6 +17,12 @@ importers:
       automatic-md-index:
         specifier: ^1.3.7
         version: 1.3.7
+      cross-env:
+        specifier: ^10.1.0
+        version: 10.1.0
+      finder-npm:
+        specifier: ^0.0.0
+        version: 0.0.0
       http-server:
         specifier: ^14.1.1
         version: 14.1.1
@@ -139,6 +145,9 @@ importers:
       highlight.js:
         specifier: ^11.12.0
         version: 11.12.0
+      i18next:
+        specifier: ^26.4.2
+        version: 26.4.2(typescript@5.7.3)
       jquery:
         specifier: ^4.0.0
         version: 4.0.0
@@ -148,6 +157,9 @@ importers:
       lucide:
         specifier: ^1.45.0
         version: 1.45.0
+      samengine:
+        specifier: ^1.11.0
+        version: 1.11.0
       tellraw-parser:
         specifier: ^1.0.2
         version: 1.0.2
@@ -240,6 +252,25 @@ importers:
       typescript:
         specifier: ^5.5.4
         version: 5.7.3
+
+  npm/vite-plugin-minisite:
+    dependencies:
+      '@shadowdara/dlib':
+        specifier: ^0.0.4
+        version: 0.0.4
+      chokidar:
+        specifier: ^4.0.3
+        version: 4.0.3
+    devDependencies:
+      '@types/node':
+        specifier: ^25.9.6
+        version: 25.9.6
+      typescript:
+        specifier: ^6.0.2
+        version: 6.0.3
+      vite:
+        specifier: ^7.0.0
+        version: 7.3.6(@types/node@25.9.6)(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.104.1)(terser@5.51.2)(tsx@4.23.13)(yaml@2.9.1)
 
 packages:
 
@@ -599,6 +630,9 @@ packages:
 
   '@emnapi/runtime@1.11.3':
     resolution: {integrity: sha512-Xz4Tpyki7XyrpbUK1jR1AhdAdaXyhhY4lZ3neLodmhpuWfy2PAQN5B46sAiU4liOXGLkHypn/qU+jvfWSCYYLA==}
+
+  '@epic-web/invariant@1.0.0':
+    resolution: {integrity: sha512-lrTPqgvfFQtR/eY/qkIzp98OGdNJu0m5ji3q/nJI8v3SXkRKEnWiOxMmbvcSoAIzv/cGiuvRy57k4suKQSAdwA==}
 
   '@esbuild/aix-ppc64@0.25.12':
     resolution: {integrity: sha512-Hhmwd6CInZ3dwpuGTF8fJG6yoWmsToE+vYgD4nytZVxcu1ulHpUQRAB1UJ8+N1Am3Mz4+xOByoQoSZf4D+CpkA==}
@@ -2261,6 +2295,11 @@ packages:
       typescript:
         optional: true
 
+  cross-env@10.1.0:
+    resolution: {integrity: sha512-GsYosgnACZTADcmEyJctkJIoqAhHjttw7RsFrVoJNXbsWWqaq6Ym+7kZjq6mS45O0jij6vtiReppKQEtqWy6Dw==}
+    engines: {node: '>=20'}
+    hasBin: true
+
   cross-spawn@7.0.6:
     resolution: {integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==}
     engines: {node: '>= 8'}
@@ -2624,6 +2663,9 @@ packages:
     resolution: {integrity: sha512-78/PXT1wlLLDgTzDs7sjq9hzz0vXD+zn+7wypEe4fXQxCmdmqfGsEPQxmiCSQI3ajFV91bVSsvNtrJRiW6nGng==}
     engines: {node: '>=10'}
 
+  finder-npm@0.0.0:
+    resolution: {integrity: sha512-X734qKdqfKxv+yU5JtI8kX1OfCIWEe8NYYfO4amoV3f/N7vuBGfBiHQ1OFHmcHQkftc9CF657q6Rg/ZUs3OUPg==}
+
   flat-cache@6.1.23:
     resolution: {integrity: sha512-f++BY9pTk+983xK1FLzlLpmM0i0z+jHmx3QESGkURMXujQZz1k5wzwX6hjnQ8goaD0B+sYnDK1yZ6MTyZfUaqA==}
 
@@ -2803,6 +2845,14 @@ packages:
   human-signals@8.0.1:
     resolution: {integrity: sha512-eKCa6bwnJhvxj14kZk5NCPc6Hb6BdsU9DZcOnmQKSnO1VKrfV0zCvtttPZUsBvjmNDn8rpcJfpwSYnHBjc95MQ==}
     engines: {node: '>=18.18.0'}
+
+  i18next@26.4.2:
+    resolution: {integrity: sha512-RX+R0VLg13IbvRuJSxnqykUFS9vQZTl8wYpWPCIUDWVrSGjsQywB5Y+pjzrkboxGAuYfJZVH1InFTdgBdxq6ug==}
+    peerDependencies:
+      typescript: ^5 || ^6 || ^7
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   iconv-lite@0.6.3:
     resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
@@ -3163,6 +3213,11 @@ packages:
   mime@1.6.0:
     resolution: {integrity: sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==}
     engines: {node: '>=4'}
+    hasBin: true
+
+  mime@4.1.0:
+    resolution: {integrity: sha512-X5ju04+cAzsojXKes0B/S4tcYtFAJ6tTMuSPBEn9CPGlrWr8Fiw7qYeLT0XyH80HSoAoqWCaz+MWKh22P7G1cw==}
+    engines: {node: '>=16'}
     hasBin: true
 
   mimic-fn@2.1.0:
@@ -3646,6 +3701,19 @@ packages:
   safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
 
+  samengine-cli@2.0.4:
+    resolution: {integrity: sha512-ArRH4fiqW7irma/otxvc+nEO3I7fnN0aHJSTSGpqCHfeKrqc29jZKbp1yCC5Q/iI1hJFkPPOUaIVVAsZ5EMrYg==}
+    hasBin: true
+
+  samengine@1.11.0:
+    resolution: {integrity: sha512-JQmtM5xySzQZEgT5qhiSy9bOSNgSSyn2misMfcfVM05q1T3pYGFJIWzmGZNDRpsb1A7WB24GhLkcGOJiWTLq2A==}
+    hasBin: true
+    peerDependencies:
+      svelte: '>=5.0.0'
+    peerDependenciesMeta:
+      svelte:
+        optional: true
+
   sass@1.104.1:
     resolution: {integrity: sha512-yDA+1aIG3EHgN4V/BvuhCvu61FF6hEd4e+9DxikUm9U0CAGuvdIZ/UYy7qbOxjhbbWQraoyLlMuzdRGOSV5Bmw==}
     engines: {node: '>=20.19.0'}
@@ -4074,6 +4142,46 @@ packages:
       yaml:
         optional: true
 
+  vite@7.3.6:
+    resolution: {integrity: sha512-4XP60spRGjSZFf1qYH+dJIkK2znL3zQfl9KkOV9MkkRR/3Dls0dxaBsQPTloEc5BLXWPL9vsOxopxyKoMmDueg==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': ^20.19.0 || >=22.12.0
+      jiti: '>=1.21.0'
+      less: ^4.0.0
+      lightningcss: ^1.21.0
+      sass: ^1.70.0
+      sass-embedded: ^1.70.0
+      stylus: '>=0.54.8'
+      sugarss: ^5.0.0
+      terser: ^5.16.0
+      tsx: ^4.8.1
+      yaml: ^2.4.2
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      jiti:
+        optional: true
+      less:
+        optional: true
+      lightningcss:
+        optional: true
+      sass:
+        optional: true
+      sass-embedded:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+      tsx:
+        optional: true
+      yaml:
+        optional: true
+
   webpack-virtual-modules@0.6.2:
     resolution: {integrity: sha512-66/V2i5hQanC51vBQKPH4aI8NMAcBW59FVBs+rC7eGHupMyfn34q7rZIE+ETlJ+XTevqfUhVVBgSUNSW2flEUQ==}
 
@@ -4102,6 +4210,18 @@ packages:
 
   wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
+
+  ws@8.21.3:
+    resolution: {integrity: sha512-201TZ/kPWxoPr/OKWjquZR1SWKXcvxdH+e1xrx89b3YbmzLMFCLfnaG1HFIgWzJOEWZ7MvpK++odZufgYR50Rw==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: '>=5.0.2'
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
 
   wsl-utils@1.0.0:
     resolution: {integrity: sha512-Hl0ZOAs672vg+06kfujwRhoS6/jehvULrlFkuF2dRu6pHgA8U06h3xqNIqNNU1LTXPcedxByAR4GS6pwQK0mgA==}
@@ -4541,6 +4661,8 @@ snapshots:
     dependencies:
       tslib: 2.8.1
     optional: true
+
+  '@epic-web/invariant@1.0.0': {}
 
   '@esbuild/aix-ppc64@0.25.12':
     optional: true
@@ -5815,6 +5937,11 @@ snapshots:
     optionalDependencies:
       typescript: 5.7.3
 
+  cross-env@10.1.0:
+    dependencies:
+      '@epic-web/invariant': 1.0.0
+      cross-spawn: 7.0.6
+
   cross-spawn@7.0.6:
     dependencies:
       path-key: 3.1.1
@@ -6240,6 +6367,8 @@ snapshots:
       locate-path: 6.0.0
       path-exists: 4.0.0
 
+  finder-npm@0.0.0: {}
+
   flat-cache@6.1.23:
     dependencies:
       cacheable: 2.5.0
@@ -6417,6 +6546,10 @@ snapshots:
   human-signals@2.1.0: {}
 
   human-signals@8.0.1: {}
+
+  i18next@26.4.2(typescript@5.7.3):
+    optionalDependencies:
+      typescript: 5.7.3
 
   iconv-lite@0.6.3:
     dependencies:
@@ -6687,6 +6820,8 @@ snapshots:
       mime-db: 1.54.0
 
   mime@1.6.0: {}
+
+  mime@4.1.0: {}
 
   mimic-fn@2.1.0: {}
 
@@ -7192,6 +7327,20 @@ snapshots:
 
   safer-buffer@2.1.2: {}
 
+  samengine-cli@2.0.4: {}
+
+  samengine@1.11.0:
+    dependencies:
+      chalk: 5.6.2
+      esbuild: 0.28.2
+      html-minifier-terser: 7.2.0
+      mime: 4.1.0
+      samengine-cli: 2.0.4
+      ws: 8.21.3
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
   sass@1.104.1:
     dependencies:
       chokidar: 5.0.0
@@ -7639,6 +7788,24 @@ snapshots:
       tsx: 4.23.13
       yaml: 2.9.1
 
+  vite@7.3.6(@types/node@25.9.6)(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.104.1)(terser@5.51.2)(tsx@4.23.13)(yaml@2.9.1):
+    dependencies:
+      esbuild: 0.28.2
+      fdir: 6.5.0(picomatch@4.0.7)
+      picomatch: 4.0.7
+      postcss: 8.5.28
+      rollup: 4.63.2
+      tinyglobby: 0.2.17
+    optionalDependencies:
+      '@types/node': 25.9.6
+      fsevents: 2.3.3
+      jiti: 2.7.0
+      lightningcss: 1.32.0
+      sass: 1.104.1
+      terser: 5.51.2
+      tsx: 4.23.13
+      yaml: 2.9.1
+
   webpack-virtual-modules@0.6.2: {}
 
   whatwg-encoding@2.0.0:
@@ -7662,6 +7829,8 @@ snapshots:
       strip-ansi: 7.2.0
 
   wrappy@1.0.2: {}
+
+  ws@8.21.3: {}
 
   wsl-utils@1.0.0:
     dependencies:

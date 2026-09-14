@@ -38,3 +38,5 @@ npm/site/tsconfig.tsbuildinfo
 /npm/vfs/dist
 *.pdb
 *.obj
+/npm/vite-plugin-minisite/node_modules
+/npm/vite-plugin-minisite/dist

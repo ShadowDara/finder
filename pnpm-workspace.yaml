@@ -10,3 +10,4 @@ allowBuilds:
 minimumReleaseAgeExclude:
   - '@shadowdara/finder-lib@0.3.17'
   - '@shadowdara/linguist-js@1.0.0'
+  - finder-npm@0.0.0
