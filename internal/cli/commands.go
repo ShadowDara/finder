@@ -200,8 +200,12 @@ func HandleCommand(args []string) {
 		}
 
 	case installCmd:
+		// Ohne Argument: alle Templates aus der Lockfile installieren
 		if len(cmd.Args) <= 0 {
-			root.PrintHelp()
+			if err := InstallAll(); err != nil {
+				fmt.Println(err)
+				os.Exit(1)
+			}
 			return
 		}
 
@@ -211,8 +215,12 @@ func HandleCommand(args []string) {
 		// List all installed templates
 		ListInstalled()
 	case uninstallCmd:
+		// Ohne Argument: alle installierten Templates entfernen
 		if len(cmd.Args) <= 0 {
-			root.PrintHelp()
+			if err := UninstallAll(); err != nil {
+				fmt.Println(err)
+				os.Exit(1)
+			}
 			return
 		}
 

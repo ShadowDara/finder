@@ -145,6 +145,61 @@ func Install(installTemplate string) error {
 	return nil
 }
 
+// InstallAll installiert alle Templates aus der Lockfile
+// (~/.finder/filepkg.lock.json) in das installierte
+// Template-Verzeichnis. Templates, deren Server nicht erreichbar ist
+// (oder die aus anderen Gründen nicht geladen werden können), werden
+// übersprungen — der Rest wird trotzdem installiert.
+func InstallAll() error {
+	customPath, err := templates.GetInstalledTemplatePath()
+	if err != nil {
+		return fmt.Errorf("install: Home-Pfad nicht ermittelbar: %v", err)
+	}
+	lockPath, err := UserLockPath()
+	if err != nil {
+		return fmt.Errorf("install: Lockfile-Pfad nicht ermittelbar: %v", err)
+	}
+
+	m := filepkg.New(customPath, lockPath)
+	m.Client = filepkg.DefaultClient()
+
+	lf, err := m.LoadLock()
+	if err != nil {
+		return fmt.Errorf("install: %v", err)
+	}
+	if len(lf.Files) == 0 {
+		fmt.Println("No templates in lockfile to install.")
+		return nil
+	}
+
+	failed := 0
+	for _, f := range lf.Files {
+		name := f.Name
+
+		// Bereits auf der Platte vorhanden → überspringen.
+		if fileExists(filepath.Join(customPath, filepath.FromSlash(name))) {
+			fmt.Printf("%sTemplate '%s' ist bereits installiert.%s\n", color.Yellow, name, color.Reset)
+			continue
+		}
+
+		ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
+		if _, err := m.Pull(ctx, name); err != nil {
+			cancel()
+			// Server nicht erreichbar o.ä. → überspringen und weitermachen.
+			fmt.Printf("%sÜbersprungen: Template '%s' (%v)%s\n", color.Yellow, name, err, color.Reset)
+			failed++
+			continue
+		}
+		cancel()
+		fmt.Printf("%sInstalled template '%s'%s\n", color.Green, name, color.Reset)
+	}
+
+	if failed > 0 {
+		fmt.Printf("%s%d Template(s) konnten nicht installiert werden (übersprungen).%s\n", color.Yellow, failed, color.Reset)
+	}
+	return nil
+}
+
 // fileExists prüft, ob eine Datei existiert.
 func fileExists(path string) bool {
 	_, err := os.Stat(path)
@@ -211,5 +266,50 @@ func Uninstall(templateName string) error {
 	}
 
 	fmt.Printf("%sUninstalled template '%s'%s\n", color.Green, relName, color.Reset)
+	return nil
+}
+
+// UninstallAll entfernt ALLE installierten Templates aus
+// ~/.finder/installed/templates/ — inklusive Lockfile-Einträgen.
+// Ist nichts installiert, wird das gemeldet, ohne Fehler.
+func UninstallAll() error {
+	customPath, err := templates.GetInstalledTemplatePath()
+	if err != nil {
+		return fmt.Errorf("uninstall: Home-Pfad nicht ermittelbar: %v", err)
+	}
+	lockPath, err := UserLockPath()
+	if err != nil {
+		return fmt.Errorf("uninstall: Lockfile-Pfad nicht ermittelbar: %v", err)
+	}
+
+	m := filepkg.New(customPath, lockPath)
+
+	lf, err := m.LoadLock()
+	if err != nil {
+		return fmt.Errorf("uninstall: %v", err)
+	}
+	if len(lf.Files) == 0 {
+		fmt.Println("No installed templates.")
+		return nil
+	}
+
+	for _, f := range lf.Files {
+		name := f.Name
+
+		// Lockfile-Eintrag entfernen
+		if _, err := m.Remove(name); err != nil {
+			fmt.Printf("%suninstall: '%s': %v%s\n", color.Red, name, err, color.Reset)
+			continue
+		}
+
+		// Datei auf der Platte entfernen
+		filePath := filepath.Join(customPath, filepath.FromSlash(name))
+		if err := os.Remove(filePath); err != nil && !os.IsNotExist(err) {
+			fmt.Printf("%suninstall: '%s': %v%s\n", color.Red, name, err, color.Reset)
+			continue
+		}
+
+		fmt.Printf("%sUninstalled template '%s'%s\n", color.Green, name, color.Reset)
+	}
 	return nil
 }
