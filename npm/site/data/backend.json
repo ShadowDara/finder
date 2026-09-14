@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-14T00:13:53.753Z",
+  "generatedAt": "2026-09-14T00:30:53.073Z",
   "total": {
-    "files": 63,
-    "bytes": 350096,
-    "kilobytes": 341.89,
+    "files": 62,
+    "bytes": 348083,
+    "kilobytes": 339.92,
     "megabytes": 0.33
   },
   "byExtension": [
@@ -11,31 +11,25 @@
       "extension": ".js",
       "files": 25,
       "bytes": 274242,
-      "percentage": 78.33
+      "percentage": 78.79
     },
     {
       "extension": ".css",
       "files": 15,
       "bytes": 56648,
-      "percentage": 16.18
+      "percentage": 16.27
     },
     {
       "extension": ".txt",
       "files": 1,
       "bytes": 9442,
-      "percentage": 2.7
+      "percentage": 2.71
     },
     {
       "extension": ".html",
       "files": 21,
-      "bytes": 7753,
-      "percentage": 2.21
-    },
-    {
-      "extension": ".sh",
-      "files": 1,
-      "bytes": 2011,
-      "percentage": 0.57
+      "bytes": 7751,
+      "percentage": 2.23
     }
   ],
   "files": [
@@ -47,7 +41,7 @@
     {
       "path": "assets/main_entry.js",
       "extension": ".js",
-      "bytes": 33423
+      "bytes": 33424
     },
     {
       "path": "assets/installscript.js",
@@ -178,11 +172,6 @@
       "path": "assets/markdownstyle.css",
       "extension": ".css",
       "bytes": 2194
-    },
-    {
-      "path": "install.sh",
-      "extension": ".sh",
-      "bytes": 2011
     },
     {
       "path": "assets/index.css",
@@ -347,12 +336,12 @@
     {
       "path": "jekyll/index.html",
       "extension": ".html",
-      "bytes": 106
+      "bytes": 104
     },
     {
       "path": "assets/page.js",
       "extension": ".js",
-      "bytes": 35
+      "bytes": 34
     }
   ]
 }

@@ -182,6 +182,13 @@ export interface PagesPluginOptions {
    * @default ["/@", "/node_modules/", "/src/"]
    */
   ignoredPathnames?: string[];
+
+  /**
+   * Liquid Template root folder
+   *
+   * @default "templates"
+   */
+  liquidTemplateRoot?: string;
 }
 
 export interface PageRenderContext {
@@ -259,6 +266,7 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
     options.ignore ?? ((id: string) => id.split("/").pop()!.startsWith("_"));
   const getTitle = options.title ?? ((id: string) => id);
   const writeDts = options.dts ?? true;
+  const liquidTemplateRoot = options.liquidTemplateRoot ?? "templates";
 
   let config: ResolvedConfig;
   let pages: PageEntry[] = [];
@@ -271,6 +279,27 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
     const clean = style.replace(/^\/+/, "");
 
     return path.resolve(config.root, clean);
+  }
+
+  // Render a Liquid template with the given data at build time.
+  //
+  // Used for `X.html` pages: the template is read from disk and rendered
+  // with the data returned by the sibling `X.build.[tj]s` module's `build()`
+  // function, producing fully static HTML.
+  async function renderLiquidTemplate(
+    template: string,
+    data: unknown,
+  ): Promise<string> {
+    // liquidjs braucht einen absoluten Pfad als `root`, damit
+    // `{% include header.html %}` die Partials-Dateien findet.
+    // `jekyllInclude: true` erlaubt die Jekyll-Syntax ohne Quotes
+    // (sonst würde `header.html` als Variablen-Zugriff geparst).
+    const engine = new Liquid({
+      root: path.resolve(config.root, liquidTemplateRoot),
+      jekyllInclude: true,
+    });
+
+    return engine.parseAndRender(template, data as Record<string, unknown>);
   }
 
   function getAssetPath(htmlFileName: string, assetFileName: string): string {
@@ -1209,6 +1238,10 @@ ${ctx.content}
               {
                 loader,
                 target: "esnext",
+                // Das Script wird als eigenes Asset ausgegeben und läuft
+                // nicht durch Vites normalen Minify-Pass — daher hier
+                // direkt minifizieren.
+                minify: true,
               },
             );
 
@@ -1364,18 +1397,4 @@ async function loadBuildData(page: PageEntry): Promise<unknown> {
       `[vite-plugin-pages-ssg] Failed to execute build() for "${page.id}":\n${String(error)}`,
     );
   }
-}
-
-// Render a Liquid template with the given data at build time.
-//
-// Used for `X.html` pages: the template is read from disk and rendered
-// with the data returned by the sibling `X.build.[tj]s` module's `build()`
-// function, producing fully static HTML.
-async function renderLiquidTemplate(
-  template: string,
-  data: unknown,
-): Promise<string> {
-  const engine = new Liquid();
-
-  return engine.parseAndRender(template, data as Record<string, unknown>);
 }
