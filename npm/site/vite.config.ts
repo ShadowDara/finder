@@ -12,6 +12,7 @@ import eslint from "vite-plugin-eslint";
 import yaml from "@rollup/plugin-yaml";
 import { buildStats } from "./vite-plugin-build-stats";
 import { markdownLint } from "./md-linter-plugin";
+import i18nextLoader from "vite-plugin-i18next-loader";
 
 function dependenciesPlugin(outDir: string) {
   return {
@@ -77,6 +78,9 @@ export default defineConfig(({ mode }) => {
       },
     },
     plugins: [
+      // i18nextLoader({
+      //   paths: ["./src/locales"],
+      // }),
       markdownLint({
         maxLineLength: 72,
 
