@@ -1,49 +1,38 @@
 {
-  "generatedAt": "2026-09-13T23:34:52.067Z",
+  "generatedAt": "2026-09-14T21:11:06.431Z",
   "total": {
-    "files": 58,
-    "bytes": 417268,
-    "kilobytes": 407.49,
+    "files": 68,
+    "bytes": 418973,
+    "kilobytes": 409.15,
     "megabytes": 0.4
   },
   "byExtension": [
     {
       "extension": ".js",
-      "files": 20,
-      "bytes": 341297,
-      "percentage": 81.79
+      "files": 27,
+      "bytes": 343574,
+      "percentage": 82
     },
     {
       "extension": ".css",
       "files": 15,
-      "bytes": 56648,
-      "percentage": 13.58
+      "bytes": 56700,
+      "percentage": 13.53
     },
     {
       "extension": ".txt",
       "files": 1,
-      "bytes": 9413,
-      "percentage": 2.26
+      "bytes": 9517,
+      "percentage": 2.27
     },
     {
       "extension": ".html",
-      "files": 21,
-      "bytes": 7899,
-      "percentage": 1.89
-    },
-    {
-      "extension": ".sh",
-      "files": 1,
-      "bytes": 2011,
-      "percentage": 0.48
+      "files": 25,
+      "bytes": 9182,
+      "percentage": 2.19
     }
   ],
   "files": [
-    {
-      "path": "assets/main_entry.js",
-      "extension": ".js",
-      "bytes": 88782
-    },
     {
       "path": "assets/jquery.module.js",
       "extension": ".js",
@@ -52,7 +41,7 @@
     {
       "path": "assets/viewer.js",
       "extension": ".js",
-      "bytes": 77571
+      "bytes": 77785
     },
     {
       "path": "assets/installscript.js",
@@ -60,9 +49,24 @@
       "bytes": 32265
     },
     {
+      "path": "assets/_virtual_page-markdown_changelog.js",
+      "extension": ".js",
+      "bytes": 30767
+    },
+    {
+      "path": "assets/_virtual_page-data_index.js",
+      "extension": ".js",
+      "bytes": 25412
+    },
+    {
+      "path": "assets/_virtual_page-markdown_readme.js",
+      "extension": ".js",
+      "bytes": 24851
+    },
+    {
       "path": "assets/creator.js",
       "extension": ".js",
-      "bytes": 15664
+      "bytes": 15609
     },
     {
       "path": "assets/markdown.js",
@@ -72,17 +76,22 @@
     {
       "path": "dependencies.txt",
       "extension": ".txt",
-      "bytes": 9413
+      "bytes": 9517
     },
     {
       "path": "assets/viewer.css",
       "extension": ".css",
-      "bytes": 9349
+      "bytes": 9401
     },
     {
       "path": "assets/configeditor.js",
       "extension": ".js",
       "bytes": 9239
+    },
+    {
+      "path": "assets/main_entry.js",
+      "extension": ".js",
+      "bytes": 8441
     },
     {
       "path": "assets/regexcreator.js",
@@ -127,7 +136,7 @@
     {
       "path": "assets/cacheviewer.js",
       "extension": ".js",
-      "bytes": 3498
+      "bytes": 3478
     },
     {
       "path": "assets/home.js",
@@ -137,7 +146,7 @@
     {
       "path": "assets/samfile.js",
       "extension": ".js",
-      "bytes": 3291
+      "bytes": 3256
     },
     {
       "path": "assets/samfile.css",
@@ -170,11 +179,6 @@
       "bytes": 2194
     },
     {
-      "path": "install.sh",
-      "extension": ".sh",
-      "bytes": 2011
-    },
-    {
       "path": "assets/index.css",
       "extension": ".css",
       "bytes": 1742
@@ -192,17 +196,27 @@
     {
       "path": "assets/worlds.js",
       "extension": ".js",
-      "bytes": 1139
+      "bytes": 1099
     },
     {
-      "path": "assets/index3.js",
+      "path": "assets/index4.js",
       "extension": ".js",
       "bytes": 1069
     },
     {
-      "path": "assets/index.js",
+      "path": "assets/index2.js",
       "extension": ".js",
       "bytes": 1004
+    },
+    {
+      "path": "assets/page2.js",
+      "extension": ".js",
+      "bytes": 738
+    },
+    {
+      "path": "assets/config.js",
+      "extension": ".js",
+      "bytes": 623
     },
     {
       "path": "assets/info.js",
@@ -265,7 +279,22 @@
       "bytes": 406
     },
     {
-      "path": "assets/index2.js",
+      "path": "tools/line_formatter/line_extender/page/index.html",
+      "extension": ".html",
+      "bytes": 387
+    },
+    {
+      "path": "tools/picture-mode-maker/page/index.html",
+      "extension": ".html",
+      "bytes": 377
+    },
+    {
+      "path": "tools/line_formatter/page/index.html",
+      "extension": ".html",
+      "bytes": 373
+    },
+    {
+      "path": "assets/index3.js",
       "extension": ".js",
       "bytes": 369
     },
@@ -325,9 +354,24 @@
       "bytes": 228
     },
     {
-      "path": "jekyll/index.html",
+      "path": "assets/index.js",
+      "extension": ".js",
+      "bytes": 129
+    },
+    {
+      "path": "test/jekyll/index.html",
       "extension": ".html",
-      "bytes": 51
+      "bytes": 109
+    },
+    {
+      "path": "test/ejs/index.html",
+      "extension": ".html",
+      "bytes": 88
+    },
+    {
+      "path": "assets/page.js",
+      "extension": ".js",
+      "bytes": 34
     }
   ]
 }

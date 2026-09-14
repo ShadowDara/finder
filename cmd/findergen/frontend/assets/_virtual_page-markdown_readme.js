@@ -1,0 +1,124 @@
+const s={id:"readme",type:"markdown",html:`<h1 id="finder">finder</h1><p><a href="https://github.com/ShadowDara/finder/actions/workflows/release.yml" target="_blank" rel="noopener noreferrer"><img src="https://github.com/ShadowDara/finder/actions/workflows/release.yml/badge.svg" alt="Build Status"></a><a href="https://github.com/ShadowDara/finder/actions/workflows/buildcheck.yml" target="_blank" rel="noopener noreferrer"><img src="https://github.com/ShadowDara/finder/actions/workflows/buildcheck.yml/badge.svg" alt="Build Check"></a><a href="https://github.com/ShadowDara/finder/actions/workflows/deploywebpage.yml" target="_blank" rel="noopener noreferrer"><img src="https://github.com/ShadowDara/finder/actions/workflows/deploywebpage.yml/badge.svg" alt="Deploy GitHub Pages"></a><a href="https://github.com/shadowdara/finder/graphs/contributors" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/github/contributors/shadowdara/finder" alt="GitHub contributors"></a><a href="https://github.com/shadowdara/finder/commits" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/github/commit-activity/m/shadowdara/finder" alt="GitHub commit activity (branch)"></a><a href="https://github.com/shadowdara/finder/commits" target="_blank" rel="noopener noreferrer"><img src="https://badges.ws/github/last-commit/shadowdara/finder" alt="Last Commit"></a><a href="https://github.com/shadowdara/finder/releases" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/github/downloads/shadowdara/finder/total?logo=github" alt="GitHub all releases"></a><a href="https://github.com/shadowdara/finder/releases" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/github/v/release/shadowdara/finder?logo=github" alt="GitHub release (with filter)"></a><a href="https://github.com/shadowdara/finder.git" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/github/languages/code-size/shadowdara/finder?logo=github" alt="GitHub code size in bytes"></a><a href="https://github.com/shadowdara/finder.git" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/github/repo-size/shadowdara/finder?logo=github" alt="GitHub repo size"></a><a href="https://github.com/shadowdara/finder.git" target="_blank" rel="noopener noreferrer"><img src="https://badges.ws/github/lang-count/shadowdara/finder" alt="Lang Count"></a><img src="https://img.shields.io/github/stars/shadowdara/finder" alt="GitHub Repo stars"> <img src="https://img.shields.io/github/forks/shadowdara/finder" alt="GitHub forks"> <img src="https://badges.ws/maintenance/yes/2026" alt="Maintained"> <img src="https://badges.ws/handmade" alt="Handmade"> <a href="https://pkg.go.dev/github.com/shadowdara/finder" target="_blank" rel="noopener noreferrer"><img src="https://pkg.go.dev/badge/github.com/shadowdara/finder" alt="Go Reference"></a></p><p>Finder is a lightweight command-line tool written in Go to locate projects and files based on predefined folder/file structure templates. It ships with <strong>370+ built-in templates</strong> covering a huge range of technologies, frameworks, and services — and you can add your own without recompiling.</p><blockquote><p><strong>Current version: 0.3.17</strong></p></blockquote><h2 id="features">Features</h2><ul><li><strong>Template-based search</strong> — find projects by folder/file structure</li><li><strong>Custom templates</strong> — drop <code>.json5</code> files into</li><li><strong>Regex support</strong> — use regular expressions in template patterns</li><li><strong>Async search</strong> — searches all drives (Windows) or root <code>/</code></li><li><strong>Caching</strong> — create and reuse a cache for significantly faster</li><li><strong>JSON output</strong> — pipe results into other tools with <code>--json</code>.</li><li><strong>Tag search</strong> — browse templates by tag (<code>-t<tag></tag></code>).</li><li><strong>Binary search</strong> — find executables in your <code>$PATH</code> (<code>-b</code>).</li><li><strong>File size & checksum validation</strong> — templates can require</li><li><strong>Command validation</strong> — templates can run a shell command after</li><li><strong>Web UI (<code>findergen</code>)</strong> — a built-in HTTP server for browsing,</li><li><strong>Cross-platform</strong> — works on Windows, Linux, and macOS.</li></ul><h2 id="requirements">Requirements</h2><ul><li>Go 1.18 or newer</li></ul><h2 id="binaries">Binaries</h2><p>The repository contains several binaries:</p><table><thead><tr><th>Binary</th><th>Description</th></tr></thead><tbody><tr><td><code>finder</code></td><td>Main CLI — search for projects and files using templates</td></tr><tr><td><code>findergen</code></td><td>HTTP server & web UI for template management, cache viewer, config editor</td></tr><tr><td><code>csf</code></td><td>Build helper — compile scripts, <code>go install</code> with CGO, git repo pack/restore</td></tr><tr><td><code>tester</code></td><td>Template test tool — validates template files</td></tr></tbody></table><h2 id="installation">Installation</h2><h3 id="build-from-source">Build from source</h3><pre><code class="language-sh">go build ./cmd/finder</code></pre><p>Or install directly (Go 1.18+):</p><pre><code class="language-sh">go install github.com/shadowdara/finder/cmd/finder@latest</code></pre><p>The produced binary is <code>finder</code> (on Windows <code>finder.exe</code>).</p><h3 id="build-all-binaries">Build all binaries</h3><pre><code class="language-sh"><span class="hljs-comment"># Windows</span>
+build.bat
+
+<span class="hljs-comment"># Linux / macOS</span>
+go build ./cmd/finder
+go build ./cmd/findergen
+go build ./cmd/tester</code></pre><p>Or using <code>make</code>:</p><pre><code class="language-sh">make          <span class="hljs-comment"># debug build</span>
+make release  <span class="hljs-comment"># release build with stripped symbols</span>
+make install  <span class="hljs-comment"># build release + copy to /usr/local/bin</span></code></pre><h2 id="usage">Usage</h2><h3 id="basic-search">Basic search</h3><pre><code class="language-sh">finder &lt;template-name&gt;</code></pre><p>Find Git repositories:</p><pre><code class="language-sh">finder git</code></pre><h3 id="commands">Commands</h3><table><thead><tr><th>Command</th><th>Aliases</th><th>Description</th></tr></thead><tbody><tr><td><code>finder<template></template></code></td><td></td><td>Search for projects matching a template</td></tr><tr><td><code>finder check</code></td><td></td><td>Validate all built-in and custom templates</td></tr><tr><td><code>finder validate</code></td><td><code>val</code></td><td>Validate a single template file</td></tr><tr><td><code>finder list</code></td><td><code>ls</code></td><td>List all available templates</td></tr><tr><td><code>finder tags</code></td><td><code>tag</code></td><td>Show all tags in the console</td></tr><tr><td><code>finder -t<tag></tag></code></td><td></td><td>Search for templates by tag</td></tr><tr><td><code>finder -b</code></td><td></td><td>Search for executables in your <code>$PATH</code></td></tr><tr><td><code>finder cp</code></td><td></td><td>Print the path to the global config file</td></tr><tr><td><code>finder version</code></td><td><code>-v</code>, <code>v</code></td><td>Print the current version</td></tr><tr><td><code>finder template<name></name></code></td><td><code>tpl</code></td><td>Search using an explicit template name</td></tr></tbody></table><h3 id="global-flags">Global flags</h3><table><thead><tr><th>Flag</th><th>Aliases</th><th>Description</th></tr></thead><tbody><tr><td><code>--json</code></td><td><code>-j</code></td><td>Output results as JSON</td></tr><tr><td><code>--verbose</code></td><td><code>-vv</code></td><td>Enable verbose output</td></tr></tbody></table><h3 id="cache-flags">Cache flags</h3><table><thead><tr><th>Flag</th><th>Aliases</th><th>Description</th></tr></thead><tbody><tr><td><code>--cache</code></td><td><code>-c</code></td><td>Use the existing cache instead of searching</td></tr><tr><td><code>--create-cache</code></td><td><code>-cc</code></td><td>Create a new cache</td></tr><tr><td><code>--create-cache-db</code></td><td><code>-ccd</code></td><td>Create a Git database from cache data</td></tr></tbody></table><h3 id="example">Example</h3><pre><code class="language-sh"><span class="hljs-comment"># Find all React projects</span>
+finder react
+
+<span class="hljs-comment"># Find with JSON output</span>
+finder --json react
+
+<span class="hljs-comment"># Create a cache for faster repeat searches</span>
+finder --create-cache git
+
+<span class="hljs-comment"># Use the cache</span>
+finder --cache git
+
+<span class="hljs-comment"># Find templates tagged with &quot;python&quot;</span>
+finder -t python
+
+<span class="hljs-comment"># List all templates</span>
+finder list</code></pre><h3 id="validate-a-single-template">Validate a single template</h3><pre><code class="language-bash"><span class="hljs-comment"># Validate a template file by path</span>
+finder validate my-template.json5
+
+<span class="hljs-comment"># Validate a built-in or custom template by name</span>
+finder validate go
+
+<span class="hljs-comment"># Validate multiple templates at once</span>
+finder validate templates/go.json5 templates/django.json5
+
+<span class="hljs-comment"># Short alias</span>
+finder val my-template.json5</code></pre><p>If a template file is not plain JSON and only parses after the JSON5 preprocessor runs, a warning is printed so you know the template depends on JSON5 features (e.g. unquoted keys):</p><pre><code class="language-text">File                       Result     Warning
+my-template.json5          OK (File)  Template is not plain JSON - it needs the JSON5 preprocessor to be parsed</code></pre><h2 id="templates">Templates</h2><h3 id="built-in-templates">Built-in templates</h3><p>370+ templates are shipped in <code>templates/</code> and compiled into <code>internal/templates/</code>. They cover frameworks, languages, databases, CI/CD systems, cloud services, AI/ML tools, and much more.</p><h3 id="template-format">Template format</h3><p>Templates are JSON5 files. A minimal template:</p><pre><code class="language-json5"><span class="hljs-punctuation">{</span>
+  name<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;*&quot;</span><span class="hljs-punctuation">,</span>
+  folders<span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">{</span> name<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;.git&quot;</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+<span class="hljs-punctuation">}</span></code></pre><p>A full template with all supported fields:</p><pre><code class="language-json5"><span class="hljs-punctuation">{</span>
+  min_version<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;0.3.6&quot;</span><span class="hljs-punctuation">,</span>
+  description<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;My Custom Project Type&quot;</span><span class="hljs-punctuation">,</span>
+  name<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;*&quot;</span><span class="hljs-punctuation">,</span>
+  tags<span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;node&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;typescript&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+  folders<span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span>
+      name<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;src&quot;</span><span class="hljs-punctuation">,</span>
+      folders<span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+      files<span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;index.ts&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+  files<span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-string">&quot;package.json&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span>
+      name<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;*.ts&quot;</span><span class="hljs-punctuation">,</span>
+      existence<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;required&quot;</span><span class="hljs-punctuation">,</span>
+      size<span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        min<span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+        min_size_type<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;KB&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+  command<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span>
+  invert_command<span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+  size<span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    min<span class="hljs-punctuation">:</span> <span class="hljs-number">10</span><span class="hljs-punctuation">,</span>
+    min_size_type<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;KB&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+<span class="hljs-punctuation">}</span></code></pre><h3 id="custom-templates">Custom templates</h3><p>Place your own <code>.json5</code> template files in:</p><table><thead><tr><th>OS</th><th>Path</th></tr></thead><tbody><tr><td>Windows</td><td>\`%USERPROFILE%\\.finder\\templates\`</td></tr><tr><td>Linux</td><td><code>~/.finder/templates/</code></td></tr><tr><td>macOS</td><td><code>~/.finder/templates/</code></td></tr></tbody></table><p>Or in the project-local directory:</p><pre><code>./.finder/templates/</code></pre><p>User templates take precedence over built-in templates with the same name. See <a href="CUSTOM_TEMPLATES.md">\`CUSTOM_TEMPLATES.md\`</a> for the full guide.</p><h3 id="pattern-matching-exact-regex-glob">Pattern matching (exact, regex, glob)</h3><p>Since <strong>v0.3.17</strong>, every name pattern in a template — the top-level <code>name</code>, every file <code>name</code>, and every folder <code>name</code> (including nested folders) — is resolved by a <strong>3-tier matching strategy</strong>:</p><table><thead><tr><th>Priority</th><th>Method</th><th>Applies when</th></tr></thead><tbody><tr><td>1</td><td>Exact string equality</td><td>pattern equals the name verbatim</td></tr><tr><td>2</td><td>Go regex (<code>regexp.MatchString</code>)</td><td>pattern compiles as a valid regex (RE2)</td></tr><tr><td>3</td><td>Glob (<code>path.Match</code>)</td><td>pattern is not a valid regex (e.g. <code>*.ts</code>)</td></tr></tbody></table><p>This means:</p><ul><li><code>&quot;src&quot;</code> → exact match</li><li><code>&quot;^project-[0-9]+$&quot;</code> → valid regex, matches <code>project-123</code>, <code>project-42</code>, …</li><li><code>&quot;*.ts&quot;</code> → not a valid regex → glob fallback, matches any <code>.ts</code> file</li><li><code>&quot;^(main|app|server)\\.py$&quot;</code> → valid regex, matches exactly <code>main.py</code>,</li></ul><p>Regex patterns work in <strong>all</strong> name fields:</p><pre><code class="language-json5"><span class="hljs-comment">// top-level name: match folder names like project-42, project-99</span>
+<span class="hljs-punctuation">{</span>
+  name<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;^project-[0-9]+$&quot;</span><span class="hljs-punctuation">,</span>
+  min_version<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;0.3.17&quot;</span><span class="hljs-punctuation">,</span>
+  files<span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-comment">// file name: match exactly main.py, app.py, or server.py</span>
+      name<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;^(main|app|server)\\\\.py$&quot;</span><span class="hljs-punctuation">,</span>
+      existence<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;required&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+  folders<span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-comment">// folder name: match src, lib, or pkg</span>
+      name<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;^(src|lib|pkg)$&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+<span class="hljs-punctuation">}</span></code></pre><blockquote><p><strong>Note:</strong> Go regex is RE2 — no backreferences and no lookahead/lookbehind. If your pattern uses unsupported syntax, it fails to compile and falls back to glob matching.</p></blockquote><p>If your template relies on regex patterns, set <code>&quot;min_version&quot;: &quot;0.3.17&quot;</code> to indicate the minimum Finder version required.</p><h2 id="config">Config</h2><p>Since <strong>v0.3.15</strong>, finder has a global config file at <code>~/.finder/config.json5</code>. If the file does not exist, defaults are used:</p><pre><code class="language-json5"><span class="hljs-punctuation">{</span>
+  port<span class="hljs-punctuation">:</span> <span class="hljs-number">8080</span><span class="hljs-punctuation">,</span>
+  cache<span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+  create_cache_db<span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+  finder_instances<span class="hljs-punctuation">:</span> <span class="hljs-number">8</span><span class="hljs-punctuation">,</span>
+<span class="hljs-punctuation">}</span></code></pre><table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>port</code></td><td>int</td><td><code>13420</code></td><td>HTTP server port for <code>findergen</code></td></tr><tr><td><code>cache</code></td><td>bool</td><td><code>false</code></td><td>Enable cache by default</td></tr><tr><td><code>create<em>cache</em>db</code></td><td>bool</td><td><code>false</code></td><td>Create a Git database from cache data</td></tr><tr><td><code>finder_instances</code></td><td>int</td><td><code>8</code></td><td>Max parallel instances when creating cache</td></tr></tbody></table><p>For a visual config editor, visit <a href="https://shadowdara.github.io/finder/configeditor" target="_blank" rel="noopener noreferrer">https://shadowdara.github.io/finder/configeditor</a>.</p><h2 id="web-ui-findergen">Web UI (<code>findergen</code>)</h2><p><code>findergen</code> starts a local HTTP server with a web interface for:</p><ul><li><strong>Template Creator</strong> — create and edit JSON5 templates visually</li><li><strong>Template Viewer</strong> — browse all built-in and custom templates</li><li><strong>Config Editor</strong> — edit <code>config.json5</code> through the browser</li><li><strong>Cache Viewer</strong> — inspect cached search results</li><li><strong>Regex Creator</strong> — build and test regular expressions for templates</li><li><strong>Minecraft World Dashboard</strong> — view Minecraft worlds from the cache</li></ul><pre><code class="language-sh"><span class="hljs-comment"># Start the web UI on the default port</span>
+./findergen
+
+<span class="hljs-comment"># Use a custom port</span>
+./findergen --port 3000
+
+<span class="hljs-comment"># Collect Minecraft worlds from cache</span>
+./findergen worlds</code></pre><h2 id="project-structure">Project structure</h2><pre><code>finder/
+├── cmd/
+│   ├── finder/          # Main CLI binary
+│   ├── findergen/       # Web UI server binary
+│   ├── csf/             # Build helper binary
+│   └── tester/          # Template test binary
+├── internal/
+│   ├── bt/              # Build tools (script compiler, git repo)
+│   ├── cache/           # Cache system & Git DB
+│   ├── cli/             # CLI command handling
+│   ├── config/          # Configuration loading
+│   ├── finderversion/   # Version constants
+│   ├── history/         # Search history
+│   ├── loader/          # File loading utilities
+│   ├── mcapp/           # Minecraft world data
+│   ├── search/          # Core search logic & binary check
+│   ├── structure/       # Folder/template structure parsing
+│   └── templates/       # Compiled templates + loader
+├── pub/
+│   ├── argparser/       # Argument parsing library
+│   ├── color/           # Terminal color utilities
+│   ├── fsd/             # Filesystem directory utilities
+│   ├── goansi/          # ANSI escape codes
+│   ├── json5/           # JSON5 parser
+│   └── version/         # Semantic version comparison
+├── templates/           # Source JSON5 templates (370+)
+└── finder-template-generator-ssg/  # Static site generator for docs</code></pre><h2 id="development">Development</h2><h3 id="run-tests">Run tests</h3><pre><code class="language-sh">go <span class="hljs-built_in">test</span> ./...</code></pre><h3 id="generate-coverage-report">Generate coverage report</h3><pre><code class="language-sh">go <span class="hljs-built_in">test</span> -coverprofile=coverage ./...
+go tool cover -html=coverage</code></pre><h3 id="build">Build</h3><pre><code class="language-sh">go build ./cmd/finder</code></pre><h3 id="validate-templates">Validate templates</h3><pre><code class="language-sh">go run ./cmd/finder check</code></pre><h3 id="list-all-templates">List all templates</h3><pre><code class="language-sh">go run ./cmd/finder list</code></pre><h2 id="contributing">Contributing</h2><ul><li>Found a missing or inaccurate template? Please open an issue.</li><li>Add new templates via PR. Keep them in JSON5 and provide a short</li><li>Feel free to contribute code improvements or new features.</li></ul><h2 id="roadmap">Roadmap</h2><ul><li><input type="checkbox" disabled="disabled"> Temporary templates via command-line arguments</li><li><input type="checkbox" disabled="disabled"> Template schema validation</li><li><input type="checkbox" disabled="disabled"> Improved search history</li><li><input type="checkbox" disabled="disabled"> Extended web UI features</li></ul><h2 id="license">License</h2><p>See <a href="LICENSE">\`LICENSE\`</a>.</p><hr><p><strong>Project:</strong> <a href="https://github.com/shadowdara/finder" target="_blank" rel="noopener noreferrer">https://github.com/shadowdara/finder</a> <strong>Website:</strong> <a href="https://shadowdara.github.io/finder" target="_blank" rel="noopener noreferrer">https://shadowdara.github.io/finder</a></p><h2 id="extra-info">Extra Info</h2><p>The Project <a href="https://github.com/shadowdara/fs-tools" target="_blank" rel="noopener noreferrer">fs-tools</a> was more or less the prototype for finder.</p><h2 id="info-video">Info Video</h2><p>(<em>a Youtube Video</em>)</p><p><a href="https://www.youtube.com/watch?v=oIRgAYv-mOA" target="_blank" rel="noopener noreferrer"><img src="https://img.youtube.com/vi/oIRgAYv-mOA/0.jpg" alt="INFO Video 1 about Finder"></a></p>`};export{s as default};

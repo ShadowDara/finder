@@ -1,0 +1,812 @@
+const n=`<pre><code class="language-md"><span class="hljs-section"># AGENTS — Finder Template Authoring Guide</span>
+
+This document is for AI assistants such as ChatGPT, Claude, Copilot,
+and similar tools that need to create valid Finder templates.
+
+Goal:
+
+<span class="hljs-bullet">-</span> create Finder-compatible JSON5 templates
+<span class="hljs-bullet">-</span> work with all supported template features
+<span class="hljs-bullet">-</span> prefer valid, minimal, and robust patterns
+<span class="hljs-bullet">-</span> avoid false positives and over-constrained matches
+
+<span class="hljs-section">## 1) What Finder matches</span>
+
+Finder scans folders on the filesystem and checks whether a directory
+matches a template.
+
+A template describes:
+
+<span class="hljs-bullet">-</span> the directory name pattern
+<span class="hljs-bullet">-</span> required or forbidden files
+<span class="hljs-bullet">-</span> required or forbidden subfolders
+<span class="hljs-bullet">-</span> optional file constraints like size and hash
+<span class="hljs-bullet">-</span> optional command validation
+<span class="hljs-bullet">-</span> tags for discovery
+
+A template is a JSON5 file ending in <span class="hljs-code">\`.json5\`</span>.
+
+Typical locations:
+
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`~/.finder/templates/\`</span>
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`./.finder/templates/\`</span>
+
+The filename without <span class="hljs-code">\`.json5\`</span> becomes the template name, for example:
+
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`my-template.json5\`</span> → <span class="hljs-code">\`my-template\`</span>
+
+---
+
+<span class="hljs-section">## 2) Core template schema</span>
+
+A valid Finder template looks like this:
+
+<span class="hljs-code">\`\`\`json5
+{
+  min_version: &quot;0.3.16&quot;,
+  description: &quot;My custom project type&quot;,
+  name: &quot;*&quot;,
+  tags: [&quot;node&quot;, &quot;typescript&quot;],
+  files: [
+    &quot;package.json&quot;,
+    {
+      name: &quot;src&quot;,
+      existence: &quot;optional&quot;,
+    },
+    {
+      name: &quot;*.ts&quot;,
+      existence: &quot;required&quot;,
+      size: {
+        min: 1,
+        min_size_type: &quot;KB&quot;,
+      },
+    },
+  ],
+  folders: [
+    {
+      name: &quot;src&quot;,
+      folders: [],
+      files: [&quot;index.ts&quot;],
+    },
+  ],
+  command: &quot;&quot;,
+  invert_command: false,
+  size: {
+    min: 10,
+    min_size_type: &quot;KB&quot;,
+  },
+}
+\`\`\`</span>
+
+---
+
+<span class="hljs-section">## 3) Supported top-level fields</span>
+
+<span class="hljs-section">### \`description\` (string)</span>
+
+Short human-readable explanation.
+
+<span class="hljs-code">\`\`\`json5
+&quot;description&quot;: &quot;Python service with pyproject.toml&quot;
+\`\`\`</span>
+
+<span class="hljs-section">### \`name\` (string)</span>
+
+Pattern for the directory name.
+
+Use:
+
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`&quot;*&quot;\`</span> for any folder name
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`&quot;my-app&quot;\`</span> for exact name
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`&quot;project-*&quot;\`</span> for glob wildcard matching
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`&quot;^project-[0-9]+$&quot;\`</span> for regex matching
+
+Important:
+
+<span class="hljs-bullet">-</span> Matching is exact-first, then regex, then glob fallback (see
+  the &quot;Pattern matching&quot; section below).
+<span class="hljs-bullet">-</span> If you want to match all folders, prefer <span class="hljs-code">\`&quot;*&quot;\`</span>.
+
+<span class="hljs-section">### \`files\` (array)</span>
+
+Defines required/optional files.
+
+Can be either:
+
+<span class="hljs-bullet">-</span> old style: string array
+<span class="hljs-bullet">-</span> modern style: objects with metadata
+
+Examples:
+
+<span class="hljs-code">\`\`\`json5
+&quot;files&quot;: [
+  &quot;package.json&quot;,
+  &quot;README.md&quot;
+]
+\`\`\`</span>
+
+<span class="hljs-code">\`\`\`json5
+&quot;files&quot;: [
+  {
+    &quot;name&quot;: &quot;*.go&quot;,
+    &quot;existence&quot;: &quot;required&quot;
+  },
+  {
+    &quot;name&quot;: &quot;go.mod&quot;,
+    &quot;existence&quot;: &quot;required&quot;
+  },
+  {
+    &quot;name&quot;: &quot;*.dll&quot;,
+    &quot;existence&quot;: &quot;forbidden&quot;
+  }
+]
+\`\`\`</span>
+
+<span class="hljs-section">### \`existence\` values</span>
+
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`required\`</span> (default): file must exist
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`forbidden\`</span>: file must not exist
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`optional\`</span>: exists is okay, but not required
+
+Examples:
+
+<span class="hljs-code">\`\`\`json5
+{
+  name: &quot;.git&quot;,
+  existence: &quot;required&quot;,
+}
+\`\`\`</span>
+
+<span class="hljs-code">\`\`\`json5
+{
+  name: &quot;*.env&quot;,
+  existence: &quot;forbidden&quot;,
+}
+\`\`\`</span>
+
+<span class="hljs-section">### \`size\` (file or folder size constraint)</span>
+
+Used under a file object or as a folder-level rule.
+
+<span class="hljs-code">\`\`\`json5
+&quot;size&quot;: {
+  &quot;min&quot;: 1,
+  &quot;min_size_type&quot;: &quot;KB&quot;,
+  &quot;max&quot;: 500,
+  &quot;max_size_type&quot;: &quot;MB&quot;
+}
+\`\`\`</span>
+
+Valid size types:
+
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`B\`</span>
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`KB\`</span>
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`MB\`</span>
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`GB\`</span>
+
+For file-level checking:
+
+<span class="hljs-bullet">-</span> file must exist
+<span class="hljs-bullet">-</span> file size must satisfy the condition
+
+For folder-level checking:
+
+<span class="hljs-bullet">-</span> total directory size is checked recursively
+
+<span class="hljs-section">### \`checksums\` (hash-based validation)</span>
+
+You can require exact SHA256 or SHA512 for matching files.
+
+<span class="hljs-code">\`\`\`json5
+{
+  name: &quot;*.zip&quot;,
+  checksums: {
+    sha256: &quot;abc123...&quot;,
+    sha512: &quot;def456...&quot;,
+  },
+}
+\`\`\`</span>
+
+Rules:
+
+<span class="hljs-bullet">-</span> both hashes are optional
+<span class="hljs-bullet">-</span> if SHA256 is provided, it must match exactly
+<span class="hljs-bullet">-</span> if SHA512 is provided, it must match exactly
+<span class="hljs-bullet">-</span> hash letters are compared case-insensitive
+
+<span class="hljs-section">### \`folders\` (nested directory patterns)</span>
+
+Used to require subfolders.
+
+<span class="hljs-code">\`\`\`json5
+&quot;folders&quot;: [
+  {
+    &quot;name&quot;: &quot;.git&quot;
+  },
+  {
+    &quot;name&quot;: &quot;src&quot;,
+    &quot;folders&quot;: [
+      {
+        &quot;name&quot;: &quot;components&quot;
+      }
+    ]
+  }
+]
+\`\`\`</span>
+
+The nested <span class="hljs-code">\`Folder\`</span> object supports the same shape recursively.
+
+<span class="hljs-section">### \`command\` (string)</span>
+
+Executes a shell command inside the found directory after matching.
+
+<span class="hljs-code">\`\`\`json5
+&quot;command&quot;: &quot;git status --porcelain&quot;
+\`\`\`</span>
+
+Behavior:
+
+<span class="hljs-bullet">-</span> empty string means no command check
+<span class="hljs-bullet">-</span> command success is evaluated according to exit code
+
+<span class="hljs-section">### \`invert<span class="hljs-emphasis">_command\` (bool)
+
+Controls logic of command result.
+
+\`\`\`json5
+&quot;invert_</span>command&quot;: false</span>
+<span class="hljs-code">\`\`\`
+
+Meaning:
+
+- \`false\` → command must return success (typically exit code 0)
+- \`true\` → command must return failure (typically exit code != 0)
+
+### \`tags\` (array of strings)
+
+Category labels for browsing or filtering by tag.
+
+\`\`\`</span>json5
+&quot;tags&quot;: [&quot;git&quot;, &quot;repo&quot;, &quot;vcs&quot;]
+<span class="hljs-code">\`\`\`
+
+### \`min_version\` (string)
+
+Minimum finder version compatibility.
+
+\`\`\`</span>json5
+&quot;min<span class="hljs-emphasis">_version&quot;: &quot;0.3.16&quot;
+\`\`\`
+
+### \`mdnote\` (string)
+
+Optional Markdown note attached to a template. It is rendered in the
+web UI (template viewer / creator) as rich text and is ignored during
+matching. Since 0.3.17.
+
+\`\`\`json5
+&quot;mdnote&quot;: &quot;# My template\\n\\nSome <span class="hljs-strong">**markdown**</span> explaining what this matches.&quot;
+\`\`\`
+
+Note: the value is normally stored percent-encoded (like
+\`encodeURIComponent\`) when generated by the web creator — newlines
+become \`%0A\` — but any plain Markdown string is valid and supported.
+
+---
+
+## 3.5) Pattern matching: regex, glob, and exact
+
+Every name pattern in a template — the top-level \`name\`, every file
+\`name\`, and every folder \`name\` (including nested folders) — is
+resolved by the same matching function:
+
+\`\`\`go
+if pattern == name {
+    return true           // 1) exact string match
+}
+if ok, err := regexp.MatchString(pattern, name); err == nil {
+    return ok             // 2) full Go regex
+}
+ok, err := path.Match(pattern, name)
+return err == nil &amp;&amp; ok   // 3) glob fallback
+\`\`\`
+
+This creates a 3-tier matching strategy:
+
+| Priority | Method                          | Applies when                               |
+| -------- | ------------------------------- | ------------------------------------------ |
+| 1        | exact string equality           | pattern equals the name verbatim           |
+| 2        | Go regex (\`regexp.MatchString\`) | pattern is a valid regular expression      |
+| 3        | glob (\`path.Match\`)             | pattern is not a valid regex (e.g. \`*.ts\`) |
+
+### How to choose a pattern
+
+Because regex is attempted before glob, the same character can mean
+different things depending on the pattern:
+
+- \`&quot;*.go&quot;\` is not a valid regex, so it is treated as a glob and
+  matches any file ending in \`.go\`.
+- \`&quot;^main\\.py$&quot;\` is a valid regex (anchored, no wildcard ambiguity),
+  so it matches exactly one name.
+- \`&quot;project-*&quot;\` is not a valid regex, so it is treated as a glob.
+
+### Go regex syntax (priority 2)
+
+Patterns that compile as a Go regular expression match with full regex
+semantics against the entire entry name. Refer to Go&#x27;s
+\`regexp/syntax\` (RE2) for the full language. Useful constructs:
+
+- anchors: \`^...$\`
+- character classes: \`[0-9]\`, \`[a-zA-Z]\`, \`[^...]\`
+- predefined classes: \`\\d\`, \`\\w\`, \`\\s\` (and uppercase negations)
+- quantifiers: \`*\`, \`+\`, \`?\`, \`{m,n}\`
+- alternation: \`(a|b)\`
+- groups: \`(abc)\`, non-capturing \`(?:abc)\`
+- escapes: \`\\.\`, \`\\\\\`
+
+Examples:
+
+\`\`\`json5
+// folder names like project-123, project-42 ...
+{ name: &quot;^project-[0-9]+$&quot; }
+\`\`\`
+
+\`\`\`json5
+// python entry files: main.py, app.py, ...
+{
+  name: &quot;^(main|app|server)\\\\.py$&quot;,
+  existence: &quot;required&quot;,
+}
+\`\`\`
+
+Note: Go regex is RE2 — no backreferences and no lookahead/lookbehind.
+If your pattern uses those, it fails to compile and falls back to glob.
+
+### Glob syntax (priority 3 fallback)
+
+When a pattern is not a valid regex, it is treated as a glob via Go&#x27;s
+\`path.Match\`:
+
+- \`*\` matches any sequence of non-\`/\` characters
+- \`?\` matches any single non-\`/\` character
+- \`[abc]\` matches one character from the class
+- \`[^abc]\` / \`[!abc]\` matches one character not in the class
+- \`\\x\` escapes the next character
+
+There is no recursive \`<span class="hljs-strong">**\` (doublestar) support — \`**</span>\` does not
+descend into subdirectories.
+
+Examples:
+
+\`\`\`json5
+&quot;name&quot;: &quot;*.ts&quot;,
+\`\`\`
+
+\`\`\`json5
+&quot;name&quot;: &quot;file?.txt&quot;,
+\`\`\`
+
+\`\`\`json5
+&quot;name&quot;: &quot;[abc].go&quot;,
+\`\`\`
+
+### Where these patterns apply
+
+- top-level \`name\` → the scanned directory name
+- \`files[].name\` → file names inside the directory
+- \`folders[].name\` → subfolder names (recursively for nested folders)
+
+Regex patterns work in all of these places. Exact glob patterns like
+\`&quot;src&quot;\` or \`&quot;package.json&quot;\` work exactly as before.
+
+### Compatibility note
+
+Regex support was added in finder 0.3.17. If your template relies on
+regex patterns, set:
+
+\`\`\`json5
+&quot;min_</span>version&quot;: &quot;0.3.17&quot;
+<span class="hljs-code">\`\`\`
+
+Templates for older finder versions should keep using glob or exact
+patterns only.
+
+---
+
+## 4) Matching semantics
+
+A directory is considered a match only if all required conditions are
+satisfied.
+
+This includes:
+
+- \`name\` matches the folder name
+- required files exist
+- forbidden files do not exist
+- required subfolders exist
+- size constraints pass
+- checksum constraints pass
+- command condition passes
+
+If any required rule fails, the directory is rejected.
+
+---
+
+## 5) Good patterns for template design
+
+### Prefer broad matching first
+
+Good default:
+
+\`\`\`</span>json5
+{
+  name: &quot;<span class="hljs-emphasis">*&quot;,
+  files: [&quot;package.json&quot;, &quot;tsconfig.json&quot;],
+}
+\`\`\`
+
+Bad:
+
+\`\`\`json5
+{
+  name: &quot;my-app&quot;,
+  files: [&quot;package.json&quot;],
+}
+\`\`\`
+
+The second version is overly restrictive and will miss most valid
+project folders.
+
+### Require the smallest useful signal
+
+For example, a Go project should usually require:
+
+- \`go.mod\`
+- one or more \`*</span>.go\` files
+
+Not a huge list of optional files.
+
+<span class="hljs-section">### Avoid false positives</span>
+
+If your project has a <span class="hljs-code">\`README.md\`</span> in many folders, do not require it
+unless it is central to your pattern.
+
+<span class="hljs-section">### Use wildcards and regex carefully</span>
+
+<span class="hljs-code">\`\`\`json5
+&quot;name&quot;: &quot;*.git&quot; // if you intended a hidden git folder, this is special-case logic
+\`\`\`</span>
+
+Use patterns like <span class="hljs-code">\`&quot;*&quot;\`</span>, <span class="hljs-code">\`&quot;src&quot;\`</span>, <span class="hljs-code">\`&quot;*.ts&quot;\`</span>, <span class="hljs-code">\`&quot;package.json&quot;\`</span> rather
+than complex regex-style expressions when a simple glob suffices.
+
+When you do need regex (e.g. matching <span class="hljs-code">\`project-123\`</span> with
+<span class="hljs-code">\`^project-[0-9]+$\`</span>), anchor with <span class="hljs-code">\`^\`</span> and <span class="hljs-code">\`$\`</span> to avoid unintended
+matches.
+
+---
+
+<span class="hljs-section">## 6) Examples</span>
+
+<span class="hljs-section">### Example A: Git repository</span>
+
+<span class="hljs-code">\`\`\`json5
+{
+  description: &quot;Git repository root&quot;,
+  name: &quot;*&quot;,
+  folders: [
+    {
+      name: &quot;.git&quot;,
+    },
+  ],
+  tags: [&quot;git&quot;, &quot;repo&quot;],
+}
+\`\`\`</span>
+
+<span class="hljs-section">### Example B: Node project</span>
+
+<span class="hljs-code">\`\`\`json5
+{
+  description: &quot;Node.js project&quot;,
+  name: &quot;*&quot;,
+  files: [&quot;package.json&quot;, &quot;src&quot;, &quot;README.md&quot;],
+  tags: [&quot;node&quot;, &quot;javascript&quot;, &quot;typescript&quot;],
+}
+\`\`\`</span>
+
+<span class="hljs-section">### Example C: Python project</span>
+
+<span class="hljs-code">\`\`\`json5
+{
+  description: &quot;Python project with pyproject.toml&quot;,
+  name: &quot;*&quot;,
+  files: [
+    &quot;pyproject.toml&quot;,
+    {
+      name: &quot;*.py&quot;,
+      existence: &quot;required&quot;,
+    },
+  ],
+  tags: [&quot;python&quot;, &quot;project&quot;],
+}
+\`\`\`</span>
+
+<span class="hljs-section">### Example D: strict checksum template</span>
+
+<span class="hljs-code">\`\`\`json5
+{
+  name: &quot;*&quot;,
+  description: &quot;test for checksums&quot;,
+  files: [
+    {
+      name: &quot;*&quot;,
+      checksums: {
+        sha256: &quot;26be688daf71f2c8e64eecfa7fdf7d1f3649b6aae80dbb686ec3a9beb9def05b&quot;,
+      },
+    },
+  ],
+  min_version: &quot;0.3.16&quot;,
+}
+\`\`\`</span>
+
+This matches only folders containing a file whose SHA256 matches
+exactly.
+
+<span class="hljs-section">### Example E: custom monorepo</span>
+
+<span class="hljs-code">\`\`\`json5
+{
+  description: &quot;Monorepo with apps and packages&quot;,
+  name: &quot;*&quot;,
+  files: [&quot;pnpm-workspace.yaml&quot;, &quot;package.json&quot;],
+  folders: [
+    {
+      name: &quot;apps&quot;,
+      folders: [
+        {
+          name: &quot;*&quot;,
+          files: [&quot;package.json&quot;],
+        },
+      ],
+    },
+    {
+      name: &quot;packages&quot;,
+      folders: [
+        {
+          name: &quot;*&quot;,
+          files: [&quot;package.json&quot;],
+        },
+      ],
+    },
+  ],
+  tags: [&quot;monorepo&quot;, &quot;workspace&quot;],
+}
+\`\`\`</span>
+
+<span class="hljs-section">### Example F: regex-matched folder name</span>
+
+<span class="hljs-code">\`\`\`json5
+{
+  description: &quot;Numbered project folder&quot;,
+  name: &quot;^project-[0-9]+$&quot;,
+  files: [
+    {
+      name: &quot;^(main|app)\\\\.py$&quot;,
+      existence: &quot;required&quot;,
+    },
+  ],
+  tags: [&quot;python&quot;, &quot;numbered&quot;],
+  min_version: &quot;0.3.17&quot;,
+}
+\`\`\`</span>
+
+This matches folders like <span class="hljs-code">\`project-123\`</span> or <span class="hljs-code">\`project-42\`</span> and requires
+exactly one of <span class="hljs-code">\`main.py\`</span> or <span class="hljs-code">\`app.py\`</span> to be present. The name uses a
+Go regex (RE2) — note the escaped dots <span class="hljs-code">\`\\\\.\`</span> and anchors <span class="hljs-code">\`^...$\`</span>.
+
+<span class="hljs-section">### Example G: regex file pattern with glob fallback</span>
+
+<span class="hljs-code">\`\`\`json5
+{
+  description: &quot;JavaScript project with strict entry points&quot;,
+  name: &quot;*&quot;,
+  files: [
+    &quot;package.json&quot;,
+    {
+      name: &quot;^(index|main|app)\\\\.(js|ts|jsx|tsx)$&quot;,
+      existence: &quot;required&quot;,
+    },
+    {
+      name: &quot;\\\\.env$&quot;,
+      existence: &quot;forbidden&quot;,
+    },
+  ],
+  tags: [&quot;javascript&quot;, &quot;strict&quot;],
+  min_version: &quot;0.3.17&quot;,
+}
+\`\`\`</span>
+
+This requires one of <span class="hljs-code">\`index.js\`</span>, <span class="hljs-code">\`main.js\`</span>, <span class="hljs-code">\`app.js\`</span>, <span class="hljs-code">\`index.ts\`</span>, etc.
+and forbids any file ending in <span class="hljs-code">\`.env\`</span>. Note that <span class="hljs-code">\`&quot;*.env&quot;\`</span> would also
+work as a glob — the regex version is more explicit.
+
+---
+
+<span class="hljs-section">## 7) Rules for AI-generated Finder templates</span>
+
+When generating a Finder template, the assistant should follow this
+checklist:
+
+<span class="hljs-bullet">1.</span> Create a valid <span class="hljs-code">\`.json5\`</span> file.
+<span class="hljs-bullet">2.</span> Use <span class="hljs-code">\`name: &quot;*&quot;\`</span> unless the directory name is intentionally constrained.
+<span class="hljs-bullet">3.</span> Keep required files minimal and specific.
+<span class="hljs-bullet">4.</span> Prefer <span class="hljs-code">\`required\`</span> over broad file matching if a file is essential.
+<span class="hljs-bullet">5.</span> Use <span class="hljs-code">\`forbidden\`</span> only for truly disqualifying files.
+<span class="hljs-bullet">6.</span> Use <span class="hljs-code">\`size\`</span> only when it genuinely distinguishes the target project type.
+<span class="hljs-bullet">7.</span> Use <span class="hljs-code">\`checksums\`</span> only when exact file identity is important.
+<span class="hljs-bullet">8.</span> Add <span class="hljs-code">\`tags\`</span> for discoverability.
+<span class="hljs-bullet">9.</span> Keep <span class="hljs-code">\`description\`</span> clear and concise.
+<span class="hljs-bullet">10.</span> Prefer a deliberately narrow but realistic match over a very broad guess.
+<span class="hljs-bullet">11.</span> Validate with the project command before claiming success.
+
+---
+
+<span class="hljs-section">## 8) Validation commands</span>
+
+After writing a template, validate it with one of these project commands:
+
+<span class="hljs-code">\`\`\`bash
+./finder check
+\`\`\`</span>
+
+Or test a specific template:
+
+<span class="hljs-code">\`\`\`bash
+./finder my-template-name
+\`\`\`</span>
+
+If a template exists in the custom template folder, it will be loaded
+automatically.
+
+---
+
+<span class="hljs-section">## 9) Common mistakes</span>
+
+<span class="hljs-section">### Mistake 1: too strict \`name\`</span>
+
+<span class="hljs-code">\`\`\`json5
+&quot;name&quot;: &quot;root&quot;
+\`\`\`</span>
+
+This will match almost nothing unless the folder is literally named <span class="hljs-code">\`root\`</span>.
+
+Use:
+
+<span class="hljs-code">\`\`\`json5
+&quot;name&quot;: &quot;*&quot;
+\`\`\`</span>
+
+unless you intentionally want a fixed directory name.
+
+<span class="hljs-section">### Mistake 2: requiring too many files</span>
+
+Large project templates often become unreliable if they require too
+many files.
+
+Prefer the smallest signal that distinguishes the project type.
+
+<span class="hljs-section">### Mistake 3: mixing regex and glob syntax unintentionally</span>
+
+Finder tries regex first, then falls back to glob. This is usually
+fine, but remember that a pattern that looks like a regex is treated
+as a regex:
+
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`&quot;*.ts&quot;\`</span> is invalid regex → glob, matches any <span class="hljs-code">\`.ts\`</span> file
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`&quot;^main\\\\.py$&quot;\`</span> is valid regex → only matches exactly <span class="hljs-code">\`main.py\`</span>
+
+Use:
+
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`*.ts\`</span>
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`package.json\`</span>
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`src\`</span>
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`^project-[0-9]+$\`</span> (regex, only when you need it)
+
+Do not write patterns that accidentally compile as a regex and change
+meaning. If in doubt, prefer glob or exact names.
+
+<span class="hljs-section">### Mistake 4: forgetting the \`.json5\` extension</span>
+
+The file must end in <span class="hljs-code">\`.json5\`</span>.
+
+<span class="hljs-section">### Mistake 5: writing invalid JSON5</span>
+
+Remember:
+
+<span class="hljs-bullet">-</span> trailing commas may be allowed depending on parser handling
+<span class="hljs-bullet">-</span> keep object structure valid
+<span class="hljs-bullet">-</span> avoid broken braces and trailing commas in awkward spots
+
+<span class="hljs-section">### Mistake 6: requiring impossible signals</span>
+
+For example, requiring a project-specific file that is generated only
+in CI or only in a subset of repositories will make your template
+unreliable.
+
+---
+
+<span class="hljs-section">## 10) Recommended prompt pattern for AI generation</span>
+
+Use this when asking an AI to generate a Finder template:
+
+<span class="hljs-code">\`\`\`text
+Create a Finder template as a JSON5 file for &lt;project type&gt;.
+Use a custom template file in ~/.finder/templates/ or ./.finder/templates/.
+Requirements:
+- match folders with name &quot;*&quot; unless a narrower pattern is necessary
+- require the smallest set of meaningful files/folders
+- include tags and a clear description
+- allow optional files if needed
+- do not use overly strict name filters
+- ensure the structure is valid Finder JSON5
+- include examples of required files and nested folders if relevant
+- add a realistic command check only when needed
+- keep the template robust and not prone to false positives
+\`\`\`</span>
+
+---
+
+<span class="hljs-section">## 11) Final rule</span>
+
+A good Finder template should be:
+
+<span class="hljs-bullet">-</span> valid JSON5
+<span class="hljs-bullet">-</span> minimal but discriminative
+<span class="hljs-bullet">-</span> not too broad
+<span class="hljs-bullet">-</span> not too narrow
+<span class="hljs-bullet">-</span> easy to debug
+<span class="hljs-bullet">-</span> easy to maintain
+
+If you are unsure, prefer a simple template with the most reliable
+markers:
+
+<span class="hljs-bullet">-</span> folder names
+<span class="hljs-bullet">-</span> known files
+<span class="hljs-bullet">-</span> known subfolders
+<span class="hljs-bullet">-</span> one or two strong signs of the project type
+
+---
+
+<span class="hljs-section">## 12) One minimal example to copy</span>
+
+<span class="hljs-code">\`\`\`json5
+{
+  description: &quot;Simple project template&quot;,
+  name: &quot;*&quot;,
+  files: [
+    &quot;package.json&quot;,
+    {
+      name: &quot;src&quot;,
+      existence: &quot;optional&quot;,
+    },
+  ],
+  tags: [&quot;project&quot;],
+}
+\`\`\`</span>
+
+This is intentionally simple and often a good starting point for custom
+templates.
+
+---
+
+<span class="hljs-section">## 13) When writing a new template for this repo</span>
+
+If the task is to add a template to this project, keep in mind:
+
+<span class="hljs-bullet">-</span> put it in the template directory used by the runtime
+<span class="hljs-bullet">-</span> follow the repo’s JSON5 style closely
+<span class="hljs-bullet">-</span> avoid accidental false positives
+<span class="hljs-bullet">-</span> validate with finder checks after creation
+
+This repo has built-in examples in the templates folder and the project
+docs in the root files.
+</code></pre>`;export{n as default};

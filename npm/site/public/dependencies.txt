@@ -28,6 +28,7 @@
 @eslint/js@10.0.1 -- MIT
 @eslint/object-schema@3.0.5 -- Apache-2.0
 @eslint/plugin-kit@0.7.2 -- Apache-2.0
+@floating-ui/dom@1.8.0 -- MIT
 @humanfs/core@0.19.2 -- Apache-2.0
 @humanfs/node@0.16.8 -- Apache-2.0
 @humanfs/types@0.15.0 -- Apache-2.0
@@ -207,6 +208,7 @@ local-pkg@1.2.1 -- MIT
 locate-path@6.0.0 -- MIT
 lower-case@2.0.2 -- MIT
 lru-cache@5.1.1 -- ISC
+lucide@1.45.0 -- ISC
 magic-string@0.30.21 -- MIT
 minimatch@10.2.6 -- BlueOak-1.0.0
 minimatch@3.1.5 -- ISC

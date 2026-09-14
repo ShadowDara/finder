@@ -831,12 +831,17 @@ export default {
     ]
   },
   "cmake.json5": {
+    "description": "a project which uses CMake",
     "files": [
       "CMakeLists.txt"
     ],
     "folders": [],
     "min_version": "0.3.14",
-    "name": "*"
+    "name": "*",
+    "tags": [
+      "C",
+      "C++"
+    ]
   },
   "cobol.json5": {
     "description": "COBOL legacy business application",
@@ -1828,6 +1833,7 @@ export default {
     ]
   },
   "flax.json5": {
+    "description": "a project with the flax game engine",
     "files": [
       "*.flaxproj"
     ],
@@ -2105,6 +2111,7 @@ export default {
     "name": "*"
   },
   "go.json5": {
+    "description": "a project with go / golang",
     "files": [
       "go.mod"
     ],
@@ -5280,6 +5287,7 @@ export default {
     "name": "*"
   },
   "steamlib.json5": {
+    "description": "the steam libary where the games a saved",
     "folders": [
       {
         "name": "common"
