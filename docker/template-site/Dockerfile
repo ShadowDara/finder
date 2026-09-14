@@ -1,26 +1,33 @@
 # Dockerfile für die Template-Site (npm/site)
-# Vite/Node-Build, serviert statische Dateien auf Port 3014
+# pnpm-workspace Build, serviert statische Dateien auf Port 3014
 
 # ---- Build-Stage ----
 FROM node:22-alpine AS builder
 
+RUN corepack enable
 WORKDIR /app
 
-# package.json und Lockfile zuerst für besseren Docker-Cache
-COPY npm/site/package.json npm/site/package-lock.json ./
+# Workspace-Root zuerst für besseren Docker-Cache (pnpm!)
+COPY pnpm-workspace.yaml pnpm-lock.yaml package.json ./
+COPY npm/site/package.json ./npm/site/package.json
+COPY npm/finder-lib/package.json ./npm/finder-lib/package.json
+COPY npm/hub/package.json ./npm/hub/package.json
+COPY npm/vfs/package.json ./npm/vfs/package.json
+COPY npm/finder-npm/package.json ./npm/finder-npm/package.json
+COPY npm/pages-plugin/package.json ./npm/pages-plugin/package.json
 
-RUN npm ci
+RUN pnpm install --frozen-lockfile
 
-COPY npm/site/ .
+# Restlichen Quellcode kopieren (nach install für besseren Cache)
+COPY . .
 
-RUN npm run docker:build
+RUN pnpm --filter finder-template-generator docker:build
 
 # ---- Runtime-Stage ----
 FROM nginx:alpine
 
 # Vite-Build-Output nach nginx kopieren
-COPY --from=builder /app/dist /usr/share/nginx/html
-
+COPY --from=builder /app/npm/site/dist /usr/share/nginx/html
 COPY docker/template-site/nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 3014

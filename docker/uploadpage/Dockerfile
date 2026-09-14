@@ -23,11 +23,11 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # Prisma-Client für den Linux-Build generieren
-RUN npx prisma generate
+RUN pnpx prisma generate
 
 ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN npm run build
+RUN pnpm run build
 
 # ---- Runtime ----
 FROM node:22-alpine AS runner
