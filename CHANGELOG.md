@@ -6,6 +6,7 @@ _The whole finder CHANGELOG_
 
 - added Author field to finder templates
 - added a subcommand to validate templates
+- install templates from the web
 
 ## 0.3.17 - 13.09.2026
 

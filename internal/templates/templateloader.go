@@ -256,6 +256,22 @@ func LoadAll() ([]string, error) {
 		for name := range userTemplates {
 			if !builtInSet[name] {
 				fileNames = append(fileNames, name)
+				builtInSet[name] = true
+			}
+		}
+	}
+
+	// Load installed templates (from `finder install`)
+	installed, err := LoadInstalledTemplates()
+	if err == nil {
+		seen := make(map[string]bool, len(fileNames))
+		for _, name := range fileNames {
+			seen[name] = true
+		}
+		for name := range installed {
+			if !seen[name] {
+				fileNames = append(fileNames, name)
+				seen[name] = true
 			}
 		}
 	}

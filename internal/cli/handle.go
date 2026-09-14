@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"path/filepath"
+	"strings"
 
 	"text/tabwriter"
 
@@ -392,7 +392,14 @@ func Validate(args []string, OutputType string) error {
 	}
 
 	for _, arg := range args {
-		name := filepath.Base(arg)
+		// The template name can contain sub-paths like
+		// `localhost_8765/test/template` (installed templates).
+		// `filepath.Base` would truncate that to just `template`,
+		// so keep the full arg as the lookup name (without .json5).
+		name := arg
+		if strings.HasSuffix(name, ".json5") {
+			name = strings.TrimSuffix(name, ".json5")
+		}
 		displayName := arg
 		res := validateResult{File: displayName}
 
