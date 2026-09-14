@@ -1,0 +1,22 @@
+{
+  "name": "virtual-fs",
+  "version": "0.1.0",
+  "description": "In-memory virtuelles Dateisystem (Ordner/Dateien) mit ZIP Import/Export, gedacht als Backend für einen Web-Editor.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsc -p tsconfig.json --watch"
+  },
+  "dependencies": {
+    "fflate": "^0.8.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4",
+    "@types/node": "^20.14.0"
+  }
+}

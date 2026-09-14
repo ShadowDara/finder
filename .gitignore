@@ -34,3 +34,5 @@ npm/site/static-stats.html
 /npm/site/dist
 /npm/site/dist-static
 npm/site/tsconfig.tsbuildinfo
+/npm/vfs/node_modules
+/npm/vfs/dist

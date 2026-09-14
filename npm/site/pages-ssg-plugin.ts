@@ -9,6 +9,7 @@ import { tsImport } from "tsx/esm/api";
 import { escapeHtml } from "./src/jsx-runtime";
 import hljs from "highlight.js/lib/common";
 import { Liquid } from "liquidjs";
+import ejs from "ejs";
 
 const MARKDOWN_PREFIX = "virtual:page-markdown:";
 const RESOLVED_MARKDOWN_PREFIX = "\0" + MARKDOWN_PREFIX;
@@ -189,7 +190,7 @@ export interface PagesPluginOptions {
   /**
    * Liquid Template root folder
    *
-   * @default "templates"
+   * @default "src/templates"
    */
   liquidTemplateRoot?: string;
 }
@@ -208,7 +209,7 @@ export interface PageRenderContext {
   content?: string;
 }
 
-type PageType = "component" | "markdown" | "liquid";
+type PageType = "component" | "markdown" | "liquid" | "ejs";
 
 interface PageEntry {
   /** Route id, e.g. "guide/installation" (posix, no extension). */
@@ -269,7 +270,7 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
     options.ignore ?? ((id: string) => id.split("/").pop()!.startsWith("_"));
   const getTitle = options.title ?? ((id: string) => id);
   const writeDts = options.dts ?? true;
-  const liquidTemplateRoot = options.liquidTemplateRoot ?? "templates";
+  const liquidTemplateRoot = options.liquidTemplateRoot ?? "src/templates";
 
   let config: ResolvedConfig;
   let pages: PageEntry[] = [];
@@ -303,6 +304,19 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
     });
 
     return engine.parseAndRender(template, data as Record<string, unknown>);
+  }
+
+  // Render an EJS template with the given data at build time.
+  // Used for `X.ejs` pages (same data flow as Liquid).
+  async function renderEjsTemplate(
+    template: string,
+    data: unknown,
+    sourceFile: string,
+  ): Promise<string> {
+    // `filename` only matters for `include`-relative paths in EJS.
+    return ejs.render(template, data, {
+      filename: sourceFile,
+    });
   }
 
   function getAssetPath(htmlFileName: string, assetFileName: string): string {
@@ -342,7 +356,11 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
     );
 
     for (const page of pages) {
-      if (page.type !== "component" && page.type !== "liquid") {
+      if (
+        page.type !== "component" &&
+        page.type !== "liquid" &&
+        page.type !== "ejs"
+      ) {
         continue;
       }
 
@@ -359,6 +377,18 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
             ...(page.buildData ?? {}),
             JS_SCRIPT: LIQUID_SCRIPT_PLACEHOLDER,
           },
+        );
+      }
+
+      // EJS pages: same data flow as Liquid, but rendered with EJS.
+      if (page.type === "ejs") {
+        page.html = await renderEjsTemplate(
+          fs.readFileSync(page.source, "utf8"),
+          {
+            ...(page.buildData ?? {}),
+            JS_SCRIPT: LIQUID_SCRIPT_PLACEHOLDER,
+          },
+          page.source,
         );
       }
 
@@ -451,6 +481,7 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
 
     const componentFiles: string[] = [];
     const htmlFiles: string[] = [];
+    const ejsFiles: string[] = [];
 
     function walk(directory: string) {
       for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
@@ -475,6 +506,11 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
 
         if (extension === ".html") {
           htmlFiles.push(fullPath);
+          continue;
+        }
+
+        if (extension === ".ejs") {
+          ejsFiles.push(fullPath);
           continue;
         }
 
@@ -510,9 +546,11 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
       })
       .filter((page) => !shouldIgnore(page.id));
 
-    // Liquid pages: every `X.html` that has a sibling `X.build.[tj]s`
-    // becomes a build-time-rendered Liquid page. The `.html` template is
-    // rendered with the data returned by `build()` at build time.
+    // Template pages: every `X.html` / `X.ejs` that has a sibling
+    // `X.build.[tj]s` becomes a build-time-rendered template page.
+    //
+    // - .html => Liquid
+    // - .ejs  => EJS
     const liquidPages: PageEntry[] = [];
 
     for (const file of htmlFiles.sort()) {
@@ -520,9 +558,6 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
 
       let id = relativePath.slice(0, -".html".length);
 
-      // `page.html` acts as the folder's index template:
-      //   jekyll/page.html -> jekyll/index
-      //   page.html        -> index
       if (path.posix.basename(id) === "page") {
         id = path.posix.join(path.posix.dirname(id), "index");
       }
@@ -531,7 +566,6 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
         continue;
       }
 
-      // A real component/markdown page with the same id takes precedence.
       if (componentPages.some((page) => page.id === id)) {
         continue;
       }
@@ -544,11 +578,7 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
         continue;
       }
 
-      // Script source for `{{ JS_SCRIPT }}`: prefer the plain page module
-      // (`page.ts` / `page.js` / ...) next to the template; fall back to
-      // the `page.build.[tj]s` data file itself.
       const baseName = file.slice(0, -".html".length);
-
       const scriptSource =
         [".ts", ".tsx", ".js", ".jsx"]
           .map((ext) => baseName + ext)
@@ -563,16 +593,55 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
       });
     }
 
-    // A `page.js`/`page.ts` next to a `page.html` is used as the Liquid
-    // script source, not as its own `…/page` route — the Liquid index
-    // page takes precedence.
+    for (const file of ejsFiles.sort()) {
+      const relativePath = path.relative(root, file).replace(/\\/g, "/");
+
+      let id = relativePath.slice(0, -".ejs".length);
+
+      if (path.posix.basename(id) === "page") {
+        id = path.posix.join(path.posix.dirname(id), "index");
+      }
+
+      if (shouldIgnore(id)) {
+        continue;
+      }
+
+      if (componentPages.some((page) => page.id === id)) {
+        continue;
+      }
+
+      const buildFile = [".ts", ".tsx", ".js", ".jsx"]
+        .map((ext) => file.slice(0, -".ejs".length) + `.build${ext}`)
+        .find((candidate) => fs.existsSync(candidate));
+
+      if (!buildFile) {
+        continue;
+      }
+
+      const baseName = file.slice(0, -".ejs".length);
+      const scriptSource =
+        [".ts", ".tsx", ".js", ".jsx"]
+          .map((ext) => baseName + ext)
+          .find((candidate) => fs.existsSync(candidate)) ?? buildFile;
+
+      liquidPages.push({
+        id,
+        source: file,
+        type: "ejs",
+        scriptSource,
+        styles: options.styles?.[id] ?? [],
+      });
+    }
+
+    // A `page.js`/`page.ts` next to a template page is used as the client
+    // script source, not as its own route — the template index page
+    // takes precedence.
     const liquidIds = new Set(liquidPages.map((page) => page.id));
 
     const duplicateComponentIds = componentPages
       .map((page) => page.id)
       .filter((id) => {
-        // id "jekyll/page" conflicts with Liquid page "jekyll/index" only
-        // when the component is literally `<dir>/page`.
+        // id "<dir>/page" conflicts with template index "<dir>/index".
         if (!id.endsWith("/page")) {
           return false;
         }
@@ -1402,7 +1471,11 @@ function getPageId(url: string, pages: PageEntry[]): string {
 
 // Function to load the build data
 async function loadBuildData(page: PageEntry): Promise<unknown> {
-  if (page.type !== "component" && page.type !== "liquid") {
+  if (
+    page.type !== "component" &&
+    page.type !== "liquid" &&
+    page.type !== "ejs"
+  ) {
     return null;
   }
 
@@ -1413,6 +1486,12 @@ async function loadBuildData(page: PageEntry): Promise<unknown> {
     buildFile =
       [".ts", ".tsx", ".js", ".jsx"]
         .map((ext) => page.source.slice(0, -".html".length) + `.build${ext}`)
+        .find((candidate) => fs.existsSync(candidate)) ?? "";
+  } else if (page.type === "ejs") {
+    // page.ejs -> page.build.[tj]s
+    buildFile =
+      [".ts", ".tsx", ".js", ".jsx"]
+        .map((ext) => page.source.slice(0, -".ejs".length) + `.build${ext}`)
         .find((candidate) => fs.existsSync(candidate)) ?? "";
   } else {
     buildFile = page.source.replace(/\.(tsx?|jsx?)$/, ".build.$1");
