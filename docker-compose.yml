@@ -46,6 +46,14 @@ services:
     ports:
       - "8080:80"
 
+  registry:
+    build:
+      context: .
+      dockerfile: docker/registry/Dockerfile
+    container_name: finder-registry
+    ports:
+      - "3017:3017"
+
   # Local Database for testing
   postgres:
     image: postgres:18
