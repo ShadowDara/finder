@@ -15,7 +15,7 @@ COPY npm/vfs/package.json ./npm/vfs/package.json
 COPY npm/finder-npm/package.json ./npm/finder-npm/package.json
 COPY npm/pages-plugin/package.json ./npm/pages-plugin/package.json
 
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile --ignore-scripts
 
 COPY . .
 

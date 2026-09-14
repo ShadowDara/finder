@@ -28,8 +28,8 @@ services:
 
   uploadpage:
     build:
-      context: ./npm/hub
-      dockerfile: ../../docker/uploadpage/Dockerfile
+      context: .
+      dockerfile: docker/uploadpage/Dockerfile
     container_name: uploadpage
     depends_on:
       - postgres

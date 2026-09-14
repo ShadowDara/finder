@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "pnpm --filter web dev",
     "build": "pnpm --filter web build",
-    "stats": "pnpx linguist-js"
+    "stats": "pnpm linguist-js"
   },
   "version": "0.3.18",
   "devDependencies": {

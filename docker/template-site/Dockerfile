@@ -16,7 +16,9 @@ COPY npm/vfs/package.json ./npm/vfs/package.json
 COPY npm/finder-npm/package.json ./npm/finder-npm/package.json
 COPY npm/pages-plugin/package.json ./npm/pages-plugin/package.json
 
-RUN pnpm install --frozen-lockfile
+# --ignore-scripts: hub's postinstall `prisma generate` would fail here
+# (no prisma/schema.prisma in this image); uploadpage handles that separately.
+RUN pnpm install --frozen-lockfile --ignore-scripts
 
 # Restlichen Quellcode kopieren (nach install für besseren Cache)
 COPY . .
