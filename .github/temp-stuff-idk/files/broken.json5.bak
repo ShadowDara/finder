@@ -1,0 +1,13 @@
+{
+  // comment test
+  name: '*',
+  files: [
+    'go.mod',
+    {
+      name: '*.go',
+      existence: 'invalidvalue',
+    },
+  ],
+  size: { min: 10, max: 5, min_size_type: 'KB', max_size_type: 'KB' },
+  author: 'shadowdara',
+}

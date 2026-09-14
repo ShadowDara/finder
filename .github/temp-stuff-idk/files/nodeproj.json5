@@ -1,0 +1,6 @@
+{
+  description: "Node.js project",
+  name: "*",
+  files: ["package.json", "src", "README.md"],
+  tags: ["node", "javascript", "typescript"],
+}
