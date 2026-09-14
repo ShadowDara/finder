@@ -106,6 +106,15 @@ func HandleCommand(args []string) {
 	// Cache Size Command
 	cacheSizeCmd := argparser.NewCommand("cache-size", "Calculates the Size of the Finder Cache and prints it to the console", "", false, "cachesize", "cs")
 
+	// Install Command
+	installCmd := argparser.NewCommand("install", "Install a template from the web", "", false, "i")
+
+	// List Installed Command
+	listInstalledCmd := argparser.NewCommand("list-installed", "List all installed templates", "", false, "installed", "li")
+
+	// Uninstall Command
+	uninstallCmd := argparser.NewCommand("uninstall", "Uninstall a custom template", "", false, "uni")
+
 	root.AddSubcommand(versionCmd)
 	root.AddSubcommand(templateCmd)
 	root.AddSubcommand(checkCmd)
@@ -116,6 +125,9 @@ func HandleCommand(args []string) {
 	root.AddSubcommand(binarySearchCmd)
 	root.AddSubcommand(configpathCmd)
 	root.AddSubcommand(cacheSizeCmd)
+	root.AddSubcommand(installCmd)
+	root.AddSubcommand(listInstalledCmd)
+	root.AddSubcommand(uninstallCmd)
 
 	// Parse the Arguments
 	cmd := root.Parse(args[1:])
@@ -179,6 +191,25 @@ func HandleCommand(args []string) {
 			os.Exit(0)
 		}
 
+	case installCmd:
+		if len(cmd.Args) <= 0 {
+			root.PrintHelp()
+			return
+		}
+
+		// Install a Template from the Web
+		Install(cmd.Args[0])
+	case listInstalledCmd:
+		// List all installed templates
+		ListInstalled()
+	case uninstallCmd:
+		if len(cmd.Args) <= 0 {
+			root.PrintHelp()
+			return
+		}
+
+		// Uninstall a custom template
+		Uninstall(cmd.Args[0])
 	case binarySearchCmd:
 		if len(cmd.Args) > 0 {
 			binarycheck.CheckAllBinaries(cmd.Args[0])

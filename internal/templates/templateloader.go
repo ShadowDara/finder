@@ -63,8 +63,44 @@ func GetCustomTemplatePath() (string, error) {
 	return "nil", err
 }
 
-// LoadUserTemplates loads custom templates from user directories and returns
-// a map of template names to their raw bytes. User templates can be placed in:
+// GetInstalledTemplatePath returns the directory where templates
+// installed via `finder install` are stored:
+// ~/.finder/installed/templates/
+func GetInstalledTemplatePath() (string, error) {
+	homeDir, err := os.UserHomeDir()
+	if err == nil {
+		return filepath.Join(homeDir, ".finder", "installed", "templates"), nil
+	}
+	return "nil", err
+}
+
+// LoadInstalledTemplates loads templates that were installed via
+// `finder install` from ~/.finder/installed/templates/ (and the
+// local ./.finder/installed/templates/). The map keys are the
+// relative sub-path names without the .json5 extension.
+func LoadInstalledTemplates() (map[string][]byte, error) {
+	installed := make(map[string][]byte)
+
+	homeInstalled, err := GetInstalledTemplatePath()
+	if err == nil {
+		if err := loadTemplatesFromDir(homeInstalled, installed); err != nil {
+			fmt.Fprintf(os.Stderr, "Warning: could not read installed templates from %s: %v\n", homeInstalled, err)
+		}
+	}
+
+	// Local project dir
+	if err := loadTemplatesFromDir(".finder/installed/templates", installed); err != nil {
+		fmt.Fprintf(os.Stderr, "Warning: could not read installed templates from .finder/installed/templates: %v\n", err)
+	}
+
+	return installed, nil
+}
+
+// LoadUserTemplates loads CUSTOM templates from user directories and returns
+// a map of template names to their raw bytes. Templates installed via
+// `finder install` (in ~/.finder/installed/templates/) are NOT included
+// here — use LoadInstalledTemplates() for those. User templates can be
+// placed in:
 //   - ~/.finder/templates/
 //   - ./.finder/templates/ (current directory)
 //   - X:\.finder\templates/ (on Windows, for each available drive X:)
@@ -78,8 +114,6 @@ func LoadUserTemplates() (map[string][]byte, error) {
 		if err := loadTemplatesFromDir(homePath, userTemplates); err != nil {
 			fmt.Fprintf(os.Stderr, "Warning: could not read user templates from %s: %v\n", homePath, err)
 		}
-	} else {
-		fmt.Fprintf(os.Stderr, "Warning: could not determine home template path: %v\n", err)
 	}
 
 	// Try to load from current directory (.finder/templates/)
@@ -107,8 +141,21 @@ func LoadUserTemplates() (map[string][]byte, error) {
 }
 
 // loadTemplatesFromDir scans a directory for .json5 files and loads them into
-// the provided map. Silently returns if directory doesn't exist.
+// the provided map, recursively descending into subdirectories. Template
+// names are stored relative to the scanned root with forward slashes and
+// without the .json5 extension, so templates installed under sub-paths (e.g.
+// via `finder install https://host/path/template.json5`) become addressable
+// names like "host/path/template". The map keys use the exact name under
+// which they were stored. Directories named "node_modules", ".git" and
+// ".finder" are skipped. Silently returns if directory doesn't exist.
 func loadTemplatesFromDir(dirPath string, templates map[string][]byte) error {
+	return loadTemplatesFromDirRoot(dirPath, dirPath, templates)
+}
+
+// loadTemplatesFromDirRoot is the recursive implementation.
+// rootDir is the top-level directory from which relative names are computed;
+// dirPath is the directory currently being scanned.
+func loadTemplatesFromDirRoot(dirPath, rootDir string, templates map[string][]byte) error {
 	entries, err := os.ReadDir(dirPath)
 	if err != nil {
 		// Directory doesn't exist or can't be read - but this is not necessarily an error
@@ -119,7 +166,17 @@ func loadTemplatesFromDir(dirPath string, templates map[string][]byte) error {
 	}
 
 	for _, entry := range entries {
+		relPath := filepath.Join(dirPath, entry.Name())
+
 		if entry.IsDir() {
+			// Skip hidden/irrelevant dirs
+			switch entry.Name() {
+			case "node_modules", ".git", ".finder":
+				continue
+			}
+			if err := loadTemplatesFromDirRoot(relPath, rootDir, templates); err != nil {
+				fmt.Fprintf(os.Stderr, "Warning: could not read user templates from %s: %v\n", relPath, err)
+			}
 			continue
 		}
 
@@ -129,15 +186,23 @@ func loadTemplatesFromDir(dirPath string, templates map[string][]byte) error {
 		}
 
 		// Read the file
-		filePath := filepath.Join(dirPath, name)
+		filePath := relPath
 		data, err := os.ReadFile(filePath)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "Warning: could not read template %s: %v\n", filePath, err)
 			continue
 		}
 
-		// Store with name without .json5 extension
-		templateName := name[:len(name)-6]
+		// Store with name relative to the ROOT directory, without the .json5
+		// extension. Use forward slashes so the name is portable.
+		rel, err := filepath.Rel(rootDir, filePath)
+		if err != nil {
+			rel = name
+		}
+		rel = filepath.ToSlash(rel)
+		rel = strings.TrimPrefix(rel, "/")
+
+		templateName := strings.TrimSuffix(rel, ".json5")
 		templates[templateName] = data
 	}
 
@@ -200,12 +265,25 @@ func LoadAll() ([]string, error) {
 
 // LoadAllWithUserTemplates returns both the list of template names and a map
 // of user-defined templates. This is more efficient than calling LoadAll() and
-// LoadUserTemplates() separately.
+// LoadUserTemplates() separately. The returned map includes installed
+// templates (from ~/.finder/installed/templates/) so that they can be found
+// by name during a search.
 func LoadAllWithUserTemplates() ([]string, map[string][]byte, error) {
 	userTemplates, err := LoadUserTemplates()
 	if err != nil {
 		// Not a fatal error, just log and continue
 		fmt.Fprintf(os.Stderr, "Warning: could not load user templates: %v\n", err)
+	}
+	if userTemplates == nil {
+		userTemplates = make(map[string][]byte)
+	}
+
+	// Include installed templates so searches can find them
+	installed, err := LoadInstalledTemplates()
+	if err == nil {
+		for name, data := range installed {
+			userTemplates[name] = data
+		}
 	}
 
 	names, err := LoadAll()

@@ -47,6 +47,7 @@
     "vite-plugin-eslint": "^1.8.1"
   },
   "dependencies": {
+    "@floating-ui/dom": "^1.8.0",
     "@node-steam/vdf": "^2.2.0",
     "@shadowdara/dlib": "^0.0.4",
     "@shadowdara/finder-lib": "^0.3.17",

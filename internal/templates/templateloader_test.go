@@ -122,17 +122,22 @@ func TestLoadAll_UniqueNames(t *testing.T) {
 }
 
 func TestLoadAll_AllTemplatesLoadable(t *testing.T) {
-	templates, err := LoadAll()
-
+	// Only test embedded templates, since LoadAll also includes
+	// user templates from the filesystem that JSONtemplateLoader
+	// (embedded) cannot load.
+	files, err := templates.ReadDir(".")
 	if err != nil {
-		t.Fatalf("LoadAll returned error: %v", err)
+		t.Fatalf("ReadDir failed: %v", err)
 	}
 
 	failedLoads := []string{}
-	for _, tmpl := range templates {
-		_, err := JSONtemplateLoader(tmpl)
-		if err != nil {
-			failedLoads = append(failedLoads, tmpl)
+	for _, file := range files {
+		if file.IsDir() || !strings.HasSuffix(file.Name(), ".json5") {
+			continue
+		}
+		name := strings.TrimSuffix(file.Name(), ".json5")
+		if _, err := JSONtemplateLoader(name); err != nil {
+			failedLoads = append(failedLoads, name)
 		}
 	}
 

@@ -248,6 +248,11 @@ func Check() error {
 		fmt.Printf("%sWarning: %v%s\n", color.Yellow, err, color.Reset)
 	}
 
+	installedTemplates, err := templates.LoadInstalledTemplates()
+	if err != nil {
+		fmt.Printf("%sWarning: %v%s\n", color.Yellow, err, color.Reset)
+	}
+
 	templatecount := len(templateNames)
 	fmt.Printf("%sFound %d Templates%s\n", color.Yellow, templatecount, color.Reset)
 
@@ -283,26 +288,26 @@ func Check() error {
 
 		var folder structure.Folder
 		if err := json.Unmarshal([]byte(normalized), &folder); err != nil {
-			fmt.Fprintf(w, "%s%s (ERROR)%s\t%s%s%s\t%s\n",
+			fmt.Fprintf(w, "%s%s (ERROR)%s\t%s%s%s\n",
 				color.Red, templ, color.Reset,
-				"Error parsing", ":", err, color.Reset,
-				"---")
+				"Error parsing: ", err, color.Reset)
 			failed = true
 			continue
 		}
 
 		if err := folder.Files.Validate(); err != nil {
-			fmt.Fprintf(w, "%s%s (ERROR)%s\t%s%s%s\t%s\n",
+			fmt.Fprintf(w, "%s%s (ERROR)%s\t%s%s%s\n",
 				color.Red, templ, color.Reset,
-				"Invalid template", ":", err, color.Reset,
-				"---")
+				"Invalid template: ", err, color.Reset)
 			failed = true
 			continue
 		}
 
-		// Determine source (built-in or custom)
+		// Determine source (built-in / installed / custom)
 		source := goansi.WHITE + "Built-in" + goansi.END
-		if _, isCustom := userTemplates[templ]; isCustom {
+		if _, isInstalled := installedTemplates[templ]; isInstalled {
+			source = fmt.Sprintf("%sInstalled%s", color.Magenta, color.Reset)
+		} else if _, isCustom := userTemplates[templ]; isCustom {
 			source = fmt.Sprintf("%sCustom%s", color.Green, color.Reset)
 		}
 
@@ -360,6 +365,11 @@ func Validate(args []string, OutputType string) error {
 	// Load user templates so custom template names can be resolved and
 	// so we can detect whether a name refers to a built-in template.
 	_, userTemplates, err := templates.LoadAllWithUserTemplates()
+	if err != nil {
+		fmt.Printf("%sWarning: %v%s\n", color.Yellow, err, color.Reset)
+	}
+
+	installedTemplates, err := templates.LoadInstalledTemplates()
 	if err != nil {
 		fmt.Printf("%sWarning: %v%s\n", color.Yellow, err, color.Reset)
 	}
@@ -457,7 +467,9 @@ func Validate(args []string, OutputType string) error {
 
 		source := "Built-in"
 		if fromName {
-			if _, isCustom := userTemplates[name]; isCustom {
+			if _, isInstalled := installedTemplates[name]; isInstalled {
+				source = "Installed"
+			} else if _, isCustom := userTemplates[name]; isCustom {
 				source = "Custom"
 			}
 		} else {
@@ -524,6 +536,11 @@ func List() error {
 		fmt.Printf("%sWarning: Error loading templates: %v%s\n", color.Yellow, err, color.Reset)
 	}
 
+	installedTemplates, err := templates.LoadInstalledTemplates()
+	if err != nil {
+		fmt.Printf("%sWarning: Error loading installed templates: %v%s\n", color.Yellow, err, color.Reset)
+	}
+
 	templatesList, err := templates.LoadAll()
 	if err != nil {
 		return fmt.Errorf("error loading templates: %v", err)
@@ -532,11 +549,21 @@ func List() error {
 	templatecount := len(templatesList)
 	fmt.Printf("%sFound %d Templates%s\n", color.Yellow, templatecount, color.Reset)
 
-	// Separate built-in from custom templates
+	// Separate built-in / custom / installed templates
 	builtInTemplates := []string{}
 	customTemplates := []string{}
+	installedNames := []string{}
+
+	// Installed templates have their own section and are NOT part of
+	// the custom templates shown in `finder list`.
+	for name := range installedTemplates {
+		installedNames = append(installedNames, name)
+	}
 
 	for _, templ := range templatesList {
+		if _, ok := installedTemplates[templ]; ok {
+			continue // shown separately below
+		}
 		if _, isCustom := userTemplates[templ]; isCustom {
 			customTemplates = append(customTemplates, templ)
 		} else {
@@ -548,6 +575,14 @@ func List() error {
 	fmt.Printf("%sBuilt-in Templates (%d):%s\n", color.Green, len(builtInTemplates), color.Reset)
 	for _, templ := range builtInTemplates {
 		fmt.Printf("  %s%s%s\n", color.Cyan, templ, color.Reset)
+	}
+
+	// Print installed templates (from `finder install`)
+	if len(installedNames) > 0 {
+		fmt.Printf("\n%sInstalled Templates (%d):%s\n", color.Green, len(installedNames), color.Reset)
+		for _, templ := range installedNames {
+			fmt.Printf("  %s%s%s  (from ~/.finder/installed/templates/)\n", color.Magenta, templ, color.Reset)
+		}
 	}
 
 	// Print custom templates if any

@@ -1,0 +1,5 @@
+{
+  "name": "*",
+  "description": "Test template installed from a sub-path URL",
+  "files": ["go.mod"]
+}
