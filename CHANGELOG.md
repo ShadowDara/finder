@@ -13,7 +13,7 @@ _The whole finder CHANGELOG_
 - updated the regex creator
 - fixed a bug in the argparser lib where global flag where not found in subcommands
 
-### Commits
+<details><summary>Commits</summary>
 
 - _[8e63902](https://github.com/shadowdara/finder/tree/8e6390298c29bfeb6984a7e40190cb6eaa6d3350)_ Update frontend assets, templates & deps
   Regenerate frontend/site assets and metadata: update cmd/findergen frontend main_entry.js (changelog/docs/markdown additions), bump lightningcss to 1.33 in dependency lists, and refresh generated site stats (npm/site/data/backend.json and gh-pages.json). Also update templates index (npm/site/src/templates.js) to add min_version/tags for many templates. These changes reflect a site build and template metadata refresh.
@@ -244,6 +244,8 @@ Improves flexibility for file-extension and substring matching and allows saving
 - _[c5a77be](https://github.com/shadowdara/finder/tree/c5a77be5243da2728d421ce761cc75e40fd52d6c)_ regex
 
 - _[c41219a](https://github.com/shadowdara/finder/tree/c41219ae4b2326a88abdd3c7c15627f179b0ed4e)_ add csf
+
+</details>
 
 ## 0.3.16 - 08.09.2026
 
