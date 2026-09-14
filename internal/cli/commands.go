@@ -115,6 +115,11 @@ func HandleCommand(args []string) {
 	// Uninstall Command
 	uninstallCmd := argparser.NewCommand("uninstall", "Uninstall a custom template", "", false, "uni")
 
+	// Alias commands (stored in ~/.finder/aliases.json)
+	aliasCmd := argparser.NewCommand("alias", "Create an alias for a template (findable via alias)", "", false)
+	unaliasCmd := argparser.NewCommand("unalias", "Remove an alias created with alias", "", false, "alias-remove")
+	aliasesCmd := argparser.NewCommand("aliases", "List all template aliases", "", false, "alias-list")
+
 	root.AddSubcommand(versionCmd)
 	root.AddSubcommand(templateCmd)
 	root.AddSubcommand(checkCmd)
@@ -128,6 +133,9 @@ func HandleCommand(args []string) {
 	root.AddSubcommand(installCmd)
 	root.AddSubcommand(listInstalledCmd)
 	root.AddSubcommand(uninstallCmd)
+	root.AddSubcommand(aliasCmd)
+	root.AddSubcommand(unaliasCmd)
+	root.AddSubcommand(aliasesCmd)
 
 	// Parse the Arguments
 	cmd := root.Parse(args[1:])
@@ -210,6 +218,33 @@ func HandleCommand(args []string) {
 
 		// Uninstall a custom template
 		Uninstall(cmd.Args[0])
+	case aliasCmd:
+		// `finder alias <alias> <template>` -> create or update alias
+		// Called via PassThrough; cmd.Args contains everything after "alias"
+		if len(cmd.Args) < 2 {
+			fmt.Println("Usage: finder alias <alias> <template>")
+			fmt.Println("  Example: finder alias myvue shadowdara.github.io/test/template")
+			fmt.Println("  Then: finder myvue  (resolves to the template)")
+			return
+		}
+		if err := AddAlias(cmd.Args[0], cmd.Args[1]); err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+	case unaliasCmd:
+		if len(cmd.Args) <= 0 {
+			fmt.Println("Usage: finder unalias <alias>")
+			return
+		}
+		if err := RemoveAlias(cmd.Args[0]); err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+	case aliasesCmd:
+		if err := ListAliases(); err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
 	case binarySearchCmd:
 		if len(cmd.Args) > 0 {
 			binarycheck.CheckAllBinaries(cmd.Args[0])

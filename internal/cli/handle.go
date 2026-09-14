@@ -39,10 +39,11 @@ func Search(searchTemplate string, OutputType string, Verbose bool, createCache 
 		fmt.Printf("%sStruct Finder %s%s - Buildtime: %s\n", color.Green, finderversion.Version, color.Reset, finderversion.BuildTime)
 	}
 
-	templateName := searchTemplate
+	searchTemplate = ResolveAlias(searchTemplate)
 
 	// Load all templates (built-in + custom)
 	templateNames, userTemplates, err := templates.LoadAllWithUserTemplates()
+	templateName := searchTemplate
 	if err != nil {
 		log.Fatalf("%sCould not load templates: %v%s\n", color.Red, err, color.Reset)
 	}
@@ -394,13 +395,16 @@ func Validate(args []string, OutputType string) error {
 	for _, arg := range args {
 		// The template name can contain sub-paths like
 		// `localhost_8765/test/template` (installed templates).
-		// `filepath.Base` would truncate that to just `template`,
-		// so keep the full arg as the lookup name (without .json5).
-		name := arg
+		// Resolve an alias before any filesystem/template lookup.
+		resolved := ResolveAlias(arg)
+		name := resolved
 		if strings.HasSuffix(name, ".json5") {
 			name = strings.TrimSuffix(name, ".json5")
 		}
 		displayName := arg
+		if resolved != arg {
+			displayName = fmt.Sprintf("%s -> %s", arg, resolved)
+		}
 		res := validateResult{File: displayName}
 
 		// Resolve the template contents: prefer a file on disk
