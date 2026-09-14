@@ -108,7 +108,9 @@ export default defineConfig(({ mode }) => {
           "docs/config": ["/src/markdownrootstyle.css"],
           "docs/index": ["/src/markdownrootstyle.css"],
         },
-        // splitMarkdown: true,
+        // Markdown-Bundle in eigene JS-Chunks aufteilen, statt alles im
+        // main_entry.js zu bündeln (wird per dynamic import() geladen).
+        splitMarkdown: true,
         prettyUrls: true,
         entry: "src/main.ts",
         // Release-Builds: alle console.log/warn/error/debug/info entfernen

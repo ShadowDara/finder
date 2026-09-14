@@ -1,23 +1,23 @@
 {
-  "generatedAt": "2026-09-14T00:11:13.161Z",
+  "generatedAt": "2026-09-14T00:13:53.753Z",
   "total": {
-    "files": 59,
-    "bytes": 349476,
-    "kilobytes": 341.29,
+    "files": 63,
+    "bytes": 350096,
+    "kilobytes": 341.89,
     "megabytes": 0.33
   },
   "byExtension": [
     {
       "extension": ".js",
-      "files": 21,
-      "bytes": 273622,
-      "percentage": 78.29
+      "files": 25,
+      "bytes": 274242,
+      "percentage": 78.33
     },
     {
       "extension": ".css",
       "files": 15,
       "bytes": 56648,
-      "percentage": 16.21
+      "percentage": 16.18
     },
     {
       "extension": ".txt",
@@ -29,30 +29,40 @@
       "extension": ".html",
       "files": 21,
       "bytes": 7753,
-      "percentage": 2.22
+      "percentage": 2.21
     },
     {
       "extension": ".sh",
       "files": 1,
       "bytes": 2011,
-      "percentage": 0.58
+      "percentage": 0.57
     }
   ],
   "files": [
-    {
-      "path": "assets/main_entry.js",
-      "extension": ".js",
-      "bytes": 88972
-    },
     {
       "path": "assets/jquery.module.js",
       "extension": ".js",
       "bytes": 79109
     },
     {
+      "path": "assets/main_entry.js",
+      "extension": ".js",
+      "bytes": 33423
+    },
+    {
       "path": "assets/installscript.js",
       "extension": ".js",
       "bytes": 32265
+    },
+    {
+      "path": "assets/_virtual_page-markdown_changelog.js",
+      "extension": ".js",
+      "bytes": 30566
+    },
+    {
+      "path": "assets/_virtual_page-markdown_readme.js",
+      "extension": ".js",
+      "bytes": 24851
     },
     {
       "path": "assets/creator.js",
@@ -190,7 +200,7 @@
       "bytes": 1355
     },
     {
-      "path": "assets/index.js",
+      "path": "assets/index2.js",
       "extension": ".js",
       "bytes": 1146
     },
@@ -200,9 +210,14 @@
       "bytes": 1099
     },
     {
-      "path": "assets/index3.js",
+      "path": "assets/index4.js",
       "extension": ".js",
       "bytes": 1069
+    },
+    {
+      "path": "assets/config.js",
+      "extension": ".js",
+      "bytes": 623
     },
     {
       "path": "assets/info.js",
@@ -265,7 +280,7 @@
       "bytes": 391
     },
     {
-      "path": "assets/index2.js",
+      "path": "assets/index3.js",
       "extension": ".js",
       "bytes": 369
     },
@@ -323,6 +338,11 @@
       "path": "assets/about.js",
       "extension": ".js",
       "bytes": 228
+    },
+    {
+      "path": "assets/index.js",
+      "extension": ".js",
+      "bytes": 129
     },
     {
       "path": "jekyll/index.html",

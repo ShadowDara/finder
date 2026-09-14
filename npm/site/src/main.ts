@@ -45,7 +45,7 @@ async function main() {
     loadStyles(page.styles);
 
     if (page.type === "markdown") {
-      renderMarkdown(app, page);
+      await renderMarkdown(app, page);
 
       return;
     }
