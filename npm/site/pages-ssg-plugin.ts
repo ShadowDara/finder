@@ -698,10 +698,11 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
           .map((style) => styleImports.get(style)!)
           .join(", ");
 
-        /* Liquid pages are fully static (rendered at build time) — they
-         * are served/emitted as-is and do not need a client-side entry in
-         * the pages map (which would bloat the main bundle). */
-        if (page.type === "liquid") {
+        /* Liquid/EJS template pages are fully static (rendered at build
+         * time) — they are served/emitted as-is and do not need a
+         * client-side entry in the pages map (which would bloat the
+         * main bundle). */
+        if (page.type === "liquid" || page.type === "ejs") {
           return null;
         }
 
@@ -1358,10 +1359,6 @@ ${ctx.content}
               path.extname(page.scriptSource),
             );
 
-            // Emit the compiled page script as a plain asset so Vite's
-            // import analysis stays happy (prebuilt chunks break
-            // `importedCss` in some setups). The file name is
-            // deterministic, so the placeholder can be replaced directly.
             const scriptFileName = `assets/${scriptName}.js`;
 
             this.emitFile({
@@ -1397,6 +1394,31 @@ ${ctx.content}
             type: "asset",
             fileName: htmlFileName,
             source: liquidHtml,
+          });
+
+          continue;
+        }
+
+        // EJS: already rendered in preparePages() into page.html
+        if (page.type === "ejs") {
+          let ejsHtml = page.html ?? "";
+
+          if (options.minify) {
+            ejsHtml = await minify(ejsHtml, {
+              collapseWhitespace: true,
+              removeComments: true,
+              removeRedundantAttributes: true,
+              removeEmptyAttributes: true,
+              useShortDoctype: true,
+              minifyCSS: true,
+              minifyJS: true,
+            });
+          }
+
+          this.emitFile({
+            type: "asset",
+            fileName: htmlFileName,
+            source: ejsHtml,
           });
 
           continue;
