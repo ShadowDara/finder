@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "map.c"
+#include "map2.c"
 
 #ifdef _WIN32
 #include <windows.h>
