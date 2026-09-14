@@ -33,6 +33,15 @@ const RESOLVED_DATA_PREFIX = "\0" + DATA_PREFIX;
 const LIQUID_SCRIPT_PLACEHOLDER = "__PAGES_LIQUID_JS_SCRIPT__";
 
 /**
+ * Build-data modules (`page.build.ts`, `index.build.tsx`, …) run only at
+ * build time via `loadBuildData()`. They must never become a client page
+ * or land in the production bundle.
+ */
+function isBuildDataFile(filePath: string): boolean {
+  return /\.build\.[^.]+$/i.test(path.basename(filePath));
+}
+
+/**
  * Escape `<...>` sequences that are NOT valid HTML tags, so the output can
  * safely pass through `html-minifier-terser` (which uses a strict HTML
  * parser). Without this, things like
@@ -234,9 +243,8 @@ interface PageEntry {
   buildData?: unknown;
 
   /**
-   * Liquid only: the `page.[tj]s` file next to the `.html` template that
-   * is built and injected where `{{ JS_SCRIPT }}` appears in the rendered
-   * output. Falls back to the `page.build.[tj]s` data file.
+   * Liquid/EJS only: the client `page.[tj]s` next to the template, injected
+   * where `{{ JS_SCRIPT }}` appears. Never a `*.build.[tj]s` data module.
    */
   scriptSource?: string;
 }
@@ -497,13 +505,9 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
         }
 
         // Build-data modules (page.build.ts / page.build.js / ...) are not
-        // pages themselves — they only feed data into their sibling page.
-        // Exclude anything that contains `.build.` before the extension.
-        // Examples:
-        //  - page.build.ts
-        //  - page.build.js
-        //  - nested/page.build.tsx
-        if (/\.build\.[^.]+$/i.test(entry.name)) {
+        // pages themselves — they only feed data into their sibling page
+        // and must not be scanned as client entries.
+        if (isBuildDataFile(entry.name)) {
           continue;
         }
 
@@ -584,16 +588,18 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
       }
 
       const baseName = file.slice(0, -".html".length);
-      const scriptSource =
-        [".ts", ".tsx", ".js", ".jsx"]
-          .map((ext) => baseName + ext)
-          .find((candidate) => fs.existsSync(candidate)) ?? buildFile;
+      const scriptSource = [".ts", ".tsx", ".js", ".jsx"]
+        .map((ext) => baseName + ext)
+        .find(
+          (candidate) =>
+            fs.existsSync(candidate) && !isBuildDataFile(candidate),
+        );
 
       liquidPages.push({
         id,
         source: file,
         type: "liquid",
-        scriptSource,
+        ...(scriptSource ? { scriptSource } : {}),
         styles: options.styles?.[id] ?? [],
       });
     }
@@ -624,16 +630,18 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
       }
 
       const baseName = file.slice(0, -".ejs".length);
-      const scriptSource =
-        [".ts", ".tsx", ".js", ".jsx"]
-          .map((ext) => baseName + ext)
-          .find((candidate) => fs.existsSync(candidate)) ?? buildFile;
+      const scriptSource = [".ts", ".tsx", ".js", ".jsx"]
+        .map((ext) => baseName + ext)
+        .find(
+          (candidate) =>
+            fs.existsSync(candidate) && !isBuildDataFile(candidate),
+        );
 
       liquidPages.push({
         id,
         source: file,
         type: "ejs",
-        scriptSource,
+        ...(scriptSource ? { scriptSource } : {}),
         styles: options.styles?.[id] ?? [],
       });
     }
@@ -708,11 +716,10 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
          * client-side entry in the pages map (which would bloat the
          * main bundle). */
         if (page.type === "liquid" || page.type === "ejs") {
-          // Liquid/EJS: Der page.scriptSource wird als eigenständige Seite (component)
-          // behandelt, damit es durch Vite/Rollup gebündelt wird.
-          // Hinweis: die HTML selbst wird weiter als Asset emittiert.
-          if (page.scriptSource) {
-            const scriptId = `__pages_script__:${page.id}`;
+          // Client scripts (`page.[tj]s`) are bundled separately and injected
+          // via `{{ JS_SCRIPT }}`. Build-data modules must not be imported
+          // here — that would pull them into the production bundle.
+          if (page.scriptSource && !isBuildDataFile(page.scriptSource)) {
             return `  ${JSON.stringify(page.id)}: {
     id: ${JSON.stringify(page.id)},
     type: "component",
@@ -1115,11 +1122,12 @@ ${ctx.content}
            * the page module (`page.[tj]s`) through the dev server.
            */
           if (page.type === "liquid") {
-            const scriptTag = page.scriptSource
-              ? `<script type="module" src="/${path
-                  .relative(config.root, page.scriptSource)
-                  .replace(/\\/g, "/")}"></script>`
-              : "";
+            const scriptTag =
+              page.scriptSource && !isBuildDataFile(page.scriptSource)
+                ? `<script type="module" src="/${path
+                    .relative(config.root, page.scriptSource)
+                    .replace(/\\/g, "/")}"></script>`
+                : "";
 
             // Liquid pages are standalone: serve the rendered content as-is,
             // without wrapping it in the default HTML shell.
@@ -1344,7 +1352,11 @@ ${ctx.content}
         if (page.type === "liquid") {
           let scriptTagForContent = "";
 
-          if (page.scriptSource && fs.existsSync(page.scriptSource)) {
+          if (
+            page.scriptSource &&
+            !isBuildDataFile(page.scriptSource) &&
+            fs.existsSync(page.scriptSource)
+          ) {
             const scriptSourceCode = fs.readFileSync(page.scriptSource, "utf8");
 
             const scriptExtension = path

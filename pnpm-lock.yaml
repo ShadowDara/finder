@@ -131,6 +131,9 @@ importers:
       liquidjs:
         specifier: ^10.29.0
         version: 10.29.0
+      lucide:
+        specifier: ^1.45.0
+        version: 1.45.0
       tellraw-parser:
         specifier: ^1.0.2
         version: 1.0.2
@@ -3033,6 +3036,9 @@ packages:
     resolution: {integrity: sha512-yH1ubCAduho9UR7oJhRXIQXogksRILBiTuZC4/bQIGeB9JOkxMlSuEHyyZpo1Z3S0yWJO2KTSUZbjiNvVxeOUw==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
+  lucide@1.45.0:
+    resolution: {integrity: sha512-Paze7TONAGAOSwg2qh2GXY0zkNY6p4+E6BTthwyY6LpVQnqcpV73jtY9UtAZeMfDiZpevZhKINpLu4WeahOXyw==}
 
   magic-string@0.30.21:
     resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
@@ -6458,6 +6464,8 @@ snapshots:
   lucide-react@1.45.0(react@19.3.0):
     dependencies:
       react: 19.3.0
+
+  lucide@1.45.0: {}
 
   magic-string@0.30.21:
     dependencies:
