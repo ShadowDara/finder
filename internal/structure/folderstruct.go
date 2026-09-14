@@ -28,7 +28,9 @@ type Folder struct {
 	// including newlines, is collapsed to single spaces) so arbitrary
 	// content survives plain-JSON serialization. Displayed e.g. in the web
 	// interface / community template hub.
-	MarkdownNote string `json:"mdnote,omitempty"`
+	MarkdownNote string   `json:"mdnote,omitempty"`
+	Author       string   `json:"author,omitempty"`
+	Authors      []string `json:"authors,omitempty"`
 }
 
 // NewFolder constructs a minimal Folder instance with reasonable defaults.
@@ -44,6 +46,8 @@ func NewFolder(foldername string) Folder {
 		Tags:          []string{},
 		DataSize:      NewSize(),
 		MarkdownNote:  "",
+		Author:        "",
+		Authors:       []string{},
 	}
 }
 

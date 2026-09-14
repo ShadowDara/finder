@@ -6,6 +6,7 @@
     "build": "pnpm --filter web build",
     "stats": "pnpx linguist-js"
   },
+  "version": "0.3.18",
   "devDependencies": {
     "@shadowdara/linguist-js": "*",
     "@shadowdara/seg": "0.2.4"
