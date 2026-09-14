@@ -2,7 +2,12 @@
 
 _The whole finder CHANGELOG_
 
-## Newest prob 0.3.17
+## Newest
+
+- added Author field to finder templates
+- added a subcommand to validate templates
+
+## 0.3.17 - 13.09.2026
 
 - added regex support
 - added mcapp minecraft world dashboard
