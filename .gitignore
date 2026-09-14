@@ -36,3 +36,5 @@ npm/site/static-stats.html
 npm/site/tsconfig.tsbuildinfo
 /npm/vfs/node_modules
 /npm/vfs/dist
+*.pdb
+*.obj
