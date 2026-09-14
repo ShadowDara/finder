@@ -111,6 +111,8 @@ export default defineConfig(({ mode }) => {
         // splitMarkdown: true,
         prettyUrls: true,
         entry: "src/main.ts",
+        // Release-Builds: alle console.log/warn/error/debug/info entfernen
+        removeConsole: true,
         minify: true,
         title: (id) => {
           const titles: Record<string, string> = {

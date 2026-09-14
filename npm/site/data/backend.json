@@ -1,23 +1,23 @@
 {
-  "generatedAt": "2026-09-14T00:04:59.897Z",
+  "generatedAt": "2026-09-14T00:11:13.161Z",
   "total": {
     "files": 59,
-    "bytes": 349838,
-    "kilobytes": 341.64,
+    "bytes": 349476,
+    "kilobytes": 341.29,
     "megabytes": 0.33
   },
   "byExtension": [
     {
       "extension": ".js",
       "files": 21,
-      "bytes": 273984,
-      "percentage": 78.32
+      "bytes": 273622,
+      "percentage": 78.29
     },
     {
       "extension": ".css",
       "files": 15,
       "bytes": 56648,
-      "percentage": 16.19
+      "percentage": 16.21
     },
     {
       "extension": ".txt",
@@ -35,14 +35,14 @@
       "extension": ".sh",
       "files": 1,
       "bytes": 2011,
-      "percentage": 0.57
+      "percentage": 0.58
     }
   ],
   "files": [
     {
       "path": "assets/main_entry.js",
       "extension": ".js",
-      "bytes": 89073
+      "bytes": 88972
     },
     {
       "path": "assets/jquery.module.js",
@@ -57,7 +57,7 @@
     {
       "path": "assets/creator.js",
       "extension": ".js",
-      "bytes": 16428
+      "bytes": 16327
     },
     {
       "path": "assets/markdown.js",
@@ -82,7 +82,7 @@
     {
       "path": "assets/viewer.js",
       "extension": ".js",
-      "bytes": 7951
+      "bytes": 7931
     },
     {
       "path": "assets/regexcreator.js",
@@ -117,7 +117,7 @@
     {
       "path": "assets/cacheviewer.js",
       "extension": ".js",
-      "bytes": 4573
+      "bytes": 4508
     },
     {
       "path": "assets/configeditor.css",
@@ -137,7 +137,7 @@
     {
       "path": "assets/samfile.js",
       "extension": ".js",
-      "bytes": 3291
+      "bytes": 3256
     },
     {
       "path": "assets/samfile.css",
@@ -197,7 +197,7 @@
     {
       "path": "assets/worlds.js",
       "extension": ".js",
-      "bytes": 1139
+      "bytes": 1099
     },
     {
       "path": "assets/index3.js",

@@ -101,6 +101,14 @@ export interface PagesPluginOptions {
   minify?: boolean;
 
   /**
+   * Remove `console.log` / `console.warn` / `console.error` / `console.debug`
+   * / `console.info` calls from all built page scripts (production only).
+   *
+   * @default false
+   */
+  removeConsole?: boolean;
+
+  /**
    * Write a `pages.d.ts` ambient module declaration next to `vite.config.ts`
    * so `import { pages } from "virtual:pages"` is typed in consumers.
    *
@@ -237,6 +245,7 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
   const splitMarkdown = options.splitMarkdown ?? false;
   const verbose = options.verbose ?? false;
   const singleBundle = options.singleBundle ?? false;
+  const removeConsole = options.removeConsole ?? false;
   const relativePath = options.relativePaths ?? false;
   const addRawMarkdown = options.addRawMarkdown ?? false;
   const pagesDirOpt = options.pagesDir ?? "pages";
@@ -1033,18 +1042,32 @@ ${ctx.content}
 
     // for single bundle
     config() {
-      if (!singleBundle) {
+      if (!singleBundle && !removeConsole) {
         return {};
       }
 
-      return {
-        build: {
-          rollupOptions: {
-            output: {
-              inlineDynamicImports: true,
-            },
+      const esbuild: Record<string, unknown> = {};
+
+      if (removeConsole) {
+        // Release builds: strip console.log/warn/error/debug/info from
+        // everything esbuild transforms. Dev mode (vite dev) keeps console
+        // output — esbuild handling only applies to the production build.
+        esbuild.drop = ["console"];
+      }
+
+      const build: Record<string, unknown> = {};
+
+      if (singleBundle) {
+        build.rollupOptions = {
+          output: {
+            inlineDynamicImports: true,
           },
-        },
+        };
+      }
+
+      return {
+        ...(Object.keys(esbuild).length > 0 ? { esbuild } : {}),
+        ...(Object.keys(build).length > 0 ? { build } : {}),
       };
     },
 
