@@ -166,6 +166,31 @@ finder -t python
 finder list
 ```
 
+### Validate a single template
+
+```bash
+# Validate a template file by path
+finder validate my-template.json5
+
+# Validate a built-in or custom template by name
+finder validate go
+
+# Validate multiple templates at once
+finder validate templates/go.json5 templates/django.json5
+
+# Short alias
+finder val my-template.json5
+```
+
+If a template file is not plain JSON and only parses after the JSON5
+preprocessor runs, a warning is printed so you know the template
+depends on JSON5 features (e.g. unquoted keys):
+
+```text
+File                       Result     Warning
+my-template.json5          OK (File)  Template is not plain JSON - it needs the JSON5 preprocessor to be parsed
+```
+
 ## Templates
 
 ### Built-in templates

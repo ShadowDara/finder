@@ -2676,7 +2676,9 @@ export default {
     "folders": [],
     "min_version": "0.3.16",
     "name": "*",
-    "tags": "docker"
+    "tags": [
+      "docker"
+    ]
   },
   "java-gradle.json5": {
     "description": "Java project with Gradle build tool",

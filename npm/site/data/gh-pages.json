@@ -1,34 +1,34 @@
 {
-  "generatedAt": "2026-09-13T20:23:26.926Z",
+  "generatedAt": "2026-09-13T23:34:52.067Z",
   "total": {
-    "files": 57,
-    "bytes": 416176,
-    "kilobytes": 406.42,
+    "files": 58,
+    "bytes": 417268,
+    "kilobytes": 407.49,
     "megabytes": 0.4
   },
   "byExtension": [
     {
       "extension": ".js",
       "files": 20,
-      "bytes": 339860,
-      "percentage": 81.66
+      "bytes": 341297,
+      "percentage": 81.79
     },
     {
       "extension": ".css",
       "files": 15,
       "bytes": 56648,
-      "percentage": 13.61
+      "percentage": 13.58
     },
     {
       "extension": ".txt",
       "files": 1,
-      "bytes": 9809,
-      "percentage": 2.36
+      "bytes": 9413,
+      "percentage": 2.26
     },
     {
       "extension": ".html",
-      "files": 20,
-      "bytes": 7848,
+      "files": 21,
+      "bytes": 7899,
       "percentage": 1.89
     },
     {
@@ -42,7 +42,7 @@
     {
       "path": "assets/main_entry.js",
       "extension": ".js",
-      "bytes": 87546
+      "bytes": 88782
     },
     {
       "path": "assets/jquery.module.js",
@@ -52,7 +52,7 @@
     {
       "path": "assets/viewer.js",
       "extension": ".js",
-      "bytes": 77569
+      "bytes": 77571
     },
     {
       "path": "assets/installscript.js",
@@ -72,7 +72,7 @@
     {
       "path": "dependencies.txt",
       "extension": ".txt",
-      "bytes": 9809
+      "bytes": 9413
     },
     {
       "path": "assets/viewer.css",
@@ -82,7 +82,7 @@
     {
       "path": "assets/configeditor.js",
       "extension": ".js",
-      "bytes": 9040
+      "bytes": 9239
     },
     {
       "path": "assets/regexcreator.js",
@@ -323,6 +323,11 @@
       "path": "assets/about.js",
       "extension": ".js",
       "bytes": 228
+    },
+    {
+      "path": "jekyll/index.html",
+      "extension": ".html",
+      "bytes": 51
     }
   ]
 }

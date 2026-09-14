@@ -22,34 +22,37 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@rollup/plugin-yaml": "^5.0.0",
+    "@tailwindcss/vite": "^4.3.3",
     "@types/html-minifier-terser": "^7.0.2",
     "@types/jquery": "^4.0.1",
     "@types/license-checker": "^25.0.6",
     "@types/node": "^26.5.0",
+    "@vitejs/devtools": "^0.7.2",
     "chalk": "^6.0.0",
+    "esbuild": ">=0.25.0",
     "eslint": "^10.9.1",
     "html-minifier-terser": "^7.2.0",
     "license-checker": "^25.0.1",
     "rollup-plugin-string": "^3.0.0",
     "rollup-plugin-visualizer": "^7.1.1",
     "sass": "^1.104.0",
+    "tailwindcss": "^4.3.3",
     "tinyglobby": "^0.2.17",
     "tsx": "^4.23.13",
     "typescript": "^5.5.0",
     "typescript-eslint": "^8.69.0",
-    "vite": "6.4.3",
-    "vite-plugin-eslint": "^1.8.1",
-    "esbuild": ">=0.25.0",
-    "@tailwindcss/vite": "^4.3.3",
-    "@vitejs/devtools": "^0.7.2",
     "unplugin-remove": "^1.0.3",
-    "tailwindcss": "^4.3.3"
+    "vite": "6.4.3",
+    "vite-plugin-eslint": "^1.8.1"
   },
   "dependencies": {
+    "@node-steam/vdf": "^2.2.0",
     "@shadowdara/dlib": "^0.0.4",
     "@shadowdara/finder-lib": "^0.3.17",
+    "ejs": "^6.0.1",
     "highlight.js": "^11.12.0",
     "jquery": "^4.0.0",
+    "liquidjs": "^10.29.0",
     "tellraw-parser": "^1.0.2"
   }
 }

@@ -48,7 +48,14 @@ declare module "virtual:pages" {
   }>;
   }
 
-  export type PageEntry = ComponentPage | MarkdownPage;
+  export interface LiquidPage {
+    id: string;
+    type: "liquid";
+    html: string;
+    styles: string[];
+  }
+
+  export type PageEntry = ComponentPage | MarkdownPage | LiquidPage;
 
   export const pages: Record<string, PageEntry>;
 }

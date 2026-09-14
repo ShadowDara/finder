@@ -5,15 +5,21 @@ from pathlib import Path
 MIN_VERSION = "0.3.17"
 
 # Ordner, in dem dieses Script liegt
-folder = Path(__file__).parent
-folder = Path(str(folder) + "/templates")
+folder = Path(__file__).parent / "templates"
 
 wrong = 0
-all = 0
+total = 0
 notags = 0
+noarraytags = 0
+
+
+# ─────────────────────────────────────────────
+# min_version ergänzen
+# ─────────────────────────────────────────────
 
 for json_file in folder.glob("*.json5"):
-    all += 1
+    total += 1
+
     try:
         with json_file.open("r", encoding="utf-8") as f:
             data = json.load(f)
@@ -27,31 +33,57 @@ for json_file in folder.glob("*.json5"):
                 f.write("\n")
 
             print(f"Ergänzt: {json_file.name}")
-        else:
-            #print(f"Bereits vorhanden: {json_file.name}")
-            pass
 
     except json.JSONDecodeError:
         print(f"Übersprungen (ungültiges JSON): {json_file.name}")
         wrong += 1
+
     except Exception as e:
         print(f"Fehler bei {json_file.name}: {e}")
 
+
+# ─────────────────────────────────────────────
+# tags überprüfen
+# ─────────────────────────────────────────────
 
 for json_file in folder.glob("*.json5"):
     try:
         with json_file.open("r", encoding="utf-8") as f:
             data = json.load(f)
 
-        # Nur ergänzen, wenn min_version nicht vorhanden ist
+        # Keine tags vorhanden
         if "tags" not in data:
             print(f"No Tags: {json_file.name}")
             notags += 1
+            continue
+
+        # tags vorhanden, aber kein Array / keine Liste
+        if not isinstance(data["tags"], list):
+            print(
+                f"Tags is not an array: "
+                f"{json_file.name} "
+                f"(type: {type(data['tags']).__name__})"
+            )
+            noarraytags += 1
 
     except json.JSONDecodeError:
+        # Bereits im ersten Durchlauf gezählt
         pass
+
     except Exception as e:
         print(f"Fehler bei {json_file.name}: {e}")
 
-print(f"\nTemplates with wrong JSON {wrong} from {all}")
-print(f"Templates without tags {notags} from {all - wrong} Working Templates")
+
+# ─────────────────────────────────────────────
+# Statistik
+# ─────────────────────────────────────────────
+
+working = total - wrong
+
+print()
+print(f"Templates with wrong JSON: {wrong} from {total}")
+print(f"Templates without tags: {notags} from {working} working templates")
+print(
+    f"Templates where tags is not an array: "
+    f"{noarraytags} from {working - notags} templates with tags attribute"
+)
