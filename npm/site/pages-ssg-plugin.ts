@@ -19,6 +19,9 @@ const RESOLVED_VIRTUAL_MODULE_ID = "\0" + VIRTUAL_MODULE_ID;
 const STYLE_PREFIX = "virtual:page-style:";
 const RESOLVED_STYLE_PREFIX = "\0" + STYLE_PREFIX;
 
+const DATA_PREFIX = "virtual:page-data:";
+const RESOLVED_DATA_PREFIX = "\0" + DATA_PREFIX;
+
 /**
  * Placeholder rendered in place of `{{ JS_SCRIPT }}` while Liquid runs.
  * The real script tag (pointing at the built `page.[tj]s`) is only known
@@ -626,6 +629,13 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
           .map((style) => styleImports.get(style)!)
           .join(", ");
 
+        /* Liquid pages are fully static (rendered at build time) — they
+         * are served/emitted as-is and do not need a client-side entry in
+         * the pages map (which would bloat the main bundle). */
+        if (page.type === "liquid") {
+          return null;
+        }
+
         if (page.type === "markdown") {
           const styles = page.styles
             .map((style) => styleImports.get(style)!)
@@ -655,23 +665,29 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
   }`;
         }
 
-        if (page.type === "liquid") {
-          return `  ${JSON.stringify(page.id)}: {
-    id: ${JSON.stringify(page.id)},
-    type: "liquid",
-    html: ${JSON.stringify(page.html ?? "")},
-    styles: [${styles}]
-  }`;
-        }
+        // Große Build-Daten (z. B. gerendertes Markdown) nicht inline in
+        // den Entry packen, sondern in einen eigenen Chunk auslagern, der
+        // erst beim Laden der Seite per import() geholt wird.
+        const dataSize =
+          typeof page.buildData === "string" ? page.buildData.length : 1024;
+
+        const inlineData = dataSize < 8 * 1024;
+
+        const dataField = inlineData
+          ? `data: ${JSON.stringify(page.buildData ?? null)},`
+          : `loadData: () => import(${JSON.stringify(
+              DATA_PREFIX + page.id,
+            )}).then((m) => m.default),`;
 
         return `  ${JSON.stringify(page.id)}: {
     id: ${JSON.stringify(page.id)},
     type: "component",
     load: () => import(${JSON.stringify(page.importPath)}),
-    data: ${JSON.stringify(page.buildData ?? null)},
+    ${dataField}
     styles: [${styles}]
   }`;
       })
+      .filter((entry): entry is string => entry != null)
       .join(",\n");
 
     return `${imports}
@@ -714,6 +730,8 @@ declare module "virtual:pages" {
     id: string;
     type: "component";
     data?: unknown;
+    /** Lazy-loaded build data (large payloads). */
+    loadData?: () => Promise<unknown>;
     load: () => Promise<PageModule>;
     styles: string[];
   }
@@ -841,6 +859,10 @@ ${ctx.content}
         return RESOLVED_STYLE_PREFIX + id.slice(STYLE_PREFIX.length);
       }
 
+      if (id.startsWith(DATA_PREFIX)) {
+        return RESOLVED_DATA_PREFIX + id.slice(DATA_PREFIX.length);
+      }
+
       return null;
     },
 
@@ -875,6 +897,23 @@ ${ctx.content}
         const stylePath = id.slice(RESOLVED_STYLE_PREFIX.length);
 
         return `export { default } from ${JSON.stringify(stylePath + "?url")};`;
+      }
+
+      if (id.startsWith(RESOLVED_DATA_PREFIX)) {
+        const pageId = id.slice(RESOLVED_DATA_PREFIX.length);
+        const page = pages.find(
+          (page) => page.type === "component" && page.id === pageId,
+        );
+
+        if (!page) {
+          throw new Error(
+            `[vite-plugin-pages-ssg] Data page not found: ${pageId}`,
+          );
+        }
+
+        return `
+      export default ${JSON.stringify(page.buildData ?? null)};
+    `;
       }
 
       return null;

@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "dev": "pnpm --filter web dev",
-    "build": "pnpm --filter web build"
+    "build": "pnpm --filter web build",
+    "stats": "pnpx linguist-js"
   },
   "devDependencies": {
     "@shadowdara/linguist-js": "*",

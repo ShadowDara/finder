@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-09-14T00:30:53.073Z",
+  "generatedAt": "2026-09-14T00:39:06.781Z",
   "total": {
-    "files": 62,
-    "bytes": 348083,
-    "kilobytes": 339.92,
+    "files": 63,
+    "bytes": 348096,
+    "kilobytes": 339.94,
     "megabytes": 0.33
   },
   "byExtension": [
     {
       "extension": ".js",
-      "files": 25,
-      "bytes": 274242,
+      "files": 26,
+      "bytes": 274255,
       "percentage": 78.79
     },
     {
@@ -39,11 +39,6 @@
       "bytes": 79109
     },
     {
-      "path": "assets/main_entry.js",
-      "extension": ".js",
-      "bytes": 33424
-    },
-    {
       "path": "assets/installscript.js",
       "extension": ".js",
       "bytes": 32265
@@ -52,6 +47,11 @@
       "path": "assets/_virtual_page-markdown_changelog.js",
       "extension": ".js",
       "bytes": 30566
+    },
+    {
+      "path": "assets/_virtual_page-data_index.js",
+      "extension": ".js",
+      "bytes": 25412
     },
     {
       "path": "assets/_virtual_page-markdown_readme.js",
@@ -82,6 +82,11 @@
       "path": "assets/configeditor.js",
       "extension": ".js",
       "bytes": 9239
+    },
+    {
+      "path": "assets/main_entry.js",
+      "extension": ".js",
+      "bytes": 8025
     },
     {
       "path": "assets/viewer.js",

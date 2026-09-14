@@ -50,17 +50,19 @@ async function main() {
       return;
     }
 
-    // Liquid pages are rendered to static HTML at build time; this branch
-    // only acts as a safety net if such a page is ever loaded client-side.
     if (page.type === "liquid") {
-      app.innerHTML = page.html ?? "";
-
       return;
     }
 
     const module = await page.load();
 
-    await module.default(app, page.data);
+    // Große Build-Daten werden optional in einem eigenen Chunk geladen.
+    const data =
+      "loadData" in page && typeof page.loadData === "function"
+        ? await page.loadData()
+        : page.data;
+
+    await module.default(app, data);
   } catch (error) {
     ErrorPage(app, id, error);
   }

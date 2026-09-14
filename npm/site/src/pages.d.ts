@@ -28,6 +28,8 @@ declare module "virtual:pages" {
     id: string;
     type: "component";
     data?: unknown;
+    /** Lazy-loaded build data (large payloads). */
+    loadData?: () => Promise<unknown>;
     load: () => Promise<PageModule>;
     styles: string[];
   }
