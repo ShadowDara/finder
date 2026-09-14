@@ -51,14 +51,11 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN addgroup --system --gid 1001 nodejs \
     && adduser --system --uid 1001 nextjs
 
-COPY --from=builder /app/npm/hub/public ./public
-COPY --from=builder --chown=nextjs:nodejs /app/npm/hub/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/npm/hub/.next/static ./.next/static
-
-# Hinweis: Der Prisma-Client (inkl. libquery_engine) wird von Next.js
-# (output: "standalone" + outputFileTracing) bereits vollständig in
-# .next/standalone eingebettet — eine separate Kopie ist nicht nötig
-# (unter pnpm existiert node_modules/.prisma nicht als flacher Pfad).
+# Standalone enthält bereits die pruned node_modules + app unter npm/hub/
+COPY --from=builder /app/npm/hub/.next/standalone ./
+# public + static werden von Next nicht in standalone kopiert -> extra
+COPY --from=builder /app/npm/hub/public ./npm/hub/public
+COPY --from=builder --chown=nextjs:nodejs /app/npm/hub/.next/static ./npm/hub/.next/static
 
 USER nextjs
 
@@ -67,4 +64,4 @@ EXPOSE 3015
 ENV PORT=3015
 ENV HOSTNAME=0.0.0.0
 
-CMD ["node", "server.js"]
+CMD ["node", "npm/hub/server.js"]
