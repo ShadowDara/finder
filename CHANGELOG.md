@@ -8,6 +8,7 @@ _The whole finder CHANGELOG_
 - added a subcommand to validate templates
 - install templates from the web
 - optimizing finder search
+- finder templates now support the extensions [`.json`, `.jsonc`, `json5`]
 
 ## 0.3.17 - 13.09.2026
 
