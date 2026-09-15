@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-09-15T15:33:47.157Z",
+  "generatedAt": "2026-09-15T15:49:30.020Z",
   "total": {
     "files": 169,
-    "bytes": 34013691,
-    "kilobytes": 33216.5,
+    "bytes": 34021045,
+    "kilobytes": 33223.68,
     "megabytes": 32.44
   },
   "byExtension": [
     {
       "extension": ".js",
       "files": 124,
-      "bytes": 33171676,
+      "bytes": 33178871,
       "percentage": 97.52
     },
     {
@@ -22,7 +22,7 @@
     {
       "extension": ".css",
       "files": 16,
-      "bytes": 221909,
+      "bytes": 222068,
       "percentage": 0.65
     },
     {
@@ -58,7 +58,7 @@
     {
       "path": "assets/monaco.js",
       "extension": ".js",
-      "bytes": 4934323
+      "bytes": 4941518
     },
     {
       "path": "monacoeditorwork/css.worker.bundle.js",
@@ -496,6 +496,11 @@
       "bytes": 3247
     },
     {
+      "path": "assets/main.css",
+      "extension": ".css",
+      "bytes": 3206
+    },
+    {
       "path": "assets/powershell.js",
       "extension": ".js",
       "bytes": 3131
@@ -514,11 +519,6 @@
       "path": "assets/qsharp.js",
       "extension": ".js",
       "bytes": 3051
-    },
-    {
-      "path": "assets/main.css",
-      "extension": ".css",
-      "bytes": 3047
     },
     {
       "path": "assets/r.js",

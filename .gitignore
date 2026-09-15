@@ -45,3 +45,4 @@ npm/site/tsconfig.tsbuildinfo
 *.vsix
 /npm/fling-vscode/node_modules
 /npm/site/data/fling
+npm/site/data/fling.tmLanguage.json
