@@ -86,6 +86,179 @@ monaco.languages.setMonarchTokensProvider("fling", {
   },
 });
 
+/**
+ * „Dark Modern“ — das aktuelle Standard-Theme von VS Code.
+ * Monaco liefert es nicht mit (nur vs / vs-dark / hc-black / hc-light),
+ * deshalb definieren wir es hier nach: Editor-Farben (#1f1f1f / #cccccc)
+ * plus die reichen TextMate-Scope-Regeln aus Dark+/Dark Modern, damit die
+ * Token-Farben im Browser so aussehen wie in VS Code.
+ */
+monaco.editor.defineTheme("dark-modern", {
+  base: "vs-dark",
+  inherit: true,
+  rules: [
+    { token: "", foreground: "cccccc", background: "1f1f1f" },
+    // comments — volle Scope-Kette mit Suffix
+    { token: "comment", foreground: "6a9955" },
+    { token: "comment.line", foreground: "6a9955" },
+    { token: "comment.line.double-slash", foreground: "6a9955" },
+    { token: "comment.line.double-slash.ts", foreground: "6a9955" },
+    { token: "comment.line.double-slash.js", foreground: "6a9955" },
+    { token: "comment.line.double-slash.fling", foreground: "6a9955" },
+    { token: "comment.line.hash", foreground: "6a9955" },
+    { token: "comment.line.hash.fling", foreground: "6a9955" },
+    // keywords / control flow
+    { token: "keyword", foreground: "569cd6" },
+    { token: "keyword.ts", foreground: "569cd6" },
+    { token: "keyword.js", foreground: "569cd6" },
+    { token: "keyword.fling", foreground: "569cd6" },
+    { token: "keyword.control", foreground: "569cd6" },
+    { token: "keyword.control.ts", foreground: "569cd6" },
+    { token: "keyword.control.js", foreground: "569cd6" },
+    { token: "keyword.control.fling", foreground: "569cd6" },
+    { token: "keyword.control.conditional", foreground: "569cd6" },
+    { token: "keyword.control.loop", foreground: "569cd6" },
+    { token: "keyword.declaration", foreground: "569cd6" },
+    { token: "keyword.declaration.ts", foreground: "569cd6" },
+    { token: "keyword.declaration.js", foreground: "569cd6" },
+    { token: "keyword.declaration.fling", foreground: "569cd6" },
+    { token: "keyword.operator.logical", foreground: "569cd6" },
+    // strings & escapes
+    { token: "string", foreground: "ce9178" },
+    { token: "string.ts", foreground: "ce9178" },
+    { token: "string.js", foreground: "ce9178" },
+    { token: "string.fling", foreground: "ce9178" },
+    { token: "string.quoted", foreground: "ce9178" },
+    { token: "string.quoted.double", foreground: "ce9178" },
+    { token: "string.quoted.double.ts", foreground: "ce9178" },
+    { token: "string.quoted.double.js", foreground: "ce9178" },
+    { token: "string.quoted.double.fling", foreground: "ce9178" },
+    { token: "constant.character.escape", foreground: "d7ba7d" },
+    { token: "constant.character.escape.ts", foreground: "d7ba7d" },
+    { token: "constant.character.escape.js", foreground: "d7ba7d" },
+    // numbers & constants
+    { token: "number", foreground: "b5cea8" },
+    { token: "number.ts", foreground: "b5cea8" },
+    { token: "number.js", foreground: "b5cea8" },
+    { token: "number.fling", foreground: "b5cea8" },
+    { token: "constant.numeric", foreground: "b5cea8" },
+    { token: "constant.numeric.ts", foreground: "b5cea8" },
+    { token: "constant.numeric.js", foreground: "b5cea8" },
+    { token: "constant.numeric.fling", foreground: "b5cea8" },
+    { token: "constant.language", foreground: "569cd6" },
+    { token: "constant.language.ts", foreground: "569cd6" },
+    { token: "constant.language.js", foreground: "569cd6" },
+    { token: "constant.language.fling", foreground: "569cd6" },
+    { token: "constant.language.true", foreground: "569cd6" },
+    { token: "constant.language.true.fling", foreground: "569cd6" },
+    { token: "constant.language.false", foreground: "569cd6" },
+    { token: "constant.language.false.fling", foreground: "569cd6" },
+    { token: "constant.language.null", foreground: "569cd6" },
+    { token: "constant.language.null.fling", foreground: "569cd6" },
+    // operators & punctuation → neutral
+    { token: "keyword.operator", foreground: "d4d4d4" },
+    { token: "keyword.operator.ts", foreground: "d4d4d4" },
+    { token: "keyword.operator.js", foreground: "d4d4d4" },
+    { token: "keyword.operator.fling", foreground: "d4d4d4" },
+    { token: "keyword.operator.assignment", foreground: "d4d4d4" },
+    { token: "keyword.operator.assignment.ts", foreground: "d4d4d4" },
+    { token: "keyword.operator.assignment.js", foreground: "d4d4d4" },
+    { token: "keyword.operator.comparison", foreground: "d4d4d4" },
+    { token: "keyword.operator.comparison.ts", foreground: "d4d4d4" },
+    { token: "keyword.operator.comparison.js", foreground: "d4d4d4" },
+    { token: "keyword.operator.comparison.fling", foreground: "d4d4d4" },
+    { token: "keyword.operator.arithmetic", foreground: "d4d4d4" },
+    { token: "keyword.operator.arithmetic.ts", foreground: "d4d4d4" },
+    { token: "keyword.operator.arithmetic.js", foreground: "d4d4d4" },
+    { token: "keyword.operator.arithmetic.fling", foreground: "d4d4d4" },
+    { token: "operator", foreground: "d4d4d4" },
+    { token: "punctuation", foreground: "d4d4d4" },
+    { token: "punctuation.definition", foreground: "d4d4d4" },
+    { token: "punctuation.separator", foreground: "d4d4d4" },
+    { token: "punctuation.terminator", foreground: "d4d4d4" },
+    { token: "punctuation.accessor", foreground: "d4d4d4" },
+    { token: "delimiter", foreground: "d4d4d4" },
+    { token: "meta", foreground: "d4d4d4" },
+    // types / classes / interfaces
+    { token: "type", foreground: "4ec9b0" },
+    { token: "type.ts", foreground: "4ec9b0" },
+    { token: "type.js", foreground: "4ec9b0" },
+    { token: "entity.name.type", foreground: "4ec9b0" },
+    { token: "entity.name.type.ts", foreground: "4ec9b0" },
+    { token: "entity.name.class", foreground: "4ec9b0" },
+    { token: "entity.name.class.ts", foreground: "4ec9b0" },
+    { token: "entity.name.interface", foreground: "4ec9b0" },
+    { token: "entity.name.interface.ts", foreground: "4ec9b0" },
+    { token: "entity.name.namespace", foreground: "4ec9b0" },
+    { token: "typeParameter", foreground: "4ec9b0" },
+    // functions & builtins → dunkles Gelb wie in Dark Modern
+    // WICHTIG: wireTmGrammars liefert Tokens mit vollem Scope-Suffix
+    // (z.B. "entity.name.function.ts" oder "entity.name.function.fling"),
+    // daher MUSS jede Regel sowohl UNscoped als auch MIT suffix registriert werden.
+    { token: "entity.name.function", foreground: "dcdcaa" },
+    { token: "entity.name.function.ts", foreground: "dcdcaa" },
+    { token: "entity.name.function.js", foreground: "dcdcaa" },
+    { token: "entity.name.function.fling", foreground: "dcdcaa" },
+    { token: "support.function", foreground: "dcdcaa" },
+    { token: "support.function.ts", foreground: "dcdcaa" },
+    { token: "support.function.js", foreground: "dcdcaa" },
+    { token: "support.function.fling", foreground: "dcdcaa" },
+    { token: "support.function.builtin", foreground: "dcdcaa" },
+    { token: "support.function.builtin.ts", foreground: "dcdcaa" },
+    { token: "support.function.builtin.js", foreground: "dcdcaa" },
+    { token: "support.function.builtin.fling", foreground: "dcdcaa" },
+    // variables / parameters / properties → Hellblau
+    // Gleiches Problem: Tokens haben Language-Suffix
+    { token: "variable", foreground: "9cdcfe" },
+    { token: "variable.ts", foreground: "9cdcfe" },
+    { token: "variable.js", foreground: "9cdcfe" },
+    { token: "variable.fling", foreground: "9cdcfe" },
+    { token: "variable.other", foreground: "9cdcfe" },
+    { token: "variable.other.ts", foreground: "9cdcfe" },
+    { token: "variable.other.js", foreground: "9cdcfe" },
+    { token: "variable.other.fling", foreground: "9cdcfe" },
+    { token: "variable.parameter", foreground: "9cdcfe" },
+    { token: "variable.parameter.ts", foreground: "9cdcfe" },
+    { token: "variable.parameter.js", foreground: "9cdcfe" },
+    { token: "variable.parameter.fling", foreground: "9cdcfe" },
+    { token: "variable.other.property", foreground: "9cdcfe" },
+    { token: "variable.other.property.ts", foreground: "9cdcfe" },
+    { token: "variable.other.property.js", foreground: "9cdcfe" },
+    { token: "variable.other.property.fling", foreground: "9cdcfe" },
+    { token: "variable.other.property.object", foreground: "9cdcfe" },
+    // markup: tags & attributes
+    { token: "tag", foreground: "569cd6" },
+    { token: "attribute.name", foreground: "9cdcfe" },
+    { token: "attribute.value", foreground: "ce9178" },
+  ],
+  colors: {
+    "editor.background": "#1f1f1f",
+    "editor.foreground": "#cccccc",
+    "editor.lineHighlightBackground": "#2d2d2d",
+    "editor.lineHighlightBorder": "#2d2d2d",
+    "editorLineNumber.foreground": "#858585",
+    "editorLineNumber.activeForeground": "#c6c6c6",
+    "editorCursor.foreground": "#aeafad",
+    "editor.selectionBackground": "#264f78",
+    "editor.inactiveSelectionBackground": "#3a3d41",
+    "editor.findMatchHighlightBackground": "#525266",
+    "editorIndentGuide.background1": "#404040",
+    "editorIndentGuide.activeBackground1": "#707070",
+    "editorWhitespace.foreground": "#3b3b3b",
+    "editorGutter.background": "#1f1f1f",
+    "editorWidget.background": "#202020",
+    "editorWidget.border": "#454545",
+    "editorSuggestWidget.background": "#252526",
+    "editorHoverWidget.background": "#252526",
+    "editorHoverWidget.border": "#454545",
+    "editorError.foreground": "#f14c4c",
+    "editorWarning.foreground": "#cca700",
+    "editorInfo.foreground": "#3794ff",
+    "editorBracketMatch.background": "#ffffff1f",
+    "editorBracketMatch.border": "#888888",
+  },
+});
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function setupTextMate(editor: any) {
   // Oniguruma (die Regex-Engine hinter TextMate) als WASM in den Browser laden.
@@ -157,7 +330,7 @@ export default function render(el: HTMLDivElement) {
               Editor
             </span>
             <span class="pane-badge" id="badge-lang">
-              TypeScript
+              TypeScript / Javascript
             </span>
           </div>
           <div class="editor-area" id="editor-left"></div>
@@ -171,7 +344,7 @@ export default function render(el: HTMLDivElement) {
               <span class="pane-dot pane-dot--view"></span>
               Preview
             </span>
-            <span class="pane-badge">Read Only</span>
+            <span class="pane-badge">Fling Output Read Only</span>
           </div>
           <div class="editor-area" id="editor-right"></div>
         </div>
@@ -194,7 +367,7 @@ export default function render(el: HTMLDivElement) {
   const leftEditor = monaco.editor.create(leftEl, {
     value: DEFAULT_VALUE,
     language: "typescript",
-    theme: "vs-dark",
+    theme: "dark-modern",
     automaticLayout: true,
     minimap: { enabled: false },
     fontSize: 14,
@@ -209,9 +382,9 @@ export default function render(el: HTMLDivElement) {
   // --- Right: read-only preview editor ---
   const rightEl = el.querySelector<HTMLDivElement>("#editor-right")!;
   const rightEditor = monaco.editor.create(rightEl, {
-    value: DEFAULT_VALUE,
+    // Kein value: wird sofort nach dem Erstellen mit dem übersetzten Inhalt befüllt.
     language: "fling",
-    theme: "vs-dark",
+    theme: "dark-modern",
     automaticLayout: true,
     readOnly: true,
     minimap: { enabled: false },
@@ -259,11 +432,15 @@ export default function render(el: HTMLDivElement) {
 
   leftEditor.onDidChangeModelContent(() => {
     let res = jsToFling(leftEditor.getValue());
-
     rightEditor.setValue(res.fling ?? "// this didnt work");
     updateStats();
   });
 
+  // Initiale Übersetzung sofort ausführen (nicht warten auf erste Änderung)
+  {
+    const res = jsToFling(leftEditor.getValue());
+    rightEditor.setValue(res.fling ?? "// this didnt work");
+  }
   updateStats();
 
   // --- Header actions ---

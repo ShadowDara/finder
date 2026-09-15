@@ -1,29 +1,35 @@
 {
-  "generatedAt": "2026-09-15T14:02:54.563Z",
+  "generatedAt": "2026-09-15T15:33:47.157Z",
   "total": {
-    "files": 168,
-    "bytes": 33412690,
-    "kilobytes": 32629.58,
-    "megabytes": 31.86
+    "files": 169,
+    "bytes": 34013691,
+    "kilobytes": 33216.5,
+    "megabytes": 32.44
   },
   "byExtension": [
     {
       "extension": ".js",
       "files": 124,
-      "bytes": 33039063,
-      "percentage": 98.88
+      "bytes": 33171676,
+      "percentage": 97.52
+    },
+    {
+      "extension": ".wasm",
+      "files": 1,
+      "bytes": 468274,
+      "percentage": 1.38
     },
     {
       "extension": ".css",
       "files": 16,
       "bytes": 221909,
-      "percentage": 0.66
+      "percentage": 0.65
     },
     {
       "extension": ".ttf",
       "files": 1,
       "bytes": 140956,
-      "percentage": 0.42
+      "percentage": 0.41
     },
     {
       "extension": ".html",
@@ -34,7 +40,7 @@
     {
       "extension": ".txt",
       "files": 1,
-      "bytes": 1376,
+      "bytes": 1490,
       "percentage": 0
     }
   ],
@@ -52,7 +58,7 @@
     {
       "path": "assets/monaco.js",
       "extension": ".js",
-      "bytes": 4801710
+      "bytes": 4934323
     },
     {
       "path": "monacoeditorwork/css.worker.bundle.js",
@@ -83,6 +89,11 @@
       "path": "monacoeditorwork/editor.worker.bundle.js",
       "extension": ".js",
       "bytes": 637641
+    },
+    {
+      "path": "assets/onigasm.wasm",
+      "extension": ".wasm",
+      "bytes": 468274
     },
     {
       "path": "assets/json.worker-GcqnjdSx.js",
@@ -662,7 +673,7 @@
     {
       "path": "dependencies.txt",
       "extension": ".txt",
-      "bytes": 1376
+      "bytes": 1490
     },
     {
       "path": "assets/markdowneditor.js",
