@@ -1,23 +1,23 @@
 {
-  "generatedAt": "2026-09-15T12:15:16.517Z",
+  "generatedAt": "2026-09-15T12:21:20.009Z",
   "total": {
     "files": 168,
-    "bytes": 32565557,
-    "kilobytes": 31802.3,
+    "bytes": 32571425,
+    "kilobytes": 31808.03,
     "megabytes": 31.06
   },
   "byExtension": [
     {
       "extension": ".js",
       "files": 124,
-      "bytes": 32186280,
-      "percentage": 98.84
+      "bytes": 32189374,
+      "percentage": 98.83
     },
     {
       "extension": ".css",
       "files": 16,
-      "bytes": 219135,
-      "percentage": 0.67
+      "bytes": 221909,
+      "percentage": 0.68
     },
     {
       "extension": ".ttf",
@@ -52,7 +52,7 @@
     {
       "path": "assets/monaco.js",
       "extension": ".js",
-      "bytes": 3948985
+      "bytes": 3952079
     },
     {
       "path": "monacoeditorwork/css.worker.bundle.js",
@@ -92,7 +92,7 @@
     {
       "path": "assets/monaco.css",
       "extension": ".css",
-      "bytes": 162435
+      "bytes": 165209
     },
     {
       "path": "assets/codicon.ttf",

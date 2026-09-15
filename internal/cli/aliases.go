@@ -1,3 +1,12 @@
+// aliases.go implements user-defined short names (aliases) for
+// templates, stored in ~/.finder/aliases.json.
+//
+// An alias allows shortened invocations:
+//
+//	finder alias myvue shadowdara.github.io/test/template
+//	finder myvue                      // → resolves to the template name
+//
+// Resolution is deliberately single-level (no alias chains).
 package cli
 
 import (
@@ -11,7 +20,7 @@ import (
 	"github.com/shadowdara/finder/pub/color"
 )
 
-// AliasPath liefert den Pfad zu ~/.finder/aliases.json
+// AliasPath returns the path to ~/.finder/aliases.json
 func AliasPath() (string, error) {
 	base, err := templates.GetCustomPath()
 	if err != nil {
@@ -20,8 +29,8 @@ func AliasPath() (string, error) {
 	return filepath.Join(base, "aliases.json"), nil
 }
 
-// LoadAliases liest ~/.finder/aliases.json ein.
-// Fehlt die Datei, wird eine leere Map zurückgegeben.
+// LoadAliases reads ~/.finder/aliases.json.
+// If the file is missing, an empty map is returned.
 func LoadAliases() (map[string]string, error) {
 	path, err := AliasPath()
 	if err != nil {
@@ -47,7 +56,7 @@ func LoadAliases() (map[string]string, error) {
 	return m, nil
 }
 
-// SaveAliases schreibt die Map atomar nach ~/.finder/aliases.json
+// SaveAliases writes the map atomically to ~/.finder/aliases.json
 func SaveAliases(m map[string]string) error {
 	path, err := AliasPath()
 	if err != nil {
@@ -70,21 +79,21 @@ func SaveAliases(m map[string]string) error {
 	return nil
 }
 
-// ResolveAlias löst einen Namen über aliases.json auf.
-// Ist kein Alias vorhanden, wird der Name unverändert zurückgegeben.
+// ResolveAlias resolves a name via aliases.json.
+// If no alias exists, the name is returned unchanged.
 func ResolveAlias(name string) string {
 	aliases, err := LoadAliases()
 	if err != nil {
 		return name
 	}
-	// einfache Auflösung, eine Ebene (keine Ketten)
+	// simple resolution, one level (no chains)
 	if target, ok := aliases[name]; ok && strings.TrimSpace(target) != "" {
 		return target
 	}
 	return name
 }
 
-// AddAlias legt einen Alias an: alias -> target
+// AddAlias creates an alias: alias -> target
 func AddAlias(alias, target string) error {
 	alias = strings.TrimSpace(alias)
 	target = strings.TrimSpace(target)
@@ -101,8 +110,8 @@ func AddAlias(alias, target string) error {
 	if err != nil {
 		return err
 	}
-	// Schutz: Alias darf keinen bestehenden Alias-Namen verdecken
-	// -> überschreiben ist erlaubt (upsert), aber mit Hinweis
+	// Guard: an alias may overwrite an existing alias name
+	// -> overwriting is allowed (upsert), but with a hint
 	aliases[alias] = target
 	if err := SaveAliases(aliases); err != nil {
 		return err
@@ -111,7 +120,7 @@ func AddAlias(alias, target string) error {
 	return nil
 }
 
-// RemoveAlias löscht einen Alias
+// RemoveAlias deletes an alias
 func RemoveAlias(alias string) error {
 	alias = strings.TrimSpace(alias)
 	if alias == "" {
@@ -132,7 +141,7 @@ func RemoveAlias(alias string) error {
 	return nil
 }
 
-// ListAliases zeigt alle Aliase aus ~/.finder/aliases.json
+// ListAliases shows all aliases from ~/.finder/aliases.json
 func ListAliases() error {
 	aliases, err := LoadAliases()
 	if err != nil {

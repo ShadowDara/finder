@@ -1,3 +1,13 @@
+// helper.go contains all matching helpers of the search:
+//
+//   - matchesPattern / matchingFileNames / matchAny: name-based checks
+//     using the 3-tier strategy (exact → regex → glob)
+//   - compiledRegex / regexCache: compiled regex patterns with cache
+//   - matchFolderTemplate: full template match for a folder
+//     (name, files, subfolders, size, checksums)
+//   - executeCommand: optional command requirement of the template
+//   - convertToBytes / checkSize / getDirSize: size checks
+
 package search
 
 import (
@@ -218,6 +228,10 @@ func warmPattern(pattern string) {
 	compiledRegex(pattern)
 }
 
+// matchingFileNames returns all file names from files that match pattern.
+//
+// Optimization: if pattern contains NO metacharacters, only an exact
+// map lookup is needed (instead of iterating over every entry).
 func matchingFileNames(files map[string]bool, pattern string) []string {
 	// Fast path for exact names: plain map lookup instead of iterating every
 	// entry through the pattern matcher.
@@ -237,6 +251,11 @@ func matchingFileNames(files map[string]bool, pattern string) []string {
 	return matching
 }
 
+// checkChecksums checks a file against optional SHA256/SHA512 hashes.
+//
+// Both hashes are computed in a single pass (MultiWriter). If both fields
+// are empty, the check is considered passed. Comparisons are case-insensitive
+// and use trimmed comparison values.
 func checkChecksums(filePath string, checksums structure.Checksum) bool {
 	if checksums.Sha256 == "" && checksums.Sha512 == "" {
 		return true
@@ -265,9 +284,8 @@ func checkChecksums(filePath string, checksums structure.Checksum) bool {
 	)
 }
 
-// matchAny returns true if at least one entry in the provided map matches
-// the pattern. Exact matches are checked first, then regex matching is used,
-// and glob matching remains as a fallback for existing templates.
+// matchAny returns true if at least ONE entry of the map matches the
+// pattern. Order: exact match → regex → glob (fallback for existing templates).
 func matchAny(entries map[string]bool, pattern string) bool {
 	if entries[pattern] {
 		return true

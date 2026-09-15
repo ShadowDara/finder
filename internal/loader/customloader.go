@@ -1,3 +1,7 @@
+// customloader.go: Ehemalige Implementierung zum Laden benutzerdefinierter
+// Templates aus OS-spezifischen Konfigurationsverzeichnissen. Der Code ist
+// auskommentiert, weil das Feature aus der Version entfernt wurde — die
+// Template-Logik läuft heute über internal/templates.
 package loader
 
 const PROGRAM_NAME = "finder"

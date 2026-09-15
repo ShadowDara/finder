@@ -5,7 +5,7 @@ and similar tools that need to create valid Finder templates.
 
 Goal:
 
-- create Finder-compatible JSON5 templates
+- create Finder-compatible JSON5/JSON/JSONC templates
 - work with all supported template features
 - prefer valid, minimal, and robust patterns
 - avoid false positives and over-constrained matches
@@ -24,7 +24,15 @@ A template describes:
 - optional command validation
 - tags for discovery
 
-A template is a JSON5 file ending in `.json5`.
+A template is a JSON5, JSON, or JSONC file. Supported extensions:
+
+- `.json5`
+- `.json`
+- `.jsonc`
+
+Content can use JSON5 syntax (unquoted keys, trailing commas, comments)
+regardless of the extension — Finder preprocesses JSON5 syntax before
+parsing. Plain JSON is always valid.
 
 Typical locations:
 
@@ -38,9 +46,22 @@ name, so a template fetched from
 `https://example.com/foo/template.json5` is reachable as
 `example.com/foo/template`.
 
-The filename without `.json5` becomes the template name, for example:
+The filename without its extension becomes the template name, for
+example:
 
 - `my-template.json5` → `my-template`
+- `my-template.json` → `my-template`
+- `my-template.jsonc` → `my-template`
+
+When the same base name exists with multiple extensions, the highest
+priority extension wins:
+
+- `.jsonc` (highest priority)
+- `.json`
+- `.json5` (lowest priority)
+
+So if `my-template.json5`, `my-template.json` and `my-template.jsonc`
+all exist, the `.jsonc` file is used.
 
 ---
 
@@ -662,7 +683,7 @@ work as a glob — the regex version is more explicit.
 When generating a Finder template, the assistant should follow this
 checklist:
 
-1. Create a valid `.json5` file.
+1. Create a valid `.json5`, `.json`, or `.jsonc` file.
 2. Use `name: "*"` unless the directory name is intentionally constrained.
 3. Keep required files minimal and specific.
 4. Prefer `required` over broad file matching if a file is essential.
@@ -749,9 +770,9 @@ Use:
 Do not write patterns that accidentally compile as a regex and change
 meaning. If in doubt, prefer glob or exact names.
 
-### Mistake 4: forgetting the `.json5` extension
+### Mistake 4: forgetting a supported file extension
 
-The file must end in `.json5`.
+The file must end in `.json5`, `.json`, or `.jsonc`.
 
 ### Mistake 5: writing invalid JSON5
 

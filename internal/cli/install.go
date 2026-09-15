@@ -1,3 +1,12 @@
+// install.go implements the commands around template installation:
+//
+//   - Install / InstallAll: download templates by URL (or registry name)
+//   - ListInstalled:        show installed templates
+//   - Uninstall / UninstallAll: remove installed templates
+//
+// Installed templates are stored under ~/.finder/installed/templates/;
+// their sources are tracked in the lockfile (~/.finder/filepkg.lock.json).
+// The download logic itself lives in pub/filepkg.
 package cli
 
 import (
@@ -14,7 +23,7 @@ import (
 	"github.com/shadowdara/finder/pub/filepkg"
 )
 
-// UserLockPath liefert den Pfad zur Lockfile im UserRoot.
+// UserLockPath returns the path to the lockfile in the UserRoot.
 func UserLockPath() (string, error) {
 	path, err := templates.GetCustomPath()
 	if err != nil {
@@ -23,19 +32,18 @@ func UserLockPath() (string, error) {
 	return filepath.Join(path, "filepkg.lock.json"), nil
 }
 
-// installPathForURL bildet den relativen Zielpfad unterhalb von
-// ~/.finder/templates/ aus einer URL ab. Aus
+// installPathForURL maps a URL to the relative target path under
+// ~/.finder/templates/. From
 //
 //	https://shadowdara.github.io/test/template.json5
 //
-// wird
+// it becomes
 //
 //	shadowdara.github.io/test/template.json5
 //
-// damit der Name dem Pfad entspricht und `finder` ihn über genau
-// diesen Pfad wiederfindet und aufrufbar ist. Ein Port im Host wird
-// durch einen Unterstrich ersetzt (Windows erlaubt kein ':' im
-// Dateinamen):
+// so the name matches the path and `finder` can look it up and invoke it
+// via exactly that path. A port in the host is replaced by an underscore
+// (Windows does not allow ':' in file names):
 //
 //	http://localhost:8765/test/template.json5
 //	→ localhost_8765/test/template.json5
@@ -50,13 +58,13 @@ func installPathForURL(rawURL string) (string, error) {
 	name := u.Host + u.Path
 	name = strings.TrimSuffix(name, "/")
 	name = strings.TrimPrefix(name, "/")
-	// Windows-kompatibel machen: ':' ist im Dateinamen verboten.
+	// Make it Windows-compatible: ':' is forbidden in file names.
 	name = strings.ReplaceAll(name, ":", "_")
 	return name, nil
 }
 
-// normalizeSourceURL ergänzt eine fehlende http(s)-Kennung und
-// liefert die volle, verwendbare URL zurück.
+// normalizeSourceURL prepends a missing http(s) scheme and returns the
+// full, usable URL.
 func normalizeSourceURL(rawURL string) string {
 	trimmed := strings.TrimSpace(rawURL)
 	if !strings.HasPrefix(trimmed, "http://") && !strings.HasPrefix(trimmed, "https://") {
@@ -65,27 +73,27 @@ func normalizeSourceURL(rawURL string) string {
 	return trimmed
 }
 
-// Install lädt ein Template per URL (oder Namen aus der Built-in
-// Registry) über die filepkg-Library in ~/.finder/templates/ ab.
-// Der Zielname entspricht der URL (Host + Pfad), sodass das
-// installierte Template später über genau diesen Namen aufrufbar ist.
+// Install downloads a template by URL (or by name from the built-in
+// registry) via the filepkg library into ~/.finder/templates/.
+// The target name matches the URL (host + path) so the installed
+// template can later be invoked by exactly that name.
 func Install(installTemplate string) error {
 	installTemplate = strings.TrimSpace(installTemplate)
 	if installTemplate == "" {
 		return fmt.Errorf("install: kein Template-Name oder keine URL angegeben")
 	}
 
-	// Bestimme Quelle + Zielname
+	// Determine source + target name
 	sourceURL := installTemplate
 	relName := templates.TrimTemplateExt(installTemplate)
 	looksLikeURL := strings.Contains(relName, "/") || strings.Contains(relName, ".")
 
 	if !looksLikeURL {
-		// Kein Pfad / keine URL → Built-in Registry-Name
+		// No path / no URL → built-in registry name
 		sourceURL = fmt.Sprintf("https://raw.githubusercontent.com/shadowdara/finder/main/templates/%s.json5", relName)
 		relName = "shadowdara.github.io/registry/" + relName
 	} else {
-		// Echte URL (auch ohne http://) → Zielname = Host + Pfad
+		// Real URL (even without http://) → target name = host + path
 		name, err := installPathForURL(normalizeSourceURL(installTemplate))
 		if err != nil {
 			return fmt.Errorf("install: %v", err)
@@ -93,45 +101,45 @@ func Install(installTemplate string) error {
 		relName = name
 	}
 
-	// Quelle normalisieren: immer volle http(s)-URL für die Lockfile
+	// Normalize the source: always a full http(s) URL for the lockfile
 	sourceURL = normalizeSourceURL(sourceURL)
 
-	// WICHTIG: Der Zielname darf NIE auf eine Template-Extension enden —
-	// er wird später mit + ".json5" als Dateiname verwendet.
-	// installPathForURL liefert ggf. den Pfad inkl. Extension (aus der URL),
-	// daher hier bereinigen.
+	// IMPORTANT: the target name must NEVER end with a template extension —
+	// it is later used with + ".json5" as the file name.
+	// installPathForURL may return the path including the extension (from the URL),
+	// so clean it here.
 	relName = templates.TrimTemplateExt(relName)
 
-	// Zielverzeichnis: ~/.finder/installed/templates/
+	// Target directory: ~/.finder/installed/templates/
 	customPath, err := templates.GetInstalledTemplatePath()
 	if err != nil {
 		return fmt.Errorf("install: Home-Pfad nicht ermittelbar: %v", err)
 	}
 
-	// Lockfile: ~/.finder/filepkg.lock.json (Ordner muss existieren!)
+	// Lockfile: ~/.finder/filepkg.lock.json (the folder must exist!)
 	lockPath, err := UserLockPath()
 	if err != nil {
 		return fmt.Errorf("install: Lockfile-Pfad nicht ermittelbar: %v", err)
 	}
 
-	// Ordner sicherstellen (Lockfile liegt in ~/.finder/)
+	// Ensure the folder exists (the lockfile lives in ~/.finder/)
 	if err := os.MkdirAll(filepath.Dir(lockPath), 0o755); err != nil {
 		return fmt.Errorf("install: Ordner %s anlegen: %v", filepath.Dir(lockPath), err)
 	}
 
-	// filepkg-Manager: Dateien landen als Unterpfade in installed/templates/,
-	// die Lockfile liegt im .finder/ Root.
+	// filepkg manager: files land as sub-paths in installed/templates/,
+	// the lockfile lives in the .finder/ root.
 	m := filepkg.New(customPath, lockPath)
 	m.Client = filepkg.DefaultClient()
 
-	// Existiert die Datei schon (gleicher relName)? Dann überspringen.
+	// Does the file already exist (same relName)? Then skip.
 	if exists, _ := m.IsLocked(relName + ".json5"); exists || fileExists(filepath.Join(customPath, filepath.FromSlash(relName)+".json5")) {
 		fmt.Printf("%sTemplate '%s' ist bereits installiert.%s\n", color.Yellow, relName, color.Reset)
 		return nil
 	}
 
-	// Herunterladen + in Lockfile nachverfolgen (filepkg berechnet
-	// den SHA-256-Hash und speichert ihn).
+	// Download + track in the lockfile (filepkg computes the SHA-256
+	// hash and stores it).
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 	defer cancel()
 
@@ -146,11 +154,10 @@ func Install(installTemplate string) error {
 	return nil
 }
 
-// InstallAll installiert alle Templates aus der Lockfile
-// (~/.finder/filepkg.lock.json) in das installierte
-// Template-Verzeichnis. Templates, deren Server nicht erreichbar ist
-// (oder die aus anderen Gründen nicht geladen werden können), werden
-// übersprungen — der Rest wird trotzdem installiert.
+// InstallAll installs all templates from the lockfile
+// (~/.finder/filepkg.lock.json) into the installed template directory.
+// Templates whose server is unreachable (or that cannot be loaded for
+// other reasons) are skipped — the rest is still installed.
 func InstallAll() error {
 	customPath, err := templates.GetInstalledTemplatePath()
 	if err != nil {
@@ -177,7 +184,7 @@ func InstallAll() error {
 	for _, f := range lf.Files {
 		name := f.Name
 
-		// Bereits auf der Platte vorhanden → überspringen.
+		// Already present on disk → skip.
 		if fileExists(filepath.Join(customPath, filepath.FromSlash(name))) {
 			fmt.Printf("%sTemplate '%s' ist bereits installiert.%s\n", color.Yellow, name, color.Reset)
 			continue
@@ -186,7 +193,7 @@ func InstallAll() error {
 		ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 		if _, err := m.Pull(ctx, name); err != nil {
 			cancel()
-			// Server nicht erreichbar o.ä. → überspringen und weitermachen.
+			// Server unreachable or similar → skip and continue.
 			fmt.Printf("%sÜbersprungen: Template '%s' (%v)%s\n", color.Yellow, name, err, color.Reset)
 			failed++
 			continue
@@ -201,13 +208,13 @@ func InstallAll() error {
 	return nil
 }
 
-// fileExists prüft, ob eine Datei existiert.
+// fileExists checks whether a file exists.
 func fileExists(path string) bool {
 	_, err := os.Stat(path)
 	return err == nil
 }
 
-// ListInstalled zeigt alle installierten Templates aus
+// ListInstalled shows all installed templates from
 // ~/.finder/installed/templates/.
 func ListInstalled() error {
 	installed, err := templates.LoadInstalledTemplates()
@@ -227,8 +234,8 @@ func ListInstalled() error {
 	return nil
 }
 
-// Uninstall entfernt ein Template (per Name oder URL) aus
-// ~/.finder/installed/templates/ (inkl. Lockfile-Eintrag).
+// Uninstall removes a template (by name or URL) from
+// ~/.finder/installed/templates/ (including the lockfile entry).
 func Uninstall(templateName string) error {
 	templateName = strings.TrimSpace(templateName)
 	if templateName == "" {
@@ -255,10 +262,10 @@ func Uninstall(templateName string) error {
 
 	m := filepkg.New(customPath, lockPath)
 
-	// Lockfile-Eintrag entfernen
+	// Remove the lockfile entry
 	removed, _ := m.Remove(relName + ".json5")
 
-	// Datei auf der Platte entfernen
+	// Remove the file from disk
 	filePath := filepath.Join(customPath, filepath.FromSlash(relName)+".json5")
 	osErr := os.Remove(filePath)
 
@@ -270,9 +277,9 @@ func Uninstall(templateName string) error {
 	return nil
 }
 
-// UninstallAll entfernt ALLE installierten Templates aus
-// ~/.finder/installed/templates/ — inklusive Lockfile-Einträgen.
-// Ist nichts installiert, wird das gemeldet, ohne Fehler.
+// UninstallAll removes ALL installed templates from
+// ~/.finder/installed/templates/ — including lockfile entries.
+// If nothing is installed, that is reported without an error.
 func UninstallAll() error {
 	customPath, err := templates.GetInstalledTemplatePath()
 	if err != nil {
@@ -297,13 +304,13 @@ func UninstallAll() error {
 	for _, f := range lf.Files {
 		name := f.Name
 
-		// Lockfile-Eintrag entfernen
+		// Remove the lockfile entry
 		if _, err := m.Remove(name); err != nil {
 			fmt.Printf("%suninstall: '%s': %v%s\n", color.Red, name, err, color.Reset)
 			continue
 		}
 
-		// Datei auf der Platte entfernen
+		// Remove the file from disk
 		filePath := filepath.Join(customPath, filepath.FromSlash(name))
 		if err := os.Remove(filePath); err != nil && !os.IsNotExist(err) {
 			fmt.Printf("%suninstall: '%s': %v%s\n", color.Red, name, err, color.Reset)

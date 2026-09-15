@@ -1,15 +1,20 @@
+// Package loader stellt einfache Datei-Ladefunktionen bereit.
+//
+// Historisch enthielt es auch die Logik zum Laden benutzerdefinierter
+// Templates aus dem OS-spezifischen Konfigurationsverzeichnis — dieser
+// Teil wurde entfernt bzw. auskommentiert (siehe customloader.go).
 package loader
 
 import (
-    "os"
+	"os"
 )
 
-// LoadFile reads the file at the given path and returns its contents as a
-// string. It returns a non-nil error if the file cannot be read.
+// LoadFile liest die Datei am angegebenen Pfad und gibt ihren Inhalt als
+// String zurück. Bei Lesefehlern wird ein nicht-nil-Fehler geliefert.
 func LoadFile(path string) (string, error) {
-    data, err := os.ReadFile(path)
-    if err != nil {
-        return "", err
-    }
-    return string(data), nil
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return "", err
+	}
+	return string(data), nil
 }
