@@ -57,6 +57,10 @@ func Find(folderstruct structure.Folder, output_type string, name string, doCach
 	// Start timing
 	start := time.Now()
 
+	// Precompile all regex patterns used by the template once, so the
+	// parallel scan goroutines below never pay the per-call compile cost.
+	precompilePatterns(folderstruct)
+
 	roots := getSearchRoots()
 
 	// Use a channel to collect results from goroutines

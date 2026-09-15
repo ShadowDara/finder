@@ -1,35 +1,35 @@
 {
-  "generatedAt": "2026-09-14T21:10:53.964Z",
+  "generatedAt": "2026-09-15T00:17:36.228Z",
   "total": {
     "files": 68,
-    "bytes": 351602,
-    "kilobytes": 343.36,
+    "bytes": 354099,
+    "kilobytes": 345.8,
     "megabytes": 0.34
   },
   "byExtension": [
     {
       "extension": ".js",
       "files": 27,
-      "bytes": 276394,
-      "percentage": 78.61
+      "bytes": 278695,
+      "percentage": 78.71
     },
     {
       "extension": ".css",
       "files": 15,
       "bytes": 56700,
-      "percentage": 16.13
+      "percentage": 16.01
     },
     {
       "extension": ".txt",
       "files": 1,
-      "bytes": 9517,
-      "percentage": 2.71
+      "bytes": 9713,
+      "percentage": 2.74
     },
     {
       "extension": ".html",
       "files": 25,
       "bytes": 8991,
-      "percentage": 2.56
+      "percentage": 2.54
     }
   ],
   "files": [
@@ -46,12 +46,12 @@
     {
       "path": "assets/_virtual_page-markdown_changelog.js",
       "extension": ".js",
-      "bytes": 30767
+      "bytes": 30822
     },
     {
       "path": "assets/_virtual_page-data_index.js",
       "extension": ".js",
-      "bytes": 25412
+      "bytes": 27658
     },
     {
       "path": "assets/_virtual_page-markdown_readme.js",
@@ -71,7 +71,7 @@
     {
       "path": "dependencies.txt",
       "extension": ".txt",
-      "bytes": 9517
+      "bytes": 9713
     },
     {
       "path": "assets/viewer.css",

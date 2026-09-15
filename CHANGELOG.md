@@ -2,11 +2,12 @@
 
 _The whole finder CHANGELOG_
 
-## Newest
+## Newest prob 0.3.18
 
 - added Author field to finder templates
 - added a subcommand to validate templates
 - install templates from the web
+- optimizing finder search
 
 ## 0.3.17 - 13.09.2026
 

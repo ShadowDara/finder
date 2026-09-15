@@ -13,9 +13,49 @@ import (
 	"regexp"
 	"runtime"
 	"strings"
+	"sync"
 
 	"github.com/shadowdara/finder/internal/structure"
 )
+
+// matcherMetaChars is the set of characters that make a pattern interesting
+// for regex or glob matching. Patterns containing none of them can only ever
+// match by exact name, which is handled by fast paths elsewhere.
+const matcherMetaChars = `*?[^$\.+()|{}[\]`
+
+// regexCache stores compiled patterns so that each distinct pattern is
+// compiled at most once per process instead of on every matcher call.
+// The value is either a *regexp.Regexp (pattern is a valid regex) or
+// notRegexMarker (pattern is not a regex and must fall back to glob).
+// A nil value means the pattern has not been looked up yet.
+var regexCache sync.Map
+
+// notRegexMarker marks cached patterns that failed to compile as regex.
+type notRegexMarker struct{}
+
+// compiledRegex returns the precompiled regexp for pattern, or nil if the
+// pattern is not a valid regular expression.
+func compiledRegex(pattern string) *regexp.Regexp {
+	if v, ok := regexCache.Load(pattern); ok {
+		if re, ok := v.(*regexp.Regexp); ok {
+			return re
+		}
+		return nil
+	}
+
+	var stored any
+	if re, err := regexp.Compile(pattern); err == nil {
+		stored = re
+	} else {
+		stored = notRegexMarker{}
+	}
+	regexCache.Store(pattern, stored)
+
+	if re, ok := stored.(*regexp.Regexp); ok {
+		return re
+	}
+	return nil
+}
 
 // matchFolderTemplate checks whether the directory at dirPath matches the
 // provided template. Matching includes name pattern, required files and
@@ -111,23 +151,83 @@ func matchFolderTemplate(dirPath string, template structure.Folder) bool {
 	return true
 }
 
+// matchesPattern applies Finder's 3-tier name matching (exact, regex, glob)
+// without recompiling the regex on every call. Patterns are compiled once and
+// cached in regexCache, and cheap fast paths are taken for "*" and exact names.
 func matchesPattern(pattern string, name string) bool {
 	if pattern == "" {
 		return false
+	}
+	if pattern == "*" {
+		return true
 	}
 	if pattern == name {
 		return true
 	}
 
-	if ok, err := regexp.MatchString(pattern, name); err == nil {
-		return ok
+	// Fast path: no wildcard or regex metacharacters means this pattern can
+	// only ever match by exact name, which was already checked above.
+	if !strings.ContainsAny(pattern, matcherMetaChars) {
+		return false
+	}
+
+	if re := compiledRegex(pattern); re != nil {
+		return re.MatchString(name)
 	}
 
 	ok, err := path.Match(pattern, name)
 	return err == nil && ok
 }
 
+// precompilePatterns compiles every regex-capable pattern used by the template
+// into regexCache before the search starts, so the parallel scan goroutines
+// never pay the compile cost. Exact names and glob-only patterns are skipped.
+func precompilePatterns(template structure.Folder) {
+	if template.Name != "" {
+		warmPattern(template.Name)
+	}
+	for _, file := range template.Files {
+		warmPattern(file.Name)
+	}
+	for _, folder := range template.Folders {
+		warmNestedPatterns(folder)
+	}
+}
+
+// warmNestedPatterns precompiles the name pattern of folder and, recursively,
+// of all its nested folders and files.
+func warmNestedPatterns(folder structure.Folder) {
+	warmPattern(folder.Name)
+	for _, file := range folder.Files {
+		warmPattern(file.Name)
+	}
+	for _, sub := range folder.Folders {
+		warmNestedPatterns(sub)
+	}
+}
+
+// warmPattern compiles pattern only if it can ever be handled by regex or
+// glob matching (i.e. it is not a plain exact name).
+func warmPattern(pattern string) {
+	if pattern == "" || pattern == "*" {
+		return
+	}
+	if !strings.ContainsAny(pattern, matcherMetaChars) {
+		return
+	}
+	compiledRegex(pattern)
+}
+
 func matchingFileNames(files map[string]bool, pattern string) []string {
+	// Fast path for exact names: plain map lookup instead of iterating every
+	// entry through the pattern matcher.
+	if pattern != "" && !strings.ContainsAny(pattern, matcherMetaChars) {
+		if files[pattern] {
+			return []string{pattern}
+		}
+		return nil
+	}
+
 	matching := make([]string, 0)
 	for name := range files {
 		if matchesPattern(pattern, name) {
@@ -180,6 +280,11 @@ func matchAny(entries map[string]bool, pattern string) bool {
 	}
 
 	return false
+}
+
+// resetRegexCache clears the cached compiled patterns. Used by tests.
+func resetRegexCache() {
+	regexCache = sync.Map{}
 }
 
 // executeCommand runs a shell command in dirPath. The function returns
