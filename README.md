@@ -446,6 +446,12 @@ go run ./cmd/finder list
   description of what the template matches.
 - Feel free to contribute code improvements or new features.
 
+### Clone the Repo
+
+```sh
+git clone --depth=1 https://github.com/shadowdara/finder
+```
+
 ## Roadmap
 
 - [ ] Temporary templates via command-line arguments
