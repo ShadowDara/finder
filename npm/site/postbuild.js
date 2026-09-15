@@ -5,6 +5,11 @@ await rm("./../../cmd/findergen/frontend", {
   force: true,
 });
 
+await rm("./dist/monacoeditorwork", {
+  recursive: true,
+  force: true,
+})
+
 await cp("./dist", "./../../cmd/findergen/frontend", {
   recursive: true,
 });

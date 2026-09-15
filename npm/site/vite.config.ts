@@ -12,6 +12,13 @@ import eslint from "vite-plugin-eslint";
 import yaml from "@rollup/plugin-yaml";
 import { buildStats } from "./vite-plugin-build-stats";
 import { markdownLint } from "./md-linter-plugin";
+import i18nextLoader from "vite-plugin-i18next-loader";
+import _monacoEditorPlugin from "vite-plugin-monaco-editor";
+
+const monacoEditorPlugin =
+  typeof _monacoEditorPlugin === "function"
+    ? _monacoEditorPlugin
+    : (_monacoEditorPlugin as any).default;
 
 function dependenciesPlugin(outDir: string) {
   return {
@@ -63,6 +70,9 @@ export default defineConfig(({ mode }) => {
   const outDir = mode === "static" ? "dist-static" : "dist";
   return {
     base: mode === "static" ? "/finder/" : "./",
+    define: {
+      "process.env.NODE_ENV": JSON.stringify(mode === "production" ? "production" : "development"),
+    },
     esbuild: {
       jsxFactory: "jsx",
       jsxFragment: "Fragment",
@@ -77,6 +87,10 @@ export default defineConfig(({ mode }) => {
       },
     },
     plugins: [
+      // i18nextLoader({
+      //   paths: ["./src/locales"],
+      // }),
+      monacoEditorPlugin({}),
       markdownLint({
         maxLineLength: 72,
 
@@ -108,9 +122,13 @@ export default defineConfig(({ mode }) => {
           "docs/config": ["/src/markdownrootstyle.css"],
           "docs/index": ["/src/markdownrootstyle.css"],
         },
-        // splitMarkdown: true,
+        // Markdown-Bundle in eigene JS-Chunks aufteilen, statt alles im
+        // main_entry.js zu bündeln (wird per dynamic import() geladen).
+        splitMarkdown: true,
         prettyUrls: true,
         entry: "src/main.ts",
+        // Release-Builds: alle console.log/warn/error/debug/info entfernen
+        removeConsole: true,
         minify: true,
         title: (id) => {
           const titles: Record<string, string> = {

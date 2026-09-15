@@ -1,0 +1,11 @@
+{
+  description: "Numbered project folder",
+  name: "^project-[0-9]+$",
+  files: [
+    {
+      name: "^(main|app)\\.py$",
+      existence: "required",
+    },
+  ],
+  tags: ["python", "numbered"],
+}

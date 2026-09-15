@@ -1,0 +1,5 @@
+# Example Files for testing
+contentmode: false
+paths:
+  - .gitignore
+  - q.exe

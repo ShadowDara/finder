@@ -1,0 +1,7 @@
+name=Max
+age=25
+city=Berlin
+l=hallo
+lol=pnpm
+
+main.exe=finder

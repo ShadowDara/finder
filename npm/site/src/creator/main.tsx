@@ -521,6 +521,21 @@ export function renderCreator(app: HTMLDivElement, version: string) {
 
       inspectorEl.appendChild(
         labeled(
+          "Name regex",
+          textInput(
+            folder.nameRegex,
+            (v) => {
+              folder.nameRegex = v;
+              renderPreview();
+            },
+            '^project-[0-9]+$',
+          ),
+          "Optional Go regex (RE2) matched against the name instead of the glob.",
+        ),
+      );
+
+      inspectorEl.appendChild(
+        labeled(
           "Description",
           textArea(folder.description, (v) => {
             folder.description = v;
@@ -664,6 +679,21 @@ export function renderCreator(app: HTMLDivElement, version: string) {
           renderTree();
           renderPreview();
         }),
+      ),
+    );
+
+    inspectorEl.appendChild(
+      labeled(
+        "Name regex",
+        textInput(
+          file.nameRegex,
+          (v) => {
+            file.nameRegex = v;
+            renderPreview();
+          },
+          '^(main|app|server)\\.py$',
+        ),
+        "Optional Go regex (RE2) matched against the file name instead of the glob.",
       ),
     );
 

@@ -1,0 +1,26 @@
+{
+    "name": "Go Dev Container",
+    "image": "mcr.microsoft.com/devcontainers/go:1-1.24-bookworm",
+    "features": {
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "golang.go",
+                "ms-azuretools.vscode-docker",
+                "ms-azuretools.vscode-containers",
+                "ms-vscode-remote.remote-containers",
+                "DigitalBrainstem.javascript-ejs-support",
+                "mhutchie.git-graph",
+                "shadowdara.samfile",
+                "bradlc.vscode-tailwindcss",
+                "github.vscode-github-actions"
+            ]
+        }
+    },
+    "forwardPorts": [
+        8080
+    ],
+    "postCreateCommand": "go mod download"
+}

@@ -8,6 +8,8 @@ import { transformWithEsbuild } from "vite";
 import { tsImport } from "tsx/esm/api";
 import { escapeHtml } from "./src/jsx-runtime";
 import hljs from "highlight.js/lib/common";
+import { Liquid } from "liquidjs";
+import ejs from "ejs";
 
 const MARKDOWN_PREFIX = "virtual:page-markdown:";
 const RESOLVED_MARKDOWN_PREFIX = "\0" + MARKDOWN_PREFIX;
@@ -17,6 +19,27 @@ const RESOLVED_VIRTUAL_MODULE_ID = "\0" + VIRTUAL_MODULE_ID;
 
 const STYLE_PREFIX = "virtual:page-style:";
 const RESOLVED_STYLE_PREFIX = "\0" + STYLE_PREFIX;
+
+const DATA_PREFIX = "virtual:page-data:";
+const RESOLVED_DATA_PREFIX = "\0" + DATA_PREFIX;
+
+/**
+ * Placeholder rendered in place of `{{ JS_SCRIPT }}` while Liquid runs.
+ * The real script tag (pointing at the built `page.[tj]s`) is only known
+ * after bundling (build) or via the dev URL (dev), so it is substituted
+ * after rendering. Uses a plain ASCII token so liquidjs / minifiers do
+ * not mangle it.
+ */
+const LIQUID_SCRIPT_PLACEHOLDER = "__PAGES_LIQUID_JS_SCRIPT__";
+
+/**
+ * Build-data modules (`page.build.ts`, `index.build.tsx`, …) run only at
+ * build time via `loadBuildData()`. They must never become a client page
+ * or land in the production bundle.
+ */
+function isBuildDataFile(filePath: string): boolean {
+  return /\.build\.[^.]+$/i.test(path.basename(filePath));
+}
 
 /**
  * Escape `<...>` sequences that are NOT valid HTML tags, so the output can
@@ -89,6 +112,14 @@ export interface PagesPluginOptions {
 
   /** Minify emitted HTML with html-minifier-terser. @default false */
   minify?: boolean;
+
+  /**
+   * Remove `console.log` / `console.warn` / `console.error` / `console.debug`
+   * / `console.info` calls from all built page scripts (production only).
+   *
+   * @default false
+   */
+  removeConsole?: boolean;
 
   /**
    * Write a `pages.d.ts` ambient module declaration next to `vite.config.ts`
@@ -164,6 +195,13 @@ export interface PagesPluginOptions {
    * @default ["/@", "/node_modules/", "/src/"]
    */
   ignoredPathnames?: string[];
+
+  /**
+   * Liquid Template root folder
+   *
+   * @default "src/templates"
+   */
+  liquidTemplateRoot?: string;
 }
 
 export interface PageRenderContext {
@@ -172,9 +210,15 @@ export interface PageRenderContext {
   globalVar: string;
   scriptTag: string;
   styleTag: string;
+
+  /**
+   * Pre-rendered body content (e.g. Liquid pages). When set, the template
+   * renders it as-is instead of bootstrapping the client app.
+   */
+  content?: string;
 }
 
-type PageType = "component" | "markdown";
+type PageType = "component" | "markdown" | "liquid" | "ejs";
 
 interface PageEntry {
   /** Route id, e.g. "guide/installation" (posix, no extension). */
@@ -197,6 +241,12 @@ interface PageEntry {
 
   /** Build-time generated data */
   buildData?: unknown;
+
+  /**
+   * Liquid/EJS only: the client `page.[tj]s` next to the template, injected
+   * where `{{ JS_SCRIPT }}` appears. Never a `*.build.[tj]s` data module.
+   */
+  scriptSource?: string;
 }
 
 let resolvedStyles = new Map<string, string>();
@@ -214,6 +264,7 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
   const splitMarkdown = options.splitMarkdown ?? false;
   const verbose = options.verbose ?? false;
   const singleBundle = options.singleBundle ?? false;
+  const removeConsole = options.removeConsole ?? false;
   const relativePath = options.relativePaths ?? false;
   const addRawMarkdown = options.addRawMarkdown ?? false;
   const pagesDirOpt = options.pagesDir ?? "pages";
@@ -227,6 +278,7 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
     options.ignore ?? ((id: string) => id.split("/").pop()!.startsWith("_"));
   const getTitle = options.title ?? ((id: string) => id);
   const writeDts = options.dts ?? true;
+  const liquidTemplateRoot = options.liquidTemplateRoot ?? "src/templates";
 
   let config: ResolvedConfig;
   let pages: PageEntry[] = [];
@@ -239,6 +291,40 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
     const clean = style.replace(/^\/+/, "");
 
     return path.resolve(config.root, clean);
+  }
+
+  // Render a Liquid template with the given data at build time.
+  //
+  // Used for `X.html` pages: the template is read from disk and rendered
+  // with the data returned by the sibling `X.build.[tj]s` module's `build()`
+  // function, producing fully static HTML.
+  async function renderLiquidTemplate(
+    template: string,
+    data: unknown,
+  ): Promise<string> {
+    // liquidjs braucht einen absoluten Pfad als `root`, damit
+    // `{% include header.html %}` die Partials-Dateien findet.
+    // `jekyllInclude: true` erlaubt die Jekyll-Syntax ohne Quotes
+    // (sonst würde `header.html` als Variablen-Zugriff geparst).
+    const engine = new Liquid({
+      root: path.resolve(config.root, liquidTemplateRoot),
+      jekyllInclude: true,
+    });
+
+    return engine.parseAndRender(template, data as Record<string, unknown>);
+  }
+
+  // Render an EJS template with the given data at build time.
+  // Used for `X.ejs` pages (same data flow as Liquid).
+  async function renderEjsTemplate(
+    template: string,
+    data: unknown,
+    sourceFile: string,
+  ): Promise<string> {
+    // `filename` only matters for `include`-relative paths in EJS.
+    return ejs.render(template, data as any, {
+      filename: sourceFile,
+    });
   }
 
   function getAssetPath(htmlFileName: string, assetFileName: string): string {
@@ -278,11 +364,41 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
     );
 
     for (const page of pages) {
-      if (page.type !== "component") {
+      if (
+        page.type !== "component" &&
+        page.type !== "liquid" &&
+        page.type !== "ejs"
+      ) {
         continue;
       }
 
       page.buildData = await loadBuildData(page);
+
+      // Liquid pages: render the .html template with the build data at
+      // build time, so the emitted page is fully static HTML. `JS_SCRIPT`
+      // is rendered as a placeholder here — the real script tag is
+      // substituted after bundling (or via the dev URL in dev mode).
+      if (page.type === "liquid") {
+        page.html = await renderLiquidTemplate(
+          fs.readFileSync(page.source, "utf8"),
+          {
+            ...(page.buildData ?? {}),
+            JS_SCRIPT: LIQUID_SCRIPT_PLACEHOLDER,
+          },
+        );
+      }
+
+      // EJS pages: same data flow as Liquid, but rendered with EJS.
+      if (page.type === "ejs") {
+        page.html = await renderEjsTemplate(
+          fs.readFileSync(page.source, "utf8"),
+          {
+            ...(page.buildData ?? {}),
+            JS_SCRIPT: LIQUID_SCRIPT_PLACEHOLDER,
+          },
+          page.source,
+        );
+      }
 
       if (verbose) {
         console.log(
@@ -371,7 +487,9 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
       );
     }
 
-    const files: string[] = [];
+    const componentFiles: string[] = [];
+    const htmlFiles: string[] = [];
+    const ejsFiles: string[] = [];
 
     function walk(directory: string) {
       for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
@@ -382,25 +500,38 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
           continue;
         }
 
-        if (
-          entry.name.endsWith(".build.ts") ||
-          entry.name.endsWith(".build.tsx")
-        ) {
+        if (!entry.isFile()) {
           continue;
         }
 
-        if (
-          entry.isFile() &&
-          extensions.includes(path.extname(entry.name).toLowerCase())
-        ) {
-          files.push(fullPath);
+        // Build-data modules (page.build.ts / page.build.js / ...) are not
+        // pages themselves — they only feed data into their sibling page
+        // and must not be scanned as client entries.
+        if (isBuildDataFile(entry.name)) {
+          continue;
+        }
+
+        const extension = path.extname(entry.name).toLowerCase();
+
+        if (extension === ".html") {
+          htmlFiles.push(fullPath);
+          continue;
+        }
+
+        if (extension === ".ejs") {
+          ejsFiles.push(fullPath);
+          continue;
+        }
+
+        if (extensions.includes(extension)) {
+          componentFiles.push(fullPath);
         }
       }
     }
 
     walk(root);
 
-    return files
+    const componentPages = componentFiles
       .sort()
       .map((file): PageEntry => {
         const relativePath = path.relative(root, file).replace(/\\/g, "/");
@@ -423,6 +554,119 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
         };
       })
       .filter((page) => !shouldIgnore(page.id));
+
+    // Template pages: every `X.html` / `X.ejs` that has a sibling
+    // `X.build.[tj]s` becomes a build-time-rendered template page.
+    //
+    // - .html => Liquid
+    // - .ejs  => EJS
+    const liquidPages: PageEntry[] = [];
+
+    for (const file of htmlFiles.sort()) {
+      const relativePath = path.relative(root, file).replace(/\\/g, "/");
+
+      let id = relativePath.slice(0, -".html".length);
+
+      if (path.posix.basename(id) === "page") {
+        id = path.posix.join(path.posix.dirname(id), "index");
+      }
+
+      if (shouldIgnore(id)) {
+        continue;
+      }
+
+      if (componentPages.some((page) => page.id === id)) {
+        continue;
+      }
+
+      const buildFile = [".ts", ".tsx", ".js", ".jsx"]
+        .map((ext) => file.slice(0, -".html".length) + `.build${ext}`)
+        .find((candidate) => fs.existsSync(candidate));
+
+      if (!buildFile) {
+        continue;
+      }
+
+      const baseName = file.slice(0, -".html".length);
+      const scriptSource = [".ts", ".tsx", ".js", ".jsx"]
+        .map((ext) => baseName + ext)
+        .find(
+          (candidate) =>
+            fs.existsSync(candidate) && !isBuildDataFile(candidate),
+        );
+
+      liquidPages.push({
+        id,
+        source: file,
+        type: "liquid",
+        ...(scriptSource ? { scriptSource } : {}),
+        styles: options.styles?.[id] ?? [],
+      });
+    }
+
+    for (const file of ejsFiles.sort()) {
+      const relativePath = path.relative(root, file).replace(/\\/g, "/");
+
+      let id = relativePath.slice(0, -".ejs".length);
+
+      if (path.posix.basename(id) === "page") {
+        id = path.posix.join(path.posix.dirname(id), "index");
+      }
+
+      if (shouldIgnore(id)) {
+        continue;
+      }
+
+      if (componentPages.some((page) => page.id === id)) {
+        continue;
+      }
+
+      const buildFile = [".ts", ".tsx", ".js", ".jsx"]
+        .map((ext) => file.slice(0, -".ejs".length) + `.build${ext}`)
+        .find((candidate) => fs.existsSync(candidate));
+
+      if (!buildFile) {
+        continue;
+      }
+
+      const baseName = file.slice(0, -".ejs".length);
+      const scriptSource = [".ts", ".tsx", ".js", ".jsx"]
+        .map((ext) => baseName + ext)
+        .find(
+          (candidate) =>
+            fs.existsSync(candidate) && !isBuildDataFile(candidate),
+        );
+
+      liquidPages.push({
+        id,
+        source: file,
+        type: "ejs",
+        ...(scriptSource ? { scriptSource } : {}),
+        styles: options.styles?.[id] ?? [],
+      });
+    }
+
+    // A `page.js`/`page.ts` next to a template page is used as the client
+    // script source, not as its own route — the template index page
+    // takes precedence.
+    const liquidIds = new Set(liquidPages.map((page) => page.id));
+
+    const duplicateComponentIds = componentPages
+      .map((page) => page.id)
+      .filter((id) => {
+        // id "<dir>/page" conflicts with template index "<dir>/index".
+        if (!id.endsWith("/page")) {
+          return false;
+        }
+
+        return liquidIds.has(id.slice(0, -"/page".length) + "/index");
+      });
+
+    const filteredComponentPages = componentPages.filter(
+      (page) => !duplicateComponentIds.includes(page.id),
+    );
+
+    return [...filteredComponentPages, ...liquidPages];
   }
 
   function createVirtualModule(): string {
@@ -467,6 +711,26 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
           .map((style) => styleImports.get(style)!)
           .join(", ");
 
+        /* Liquid/EJS template pages are fully static (rendered at build
+         * time) — they are served/emitted as-is and do not need a
+         * client-side entry in the pages map (which would bloat the
+         * main bundle). */
+        if (page.type === "liquid" || page.type === "ejs") {
+          // Client scripts (`page.[tj]s`) are bundled separately and injected
+          // via `{{ JS_SCRIPT }}`. Build-data modules must not be imported
+          // here — that would pull them into the production bundle.
+          if (page.scriptSource && !isBuildDataFile(page.scriptSource)) {
+            return `  ${JSON.stringify(page.id)}: {
+    id: ${JSON.stringify(page.id)},
+    type: "component",
+    load: () => import(${JSON.stringify(page.importPath ?? page.scriptSource)}),
+    styles: []
+  }`;
+          }
+
+          return null;
+        }
+
         if (page.type === "markdown") {
           const styles = page.styles
             .map((style) => styleImports.get(style)!)
@@ -496,14 +760,29 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
   }`;
         }
 
+        // Große Build-Daten (z. B. gerendertes Markdown) nicht inline in
+        // den Entry packen, sondern in einen eigenen Chunk auslagern, der
+        // erst beim Laden der Seite per import() geholt wird.
+        const dataSize =
+          typeof page.buildData === "string" ? page.buildData.length : 1024;
+
+        const inlineData = dataSize < 8 * 1024;
+
+        const dataField = inlineData
+          ? `data: ${JSON.stringify(page.buildData ?? null)},`
+          : `loadData: () => import(${JSON.stringify(
+              DATA_PREFIX + page.id,
+            )}).then((m) => m.default),`;
+
         return `  ${JSON.stringify(page.id)}: {
     id: ${JSON.stringify(page.id)},
     type: "component",
     load: () => import(${JSON.stringify(page.importPath)}),
-    data: ${JSON.stringify(page.buildData ?? null)},
+    ${dataField}
     styles: [${styles}]
   }`;
       })
+      .filter((entry): entry is string => entry != null)
       .join(",\n");
 
     return `${imports}
@@ -546,6 +825,8 @@ declare module "virtual:pages" {
     id: string;
     type: "component";
     data?: unknown;
+    /** Lazy-loaded build data (large payloads). */
+    loadData?: () => Promise<unknown>;
     load: () => Promise<PageModule>;
     styles: string[];
   }
@@ -566,7 +847,14 @@ declare module "virtual:pages" {
   }>;
   }
 
-  export type PageEntry = ComponentPage | MarkdownPage;
+  export interface LiquidPage {
+    id: string;
+    type: "liquid";
+    html: string;
+    styles: string[];
+  }
+
+  export type PageEntry = ComponentPage | MarkdownPage | LiquidPage;
 
   export const pages: Record<string, PageEntry>;
 }
@@ -592,6 +880,26 @@ declare module "virtual:pages" {
   }
 
   function defaultTemplate(ctx: PageRenderContext): string {
+    /*
+     * Pre-rendered content (e.g. Liquid pages): plain static HTML document
+     * without the client-side bootstrapping shell.
+     */
+    if (ctx.content != null) {
+      return `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${escapeHtml(ctx.title)}</title>
+  ${ctx.styleTag}
+</head>
+<body>
+${ctx.content}
+</body>
+</html>
+`;
+    }
+
     return `<!doctype html>
 <html lang="en">
 <head>
@@ -646,6 +954,10 @@ declare module "virtual:pages" {
         return RESOLVED_STYLE_PREFIX + id.slice(STYLE_PREFIX.length);
       }
 
+      if (id.startsWith(DATA_PREFIX)) {
+        return RESOLVED_DATA_PREFIX + id.slice(DATA_PREFIX.length);
+      }
+
       return null;
     },
 
@@ -682,6 +994,23 @@ declare module "virtual:pages" {
         return `export { default } from ${JSON.stringify(stylePath + "?url")};`;
       }
 
+      if (id.startsWith(RESOLVED_DATA_PREFIX)) {
+        const pageId = id.slice(RESOLVED_DATA_PREFIX.length);
+        const page = pages.find(
+          (page) => page.type === "component" && page.id === pageId,
+        );
+
+        if (!page) {
+          throw new Error(
+            `[vite-plugin-pages-ssg] Data page not found: ${pageId}`,
+          );
+        }
+
+        return `
+      export default ${JSON.stringify(page.buildData ?? null)};
+    `;
+      }
+
       return null;
     },
 
@@ -714,7 +1043,13 @@ declare module "virtual:pages" {
           file.startsWith(docsRoot) &&
           path.extname(file).toLowerCase() === ".md";
 
-        if (!isPageFile && !isDocFile) {
+        // Liquid templates (page.html) live in the pages dir but have
+        // the .html extension, which is not in `extensions`.
+        const isLiquidFile =
+          file.startsWith(pagesRoot) &&
+          path.extname(file).toLowerCase() === ".html";
+
+        if (!isPageFile && !isDocFile && !isLiquidFile) {
           return;
         }
 
@@ -781,6 +1116,48 @@ declare module "virtual:pages" {
          * /foo/bar      -> foo/bar
          */
         if (page) {
+          /*
+           * Liquid pages are rendered at build time and served as static
+           * HTML. `{{ JS_SCRIPT }}` is replaced with a script tag loading
+           * the page module (`page.[tj]s`) through the dev server.
+           */
+          if (page.type === "liquid") {
+            const scriptTag =
+              page.scriptSource && !isBuildDataFile(page.scriptSource)
+                ? `<script type="module" src="/${path
+                    .relative(config.root, page.scriptSource)
+                    .replace(/\\/g, "/")}"></script>`
+                : "";
+
+            // Liquid pages are standalone: serve the rendered content as-is,
+            // without wrapping it in the default HTML shell.
+            let content =
+              page.html
+                ?.replaceAll(LIQUID_SCRIPT_PLACEHOLDER, scriptTag)
+                // Fallback: wörtliches `{{ JS_SCRIPT }}` ersetzen
+                .replaceAll("{{ JS_SCRIPT }}", scriptTag) ?? "";
+
+            if (options.minify) {
+              content = await minify(content, {
+                collapseWhitespace: true,
+                removeComments: true,
+                removeRedundantAttributes: true,
+                removeEmptyAttributes: true,
+                useShortDoctype: true,
+                minifyCSS: true,
+                minifyJS: true,
+              });
+            }
+
+            const transformed = await server.transformIndexHtml(url, content);
+
+            res.statusCode = 200;
+            res.setHeader("Content-Type", "text/html; charset=utf-8");
+            res.end(transformed);
+
+            return;
+          }
+
           const ctx: PageRenderContext = {
             id: page.id,
             title: getTitle(page.id),
@@ -829,18 +1206,32 @@ declare module "virtual:pages" {
 
     // for single bundle
     config() {
-      if (!singleBundle) {
+      if (!singleBundle && !removeConsole) {
         return {};
       }
 
-      return {
-        build: {
-          rollupOptions: {
-            output: {
-              inlineDynamicImports: true,
-            },
+      const esbuild: Record<string, unknown> = {};
+
+      if (removeConsole) {
+        // Release builds: strip console.log/warn/error/debug/info from
+        // everything esbuild transforms. Dev mode (vite dev) keeps console
+        // output — esbuild handling only applies to the production build.
+        esbuild.drop = ["console"];
+      }
+
+      const build: Record<string, unknown> = {};
+
+      if (singleBundle) {
+        build.rollupOptions = {
+          output: {
+            inlineDynamicImports: true,
           },
-        },
+        };
+      }
+
+      return {
+        ...(Object.keys(esbuild).length > 0 ? { esbuild } : {}),
+        ...(Object.keys(build).length > 0 ? { build } : {}),
       };
     },
 
@@ -885,6 +1276,8 @@ declare module "virtual:pages" {
             this.error(
               `[vite-plugin-pages-ssg] Could not resolve style: ${style}`,
             );
+
+            return;
           }
 
           resolvedStyles.set(style, resolved.id);
@@ -904,13 +1297,17 @@ declare module "virtual:pages" {
         this.error(
           "[vite-plugin-pages-ssg] Could not find the generated entry .js chunk.",
         );
+
+        return;
       }
+
+      const entryJsChunk = jsChunk;
 
       for (const page of pages) {
         const htmlFileName = outputFileName(page.id);
         const htmlDir = path.dirname(htmlFileName);
 
-        const scriptPath = getAssetPath(htmlFileName, jsChunk.fileName);
+        const scriptPath = getAssetPath(htmlFileName, entryJsChunk.fileName);
         const scriptTag = `<script type="module" src="${scriptPath}"></script>`;
 
         /*
@@ -927,7 +1324,7 @@ declare module "virtual:pages" {
         let styleTag = "";
 
         const cssFiles = new Set<string>(
-          jsChunk.viteMetadata?.importedCss ?? [],
+          entryJsChunk.viteMetadata?.importedCss ?? [],
         );
 
         if (pageChunk?.type === "chunk" && pageChunk.viteMetadata) {
@@ -944,6 +1341,117 @@ declare module "virtual:pages" {
               return `<link rel="stylesheet" href="${cssPath}" />`;
             })
             .join("\n  ");
+        }
+
+        /*
+         * Liquid pages are standalone: emit the rendered content as-is,
+         * without wrapping it in the default HTML shell. `{{ JS_SCRIPT }}`
+         * is replaced with the built page module (`page.[tj]s`), compiled
+         * with esbuild and emitted as its own asset.
+         */
+        if (page.type === "liquid") {
+          let scriptTagForContent = "";
+
+          if (
+            page.scriptSource &&
+            !isBuildDataFile(page.scriptSource) &&
+            fs.existsSync(page.scriptSource)
+          ) {
+            const scriptSourceCode = fs.readFileSync(page.scriptSource, "utf8");
+
+            const scriptExtension = path
+              .extname(page.scriptSource)
+              .slice(1)
+              .toLowerCase();
+
+            const loader =
+              scriptExtension === "ts" || scriptExtension === "tsx"
+                ? "ts"
+                : scriptExtension === "jsx"
+                  ? "jsx"
+                  : "js";
+
+            const result = await transformWithEsbuild(
+              scriptSourceCode,
+              page.scriptSource,
+              {
+                loader,
+                target: "esnext",
+                // Das Script wird als eigenes Asset ausgegeben und läuft
+                // nicht durch Vites normalen Minify-Pass — daher hier
+                // direkt minifizieren.
+                minify: true,
+              },
+            );
+
+            const scriptName = path.basename(
+              page.scriptSource,
+              path.extname(page.scriptSource),
+            );
+
+            const scriptFileName = `assets/${scriptName}.js`;
+
+            this.emitFile({
+              type: "asset",
+              fileName: scriptFileName,
+              source: result.code,
+            });
+
+            scriptTagForContent = `<script type="module" src="${getAssetPath(
+              htmlFileName,
+              scriptFileName,
+            )}"></script>`;
+          }
+
+          let liquidHtml =
+            page.html
+              ?.replaceAll(LIQUID_SCRIPT_PLACEHOLDER, scriptTagForContent)
+              .replaceAll("{{ JS_SCRIPT }}", scriptTagForContent) ?? "";
+
+          if (options.minify) {
+            liquidHtml = await minify(liquidHtml, {
+              collapseWhitespace: true,
+              removeComments: true,
+              removeRedundantAttributes: true,
+              removeEmptyAttributes: true,
+              useShortDoctype: true,
+              minifyCSS: true,
+              minifyJS: true,
+            });
+          }
+
+          this.emitFile({
+            type: "asset",
+            fileName: htmlFileName,
+            source: liquidHtml,
+          });
+
+          continue;
+        }
+
+        // EJS: already rendered in preparePages() into page.html
+        if (page.type === "ejs") {
+          let ejsHtml = page.html ?? "";
+
+          if (options.minify) {
+            ejsHtml = await minify(ejsHtml, {
+              collapseWhitespace: true,
+              removeComments: true,
+              removeRedundantAttributes: true,
+              removeEmptyAttributes: true,
+              useShortDoctype: true,
+              minifyCSS: true,
+              minifyJS: true,
+            });
+          }
+
+          this.emitFile({
+            type: "asset",
+            fileName: htmlFileName,
+            source: ejsHtml,
+          });
+
+          continue;
         }
 
         const ctx: PageRenderContext = {
@@ -1015,13 +1523,33 @@ function getPageId(url: string, pages: PageEntry[]): string {
 
 // Function to load the build data
 async function loadBuildData(page: PageEntry): Promise<unknown> {
-  if (page.type !== "component") {
+  if (
+    page.type !== "component" &&
+    page.type !== "liquid" &&
+    page.type !== "ejs"
+  ) {
     return null;
   }
 
-  const buildFile = page.source.replace(/\.(tsx?|jsx?)$/, ".build.$1");
+  let buildFile: string;
 
-  if (!fs.existsSync(buildFile)) {
+  if (page.type === "liquid") {
+    // page.html -> page.build.[tj]s
+    buildFile =
+      [".ts", ".tsx", ".js", ".jsx"]
+        .map((ext) => page.source.slice(0, -".html".length) + `.build${ext}`)
+        .find((candidate) => fs.existsSync(candidate)) ?? "";
+  } else if (page.type === "ejs") {
+    // page.ejs -> page.build.[tj]s
+    buildFile =
+      [".ts", ".tsx", ".js", ".jsx"]
+        .map((ext) => page.source.slice(0, -".ejs".length) + `.build${ext}`)
+        .find((candidate) => fs.existsSync(candidate)) ?? "";
+  } else {
+    buildFile = page.source.replace(/\.(tsx?|jsx?)$/, ".build.$1");
+  }
+
+  if (!buildFile || !fs.existsSync(buildFile)) {
     return null;
   }
 

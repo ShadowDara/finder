@@ -1,3 +1,14 @@
+// Package argparser ist eine leichtgewichtige, selbstgebaute
+// Kommandozeilen-Parser-Bibliothek. Sie unterstützt:
+//
+//   - Long-Flags (--name), Short-Aliase (-n) und Wertzuweisungen (--name=John)
+//   - Bool-/String-/Number-Flags (auch global über die Kommandohierarchie)
+//   - Subcommands mit Aliasen (z.B. "finder list" oder "finder ls")
+//   - Positionale Argumente
+//   - Automatische Hilfe (--help/-h) und Pflicht-Flag-Prüfung
+//
+// Design note: global flags must appear AFTER the subcommand
+// ("finder search --verbose"), not before.
 package argparser
 
 import (

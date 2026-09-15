@@ -3,7 +3,7 @@
 
 // Version which is fitting with the finder version
 
-import newest = versions.v0_3_17;
+import newest = versions.v0_3_18;
 export { newest };
 
 /// ALL Versions
@@ -211,6 +211,59 @@ export namespace versions {
 
     export interface File {
       name: string;
+      existence?: Existence;
+      size?: Size;
+      checksums?: Checksums;
+    }
+
+    export interface Size {
+      min?: number;
+      max?: number;
+      min_size_type?: SizeType;
+      max_size_type?: SizeType;
+    }
+
+    export interface Checksums {
+      sha256?: string;
+      sha512?: string;
+    }
+
+    export type Existence = "required" | "forbidden" | "optional";
+
+    export type SizeType = "B" | "KB" | "MB" | "GB";
+  }
+
+  /// Version v0.3.18
+  export namespace v0_3_18 {
+    export interface Template {
+      min_version?: string;
+      description?: string;
+      tags?: string[];
+      name: string;
+      name_regex?: string;
+      folders?: Folder[];
+      files?: File[] | string[];
+      command?: string;
+      invert_command?: boolean;
+      size?: Size;
+      mdnote?: string;
+      author?: string;
+      authors?: string[];
+    }
+
+    export interface Folder {
+      name: string;
+      name_regex?: string;
+      folders?: Folder[];
+      files?: File[] | string[];
+      command?: string;
+      invert_command?: boolean;
+      size?: Size;
+    }
+
+    export interface File {
+      name: string;
+      name_regex?: string;
       existence?: Existence;
       size?: Size;
       checksums?: Checksums;

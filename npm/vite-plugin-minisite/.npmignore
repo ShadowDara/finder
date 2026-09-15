@@ -1,0 +1,7 @@
+src/**
+
+node_modules/
+*.tgz
+tsconfig.json
+pnpm-lock.yaml
+pnpm-workspace.yaml

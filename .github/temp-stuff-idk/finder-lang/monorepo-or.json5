@@ -1,0 +1,6 @@
+{
+  description: "Node oder Rust Projekt (mit query nicht mit files/folders alleine ausdrückbar)",
+  name: "*",
+  query: "(file(\"package.json\") || file(\"Cargo.toml\")) && !folder(\"node_modules\") && count(\"*.log\", \"\", \"0\")",
+  tags: ["node", "rust"],
+}

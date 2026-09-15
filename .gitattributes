@@ -9,9 +9,9 @@
 # mark samfile as shell
 samfile linguist-language=Shell
 
-go.work linguist-language=go
-go.mod linguist-language=go
-go.sum linguist-language=go
+go.work linguist-language=Go
+go.mod linguist-language=Go
+go.sum linguist-language=Go
 
 docker-compose.yml linguist-language=Dockerfile
 
@@ -29,3 +29,7 @@ docker-compose.yml linguist-language=Dockerfile
 /npm/site/src/templates.js linguist-vendored
 
 /.obsidian/** linguist-vendored
+
+/install2.sh linguist-vendored
+
+/.github/temp-stuff-idk linguist-vendored

@@ -1,0 +1,22 @@
+{
+  min_version: "0.3.18",
+  description: "Automatisch vervollständigte Vorlage (Tags: go) - TODO: Beschreibung präzisieren",
+  name: "*",
+  tags: [
+    "go"
+  ],
+  files: [
+    "go.mod",
+    {
+      name: "*.go",
+      existence: "invalidvalue"
+    }
+  ],
+  size: {
+    min: 10,
+    min_size_type: "KB",
+    max: 5,
+    max_size_type: "KB"
+  },
+  author: "shadowdara"
+}

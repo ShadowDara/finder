@@ -1,0 +1,5 @@
+# Just for testing
+contentmode: true
+paths:
+  - go.sum
+  - testfiles

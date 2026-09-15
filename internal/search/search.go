@@ -34,32 +34,44 @@ func getSearchRoots() []string {
 	return []string{"/"}
 }
 
-// Find searches the filesystem for directories that match the
-// provided
-// Folder template. Results are printed to stdout according
-// to output_type:
-// - "normal": human readable output with header and footer
-// - "json": a JSON array is emitted to stdout
-// - "clear": only paths are printed (useful for scripting)
+// Find searches the filesystem for directories that match the given
+// Folder template.
 //
-// Search is performed asynchronously across all available drives/roots
-// for improved performance, especially with multiple drives.
+// Result format (output_type):
+//   - "normal": human-readable output with header/footer and statistics
+//   - "json":   a JSON array (produced by the caller)
+//   - "clear":  only the paths (ideal for shell pipelines)
+//
+// The search runs asynchronously: a goroutine is started for each root
+// and results are collected via a channel, so every drive is scanned in
+// parallel.
+//
+// Parameters:
+//   - folderstruct: the loaded template to search for
+//   - output_type:  output format ("normal", "json", "clear")
+//   - name:         template name (for cache and status messages)
+//   - doCache:      whether the results should be saved as cache
 func Find(folderstruct structure.Folder, output_type string, name string, doCache bool) []string {
+	// Header with description (not for machine output)
 	if output_type != "clear" && output_type != "json" {
 		fmt.Printf("Description: %s\n", folderstruct.Description)
 
-		// If Version is to old
+		// Warning if the template is newer than the installed version
 		if /*folderstruct.MinVersion != "0.0.0" && */ version.IsNewer(folderstruct.MinVersion, finderversion.Version) {
 			fmt.Printf("%s[WARNING] Your Version of finder is maybe to old for this Template! Something could go wrong!%s\n", goansi.YELLOW, goansi.END)
 		}
 	}
 
-	// Start timing
+	// Remember the start time for the duration statistic
 	start := time.Now()
+
+	// Precompile all regex patterns of the template once so the parallel
+	// scan goroutines do not pay the compile cost on every call.
+	precompilePatterns(folderstruct)
 
 	roots := getSearchRoots()
 
-	// Use a channel to collect results from goroutines
+	// Channel used to collect results from the goroutines
 	resultsChan := make(chan []string)
 	var wg sync.WaitGroup
 
@@ -68,7 +80,7 @@ func Find(folderstruct structure.Folder, output_type string, name string, doCach
 		wg.Add(1)
 		go func(searchRoot string) {
 			defer wg.Done()
-			// Search this root and send results back through the channel
+			// Search this root and send hits through the channel
 			matches := findMatchingFolders(searchRoot, folderstruct)
 			if len(matches) > 0 {
 				resultsChan <- matches
@@ -76,8 +88,8 @@ func Find(folderstruct structure.Folder, output_type string, name string, doCach
 		}(root)
 	}
 
-	// Wait for all goroutines to complete in a separate goroutine,
-	// then close the channel so the loop below will exit
+	// Wait for all scans in a separate goroutine, then close the
+	// channel so the collection loop below ends.
 	go func() {
 		wg.Wait()
 		close(resultsChan)
@@ -89,19 +101,20 @@ func Find(folderstruct structure.Folder, output_type string, name string, doCach
 		matches = append(matches, results...)
 	}
 
-	// Normalize Windows backslashes to forward slashes for consistent output
+	// Normalize Windows backslashes to forward slashes so the
+	// output is consistent on all platforms
 	for i, m := range matches {
 		matches[i] = filepath.ToSlash(m)
 	}
 
-	// Calculate elapsed time
+	// Calculate elapsed time and print statistics
 	elapsed := time.Since(start).Seconds()
 	if output_type != "clear" && output_type != "json" {
 		fmt.Printf("Search by finder took: %.4f seconds\n", elapsed)
 		fmt.Printf("Found: %.d Results\n", len(matches))
 	}
 
-	// add the cache files
+	// Optional: store search results in the cache ("--create-cache")
 	if doCache {
 		cache.SaveCache(name, matches)
 

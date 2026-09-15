@@ -17,10 +17,29 @@ import (
 	"github.com/shadowdara/finder/internal/templates"
 	"github.com/shadowdara/finder/pub/color"
 	"github.com/shadowdara/finder/pub/goansi"
+	"github.com/shadowdara/finder/pub/json5"
 )
 
-// Function to search for a Template
+// Search is the main search function: it searches the filesystem for
+// folders that match the given template.
+//
+// Flow:
+//  1. Load cache if useCache is set → no live search needed
+//  2. Resolve the template name alias (if any)
+//  3. Load template data (built-in + user templates, user takes precedence)
+//  4. Execute search.Find() and print the results
+//  5. Optionally create a cache or git database
+//
+// Parameters:
+//   - searchTemplate: name of the template to search for
+//   - OutputType: "normal", "clear" or "json"
+//   - Verbose: show additional debug output
+//   - createCache: save the search result as cache
+//   - useCache: load the existing cache instead of searching
+//   - createCacheDB: create a git database from the cache
+//   - cachecount: print only the number of hits
 func Search(searchTemplate string, OutputType string, Verbose bool, createCache bool, useCache bool, createCacheDB bool, cachecount bool) error {
+	// Cache mode: no live search, load the data from the cache instead
 	if useCache {
 		data, err := cache.LoadCache(searchTemplate)
 		if err != nil {
@@ -33,22 +52,25 @@ func Search(searchTemplate string, OutputType string, Verbose bool, createCache 
 		return nil
 	}
 
+	// In verbose mode show additional program information
 	if Verbose {
 		fmt.Printf("%sStruct Finder %s%s - Buildtime: %s\n", color.Green, finderversion.Version, color.Reset, finderversion.BuildTime)
 	}
 
-	templateName := searchTemplate
+	// Replace the template name with a user-defined alias, if present
+	searchTemplate = ResolveAlias(searchTemplate)
 
-	// Load all templates (built-in + custom)
+	// Load all template names (built-in + custom) — used for error output
 	templateNames, userTemplates, err := templates.LoadAllWithUserTemplates()
+	templateName := searchTemplate
 	if err != nil {
 		log.Fatalf("%sCould not load templates: %v%s\n", color.Red, err, color.Reset)
 	}
 
-	// Try to load with user templates first (they can override built-in ones)
+	// Load the template — user templates take precedence over built-ins
 	data, err := templates.JSONtemplateLoaderWithUserTemplates(templateName, userTemplates)
 	if err != nil {
-		// Template not found - provide helpful error message
+		// Template not found: helpful error message listing all available templates
 		fmt.Printf("%sTemplate '%s' not found.%s\n", color.Red, templateName, color.Reset)
 		fmt.Printf("Available templates: %s\n", color.Yellow)
 		for i, t := range templateNames {
@@ -61,13 +83,17 @@ func Search(searchTemplate string, OutputType string, Verbose bool, createCache 
 		return nil
 	}
 
+	// Show a status message only for "normal" output
+	// ("clear" and "json" produce pure machine output)
 	if OutputType != "clear" && OutputType != "json" {
 		fmt.Printf("Searching for %s ...\n", templateName)
 	}
+
+	// Live search in the filesystem: parse the structure and find matching folders
 	matches := search.Find(structure.LoadJSON5(string(data)), OutputType, templateName, createCache)
 	PrintResults(matches, OutputType, cachecount)
 
-	// Safe Git Database
+	// Optional: save the git cache database ("--create-cache-db")
 	if createCacheDB {
 		db.SaveDB()
 		if OutputType != "clear" && OutputType != "json" {
@@ -78,7 +104,15 @@ func Search(searchTemplate string, OutputType string, Verbose bool, createCache 
 	return nil
 }
 
+// PrintResults prints a list of found paths in the requested format.
+//
+// Formats:
+//   - count=true: only the number of hits ("5" or {"count":5} for JSON)
+//   - "normal": headed/footed list with "# Found:" / "# End of the List"
+//   - "json":   JSON array of the found paths (escape-safe via encoder)
+//   - "clear":  plain path list without decorations (for shell pipelines)
 func PrintResults(matches []string, OutputType string, count bool) {
+	// Print only the hit count when the "--count" flag is set
 	if count {
 		switch OutputType {
 		case "json":
@@ -94,7 +128,7 @@ func PrintResults(matches []string, OutputType string, count bool) {
 		return
 	}
 
-	// Print
+	// Print the full list in the matching format
 	switch OutputType {
 	case "normal":
 		fmt.Println("# Found:")
@@ -103,39 +137,47 @@ func PrintResults(matches []string, OutputType string, count bool) {
 		}
 		fmt.Println("# End of the List")
 	case "json":
+		// Use the JSON encoder so strings are properly quoted/escaped
 		enc := json.NewEncoder(os.Stdout)
 		if err := enc.Encode(matches); err != nil {
 			fmt.Println("JSON encoding error:", err)
 		}
 	case "clear":
+		// Plain path output (one path per line, no markers)
 		for _, m := range matches {
 			fmt.Println(m)
 		}
 	}
 }
 
-// Function to search for tags
+// TagSearch finds all templates that contain a specific tag and shows
+// them in a table (template name, tags, source).
+//
+// With OutputType="json" a JSON array of the hits is printed instead;
+// the JSON mode is suitable for scripts.
 func TagSearch(searchTag string, OutputType string, Verbose bool) error {
+	// Verbose: show version and search status
 	if Verbose {
 		fmt.Printf("%sStruct Finder v%s%s\n", color.Green, finderversion.Version, color.Reset)
 		fmt.Printf("Searching for templates with tag '%s'...\n", searchTag)
 	}
 
-	// Load all templates
+	// Load all templates (built-in + custom)
 	templateNames, userTemplates, err := templates.LoadAllWithUserTemplates()
 	if err != nil {
 		fmt.Printf("%sWarning: %v%s\n", color.Yellow, err, color.Reset)
 	}
 
-	// Find templates with the requested tag
+	// Result list: template name, tags and source (Built-in/Custom)
 	matchingTemplates := []struct {
 		name   string
 		tags   []string
 		source string
 	}{}
 
+	// Check each template whether it contains the searched tag
 	for _, templ := range templateNames {
-		// Try to load with user templates first
+		// Load the template (user templates take precedence)
 		data, err := templates.JSONtemplateLoaderWithUserTemplates(templ, userTemplates)
 		if err != nil {
 			if Verbose {
@@ -144,9 +186,10 @@ func TagSearch(searchTag string, OutputType string, Verbose bool) error {
 			continue
 		}
 
+		// Load the template structure to read its tags
 		folder := structure.LoadJSON5(string(data))
 
-		// Check if this template has the searched tag
+		// Check whether one of the tags matches the searched one
 		for _, tag := range folder.Tags {
 			if tag == searchTag {
 				source := "Built-in"
@@ -154,6 +197,8 @@ func TagSearch(searchTag string, OutputType string, Verbose bool) error {
 					source = "Custom"
 				}
 
+				// Add the hit to the result list and
+				// end the inner loop (only once per template)
 				matchingTemplates = append(matchingTemplates, struct {
 					name   string
 					tags   []string
@@ -168,14 +213,14 @@ func TagSearch(searchTag string, OutputType string, Verbose bool) error {
 		}
 	}
 
-	// Display results
+	// No hits: print a hint instead of an error
 	if len(matchingTemplates) == 0 {
 		fmt.Printf("%sNo templates found with tag '%s'%s\n", color.Yellow, searchTag, color.Reset)
 		return nil
 	}
 
 	if OutputType == "json" {
-		// JSON output
+		// JSON output: manually formatted since the structure is nested
 		fmt.Printf("[")
 		for i, tmpl := range matchingTemplates {
 			if i > 0 {
@@ -192,7 +237,7 @@ func TagSearch(searchTag string, OutputType string, Verbose bool) error {
 		}
 		fmt.Printf("]\n")
 	} else {
-		// Normal output
+		// Tabular output with tabwriter for clean columns
 		fmt.Printf("%sTemplates with tag '%s' (%d found):%s\n", color.Green, searchTag, len(matchingTemplates), color.Reset)
 		fmt.Println()
 
@@ -201,7 +246,7 @@ func TagSearch(searchTag string, OutputType string, Verbose bool) error {
 			color.Yellow, color.Reset, color.Yellow, color.Reset)
 
 		for _, tmpl := range matchingTemplates {
-			// Tags als kommagetrennten String bauen
+			// Build the tags as comma-separated string
 			tagStr := ""
 			for i, tag := range tmpl.tags {
 				if i > 0 {
@@ -210,7 +255,7 @@ func TagSearch(searchTag string, OutputType string, Verbose bool) error {
 				tagStr += tag
 			}
 
-			// Source einfärben
+			// Color the source: Custom = green, Built-in/Installed = cyan
 			var sourceColor string
 			if tmpl.source == "Custom" {
 				sourceColor = fmt.Sprintf("%s%s%s", color.Green, tmpl.source, color.Reset)
@@ -218,7 +263,7 @@ func TagSearch(searchTag string, OutputType string, Verbose bool) error {
 				sourceColor = fmt.Sprintf("%s%s%s", color.Cyan, tmpl.source, color.Reset)
 			}
 
-			// Ausgabe
+			// Output: name, tags, source
 			fmt.Fprintf(
 				w,
 				"%s%s%s\t%s\t%s\n",
@@ -236,12 +281,28 @@ func TagSearch(searchTag string, OutputType string, Verbose bool) error {
 	return nil
 }
 
-// handleCheck validates all templates
+// Check validates all available templates (built-in, custom, installed)
+// for syntax and schema errors and shows a table with the status of
+// each template.
+//
+// Special notes:
+//   - Blocked templates (blocklist) are marked as "BLOCKED"
+//   - Templates with errors end the check with exit code 1
+//   - structure.LoadJSON5 is NOT used here (it would abort via
+//     log.Fatalf), instead each template is parsed manually so that
+//     every broken template gets reported individually.
 func Check() error {
 
 	fmt.Println("Checking all Templates ...")
 
+	// Load all template names + user templates
 	templateNames, userTemplates, err := templates.LoadAllWithUserTemplates()
+	if err != nil {
+		fmt.Printf("%sWarning: %v%s\n", color.Yellow, err, color.Reset)
+	}
+
+	// Load installed templates so the source is displayed correctly
+	installedTemplates, err := templates.LoadInstalledTemplates()
 	if err != nil {
 		fmt.Printf("%sWarning: %v%s\n", color.Yellow, err, color.Reset)
 	}
@@ -249,51 +310,324 @@ func Check() error {
 	templatecount := len(templateNames)
 	fmt.Printf("%sFound %d Templates%s\n", color.Yellow, templatecount, color.Reset)
 
-	// use tabwriter to align columns
+	// tabwriter for neatly aligned table columns
 	w := tabwriter.NewWriter(os.Stdout, 0, 8, 2, ' ', 0)
 	fmt.Fprintf(w, "%sName%s\t%sSource%s\tDescription\n", goansi.WHITE, goansi.END, goansi.WHITE, goansi.END)
 
+	// Flag: did at least one template fail?
+	failed := false
 	for _, templ := range templateNames {
-		// Check for blocked templates
+		// Check the blocklist: skip blocked templates right away
 		blockednames := loader.GetBlockedTemplateNames()
 		if _, isBlocked := blockednames[templ]; isBlocked {
 			fmt.Fprintf(w, "%s%s (BLOCKED)%s\t%s\t%s\n", color.Red, templ, color.Reset, "---", "---")
 			continue
 		}
 
-		// Try to load with user templates first
+		// Load the template (user templates take precedence)
 		data, err := templates.JSONtemplateLoaderWithUserTemplates(templ, userTemplates)
 		if err != nil {
 			fmt.Fprintf(w, "%s%s (ERROR)%s\t%s\t%s\n", color.Red, templ, color.Reset, "Error loading", "---")
+			failed = true
 			continue
 		}
 
-		folder := structure.LoadJSON5(string(data))
+		// Parse manually instead of structure.LoadJSON5: LoadJSON5 would
+		// call log.Fatalf on an error and abort the whole check without
+		// naming the affected template.
+		validJSON := json.Valid(data)
+		normalized := string(data)
+		if !validJSON {
+			// Not plain JSON → JSON5 preprocessing, then parse as JSON
+			normalized = json5.PreprocessJSON5(normalized)
+		}
 
-		// Determine source (built-in or custom)
+		var folder structure.Folder
+		if err := json.Unmarshal([]byte(normalized), &folder); err != nil {
+			fmt.Fprintf(w, "%s%s (ERROR)%s\t%s%s%s\n",
+				color.Red, templ, color.Reset,
+				"Error parsing: ", err, color.Reset)
+			failed = true
+			continue
+		}
+
+		// Additionally run the file validation of the structure
+		if err := folder.Files.Validate(); err != nil {
+			fmt.Fprintf(w, "%s%s (ERROR)%s\t%s%s%s\n",
+				color.Red, templ, color.Reset,
+				"Invalid template: ", err, color.Reset)
+			failed = true
+			continue
+		}
+
+		// Determine the source: built-in / installed / custom
 		source := goansi.WHITE + "Built-in" + goansi.END
-		if _, isCustom := userTemplates[templ]; isCustom {
+		if _, isInstalled := installedTemplates[templ]; isInstalled {
+			source = fmt.Sprintf("%sInstalled%s", color.Magenta, color.Reset)
+		} else if _, isCustom := userTemplates[templ]; isCustom {
 			source = fmt.Sprintf("%sCustom%s", color.Green, color.Reset)
 		}
 
+		// Valid template: add name, source and description to the table
 		fmt.Fprintf(w, "%s%s%s\t%s\t%s\n", color.Cyan, templ,
 			color.Reset, source, folder.Description)
 	}
 
 	w.Flush()
+
+	// At least one error → non-silent exit code 1 (for CI/scripts)
+	if failed {
+		fmt.Printf("%sFinished Checking with Errors!%s\n", color.Red, color.Reset)
+		os.Exit(1)
+	}
 	fmt.Printf("%sFinished Checking!%s\n", color.Green, color.Reset)
 	return nil
 }
 
-// handleList displays all available templates
+// Validate checks a single finder template file for correctness.
+// The file can be passed as a path (relative or absolute) or as a
+// template name (built-in or custom). If the file is not valid JSON
+// but becomes valid after the JSON5 preprocessing step, a warning is
+// printed to inform the user that the template depends on the JSON5
+// preprocessor.
+//
+// OutputType controls the result format: "json" produces a single
+// machine readable JSON object on stdout, any other value produces the
+// human readable table. In JSON mode the process still exits non-zero
+// if any template failed validation.
+func Validate(args []string, OutputType string) error {
+	templatecount := len(args)
+	// In JSON mode no status messages on stdout (pure machine output)
+	if OutputType != "json" {
+		fmt.Printf("%sValidating %d Template(s)%s\n", color.Yellow, templatecount, color.Reset)
+	}
+
+	// No arguments → usage hint (also possible as JSON error object)
+	if templatecount <= 0 {
+		if OutputType == "json" {
+			out := struct {
+				Valid bool   `json:"valid"`
+				Count int    `json:"count"`
+				Error string `json:"error"`
+				Usage string `json:"usage"`
+			}{
+				Valid: false,
+				Count: 0,
+				Error: "no templates given",
+				Usage: "finder validate <template-file-or-name> [more files ...]",
+			}
+			json.NewEncoder(os.Stdout).Encode(out)
+			os.Exit(1)
+		}
+		fmt.Println("Usage: finder validate <template-file-or-name> [more files ...]")
+		return nil
+	}
+
+	// Load user templates so custom template names can be resolved and
+	// so we can detect whether a name refers to a built-in template.
+	_, userTemplates, err := templates.LoadAllWithUserTemplates()
+	if err != nil {
+		fmt.Printf("%sWarning: %v%s\n", color.Yellow, err, color.Reset)
+	}
+
+	installedTemplates, err := templates.LoadInstalledTemplates()
+	if err != nil {
+		fmt.Printf("%sWarning: %v%s\n", color.Yellow, err, color.Reset)
+	}
+
+	// Result list for all validated files — used for the JSON output
+	failed := false
+
+	// Result structure for a single validated template
+	// (JSON tags determine the output format for "--json")
+	type validateResult struct {
+		File    string `json:"file"`
+		Source  string `json:"source"`
+		Valid   bool   `json:"valid"`
+		Error   string `json:"error,omitempty"`
+		JSON5   bool   `json:"json5,omitempty"` // true if the JSON5 preprocessor was needed
+		Warning string `json:"warning,omitempty"`
+	}
+	results := []validateResult{}
+
+	// Table output (only in non-JSON mode)
+	w := tabwriter.NewWriter(os.Stdout, 0, 8, 2, ' ', 0)
+	if OutputType != "json" {
+		fmt.Fprintf(w, "%sFile%s\t%sResult%s\tWarning\n", goansi.WHITE, goansi.END, goansi.WHITE, goansi.END)
+	}
+
+	// Validate each passed argument one after another
+	for _, arg := range args {
+		// The template name can contain sub-paths, e.g.
+		// `localhost_8765/test/template` for installed templates.
+		// The alias is resolved before any filesystem/template lookup.
+		resolved := ResolveAlias(arg)
+		name := resolved
+		name = templates.TrimTemplateExt(name)
+		displayName := arg
+		if resolved != arg {
+			displayName = fmt.Sprintf("%s -> %s", arg, resolved)
+		}
+		res := validateResult{File: displayName}
+
+		// Obtain the content: prefer a file on disk (if a path was
+		// passed), otherwise look up built-in/custom template names.
+		var data []byte
+		fromName := false
+		if _, err := os.Stat(arg); err == nil {
+			// Argument is a file path → read it directly
+			data, err = os.ReadFile(arg)
+			if err != nil {
+				res.Valid = false
+				res.Error = fmt.Sprintf("error reading: %v", err)
+				results = append(results, res)
+				if OutputType != "json" {
+					fmt.Fprintf(w, "%s%s%s\t%sError reading: %v%s\t%s\n", color.Red, displayName, color.Reset, color.Red, err, color.Reset, "---")
+				}
+				failed = true
+				continue
+			}
+		} else {
+			// No path → load the template by name
+			data, err = templates.JSONtemplateLoaderWithUserTemplates(name, userTemplates)
+			if err != nil {
+				res.Valid = false
+				res.Error = fmt.Sprintf("not found: %v", err)
+				results = append(results, res)
+				if OutputType != "json" {
+					fmt.Fprintf(w, "%s%s%s\t%sNOT FOUND%s\t%s\n", color.Red, displayName, color.Reset, color.Red, err, color.Reset)
+				}
+				failed = true
+				continue
+			}
+			fromName = true
+		}
+
+		content := string(data)
+
+		// Check whether the content is directly valid JSON (without JSON5 preprocessing)
+		validJSON := json.Valid([]byte(content))
+
+		// Load into the folder structure to find schema/validation errors.
+		// We unmarshal manually (instead of structure.LoadJSON5, which
+		// would call log.Fatalf on bad input and abort the whole
+		// command) so every file gets reported.
+		normalized := content
+		if !validJSON {
+			normalized = json5.PreprocessJSON5(content)
+		}
+
+		var folder structure.Folder
+		if err := json.Unmarshal([]byte(normalized), &folder); err != nil {
+			// JSON/JSON5 syntax error
+			res.Valid = false
+			res.Error = err.Error()
+			results = append(results, res)
+			if OutputType != "json" {
+				fmt.Fprintf(w, "%s%s%s\t%sINVALID%s\t%s%v%s\n", color.Red, displayName, color.Reset, color.Red, color.Reset, "---", err, color.Reset)
+			}
+			failed = true
+			continue
+		}
+
+		// Schema validation of the file constraints
+		if err := folder.Files.Validate(); err != nil {
+			res.Valid = false
+			res.Error = err.Error()
+			results = append(results, res)
+			if OutputType != "json" {
+				fmt.Fprintf(w, "%s%s%s\t%sINVALID%s\t%s%v%s\n", color.Red, displayName, color.Reset, color.Red, color.Reset, "---", err, color.Reset)
+			}
+			failed = true
+			continue
+		}
+
+		// Determine the template source: "File" (path passed) or
+		// "Built-in"/"Installed"/"Custom" (name passed)
+		source := "Built-in"
+		if fromName {
+			if _, isInstalled := installedTemplates[name]; isInstalled {
+				source = "Installed"
+			} else if _, isCustom := userTemplates[name]; isCustom {
+				source = "Custom"
+			}
+		} else {
+			source = "File"
+		}
+
+		// Warning when the JSON5 preprocessor was needed (not plain JSON)
+		warning := ""
+		if !validJSON {
+			warning = "Template is not plain JSON - it needs the JSON5 preprocessor to be parsed"
+		}
+
+		// Successfully validated → record the result
+		res.Valid = true
+		res.Source = source
+		res.JSON5 = !validJSON
+		res.Warning = warning
+		results = append(results, res)
+
+		if OutputType != "json" {
+			fmt.Fprintf(w, "%s%s%s\t%sOK%s (%s)\t%s%s%s\n",
+				color.Cyan, displayName, color.Reset,
+				color.Green, color.Reset, source,
+				color.Yellow, warning, color.Reset)
+		}
+	}
+
+	if OutputType == "json" {
+		// Overall result as ONE JSON object on stdout (machine-readable)
+		out := struct {
+			Valid   bool             `json:"valid"`
+			Count   int              `json:"count"`
+			Results []validateResult `json:"results"`
+		}{
+			Valid:   !failed,
+			Count:   len(results),
+			Results: results,
+		}
+		if err := json.NewEncoder(os.Stdout).Encode(out); err != nil {
+			fmt.Println("JSON encoding error:", err)
+		}
+	} else {
+		w.Flush()
+	}
+
+	// On at least one error exit with code 1 (CI-friendly)
+	if failed {
+		if OutputType == "json" {
+			os.Exit(1)
+		}
+		fmt.Printf("%sValidation failed!%s\n", color.Red, color.Reset)
+		os.Exit(1)
+	}
+
+	if OutputType != "json" {
+		fmt.Printf("%sValidation complete. All Templates are valid!%s\n", color.Green, color.Reset)
+	}
+	return nil
+}
+
+// List shows all available templates grouped by source:
+// Built-in, Installed (loaded via `finder install`) and Custom
+// (own templates in ~/.finder/templates/ or ./.finder/templates/).
 func List() error {
 	fmt.Println("List available Templates:")
 
+	// Load user templates (for custom detection)
 	_, userTemplates, err := templates.LoadAllWithUserTemplates()
 	if err != nil {
 		fmt.Printf("%sWarning: Error loading templates: %v%s\n", color.Yellow, err, color.Reset)
 	}
 
+	// Load installed templates
+	installedTemplates, err := templates.LoadInstalledTemplates()
+	if err != nil {
+		fmt.Printf("%sWarning: Error loading installed templates: %v%s\n", color.Yellow, err, color.Reset)
+	}
+
+	// Load all built-in templates
 	templatesList, err := templates.LoadAll()
 	if err != nil {
 		return fmt.Errorf("error loading templates: %v", err)
@@ -302,11 +636,22 @@ func List() error {
 	templatecount := len(templatesList)
 	fmt.Printf("%sFound %d Templates%s\n", color.Yellow, templatecount, color.Reset)
 
-	// Separate built-in from custom templates
+	// Planned grouping: built-in / custom / installed kept separate
 	builtInTemplates := []string{}
 	customTemplates := []string{}
+	installedNames := []string{}
 
+	// Installed templates have their own section and are NOT part of
+	// the custom templates in `finder list`.
+	for name := range installedTemplates {
+		installedNames = append(installedNames, name)
+	}
+
+	// Assign each template to the correct list
 	for _, templ := range templatesList {
+		if _, ok := installedTemplates[templ]; ok {
+			continue // shown separately further below
+		}
 		if _, isCustom := userTemplates[templ]; isCustom {
 			customTemplates = append(customTemplates, templ)
 		} else {
@@ -314,13 +659,21 @@ func List() error {
 		}
 	}
 
-	// Print built-in templates
+	// Section: built-in templates
 	fmt.Printf("%sBuilt-in Templates (%d):%s\n", color.Green, len(builtInTemplates), color.Reset)
 	for _, templ := range builtInTemplates {
 		fmt.Printf("  %s%s%s\n", color.Cyan, templ, color.Reset)
 	}
 
-	// Print custom templates if any
+	// Section: installed templates (from `finder install`)
+	if len(installedNames) > 0 {
+		fmt.Printf("\n%sInstalled Templates (%d):%s\n", color.Green, len(installedNames), color.Reset)
+		for _, templ := range installedNames {
+			fmt.Printf("  %s%s%s  (from ~/.finder/installed/templates/)\n", color.Magenta, templ, color.Reset)
+		}
+	}
+
+	// Section: user-defined templates (if any)
 	if len(customTemplates) > 0 {
 		fmt.Printf("\n%sCustom Templates (%d):%s\n", color.Green, len(customTemplates), color.Reset)
 		for _, templ := range customTemplates {
@@ -330,27 +683,28 @@ func List() error {
 		fmt.Printf("  - $HOME/.finder/templates/\n")
 		fmt.Printf("  - ./.finder/templates/\n")
 	} else {
+		// No custom templates → show a tip where to put them
 		fmt.Printf("\n%sNo custom templates found. Add them to:~/.finder/templates/ or ./.finder/templates/%s\n", color.Yellow, color.Reset)
 	}
 
 	return nil
 }
 
-// handleTags displays available tags or processes tag-related operations
+// Tags collects all tags used across all templates (without duplicates)
+// and prints them line by line to the console.
 func Tags() error {
-	// LOAD ALL TEMPLATES
-
+	// Load all templates (built-in + custom)
 	templateNames, userTemplates, err := templates.LoadAllWithUserTemplates()
 	if err != nil {
 		fmt.Printf("%sWarning: %v%s\n", color.Yellow, err, color.Reset)
 	}
 
-	// Save all available tags to an tags array
-
+	// Collect all unique tags in a string slice
 	var tags []string = []string{}
 
+	// Go through each template and gather its tags
 	for _, templ := range templateNames {
-		// Try to load with user templates first
+		// Load the template (user templates take precedence)
 		data, err := templates.JSONtemplateLoaderWithUserTemplates(templ, userTemplates)
 		if err != nil {
 			fmt.Printf("%s%s (ERROR)%s\t%s\t%s\n", color.Red,
@@ -358,8 +712,10 @@ func Tags() error {
 			continue
 		}
 
+		// Load the template structure to access the tags field
 		folder := structure.LoadJSON5(string(data))
 
+		// Adopt newly found tags only once (deduplication)
 		for _, tag := range folder.Tags {
 			if !contains(tags, tag) {
 				tags = append(tags, tag)
@@ -367,18 +723,18 @@ func Tags() error {
 		}
 	}
 
+	// Display all unique tags
 	fmt.Println("Available Tags:")
 
 	for _, tag := range tags {
 		fmt.Printf(" - %s\n", tag)
 	}
 
-	// Print the tags array
-
 	return nil
 }
 
-// Contains helper function
+// contains is a small helper: checks whether a string occurs in a slice
+// (linear search, specifically for tag deduplication).
 func contains(slice []string, s string) bool {
 	for _, v := range slice {
 		if v == s {

@@ -1,0 +1,95 @@
+/* Google Font einbinden (im <head> einfügen)
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+*/
+
+:root {
+  --bg-color: #f5f7fa;
+  --text-color: #1a1a1a;
+  --card-bg: #ffffff;
+  --accent: #4f46e5;
+}
+
+/* Dark Mode automatisch erkennen */
+/*@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #0f172a;
+        --text-color: #e5e7eb;
+        --card-bg: #1e293b;
+        --accent: #6366f1;
+    }
+}*/
+
+body {
+  margin: 0;
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+/* Inhalt links & rechts begrenzen */
+.container {
+  max-width: 70%;
+  margin: 0 auto;
+  padding: 20px 20px;
+  /*border-radius: 10px;*/
+  /*background-color: var(--card-bg);*/
+}
+
+/* Karten Design */
+.card {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+}
+
+/* Buttons */
+button {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.1s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+/* Überschriften */
+h1,
+h2,
+h3 {
+  font-weight: 600;
+  margin-top: 0;
+}
+
+/* Links */
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

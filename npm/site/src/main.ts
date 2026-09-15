@@ -45,14 +45,24 @@ async function main() {
     loadStyles(page.styles);
 
     if (page.type === "markdown") {
-      renderMarkdown(app, page);
+      await renderMarkdown(app, page);
 
+      return;
+    }
+
+    if (page.type === "liquid") {
       return;
     }
 
     const module = await page.load();
 
-    await module.default(app, page.data);
+    // Große Build-Daten werden optional in einem eigenen Chunk geladen.
+    const data =
+      "loadData" in page && typeof page.loadData === "function"
+        ? await page.loadData()
+        : page.data;
+
+    await module.default(app, data);
   } catch (error) {
     ErrorPage(app, id, error);
   }

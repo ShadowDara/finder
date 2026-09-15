@@ -324,6 +324,11 @@ input {
   color: #2dd4bf;
 }
 
+.badge.installed {
+  background: rgba(251, 191, 36, 0.12);
+  color: #fbbf24;
+}
+
 /* Code */
 
 .code-preview {

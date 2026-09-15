@@ -34,3 +34,14 @@ npm/site/static-stats.html
 /npm/site/dist
 /npm/site/dist-static
 npm/site/tsconfig.tsbuildinfo
+/npm/vfs/node_modules
+/npm/vfs/dist
+*.pdb
+*.obj
+/npm/vite-plugin-minisite/node_modules
+/npm/vite-plugin-minisite/dist
+/.github/temp-stuff-idk/farbtext/node_modules
+/cmd/findergen/frontend/monacoeditorwork
+*.vsix
+/npm/fling-vscode/node_modules
+/npm/site/data/fling

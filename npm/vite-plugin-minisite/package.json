@@ -1,0 +1,50 @@
+{
+  "name": "vite-plugin-minisite",
+  "version": "0.0.0",
+  "description": "Vite plugin that compiles a folder of Markdown files plus optional assets into a single self-contained minisite (single index.html with hash routing)",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "vite",
+    "vite-plugin",
+    "minisite",
+    "markdown",
+    "static-site"
+  ],
+  "author": "Shadowdara",
+  "license": "MIT",
+  "peerDependencies": {
+    "vite": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.6",
+    "typescript": "^6.0.2",
+    "vite": "^7.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shadowdara/samengine",
+    "directory": "packages/vite-plugin-minisite"
+  },
+  "bugs": {
+    "url": "https://github.com/shadowdara/samengine/issues"
+  },
+  "dependencies": {
+    "@shadowdara/dlib": "^0.0.4",
+    "chokidar": "^4.0.3"
+  }
+}

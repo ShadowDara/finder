@@ -1,7 +1,8 @@
+// Package structure definiert die Folder-Template-Datenstruktur, mit der
+// beschrieben wird, welche Dateien und Unterordner in einem passenden
+// Verzeichnis vorhanden sein müssen. Diese Strukturen sind direkt das
+// JSON5-Schema der Template-Dateien (templates/*.json5).
 package structure
-
-// Package structure defines the Folder template data-structure used to
-// describe the files and subfolders that should be present in a match.
 
 import (
 	"encoding/json"
@@ -10,33 +11,51 @@ import (
 	"github.com/shadowdara/finder/pub/json5"
 )
 
-// Folder represents the JSON structure used to describe a directory
-// template. Fields are exported and annotated so encoding/json can
-// decode them after the lightweight JSON5 preprocessing step.
+// Folder repräsentiert die JSON-Struktur eines Verzeichnis-Templates.
+// Alle Felder sind exportiert und mit JSON-Tags versehen, damit
+// encoding/json die Daten nach dem JSON5-Preprocessing dekodieren kann.
+//
+// Matching behavior (see also internal/search/helper.go):
+//   - Name:      Ordner-Namensmuster (exakt oder Glob) — wie vor Regex
+//   - NameRegex: optionales Regex-Muster für den Ordnernamen
+//   - Files:     Pflicht-, verbotene oder optionale Dateien
+//   - Folders:   benötigte Unterordner (rekursiv verschachtelbar)
+//   - Command/InvertCommand: optionale Shell-Prüfung nach dem Match
+//   - Size:      Gesamtgrößen-Beschränkung des Ordners
+//   - Checksums: exakte Hash-Übereinstimmung für Dateien
+//
+// Die übrigen Felder (MinVersion, Description, Tags, mdnote, author,
+// authors) sind nur für Anzeige/Filterung relevant und fließen nicht
+// in die Match-Entscheidung ein.
 type Folder struct {
-	// To check that to old templates are not used an the user will be informed!
+	// Used to detect templates requiring an older Finder version and warn the user
 	MinVersion    string   `json:"min_version,omitempty"`
 	Description   string   `json:"description"`
 	Name          string   `json:"name"`
+	NameRegex     string   `json:"name_regex,omitempty"`
 	Folders       []Folder `json:"folders"`
-	Files         Files    `json:"files"`          // Only the filename for now
-	Command       string   `json:"command"`        // Optional command to execute after finding directory
-	InvertCommand bool     `json:"invert_command"` // To change if return code 0 or 1 is required. False is equal to 0
-	Tags          []string `json:"tags"`           // tags to sort the Templates
+	Files         Files    `json:"files"`          // Nur der Dateiname (plus optionale Constraints)
+	Command       string   `json:"command"`        // Optionales Kommando zur Nachprüfung nach dem Fund
+	InvertCommand bool     `json:"invert_command"` // true → Kommando muss fehlschlagen (Exit != 0)
+	Tags          []string `json:"tags"`           // Tags zum Sortieren/Finden der Templates
 	DataSize      Size     `json:"size,omitempty"`
-	// Optional Markdown note. Stored as a single-line string (whitespace,
-	// including newlines, is collapsed to single spaces) so arbitrary
-	// content survives plain-JSON serialization. Displayed e.g. in the web
-	// interface / community template hub.
-	MarkdownNote string `json:"mdnote,omitempty"`
+	// Optionaler Markdown-Hinweis. Gespeichert als einzeiliger String
+	// (Whitespace inkl. Zeilenumbrüche wird zu einfachen Leerzeichen
+	// reduziert), damit beliebiger Inhalt die reine JSON-Serialisierung
+	// übersteht. Angezeigt z.B. in der Web-UI / dem Community-Hub.
+	MarkdownNote string   `json:"mdnote,omitempty"`
+	Author       string   `json:"author,omitempty"`
+	Authors      []string `json:"authors,omitempty"`
 }
 
-// NewFolder constructs a minimal Folder instance with reasonable defaults.
+// NewFolder erzeugt eine minimale Folder-Instanz mit sinnvollen
+// Standardwerten (leere Listen, keine Constraints, Version "0.0.0").
 func NewFolder(foldername string) Folder {
 	return Folder{
 		MinVersion:    "0.0.0",
 		Description:   "",
 		Name:          foldername,
+		NameRegex:     "",
 		Folders:       []Folder{},
 		Files:         Files{},
 		Command:       "",
@@ -44,14 +63,20 @@ func NewFolder(foldername string) Folder {
 		Tags:          []string{},
 		DataSize:      NewSize(),
 		MarkdownNote:  "",
+		Author:        "",
+		Authors:       []string{},
 	}
 }
 
-// LoadJSON5 accepts a JSON5-like string, runs a lightweight
-// preprocessing step and unmarshals the result into a Folder. On
-// unrecoverable parse errors the function exits the program with a
-// non-zero status via log.Fatalf — this mirrors the original project
-// behaviour and keeps the command-line UX simple.
+// LoadJSON5 akzeptiert einen JSON5-ähnlichen String, führt einen
+// leichten Vorverarbeitungsschritt aus (json5.PreprocessJSON5) und
+// unmarshalled das Ergebnis in eine Folder-Struktur.
+//
+// WICHTIG: Bei nicht behebbaren Parse-Fehlern beendet die Funktion das
+// Programm mit Exit-Code != 0 (log.Fatalf) — das spiegelt das
+// ursprüngliche Projektverhalten wider und hält die CLI-Ausgabe einfach.
+// Für „weiche” Validierung (z.B. `finder check`/`finder validate`)
+// wird stattdessen direkt json.Unmarshal verwendet (siehe internal/cli).
 func LoadJSON5(data string /*, filename string */) Folder {
 	var f Folder
 

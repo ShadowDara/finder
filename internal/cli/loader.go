@@ -1,6 +1,7 @@
+// loader.go: Former handlers for loading template JSON files or
+// arguments directly. These features were removed from the version
+// (commented out); the code is kept as a reference.
 package cli
-
-// Removed from the Version
 
 /*
 // handleFileLoad loads a custom JSON/JSON5 file

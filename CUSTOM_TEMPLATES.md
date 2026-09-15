@@ -138,6 +138,22 @@ finder check
 
 This validates both built-in and custom templates.
 
+### Validate a single template:
+```bash
+finder validate my-template.json5
+```
+
+or by template name (built-in or custom):
+
+```bash
+finder validate mycustomtemplate
+```
+
+If the template is not plain JSON and only parses after the JSON5
+preprocessor runs, a warning is shown next to the result. This helps
+you notice that the template relies on JSON5-only syntax (like
+unquoted keys).
+
 ## Overriding Built-in Templates
 
 If you place a custom template with the same name as a built-in template, your custom version will take precedence.

@@ -13,6 +13,7 @@ export type Existence = "required" | "forbidden" | "optional";
 export interface FileNode {
   id: string;
   name: string;
+  nameRegex: string;
   existence: Existence;
   size: Size | null;
   checksums: Checksum | null;
@@ -28,6 +29,7 @@ export interface Checksum {
 export interface FolderNode {
   id: string;
   name: string;
+  nameRegex: string;
   description: string;
   minVersion: string; // only meaningful on the root node, but the struct allows it anywhere
   command: string;
@@ -50,6 +52,7 @@ export interface FolderNode {
  */
 export interface FileJSON {
   name: string;
+  name_regex?: string;
   existence?: Existence;
   size?: Size;
   checksums?: Partial<Checksum>;
@@ -59,6 +62,7 @@ export interface FolderJSON {
   min_version?: string;
   description?: string;
   name: string;
+  name_regex?: string;
   folders?: FolderJSON[];
   files?: FileJSON[];
   command?: string;

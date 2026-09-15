@@ -120,6 +120,7 @@ finder git
 | ------------------------ | --------- | ------------------------------------------ |
 | `finder <template>`      |           | Search for projects matching a template    |
 | `finder check`           |           | Validate all built-in and custom templates |
+| `finder validate`        | `val`     | Validate a single template file            |
 | `finder list`            | `ls`      | List all available templates               |
 | `finder tags`            | `tag`     | Show all tags in the console               |
 | `finder -t <tag>`        |           | Search for templates by tag                |
@@ -163,6 +164,31 @@ finder -t python
 
 # List all templates
 finder list
+```
+
+### Validate a single template
+
+```bash
+# Validate a template file by path
+finder validate my-template.json5
+
+# Validate a built-in or custom template by name
+finder validate go
+
+# Validate multiple templates at once
+finder validate templates/go.json5 templates/django.json5
+
+# Short alias
+finder val my-template.json5
+```
+
+If a template file is not plain JSON and only parses after the JSON5
+preprocessor runs, a warning is printed so you know the template
+depends on JSON5 features (e.g. unquoted keys):
+
+```text
+File                       Result     Warning
+my-template.json5          OK (File)  Template is not plain JSON - it needs the JSON5 preprocessor to be parsed
 ```
 
 ## Templates
@@ -221,6 +247,12 @@ A full template with all supported fields:
 
 ### Custom templates
 
+> [!IMPORTANT]
+> Starting with Finder version 0.3.18, Finder supports the following template file extensions: [`.json`, `.jsonc`, `.json5`]
+
+> [!WARNING]
+> Starting with finder version 0.3.25 (not released yet), running a template which end with `.json5` while create a warning
+
 Place your own `.json5` template files in:
 
 | OS      | Path                               |
@@ -239,55 +271,61 @@ User templates take precedence over built-in templates with the
 same name. See [`CUSTOM_TEMPLATES.md`](CUSTOM_TEMPLATES.md) for the
 full guide.
 
-### Pattern matching (exact, regex, glob)
+### Pattern matching (exact and glob); regex via `name_regex`
 
-Since **v0.3.17**, every name pattern in a template — the top-level
-`name`, every file `name`, and every folder `name` (including nested
-folders) — is resolved by a **3-tier matching strategy**:
+The `name` field (top-level, files, and folders) uses a **2-tier
+matching strategy** — exact match first, then glob (`path.Match`).
+Regular expressions are **not** interpreted inside `name` anymore.
 
-| Priority | Method                          | Applies when                               |
-| -------- | ------------------------------- | ------------------------------------------ |
-| 1        | Exact string equality           | pattern equals the name verbatim           |
-| 2        | Go regex (`regexp.MatchString`) | pattern compiles as a valid regex (RE2)    |
-| 3        | Glob (`path.Match`)             | pattern is not a valid regex (e.g. `*.ts`) |
+| Priority | Method                | Applies when                     |
+| -------- | --------------------- | -------------------------------- |
+| 1        | Exact string equality | pattern equals the name verbatim |
+| 2        | Glob (`path.Match`)   | pattern contains `*`/`?`/`[`     |
+
+For regex matching use the separate **`name_regex`** field (available
+on top-level templates, files, and folders). It is matched with a full
+Go regex (RE2) against the name. When both `name` and `name_regex` are
+set, **both** must match.
 
 This means:
 
 - `"src"` → exact match
-- `"^project-[0-9]+$"` → valid regex, matches `project-123`, `project-42`, …
-- `"*.ts"` → not a valid regex → glob fallback, matches any `.ts` file
-- `"^(main|app|server)\.py$"` → valid regex, matches exactly `main.py`,
-  `app.py`, or `server.py`
+- `"*"` → matches any name
+- `"*.ts"` → glob, matches any `.ts` file
+- `"^project-[0-9]+$"` in `name` → **not** a regex anymore; a `^`/`$`
+  literal pattern like this matches only an identical literal name.
+  Put regexes into `name_regex` instead.
 
-Regex patterns work in **all** name fields:
+Regex patterns live in the `name_regex` field:
 
 ```json5
-// top-level name: match folder names like project-42, project-99
+// top-level name_regex: match folder names like project-42, project-99
 {
-  name: "^project-[0-9]+$",
-  min_version: "0.3.17",
+  name: "*",
+  name_regex: "^project-[0-9]+$",
+  min_version: "0.3.18",
   files: [
     {
-      // file name: match exactly main.py, app.py, or server.py
-      name: "^(main|app|server)\\.py$",
+      // file name_regex: match exactly main.py, app.py, or server.py
+      name_regex: "^(main|app|server)\\.py$",
       existence: "required",
     },
   ],
   folders: [
     {
-      // folder name: match src, lib, or pkg
-      name: "^(src|lib|pkg)$",
+      // folder name_regex: match src, lib, or pkg
+      name_regex: "^(src|lib|pkg)$",
     },
   ],
 }
 ```
 
 > **Note:** Go regex is RE2 — no backreferences and no
-> lookahead/lookbehind. If your pattern uses unsupported syntax, it
-> fails to compile and falls back to glob matching.
+> lookahead/lookbehind. An invalid regex never matches (it fails
+> closed); use `finder check`/`finder validate` to catch mistakes.
 
-If your template relies on regex patterns, set `"min_version": "0.3.17"`
-to indicate the minimum Finder version required.
+Templates that rely on `name_regex` should set
+`"min_version": "0.3.18"`.
 
 ## Config
 

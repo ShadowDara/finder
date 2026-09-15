@@ -1,3 +1,9 @@
+// Package fsd („File System Utilities”) enthält kleine, plattform-
+// übergreifende Helfer rund um das Dateisystem:
+//
+//   - OpenFolder / OpenBrowser: Ordner bzw. URLs im System-Programm öffnen
+//   - CopyFile / DirSize: Dateikopie und rekursive Größenberechnung
+//   - GetBinaryDir: Verzeichnis des aktuell laufenden Binaries
 package fsd
 
 import (
@@ -9,9 +15,13 @@ import (
 	"runtime"
 )
 
+// OpenFolder öffnet den angegebenen Ordner im nativen Dateimanager
+// (Explorer unter Windows, Finder unter macOS, Standard-Dateimanager
+// unter Linux). Unterstützte Plattformen: windows, darwin, linux.
 func OpenFolder(path string) error {
 	switch runtime.GOOS {
 	case "windows":
+		// Windows: `cmd /c start "" <pfad>` startet den Explorer
 		cmd := exec.Command("cmd", "/c", "start", "", path)
 		return cmd.Start()
 
@@ -26,6 +36,8 @@ func OpenFolder(path string) error {
 	}
 }
 
+// OpenBrowser öffnet eine URL im Standard-Webbrowser des Systems.
+// Errors are intentionally ignored (fire-and-forget).
 func OpenBrowser(url string) {
 	var cmd string
 	var args []string
@@ -45,10 +57,12 @@ func OpenBrowser(url string) {
 	exec.Command(cmd, args...).Start()
 }
 
-// CopyFile kopiert src → dst
+// CopyFile kopiert src → dst (Byte für Byte) und synchronisiert den
+// Inhalt danach auf die Platte (Sync). Eine bereits existierende
+// Zieldatei wird übersprungen (no-op), nicht überschrieben.
 func CopyFile(src, dst string) error {
 	if _, err := os.Stat(dst); err == nil {
-		// existiert schon → skip
+		// already exists → skip
 		return nil
 	}
 
@@ -81,6 +95,8 @@ func CopyFile(src, dst string) error {
 	return nil
 }
 
+// DirSize berechnet die Gesamtgröße eines Verzeichnisses rekursiv
+// (Summe aller Dateigrößen; Verzeichnisse selbst zählen nicht).
 func DirSize(path string) (int64, error) {
 	var size int64
 	err := filepath.Walk(path, func(_ string, info os.FileInfo, err error) error {
@@ -95,6 +111,8 @@ func DirSize(path string) (int64, error) {
 	return size, err
 }
 
+// GetBinaryDir liefert das Verzeichnis, in dem das aktuell laufende
+// Binary liegt (z.B. für relative Ressourcen-Pfade). Panikt bei Fehlern.
 func GetBinaryDir() string {
 	ex, err := os.Executable() // Pfad zum Binary
 	if err != nil {

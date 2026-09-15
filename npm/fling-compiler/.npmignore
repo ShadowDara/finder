@@ -1,0 +1,5 @@
+*.tgz
+src/
+examples/
+test.fling
+tsconfig.json

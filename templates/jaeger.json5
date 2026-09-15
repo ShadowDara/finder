@@ -5,6 +5,8 @@
     "files": [
         "docker-compose.yml"
     ],
-    "tags": "docker",
+    "tags": [
+        "docker"
+    ],
     "min_version": "0.3.16"
 }

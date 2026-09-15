@@ -1,12 +1,25 @@
 {
   "name": "steamapps",
   "folders": [
-    { "name": "common" },
-    { "name": "downloading" },
-    { "name": "shadercache" },
-    { "name": "temp" },
-    { "name": "workshop" }
+    {
+      "name": "common"
+    },
+    {
+      "name": "downloading"
+    },
+    {
+      "name": "shadercache"
+    },
+    {
+      "name": "temp"
+    },
+    {
+      "name": "workshop"
+    }
   ],
-  "tags": ["libary"],
-  "min_version": "0.3.14"
+  "tags": [
+    "libary"
+  ],
+  "min_version": "0.3.14",
+  "description": "the steam libary where the games a saved"
 }

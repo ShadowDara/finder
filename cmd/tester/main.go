@@ -6,8 +6,8 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-	"strings"
 
+	"github.com/shadowdara/finder/internal/templates"
 	"github.com/shadowdara/finder/pub/json5"
 )
 
@@ -39,7 +39,7 @@ func main() {
 		}
 
 		name := entry.Name()
-		if !strings.EqualFold(filepath.Ext(name), ".json5") {
+		if !templates.IsTemplateFile(name) {
 			continue
 		}
 

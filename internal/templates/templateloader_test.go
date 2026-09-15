@@ -1,9 +1,84 @@
 package templates
 
 import (
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 )
+
+func TestIsTemplateFile(t *testing.T) {
+	cases := []struct {
+		name string
+		want bool
+	}{
+		{"foo.json5", true},
+		{"foo.json", true},
+		{"foo.jsonc", true},
+		{"foo.txt", false},
+		{"foo", false},
+		{"foo.JSON5", false}, // case-sensitive
+		{"config.json", true},
+		{".jsonc", true},
+	}
+	for _, c := range cases {
+		if got := IsTemplateFile(c.name); got != c.want {
+			t.Errorf("IsTemplateFile(%q) = %v, want %v", c.name, got, c.want)
+		}
+	}
+}
+
+func TestTrimTemplateExt(t *testing.T) {
+	cases := []struct {
+		name string
+		want string
+	}{
+		{"foo.json5", "foo"},
+		{"foo.json", "foo"},
+		{"foo.jsonc", "foo"},
+		{"foo.txt", "foo.txt"},
+		{"foo", "foo"},
+		{"a/b/c.json5", "a/b/c"},
+		{"foo.json5.json", "foo.json5"}, // ".json" matches before ".json5" in the list
+	}
+	for _, c := range cases {
+		if got := TrimTemplateExt(c.name); got != c.want {
+			t.Errorf("TrimTemplateExt(%q) = %q, want %q", c.name, got, c.want)
+		}
+	}
+}
+
+func TestLoadUserTemplates_ExtensionPriority(t *testing.T) {
+	dir := t.TempDir()
+
+	// Create the same template with three extensions
+	write := func(ext, content string) {
+		path := filepath.Join(dir, "duplicate"+ext)
+		if err := os.WriteFile(path, []byte(content), 0o644); err != nil {
+			t.Fatalf("write %s: %v", path, err)
+		}
+	}
+	write(".json5", `{"description": "json5 version", "name": "*"}`)
+	write(".json", `{"description": "json version", "name": "*"}`)
+	write(".jsonc", `{"description": "jsonc version", "name": "*"}`)
+
+	templates := make(map[string][]byte)
+	if err := loadTemplatesFromDir(dir, templates); err != nil {
+		t.Fatalf("loadTemplatesFromDir: %v", err)
+	}
+
+	if len(templates) != 1 {
+		t.Fatalf("expected exactly 1 template, got %d: %v", len(templates), templates)
+	}
+
+	data, ok := templates["duplicate"]
+	if !ok {
+		t.Fatalf("expected template 'duplicate', got keys: %v", templates)
+	}
+	if !strings.Contains(string(data), "jsonc version") {
+		t.Errorf("expected jsonc (highest priority) to win, got: %s", string(data))
+	}
+}
 
 func TestJSONtemplateLoader_ValidTemplate(t *testing.T) {
 	// Test with a known template
@@ -122,17 +197,22 @@ func TestLoadAll_UniqueNames(t *testing.T) {
 }
 
 func TestLoadAll_AllTemplatesLoadable(t *testing.T) {
-	templates, err := LoadAll()
-
+	// Only test embedded templates, since LoadAll also includes
+	// user templates from the filesystem that JSONtemplateLoader
+	// (embedded) cannot load.
+	files, err := templates.ReadDir(".")
 	if err != nil {
-		t.Fatalf("LoadAll returned error: %v", err)
+		t.Fatalf("ReadDir failed: %v", err)
 	}
 
 	failedLoads := []string{}
-	for _, tmpl := range templates {
-		_, err := JSONtemplateLoader(tmpl)
-		if err != nil {
-			failedLoads = append(failedLoads, tmpl)
+	for _, file := range files {
+		if file.IsDir() || !strings.HasSuffix(file.Name(), ".json5") {
+			continue
+		}
+		name := strings.TrimSuffix(file.Name(), ".json5")
+		if _, err := JSONtemplateLoader(name); err != nil {
+			failedLoads = append(failedLoads, name)
 		}
 	}
 

@@ -1,0 +1,312 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Fling",
+  "scopeName": "source.fling",
+  "fileTypes": ["fling"],
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#strings" },
+    { "include": "#number" },
+    { "include": "#keywords" },
+    { "include": "#constants" },
+    { "include": "#function-declaration" },
+    { "include": "#function-call" },
+    { "include": "#member-access" },
+    { "include": "#operators" },
+    { "include": "#punctuation" },
+    { "include": "#object-literal" },
+    { "include": "#array-literal" },
+    { "include": "#identifier" }
+  ],
+  "repository": {
+    "comments": {
+      "comment": "Zeilenkommentare: # ... und // ... (keine Blockkommentare in Fling)",
+      "patterns": [
+        {
+          "name": "comment.line.hash.fling",
+          "match": "(#).*$"
+        },
+        {
+          "name": "comment.line.double-slash.fling",
+          "match": "(//).*$"
+        }
+      ]
+    },
+
+    "strings": {
+      "comment": "Strings: \"...\" ohne Escape-Sequenzen (Backslash wird als normales Zeichen übernommen)",
+      "patterns": [
+        {
+          "name": "string.quoted.double.fling",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.fling",
+              "match": "\\\\."
+            }
+          ]
+        }
+      ]
+    },
+
+    "number": {
+      "comment": "Zahlen: nur Ziffernfolgen (keine Fließkomma-/Hex-Literale laut Lexer)",
+      "name": "constant.numeric.fling",
+      "match": "\\b[0-9]+\\b"
+    },
+
+    "keywords": {
+      "comment": "Die 6 reservierten Schlüsselwörter von Fling",
+      "patterns": [
+        {
+          "name": "keyword.declaration.let.fling",
+          "match": "\\blet\\b"
+        },
+        {
+          "name": "keyword.declaration.const.fling",
+          "match": "\\bconst\\b"
+        },
+        {
+          "name": "keyword.declaration.function.fling",
+          "match": "\\bfn\\b"
+        },
+        {
+          "name": "keyword.control.if.fling",
+          "match": "\\bif\\b"
+        },
+        {
+          "name": "keyword.control.else.fling",
+          "match": "\\belse\\b"
+        },
+        {
+          "name": "keyword.control.while.fling",
+          "match": "\\bwhile\\b"
+        }
+      ]
+    },
+
+    "constants": {
+      "comment": "true/false/null sind keine Keywords, sondern vordeklarierte Konstanten (schattierbar)",
+      "patterns": [
+        {
+          "name": "constant.language.true.fling",
+          "match": "\\btrue\\b"
+        },
+        {
+          "name": "constant.language.false.fling",
+          "match": "\\bfalse\\b"
+        },
+        {
+          "name": "constant.language.null.fling",
+          "match": "\\bnull\\b"
+        }
+      ]
+    },
+
+    "function-declaration": {
+      "comment": "fn name(params) { ... } – Funktionsname und Parameter hervorheben",
+      "begin": "\\bfn\\b\\s+(?=[A-Za-z][A-Za-z0-9]*)",
+      "end": "(?=\\{)",
+      "patterns": [
+        {
+          "name": "keyword.declaration.function.fling",
+          "match": "\\bfn\\b"
+        },
+        {
+          "name": "entity.name.function.fling",
+          "match": "[A-Za-z][A-Za-z0-9]*"
+        },
+        {
+          "begin": "\\(",
+          "end": "\\)",
+          "patterns": [
+            {
+              "name": "variable.parameter.fling",
+              "match": "[A-Za-z][A-Za-z0-9]*"
+            },
+            {
+              "name": "punctuation.separator.comma.fling",
+              "match": ","
+            },
+            { "include": "#punctuation" }
+          ]
+        }
+      ]
+    },
+
+    "function-call": {
+      "comment": "Aufruf bekannter eingebauter Funktionen + benannte Funktionen",
+      "patterns": [
+        {
+          "name": "support.function.builtin.fling",
+          "match": "\\bprint\\s*(?=\\()"
+        },
+        {
+          "name": "support.function.fling",
+          "match": "[A-Za-z][A-Za-z0-9]*\\s*(?=\\()"
+        }
+      ]
+    },
+
+    "member-access": {
+      "comment": "Member-Zugriff: obj.prop (Punkt muss Identifier folgen)",
+      "patterns": [
+        {
+          "name": "variable.other.property.fling",
+          "match": "(?<=\\.)[A-Za-z][A-Za-z0-9]*"
+        }
+      ]
+    },
+
+    "object-literal": {
+      "comment": "Objekte: { key: value, key2 } – Keys als Property-Namen",
+      "patterns": [
+        {
+          "name": "meta.object.fling",
+          "begin": "\\{",
+          "end": "\\}",
+          "beginCaptures": {
+            "0": { "name": "punctuation.definition.brace.curly.begin.fling" }
+          },
+          "endCaptures": {
+            "0": { "name": "punctuation.definition.brace.curly.end.fling" }
+          },
+          "patterns": [
+            {
+              "name": "variable.other.property.object.fling",
+              "match": "[A-Za-z][A-Za-z0-9]*(?=\\s*:)"
+            },
+            {
+              "name": "punctuation.separator.key-value.fling",
+              "match": ":"
+            },
+            { "include": "#comments" },
+            { "include": "#strings" },
+            { "include": "#number" },
+            { "include": "#keywords" },
+            { "include": "#constants" },
+            { "include": "#function-call" },
+            { "include": "#member-access" },
+            { "include": "#operators" },
+            { "include": "#punctuation" },
+            { "include": "#object-literal" },
+            { "include": "#array-literal" }
+          ]
+        }
+      ]
+    },
+
+    "array-literal": {
+      "comment": "Arrays: [ ... ] – rekursive Inhalt-Erkennung",
+      "patterns": [
+        {
+          "name": "meta.array.fling",
+          "begin": "\\[",
+          "end": "\\]",
+          "beginCaptures": {
+            "0": { "name": "punctuation.definition.brace.square.begin.fling" }
+          },
+          "endCaptures": {
+            "0": { "name": "punctuation.definition.brace.square.end.fling" }
+          },
+          "patterns": [
+            { "include": "#comments" },
+            { "include": "#strings" },
+            { "include": "#number" },
+            { "include": "#keywords" },
+            { "include": "#constants" },
+            { "include": "#function-call" },
+            { "include": "#member-access" },
+            { "include": "#operators" },
+            { "include": "#punctuation" },
+            { "include": "#object-literal" },
+            { "include": "#array-literal" }
+          ]
+        }
+      ]
+    },
+
+    "operators": {
+      "comment": "Alle Operatoren inkl. Vergleichs- und logische Operatoren (längste zuerst)",
+      "patterns": [
+        {
+          "name": "keyword.operator.logical.fling",
+          "match": "&&|\\|\\|"
+        },
+        {
+          "name": "keyword.operator.comparison.fling",
+          "match": "==|!=|<=|>="
+        },
+        {
+          "name": "keyword.operator.arithmetic.fling",
+          "match": "\\+|\\-|\\*|/|%"
+        },
+        {
+          "name": "keyword.operator.assignment.fling",
+          "match": "="
+        },
+        {
+          "name": "keyword.operator.comparison.fling",
+          "match": "<|>"
+        },
+        {
+          "name": "keyword.operator.logical.fling",
+          "match": "!"
+        }
+      ]
+    },
+
+    "punctuation": {
+      "comment": "Interpunktion: () {} [] , . : ;",
+      "patterns": [
+        {
+          "name": "punctuation.definition.group.begin.fling",
+          "match": "\\("
+        },
+        {
+          "name": "punctuation.definition.group.end.fling",
+          "match": "\\)"
+        },
+        {
+          "name": "punctuation.definition.brace.curly.begin.fling",
+          "match": "\\{"
+        },
+        {
+          "name": "punctuation.definition.brace.curly.end.fling",
+          "match": "\\}"
+        },
+        {
+          "name": "punctuation.definition.brace.square.begin.fling",
+          "match": "\\["
+        },
+        {
+          "name": "punctuation.definition.brace.square.end.fling",
+          "match": "\\]"
+        },
+        {
+          "name": "punctuation.separator.comma.fling",
+          "match": ","
+        },
+        {
+          "name": "punctuation.accessor.dot.fling",
+          "match": "\\."
+        },
+        {
+          "name": "punctuation.separator.key-value.fling",
+          "match": ":"
+        },
+        {
+          "name": "punctuation.terminator.statement.fling",
+          "match": ";"
+        }
+      ]
+    },
+
+    "identifier": {
+      "comment": "Normale Identifier: [Alpha][AlphaNumeric]* (kein '_' in Fling)",
+      "name": "variable.other.fling",
+      "match": "[A-Za-z][A-Za-z0-9]*"
+    }
+  }
+}

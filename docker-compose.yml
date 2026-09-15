@@ -1,3 +1,4 @@
+# Docker Containers
 services:
   findergen:
     build:
@@ -27,8 +28,8 @@ services:
 
   uploadpage:
     build:
-      context: ./npm/hub
-      dockerfile: ../../docker/uploadpage/Dockerfile
+      context: .
+      dockerfile: docker/uploadpage/Dockerfile
     container_name: uploadpage
     depends_on:
       - postgres
@@ -44,6 +45,14 @@ services:
     container_name: dashboard
     ports:
       - "8080:80"
+
+  registry:
+    build:
+      context: .
+      dockerfile: docker/registry/Dockerfile
+    container_name: finder-registry
+    ports:
+      - "3017:3017"
 
   # Local Database for testing
   postgres:
@@ -62,5 +71,18 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql
 
+  test-install:
+    build: 
+      context: .
+      dockerfile: docker/test-install/Dockerfile
+    # container_name: test-install
+
+  test-install-ubuntu:
+    build: 
+      context: .
+      dockerfile: docker/test-install-ubuntu/Dockerfile
+    # container_name: test-install
+
+# Saved Data
 volumes:
   postgres_data:

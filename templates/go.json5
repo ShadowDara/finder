@@ -7,5 +7,6 @@
     "tags": [
         "go"
     ],
-    "min_version": "0.3.14"
+    "min_version": "0.3.14",
+    "description": "a project with go / golang"
 }

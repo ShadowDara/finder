@@ -1,0 +1,12 @@
+{
+  "name": "finder-npm",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "author": "Shadowdara",
+  "license": "GPL-3.0-only",
+  "type": "module",
+  "files": [
+    "cli.js"
+  ]
+}

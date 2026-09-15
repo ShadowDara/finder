@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<title>mini-vapor Demo (kein VDOM)</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 640px; margin: 40px auto; color: #1a1a1a; }
+  h1 { font-size: 1.4rem; }
+  .card { border: 1px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 24px; }
+  button { cursor: pointer; border: 1px solid #ccc; background: #f5f5f5; border-radius: 6px; padding: 6px 12px; }
+  button:disabled { opacity: .4; cursor: not-allowed; }
+  input[type=text] { padding: 6px 10px; border: 1px solid #ccc; border-radius: 6px; width: 60%; }
+  ul { padding-left: 0; list-style: none; }
+  li { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid #eee; }
+  li span.done { text-decoration: line-through; color: #999; }
+  code { background: #f0f0f0; padding: 1px 5px; border-radius: 4px; }
+  .hint { color: #666; font-size: .85rem; }
+</style>
+</head>
+<body>
+
+<h1>mini-vapor — Vue-ähnlicher Compiler ohne VDOM</h1>
+<p class="hint">
+  Jede Bindung im generierten Code hängt direkt an genau dem DOM-Knoten, den sie betrifft.
+  Öffne die Konsole und rufe <code>console.log(counterApp.compiled.source)</code> bzw.
+  <code>console.log(todoApp.compiled.source)</code> auf, um den generierten,
+  vollständig imperativen JS-Code zu sehen — kein virtueller Baum, kein Diffing.
+</p>
+
+<div class="card">
+  <h2>1) Counter</h2>
+  <div id="counter"></div>
+</div>
+
+<div class="card">
+  <h2>2) Todo-Liste (v-for, v-if/v-else, v-model, @click, :bind)</h2>
+  <div id="todos"></div>
+</div>
+
+<script src="../dist/mini-vapor.js"></script>
+<script>
+const { defineComponent, ref, computed } = MiniVapor;
+
+// ---------------------------------------------------------------
+// 1) Counter
+// ---------------------------------------------------------------
+const counterApp = defineComponent({
+  template: `
+    <div>
+      <p>Wert: <strong>{{ count }}</strong></p>
+      <button @click="dec" :disabled="count <= 0">-1</button>
+      <button @click="inc">+1</button>
+    </div>
+  `,
+  setup() {
+    const count = ref(0);
+    return {
+      count,
+      inc: () => count.value++,
+      dec: () => { if (count.value > 0) count.value--; },
+    };
+  },
+});
+counterApp.mount(document.getElementById('counter'));
+window.counterApp = counterApp;
+
+// ---------------------------------------------------------------
+// 2) Todo-Liste
+// ---------------------------------------------------------------
+const todoApp = defineComponent({
+  template: `
+    <div>
+      <input type="text" v-model="draft" @keyup.enter="add" placeholder="Neues Todo..." />
+      <button @click="add">Hinzufügen</button>
+
+      <p v-if="todos.length === 0">Keine Todos — leg direkt los!</p>
+      <ul v-else>
+        <li v-for="todo in todos" :key="todo.id">
+          <input type="checkbox" @click="toggle(todo.id)" />
+          <span>{{ todo.text }}</span>
+          <button @click="remove(todo.id)">✕</button>
+        </li>
+      </ul>
+
+      <p class="hint">Offen: {{ openCount }} von {{ todos.length }}</p>
+    </div>
+  `,
+  setup() {
+    const todos = ref([
+      { id: 1, text: 'mini-vapor ausprobieren', done: false },
+      { id: 2, text: 'Kein VDOM mehr brauchen', done: false },
+    ]);
+    const draft = ref('');
+    let nextId = 3;
+
+    function add() {
+      if (!draft.value.trim()) return;
+      todos.value = [...todos.value, { id: nextId++, text: draft.value, done: false }];
+      draft.value = '';
+    }
+    function remove(id) {
+      todos.value = todos.value.filter((t) => t.id !== id);
+    }
+    function toggle(id) {
+      todos.value = todos.value.map((t) =>
+        t.id === id ? { ...t, done: !t.done } : t
+      );
+    }
+    const openCount = computed(() => todos.value.filter((t) => !t.done).length);
+
+    return { todos, draft, add, remove, toggle, openCount };
+  },
+});
+todoApp.mount(document.getElementById('todos'));
+window.todoApp = todoApp;
+</script>
+</body>
+</html>

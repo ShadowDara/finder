@@ -13,7 +13,6 @@ import (
 	"path/filepath"
 	"runtime"
 	"strconv"
-	"strings"
 	"sync"
 	"time"
 
@@ -26,7 +25,7 @@ import (
 	"github.com/shadowdara/finder/pub/json5"
 )
 
-//go:embed frontend/***
+//go:embed all:frontend
 var frontend embed.FS
 
 // Function to create a file
@@ -256,7 +255,7 @@ func main() {
 			return
 		}
 
-		if !strings.HasSuffix(payload.Name, ".json5") {
+		if !templates.IsTemplateFile(payload.Name) {
 			payload.Name += ".json5"
 		}
 
@@ -297,7 +296,7 @@ func main() {
 			return
 		}
 
-		if !strings.HasSuffix(payload.Name, ".json5") {
+		if !templates.IsTemplateFile(payload.Name) {
 			payload.Name += ".json5"
 		}
 
@@ -341,11 +340,20 @@ func main() {
 			return
 		}
 
+		installed, err := templates.LoadInstalledTemplates()
+		if err != nil {
+			http.Error(w, "Failed to load installed templates", http.StatusInternalServerError)
+			return
+		}
+
 		builtin := make([]string, 0)
 		custom := make([]string, 0)
+		installedNames := make([]string, 0)
 
 		for _, name := range templateNames {
-			if _, exists := userTemplates[name]; exists {
+			if _, exists := installed[name]; exists {
+				installedNames = append(installedNames, name)
+			} else if _, exists := userTemplates[name]; exists {
 				custom = append(custom, name)
 			} else {
 				builtin = append(builtin, name)
@@ -356,6 +364,7 @@ func main() {
 			"templates":     templateNames,
 			"builtin":       builtin,
 			"custom":        custom,
+			"installed":     installedNames,
 			"templatecount": len(templateNames),
 		}
 
@@ -379,16 +388,25 @@ func main() {
 			return
 		}
 
+		installed, err := templates.LoadInstalledTemplates()
+		if err != nil {
+			http.Error(w, "Failed to load installed templates", http.StatusInternalServerError)
+			return
+		}
+
 		builtin := make([]string, 0)
 		custom := make([]string, 0)
+		installedNames := make([]string, 0)
 
 		alltemplates := map[string]string{}
 		allbuildinTemplates := map[string]string{}
 		allcustomTemplates := map[string]string{}
+		allinstalledTemplates := map[string]string{}
 
 		for _, name := range templateNames {
-			if _, exists := userTemplates[name]; exists {
-
+			if _, exists := installed[name]; exists {
+				installedNames = append(installedNames, name)
+			} else if _, exists := userTemplates[name]; exists {
 				custom = append(custom, name)
 			} else {
 				builtin = append(builtin, name)
@@ -409,6 +427,20 @@ func main() {
 			allbuildinTemplates[name] = normalized
 		}
 
+		// Load every Installed Template (from `finder install`)
+		for _, name := range installedNames {
+			data, exists := installed[name]
+			if !exists {
+				http.Error(w, "Template not found", http.StatusNotFound)
+				return
+			}
+
+			normalized := json5.PreprocessJSON5(string(data))
+
+			alltemplates[name] = normalized
+			allinstalledTemplates[name] = normalized
+		}
+
 		// Load every Custom Template
 		// load Custom Templates after wards
 		for _, name := range custom {
@@ -425,12 +457,14 @@ func main() {
 		}
 
 		response := map[string]interface{}{
-			"count_templates":         len(alltemplates),
-			"count_buildin_templates": len(allbuildinTemplates),
-			"count_custom_templates":  len(allcustomTemplates),
-			"templates":               alltemplates,
-			"builtin":                 allbuildinTemplates,
-			"custom":                  allcustomTemplates,
+			"count_templates":           len(alltemplates),
+			"count_buildin_templates":   len(allbuildinTemplates),
+			"count_installed_templates": len(allinstalledTemplates),
+			"count_custom_templates":    len(allcustomTemplates),
+			"templates":                 alltemplates,
+			"builtin":                   allbuildinTemplates,
+			"installed":                 allinstalledTemplates,
+			"custom":                    allcustomTemplates,
 		}
 
 		if err := json.NewEncoder(w).Encode(response); err != nil {
@@ -486,6 +520,34 @@ func main() {
 		}
 
 		writeTemplateJSON(w, name, "builtin", data)
+	})
+
+	// Load an installed template (from `finder install`)
+	mux.HandleFunc("/api/template/load/installed", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+			return
+		}
+
+		name := r.URL.Query().Get("name")
+		if name == "" {
+			http.Error(w, "Missing template name", http.StatusBadRequest)
+			return
+		}
+
+		installed, err := templates.LoadInstalledTemplates()
+		if err != nil {
+			http.Error(w, "Failed to load installed templates", http.StatusInternalServerError)
+			return
+		}
+
+		data, exists := installed[name]
+		if !exists {
+			http.Error(w, "Template not found", http.StatusNotFound)
+			return
+		}
+
+		writeTemplateJSON(w, name, "installed", data)
 	})
 
 	// Load a template cache by its name

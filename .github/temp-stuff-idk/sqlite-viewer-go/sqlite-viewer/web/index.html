@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SQLite Viewer</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>SQLite Viewer</h1>
+      <span id="status">Verbinde…</span>
+    </div>
+    <button id="refreshBtn" class="secondary">↻ Aktualisieren</button>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-title">Objekte</div>
+      <input id="tableFilter" class="filter" placeholder="Tabelle filtern…">
+      <div id="tables" class="table-list"></div>
+    </aside>
+
+    <main class="content">
+      <section id="welcome" class="card">
+        <h2>SQLite Viewer</h2>
+        <p>Wähle links eine Tabelle oder führe unten eine SQL-Abfrage aus.</p>
+      </section>
+
+      <section id="tableView" class="hidden">
+        <div class="section-head">
+          <div>
+            <h2 id="tableTitle"></h2>
+            <div id="tableMeta" class="muted"></div>
+          </div>
+          <div class="actions">
+            <button id="schemaBtn" class="secondary">Schema</button>
+            <button id="prevBtn" class="secondary">←</button>
+            <span id="pageInfo"></span>
+            <button id="nextBtn" class="secondary">→</button>
+          </div>
+        </div>
+
+        <div class="card table-card">
+          <div class="table-wrap">
+            <table id="dataTable"></table>
+          </div>
+        </div>
+
+        <div id="schema" class="card hidden"></div>
+      </section>
+
+      <section class="card sql-card">
+        <div class="section-head">
+          <div>
+            <h2>SQL Console</h2>
+            <div class="muted">Standardmäßig read-only</div>
+          </div>
+          <button id="runBtn">Ausführen</button>
+        </div>
+        <textarea id="sql" spellcheck="false" placeholder="SELECT * FROM users LIMIT 50;"></textarea>
+        <div id="queryMessage" class="query-message"></div>
+        <div class="table-wrap">
+          <table id="queryTable"></table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

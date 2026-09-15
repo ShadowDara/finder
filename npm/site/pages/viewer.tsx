@@ -7,9 +7,11 @@ import { SERVER_ADRESS } from "../src/vars.js";
 export interface ServerResponse {
   count_templates: number;
   count_buildin_templates: number;
+  count_installed_templates: number;
   count_custom_templates: number;
   templates: Record<string, string>;
   builtin: Record<string, string>;
+  installed: Record<string, string>;
   custom: Record<string, string>;
 }
 
@@ -30,9 +32,11 @@ export default function render(el: HTMLDivElement) {
     renderViewer(el, {
       templates: builtin,
       builtin,
+      installed: [],
       custom: [],
       count_templates: builtin.length,
       count_buildin_templates: builtin.length,
+      count_installed_templates: 0,
       count_custom_templates: 0,
     });
     return;
@@ -93,9 +97,11 @@ function renderViewer(
   data: {
     templates: [string, string][];
     builtin: [string, string][];
+    installed: [string, string][];
     custom: [string, string][];
     count_templates: number;
     count_buildin_templates: number;
+    count_installed_templates: number;
     count_custom_templates: number;
   },
 ) {
@@ -138,6 +144,13 @@ function renderViewer(
 
             {!isStatic ? (
               <div class="stat">
+                <strong>{data.count_installed_templates}</strong>
+                <span>Installed</span>
+              </div>
+            ) : null}
+
+            {!isStatic ? (
+              <div class="stat">
                 <strong>{data.count_custom_templates}</strong>
                 <span>Custom</span>
               </div>
@@ -169,6 +182,11 @@ function renderViewer(
                   <span>{data.builtin.length}</span>
                 </button>
 
+                <button class="filter" data-filter="installed">
+                  Installed
+                  <span>{data.installed.length}</span>
+                </button>
+
                 <button class="filter" data-filter="custom">
                   Custom
                   <span>{data.custom.length}</span>
@@ -197,6 +215,7 @@ function renderViewer(
 
         <section class="template-grid" id="template-grid">
           {renderTemplates(data.builtin, "builtin")}
+          {!isStatic ? renderTemplates(data.installed, "installed") : null}
           {!isStatic ? renderTemplates(data.custom, "custom") : null}
         </section>
 
@@ -225,9 +244,11 @@ async function renderServer(el: HTMLDivElement) {
     renderViewer(el, {
       templates: Object.entries(data.templates),
       builtin: Object.entries(data.builtin),
+      installed: Object.entries(data.installed ?? {}),
       custom: Object.entries(data.custom),
       count_templates: data.count_templates,
       count_buildin_templates: data.count_buildin_templates,
+      count_installed_templates: data.count_installed_templates ?? 0,
       count_custom_templates: data.count_custom_templates,
     });
   } catch (error) {
@@ -247,7 +268,7 @@ async function renderServer(el: HTMLDivElement) {
 
 function renderTemplates(
   templates: [string, string][],
-  type: "templates" | "builtin" | "custom",
+  type: "templates" | "builtin" | "installed" | "custom",
 ) {
   return templates.map(([name, content]) => {
     const tags = getTags(content);
@@ -257,6 +278,15 @@ function renderTemplates(
       `&filename=${encodeURIComponent(name)}`;
 
     const cacheUrl = `../cacheviewer?name=${encodeURIComponent(name)}`;
+
+    const icon = type === "builtin" ? "★" : type === "installed" ? "⬇" : "◇";
+
+    const badgeText =
+      type === "builtin"
+        ? "Built-in"
+        : type === "installed"
+          ? "Installed"
+          : "Template";
 
     return (
       <article
@@ -269,13 +299,11 @@ function renderTemplates(
         aria-label={`Template ${escapeHtml(name)} open`}
       >
         <div class="card-header">
-          <div class="template-icon">{type === "builtin" ? "★" : "◇"}</div>
+          <div class="template-icon">{icon}</div>
 
           <div class="template-info">
             <h2>{escapeHtml(name)}</h2>
-            <span class={`badge ${type}`}>
-              {type === "builtin" ? "Built-in" : "Template"}
-            </span>
+            <span class={`badge ${type}`}>{badgeText}</span>
             {tags.length ? (
               <div class="template-tags">
                 {tags.map((tag) => (

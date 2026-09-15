@@ -9,7 +9,11 @@
     },
     "name": {
       "type": "string",
-      "description": "Name of the folder or template."
+      "description": "Name pattern of the folder or template (exact name or glob)."
+    },
+    "name_regex": {
+      "type": "string",
+      "description": "Optional regular expression matched against the folder name (Go RE2)."
     },
     "folders": {
       "type": "array",
@@ -41,6 +45,7 @@
       "type": "object",
       "properties": {
         "name": { "type": "string" },
+        "name_regex": { "type": "string" },
         "existence": {
           "type": "string",
           "enum": ["required", "forbidden", "optional"],
@@ -54,6 +59,7 @@
       "properties": {
         "description": { "type": "string" },
         "name": { "type": "string" },
+        "name_regex": { "type": "string" },
         "folders": {
           "type": "array",
           "items": { "$ref": "#/definitions/folder" }
