@@ -1,0 +1,44 @@
+{
+  "name": "fling-language",
+  "displayName": "Fling Language Support",
+  "description": "Sprachunterstützung für die Fling Skriptsprache: Syntax-Highlighting via TextMate-Grammatik",
+  "version": "0.1.0",
+  "publisher": "fling-lang",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "fling",
+        "aliases": [
+          "Fling",
+          "fling"
+        ],
+        "extensions": [
+          ".fling"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "fling",
+        "scopeName": "source.fling",
+        "path": "./syntaxes/fling.tmLanguage.json"
+      }
+    ]
+  },
+  "devDependencies": {
+    "@vscode/vsce": "^3.9.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shadowdara/finder",
+    "directory": "npm/fling-vscode"
+  },
+  "license": "MIT"
+}

@@ -7,6 +7,7 @@ import { Registry } from "monaco-textmate";
 import { wireTmGrammars } from "monaco-editor-textmate";
 import onigasmWasm from "onigasm/lib/onigasm.wasm?url";
 import * as shikiLangs from "@shikijs/langs";
+import flingTm from "./../data/fling/fling.tmLanguage.json";
 
 const DEFAULT_VALUE = `// examples/example1.ts
 // A tour of the subset this compiler supports. Compile with:
@@ -62,6 +63,7 @@ console.log("clampLabel(250) =", clampLabel(250));
  * in die Monaco-Instanz verdrahtet.
  */
 const TM_GRAMMARS: Record<string, string> = {
+  fling: "source.fling",
   typescript: "source.ts",
   javascript: "source.js",
   json: "source.json",
@@ -74,6 +76,16 @@ const TM_GRAMMARS: Record<string, string> = {
   go: "source.go",
 };
 
+// Fling-Sprache bei Monaco registrieren (für Language-IDs)
+monaco.languages.register({ id: "fling" });
+
+// Minimaler Monarch-Fallback, falls TextMate ausfällt (sonst wirft Monaco)
+monaco.languages.setMonarchTokensProvider("fling", {
+  tokenizer: {
+    root: [],
+  },
+});
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function setupTextMate(editor: any) {
   // Oniguruma (die Regex-Engine hinter TextMate) als WASM in den Browser laden.
@@ -81,8 +93,15 @@ async function setupTextMate(editor: any) {
 
   const registry = new Registry({
     getGrammarDefinition: async (scopeName: string) => {
-      // @shikijs/langs exportiert jede Sprache als Top-Level-Prop
-      // (gleicher Name wie die Monaco-Sprach-ID in TM_GRAMMARS).
+      // Lokale Grammatiken (z.B. fling) direkt aus importierten JSONs liefern
+      if (scopeName === "source.fling") {
+        return {
+          format: "json",
+          content: JSON.stringify(flingTm),
+        };
+      }
+
+      // Alle anderen: über @shikijs/langs (gleicher Name wie Monaco-Language-ID)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const lang = (shikiLangs as Record<string, any>)[
         Object.entries(TM_GRAMMARS).find(
@@ -191,7 +210,7 @@ export default function render(el: HTMLDivElement) {
   const rightEl = el.querySelector<HTMLDivElement>("#editor-right")!;
   const rightEditor = monaco.editor.create(rightEl, {
     value: DEFAULT_VALUE,
-    language: "plaintext",
+    language: "fling",
     theme: "vs-dark",
     automaticLayout: true,
     readOnly: true,
@@ -218,6 +237,13 @@ export default function render(el: HTMLDivElement) {
   setupTextMate(leftEditor).catch((error) => {
     console.error(
       "[monaco] TextMate setup failed — falling back to Monarch",
+      error,
+    );
+  });
+
+  setupTextMate(rightEditor).catch((error) => {
+    console.error(
+      "[monaco] TextMate setup for right editor failed — falling back to Monarch",
       error,
     );
   });

@@ -6,7 +6,9 @@ allowBuilds:
   "@prisma/client": true
   "@prisma/engines": true
   "@shadowdara/seg": true
+  '@vscode/vsce-sign': true
   esbuild: true
+  keytar: false
   prisma: true
 minimumReleaseAgeExclude:
   - "@shadowdara/finder-lib@0.3.17"
