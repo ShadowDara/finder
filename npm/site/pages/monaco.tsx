@@ -2,10 +2,17 @@ import { jsx, Fragment } from "../src/jsx-runtime";
 import * as monaco from "monaco-editor";
 import "./monaco.css";
 import { jsToFling } from "js-to-fling";
+import { loadWASM } from "onigasm";
+import { Registry } from "monaco-textmate";
+import { wireTmGrammars } from "monaco-editor-textmate";
+import onigasmWasm from "onigasm/lib/onigasm.wasm?url";
+import * as shikiLangs from "@shikijs/langs";
 
 const DEFAULT_VALUE = `// examples/example1.ts
 // A tour of the subset this compiler supports. Compile with:
 //   npx ts-node src/cli.ts examples/example1.ts -o examples/example1.fling
+
+// Paste any typescript code here which should be ported
 
 function classify(x: number): string {
   if (x < 0) {
@@ -46,6 +53,61 @@ console.log("5 % 2 =", 5 % 2); // compiled with swapped operands to counter bug 
 console.log("classify(-3) =", classify(-3));
 console.log("clampLabel(250) =", clampLabel(250));
 `;
+
+/**
+ * Monaco hat KEINE native TextMate-Tokenisierung eingebaut — das ist ein
+ * reines VS-Code-Feature. Hier wird das mit `monaco-editor-textmate` +
+ * `onigasm` nachgerüstet: Die echten .tmLanguage.json-Grammars von
+ * VS-Code-Erweiterungen (aus @shikijs/langs) werden per `EncodedTokensProvider`
+ * in die Monaco-Instanz verdrahtet.
+ */
+const TM_GRAMMARS: Record<string, string> = {
+  typescript: "source.ts",
+  javascript: "source.js",
+  json: "source.json",
+  css: "source.css",
+  html: "text.html.basic",
+  markdown: "text.html.markdown",
+  xml: "text.xml",
+  yaml: "source.yaml",
+  python: "source.python",
+  go: "source.go",
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function setupTextMate(editor: any) {
+  // Oniguruma (die Regex-Engine hinter TextMate) als WASM in den Browser laden.
+  await loadWASM(onigasmWasm);
+
+  const registry = new Registry({
+    getGrammarDefinition: async (scopeName: string) => {
+      // @shikijs/langs exportiert jede Sprache als Top-Level-Prop
+      // (gleicher Name wie die Monaco-Sprach-ID in TM_GRAMMARS).
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const lang = (shikiLangs as Record<string, any>)[
+        Object.entries(TM_GRAMMARS).find(
+          ([, scope]) => scope === scopeName,
+        )?.[0] ?? ""
+      ];
+
+      if (!lang?.grammar) {
+        throw new Error(`No grammar found for scope "${scopeName}"`);
+      }
+
+      return {
+        format: "json",
+        content: JSON.stringify(lang.grammar),
+      };
+    },
+  });
+
+  const grammars = new Map<string, string>();
+  for (const [langId, scopeName] of Object.entries(TM_GRAMMARS)) {
+    grammars.set(langId, scopeName);
+  }
+
+  await wireTmGrammars(monaco as never, registry, grammars, editor as never);
+}
 
 export default function render(el: HTMLDivElement) {
   el.innerHTML = (
@@ -150,6 +212,14 @@ export default function render(el: HTMLDivElement) {
     lineDecorationsWidth: 8,
     lineNumbersMinChars: 0,
     lineNumbers: "off",
+  });
+
+  // --- Optional: VS-Code-TextMate-Grammars verdrahten (async, fehlertolerant) ---
+  setupTextMate(leftEditor).catch((error) => {
+    console.error(
+      "[monaco] TextMate setup failed — falling back to Monarch",
+      error,
+    );
   });
 
   // --- Sync left → right on every keystroke ---

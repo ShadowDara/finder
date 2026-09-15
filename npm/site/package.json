@@ -55,6 +55,7 @@
     "@node-steam/vdf": "^2.2.0",
     "@shadowdara/dlib": "^0.0.4",
     "@shadowdara/finder-lib": "^0.3.17",
+    "@shikijs/langs": "^4.4.3",
     "browser-image-compression": "^2.0.2",
     "comlink": "^4.4.2",
     "ejs": "^6.0.1",
@@ -66,6 +67,9 @@
     "liquidjs": "^10.29.0",
     "lucide": "^1.45.0",
     "monaco-editor": "^0.56.0",
+    "monaco-editor-textmate": "^4.0.0",
+    "monaco-textmate": "^3.0.1",
+    "onigasm": "^2.2.5",
     "samengine": "^1.11.0",
     "tellraw-parser": "^1.0.2",
     "tsafe": "^1.8.12"
