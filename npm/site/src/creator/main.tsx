@@ -1,5 +1,5 @@
 import { jsx } from "../jsx-runtime";
-import type { Existence, FileNode, FolderJSON, FolderNode } from "./types";
+import type { Existence, FileNode, FolderNode, TemplateJSON } from "./types";
 import {
   decodeMarkdownNote,
   encodeMarkdownNote,
@@ -69,7 +69,7 @@ export function renderCreator(app: HTMLDivElement, version: string) {
             id="btn-back-to-origin"
             class="btn btn-ghost"
             type="button"
-            href={`${origin_link}?template=${encodeURIComponent(JSON.stringify(serializeFolder(root, true)))}&name=${filname}`}
+            href={`${origin_link}?template=${encodeURIComponent(JSON.stringify(serializeFolder(root)))}&name=${filname}`}
           >
             Go back to origin
           </a>
@@ -145,9 +145,9 @@ export function renderCreator(app: HTMLDivElement, version: string) {
   );
 
   async function saveTemplateToBackend(name: string): Promise<void> {
-    const payload: { name: string; content: FolderJSON } = {
+    const payload: { name: string; content: TemplateJSON } = {
       name,
-      content: serializeFolder(root, true),
+      content: serializeFolder(root),
     };
 
     console.log(payload);
@@ -231,7 +231,7 @@ export function renderCreator(app: HTMLDivElement, version: string) {
   // root serialisiert wird und nicht der Stand vom ersten Rendering.
   function updateOriginLink(): void {
     if (!originLinkEl || !origin_link) return;
-    originLinkEl.href = `${origin_link}?template=${encodeURIComponent(JSON.stringify(serializeFolder(root, true)))}&name=${filname}`;
+    originLinkEl.href = `${origin_link}?template=${encodeURIComponent(JSON.stringify(serializeFolder(root)))}&name=${filname}`;
   }
 
   // ---------- Tree ----------
@@ -528,23 +528,27 @@ export function renderCreator(app: HTMLDivElement, version: string) {
               folder.nameRegex = v;
               renderPreview();
             },
-            '^project-[0-9]+$',
+            "^project-[0-9]+$",
           ),
           "Optional Go regex (RE2) matched against the name instead of the glob.",
         ),
       );
 
-      inspectorEl.appendChild(
-        labeled(
-          "Description",
-          textArea(folder.description, (v) => {
-            folder.description = v;
-            renderPreview();
-          }),
-        ),
-      );
-
+      // Root-only metadata: description, min_version, tags and the markdown
+      // note are only valid on the root per the finder schema. Nested
+      // folders carry just name / name_regex / files / folders / command /
+      // invert_command / size.
       if (isRoot) {
+        inspectorEl.appendChild(
+          labeled(
+            "Description",
+            textArea(folder.description, (v) => {
+              folder.description = v;
+              renderPreview();
+            }),
+          ),
+        );
+
         inspectorEl.appendChild(
           labeled(
             "Minimum finder version",
@@ -559,39 +563,39 @@ export function renderCreator(app: HTMLDivElement, version: string) {
             "Old templates without a matching version will warn the user.",
           ),
         );
+
+        const markdownTextArea = textArea(
+          folder.markdownNote,
+          (v) => {
+            folder.markdownNote = v;
+            renderPreview();
+          },
+          "# Kurze Beschreibung …\n\nOptional: weitere Details zu diesem Template",
+        );
+        markdownTextArea.rows = 6;
+        const noteField = labeled(
+          "Markdown note",
+          markdownTextArea,
+          "Wird percent-encodiert (wie encodeURIComponent, z.B. neue Zeilen als %0A) im Feld mdnote gespeichert.",
+        );
+
+        const notePreview = document.createElement("code");
+        notePreview.className = "note-mdnote-preview";
+
+        const noteFolder = folder; // narrowed non-null reference for closures
+
+        function renderNotePreview(): void {
+          const note = encodeMarkdownNote(noteFolder.markdownNote);
+          notePreview.textContent = note ? `mdnote: "${note}"` : "";
+        }
+
+        markdownTextArea.addEventListener("input", () => {
+          renderNotePreview();
+        });
+
+        noteField.appendChild(notePreview);
+        inspectorEl.appendChild(noteField);
       }
-
-      const markdownTextArea = textArea(
-        folder.markdownNote,
-        (v) => {
-          folder.markdownNote = v;
-          renderPreview();
-        },
-        "# Kurze Beschreibung …\n\nOptional: weitere Details zu diesem Template",
-      );
-      markdownTextArea.rows = 6;
-      const noteField = labeled(
-        "Markdown note",
-        markdownTextArea,
-        "Wird percent-encodiert (wie encodeURIComponent, z.B. neue Zeilen als %0A) im Feld mdnote gespeichert.",
-      );
-
-      const notePreview = document.createElement("code");
-      notePreview.className = "note-mdnote-preview";
-
-      const noteFolder = folder; // narrowed non-null reference for closures
-
-      function renderNotePreview(): void {
-        const note = encodeMarkdownNote(noteFolder.markdownNote);
-        notePreview.textContent = note ? `mdnote: "${note}"` : "";
-      }
-
-      markdownTextArea.addEventListener("input", () => {
-        renderNotePreview();
-      });
-
-      noteField.appendChild(notePreview);
-      inspectorEl.appendChild(noteField);
 
       inspectorEl.appendChild(
         labeled(
@@ -623,23 +627,25 @@ export function renderCreator(app: HTMLDivElement, version: string) {
       );
       inspectorEl.appendChild(invertLabel);
 
-      inspectorEl.appendChild(
-        labeled(
-          "Tags",
-          textInput(
-            folder.tags.join(", "),
-            (v) => {
-              folder.tags = v
-                .split(",")
-                .map((t) => t.trim())
-                .filter(Boolean);
-              renderPreview();
-            },
-            "backend, node, monorepo",
+      if (isRoot) {
+        inspectorEl.appendChild(
+          labeled(
+            "Tags",
+            textInput(
+              folder.tags.join(", "),
+              (v) => {
+                folder.tags = v
+                  .split(",")
+                  .map((t) => t.trim())
+                  .filter(Boolean);
+                renderPreview();
+              },
+              "backend, node, monorepo",
+            ),
+            "Comma-separated.",
           ),
-          "Comma-separated.",
-        ),
-      );
+        );
+      }
 
       inspectorEl.appendChild(
         labeled(
@@ -691,7 +697,7 @@ export function renderCreator(app: HTMLDivElement, version: string) {
             file.nameRegex = v;
             renderPreview();
           },
-          '^(main|app|server)\\.py$',
+          "^(main|app|server)\\.py$",
         ),
         "Optional Go regex (RE2) matched against the file name instead of the glob.",
       ),
@@ -743,7 +749,7 @@ export function renderCreator(app: HTMLDivElement, version: string) {
   // ---------- Preview ----------
 
   function renderPreview(): void {
-    const json = serializeFolder(root, true);
+    const json = serializeFolder(root);
     previewEl.innerHTML = highlightFinderTemplate(
       JSON.stringify(json, null, 2),
     );
@@ -777,7 +783,7 @@ export function renderCreator(app: HTMLDivElement, version: string) {
   document
     .querySelector<HTMLButtonElement>("#btn-download")!
     .addEventListener("click", () => {
-      const json = serializeFolder(root, true);
+      const json = serializeFolder(root);
       const blob = new Blob([JSON.stringify(json, null, 2)], {
         type: "application/json",
       });
@@ -791,7 +797,7 @@ export function renderCreator(app: HTMLDivElement, version: string) {
 
   // Extract the markdown note from a parsed template so the import dialog
   // (which uses JSON.parse directly) also gets the note.
-  function applyNoteFromRaw(raw: FolderJSON): void {
+  function applyNoteFromRaw(raw: TemplateJSON): void {
     const rawWithNote = raw as unknown as { mdnote?: unknown };
     if (typeof rawWithNote.mdnote === "string") {
       root.markdownNote = decodeMarkdownNote(rawWithNote.mdnote);

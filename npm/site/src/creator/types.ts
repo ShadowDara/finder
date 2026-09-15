@@ -1,46 +1,13 @@
-// Mirrors the Go structs in package `structure` (Folder, Files/File, Size).
-// The Size struct wasn't part of the source you shared, so it's modeled here
-// as a simple { min, max } byte range — rename the fields in `serialize.ts`
-// if your real `Size` struct looks different.
+// Types for the template creator.
+//
+// The plain-JSON shapes written to disk / read by the Go tool come straight
+// from `@shadowdara/finder-lib` (newest = v0.3.18), so they stay in sync with
+// the actual finder schema instead of being hand-maintained here.
+//
+// The editor additionally works with mutable node types (FileNode / FolderNode)
+// that carry UI-only ids and ""-defaults for the optional string fields.
 
 import { newest } from "@shadowdara/finder-lib";
-
-export type Size = newest.Size;
-
-export type Existence = "required" | "forbidden" | "optional";
-
-/** Editable file-node. `id` is UI-only bookkeeping, stripped on export. */
-export interface FileNode {
-  id: string;
-  name: string;
-  nameRegex: string;
-  existence: Existence;
-  size: Size | null;
-  checksums: Checksum | null;
-}
-
-/** Checksum node */
-export interface Checksum {
-  sha256: string;
-  sha512: string;
-}
-
-/** Editable folder-node (tree). `id` is UI-only bookkeeping, stripped on export. */
-export interface FolderNode {
-  id: string;
-  name: string;
-  nameRegex: string;
-  description: string;
-  minVersion: string; // only meaningful on the root node, but the struct allows it anywhere
-  command: string;
-  invertCommand: boolean;
-  tags: string[];
-  files: FileNode[];
-  folders: FolderNode[];
-  size: Size | null;
-  /** Raw Markdown note, edited in the UI. Encoded to base64 on export. */
-  markdownNote: string;
-}
 
 /**
  * The plain-JSON shape written to disk / read by the Go tool.
@@ -50,25 +17,53 @@ export interface FolderNode {
  * Defaults: existence = "required", command = "", invert_command = false,
  * tags/folders/files = [], description/min_version = "", size = unset.
  */
-export interface FileJSON {
+export type FileJSON = newest.File;
+
+/**
+ * The plain-JSON shape of a nested folder (the Go `Folder` struct). Only
+ * fields valid on every nesting level are allowed here — root-only metadata
+ * (description / min_version / tags / mdnote / author / authors) belongs to
+ * `TemplateJSON`.
+ */
+export type FolderJSON = newest.Folder;
+
+/**
+ * The full top-level template JSON: the root folder plus the root-only
+ * metadata fields (description, min_version, tags, mdnote, author, authors).
+ */
+export type TemplateJSON = newest.Template;
+
+/** Size range as edited in the UI; serialized via `serializeSize`. */
+export type SizeConstraint = Pick<newest.Size, "min" | "max">;
+
+/** Checksum pair as edited in the UI ("" = unset). */
+export type Checksum = Required<newest.Checksums>;
+
+/** Existence values from the finder schema. */
+export type Existence = newest.Existence;
+
+/** A single file entry in the editor tree. */
+export interface FileNode {
+  id: string;
   name: string;
-  name_regex?: string;
-  existence?: Existence;
-  size?: Size;
-  checksums?: Partial<Checksum>;
+  nameRegex: string;
+  existence: Existence;
+  size: SizeConstraint | null;
+  checksums: Checksum | null;
 }
 
-export interface FolderJSON {
-  min_version?: string;
-  description?: string;
+/** A folder (or the root) node in the editor tree. */
+export interface FolderNode {
+  id: string;
   name: string;
-  name_regex?: string;
-  folders?: FolderJSON[];
-  files?: FileJSON[];
-  command?: string;
-  invert_command?: boolean;
-  tags?: string[];
-  size?: Size;
-  /** Optional Markdown note, percent-encoded (like encodeURIComponent). Mirrors Go's mdnote. */
-  mdnote?: string;
+  nameRegex: string;
+  description: string;
+  minVersion: string;
+  command: string;
+  invertCommand: boolean;
+  tags: string[];
+  files: FileNode[];
+  folders: FolderNode[];
+  size: SizeConstraint | null;
+  markdownNote: string;
 }
