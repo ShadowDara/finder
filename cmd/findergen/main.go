@@ -13,7 +13,6 @@ import (
 	"path/filepath"
 	"runtime"
 	"strconv"
-	"strings"
 	"sync"
 	"time"
 
@@ -256,7 +255,7 @@ func main() {
 			return
 		}
 
-		if !strings.HasSuffix(payload.Name, ".json5") {
+		if !templates.IsTemplateFile(payload.Name) {
 			payload.Name += ".json5"
 		}
 
@@ -297,7 +296,7 @@ func main() {
 			return
 		}
 
-		if !strings.HasSuffix(payload.Name, ".json5") {
+		if !templates.IsTemplateFile(payload.Name) {
 			payload.Name += ".json5"
 		}
 

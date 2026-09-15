@@ -77,7 +77,7 @@ func Install(installTemplate string) error {
 
 	// Bestimme Quelle + Zielname
 	sourceURL := installTemplate
-	relName := strings.TrimSuffix(installTemplate, ".json5")
+	relName := templates.TrimTemplateExt(installTemplate)
 	looksLikeURL := strings.Contains(relName, "/") || strings.Contains(relName, ".")
 
 	if !looksLikeURL {
@@ -96,10 +96,11 @@ func Install(installTemplate string) error {
 	// Quelle normalisieren: immer volle http(s)-URL für die Lockfile
 	sourceURL = normalizeSourceURL(sourceURL)
 
-	// WICHTIG: Der Zielname darf NIE auf .json5 enden — er wird später
-	// mit + ".json5" als Dateiname verwendet. installPathForURL liefert
-	// ggf. den Pfad inkl. .json5 (aus der URL), daher hier bereinigen.
-	relName = strings.TrimSuffix(relName, ".json5")
+	// WICHTIG: Der Zielname darf NIE auf eine Template-Extension enden —
+	// er wird später mit + ".json5" als Dateiname verwendet.
+	// installPathForURL liefert ggf. den Pfad inkl. Extension (aus der URL),
+	// daher hier bereinigen.
+	relName = templates.TrimTemplateExt(relName)
 
 	// Zielverzeichnis: ~/.finder/installed/templates/
 	customPath, err := templates.GetInstalledTemplatePath()
@@ -234,7 +235,7 @@ func Uninstall(templateName string) error {
 		return fmt.Errorf("uninstall: kein Template-Name angegeben")
 	}
 
-	relName := strings.TrimSuffix(templateName, ".json5")
+	relName := templates.TrimTemplateExt(templateName)
 	if strings.Contains(relName, "/") || strings.Contains(relName, ".") {
 		name, err := installPathForURL(normalizeSourceURL(templateName))
 		if err != nil {

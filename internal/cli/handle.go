@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"strings"
 
 	"text/tabwriter"
 
@@ -398,9 +397,7 @@ func Validate(args []string, OutputType string) error {
 		// Resolve an alias before any filesystem/template lookup.
 		resolved := ResolveAlias(arg)
 		name := resolved
-		if strings.HasSuffix(name, ".json5") {
-			name = strings.TrimSuffix(name, ".json5")
-		}
+		name = templates.TrimTemplateExt(name)
 		displayName := arg
 		if resolved != arg {
 			displayName = fmt.Sprintf("%s -> %s", arg, resolved)
