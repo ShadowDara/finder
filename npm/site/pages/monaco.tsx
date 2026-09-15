@@ -1,24 +1,11 @@
 import { jsx, Fragment } from "../src/jsx-runtime";
 import * as monaco from "monaco-editor";
 import "./monaco.css";
+import { jsToFling } from "js-to-fling";
 
-const DEFAULT_VALUE = `{
-  "name": "finder",
-  "description": "Fast, tag-based project finder",
-  "version": "0.3.18",
-  "templates": [
-    {
-      "name": "node",
-      "tags": ["node", "javascript"],
-      "files": ["package.json"]
-    },
-    {
-      "name": "python",
-      "tags": ["python"],
-      "files": ["pyproject.toml", "*.py"]
-    }
-  ]
-}`;
+const DEFAULT_VALUE = `// write typescript code here os JS
+
+console.log("hello world")`;
 
 export default function render(el: HTMLDivElement) {
   el.innerHTML = (
@@ -135,7 +122,9 @@ export default function render(el: HTMLDivElement) {
   }
 
   leftEditor.onDidChangeModelContent(() => {
-    rightEditor.setValue(leftEditor.getValue());
+    let res = jsToFling(leftEditor.getValue());
+
+    rightEditor.setValue(res.fling ?? "// this didnt work");
     updateStats();
   });
 
