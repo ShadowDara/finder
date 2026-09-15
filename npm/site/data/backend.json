@@ -1,29 +1,29 @@
 {
-  "generatedAt": "2026-09-15T15:49:30.020Z",
+  "generatedAt": "2026-09-15T21:18:57.563Z",
   "total": {
-    "files": 169,
-    "bytes": 34021045,
-    "kilobytes": 33223.68,
-    "megabytes": 32.44
+    "files": 172,
+    "bytes": 34374483,
+    "kilobytes": 33568.83,
+    "megabytes": 32.78
   },
   "byExtension": [
     {
       "extension": ".js",
-      "files": 124,
-      "bytes": 33178871,
+      "files": 125,
+      "bytes": 33522952,
       "percentage": 97.52
     },
     {
       "extension": ".wasm",
       "files": 1,
       "bytes": 468274,
-      "percentage": 1.38
+      "percentage": 1.36
     },
     {
       "extension": ".css",
-      "files": 16,
-      "bytes": 222068,
-      "percentage": 0.65
+      "files": 17,
+      "bytes": 230751,
+      "percentage": 0.67
     },
     {
       "extension": ".ttf",
@@ -33,15 +33,15 @@
     },
     {
       "extension": ".html",
-      "files": 26,
-      "bytes": 9386,
+      "files": 27,
+      "bytes": 9783,
       "percentage": 0.03
     },
     {
       "extension": ".txt",
       "files": 1,
-      "bytes": 1490,
-      "percentage": 0
+      "bytes": 1767,
+      "percentage": 0.01
     }
   ],
   "files": [
@@ -101,6 +101,11 @@
       "bytes": 405141
     },
     {
+      "path": "assets/console.js",
+      "extension": ".js",
+      "bytes": 338160
+    },
+    {
       "path": "assets/monaco.css",
       "extension": ".css",
       "bytes": 165209
@@ -116,6 +121,11 @@
       "bytes": 79109
     },
     {
+      "path": "assets/_virtual_page-data_index.js",
+      "extension": ".js",
+      "bytes": 33588
+    },
+    {
       "path": "assets/installscript.js",
       "extension": ".js",
       "bytes": 32265
@@ -126,11 +136,6 @@
       "bytes": 30822
     },
     {
-      "path": "assets/_virtual_page-data_index.js",
-      "extension": ".js",
-      "bytes": 29099
-    },
-    {
       "path": "assets/lspLanguageFeatures.js",
       "extension": ".js",
       "bytes": 28659
@@ -138,7 +143,7 @@
     {
       "path": "assets/_virtual_page-markdown_readme.js",
       "extension": ".js",
-      "bytes": 24851
+      "bytes": 25185
     },
     {
       "path": "assets/tsMode.js",
@@ -151,14 +156,14 @@
       "bytes": 18459
     },
     {
+      "path": "assets/creator.js",
+      "extension": ".js",
+      "bytes": 17157
+    },
+    {
       "path": "assets/powerquery.js",
       "extension": ".js",
       "bytes": 16801
-    },
-    {
-      "path": "assets/creator.js",
-      "extension": ".js",
-      "bytes": 16327
     },
     {
       "path": "assets/freemarker2.js",
@@ -216,19 +221,24 @@
       "bytes": 9401
     },
     {
+      "path": "assets/main_entry.js",
+      "extension": ".js",
+      "bytes": 9262
+    },
+    {
       "path": "assets/configeditor.js",
       "extension": ".js",
       "bytes": 9239
     },
     {
-      "path": "assets/main_entry.js",
-      "extension": ".js",
-      "bytes": 9088
-    },
-    {
       "path": "assets/protobuf.js",
       "extension": ".js",
       "bytes": 8908
+    },
+    {
+      "path": "assets/console.css",
+      "extension": ".css",
+      "bytes": 8663
     },
     {
       "path": "assets/ruby.js",
@@ -498,7 +508,7 @@
     {
       "path": "assets/main.css",
       "extension": ".css",
-      "bytes": 3206
+      "bytes": 3226
     },
     {
       "path": "assets/powershell.js",
@@ -631,6 +641,11 @@
       "bytes": 1862
     },
     {
+      "path": "dependencies.txt",
+      "extension": ".txt",
+      "bytes": 1767
+    },
+    {
       "path": "assets/index.css",
       "extension": ".css",
       "bytes": 1742
@@ -671,11 +686,6 @@
       "bytes": 1545
     },
     {
-      "path": "dependencies.txt",
-      "extension": ".txt",
-      "bytes": 1490
-    },
-    {
       "path": "assets/markdowneditor.js",
       "extension": ".js",
       "bytes": 1355
@@ -686,14 +696,14 @@
       "bytes": 1281
     },
     {
+      "path": "assets/index2.js",
+      "extension": ".js",
+      "bytes": 1240
+    },
+    {
       "path": "assets/workers.js",
       "extension": ".js",
       "bytes": 1215
-    },
-    {
-      "path": "assets/index2.js",
-      "extension": ".js",
-      "bytes": 1146
     },
     {
       "path": "assets/worlds.js",
@@ -774,6 +784,11 @@
       "path": "tools/index.html",
       "extension": ".html",
       "bytes": 399
+    },
+    {
+      "path": "console/index.html",
+      "extension": ".html",
+      "bytes": 397
     },
     {
       "path": "creator/index.html",

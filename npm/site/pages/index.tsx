@@ -21,7 +21,13 @@ export default function render(el: HTMLDivElement, data: string) {
             <a href="./regexcreator">Regex Creator</a>
           </li>
           <li>
+            <a href="./console">Console</a>
+          </li>
+          <li>
             <a href="./tools">Tools</a>
+          </li>
+          <li>
+            <a href="./mcapp">MCAPP</a>
           </li>
           {/* {import.meta.env.MODE == "backend" && (
             <li>

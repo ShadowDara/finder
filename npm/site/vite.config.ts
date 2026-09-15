@@ -71,7 +71,9 @@ export default defineConfig(({ mode }) => {
   return {
     base: mode === "static" ? "/finder/" : "./",
     define: {
-      "process.env.NODE_ENV": JSON.stringify(mode === "production" ? "production" : "development"),
+      "process.env.NODE_ENV": JSON.stringify(
+        mode === "production" ? "production" : "development",
+      ),
     },
     esbuild: {
       jsxFactory: "jsx",
@@ -83,6 +85,7 @@ export default defineConfig(({ mode }) => {
         "/api": {
           target: "http://localhost:13420",
           changeOrigin: true,
+          ws: true,
         },
       },
     },
