@@ -13,6 +13,12 @@ import yaml from "@rollup/plugin-yaml";
 import { buildStats } from "./vite-plugin-build-stats";
 import { markdownLint } from "./md-linter-plugin";
 import i18nextLoader from "vite-plugin-i18next-loader";
+import _monacoEditorPlugin from "vite-plugin-monaco-editor";
+
+const monacoEditorPlugin =
+  typeof _monacoEditorPlugin === "function"
+    ? _monacoEditorPlugin
+    : (_monacoEditorPlugin as any).default;
 
 function dependenciesPlugin(outDir: string) {
   return {
@@ -81,6 +87,7 @@ export default defineConfig(({ mode }) => {
       // i18nextLoader({
       //   paths: ["./src/locales"],
       // }),
+      monacoEditorPlugin({}),
       markdownLint({
         maxLineLength: 72,
 

@@ -203,6 +203,9 @@ importers:
       lucide:
         specifier: ^1.45.0
         version: 1.45.0
+      monaco-editor:
+        specifier: ^0.56.0
+        version: 0.56.0
       samengine:
         specifier: ^1.11.0
         version: 1.11.0
@@ -5574,7 +5577,7 @@ snapshots:
 
   '@modelcontextprotocol/core@2.0.0':
     dependencies:
-      zod: 4.6.2
+      zod: 4.6.5
 
   '@modelcontextprotocol/sdk@1.30.0(zod@3.25.76)':
     dependencies:
@@ -5601,7 +5604,7 @@ snapshots:
   '@modelcontextprotocol/server@2.0.0':
     dependencies:
       '@modelcontextprotocol/core': 2.0.0
-      zod: 4.6.2
+      zod: 4.6.5
 
   '@monaco-editor/loader@1.7.0':
     dependencies:

@@ -64,6 +64,7 @@
     "ky": "^2.1.0",
     "liquidjs": "^10.29.0",
     "lucide": "^1.45.0",
+    "monaco-editor": "^0.56.0",
     "samengine": "^1.11.0",
     "tellraw-parser": "^1.0.2",
     "tsafe": "^1.8.12"
