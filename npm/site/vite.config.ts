@@ -70,6 +70,9 @@ export default defineConfig(({ mode }) => {
   const outDir = mode === "static" ? "dist-static" : "dist";
   return {
     base: mode === "static" ? "/finder/" : "./",
+    define: {
+      "process.env.NODE_ENV": JSON.stringify(mode === "production" ? "production" : "development"),
+    },
     esbuild: {
       jsxFactory: "jsx",
       jsxFragment: "Fragment",

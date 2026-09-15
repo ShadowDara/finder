@@ -36,7 +36,7 @@ export default function render(el: HTMLDivElement) {
               Editor
             </span>
             <span class="pane-badge" id="badge-lang">
-              JSON
+              TypeScript
             </span>
           </div>
           <div class="editor-area" id="editor-left"></div>
@@ -72,7 +72,7 @@ export default function render(el: HTMLDivElement) {
   const leftEl = el.querySelector<HTMLDivElement>("#editor-left")!;
   const leftEditor = monaco.editor.create(leftEl, {
     value: DEFAULT_VALUE,
-    language: "json",
+    language: "typescript",
     theme: "vs-dark",
     automaticLayout: true,
     minimap: { enabled: false },
