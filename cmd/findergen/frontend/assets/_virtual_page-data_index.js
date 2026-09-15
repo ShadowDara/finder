@@ -1,4 +1,4 @@
-const n=`<pre><code class="language-md"><span class="hljs-section"># AGENTS — Finder Template Authoring Guide</span>
+const s=`<pre><code class="language-md"><span class="hljs-section"># AGENTS — Finder Template Authoring Guide</span>
 
 This document is for AI assistants such as ChatGPT, Claude, Copilot,
 and similar tools that need to create valid Finder templates.
@@ -127,36 +127,52 @@ Use:
 <span class="hljs-bullet">-</span> <span class="hljs-code">\`&quot;*&quot;\`</span> for any folder name
 <span class="hljs-bullet">-</span> <span class="hljs-code">\`&quot;my-app&quot;\`</span> for exact name
 <span class="hljs-bullet">-</span> <span class="hljs-code">\`&quot;project-*&quot;\`</span> for glob wildcard matching
-<span class="hljs-bullet">-</span> <span class="hljs-code">\`&quot;^project-[0-9]+$&quot;\`</span> for regex matching
 
 Important:
 
-<span class="hljs-bullet">-</span> Matching is exact-first, then regex, then glob fallback (see
-  the &quot;Pattern matching&quot; section below).
+<span class="hljs-bullet">-</span> Matching is exact-first, then glob fallback (see the &quot;Pattern
+  matching&quot; section below). Regular expressions are <span class="hljs-strong">**not**</span> interpreted
+  inside <span class="hljs-code">\`name\`</span> — use the dedicated <span class="hljs-code">\`name_regex\`</span> field instead.
 <span class="hljs-bullet">-</span> If you want to match all folders, prefer <span class="hljs-code">\`&quot;*&quot;\`</span>.
 
-<span class="hljs-section">### \`files\` (array)</span>
+<span class="hljs-section">### \`name<span class="hljs-emphasis">_regex\` (string)
+
+Optional Go regular expression (RE2) matched against the directory
+name. It is a separate field, so \`name\` keeps its exact/glob behaviour.
+
+\`\`\`json5
+&quot;name_</span>regex&quot;: &quot;^project-[0-9]+$&quot;</span>
+<span class="hljs-code">\`\`\`
+
+Rules:
+
+- both \`name\` and \`name_regex\` can be set; when both are set, **both**
+  must match
+- the regex must compile; an invalid regex never matches (fails closed)
+- since 0.3.18 — set \`&quot;min_version&quot;: &quot;0.3.18&quot;\` when you use it
+
+### \`files\` (array)
 
 Defines required/optional files.
 
 Can be either:
 
-<span class="hljs-bullet">-</span> old style: string array
-<span class="hljs-bullet">-</span> modern style: objects with metadata
+- old style: string array
+- modern style: objects with metadata
 
 Examples:
 
-<span class="hljs-code">\`\`\`json5
+\`\`\`</span>json5
 &quot;files&quot;: [
   &quot;package.json&quot;,
   &quot;README.md&quot;
 ]
-\`\`\`</span>
+<span class="hljs-code">\`\`\`
 
-<span class="hljs-code">\`\`\`json5
+\`\`\`</span>json5
 &quot;files&quot;: [
   {
-    &quot;name&quot;: &quot;*.go&quot;,
+<span class="hljs-code">    &quot;name&quot;: &quot;*.go&quot;,
     &quot;existence&quot;: &quot;required&quot;
   },
   {
@@ -168,8 +184,8 @@ Examples:
     &quot;existence&quot;: &quot;forbidden&quot;
   }
 ]
-\`\`\`</span>
-
+\`\`\`
+</span>
 <span class="hljs-section">### \`existence\` values</span>
 
 <span class="hljs-bullet">-</span> <span class="hljs-code">\`required\`</span> (default): file must exist
@@ -340,175 +356,172 @@ displayed in the web UI / template hub. Since 0.3.18.
 
 ---
 
-## 3.5) Pattern matching: regex, glob, and exact
+## 3.5) Pattern matching: exact and glob; regex via \`name_</span>regex\`
 
-Every name pattern in a template — the top-level \`name\`, every file
-\`name\`, and every folder \`name\` (including nested folders) — is
+Every <span class="hljs-code">\`name\`</span> pattern in a template — the top-level <span class="hljs-code">\`name\`</span>, every file
+<span class="hljs-code">\`name\`</span>, and every folder <span class="hljs-code">\`name\`</span> (including nested folders) — is
 resolved by the same matching function:
 
-\`\`\`go
+<span class="hljs-code">\`\`\`go
 if pattern == name {
     return true           // 1) exact string match
 }
-if ok, err := regexp.MatchString(pattern, name); err == nil {
-    return ok             // 2) full Go regex
-}
 ok, err := path.Match(pattern, name)
-return err == nil &amp;&amp; ok   // 3) glob fallback
-\`\`\`
+return err == nil &amp;&amp; ok   // 2) glob fallback
+\`\`\`</span>
 
-This creates a 3-tier matching strategy:
+This creates a 2-tier matching strategy for <span class="hljs-code">\`name\`</span>:
 
-| Priority | Method                          | Applies when                               |
-| -------- | ------------------------------- | ------------------------------------------ |
-| 1        | exact string equality           | pattern equals the name verbatim           |
-| 2        | Go regex (\`regexp.MatchString\`) | pattern is a valid regular expression      |
-| 3        | glob (\`path.Match\`)             | pattern is not a valid regex (e.g. \`*.ts\`) |
+| Priority | Method                | Applies when                     |
+| -------- | --------------------- | -------------------------------- |
+| 1        | exact string equality | pattern equals the name verbatim |
+| 2        | glob (<span class="hljs-code">\`path.Match\`</span>)   | pattern contains <span class="hljs-code">\`*\`</span>, <span class="hljs-code">\`?\`</span> or <span class="hljs-code">\`[\`</span> |
 
-### How to choose a pattern
+Regular expressions are <span class="hljs-strong">**not**</span> interpreted inside <span class="hljs-code">\`name\`</span> — they live
+in the separate <span class="hljs-strong">**\`name<span class="hljs-emphasis">_regex\`** field (available on top-level
+templates, files, and folders). When both \`name\` and \`name_</span>regex\` are
+set, **</span>both** must match.
 
-Because regex is attempted before glob, the same character can mean
-different things depending on the pattern:
+<span class="hljs-section">### How to choose a pattern</span>
 
-- \`&quot;*.go&quot;\` is not a valid regex, so it is treated as a glob and
-  matches any file ending in \`.go\`.
-- \`&quot;^main\\.py$&quot;\` is a valid regex (anchored, no wildcard ambiguity),
-  so it matches exactly one name.
-- \`&quot;project-*&quot;\` is not a valid regex, so it is treated as a glob.
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`&quot;*.go&quot;\`</span> is a glob and matches any file ending in <span class="hljs-code">\`.go\`</span>.
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`&quot;project-*&quot;\`</span> is a glob.
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`&quot;^main\\.py$&quot;\`</span> in <span class="hljs-code">\`name\`</span> matches the literal name <span class="hljs-code">\`^main\\.py$\`</span> —
+  put anchored regexes into <span class="hljs-code">\`name_regex\`</span> instead.
 
-### Go regex syntax (priority 2)
+<span class="hljs-section">### Go regex syntax (in \`name<span class="hljs-emphasis">_regex\`)
 
-Patterns that compile as a Go regular expression match with full regex
-semantics against the entire entry name. Refer to Go&#x27;s
-\`regexp/syntax\` (RE2) for the full language. Useful constructs:
+\`name_</span>regex\` patterns match with full Go regex semantics (RE2)</span>
+against the entire entry name. Refer to Go&#x27;s <span class="hljs-code">\`regexp/syntax\`</span> (RE2)
+for the full language. Useful constructs:
 
-- anchors: \`^...$\`
-- character classes: \`[0-9]\`, \`[a-zA-Z]\`, \`[^...]\`
-- predefined classes: \`\\d\`, \`\\w\`, \`\\s\` (and uppercase negations)
-- quantifiers: \`*\`, \`+\`, \`?\`, \`{m,n}\`
-- alternation: \`(a|b)\`
-- groups: \`(abc)\`, non-capturing \`(?:abc)\`
-- escapes: \`\\.\`, \`\\\\\`
+<span class="hljs-bullet">-</span> anchors: <span class="hljs-code">\`^...$\`</span>
+<span class="hljs-bullet">-</span> character classes: <span class="hljs-code">\`[0-9]\`</span>, <span class="hljs-code">\`[a-zA-Z]\`</span>, <span class="hljs-code">\`[^...]\`</span>
+<span class="hljs-bullet">-</span> predefined classes: <span class="hljs-code">\`\\d\`</span>, <span class="hljs-code">\`\\w\`</span>, <span class="hljs-code">\`\\s\`</span> (and uppercase negations)
+<span class="hljs-bullet">-</span> quantifiers: <span class="hljs-code">\`*\`</span>, <span class="hljs-code">\`+\`</span>, <span class="hljs-code">\`?\`</span>, <span class="hljs-code">\`{m,n}\`</span>
+<span class="hljs-bullet">-</span> alternation: <span class="hljs-code">\`(a|b)\`</span>
+<span class="hljs-bullet">-</span> groups: <span class="hljs-code">\`(abc)\`</span>, non-capturing <span class="hljs-code">\`(?:abc)\`</span>
+<span class="hljs-bullet">-</span> escapes: <span class="hljs-code">\`\\.\`</span>, <span class="hljs-code">\`\\\\\`</span>
 
 Examples:
 
-\`\`\`json5
+<span class="hljs-code">\`\`\`json5
 // folder names like project-123, project-42 ...
-{ name: &quot;^project-[0-9]+$&quot; }
-\`\`\`
+{ name_regex: &quot;^project-[0-9]+$&quot; }
+\`\`\`</span>
 
-\`\`\`json5
+<span class="hljs-code">\`\`\`json5
 // python entry files: main.py, app.py, ...
 {
-  name: &quot;^(main|app|server)\\\\.py$&quot;,
+  name_regex: &quot;^(main|app|server)\\\\.py$&quot;,
   existence: &quot;required&quot;,
 }
-\`\`\`
+\`\`\`</span>
 
 Note: Go regex is RE2 — no backreferences and no lookahead/lookbehind.
-If your pattern uses those, it fails to compile and falls back to glob.
+An invalid <span class="hljs-code">\`name_regex\`</span> never matches (fails closed).
 
-### Glob syntax (priority 3 fallback)
+<span class="hljs-section">### Glob syntax (in \`name\`)</span>
 
-When a pattern is not a valid regex, it is treated as a glob via Go&#x27;s
-\`path.Match\`:
+<span class="hljs-code">\`name\`</span> patterns are handled via Go&#x27;s <span class="hljs-code">\`path.Match\`</span>:
 
-- \`*\` matches any sequence of non-\`/\` characters
-- \`?\` matches any single non-\`/\` character
-- \`[abc]\` matches one character from the class
-- \`[^abc]\` / \`[!abc]\` matches one character not in the class
-- \`\\x\` escapes the next character
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`*\`</span> matches any sequence of non-<span class="hljs-code">\`/\`</span> characters
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`?\`</span> matches any single non-<span class="hljs-code">\`/\`</span> character
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`[abc]\`</span> matches one character from the class
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`[^abc]\`</span> / <span class="hljs-code">\`[!abc]\`</span> matches one character not in the class
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`\\x\`</span> escapes the next character
 
-There is no recursive \`<span class="hljs-strong">**\` (doublestar) support — \`**</span>\` does not
+There is no recursive <span class="hljs-code">\`**\`</span> (doublestar) support — <span class="hljs-code">\`**\`</span> does not
 descend into subdirectories.
 
 Examples:
 
-\`\`\`json5
+<span class="hljs-code">\`\`\`json5
 &quot;name&quot;: &quot;*.ts&quot;,
-\`\`\`
+\`\`\`</span>
 
-\`\`\`json5
+<span class="hljs-code">\`\`\`json5
 &quot;name&quot;: &quot;file?.txt&quot;,
-\`\`\`
+\`\`\`</span>
 
-\`\`\`json5
+<span class="hljs-code">\`\`\`json5
 &quot;name&quot;: &quot;[abc].go&quot;,
-\`\`\`
+\`\`\`</span>
 
-### Where these patterns apply
+<span class="hljs-section">### Where these patterns apply</span>
 
-- top-level \`name\` → the scanned directory name
-- \`files[].name\` → file names inside the directory
-- \`folders[].name\` → subfolder names (recursively for nested folders)
+<span class="hljs-bullet">-</span> top-level <span class="hljs-code">\`name\`</span> / <span class="hljs-code">\`name_regex\`</span> → the scanned directory name
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`files[].name\`</span> / <span class="hljs-code">\`files[].name_regex\`</span> → file names inside the directory
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`folders[].name\`</span> / <span class="hljs-code">\`folders[].name_regex\`</span> → subfolder names
+  (recursively for nested folders)
 
-Regex patterns work in all of these places. Exact glob patterns like
-\`&quot;src&quot;\` or \`&quot;package.json&quot;\` work exactly as before.
+Exact glob patterns like <span class="hljs-code">\`&quot;src&quot;\`</span> or <span class="hljs-code">\`&quot;package.json&quot;\`</span> work exactly as
+before.
 
-### Compatibility note
+<span class="hljs-section">### Compatibility note</span>
 
-Regex support was added in finder 0.3.17. If your template relies on
-regex patterns, set:
+The separate <span class="hljs-code">\`name_regex\`</span> field was added in finder 0.3.18. If your
+template relies on regex patterns, set:
 
-\`\`\`json5
-&quot;min_</span>version&quot;: &quot;0.3.17&quot;
-<span class="hljs-code">\`\`\`
+<span class="hljs-code">\`\`\`json5
+&quot;min_version&quot;: &quot;0.3.18&quot;
+\`\`\`</span>
 
 Templates for older finder versions should keep using glob or exact
 patterns only.
 
 ---
 
-## 4) Matching semantics
+<span class="hljs-section">## 4) Matching semantics</span>
 
 A directory is considered a match only if all required conditions are
 satisfied.
 
 This includes:
 
-- \`name\` matches the folder name
-- required files exist
-- forbidden files do not exist
-- required subfolders exist
-- size constraints pass
-- checksum constraints pass
-- command condition passes
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`name\`</span> matches the folder name
+<span class="hljs-bullet">-</span> required files exist
+<span class="hljs-bullet">-</span> forbidden files do not exist
+<span class="hljs-bullet">-</span> required subfolders exist
+<span class="hljs-bullet">-</span> size constraints pass
+<span class="hljs-bullet">-</span> checksum constraints pass
+<span class="hljs-bullet">-</span> command condition passes
 
 If any required rule fails, the directory is rejected.
 
 ---
 
-## 5) Good patterns for template design
+<span class="hljs-section">## 5) Good patterns for template design</span>
 
-### Prefer broad matching first
+<span class="hljs-section">### Prefer broad matching first</span>
 
 Good default:
 
-\`\`\`</span>json5
+<span class="hljs-code">\`\`\`json5
 {
-  name: &quot;<span class="hljs-emphasis">*&quot;,
+  name: &quot;*&quot;,
   files: [&quot;package.json&quot;, &quot;tsconfig.json&quot;],
 }
-\`\`\`
+\`\`\`</span>
 
 Bad:
 
-\`\`\`json5
+<span class="hljs-code">\`\`\`json5
 {
   name: &quot;my-app&quot;,
   files: [&quot;package.json&quot;],
 }
-\`\`\`
+\`\`\`</span>
 
 The second version is overly restrictive and will miss most valid
 project folders.
 
-### Require the smallest useful signal
+<span class="hljs-section">### Require the smallest useful signal</span>
 
 For example, a Go project should usually require:
 
-- \`go.mod\`
-- one or more \`*</span>.go\` files
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`go.mod\`</span>
+<span class="hljs-bullet">-</span> one or more <span class="hljs-code">\`*.go\`</span> files
 
 Not a huge list of optional files.
 
@@ -527,8 +540,9 @@ Use patterns like <span class="hljs-code">\`&quot;*&quot;\`</span>, <span class=
 than complex regex-style expressions when a simple glob suffices.
 
 When you do need regex (e.g. matching <span class="hljs-code">\`project-123\`</span> with
-<span class="hljs-code">\`^project-[0-9]+$\`</span>), anchor with <span class="hljs-code">\`^\`</span> and <span class="hljs-code">\`$\`</span> to avoid unintended
-matches.
+<span class="hljs-code">\`^project-[0-9]+$\`</span>), keep it in the <span class="hljs-code">\`name_regex\`</span> field, anchor with
+<span class="hljs-code">\`^\`</span> and <span class="hljs-code">\`$\`</span> to avoid unintended matches, and set
+<span class="hljs-code">\`&quot;min_version&quot;: &quot;0.3.18&quot;\`</span>.
 
 ---
 
@@ -634,21 +648,22 @@ exactly.
 <span class="hljs-code">\`\`\`json5
 {
   description: &quot;Numbered project folder&quot;,
-  name: &quot;^project-[0-9]+$&quot;,
+  name: &quot;*&quot;,
+  name_regex: &quot;^project-[0-9]+$&quot;,
   files: [
     {
-      name: &quot;^(main|app)\\\\.py$&quot;,
+      name_regex: &quot;^(main|app)\\\\.py$&quot;,
       existence: &quot;required&quot;,
     },
   ],
   tags: [&quot;python&quot;, &quot;numbered&quot;],
-  min_version: &quot;0.3.17&quot;,
+  min_version: &quot;0.3.18&quot;,
 }
 \`\`\`</span>
 
 This matches folders like <span class="hljs-code">\`project-123\`</span> or <span class="hljs-code">\`project-42\`</span> and requires
-exactly one of <span class="hljs-code">\`main.py\`</span> or <span class="hljs-code">\`app.py\`</span> to be present. The name uses a
-Go regex (RE2) — note the escaped dots <span class="hljs-code">\`\\\\.\`</span> and anchors <span class="hljs-code">\`^...$\`</span>.
+exactly one of <span class="hljs-code">\`main.py\`</span> or <span class="hljs-code">\`app.py\`</span> to be present. The regex lives in
+<span class="hljs-code">\`name_regex\`</span> — note the escaped dots <span class="hljs-code">\`\\\\.\`</span> and anchors <span class="hljs-code">\`^...$\`</span>.
 
 <span class="hljs-section">### Example G: regex file pattern with glob fallback</span>
 
@@ -659,22 +674,22 @@ Go regex (RE2) — note the escaped dots <span class="hljs-code">\`\\\\.\`</span
   files: [
     &quot;package.json&quot;,
     {
-      name: &quot;^(index|main|app)\\\\.(js|ts|jsx|tsx)$&quot;,
+      name_regex: &quot;^(index|main|app)\\\\.(js|ts|jsx|tsx)$&quot;,
       existence: &quot;required&quot;,
     },
     {
-      name: &quot;\\\\.env$&quot;,
+      name_regex: &quot;\\\\.env$&quot;,
       existence: &quot;forbidden&quot;,
     },
   ],
   tags: [&quot;javascript&quot;, &quot;strict&quot;],
-  min_version: &quot;0.3.17&quot;,
+  min_version: &quot;0.3.18&quot;,
 }
 \`\`\`</span>
 
 This requires one of <span class="hljs-code">\`index.js\`</span>, <span class="hljs-code">\`main.js\`</span>, <span class="hljs-code">\`app.js\`</span>, <span class="hljs-code">\`index.ts\`</span>, etc.
 and forbids any file ending in <span class="hljs-code">\`.env\`</span>. Note that <span class="hljs-code">\`&quot;*.env&quot;\`</span> would also
-work as a glob — the regex version is more explicit.
+work as a glob in <span class="hljs-code">\`name\`</span> — the <span class="hljs-code">\`name_regex\`</span> version is more explicit.
 
 ---
 
@@ -753,22 +768,23 @@ Prefer the smallest signal that distinguishes the project type.
 
 <span class="hljs-section">### Mistake 3: mixing regex and glob syntax unintentionally</span>
 
-Finder tries regex first, then falls back to glob. This is usually
-fine, but remember that a pattern that looks like a regex is treated
-as a regex:
+<span class="hljs-code">\`name\`</span> only supports exact and glob syntax; regex patterns belong in
+the separate <span class="hljs-code">\`name_regex\`</span> field. Putting a regex into <span class="hljs-code">\`name\`</span> makes it
+a literal/glob pattern that will not match what you expect:
 
-<span class="hljs-bullet">-</span> <span class="hljs-code">\`&quot;*.ts&quot;\`</span> is invalid regex → glob, matches any <span class="hljs-code">\`.ts\`</span> file
-<span class="hljs-bullet">-</span> <span class="hljs-code">\`&quot;^main\\\\.py$&quot;\`</span> is valid regex → only matches exactly <span class="hljs-code">\`main.py\`</span>
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`&quot;*.ts&quot;\`</span> in <span class="hljs-code">\`name\`</span> → glob, matches any <span class="hljs-code">\`.ts\`</span> file
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`&quot;^main\\\\.py$&quot;\`</span> in <span class="hljs-code">\`name\`</span> → literal pattern, matches a folder that
+  is literally named <span class="hljs-code">\`^main\\.py$\`</span> — put it into <span class="hljs-code">\`name_regex\`</span> instead
 
 Use:
 
-<span class="hljs-bullet">-</span> <span class="hljs-code">\`*.ts\`</span>
-<span class="hljs-bullet">-</span> <span class="hljs-code">\`package.json\`</span>
-<span class="hljs-bullet">-</span> <span class="hljs-code">\`src\`</span>
-<span class="hljs-bullet">-</span> <span class="hljs-code">\`^project-[0-9]+$\`</span> (regex, only when you need it)
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`*.ts\`</span> (name)
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`package.json\`</span> (name)
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`src\`</span> (name)
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`^project-[0-9]+$\`</span> (in <span class="hljs-code">\`name_regex\`</span>, only when you need it)
 
-Do not write patterns that accidentally compile as a regex and change
-meaning. If in doubt, prefer glob or exact names.
+Do not write regex-looking patterns into <span class="hljs-code">\`name\`</span> and expect them to be
+interpreted as regex. If in doubt, prefer glob or exact names.
 
 <span class="hljs-section">### Mistake 4: forgetting a supported file extension</span>
 
@@ -873,4 +889,4 @@ Its generated copy is kept in sync at <span class="hljs-code">\`npm/site/data/ag
 bundled into the findergen frontend assets). When updating <span class="hljs-code">\`AGENTS.md\`</span>,
 apply the same changes to the synced copies so the documentation stays
 consistent everywhere.
-</code></pre>`;export{n as default};
+</code></pre>`;export{s as default};
