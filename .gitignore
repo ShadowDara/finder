@@ -40,3 +40,4 @@ npm/site/tsconfig.tsbuildinfo
 *.obj
 /npm/vite-plugin-minisite/node_modules
 /npm/vite-plugin-minisite/dist
+/.github/temp-stuff-idk/farbtext/node_modules

@@ -26,7 +26,7 @@ import (
 	"github.com/shadowdara/finder/pub/json5"
 )
 
-//go:embed frontend/***
+//go:embed all:frontend
 var frontend embed.FS
 
 // Function to create a file

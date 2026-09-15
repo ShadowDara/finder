@@ -31,3 +31,5 @@ docker-compose.yml linguist-language=Dockerfile
 /.obsidian/** linguist-vendored
 
 /install2.sh linguist-vendored
+
+/.github/temp-stuff-idk linguist-vendored
