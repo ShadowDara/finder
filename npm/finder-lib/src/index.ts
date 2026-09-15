@@ -3,7 +3,7 @@
 
 // Version which is fitting with the finder version
 
-import newest = versions.v0_3_17;
+import newest = versions.v0_3_18;
 export { newest };
 
 /// ALL Versions
@@ -240,6 +240,7 @@ export namespace versions {
       description?: string;
       tags?: string[];
       name: string;
+      name_regex?: string;
       folders?: Folder[];
       files?: File[] | string[];
       command?: string;
@@ -252,6 +253,7 @@ export namespace versions {
 
     export interface Folder {
       name: string;
+      name_regex?: string;
       folders?: Folder[];
       files?: File[] | string[];
       command?: string;
@@ -261,6 +263,7 @@ export namespace versions {
 
     export interface File {
       name: string;
+      name_regex?: string;
       existence?: Existence;
       size?: Size;
       checksums?: Checksums;

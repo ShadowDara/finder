@@ -19,6 +19,7 @@ export function newFile(name = "new-file.txt"): FileNode {
   return {
     id: nextId(),
     name,
+    nameRegex: "",
     existence: "required",
     size: null,
     checksums: null,
@@ -29,6 +30,7 @@ export function newFolder(name = "new-folder"): FolderNode {
   return {
     id: nextId(),
     name,
+    nameRegex: "",
     description: "",
     minVersion: "",
     command: "",
@@ -125,6 +127,7 @@ const DEFAULT_EXISTENCE: Existence = "required";
 
 export function serializeFile(file: FileNode): FileJSON {
   const out: FileJSON = { name: file.name };
+  if (file.nameRegex.trim()) out.name_regex = file.nameRegex.trim();
   if (file.existence && file.existence !== DEFAULT_EXISTENCE) {
     out.existence = file.existence;
   }
@@ -154,6 +157,7 @@ function serializeChecksums(
 export function serializeFolder(folder: FolderNode, isRoot = true): FolderJSON {
   const out: FolderJSON = { name: folder.name };
 
+  if (folder.nameRegex.trim()) out.name_regex = folder.nameRegex.trim();
   if (folder.description.trim()) out.description = folder.description;
   if (folder.command.trim()) out.command = folder.command;
   if (folder.invertCommand) out.invert_command = true;
@@ -185,6 +189,7 @@ function parseFiles(raw: unknown): FileNode[] {
       return {
         id: nextId(),
         name: entry,
+        nameRegex: "",
         existence: "required",
         size: null,
         checksums: null,
@@ -194,6 +199,7 @@ function parseFiles(raw: unknown): FileNode[] {
     return {
       id: nextId(),
       name: e.name ?? "",
+      nameRegex: e.name_regex ?? "",
       existence: e.existence ?? "required",
       size: e.size ? { min: e.size.mix, max: e.size.max } : null,
       checksums: e.checksums
@@ -216,6 +222,7 @@ export function parseFolder(raw: FolderJSON): FolderNode {
   return {
     id: nextId(),
     name: raw.name ?? "",
+    nameRegex: raw.name_regex ?? "",
     description: raw.description ?? "",
     minVersion: raw.min_version ?? "",
     command: raw.command ?? "",

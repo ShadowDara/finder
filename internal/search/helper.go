@@ -1,7 +1,9 @@
 // helper.go contains all matching helpers of the search:
 //
-//   - matchesPattern / matchingFileNames / matchAny: name-based checks
-//     using the 3-tier strategy (exact → regex → glob)
+//   - matchesNamePattern / matchingFileNames / matchAny / matchesRegex:
+//     name-based checks. The "name" field is matched exact-or-glob (as
+//     before regex support); the separate "name_regex" field applies an
+//     additional Go regex.
 //   - compiledRegex / regexCache: compiled regex patterns with cache
 //   - matchFolderTemplate: full template match for a folder
 //     (name, files, subfolders, size, checksums)
@@ -28,10 +30,13 @@ import (
 	"github.com/shadowdara/finder/internal/structure"
 )
 
-// matcherMetaChars is the set of characters that make a pattern interesting
-// for regex or glob matching. Patterns containing none of them can only ever
+// globMetaChars is the set of characters that make a "name" pattern
+// interesting for glob (path.Match) matching: '*', '?', '[' and the
+// escape backslash. Patterns containing none of them can only ever
 // match by exact name, which is handled by fast paths elsewhere.
-const matcherMetaChars = `*?[^$\.+()|{}[\]`
+// Regex patterns live in the separate "name_regex" field and are never
+// interpreted inside "name".
+const globMetaChars = `*?[\`
 
 // regexCache stores compiled patterns so that each distinct pattern is
 // compiled at most once per process instead of on every matcher call.
@@ -69,14 +74,20 @@ func compiledRegex(pattern string) *regexp.Regexp {
 
 // matchFolderTemplate checks whether the directory at dirPath matches the
 // provided template. Matching includes name pattern, required files and
-// required subfolders. Template names support both Go glob patterns and full
-// regular expressions for compatibility with existing and new templates.
+// required subfolders. The "name" field is matched exact-or-glob (as before
+// regex support); an optional "name_regex" field applies an additional Go
+// regular expression.
 func matchFolderTemplate(dirPath string, template structure.Folder) bool {
 	// Check folder name if provided
 	dirName := filepath.Base(dirPath)
 
 	if template.Name != "" {
-		if !matchesPattern(template.Name, dirName) {
+		if !matchesNamePattern(template.Name, dirName) {
+			return false
+		}
+	}
+	if template.NameRegex != "" {
+		if !matchesRegex(template.NameRegex, dirName) {
 			return false
 		}
 	}
@@ -100,7 +111,7 @@ func matchFolderTemplate(dirPath string, template structure.Folder) bool {
 
 	// Check files with existence logic
 	for _, file := range template.Files {
-		matchingFiles := matchingFileNames(filesMap, file.Name)
+		matchingFiles := matchingFileNames(filesMap, file)
 		exists := len(matchingFiles) > 0
 
 		switch file.Existence {
@@ -144,8 +155,7 @@ func matchFolderTemplate(dirPath string, template structure.Folder) bool {
 
 	// Check required subfolders (supports wildcards)
 	for _, folder := range template.Folders {
-		pattern := folder.Name
-		if !matchAny(dirsMap, pattern) {
+		if !matchFolderPattern(dirsMap, folder) {
 			return false
 		}
 	}
@@ -161,10 +171,11 @@ func matchFolderTemplate(dirPath string, template structure.Folder) bool {
 	return true
 }
 
-// matchesPattern applies Finder's 3-tier name matching (exact, regex, glob)
-// without recompiling the regex on every call. Patterns are compiled once and
-// cached in regexCache, and cheap fast paths are taken for "*" and exact names.
-func matchesPattern(pattern string, name string) bool {
+// matchesNamePattern applies Finder's name matching for the "name" field:
+// exact match first, then glob (path.Match). Regular expressions are NOT
+// interpreted here — they belong in the separate "name_regex" field and are
+// applied via matchesRegex. This restores the pre-regex behaviour of "name".
+func matchesNamePattern(pattern string, name string) bool {
 	if pattern == "" {
 		return false
 	}
@@ -175,76 +186,130 @@ func matchesPattern(pattern string, name string) bool {
 		return true
 	}
 
-	// Fast path: no wildcard or regex metacharacters means this pattern can
-	// only ever match by exact name, which was already checked above.
-	if !strings.ContainsAny(pattern, matcherMetaChars) {
+	// Fast path: no glob metacharacters means this pattern can only ever
+	// match by exact name, which was already checked above.
+	if !strings.ContainsAny(pattern, globMetaChars) {
 		return false
-	}
-
-	if re := compiledRegex(pattern); re != nil {
-		return re.MatchString(name)
 	}
 
 	ok, err := path.Match(pattern, name)
 	return err == nil && ok
 }
 
-// precompilePatterns compiles every regex-capable pattern used by the template
-// into regexCache before the search starts, so the parallel scan goroutines
-// never pay the compile cost. Exact names and glob-only patterns are skipped.
+// matchesRegex applies an anchored full-string match of a Go regular
+// expression against name. Invalid regex patterns simply never match,
+// so a template with a malformed name_regex fails closed.
+func matchesRegex(pattern string, name string) bool {
+	if pattern == "" {
+		return false
+	}
+	re := compiledRegex(pattern)
+	if re == nil {
+		return false
+	}
+	return re.MatchString(name)
+}
+
+// matchFolderPattern returns true if at least one entry of the map matches
+// the folder template constraints: exact/glob via Name, plus regex via
+// NameRegex (both must be satisfied when both are set).
+func matchFolderPattern(entries map[string]bool, folder structure.Folder) bool {
+	for name := range entries {
+		ok := true
+		if folder.Name != "" {
+			ok = ok && matchesNamePattern(folder.Name, name)
+		}
+		if folder.NameRegex != "" {
+			ok = ok && matchesRegex(folder.NameRegex, name)
+		}
+		if ok {
+			return true
+		}
+	}
+	return false
+}
+
+// precompilePatterns compiles every regex pattern used by the template
+// ("name_regex" fields) into regexCache before the search starts, so the
+// parallel scan goroutines never pay the compile cost. Exact names and
+// glob patterns are skipped (they do not need compilation).
 func precompilePatterns(template structure.Folder) {
 	if template.Name != "" {
 		warmPattern(template.Name)
 	}
+	if template.NameRegex != "" {
+		compiledRegex(template.NameRegex)
+	}
 	for _, file := range template.Files {
 		warmPattern(file.Name)
+		if file.NameRegex != "" {
+			compiledRegex(file.NameRegex)
+		}
 	}
 	for _, folder := range template.Folders {
 		warmNestedPatterns(folder)
 	}
 }
 
-// warmNestedPatterns precompiles the name pattern of folder and, recursively,
-// of all its nested folders and files.
+// warmNestedPatterns precompiles the name and name_regex pattern of folder
+// and, recursively, of all its nested folders and files.
 func warmNestedPatterns(folder structure.Folder) {
 	warmPattern(folder.Name)
+	if folder.NameRegex != "" {
+		compiledRegex(folder.NameRegex)
+	}
 	for _, file := range folder.Files {
 		warmPattern(file.Name)
+		if file.NameRegex != "" {
+			compiledRegex(file.NameRegex)
+		}
 	}
 	for _, sub := range folder.Folders {
 		warmNestedPatterns(sub)
 	}
 }
 
-// warmPattern compiles pattern only if it can ever be handled by regex or
-// glob matching (i.e. it is not a plain exact name).
+// warmPattern compiles pattern only if it can ever be handled by glob
+// matching (i.e. it is not a plain exact name). Because "name" is no longer
+// regex-interpreted, only glob metacharacters trigger compilation; the
+// "name_regex" fields are precompiled separately via compiledRegex.
 func warmPattern(pattern string) {
 	if pattern == "" || pattern == "*" {
 		return
 	}
-	if !strings.ContainsAny(pattern, matcherMetaChars) {
+	if !strings.ContainsAny(pattern, globMetaChars) {
 		return
 	}
 	compiledRegex(pattern)
 }
 
-// matchingFileNames returns all file names from files that match pattern.
+// matchingFileNames returns all file names from files that match the file
+// constraint. Both "name" (exact/glob) and "name_regex" (regex) are applied;
+// when both are set, both must match.
 //
-// Optimization: if pattern contains NO metacharacters, only an exact
-// map lookup is needed (instead of iterating over every entry).
-func matchingFileNames(files map[string]bool, pattern string) []string {
+// Optimization: if the pattern contains NO glob metacharacters and no regex
+// is set, only an exact map lookup is needed (instead of iterating over
+// every entry).
+func matchingFileNames(files map[string]bool, file structure.File) []string {
 	// Fast path for exact names: plain map lookup instead of iterating every
-	// entry through the pattern matcher.
-	if pattern != "" && !strings.ContainsAny(pattern, matcherMetaChars) {
-		if files[pattern] {
-			return []string{pattern}
+	// entry through the pattern matcher. Only valid when no regex applies.
+	if file.NameRegex == "" && file.Name != "" && !strings.ContainsAny(file.Name, globMetaChars) {
+		if files[file.Name] {
+			return []string{file.Name}
 		}
 		return nil
 	}
 
 	matching := make([]string, 0)
 	for name := range files {
-		if matchesPattern(pattern, name) {
+		match := true
+		if file.Name != "" {
+			match = matchesNamePattern(file.Name, name)
+		}
+		if file.NameRegex != "" {
+			match = match && matchesRegex(file.NameRegex, name)
+		}
+		if match {
 			matching = append(matching, name)
 		}
 	}
@@ -285,14 +350,16 @@ func checkChecksums(filePath string, checksums structure.Checksum) bool {
 }
 
 // matchAny returns true if at least ONE entry of the map matches the
-// pattern. Order: exact match → regex → glob (fallback for existing templates).
+// pattern. The pattern is interpreted as a "name" field value:
+// exact match → glob. Regex patterns belong in "name_regex" and are
+// handled via matchFolderPattern/matchesRegex instead.
 func matchAny(entries map[string]bool, pattern string) bool {
 	if entries[pattern] {
 		return true
 	}
 
 	for name := range entries {
-		if matchesPattern(pattern, name) {
+		if matchesNamePattern(pattern, name) {
 			return true
 		}
 	}

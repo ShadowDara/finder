@@ -16,11 +16,12 @@ import (
 // encoding/json die Daten nach dem JSON5-Preprocessing dekodieren kann.
 //
 // Matching behavior (see also internal/search/helper.go):
-//   - Name:  Ordner-Namensmuster (exakt / Regex / Glob)
-//   - Files: Pflicht-, verbotene oder optionale Dateien
-//   - Folders: benötigte Unterordner (rekursiv verschachtelbar)
+//   - Name:      Ordner-Namensmuster (exakt oder Glob) — wie vor Regex
+//   - NameRegex: optionales Regex-Muster für den Ordnernamen
+//   - Files:     Pflicht-, verbotene oder optionale Dateien
+//   - Folders:   benötigte Unterordner (rekursiv verschachtelbar)
 //   - Command/InvertCommand: optionale Shell-Prüfung nach dem Match
-//   - Size: Gesamtgrößen-Beschränkung des Ordners
+//   - Size:      Gesamtgrößen-Beschränkung des Ordners
 //   - Checksums: exakte Hash-Übereinstimmung für Dateien
 //
 // Die übrigen Felder (MinVersion, Description, Tags, mdnote, author,
@@ -31,6 +32,7 @@ type Folder struct {
 	MinVersion    string   `json:"min_version,omitempty"`
 	Description   string   `json:"description"`
 	Name          string   `json:"name"`
+	NameRegex     string   `json:"name_regex,omitempty"`
 	Folders       []Folder `json:"folders"`
 	Files         Files    `json:"files"`          // Nur der Dateiname (plus optionale Constraints)
 	Command       string   `json:"command"`        // Optionales Kommando zur Nachprüfung nach dem Fund
@@ -53,6 +55,7 @@ func NewFolder(foldername string) Folder {
 		MinVersion:    "0.0.0",
 		Description:   "",
 		Name:          foldername,
+		NameRegex:     "",
 		Folders:       []Folder{},
 		Files:         Files{},
 		Command:       "",

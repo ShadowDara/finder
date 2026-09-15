@@ -360,7 +360,7 @@ textarea {
 }
 
 /*
- * Regex/glob highlighting inside `"name"` values.
+ * Regex/glob highlighting inside `"name"` and `"name_regex"` values.
  * Der Preview-Hintergrund ist weiß, daher werden hier dunkle Farben
  * (GitHub-Light-Palette) verwendet. Die alten hellen Farben sind
  * auskommentiert und können bei einem dunklen Hintergrund wieder
