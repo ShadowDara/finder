@@ -1,13 +1,14 @@
 packages:
   - "npm/*"
+  - ".github/temp-stuff-idk/*"
 allowBuilds:
-  '@parcel/watcher': true
-  '@prisma/client': true
-  '@prisma/engines': true
-  '@shadowdara/seg': true
+  "@parcel/watcher": true
+  "@prisma/client": true
+  "@prisma/engines": true
+  "@shadowdara/seg": true
   esbuild: true
   prisma: true
 minimumReleaseAgeExclude:
-  - '@shadowdara/finder-lib@0.3.17'
-  - '@shadowdara/linguist-js@1.0.0'
+  - "@shadowdara/finder-lib@0.3.17"
+  - "@shadowdara/linguist-js@1.0.0"
   - finder-npm@0.0.0

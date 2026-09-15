@@ -1,0 +1,26 @@
+{
+  "name": "js-to-fling",
+  "version": "0.1.0",
+  "description": "Source-to-source compiler: transpiles a supported subset of TypeScript/JavaScript into the Fling scripting language.",
+  "main": "dist/compile.js",
+  "bin": {
+    "flingc": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p .",
+    "start": "node dist/cli.js",
+    "dev": "ts-node src/cli.ts"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@babel/parser": "^7.24.0",
+    "@babel/traverse": "^7.24.0",
+    "@babel/types": "^7.24.0"
+  },
+  "devDependencies": {
+    "@types/babel__traverse": "^7.20.5",
+    "@types/node": "^20.11.0",
+    "typescript": "^5.4.0",
+    "ts-node": "^10.9.2"
+  }
+}

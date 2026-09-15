@@ -218,11 +218,12 @@
             }
           }
         ],
-        "currentTab": 5
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -238,6 +239,8 @@
   },
   "active": "8e1d4bedc8a7f5b5",
   "lastOpenFiles": [
+    "_tmp_18400_d36c0bd4215bb71cafec360b691574ce",
+    "Map.md",
     "npm/vite-plugin-minisite/vite-plugin-minisite-0.0.0.tgz",
     "_tmp_22152_da5b2c4a831da8fbd38fe8bfe3d15dde",
     "pnpm-lock.yaml.2641520724",
@@ -248,7 +251,6 @@
     "npm/vite-plugin-minisite/src/index.ts",
     "npm/vite-plugin-minisite/src/compile.ts",
     "npm/vite-plugin-minisite/src",
-    "npm/vite-plugin-minisite/node_modules/undici-types/websocket.d.ts",
     "npm/vite-plugin-minisite/node_modules/undici-types/README.md",
     "npm/vite-plugin-minisite/node_modules/tinyglobby/README.md",
     "npm/vite-plugin-minisite/node_modules/source-map-js/README.md",
@@ -267,7 +269,6 @@
     "npm/vite-plugin-minisite/node_modules/@rollup/rollup-win32-x64-gnu/README.md",
     "npm/vite-plugin-minisite/node_modules/@esbuild/win32-x64/README.md",
     "npm/vite-plugin-minisite/README.md",
-    "Map.md",
     "template-management-system(1)/node_modules/@tailwindcss/postcss/README.md",
     "template-management-system(1)/public/placeholder.svg",
     "template-management-system(1)/public/placeholder.jpg",
