@@ -1,7 +1,0 @@
-*.exe
-output/
-*.json
-
-generate/checkstaticfiles.config.yaml
-*.gz
-checkstaticfiles.data.go
