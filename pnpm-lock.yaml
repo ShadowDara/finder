@@ -195,8 +195,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       js-to-fling:
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: ^0.1.1
+        version: 0.1.1
       ky:
         specifier: ^2.1.0
         version: 2.1.0
@@ -3321,8 +3321,8 @@ packages:
   jquery@4.0.0:
     resolution: {integrity: sha512-TXCHVR3Lb6TZdtw1l3RTLf8RBWVGexdxL6AC8/e0xZKEpBflBsjh9/8LXw+dkNFuOyW9B7iB3O1sP7hS0Kiacg==}
 
-  js-to-fling@0.1.0:
-    resolution: {integrity: sha512-JO5eLFzDisArsmfxwPPY3gJr8LduNLpdcKBJMZn6P35qcwBP4AaT5J9767BI8sLlzN70mGq3v61nECekCYJMLg==}
+  js-to-fling@0.1.1:
+    resolution: {integrity: sha512-po4CbMrpMXLI3WncSatdyo5RHwh++fOmMNY0dmKtcSCnmbm8O9/mfbIU3vPoj7K+p2NNoRLrq//xWYvYMn3FGw==}
     hasBin: true
 
   js-tokens@4.0.0:
@@ -7382,7 +7382,7 @@ snapshots:
 
   jquery@4.0.0: {}
 
-  js-to-fling@0.1.0:
+  js-to-fling@0.1.1:
     dependencies:
       '@babel/parser': 7.29.8
       '@babel/traverse': 7.29.8

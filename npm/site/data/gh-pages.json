@@ -1,38 +1,104 @@
 {
-  "generatedAt": "2026-09-15T00:17:51.399Z",
+  "generatedAt": "2026-09-15T13:39:17.197Z",
   "total": {
-    "files": 68,
-    "bytes": 421470,
-    "kilobytes": 411.59,
-    "megabytes": 0.4
+    "files": 168,
+    "bytes": 33485977,
+    "kilobytes": 32701.15,
+    "megabytes": 31.93
   },
   "byExtension": [
     {
       "extension": ".js",
-      "files": 27,
-      "bytes": 345875,
-      "percentage": 82.06
+      "files": 124,
+      "bytes": 33103682,
+      "percentage": 98.86
     },
     {
       "extension": ".css",
-      "files": 15,
-      "bytes": 56700,
-      "percentage": 13.45
+      "files": 16,
+      "bytes": 221922,
+      "percentage": 0.66
+    },
+    {
+      "extension": ".ttf",
+      "files": 1,
+      "bytes": 140956,
+      "percentage": 0.42
     },
     {
       "extension": ".txt",
       "files": 1,
-      "bytes": 9713,
-      "percentage": 2.3
+      "bytes": 9825,
+      "percentage": 0.03
     },
     {
       "extension": ".html",
-      "files": 25,
-      "bytes": 9182,
-      "percentage": 2.18
+      "files": 26,
+      "bytes": 9592,
+      "percentage": 0.03
     }
   ],
   "files": [
+    {
+      "path": "finder/monacoeditorwork/ts.worker.bundle.js",
+      "extension": ".js",
+      "bytes": 13365068
+    },
+    {
+      "path": "assets/ts.worker-Bs0vidAd.js",
+      "extension": ".js",
+      "bytes": 7041818
+    },
+    {
+      "path": "assets/monaco.js",
+      "extension": ".js",
+      "bytes": 4799285
+    },
+    {
+      "path": "finder/monacoeditorwork/css.worker.bundle.js",
+      "extension": ".js",
+      "bytes": 1969660
+    },
+    {
+      "path": "finder/monacoeditorwork/html.worker.bundle.js",
+      "extension": ".js",
+      "bytes": 1350059
+    },
+    {
+      "path": "assets/css.worker-CT4YU7ZE.js",
+      "extension": ".js",
+      "bytes": 1052295
+    },
+    {
+      "path": "finder/monacoeditorwork/json.worker.bundle.js",
+      "extension": ".js",
+      "bytes": 940733
+    },
+    {
+      "path": "assets/html.worker-XmF3pKa_.js",
+      "extension": ".js",
+      "bytes": 714832
+    },
+    {
+      "path": "finder/monacoeditorwork/editor.worker.bundle.js",
+      "extension": ".js",
+      "bytes": 637641
+    },
+    {
+      "path": "assets/json.worker-GcqnjdSx.js",
+      "extension": ".js",
+      "bytes": 405141
+    },
+    {
+      "path": "assets/monaco.css",
+      "extension": ".css",
+      "bytes": 165222
+    },
+    {
+      "path": "assets/codicon.ttf",
+      "extension": ".ttf",
+      "bytes": 140956
+    },
     {
       "path": "assets/jquery.module.js",
       "extension": ".js",
@@ -56,7 +122,12 @@
     {
       "path": "assets/_virtual_page-data_index.js",
       "extension": ".js",
-      "bytes": 27658
+      "bytes": 29099
+    },
+    {
+      "path": "assets/lspLanguageFeatures.js",
+      "extension": ".js",
+      "bytes": 28659
     },
     {
       "path": "assets/_virtual_page-markdown_readme.js",
@@ -64,9 +135,54 @@
       "bytes": 24851
     },
     {
+      "path": "assets/tsMode.js",
+      "extension": ".js",
+      "bytes": 22038
+    },
+    {
+      "path": "assets/solidity.js",
+      "extension": ".js",
+      "bytes": 18459
+    },
+    {
+      "path": "assets/powerquery.js",
+      "extension": ".js",
+      "bytes": 16801
+    },
+    {
+      "path": "assets/freemarker2.js",
+      "extension": ".js",
+      "bytes": 15610
+    },
+    {
       "path": "assets/creator.js",
       "extension": ".js",
       "bytes": 15609
+    },
+    {
+      "path": "assets/abap.js",
+      "extension": ".js",
+      "bytes": 14025
+    },
+    {
+      "path": "assets/pgsql.js",
+      "extension": ".js",
+      "bytes": 13326
+    },
+    {
+      "path": "assets/jsonMode.js",
+      "extension": ".js",
+      "bytes": 12418
+    },
+    {
+      "path": "assets/redshift.js",
+      "extension": ".js",
+      "bytes": 11662
+    },
+    {
+      "path": "assets/mysql.js",
+      "extension": ".js",
+      "bytes": 11136
     },
     {
       "path": "assets/markdown.js",
@@ -74,9 +190,24 @@
       "bytes": 10726
     },
     {
+      "path": "assets/sql.js",
+      "extension": ".js",
+      "bytes": 10159
+    },
+    {
+      "path": "assets/elixir.js",
+      "extension": ".js",
+      "bytes": 10119
+    },
+    {
       "path": "dependencies.txt",
       "extension": ".txt",
-      "bytes": 9713
+      "bytes": 9825
+    },
+    {
+      "path": "assets/clojure.js",
+      "extension": ".js",
+      "bytes": 9505
     },
     {
       "path": "assets/viewer.css",
@@ -89,9 +220,64 @@
       "bytes": 9239
     },
     {
+      "path": "assets/protobuf.js",
+      "extension": ".js",
+      "bytes": 8908
+    },
+    {
       "path": "assets/main_entry.js",
       "extension": ".js",
-      "bytes": 8441
+      "bytes": 8621
+    },
+    {
+      "path": "assets/ruby.js",
+      "extension": ".js",
+      "bytes": 8366
+    },
+    {
+      "path": "assets/razor.js",
+      "extension": ".js",
+      "bytes": 8310
+    },
+    {
+      "path": "assets/perl.js",
+      "extension": ".js",
+      "bytes": 8117
+    },
+    {
+      "path": "assets/php.js",
+      "extension": ".js",
+      "bytes": 7889
+    },
+    {
+      "path": "assets/postiats.js",
+      "extension": ".js",
+      "bytes": 7718
+    },
+    {
+      "path": "assets/systemverilog.js",
+      "extension": ".js",
+      "bytes": 7465
+    },
+    {
+      "path": "assets/st.js",
+      "extension": ".js",
+      "bytes": 7261
+    },
+    {
+      "path": "assets/wgsl.js",
+      "extension": ".js",
+      "bytes": 7210
+    },
+    {
+      "path": "assets/scala.js",
+      "extension": ".js",
+      "bytes": 7180
+    },
+    {
+      "path": "assets/julia.js",
+      "extension": ".js",
+      "bytes": 7011
     },
     {
       "path": "assets/regexcreator.js",
@@ -99,9 +285,29 @@
       "bytes": 6983
     },
     {
+      "path": "assets/handlebars.js",
+      "extension": ".js",
+      "bytes": 6306
+    },
+    {
+      "path": "assets/scss.js",
+      "extension": ".js",
+      "bytes": 6271
+    },
+    {
+      "path": "assets/twig.js",
+      "extension": ".js",
+      "bytes": 5835
+    },
+    {
       "path": "assets/installscript.css",
       "extension": ".css",
       "bytes": 5685
+    },
+    {
+      "path": "assets/vb.js",
+      "extension": ".js",
+      "bytes": 5653
     },
     {
       "path": "assets/regexcreator.css",
@@ -114,6 +320,36 @@
       "bytes": 5365
     },
     {
+      "path": "assets/ecl.js",
+      "extension": ".js",
+      "bytes": 5204
+    },
+    {
+      "path": "assets/cpp.js",
+      "extension": ".js",
+      "bytes": 5162
+    },
+    {
+      "path": "assets/swift.js",
+      "extension": ".js",
+      "bytes": 5033
+    },
+    {
+      "path": "assets/typescript.js",
+      "extension": ".js",
+      "bytes": 4919
+    },
+    {
+      "path": "assets/msdax.js",
+      "extension": ".js",
+      "bytes": 4774
+    },
+    {
+      "path": "assets/pug.js",
+      "extension": ".js",
+      "bytes": 4690
+    },
+    {
       "path": "assets/tellraw.js",
       "extension": ".js",
       "bytes": 4685
@@ -124,9 +360,59 @@
       "bytes": 4615
     },
     {
+      "path": "assets/html.js",
+      "extension": ".js",
+      "bytes": 4546
+    },
+    {
+      "path": "assets/csharp.js",
+      "extension": ".js",
+      "bytes": 4386
+    },
+    {
+      "path": "assets/css.js",
+      "extension": ".js",
+      "bytes": 4372
+    },
+    {
+      "path": "assets/mdx.js",
+      "extension": ".js",
+      "bytes": 4337
+    },
+    {
+      "path": "assets/dart.js",
+      "extension": ".js",
+      "bytes": 4112
+    },
+    {
+      "path": "assets/rust.js",
+      "extension": ".js",
+      "bytes": 4022
+    },
+    {
       "path": "assets/configeditor.css",
       "extension": ".css",
       "bytes": 3970
+    },
+    {
+      "path": "assets/apex.js",
+      "extension": ".js",
+      "bytes": 3820
+    },
+    {
+      "path": "assets/less.js",
+      "extension": ".js",
+      "bytes": 3760
+    },
+    {
+      "path": "assets/restructuredtext.js",
+      "extension": ".js",
+      "bytes": 3755
+    },
+    {
+      "path": "assets/python.js",
+      "extension": ".js",
+      "bytes": 3736
     },
     {
       "path": "assets/cacheviewer.css",
@@ -134,14 +420,59 @@
       "bytes": 3675
     },
     {
+      "path": "assets/markdown2.js",
+      "extension": ".js",
+      "bytes": 3650
+    },
+    {
+      "path": "assets/yaml.js",
+      "extension": ".js",
+      "bytes": 3557
+    },
+    {
+      "path": "assets/htmlMode.js",
+      "extension": ".js",
+      "bytes": 3499
+    },
+    {
+      "path": "assets/liquid.js",
+      "extension": ".js",
+      "bytes": 3492
+    },
+    {
       "path": "assets/cacheviewer.js",
       "extension": ".js",
       "bytes": 3478
     },
     {
+      "path": "assets/coffee.js",
+      "extension": ".js",
+      "bytes": 3452
+    },
+    {
+      "path": "assets/hcl.js",
+      "extension": ".js",
+      "bytes": 3452
+    },
+    {
+      "path": "assets/tcl.js",
+      "extension": ".js",
+      "bytes": 3433
+    },
+    {
       "path": "assets/home.js",
       "extension": ".js",
       "bytes": 3421
+    },
+    {
+      "path": "assets/redis.js",
+      "extension": ".js",
+      "bytes": 3418
+    },
+    {
+      "path": "assets/kotlin.js",
+      "extension": ".js",
+      "bytes": 3262
     },
     {
       "path": "assets/samfile.js",
@@ -154,9 +485,99 @@
       "bytes": 3253
     },
     {
+      "path": "assets/cypher.js",
+      "extension": ".js",
+      "bytes": 3247
+    },
+    {
+      "path": "assets/powershell.js",
+      "extension": ".js",
+      "bytes": 3131
+    },
+    {
+      "path": "assets/java.js",
+      "extension": ".js",
+      "bytes": 3083
+    },
+    {
+      "path": "assets/qsharp.js",
+      "extension": ".js",
+      "bytes": 3051
+    },
+    {
       "path": "assets/main.css",
       "extension": ".css",
       "bytes": 3047
+    },
+    {
+      "path": "assets/cssMode.js",
+      "extension": ".js",
+      "bytes": 3040
+    },
+    {
+      "path": "assets/r.js",
+      "extension": ".js",
+      "bytes": 2993
+    },
+    {
+      "path": "assets/shell.js",
+      "extension": ".js",
+      "bytes": 2935
+    },
+    {
+      "path": "assets/pascal.js",
+      "extension": ".js",
+      "bytes": 2857
+    },
+    {
+      "path": "assets/fsharp.js",
+      "extension": ".js",
+      "bytes": 2845
+    },
+    {
+      "path": "assets/m3.js",
+      "extension": ".js",
+      "bytes": 2679
+    },
+    {
+      "path": "assets/typespec.js",
+      "extension": ".js",
+      "bytes": 2658
+    },
+    {
+      "path": "assets/sophia.js",
+      "extension": ".js",
+      "bytes": 2626
+    },
+    {
+      "path": "assets/go.js",
+      "extension": ".js",
+      "bytes": 2519
+    },
+    {
+      "path": "assets/mips.js",
+      "extension": ".js",
+      "bytes": 2441
+    },
+    {
+      "path": "assets/sparql.js",
+      "extension": ".js",
+      "bytes": 2414
+    },
+    {
+      "path": "assets/bicep.js",
+      "extension": ".js",
+      "bytes": 2398
+    },
+    {
+      "path": "assets/lexon.js",
+      "extension": ".js",
+      "bytes": 2299
+    },
+    {
+      "path": "assets/objective-c.js",
+      "extension": ".js",
+      "bytes": 2264
     },
     {
       "path": "assets/tellraw.css",
@@ -179,9 +600,54 @@
       "bytes": 2194
     },
     {
+      "path": "assets/graphql.js",
+      "extension": ".js",
+      "bytes": 2122
+    },
+    {
+      "path": "assets/cameligo.js",
+      "extension": ".js",
+      "bytes": 2047
+    },
+    {
+      "path": "assets/lua.js",
+      "extension": ".js",
+      "bytes": 1985
+    },
+    {
+      "path": "assets/xml.js",
+      "extension": ".js",
+      "bytes": 1945
+    },
+    {
+      "path": "assets/pascaligo.js",
+      "extension": ".js",
+      "bytes": 1862
+    },
+    {
       "path": "assets/index.css",
       "extension": ".css",
       "bytes": 1742
+    },
+    {
+      "path": "assets/dockerfile.js",
+      "extension": ".js",
+      "bytes": 1731
+    },
+    {
+      "path": "assets/bat.js",
+      "extension": ".js",
+      "bytes": 1707
+    },
+    {
+      "path": "assets/sb.js",
+      "extension": ".js",
+      "bytes": 1691
+    },
+    {
+      "path": "assets/flow9.js",
+      "extension": ".js",
+      "bytes": 1672
     },
     {
       "path": "assets/mcappheader.css",
@@ -189,9 +655,29 @@
       "bytes": 1636
     },
     {
+      "path": "assets/scheme.js",
+      "extension": ".js",
+      "bytes": 1629
+    },
+    {
+      "path": "assets/pla.js",
+      "extension": ".js",
+      "bytes": 1545
+    },
+    {
       "path": "assets/markdowneditor.js",
       "extension": ".js",
       "bytes": 1355
+    },
+    {
+      "path": "assets/csp.js",
+      "extension": ".js",
+      "bytes": 1281
+    },
+    {
+      "path": "assets/workers.js",
+      "extension": ".js",
+      "bytes": 1215
     },
     {
       "path": "assets/worlds.js",
@@ -209,9 +695,24 @@
       "bytes": 1004
     },
     {
+      "path": "assets/ini.js",
+      "extension": ".js",
+      "bytes": 963
+    },
+    {
+      "path": "assets/javascript.js",
+      "extension": ".js",
+      "bytes": 809
+    },
+    {
       "path": "assets/page2.js",
       "extension": ".js",
       "bytes": 738
+    },
+    {
+      "path": "assets/azcli.js",
+      "extension": ".js",
+      "bytes": 710
     },
     {
       "path": "assets/config.js",
@@ -272,6 +773,11 @@
       "path": "samfile/index.html",
       "extension": ".html",
       "bytes": 412
+    },
+    {
+      "path": "monaco/index.html",
+      "extension": ".html",
+      "bytes": 410
     },
     {
       "path": "home/index.html",

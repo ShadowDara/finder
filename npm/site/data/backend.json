@@ -1,34 +1,34 @@
 {
-  "generatedAt": "2026-09-15T12:21:20.009Z",
+  "generatedAt": "2026-09-15T13:38:12.254Z",
   "total": {
     "files": 168,
-    "bytes": 32571425,
-    "kilobytes": 31808.03,
-    "megabytes": 31.06
+    "bytes": 33420065,
+    "kilobytes": 32636.78,
+    "megabytes": 31.87
   },
   "byExtension": [
     {
       "extension": ".js",
       "files": 124,
-      "bytes": 32189374,
-      "percentage": 98.83
+      "bytes": 33037989,
+      "percentage": 98.86
     },
     {
       "extension": ".css",
       "files": 16,
       "bytes": 221909,
-      "percentage": 0.68
+      "percentage": 0.66
     },
     {
       "extension": ".ttf",
       "files": 1,
       "bytes": 140956,
-      "percentage": 0.43
+      "percentage": 0.42
     },
     {
       "extension": ".txt",
       "files": 1,
-      "bytes": 9800,
+      "bytes": 9825,
       "percentage": 0.03
     },
     {
@@ -52,7 +52,7 @@
     {
       "path": "assets/monaco.js",
       "extension": ".js",
-      "bytes": 3952079
+      "bytes": 4800694
     },
     {
       "path": "monacoeditorwork/css.worker.bundle.js",
@@ -197,7 +197,7 @@
     {
       "path": "dependencies.txt",
       "extension": ".txt",
-      "bytes": 9800
+      "bytes": 9825
     },
     {
       "path": "assets/clojure.js",
