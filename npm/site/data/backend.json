@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-09-15T13:38:12.254Z",
+  "generatedAt": "2026-09-15T14:02:54.563Z",
   "total": {
     "files": 168,
-    "bytes": 33420065,
-    "kilobytes": 32636.78,
-    "megabytes": 31.87
+    "bytes": 33412690,
+    "kilobytes": 32629.58,
+    "megabytes": 31.86
   },
   "byExtension": [
     {
       "extension": ".js",
       "files": 124,
-      "bytes": 33037989,
-      "percentage": 98.86
+      "bytes": 33039063,
+      "percentage": 98.88
     },
     {
       "extension": ".css",
@@ -26,16 +26,16 @@
       "percentage": 0.42
     },
     {
-      "extension": ".txt",
-      "files": 1,
-      "bytes": 9825,
-      "percentage": 0.03
-    },
-    {
       "extension": ".html",
       "files": 26,
       "bytes": 9386,
       "percentage": 0.03
+    },
+    {
+      "extension": ".txt",
+      "files": 1,
+      "bytes": 1376,
+      "percentage": 0
     }
   ],
   "files": [
@@ -52,7 +52,7 @@
     {
       "path": "assets/monaco.js",
       "extension": ".js",
-      "bytes": 4800694
+      "bytes": 4801710
     },
     {
       "path": "monacoeditorwork/css.worker.bundle.js",
@@ -195,11 +195,6 @@
       "bytes": 10119
     },
     {
-      "path": "dependencies.txt",
-      "extension": ".txt",
-      "bytes": 9825
-    },
-    {
       "path": "assets/clojure.js",
       "extension": ".js",
       "bytes": 9505
@@ -217,7 +212,7 @@
     {
       "path": "assets/main_entry.js",
       "extension": ".js",
-      "bytes": 9030
+      "bytes": 9088
     },
     {
       "path": "assets/protobuf.js",
@@ -663,6 +658,11 @@
       "path": "assets/pla.js",
       "extension": ".js",
       "bytes": 1545
+    },
+    {
+      "path": "dependencies.txt",
+      "extension": ".txt",
+      "bytes": 1376
     },
     {
       "path": "assets/markdowneditor.js",

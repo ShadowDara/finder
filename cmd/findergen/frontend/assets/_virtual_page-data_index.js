@@ -5,7 +5,7 @@ and similar tools that need to create valid Finder templates.
 
 Goal:
 
-<span class="hljs-bullet">-</span> create Finder-compatible JSON5 templates
+<span class="hljs-bullet">-</span> create Finder-compatible JSON5/JSON/JSONC templates
 <span class="hljs-bullet">-</span> work with all supported template features
 <span class="hljs-bullet">-</span> prefer valid, minimal, and robust patterns
 <span class="hljs-bullet">-</span> avoid false positives and over-constrained matches
@@ -24,7 +24,15 @@ A template describes:
 <span class="hljs-bullet">-</span> optional command validation
 <span class="hljs-bullet">-</span> tags for discovery
 
-A template is a JSON5 file ending in <span class="hljs-code">\`.json5\`</span>.
+A template is a JSON5, JSON, or JSONC file. Supported extensions:
+
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`.json5\`</span>
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`.json\`</span>
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`.jsonc\`</span>
+
+Content can use JSON5 syntax (unquoted keys, trailing commas, comments)
+regardless of the extension — Finder preprocesses JSON5 syntax before
+parsing. Plain JSON is always valid.
 
 Typical locations:
 
@@ -38,9 +46,22 @@ name, so a template fetched from
 <span class="hljs-code">\`https://example.com/foo/template.json5\`</span> is reachable as
 <span class="hljs-code">\`example.com/foo/template\`</span>.
 
-The filename without <span class="hljs-code">\`.json5\`</span> becomes the template name, for example:
+The filename without its extension becomes the template name, for
+example:
 
 <span class="hljs-bullet">-</span> <span class="hljs-code">\`my-template.json5\`</span> → <span class="hljs-code">\`my-template\`</span>
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`my-template.json\`</span> → <span class="hljs-code">\`my-template\`</span>
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`my-template.jsonc\`</span> → <span class="hljs-code">\`my-template\`</span>
+
+When the same base name exists with multiple extensions, the highest
+priority extension wins:
+
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`.jsonc\`</span> (highest priority)
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`.json\`</span>
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`.json5\`</span> (lowest priority)
+
+So if <span class="hljs-code">\`my-template.json5\`</span>, <span class="hljs-code">\`my-template.json\`</span> and <span class="hljs-code">\`my-template.jsonc\`</span>
+all exist, the <span class="hljs-code">\`.jsonc\`</span> file is used.
 
 ---
 
@@ -662,7 +683,7 @@ work as a glob — the regex version is more explicit.
 When generating a Finder template, the assistant should follow this
 checklist:
 
-<span class="hljs-bullet">1.</span> Create a valid <span class="hljs-code">\`.json5\`</span> file.
+<span class="hljs-bullet">1.</span> Create a valid <span class="hljs-code">\`.json5\`</span>, <span class="hljs-code">\`.json\`</span>, or <span class="hljs-code">\`.jsonc\`</span> file.
 <span class="hljs-bullet">2.</span> Use <span class="hljs-code">\`name: &quot;*&quot;\`</span> unless the directory name is intentionally constrained.
 <span class="hljs-bullet">3.</span> Keep required files minimal and specific.
 <span class="hljs-bullet">4.</span> Prefer <span class="hljs-code">\`required\`</span> over broad file matching if a file is essential.
@@ -749,9 +770,9 @@ Use:
 Do not write patterns that accidentally compile as a regex and change
 meaning. If in doubt, prefer glob or exact names.
 
-<span class="hljs-section">### Mistake 4: forgetting the \`.json5\` extension</span>
+<span class="hljs-section">### Mistake 4: forgetting a supported file extension</span>
 
-The file must end in <span class="hljs-code">\`.json5\`</span>.
+The file must end in <span class="hljs-code">\`.json5\`</span>, <span class="hljs-code">\`.json\`</span>, or <span class="hljs-code">\`.jsonc\`</span>.
 
 <span class="hljs-section">### Mistake 5: writing invalid JSON5</span>
 

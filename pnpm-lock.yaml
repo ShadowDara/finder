@@ -37,7 +37,20 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0(@types/node@26.5.1)(vite@7.3.6(@types/node@26.5.1)(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.104.1)(terser@5.51.2)(tsx@4.23.13)(yaml@2.9.1))
 
-  .github/temp-stuff-idk/fling-compiler:
+  .github/temp-stuff-idk/mini-vapor: {}
+
+  npm/finder-lib:
+    devDependencies:
+      '@types/node':
+        specifier: ^25.5.2
+        version: 25.9.6
+      typescript:
+        specifier: ^6.0.2
+        version: 6.0.3
+
+  npm/finder-npm: {}
+
+  npm/fling-compiler:
     dependencies:
       '@babel/parser':
         specifier: ^7.24.0
@@ -61,19 +74,6 @@ importers:
       typescript:
         specifier: ^5.4.0
         version: 5.7.3
-
-  .github/temp-stuff-idk/mini-vapor: {}
-
-  npm/finder-lib:
-    devDependencies:
-      '@types/node':
-        specifier: ^25.5.2
-        version: 25.9.6
-      typescript:
-        specifier: ^6.0.2
-        version: 6.0.3
-
-  npm/finder-npm: {}
 
   npm/hub:
     dependencies:
@@ -195,8 +195,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       js-to-fling:
-        specifier: ^0.1.1
-        version: 0.1.1
+        specifier: ^0.1.2
+        version: 0.1.2
       ky:
         specifier: ^2.1.0
         version: 2.1.0
@@ -3321,8 +3321,8 @@ packages:
   jquery@4.0.0:
     resolution: {integrity: sha512-TXCHVR3Lb6TZdtw1l3RTLf8RBWVGexdxL6AC8/e0xZKEpBflBsjh9/8LXw+dkNFuOyW9B7iB3O1sP7hS0Kiacg==}
 
-  js-to-fling@0.1.1:
-    resolution: {integrity: sha512-po4CbMrpMXLI3WncSatdyo5RHwh++fOmMNY0dmKtcSCnmbm8O9/mfbIU3vPoj7K+p2NNoRLrq//xWYvYMn3FGw==}
+  js-to-fling@0.1.2:
+    resolution: {integrity: sha512-kULYnWU+iJtnpEZDEbLB/SFS2UNiYJ2vPkEEnRDJajnx7reoll6hw8Gq+kc3apTq2AEV1OXsbQFiSZPN6Y5HFQ==}
     hasBin: true
 
   js-tokens@4.0.0:
@@ -7382,7 +7382,7 @@ snapshots:
 
   jquery@4.0.0: {}
 
-  js-to-fling@0.1.1:
+  js-to-fling@0.1.2:
     dependencies:
       '@babel/parser': 7.29.8
       '@babel/traverse': 7.29.8
