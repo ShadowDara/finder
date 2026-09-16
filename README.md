@@ -116,18 +116,19 @@ finder git
 
 ### Commands
 
-| Command                  | Aliases   | Description                                |
-| ------------------------ | --------- | ------------------------------------------ |
-| `finder <template>`      |           | Search for projects matching a template    |
-| `finder check`           |           | Validate all built-in and custom templates |
-| `finder validate`        | `val`     | Validate a single template file            |
-| `finder list`            | `ls`      | List all available templates               |
-| `finder tags`            | `tag`     | Show all tags in the console               |
-| `finder -t <tag>`        |           | Search for templates by tag                |
-| `finder -b`              |           | Search for executables in your `$PATH`     |
-| `finder cp`              |           | Print the path to the global config file   |
-| `finder version`         | `-v`, `v` | Print the current version                  |
-| `finder template <name>` | `tpl`     | Search using an explicit template name     |
+| Command                  | Aliases   | Description                                        |
+| ------------------------ | --------- | -------------------------------------------------- |
+| `finder <template>`      |           | Search for projects matching a template            |
+| `finder check`           |           | Validate all built-in and custom templates         |
+| `finder validate`        | `val`     | Validate a single template file                    |
+| `finder list`            | `ls`      | List all available templates                       |
+| `finder tags`            | `tag`     | Show all tags in the console                       |
+| `finder -t <tag>`        |           | Search for templates by tag                        |
+| `finder -b`              |           | Search for executables in your `$PATH`             |
+| `finder cp`              |           | Print the path to the global config file           |
+| `finder version`         | `-v`, `v` | Print the current version                          |
+| `finder template <name>` | `tpl`     | Search using an explicit template name             |
+| `finder view <name>`     |           | View the content of a template in the command line |
 
 ### Global flags
 

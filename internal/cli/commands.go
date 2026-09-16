@@ -145,6 +145,10 @@ func HandleCommand(args []string) {
 	unaliasCmd := argparser.NewCommand("unalias", "Remove an alias created with alias", "", false, "alias-remove")
 	aliasesCmd := argparser.NewCommand("aliases", "List all template aliases", "", false, "alias-list")
 
+	// View COmmand
+	// to view a template in the command line
+	viewCMD := argparser.NewCommand("view", "View a template in the command line", "", false)
+
 	// Register all subcommands on the root — the argparser then knows
 	// the whole command tree and can map the arguments correctly.
 	root.AddSubcommand(versionCmd)
@@ -163,6 +167,7 @@ func HandleCommand(args []string) {
 	root.AddSubcommand(aliasCmd)
 	root.AddSubcommand(unaliasCmd)
 	root.AddSubcommand(aliasesCmd)
+	root.AddSubcommand(viewCMD)
 
 	// Parse the arguments: args[0] is "finder" itself — pass args[1:]
 	// The result is the subcommand that matches the first argument.
@@ -207,6 +212,13 @@ func HandleCommand(args []string) {
 	case tagsCmd:
 		// Show all tags found in templates
 		Tags()
+
+	case viewCMD:
+		if len(cmd.Args) <= 0 {
+			fmt.Errorf("You have to submit a template name after <view>")
+		}
+
+		View(cmd.Args[0])
 
 	case cacheSizeCmd:
 		{
@@ -266,6 +278,8 @@ func HandleCommand(args []string) {
 			fmt.Println("Usage: finder alias <alias> <template>")
 			fmt.Println("  Example: finder alias myvue shadowdara.github.io/test/template")
 			fmt.Println("  Then: finder myvue  (resolves to the template)")
+			fmt.Println("  Start-Path: finder alias s/ shadowdara.github.io/templates/")
+			fmt.Println("  Then: finder s/test  (resolves to shadowdara.github.io/templates/test)")
 			return
 		}
 		if err := AddAlias(cmd.Args[0], cmd.Args[1]); err != nil {
