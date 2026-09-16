@@ -2,11 +2,13 @@
 @floating-ui/dom@1.8.0 -- MIT
 @iconify-json/game-icons@1.2.4 -- CC-BY-3.0
 @node-steam/vdf@2.2.0 -- MIT
+@phosphor-icons/web@2.1.2 -- MIT
 @rollup/plugin-yaml@5.0.0 -- MIT
 @shadowdara/dlib@0.0.4 -- MIT
 @shadowdara/finder-lib@0.3.18 -- Apache-2.0
 @shikijs/langs@4.4.3 -- MIT
 @tailwindcss/vite@4.3.3 -- MIT
+@twine/core@1.0.0 -- Apache-2.0
 @types/ejs@3.1.5 -- MIT
 @types/html-minifier-terser@7.0.2 -- MIT
 @types/jquery@4.0.1 -- MIT

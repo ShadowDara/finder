@@ -1,1 +1,1 @@
-import{j as n,F as l}from"./main_entry.js";import{r as o}from"./mcappheader.js";function m(r){r.innerHTML=n(l,null,n(o,null),n("main",null,n("h1",null,"About"),n("p",null,"Some Infos about the Programm")))}export{m as default};
+import{a as e,j as r,F as a}from"./main_entry.js";import{r as o}from"./mcappheader.js";function s(n){n.innerHTML=e(a,{children:[r(o,{}),e("main",{children:[r("h1",{children:"About"}),r("p",{children:"Some Infos about the Programm"})]})]})}export{s as default};
