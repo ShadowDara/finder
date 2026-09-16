@@ -95,9 +95,7 @@ export function DashboardClient({
     setEditorReset((n) => n + 1);
   }, []); // einmalig beim Mount
 
-  const contentBytes = new TextEncoder().encode(
-    JSON.stringify(JSON.parse(content), null, 0),
-  ).length;
+  const contentBytes = new TextEncoder().encode(content).length;
 
   function resetForm() {
     setEditingId(null);
