@@ -254,7 +254,7 @@ function renderCards(items: ParsedLocation[]): string {
 // ---------------------------------------------------------------------------
 
 function setupViewer(el: HTMLDivElement) {
-  if (import.meta.env.MODE == "static") {
+  if (import.meta.env.MODE != "backend") {
     return (
       <>
         <h1>Cache Viewer</h1>

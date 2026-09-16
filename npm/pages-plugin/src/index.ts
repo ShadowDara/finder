@@ -614,8 +614,10 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
       })
       .filter((page) => !shouldIgnore(page.id));
 
-    // Template pages: every `X.html` / `X.ejs` that has a sibling
-    // `X.build.[tj]s` becomes a build-time-rendered template page.
+    // Template pages: every `X.html` / `X.ejs` becomes a build-time
+    // rendered template page. A sibling `X.build.[tj]s` is optional —
+    // it only supplies the render data via its `build()` export. Without
+    // it the template renders with an empty context.
     //
     // - .html => Liquid
     // - .ejs  => EJS
@@ -635,14 +637,6 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
       }
 
       if (componentPages.some((page) => page.id === id)) {
-        continue;
-      }
-
-      const buildFile = [".ts", ".tsx", ".js", ".jsx"]
-        .map((ext) => file.slice(0, -".html".length) + `.build${ext}`)
-        .find((candidate) => fs.existsSync(candidate));
-
-      if (!buildFile) {
         continue;
       }
 
@@ -677,14 +671,6 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
       }
 
       if (componentPages.some((page) => page.id === id)) {
-        continue;
-      }
-
-      const buildFile = [".ts", ".tsx", ".js", ".jsx"]
-        .map((ext) => file.slice(0, -".ejs".length) + `.build${ext}`)
-        .find((candidate) => fs.existsSync(candidate));
-
-      if (!buildFile) {
         continue;
       }
 
