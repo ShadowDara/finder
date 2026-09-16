@@ -1,3 +1,8 @@
+import { betterAuth } from "better-auth";
+import { prismaAdapter } from "better-auth/adapters/prisma";
+import { nextCookies } from "better-auth/next-js";
+import { prisma } from "@/lib/db";
+
 const vercelOrigin = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : undefined;
