@@ -218,12 +218,11 @@
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -239,22 +238,28 @@
   },
   "active": "8e1d4bedc8a7f5b5",
   "lastOpenFiles": [
-    "npm/site/dist-static/viewer/index.html",
-    "npm/site/dist-static/viewer",
-    "npm/site/dist-static/tools/line_formatter/line_extender/page/index.html",
-    "npm/site/dist-static/tools/picture-mode-maker/page/index.html",
-    "npm/site/dist-static/tools/minecraft/tellraw/index.html",
-    "npm/site/dist-static/tools/line_formatter/page/index.html",
-    "npm/site/dist-static/tools/line_formatter/line_extender/page",
-    "npm/site/dist-static/tools/picture-mode-maker/page",
-    "npm/site/dist-static/tools/minecraft/tellraw",
-    "npm/site/dist-static/tools/markdowneditor/index.html",
-    "npm/site/dist-static/tools/line_formatter/page",
+    "npm/site/pages/gitviewer/page.html",
+    "npm/site/pages/gitviewer",
+    "pub/version/version_test.go",
+    "pub/goansi/colores_test.go",
+    "npm/site/src/dockview/render.ts",
+    "npm/site/src/dockview/panels.ts",
+    "npm/site/src/dockview/dockview.css",
+    "npm/site/src/dockview",
+    "npm/pages-plugin/src/styles.ts",
+    "internal/mcapp/gitviewer/package.go",
+    "internal/mcapp/gitviewer",
+    "cmd/findergen/frontend/favicon.svg",
+    "npm/site/public/favicon.svg",
+    "npm/pages-plugin/README.md",
+    "npm/fling-vscode/README.md",
+    "npm/fling-compiler/README.md",
+    "IDEAS.md",
+    "Map.md",
     "pub/checkstaticfiles/README.md",
     "pub/checkstaticfiles/CHANGELOG.md",
     "pub/checkstaticfiles-main/README.md",
     "pub/checkstaticfiles-main/CHANGELOG.md",
-    "Map.md",
     "npm/vite-plugin-minisite/node_modules/undici-types/README.md",
     "npm/vite-plugin-minisite/node_modules/tinyglobby/README.md",
     "npm/vite-plugin-minisite/node_modules/source-map-js/README.md",
@@ -271,9 +276,6 @@
     "npm/vite-plugin-minisite/node_modules/@types/estree/README.md",
     "npm/vite-plugin-minisite/node_modules/@rollup/rollup-win32-x64-msvc/README.md",
     "npm/vite-plugin-minisite/node_modules/@rollup/rollup-win32-x64-gnu/README.md",
-    "npm/vite-plugin-minisite/node_modules/@esbuild/win32-x64/README.md",
-    "npm/vite-plugin-minisite/README.md",
-    "template-management-system(1)/node_modules/@tailwindcss/postcss/README.md",
     "template-management-system(1)/public/placeholder.svg",
     "template-management-system(1)/public/placeholder.jpg",
     "template-management-system(1)/public/placeholder-user.jpg",
@@ -282,9 +284,6 @@
     "template-management-system(1)/public/icon-light-32x32.png",
     "template-management-system(1)/public/icon.svg",
     "template-management-system(1)/public/icon-dark-32x32.png",
-    "template-management-system(1)/public/apple-icon.png",
-    "uploadpage/node_modules/lucide-react/README.md",
-    "uploadpage/node_modules/date-fns/docs/logotype.svg",
     "stuffcanvas.canvas"
   ]
 }
