@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Git Viewer – Commit-Größen</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --panel: #171a21;
+    --border: #2a2e37;
+    --text: #e6e8ee;
+    --muted: #8b93a3;
+    --accent: #5b9dff;
+    --accent-soft: rgba(91, 157, 255, 0.15);
+    --danger: #ff6b6b;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+  header {
+    padding: 24px 32px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  header h1 {
+    margin: 0 0 4px;
+    font-size: 20px;
+    font-weight: 600;
+  }
+  header p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .controls {
+    display: flex;
+    gap: 8px;
+    padding: 16px 32px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .controls input {
+    flex: 1;
+    min-width: 260px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+  .controls input:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  button {
+    background: var(--accent);
+    color: #0b0d11;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  button.secondary {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  main {
+    padding: 0 32px 40px;
+  }
+  #status {
+    color: var(--muted);
+    font-size: 13px;
+    padding: 4px 0 16px;
+    min-height: 18px;
+  }
+  #status.error { color: var(--danger); }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  thead th {
+    text-align: left;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  tbody td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    vertical-align: middle;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  .hash {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    color: var(--accent);
+  }
+  .msg {
+    max-width: 380px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .date, .author { color: var(--muted); white-space: nowrap; }
+  .size-cell { min-width: 220px; }
+  .size-bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .size-bar-track {
+    flex: 1;
+    height: 8px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 4px;
+    overflow: hidden;
+    min-width: 80px;
+  }
+  .size-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 4px;
+    width: 0%;
+    transition: width 0.3s ease;
+  }
+  .size-label {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    white-space: nowrap;
+    min-width: 78px;
+    text-align: right;
+  }
+  .size-label.pending { color: var(--muted); }
+  .size-label.err { color: var(--danger); }
+  .empty {
+    color: var(--muted);
+    padding: 40px;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Git Viewer</h1>
+  <p>Zeigt die Commit-Historie eines lokalen Git-Repos inklusive Repo-Größe je Commit (via System-Git).</p>
+</header>
+
+<div class="controls">
+  <input id="repoInput" type="text" placeholder="Absoluter Pfad zum Git-Repository, z.B. /home/user/mein-projekt" />
+  <button id="loadBtn">Laden</button>
+  <button id="sizeAllBtn" class="secondary" disabled>Alle Größen berechnen</button>
+</div>
+
+<main>
+  <div id="status"></div>
+  <table id="commitTable" style="display:none">
+    <thead>
+      <tr>
+        <th>Commit</th>
+        <th>Datum</th>
+        <th>Autor</th>
+        <th>Nachricht</th>
+        <th class="size-cell">Größe des Repos zu diesem Commit</th>
+      </tr>
+    </thead>
+    <tbody id="commitBody"></tbody>
+  </table>
+</main>
+
+<script>
+const repoInput = document.getElementById('repoInput');
+const loadBtn = document.getElementById('loadBtn');
+const sizeAllBtn = document.getElementById('sizeAllBtn');
+const statusEl = document.getElementById('status');
+const table = document.getElementById('commitTable');
+const tbody = document.getElementById('commitBody');
+
+let currentRepo = '';
+let currentCommits = [];
+let maxSizeSeen = 0;
+
+// letzten benutzten Repo-Pfad im Browser merken (rein clientseitig, kein Server-State)
+const LAST_REPO_KEY = 'gitviewer_last_repo';
+try {
+  const saved = localStorage.getItem(LAST_REPO_KEY);
+  if (saved) repoInput.value = saved;
+} catch (e) { /* localStorage evtl. nicht verfügbar */ }
+
+function setStatus(msg, isError = false) {
+  statusEl.textContent = msg;
+  statusEl.className = isError ? 'error' : '';
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function formatDate(iso) {
+  try {
+    const d = new Date(iso);
+    return d.toLocaleString();
+  } catch (e) {
+    return iso;
+  }
+}
+
+async function loadCommits() {
+  const repo = repoInput.value.trim();
+  if (!repo) {
+    setStatus('Bitte einen Repo-Pfad angeben.', true);
+    return;
+  }
+  currentRepo = repo;
+  try { localStorage.setItem(LAST_REPO_KEY, repo); } catch (e) {}
+
+  loadBtn.disabled = true;
+  sizeAllBtn.disabled = true;
+  setStatus('Lade Commits …');
+  table.style.display = 'none';
+  tbody.innerHTML = '';
+  maxSizeSeen = 0;
+
+  try {
+    const res = await fetch(`/api/commits?repo=${encodeURIComponent(repo)}`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Unbekannter Fehler');
+
+    currentCommits = data || [];
+    if (currentCommits.length === 0) {
+      setStatus('Keine Commits gefunden.');
+      loadBtn.disabled = false;
+      return;
+    }
+
+    renderRows(currentCommits);
+    table.style.display = '';
+    setStatus(`${currentCommits.length} Commit(s) geladen. Größe wird pro Commit einzeln berechnet.`);
+    sizeAllBtn.disabled = false;
+    loadBtn.disabled = false;
+
+    // Größen nacheinander im Hintergrund laden
+    loadAllSizes();
+  } catch (err) {
+    setStatus('Fehler: ' + err.message, true);
+    loadBtn.disabled = false;
+  }
+}
+
+function renderRows(commits) {
+  tbody.innerHTML = commits.map(c => `
+    <tr data-hash="${c.hash}">
+      <td class="hash" title="${c.hash}">${c.short}</td>
+      <td class="date">${formatDate(c.date)}</td>
+      <td class="author">${escapeHtml(c.author)}</td>
+      <td class="msg" title="${escapeHtml(c.message)}">${escapeHtml(c.message)}</td>
+      <td class="size-cell">
+        <div class="size-bar-wrap">
+          <div class="size-bar-track"><div class="size-bar-fill"></div></div>
+          <span class="size-label pending">…</span>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+async function loadSizeForCommit(hash) {
+  const row = tbody.querySelector(`tr[data-hash="${hash}"]`);
+  if (!row) return;
+  const label = row.querySelector('.size-label');
+  const fill = row.querySelector('.size-bar-fill');
+
+  try {
+    const res = await fetch(`/api/size?repo=${encodeURIComponent(currentRepo)}&commit=${encodeURIComponent(hash)}`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Fehler');
+
+    label.textContent = data.sizeHuman;
+    label.classList.remove('pending', 'err');
+    row.dataset.size = data.size;
+
+    if (data.size > maxSizeSeen) {
+      maxSizeSeen = data.size;
+      updateAllBars();
+    } else {
+      fill.style.width = maxSizeSeen > 0 ? `${(data.size / maxSizeSeen) * 100}%` : '0%';
+    }
+  } catch (err) {
+    label.textContent = 'Fehler';
+    label.classList.remove('pending');
+    label.classList.add('err');
+    label.title = err.message;
+  }
+}
+
+function updateAllBars() {
+  tbody.querySelectorAll('tr').forEach(row => {
+    const size = Number(row.dataset.size || 0);
+    const fill = row.querySelector('.size-bar-fill');
+    if (row.dataset.size !== undefined && fill) {
+      fill.style.width = maxSizeSeen > 0 ? `${(size / maxSizeSeen) * 100}%` : '0%';
+    }
+  });
+}
+
+// Größen sequenziell laden, um das lokale Git-Kommando nicht zu überlasten
+async function loadAllSizes() {
+  sizeAllBtn.disabled = true;
+  for (const c of currentCommits) {
+    await loadSizeForCommit(c.hash);
+  }
+  setStatus(`${currentCommits.length} Commit(s) geladen, alle Größen berechnet.`);
+}
+
+loadBtn.addEventListener('click', loadCommits);
+sizeAllBtn.addEventListener('click', loadAllSizes);
+repoInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') loadCommits();
+});
+</script>
+
+</body>
+</html>
