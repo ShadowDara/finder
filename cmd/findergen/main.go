@@ -613,9 +613,9 @@ func main() {
 		json.NewEncoder(w).Encode(worlds)
 	})
 
-	http.HandleFunc("/api/gitviewer/commits", gitviewer.WithCORS(gitviewer.CommitsHandler))
-	http.HandleFunc("/api/gitviewer/size", gitviewer.WithCORS(gitviewer.SizeHandler))
-	http.HandleFunc("/api/gitviewer/diffsize", gitviewer.WithCORS(gitviewer.DiffSizeHandler))
+	mux.HandleFunc("/api/gitviewer/commits", gitviewer.WithCORS(gitviewer.CommitsHandler))
+	mux.HandleFunc("/api/gitviewer/size", gitviewer.WithCORS(gitviewer.SizeHandler))
+	mux.HandleFunc("/api/gitviewer/diffsize", gitviewer.WithCORS(gitviewer.DiffSizeHandler))
 
 	// Console (web terminal) routes
 	registerConsoleRoutes(mux)
