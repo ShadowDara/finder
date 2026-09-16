@@ -27,19 +27,30 @@ export const auth = betterAuth({
 
   baseURL,
 
-  trustedOrigins: [
-    "http://localhost:3000",
+  trustedOrigins: async (request) => {
+    const origins: string[] = [
+      "http://localhost:3000",
 
-    ...(vercelUrl ? [vercelUrl] : []),
-    ...(productionUrl ? [productionUrl] : []),
+      ...(vercelUrl ? [vercelUrl] : []),
+      ...(productionUrl ? [productionUrl] : []),
 
-    ...(process.env.V0_RUNTIME_URL ? [process.env.V0_RUNTIME_URL] : []),
-    ...(process.env.V0_DEV_APP_URL ? [process.env.V0_DEV_APP_URL] : []),
-    ...(process.env.V0_BUILD_URL ? [process.env.V0_BUILD_URL] : []),
-    ...(process.env.V0_SANDBOX_URL ? [process.env.V0_SANDBOX_URL] : []),
+      ...(process.env.V0_RUNTIME_URL ? [process.env.V0_RUNTIME_URL] : []),
+      ...(process.env.V0_DEV_APP_URL ? [process.env.V0_DEV_APP_URL] : []),
+      ...(process.env.V0_BUILD_URL ? [process.env.V0_BUILD_URL] : []),
+      ...(process.env.V0_SANDBOX_URL ? [process.env.V0_SANDBOX_URL] : []),
 
-    ...(process.env.BETTER_AUTH_URL ? [process.env.BETTER_AUTH_URL] : []),
-  ],
+      ...(process.env.BETTER_AUTH_URL ? [process.env.BETTER_AUTH_URL] : []),
+    ];
+
+    // Vercel-Preview- und wechselnde Deployment-Domains zulassen:
+    // Die Origin der aktuellen Anfrage wird mit vertraut, damit Anmeldung
+    // auf jeder aktuellen Deployment-URL funktioniert (z.B. git-develop-...).
+    const reqOrigin = request?.headers?.get("origin");
+    if (reqOrigin && !origins.includes(reqOrigin)) {
+      origins.push(reqOrigin);
+    }
+    return origins;
+  },
 
   emailAndPassword: {
     enabled: true,
