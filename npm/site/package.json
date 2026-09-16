@@ -70,6 +70,7 @@
     "@xterm/addon-fit": "^0.11.0",
     "@xterm/xterm": "^6.0.0",
     "browser-image-compression": "^2.0.2",
+    "chart.js": "4.4.4",
     "comlink": "^4.4.2",
     "dockview": "^8.3.1",
     "droll": "^0.2.1",
