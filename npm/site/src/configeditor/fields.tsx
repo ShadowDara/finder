@@ -1,4 +1,4 @@
-import { jsx, Fragment, raw } from "@twine/core/jsx-runtime";
+import { raw } from "@twine/core/jsx-runtime";
 import type { HtmlValue } from "@twine/core/jsx-runtime";
 import type { ConfigField } from "./types";
 

@@ -1,4 +1,3 @@
-import { jsx, Fragment } from "@twine/core/jsx-runtime";
 import * as monaco from "monaco-editor";
 import "./monaco.css";
 import { jsToFling } from "js-to-fling";

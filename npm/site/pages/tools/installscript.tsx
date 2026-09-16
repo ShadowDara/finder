@@ -1,4 +1,3 @@
-import { jsx, Fragment } from "@twine/core/jsx-runtime";
 import {
   generateInstallerScript,
   type BinarySpec,

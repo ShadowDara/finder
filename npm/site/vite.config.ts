@@ -76,8 +76,8 @@ export default defineConfig(({ mode }) => {
       ),
     },
     esbuild: {
-      jsxFactory: "jsx",
-      jsxFragment: "Fragment",
+      jsx: "automatic",
+      jsxImportSource: "@twine/core",
     },
     root: ".",
     server: {

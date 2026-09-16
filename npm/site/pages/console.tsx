@@ -1,4 +1,3 @@
-import { jsx } from "@twine/core/jsx-runtime";
 import { SERVER_ADRESS } from "../src/vars";
 import { Terminal } from "@xterm/xterm";
 import { FitAddon } from "@xterm/addon-fit";

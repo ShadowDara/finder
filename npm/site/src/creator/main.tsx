@@ -1,4 +1,3 @@
-import { jsx } from "@twine/core/jsx-runtime";
 import type { Existence, FileNode, FolderNode, TemplateJSON } from "./types";
 import {
   decodeMarkdownNote,

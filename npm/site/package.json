@@ -56,6 +56,7 @@
     "@floating-ui/dom": "^1.8.0",
     "@iconify-json/game-icons": "1.2.4",
     "@node-steam/vdf": "^2.2.0",
+    "@phosphor-icons/web": "^2.1.2",
     "@shadowdara/dlib": "^0.0.4",
     "@shadowdara/finder-lib": "^0.3.18",
     "@shikijs/langs": "^4.4.3",

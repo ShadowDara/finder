@@ -1,4 +1,3 @@
-import { escapeHtml, jsx, raw, Fragment } from "@twine/core/jsx-runtime";
 import "./mcappstyle.css";
 
 export default function render() {

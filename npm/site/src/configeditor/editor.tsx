@@ -1,4 +1,3 @@
-import { jsx, Fragment } from "@twine/core/jsx-runtime";
 import type { ConfigSchema } from "./types";
 import { asHtml, renderField } from "./fields";
 

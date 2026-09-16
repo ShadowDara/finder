@@ -1306,16 +1306,15 @@ ${ctx.content}
       const result = await transformWithEsbuild(code, id, {
         loader: "tsx",
         target: "esnext",
-        jsxFactory: "jsx",
-        jsxFragment: "Fragment",
+        // Automatic JSX runtime: esbuild injects `import { jsx } from
+        // "<jsxImportSource>/jsx-runtime"` itself, so no manual import prepend needed.
+        jsx: "automatic",
+        jsxImportSource: jsxRuntimePath.replace(/\/jsx-runtime$/, ""),
         sourcemap: true,
       });
 
       return {
-        code: [
-          `import { jsx, Fragment } from ${JSON.stringify(jsxRuntimePath)};`,
-          result.code,
-        ].join("\n"),
+        code: result.code,
         map: result.map as any,
       };
     },
