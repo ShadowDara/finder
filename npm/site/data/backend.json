@@ -1,29 +1,29 @@
 {
-  "generatedAt": "2026-09-16T11:27:33.144Z",
+  "generatedAt": "2026-09-16T11:58:31.021Z",
   "total": {
-    "files": 175,
-    "bytes": 34933322,
-    "kilobytes": 34114.57,
-    "megabytes": 33.32
+    "files": 178,
+    "bytes": 35426696,
+    "kilobytes": 34596.38,
+    "megabytes": 33.79
   },
   "byExtension": [
     {
       "extension": ".js",
-      "files": 126,
-      "bytes": 34075898,
-      "percentage": 97.55
+      "files": 127,
+      "bytes": 34432966,
+      "percentage": 97.19
     },
     {
       "extension": ".wasm",
       "files": 1,
       "bytes": 468274,
-      "percentage": 1.34
+      "percentage": 1.32
     },
     {
       "extension": ".css",
-      "files": 17,
-      "bytes": 230930,
-      "percentage": 0.66
+      "files": 18,
+      "bytes": 366805,
+      "percentage": 1.04
     },
     {
       "extension": ".ttf",
@@ -33,8 +33,8 @@
     },
     {
       "extension": ".html",
-      "files": 28,
-      "bytes": 10219,
+      "files": 29,
+      "bytes": 10628,
       "percentage": 0.03
     },
     {
@@ -46,7 +46,7 @@
     {
       "extension": ".txt",
       "files": 1,
-      "bytes": 1832,
+      "bytes": 1854,
       "percentage": 0.01
     }
   ],
@@ -112,6 +112,11 @@
       "bytes": 405141
     },
     {
+      "path": "assets/creatorstudio.js",
+      "extension": ".js",
+      "bytes": 356867
+    },
+    {
       "path": "assets/console.js",
       "extension": ".js",
       "bytes": 338341
@@ -125,6 +130,11 @@
       "path": "assets/codicon.ttf",
       "extension": ".ttf",
       "bytes": 140956
+    },
+    {
+      "path": "assets/creatorstudio.css",
+      "extension": ".css",
+      "bytes": 135875
     },
     {
       "path": "assets/jquery.module.js",
@@ -224,7 +234,7 @@
     {
       "path": "assets/main_entry.js",
       "extension": ".js",
-      "bytes": 9673
+      "bytes": 9874
     },
     {
       "path": "assets/configeditor.js",
@@ -659,7 +669,7 @@
     {
       "path": "dependencies.txt",
       "extension": ".txt",
-      "bytes": 1832
+      "bytes": 1854
     },
     {
       "path": "assets/index.css",
@@ -785,6 +795,11 @@
       "path": "configeditor/index.html",
       "extension": ".html",
       "bytes": 421
+    },
+    {
+      "path": "creatorstudio/index.html",
+      "extension": ".html",
+      "bytes": 409
     },
     {
       "path": "regexcreator/index.html",

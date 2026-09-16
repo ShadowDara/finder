@@ -22,6 +22,7 @@ browser-image-compression@2.0.2 -- MIT
 chalk@6.0.0 -- MIT
 clash-of-clans-data@0.16.0 -- MIT
 comlink@4.4.2 -- Apache-2.0
+dockview@8.3.1 -- MIT
 droll@0.2.1 -- MIT
 ejs@6.0.1 -- Apache-2.0
 esbuild@0.28.2 -- MIT
