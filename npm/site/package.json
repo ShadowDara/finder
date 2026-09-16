@@ -88,6 +88,7 @@
     "monaco-textmate": "^3.0.1",
     "onigasm": "^2.2.5",
     "samengine": "^1.11.0",
+    "shadcn": "^4.21.0",
     "tellraw-parser": "^1.0.2",
     "three": "^0.186.0",
     "tsafe": "^1.8.12"

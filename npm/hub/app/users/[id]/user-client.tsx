@@ -79,12 +79,20 @@ export function UserClient({ user }: { user: UserData }) {
                   Aktualisiert{" "}
                   {new Date(template.updatedAt).toLocaleDateString("de-DE")}
                 </p>
-                <button
-                  className="button button-outline"
-                  onClick={() => open(template.id)}
-                >
-                  Template ansehen
-                </button>
+                <div className="card-actions">
+                  <button
+                    className="button button-outline"
+                    onClick={() => open(template.id)}
+                  >
+                    Template ansehen
+                  </button>
+                  <a
+                    className="button button-outline"
+                    href={`/t/${template.id}.json5`}
+                  >
+                    Download
+                  </a>
+                </div>
               </article>
             ))}
           </div>

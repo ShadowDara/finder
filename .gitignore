@@ -47,3 +47,6 @@ npm/site/tsconfig.tsbuildinfo
 /npm/site/data/fling
 /npm/pages-plugin/node_modules
 /npm/pages-plugin/dist
+/npm/hub/.claude
+/npm/hub/.windsurf
+/npm/hub/.agents

@@ -6,13 +6,14 @@
     "dev": "next dev",
     "build": "prisma generate && next build",
     "start": "next start",
-    "spostinstall": "prisma generate",
+    "postinstall": "prisma generate",
     "db:push": "prisma db push",
     "db:studio": "prisma studio"
   },
   "dependencies": {
     "@base-ui/react": "^1.5.0",
     "@monaco-editor/react": "^4.7.0",
+    "@prisma/adapter-pg": "^7.10.0",
     "@prisma/client": "^7.10.0",
     "@shadowdara/dlib": "^0.0.4",
     "@shadowdara/finder-lib": "0.3.17",
