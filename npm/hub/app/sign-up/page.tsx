@@ -7,7 +7,7 @@ import { useState } from 'react'
 
 export default function SignUpPage() {
   const router = useRouter()
-  const [name, setName] = useState('')
+  const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [checksum, setChecksum] = useState<string | null>(null)
@@ -18,7 +18,7 @@ export default function SignUpPage() {
     e.preventDefault()
     setError(null)
     setLoading(true)
-    const result = await signUp.email({ name, email, password })
+    const result = await signUp.email({ name: username, username, email, password })
     if (result.error) {
       setError('Registrierung fehlgeschlagen. Bitte prüfe deine Angaben.')
       setLoading(false)
@@ -51,7 +51,7 @@ export default function SignUpPage() {
     <main style={{ maxWidth: 400, margin: '0 auto', padding: 24 }}>
       <h1>Registrieren</h1>
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        <label>Name<input type="text" value={name} onChange={(e) => setName(e.target.value)} required autoComplete="name" /></label>
+        <label>Benutzername<input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required autoComplete="username" placeholder="z.B. shadowdara" /></label>
         <label>E-Mail<input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required autoComplete="email" /></label>
         <label>Passwort<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={8} autoComplete="new-password" /></label>
         {error && <p role="alert">{error}</p>}

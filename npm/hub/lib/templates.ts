@@ -1,17 +1,46 @@
-import type { Template as FinderTemplate } from "@shadowdara/finder-lib";
+import type { newest } from "@shadowdara/finder-lib";
 
 export const MAX_TEMPLATE_BYTES = 5 * 1024;
 export const MAX_TEMPLATE_NAME_LENGTH = 120;
 export const MAX_TAGS = 12;
 export const MAX_TAG_LENGTH = 32;
 
-type TemplateInput = { name: string; content: string; tags: string[] };
+export function toSlug(input: string): string {
+  return input
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9._-]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 80);
+}
+
+export function toUsername(input: string): string {
+  return input
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9._-]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 32);
+}
+
+const USERNAME_RE = /^[a-z0-9][a-z0-9._-]{0,31}$/;
+
+export function isValidUsername(u: string): boolean {
+  return USERNAME_RE.test(u);
+}
+
+type TemplateInput = {
+  name: string;
+  slug: string;
+  content: string;
+  tags: string[];
+};
 
 export type TemplateInputResult =
-  | { ok: true; name: string; content: string; tags: string[] }
+  | { ok: true; name: string; slug: string; content: string; tags: string[] }
   | { ok: false; error: string };
 
-function isFinderTemplate(value: unknown): value is FinderTemplate {
+function isFinderTemplate(value: unknown): value is newest.Template {
   if (typeof value !== "object" || value === null) return false;
   const template = value as Record<string, unknown>;
   if (typeof template.name !== "string" || !template.name.trim()) return false;
@@ -75,8 +104,8 @@ export function validateTemplateInput(input: unknown): TemplateInputResult {
         .filter((tag): tag is string => typeof tag === "string")
         .map((tag) => tag.trim().toLowerCase())
         .filter(Boolean)
-    : Array.isArray((parsed as FinderTemplate).tags)
-      ? (parsed as FinderTemplate)
+    : Array.isArray((parsed as newest.Template).tags)
+      ? (parsed as newest.Template)
           .tags!.map((tag) => tag.trim().toLowerCase())
           .filter(Boolean)
       : [];
@@ -88,9 +117,12 @@ export function validateTemplateInput(input: unknown): TemplateInputResult {
       ok: false,
       error: `Maximal ${MAX_TAGS} Tags mit jeweils höchstens ${MAX_TAG_LENGTH} Zeichen erlaubt.`,
     };
+  const slug = toSlug(name);
+  if (!slug) return { ok: false, error: "Name ist nicht als Slug verwendbar." };
   return {
     ok: true,
     name: name.trim(),
+    slug,
     content: normalizedContent,
     tags: [...new Set(normalizedTags)],
   };

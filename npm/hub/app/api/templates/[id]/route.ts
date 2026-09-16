@@ -48,9 +48,20 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
   }
 
   // Scope the update by userId so a user can only modify their own templates.
+  const existing = await prisma.template.findUnique({
+    where: { userId_slug: { userId: user.id, slug: result.slug } },
+    select: { id: true },
+  })
+  if (existing && existing.id !== id) {
+    return NextResponse.json(
+      { error: 'Es existiert bereits ein Template mit diesem Namen.' },
+      { status: 409 },
+    )
+  }
+
   const updated = await prisma.template.updateMany({
     where: { id, userId: user.id },
-    data: { name: result.name, content: result.content, tags: result.tags },
+    data: { name: result.name, slug: result.slug, content: result.content, tags: result.tags },
   })
 
   if (updated.count === 0) {
