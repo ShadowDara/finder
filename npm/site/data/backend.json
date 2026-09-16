@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-09-15T21:18:57.563Z",
+  "generatedAt": "2026-09-16T01:12:04.585Z",
   "total": {
-    "files": 172,
-    "bytes": 34374483,
-    "kilobytes": 33568.83,
-    "megabytes": 32.78
+    "files": 173,
+    "bytes": 34460618,
+    "kilobytes": 33652.95,
+    "megabytes": 32.86
   },
   "byExtension": [
     {
       "extension": ".js",
       "files": 125,
-      "bytes": 33522952,
-      "percentage": 97.52
+      "bytes": 33523749,
+      "percentage": 97.28
     },
     {
       "extension": ".wasm",
@@ -22,7 +22,7 @@
     {
       "extension": ".css",
       "files": 17,
-      "bytes": 230751,
+      "bytes": 230765,
       "percentage": 0.67
     },
     {
@@ -32,15 +32,21 @@
       "percentage": 0.41
     },
     {
+      "extension": ".svg",
+      "files": 1,
+      "bytes": 85216,
+      "percentage": 0.25
+    },
+    {
       "extension": ".html",
       "files": 27,
-      "bytes": 9783,
+      "bytes": 9842,
       "percentage": 0.03
     },
     {
       "extension": ".txt",
       "files": 1,
-      "bytes": 1767,
+      "bytes": 1816,
       "percentage": 0.01
     }
   ],
@@ -116,6 +122,11 @@
       "bytes": 140956
     },
     {
+      "path": "favicon.svg",
+      "extension": ".svg",
+      "bytes": 85216
+    },
+    {
       "path": "assets/jquery.module.js",
       "extension": ".js",
       "bytes": 79109
@@ -128,12 +139,12 @@
     {
       "path": "assets/installscript.js",
       "extension": ".js",
-      "bytes": 32265
+      "bytes": 32268
     },
     {
       "path": "assets/_virtual_page-markdown_changelog.js",
       "extension": ".js",
-      "bytes": 30822
+      "bytes": 31063
     },
     {
       "path": "assets/lspLanguageFeatures.js",
@@ -143,7 +154,7 @@
     {
       "path": "assets/_virtual_page-markdown_readme.js",
       "extension": ".js",
-      "bytes": 25185
+      "bytes": 25738
     },
     {
       "path": "assets/tsMode.js",
@@ -238,7 +249,7 @@
     {
       "path": "assets/console.css",
       "extension": ".css",
-      "bytes": 8663
+      "bytes": 8677
     },
     {
       "path": "assets/ruby.js",
@@ -643,7 +654,7 @@
     {
       "path": "dependencies.txt",
       "extension": ".txt",
-      "bytes": 1767
+      "bytes": 1816
     },
     {
       "path": "assets/index.css",
@@ -801,6 +812,11 @@
       "bytes": 397
     },
     {
+      "path": "index.html",
+      "extension": ".html",
+      "bytes": 396
+    },
+    {
       "path": "monaco/index.html",
       "extension": ".html",
       "bytes": 395
@@ -869,11 +885,6 @@
       "path": "readme/index.html",
       "extension": ".html",
       "bytes": 344
-    },
-    {
-      "path": "index.html",
-      "extension": ".html",
-      "bytes": 337
     },
     {
       "path": "assets/mcappheader.js",

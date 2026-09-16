@@ -1,5 +1,5 @@
-import { jsx, Fragment, raw } from "../jsx-runtime";
-import type { HtmlValue } from "../jsx-runtime";
+import { jsx, Fragment, raw } from "@shadowdara/ssg-pages-plugin/jsx-runtime";
+import type { HtmlValue } from "@shadowdara/ssg-pages-plugin/jsx-runtime";
 import type { ConfigField } from "./types";
 
 export type FieldRenderer = (

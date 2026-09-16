@@ -1,4 +1,4 @@
-import { jsx, raw } from "../../src/jsx-runtime";
+import { jsx, raw } from "@shadowdara/ssg-pages-plugin/jsx-runtime";
 import { parseMarkdown, parseMarkdownToDocument } from "@shadowdara/dlib";
 // import { SERVER_ADRESS } from "../../src/vars";
 import "./markdowneditor.css";

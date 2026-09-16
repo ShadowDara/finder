@@ -1,4 +1,9 @@
-import { escapeHtml, jsx, raw, Fragment } from "../src/jsx-runtime";
+import {
+  escapeHtml,
+  jsx,
+  raw,
+  Fragment,
+} from "@shadowdara/ssg-pages-plugin/jsx-runtime";
 import { parseMarkdown } from "@shadowdara/dlib";
 import "./viewer.css";
 import builtinTemplates from "../src/templates.js";

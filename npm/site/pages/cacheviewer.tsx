@@ -1,4 +1,9 @@
-import { escapeHtml, jsx, raw, Fragment } from "../src/jsx-runtime";
+import {
+  escapeHtml,
+  jsx,
+  raw,
+  Fragment,
+} from "@shadowdara/ssg-pages-plugin/jsx-runtime";
 import { SERVER_ADRESS } from "../src/vars";
 import "./cacheviewer.css";
 

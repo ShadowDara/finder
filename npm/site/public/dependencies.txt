@@ -5,6 +5,7 @@
 @rollup/plugin-yaml@5.0.0 -- MIT
 @shadowdara/dlib@0.0.4 -- MIT
 @shadowdara/finder-lib@0.3.18 -- Apache-2.0
+@shadowdara/ssg-pages-plugin@1.0.0 -- Apache-2.0
 @shikijs/langs@4.4.3 -- MIT
 @tailwindcss/vite@4.3.3 -- MIT
 @types/ejs@3.1.5 -- MIT

@@ -247,6 +247,12 @@ A full template with all supported fields:
 
 ### Custom templates
 
+> [!IMPORTANT]
+> Starting with Finder version 0.3.18, Finder supports the following template file extensions: [`.json`, `.jsonc`, `.json5`]
+
+> [!WARNING]
+> Starting with finder version 0.3.25 (not released yet), running a template which end with `.json5` while create a warning
+
 Place your own `.json5` template files in:
 
 | OS      | Path                               |
@@ -439,6 +445,12 @@ go run ./cmd/finder list
 - Add new templates via PR. Keep them in JSON5 and provide a short
   description of what the template matches.
 - Feel free to contribute code improvements or new features.
+
+### Clone the Repo
+
+```sh
+git clone --depth=1 https://github.com/shadowdara/finder
+```
 
 ## Roadmap
 

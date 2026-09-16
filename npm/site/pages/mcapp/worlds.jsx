@@ -1,4 +1,9 @@
-import { escapeHtml, jsx, raw, Fragment } from "../../src/jsx-runtime";
+import {
+  escapeHtml,
+  jsx,
+  raw,
+  Fragment,
+} from "@shadowdara/ssg-pages-plugin/jsx-runtime";
 import Header from "../../src/components/mcappheader.jsx";
 import * as f from "../../src/components/mcappstyle.js";
 import { SERVER_ADRESS } from "../../src/vars.js";

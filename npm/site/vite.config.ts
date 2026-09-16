@@ -1,5 +1,5 @@
 import { defineConfig } from "vite";
-import { pagesPlugin } from "./pages-ssg-plugin";
+import { pagesPlugin } from "@shadowdara/ssg-pages-plugin";
 import { visualizer } from "rollup-plugin-visualizer";
 import tailwindcss from "@tailwindcss/vite";
 import path from "node:path";
@@ -125,12 +125,12 @@ export default defineConfig(({ mode }) => {
           "docs/config": ["/src/markdownrootstyle.css"],
           "docs/index": ["/src/markdownrootstyle.css"],
         },
-        // Markdown-Bundle in eigene JS-Chunks aufteilen, statt alles im
-        // main_entry.js zu bündeln (wird per dynamic import() geladen).
+        head: {
+          index: `<link rel="icon" type="image/svg+xml" href="./favicon.svg" />`,
+        },
         splitMarkdown: true,
         prettyUrls: true,
         entry: "src/main.ts",
-        // Release-Builds: alle console.log/warn/error/debug/info entfernen
         removeConsole: true,
         minify: true,
         title: (id) => {

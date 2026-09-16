@@ -11,7 +11,7 @@ allowBuilds:
   keytar: false
   prisma: true
 minimumReleaseAgeExclude:
-  - "@shadowdara/finder-lib@0.3.17"
+  - '@shadowdara/finder-lib@0.3.17 || 0.3.18'
   - "@shadowdara/linguist-js@1.0.0"
   - finder-npm@0.0.0
   - js-to-fling@0.1.0 || 0.1.1 || 0.1.2

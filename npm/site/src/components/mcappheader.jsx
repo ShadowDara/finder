@@ -1,4 +1,9 @@
-import { escapeHtml, jsx, raw, Fragment } from "../jsx-runtime";
+import {
+  escapeHtml,
+  jsx,
+  raw,
+  Fragment,
+} from "@shadowdara/ssg-pages-plugin/jsx-runtime";
 import "./mcappstyle.css";
 
 export default function render() {

@@ -1,4 +1,4 @@
-import { jsx } from "../src/jsx-runtime";
+import { jsx } from "@shadowdara/ssg-pages-plugin/jsx-runtime";
 import { SERVER_ADRESS } from "../src/vars";
 import { Terminal } from "@xterm/xterm";
 import { FitAddon } from "@xterm/addon-fit";
