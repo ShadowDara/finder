@@ -1,4 +1,4 @@
-import { jsx } from "@twine/core";
+import { jsx } from "@twine/core/jsx-runtime";
 import { generateRegex, type MatchMode } from "../src/lib/regex";
 import "./regexcreator.css";
 

@@ -7,6 +7,8 @@ import { parseMarkdown } from "@shadowdara/dlib";
 import { transformWithEsbuild } from "vite";
 import { tsImport } from "tsx/esm/api";
 import { escapeHtml } from "./jsx-runtime.js";
+export { jsx, Fragment, raw, escapeHtml, loadStyles } from "./jsx-runtime.js";
+export type { HtmlValue } from "./jsx-runtime.js";
 import hljs from "highlight.js/lib/common";
 import { Liquid } from "liquidjs";
 import ejs from "ejs";
@@ -234,7 +236,7 @@ export interface PagesPluginOptions {
    * (`jsx`/`Fragment`) is available. Defaults to the jsx-runtime shipped
    * with this package.
    *
-   * @default "@twine/core"
+   * @default "@twine/core/jsx-runtime"
    */
   jsxRuntimePath?: string;
 }
@@ -335,7 +337,7 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
   const writeDts = options.dts ?? true;
   const dtsPathOpt = options.dtsPath ?? "src/pages.d.ts";
   const liquidTemplateRoot = options.liquidTemplateRoot ?? "src/templates";
-  const jsxRuntimePath = options.jsxRuntimePath ?? "@twine/core";
+  const jsxRuntimePath = options.jsxRuntimePath ?? "@twine/core/jsx-runtime";
 
   let config: ResolvedConfig;
   let pages: PageEntry[] = [];

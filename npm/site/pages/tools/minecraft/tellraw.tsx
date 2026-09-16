@@ -1,4 +1,4 @@
-import { jsx } from "@twine/core";
+import { jsx } from "@twine/core/jsx-runtime";
 import { parseTellraw, stringifyTellraw } from "tellraw-parser";
 import "./tellraw.css";
 import $ from "jquery";

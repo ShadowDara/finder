@@ -1,52 +1,52 @@
 {
-  "generatedAt": "2026-09-16T01:12:04.585Z",
+  "generatedAt": "2026-09-16T10:57:21.601Z",
   "total": {
-    "files": 173,
-    "bytes": 34460618,
-    "kilobytes": 33652.95,
-    "megabytes": 32.86
+    "files": 175,
+    "bytes": 34927717,
+    "kilobytes": 34109.1,
+    "megabytes": 33.31
   },
   "byExtension": [
     {
       "extension": ".js",
-      "files": 125,
-      "bytes": 33523749,
-      "percentage": 97.28
+      "files": 126,
+      "bytes": 34070326,
+      "percentage": 97.55
     },
     {
       "extension": ".wasm",
       "files": 1,
       "bytes": 468274,
-      "percentage": 1.36
+      "percentage": 1.34
     },
     {
       "extension": ".css",
       "files": 17,
-      "bytes": 230765,
-      "percentage": 0.67
+      "bytes": 230930,
+      "percentage": 0.66
     },
     {
       "extension": ".ttf",
       "files": 1,
       "bytes": 140956,
-      "percentage": 0.41
+      "percentage": 0.4
+    },
+    {
+      "extension": ".html",
+      "files": 28,
+      "bytes": 10219,
+      "percentage": 0.03
     },
     {
       "extension": ".svg",
       "files": 1,
-      "bytes": 85216,
-      "percentage": 0.25
-    },
-    {
-      "extension": ".html",
-      "files": 27,
-      "bytes": 9842,
-      "percentage": 0.03
+      "bytes": 5213,
+      "percentage": 0.01
     },
     {
       "extension": ".txt",
       "files": 1,
-      "bytes": 1816,
+      "bytes": 1799,
       "percentage": 0.01
     }
   ],
@@ -97,6 +97,11 @@
       "bytes": 637641
     },
     {
+      "path": "assets/modelviewer.js",
+      "extension": ".js",
+      "bytes": 546413
+    },
+    {
       "path": "assets/onigasm.wasm",
       "extension": ".wasm",
       "bytes": 468274
@@ -120,11 +125,6 @@
       "path": "assets/codicon.ttf",
       "extension": ".ttf",
       "bytes": 140956
-    },
-    {
-      "path": "favicon.svg",
-      "extension": ".svg",
-      "bytes": 85216
     },
     {
       "path": "assets/jquery.module.js",
@@ -227,14 +227,14 @@
       "bytes": 9505
     },
     {
+      "path": "assets/main_entry.js",
+      "extension": ".js",
+      "bytes": 9426
+    },
+    {
       "path": "assets/viewer.css",
       "extension": ".css",
       "bytes": 9401
-    },
-    {
-      "path": "assets/main_entry.js",
-      "extension": ".js",
-      "bytes": 9262
     },
     {
       "path": "assets/configeditor.js",
@@ -345,6 +345,11 @@
       "path": "assets/creator.css",
       "extension": ".css",
       "bytes": 5365
+    },
+    {
+      "path": "favicon.svg",
+      "extension": ".svg",
+      "bytes": 5213
     },
     {
       "path": "assets/ecl.js",
@@ -497,6 +502,11 @@
       "bytes": 3418
     },
     {
+      "path": "assets/main.css",
+      "extension": ".css",
+      "bytes": 3391
+    },
+    {
       "path": "assets/kotlin.js",
       "extension": ".js",
       "bytes": 3262
@@ -515,11 +525,6 @@
       "path": "assets/cypher.js",
       "extension": ".js",
       "bytes": 3247
-    },
-    {
-      "path": "assets/main.css",
-      "extension": ".css",
-      "bytes": 3226
     },
     {
       "path": "assets/powershell.js",
@@ -654,7 +659,7 @@
     {
       "path": "dependencies.txt",
       "extension": ".txt",
-      "bytes": 1816
+      "bytes": 1799
     },
     {
       "path": "assets/index.css",
@@ -835,6 +840,11 @@
       "path": "tools/picture-mode-maker/page/index.html",
       "extension": ".html",
       "bytes": 379
+    },
+    {
+      "path": "tools/minecraft/modelviewer/index.html",
+      "extension": ".html",
+      "bytes": 377
     },
     {
       "path": "tools/line_formatter/page/index.html",

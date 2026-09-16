@@ -1,5 +1,5 @@
-import { jsx, Fragment } from "@twine/core";
-import { raw } from "@twine/core";
+import { jsx, Fragment } from "@twine/core/jsx-runtime";
+import { raw } from "@twine/core/jsx-runtime";
 import { PageEntry } from "virtual:pages";
 
 export async function renderMarkdown(app: HTMLElement, page: PageEntry) {

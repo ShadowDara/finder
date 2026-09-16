@@ -290,12 +290,12 @@ importers:
       '@rollup/plugin-yaml':
         specifier: ^5.0.0
         version: 5.0.0(rollup@4.63.2)
-      '@shadowdara/ssg-pages-plugin':
-        specifier: workspace:*
-        version: link:../pages-plugin
       '@tailwindcss/vite':
         specifier: ^4.3.3
         version: 4.3.3(vite@6.4.3(@types/node@26.5.1)(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.104.1)(terser@5.51.2)(tsx@4.23.13)(yaml@2.9.1))
+      '@twine/core':
+        specifier: workspace:*
+        version: link:../pages-plugin
       '@types/html-minifier-terser':
         specifier: ^7.0.2
         version: 7.0.2

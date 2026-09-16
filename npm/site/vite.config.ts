@@ -1,5 +1,5 @@
 import { defineConfig } from "vite";
-import { pagesPlugin } from "@shadowdara/ssg-pages-plugin";
+import { pagesPlugin } from "@twine/core";
 import { visualizer } from "rollup-plugin-visualizer";
 import tailwindcss from "@tailwindcss/vite";
 import path from "node:path";

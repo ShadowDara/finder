@@ -1,4 +1,4 @@
-import { jsx, raw } from "@twine/core";
+import { jsx, raw } from "@twine/core/jsx-runtime";
 import { parseMarkdown, parseMarkdownToDocument } from "@shadowdara/dlib";
 // import { SERVER_ADRESS } from "../../src/vars";
 import "./markdowneditor.css";
