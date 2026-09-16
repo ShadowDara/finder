@@ -266,8 +266,37 @@ func TestMatchAny_RegexMatch(t *testing.T) {
 		"gamma.js":  true,
 	}
 
-	if !matchAny(entries, `^alpha\..+$`) {
-		t.Errorf("expected regex match for '^alpha\\..+$'")
+	// matchAny only handles "name" fields (exact/glob). A regex-looking
+	// pattern is never interpreted as regex here — it must be tested via
+	// matchFolderPattern / matchesRegex instead.
+	if matchAny(entries, `^alpha\..+$`) {
+		t.Errorf("matchAny must not interpret regex patterns (regex lives in name_regex)")
+	}
+}
+
+// TestMatchFolderPattern_Regex verifies that regex-based folder constraints
+// (name_regex) are matched per-entry and combined with the name field.
+func TestMatchFolderPattern_Regex(t *testing.T) {
+	entries := map[string]bool{
+		"src":        true,
+		"src-backup": true,
+		"docs":       true,
+	}
+
+	if !matchFolderPattern(entries, structure.Folder{NameRegex: `^src[0-9]*$`}) {
+		t.Errorf("expected name_regex to match a src folder")
+	}
+
+	if !matchFolderPattern(entries, structure.Folder{Name: "*", NameRegex: `^docs$`}) {
+		t.Errorf("expected combined name + name_regex to match docs")
+	}
+
+	if matchFolderPattern(entries, structure.Folder{Name: "src", NameRegex: `^src$`}) == false {
+		t.Errorf("expected combined exact name + regex to match 'src'")
+	}
+
+	if matchFolderPattern(entries, structure.Folder{Name: "src", NameRegex: `^docs$`}) {
+		t.Errorf("expected combined name + regex with conflicting patterns NOT to match")
 	}
 }
 
@@ -287,12 +316,12 @@ func TestMatchFolderTemplate_RegexMatch(t *testing.T) {
 	}
 
 	template := structure.Folder{
-		Name: `^project-[0-9]+$`,
+		NameRegex: `^project-[0-9]+$`,
 		Files: structure.Files{
-			{Name: `^main\.py$`, Existence: "required"},
+			{NameRegex: `^main\.py$`, Existence: "required"},
 		},
 		Folders: []structure.Folder{
-			{Name: `^src$`},
+			{NameRegex: `^src$`},
 		},
 	}
 

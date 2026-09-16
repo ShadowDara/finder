@@ -127,13 +127,29 @@ Use:
 - `"*"` for any folder name
 - `"my-app"` for exact name
 - `"project-*"` for glob wildcard matching
-- `"^project-[0-9]+$"` for regex matching
 
 Important:
 
-- Matching is exact-first, then regex, then glob fallback (see
-  the "Pattern matching" section below).
+- Matching is exact-first, then glob fallback (see the "Pattern
+  matching" section below). Regular expressions are **not** interpreted
+  inside `name` — use the dedicated `name_regex` field instead.
 - If you want to match all folders, prefer `"*"`.
+
+### `name_regex` (string)
+
+Optional Go regular expression (RE2) matched against the directory
+name. It is a separate field, so `name` keeps its exact/glob behaviour.
+
+```json5
+"name_regex": "^project-[0-9]+$"
+```
+
+Rules:
+
+- both `name` and `name_regex` can be set; when both are set, **both**
+  must match
+- the regex must compile; an invalid regex never matches (fails closed)
+- since 0.3.18 — set `"min_version": "0.3.18"` when you use it
 
 ### `files` (array)
 
@@ -340,9 +356,9 @@ displayed in the web UI / template hub. Since 0.3.18.
 
 ---
 
-## 3.5) Pattern matching: regex, glob, and exact
+## 3.5) Pattern matching: exact and glob; regex via `name_regex`
 
-Every name pattern in a template — the top-level `name`, every file
+Every `name` pattern in a template — the top-level `name`, every file
 `name`, and every folder `name` (including nested folders) — is
 resolved by the same matching function:
 
@@ -350,37 +366,34 @@ resolved by the same matching function:
 if pattern == name {
     return true           // 1) exact string match
 }
-if ok, err := regexp.MatchString(pattern, name); err == nil {
-    return ok             // 2) full Go regex
-}
 ok, err := path.Match(pattern, name)
-return err == nil && ok   // 3) glob fallback
+return err == nil && ok   // 2) glob fallback
 ```
 
-This creates a 3-tier matching strategy:
+This creates a 2-tier matching strategy for `name`:
 
-| Priority | Method                          | Applies when                               |
-| -------- | ------------------------------- | ------------------------------------------ |
-| 1        | exact string equality           | pattern equals the name verbatim           |
-| 2        | Go regex (`regexp.MatchString`) | pattern is a valid regular expression      |
-| 3        | glob (`path.Match`)             | pattern is not a valid regex (e.g. `*.ts`) |
+| Priority | Method                | Applies when                     |
+| -------- | --------------------- | -------------------------------- |
+| 1        | exact string equality | pattern equals the name verbatim |
+| 2        | glob (`path.Match`)   | pattern contains `*`, `?` or `[` |
+
+Regular expressions are **not** interpreted inside `name` — they live
+in the separate **`name_regex`** field (available on top-level
+templates, files, and folders). When both `name` and `name_regex` are
+set, **both** must match.
 
 ### How to choose a pattern
 
-Because regex is attempted before glob, the same character can mean
-different things depending on the pattern:
+- `"*.go"` is a glob and matches any file ending in `.go`.
+- `"project-*"` is a glob.
+- `"^main\.py$"` in `name` matches the literal name `^main\.py$` —
+  put anchored regexes into `name_regex` instead.
 
-- `"*.go"` is not a valid regex, so it is treated as a glob and
-  matches any file ending in `.go`.
-- `"^main\.py$"` is a valid regex (anchored, no wildcard ambiguity),
-  so it matches exactly one name.
-- `"project-*"` is not a valid regex, so it is treated as a glob.
+### Go regex syntax (in `name_regex`)
 
-### Go regex syntax (priority 2)
-
-Patterns that compile as a Go regular expression match with full regex
-semantics against the entire entry name. Refer to Go's
-`regexp/syntax` (RE2) for the full language. Useful constructs:
+`name_regex` patterns match with full Go regex semantics (RE2)
+against the entire entry name. Refer to Go's `regexp/syntax` (RE2)
+for the full language. Useful constructs:
 
 - anchors: `^...$`
 - character classes: `[0-9]`, `[a-zA-Z]`, `[^...]`
@@ -394,24 +407,23 @@ Examples:
 
 ```json5
 // folder names like project-123, project-42 ...
-{ name: "^project-[0-9]+$" }
+{ name_regex: "^project-[0-9]+$" }
 ```
 
 ```json5
 // python entry files: main.py, app.py, ...
 {
-  name: "^(main|app|server)\\.py$",
+  name_regex: "^(main|app|server)\\.py$",
   existence: "required",
 }
 ```
 
 Note: Go regex is RE2 — no backreferences and no lookahead/lookbehind.
-If your pattern uses those, it fails to compile and falls back to glob.
+An invalid `name_regex` never matches (fails closed).
 
-### Glob syntax (priority 3 fallback)
+### Glob syntax (in `name`)
 
-When a pattern is not a valid regex, it is treated as a glob via Go's
-`path.Match`:
+`name` patterns are handled via Go's `path.Match`:
 
 - `*` matches any sequence of non-`/` characters
 - `?` matches any single non-`/` character
@@ -438,20 +450,21 @@ Examples:
 
 ### Where these patterns apply
 
-- top-level `name` → the scanned directory name
-- `files[].name` → file names inside the directory
-- `folders[].name` → subfolder names (recursively for nested folders)
+- top-level `name` / `name_regex` → the scanned directory name
+- `files[].name` / `files[].name_regex` → file names inside the directory
+- `folders[].name` / `folders[].name_regex` → subfolder names
+  (recursively for nested folders)
 
-Regex patterns work in all of these places. Exact glob patterns like
-`"src"` or `"package.json"` work exactly as before.
+Exact glob patterns like `"src"` or `"package.json"` work exactly as
+before.
 
 ### Compatibility note
 
-Regex support was added in finder 0.3.17. If your template relies on
-regex patterns, set:
+The separate `name_regex` field was added in finder 0.3.18. If your
+template relies on regex patterns, set:
 
 ```json5
-"min_version": "0.3.17"
+"min_version": "0.3.18"
 ```
 
 Templates for older finder versions should keep using glob or exact
@@ -527,8 +540,9 @@ Use patterns like `"*"`, `"src"`, `"*.ts"`, `"package.json"` rather
 than complex regex-style expressions when a simple glob suffices.
 
 When you do need regex (e.g. matching `project-123` with
-`^project-[0-9]+$`), anchor with `^` and `$` to avoid unintended
-matches.
+`^project-[0-9]+$`), keep it in the `name_regex` field, anchor with
+`^` and `$` to avoid unintended matches, and set
+`"min_version": "0.3.18"`.
 
 ---
 
@@ -634,21 +648,22 @@ exactly.
 ```json5
 {
   description: "Numbered project folder",
-  name: "^project-[0-9]+$",
+  name: "*",
+  name_regex: "^project-[0-9]+$",
   files: [
     {
-      name: "^(main|app)\\.py$",
+      name_regex: "^(main|app)\\.py$",
       existence: "required",
     },
   ],
   tags: ["python", "numbered"],
-  min_version: "0.3.17",
+  min_version: "0.3.18",
 }
 ```
 
 This matches folders like `project-123` or `project-42` and requires
-exactly one of `main.py` or `app.py` to be present. The name uses a
-Go regex (RE2) — note the escaped dots `\\.` and anchors `^...$`.
+exactly one of `main.py` or `app.py` to be present. The regex lives in
+`name_regex` — note the escaped dots `\\.` and anchors `^...$`.
 
 ### Example G: regex file pattern with glob fallback
 
@@ -659,22 +674,22 @@ Go regex (RE2) — note the escaped dots `\\.` and anchors `^...$`.
   files: [
     "package.json",
     {
-      name: "^(index|main|app)\\.(js|ts|jsx|tsx)$",
+      name_regex: "^(index|main|app)\\.(js|ts|jsx|tsx)$",
       existence: "required",
     },
     {
-      name: "\\.env$",
+      name_regex: "\\.env$",
       existence: "forbidden",
     },
   ],
   tags: ["javascript", "strict"],
-  min_version: "0.3.17",
+  min_version: "0.3.18",
 }
 ```
 
 This requires one of `index.js`, `main.js`, `app.js`, `index.ts`, etc.
 and forbids any file ending in `.env`. Note that `"*.env"` would also
-work as a glob — the regex version is more explicit.
+work as a glob in `name` — the `name_regex` version is more explicit.
 
 ---
 
@@ -753,22 +768,23 @@ Prefer the smallest signal that distinguishes the project type.
 
 ### Mistake 3: mixing regex and glob syntax unintentionally
 
-Finder tries regex first, then falls back to glob. This is usually
-fine, but remember that a pattern that looks like a regex is treated
-as a regex:
+`name` only supports exact and glob syntax; regex patterns belong in
+the separate `name_regex` field. Putting a regex into `name` makes it
+a literal/glob pattern that will not match what you expect:
 
-- `"*.ts"` is invalid regex → glob, matches any `.ts` file
-- `"^main\\.py$"` is valid regex → only matches exactly `main.py`
+- `"*.ts"` in `name` → glob, matches any `.ts` file
+- `"^main\\.py$"` in `name` → literal pattern, matches a folder that
+  is literally named `^main\.py$` — put it into `name_regex` instead
 
 Use:
 
-- `*.ts`
-- `package.json`
-- `src`
-- `^project-[0-9]+$` (regex, only when you need it)
+- `*.ts` (name)
+- `package.json` (name)
+- `src` (name)
+- `^project-[0-9]+$` (in `name_regex`, only when you need it)
 
-Do not write patterns that accidentally compile as a regex and change
-meaning. If in doubt, prefer glob or exact names.
+Do not write regex-looking patterns into `name` and expect them to be
+interpreted as regex. If in doubt, prefer glob or exact names.
 
 ### Mistake 4: forgetting a supported file extension
 

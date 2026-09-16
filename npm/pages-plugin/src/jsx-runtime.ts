@@ -1,6 +1,4 @@
-// for the lib
-
-// Custom JSX Runtime for the SSG Plugin
+// Custom JSX Runtime for the SSG Pages Plugin
 
 const HTML = Symbol("html");
 
@@ -163,7 +161,7 @@ export function raw(value: string): HtmlValue {
   return createHtml(value);
 }
 
-// Function is from the lib thats why it in jsx rumtime
+// Function is from the lib thats why it in jsx runtime
 export function loadStyles(styles: string[]) {
   if (import.meta.env.DEV) {
     console.log("[pages] loading styles:", styles);

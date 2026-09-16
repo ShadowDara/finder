@@ -1,4 +1,4 @@
-import { escapeHtml, jsx, raw, Fragment } from "../../src/jsx-runtime";
+import { escapeHtml, jsx, raw, Fragment } from "@twine/core/jsx-runtime";
 import "./index.css";
 
 const tools = [

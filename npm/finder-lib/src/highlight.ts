@@ -3,8 +3,8 @@
  *
  * Produces HTML with highlight.js-compatible scope classes (`hljs-*`) so the
  * imported `github-dark` theme keeps working, and additionally colorizes the
- * content of every `"name"` string value as a regex/glob pattern (tokens are
- * wrapped in `rx-*` classes).
+ * content of every `"name"` and `"name_regex"` string value as a regex/glob
+ * pattern (tokens are wrapped in `rx-*` classes).
  *
  * The input is expected to be valid JSON (templates are validated + minified
  * server-side). Non-JSON input falls back to plain, HTML-escaped text.
@@ -210,7 +210,9 @@ export function highlightFinderTemplate(code: string): string {
       const isKey = nextToken === "key";
       if (isKey) {
         out += `<span class="hljs-attr">&quot;${escapeHtml(content)}&quot;</span>`;
-        if (content === "name") pendingName = true;
+        if (content === "name" || content === "name_regex") {
+          pendingName = true;
+        }
       } else if (pendingName) {
         out += `<span class="hljs-string">&quot;${tokenizeRegex(content)}&quot;</span>`;
         pendingName = false;

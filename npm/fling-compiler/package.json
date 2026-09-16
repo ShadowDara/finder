@@ -1,6 +1,6 @@
 {
   "name": "js-to-fling",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Source-to-source compiler: transpiles a supported subset of TypeScript/JavaScript into the Fling scripting language.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

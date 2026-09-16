@@ -1,0 +1,11 @@
+{
+  "name": "*",
+  "name_regex": "^project-[0-9]+$",
+  "description": "test name_regex matching",
+  "files": [
+    {
+      "name_regex": "^main\\.py$",
+      "existence": "required"
+    }
+  ]
+}

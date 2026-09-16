@@ -42,3 +42,8 @@ npm/site/tsconfig.tsbuildinfo
 /npm/vite-plugin-minisite/dist
 /.github/temp-stuff-idk/farbtext/node_modules
 /cmd/findergen/frontend/monacoeditorwork
+*.vsix
+/npm/fling-vscode/node_modules
+/npm/site/data/fling
+/npm/pages-plugin/node_modules
+/npm/pages-plugin/dist

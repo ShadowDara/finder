@@ -43,60 +43,51 @@ func TestMatchFolderTemplateAndFind(t *testing.T) {
 }
 
 // TestMatchesPattern_ExactFastPath verifies that exact-name patterns with no
-// regex/glob metacharacters use the map-lookup fast path.
-//
-// Note: an exact name like "config.json" contains '.' which is a valid regex
-// metacharacter, so it always goes through the regex matcher (substring match,
-// e.g. "config.json" regex-matches "config.json.bak"). This is long-standing
-// Finder behaviour and is preserved unchanged.
-func TestMatchesPattern_ExactFastPath(t *testing.T) {
-	// Pattern without any metacharacter: exact-match fast path, never compiled.
-	if !matchesPattern("config", "config") {
+// glob metacharacters use the map-lookup fast path.
+func TestMatchesNamePattern_ExactFastPath(t *testing.T) {
+	// Pattern without any glob metacharacter: exact-match fast path.
+	if !matchesNamePattern("config", "config") {
 		t.Errorf(`exact name "config" should match itself`)
 	}
 	for _, name := range []string{"config2", "config.json", "conf"} {
-		if matchesPattern("config", name) {
+		if matchesNamePattern("config", name) {
 			t.Errorf(`exact pattern "config" should not match %q`, name)
 		}
-	}
-
-	// No metacharacters means the pattern is not cached as a compiled regex.
-	if _, ok := regexCache.Load("config"); ok {
-		t.Errorf(`plain exact name "config" should not be cached as a pattern`)
 	}
 }
 
 // TestMatchesPattern_StarWildcard verifies the "*" fast path always matches.
-func TestMatchesPattern_StarWildcard(t *testing.T) {
-	if !matchesPattern("*", "") {
+func TestMatchesNamePattern_StarWildcard(t *testing.T) {
+	if !matchesNamePattern("*", "") {
 		t.Errorf(`"*" should match empty name`)
 	}
-	if !matchesPattern("*", "anything-at-all") {
+	if !matchesNamePattern("*", "anything-at-all") {
 		t.Errorf(`"*" should match any name`)
 	}
 }
 
-// TestMatchesPattern_GlobFallback verifies glob-only patterns still work
-// through the glob fallback and get cached as non-regex.
-func TestMatchesPattern_GlobFallback(t *testing.T) {
-	// "*.ts" is not a valid regex, so it must fall back to glob matching.
-	if !matchesPattern("*.ts", "index.ts") {
+// TestMatchesPattern_GlobFallback verifies glob patterns still work
+// through path.Match.
+func TestMatchesNamePattern_GlobFallback(t *testing.T) {
+	if !matchesNamePattern("*.ts", "index.ts") {
 		t.Errorf(`"*.ts" should glob-match "index.ts"`)
 	}
-	if matchesPattern("*.ts", "index.js") {
+	if matchesNamePattern("*.ts", "index.js") {
 		t.Errorf(`"*.ts" should not glob-match "index.js"`)
 	}
 }
 
-// TestMatchesPattern_RegexCached verifies that regex patterns are cached so
-// later calls skip compilation. It also guards against regressions that would
-// recompile on every match.
-func TestMatchesPattern_RegexCached(t *testing.T) {
+// TestMatchesRegex_Basic verifies that name_regex patterns are compiled
+// and cached, and that they match correctly.
+func TestMatchesRegex_Basic(t *testing.T) {
 	resetRegexCache()
 
 	pattern := `^project-[0-9]+$`
-	if !matchesPattern(pattern, "project-123") {
+	if !matchesRegex(pattern, "project-123") {
 		t.Fatalf("expected regex pattern to match")
+	}
+	if matchesRegex(pattern, "project-abc") {
+		t.Fatalf("expected regex pattern not to match alpha names")
 	}
 
 	// The pattern must now be in the cache.
@@ -105,22 +96,30 @@ func TestMatchesPattern_RegexCached(t *testing.T) {
 	}
 }
 
+// TestMatchesRegex_InvalidRegex verifies that an invalid regex never matches.
+func TestMatchesRegex_InvalidRegex(t *testing.T) {
+	if matchesRegex("[invalid", "anything") {
+		t.Errorf("invalid regex should never match")
+	}
+}
+
 // TestPrecompilePatterns warms the cache for all patterns used by a template,
 // including nested folders, before any matching happens. Plain exact names and
-// glob-only patterns that are not valid regexes are skipped.
+// glob-only patterns are not cached as regex; "name_regex" fields are compiled.
 func TestPrecompilePatterns(t *testing.T) {
 	resetRegexCache()
 
 	tpl := structure.Folder{
-		Name: `^project-[0-9]+$`,
+		Name:      "*",
+		NameRegex: `^project-[0-9]+$`,
 		Files: structure.Files{
-			{Name: `^main\.py$`},
-			{Name: "package.json"},
+			{Name: "package.json", NameRegex: `^main\.py$`},
 		},
 		Folders: []structure.Folder{
 			{
-				Name:  `^src[0-9]$`,
-				Files: structure.Files{{Name: `^index\.(js|ts)$`}},
+				Name:      "*",
+				NameRegex: `^src[0-9]$`,
+				Files:     structure.Files{{NameRegex: `^index\.(js|ts)$`}},
 				Folders: []structure.Folder{
 					{Name: "components"},
 				},
@@ -130,6 +129,7 @@ func TestPrecompilePatterns(t *testing.T) {
 
 	precompilePatterns(tpl)
 
+	// "name_regex" fields and file "name_regex" must be cached as compiled regex.
 	for _, p := range []string{
 		`^project-[0-9]+$`,
 		`^main\.py$`,
@@ -141,16 +141,9 @@ func TestPrecompilePatterns(t *testing.T) {
 		}
 	}
 
-	// Plain exact names without metacharacters must NOT be compiled (they use
-	// the map-lookup fast path).
+	// Plain exact names without glob metacharacters must NOT be compiled.
 	if _, ok := regexCache.Load("components"); ok {
 		t.Errorf("exact name %q should not be cached as a pattern", "components")
-	}
-
-	// "package.json" contains '.', which IS a valid regex: it is precompiled
-	// and used as a substring regex, exactly as before the change.
-	if _, ok := regexCache.Load("package.json"); !ok {
-		t.Errorf("expected %q to be cached ('.' is a regex metacharacter)", "package.json")
 	}
 }
 

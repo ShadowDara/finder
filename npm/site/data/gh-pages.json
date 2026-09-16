@@ -1,41 +1,47 @@
 {
-  "generatedAt": "2026-09-15T13:39:17.197Z",
+  "generatedAt": "2026-09-15T15:50:37.920Z",
   "total": {
-    "files": 168,
-    "bytes": 33485977,
-    "kilobytes": 32701.15,
-    "megabytes": 31.93
+    "files": 169,
+    "bytes": 34086939,
+    "kilobytes": 33288.03,
+    "megabytes": 32.51
   },
   "byExtension": [
     {
       "extension": ".js",
       "files": 124,
-      "bytes": 33103682,
-      "percentage": 98.86
+      "bytes": 33244546,
+      "percentage": 97.53
+    },
+    {
+      "extension": ".wasm",
+      "files": 1,
+      "bytes": 468274,
+      "percentage": 1.37
     },
     {
       "extension": ".css",
       "files": 16,
-      "bytes": 221922,
-      "percentage": 0.66
+      "bytes": 222081,
+      "percentage": 0.65
     },
     {
       "extension": ".ttf",
       "files": 1,
       "bytes": 140956,
-      "percentage": 0.42
-    },
-    {
-      "extension": ".txt",
-      "files": 1,
-      "bytes": 9825,
-      "percentage": 0.03
+      "percentage": 0.41
     },
     {
       "extension": ".html",
       "files": 26,
       "bytes": 9592,
       "percentage": 0.03
+    },
+    {
+      "extension": ".txt",
+      "files": 1,
+      "bytes": 1490,
+      "percentage": 0
     }
   ],
   "files": [
@@ -52,7 +58,7 @@
     {
       "path": "assets/monaco.js",
       "extension": ".js",
-      "bytes": 4799285
+      "bytes": 4940091
     },
     {
       "path": "finder/monacoeditorwork/css.worker.bundle.js",
@@ -83,6 +89,11 @@
       "path": "finder/monacoeditorwork/editor.worker.bundle.js",
       "extension": ".js",
       "bytes": 637641
+    },
+    {
+      "path": "assets/onigasm.wasm",
+      "extension": ".wasm",
+      "bytes": 468274
     },
     {
       "path": "assets/json.worker-GcqnjdSx.js",
@@ -200,11 +211,6 @@
       "bytes": 10119
     },
     {
-      "path": "dependencies.txt",
-      "extension": ".txt",
-      "bytes": 9825
-    },
-    {
       "path": "assets/clojure.js",
       "extension": ".js",
       "bytes": 9505
@@ -227,7 +233,7 @@
     {
       "path": "assets/main_entry.js",
       "extension": ".js",
-      "bytes": 8621
+      "bytes": 8679
     },
     {
       "path": "assets/ruby.js",
@@ -490,6 +496,11 @@
       "bytes": 3247
     },
     {
+      "path": "assets/main.css",
+      "extension": ".css",
+      "bytes": 3206
+    },
+    {
       "path": "assets/powershell.js",
       "extension": ".js",
       "bytes": 3131
@@ -503,11 +514,6 @@
       "path": "assets/qsharp.js",
       "extension": ".js",
       "bytes": 3051
-    },
-    {
-      "path": "assets/main.css",
-      "extension": ".css",
-      "bytes": 3047
     },
     {
       "path": "assets/cssMode.js",
@@ -663,6 +669,11 @@
       "path": "assets/pla.js",
       "extension": ".js",
       "bytes": 1545
+    },
+    {
+      "path": "dependencies.txt",
+      "extension": ".txt",
+      "bytes": 1490
     },
     {
       "path": "assets/markdowneditor.js",

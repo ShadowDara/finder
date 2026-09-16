@@ -1,41 +1,53 @@
 {
-  "generatedAt": "2026-09-15T13:38:12.254Z",
+  "generatedAt": "2026-09-16T10:57:21.601Z",
   "total": {
-    "files": 168,
-    "bytes": 33420065,
-    "kilobytes": 32636.78,
-    "megabytes": 31.87
+    "files": 175,
+    "bytes": 34927717,
+    "kilobytes": 34109.1,
+    "megabytes": 33.31
   },
   "byExtension": [
     {
       "extension": ".js",
-      "files": 124,
-      "bytes": 33037989,
-      "percentage": 98.86
+      "files": 126,
+      "bytes": 34070326,
+      "percentage": 97.55
+    },
+    {
+      "extension": ".wasm",
+      "files": 1,
+      "bytes": 468274,
+      "percentage": 1.34
     },
     {
       "extension": ".css",
-      "files": 16,
-      "bytes": 221909,
+      "files": 17,
+      "bytes": 230930,
       "percentage": 0.66
     },
     {
       "extension": ".ttf",
       "files": 1,
       "bytes": 140956,
-      "percentage": 0.42
+      "percentage": 0.4
+    },
+    {
+      "extension": ".html",
+      "files": 28,
+      "bytes": 10219,
+      "percentage": 0.03
+    },
+    {
+      "extension": ".svg",
+      "files": 1,
+      "bytes": 5213,
+      "percentage": 0.01
     },
     {
       "extension": ".txt",
       "files": 1,
-      "bytes": 9825,
-      "percentage": 0.03
-    },
-    {
-      "extension": ".html",
-      "files": 26,
-      "bytes": 9386,
-      "percentage": 0.03
+      "bytes": 1799,
+      "percentage": 0.01
     }
   ],
   "files": [
@@ -52,7 +64,7 @@
     {
       "path": "assets/monaco.js",
       "extension": ".js",
-      "bytes": 4800694
+      "bytes": 4941518
     },
     {
       "path": "monacoeditorwork/css.worker.bundle.js",
@@ -85,9 +97,24 @@
       "bytes": 637641
     },
     {
+      "path": "assets/modelviewer.js",
+      "extension": ".js",
+      "bytes": 546413
+    },
+    {
+      "path": "assets/onigasm.wasm",
+      "extension": ".wasm",
+      "bytes": 468274
+    },
+    {
       "path": "assets/json.worker-GcqnjdSx.js",
       "extension": ".js",
       "bytes": 405141
+    },
+    {
+      "path": "assets/console.js",
+      "extension": ".js",
+      "bytes": 338160
     },
     {
       "path": "assets/monaco.css",
@@ -105,19 +132,19 @@
       "bytes": 79109
     },
     {
+      "path": "assets/_virtual_page-data_index.js",
+      "extension": ".js",
+      "bytes": 33588
+    },
+    {
       "path": "assets/installscript.js",
       "extension": ".js",
-      "bytes": 32265
+      "bytes": 32268
     },
     {
       "path": "assets/_virtual_page-markdown_changelog.js",
       "extension": ".js",
-      "bytes": 30822
-    },
-    {
-      "path": "assets/_virtual_page-data_index.js",
-      "extension": ".js",
-      "bytes": 29099
+      "bytes": 31063
     },
     {
       "path": "assets/lspLanguageFeatures.js",
@@ -127,7 +154,7 @@
     {
       "path": "assets/_virtual_page-markdown_readme.js",
       "extension": ".js",
-      "bytes": 24851
+      "bytes": 25738
     },
     {
       "path": "assets/tsMode.js",
@@ -140,14 +167,14 @@
       "bytes": 18459
     },
     {
+      "path": "assets/creator.js",
+      "extension": ".js",
+      "bytes": 17157
+    },
+    {
       "path": "assets/powerquery.js",
       "extension": ".js",
       "bytes": 16801
-    },
-    {
-      "path": "assets/creator.js",
-      "extension": ".js",
-      "bytes": 16327
     },
     {
       "path": "assets/freemarker2.js",
@@ -195,14 +222,14 @@
       "bytes": 10119
     },
     {
-      "path": "dependencies.txt",
-      "extension": ".txt",
-      "bytes": 9825
-    },
-    {
       "path": "assets/clojure.js",
       "extension": ".js",
       "bytes": 9505
+    },
+    {
+      "path": "assets/main_entry.js",
+      "extension": ".js",
+      "bytes": 9426
     },
     {
       "path": "assets/viewer.css",
@@ -215,14 +242,14 @@
       "bytes": 9239
     },
     {
-      "path": "assets/main_entry.js",
-      "extension": ".js",
-      "bytes": 9030
-    },
-    {
       "path": "assets/protobuf.js",
       "extension": ".js",
       "bytes": 8908
+    },
+    {
+      "path": "assets/console.css",
+      "extension": ".css",
+      "bytes": 8677
     },
     {
       "path": "assets/ruby.js",
@@ -318,6 +345,11 @@
       "path": "assets/creator.css",
       "extension": ".css",
       "bytes": 5365
+    },
+    {
+      "path": "favicon.svg",
+      "extension": ".svg",
+      "bytes": 5213
     },
     {
       "path": "assets/ecl.js",
@@ -470,6 +502,11 @@
       "bytes": 3418
     },
     {
+      "path": "assets/main.css",
+      "extension": ".css",
+      "bytes": 3391
+    },
+    {
       "path": "assets/kotlin.js",
       "extension": ".js",
       "bytes": 3262
@@ -508,11 +545,6 @@
       "path": "assets/qsharp.js",
       "extension": ".js",
       "bytes": 3051
-    },
-    {
-      "path": "assets/main.css",
-      "extension": ".css",
-      "bytes": 3047
     },
     {
       "path": "assets/r.js",
@@ -625,6 +657,11 @@
       "bytes": 1862
     },
     {
+      "path": "dependencies.txt",
+      "extension": ".txt",
+      "bytes": 1799
+    },
+    {
       "path": "assets/index.css",
       "extension": ".css",
       "bytes": 1742
@@ -675,14 +712,14 @@
       "bytes": 1281
     },
     {
+      "path": "assets/index2.js",
+      "extension": ".js",
+      "bytes": 1240
+    },
+    {
       "path": "assets/workers.js",
       "extension": ".js",
       "bytes": 1215
-    },
-    {
-      "path": "assets/index2.js",
-      "extension": ".js",
-      "bytes": 1146
     },
     {
       "path": "assets/worlds.js",
@@ -765,6 +802,11 @@
       "bytes": 399
     },
     {
+      "path": "console/index.html",
+      "extension": ".html",
+      "bytes": 397
+    },
+    {
       "path": "creator/index.html",
       "extension": ".html",
       "bytes": 397
@@ -773,6 +815,11 @@
       "path": "samfile/index.html",
       "extension": ".html",
       "bytes": 397
+    },
+    {
+      "path": "index.html",
+      "extension": ".html",
+      "bytes": 396
     },
     {
       "path": "monaco/index.html",
@@ -793,6 +840,11 @@
       "path": "tools/picture-mode-maker/page/index.html",
       "extension": ".html",
       "bytes": 379
+    },
+    {
+      "path": "tools/minecraft/modelviewer/index.html",
+      "extension": ".html",
+      "bytes": 377
     },
     {
       "path": "tools/line_formatter/page/index.html",
@@ -843,11 +895,6 @@
       "path": "readme/index.html",
       "extension": ".html",
       "bytes": 344
-    },
-    {
-      "path": "index.html",
-      "extension": ".html",
-      "bytes": 337
     },
     {
       "path": "assets/mcappheader.js",

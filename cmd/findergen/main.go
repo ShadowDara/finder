@@ -94,6 +94,21 @@ func writeTemplateJSON(w http.ResponseWriter, name string, source string, raw []
 }
 
 func main() {
+	// app := &App{lastActivity: time.Now()}
+
+	// Inaktivitätsüberwachung
+	// go app.monitorIdle()
+
+	// if len(os.Args) > 1 {
+	// 	core.ParseArgs(os.Args[1:], &app.serverRunning)
+	// 	return
+	// } else {
+	// 	log.Printf("Starting MC APP server... Version=%s Buildtime=%s\n", Version, Buildtime)
+	// }
+
+	// Logging etc. wie gehabt …
+	// app.consoleLoop()
+
 	argconf := parseCliArgs()
 
 	log.SetFlags(log.LstdFlags | log.Lmicroseconds)
@@ -663,6 +678,9 @@ func main() {
 
 		json.NewEncoder(w).Encode(worlds)
 	})
+
+	// Console (web terminal) routes
+	registerConsoleRoutes(mux)
 
 	webcachePath := filepath.Join(path, "webcache")
 

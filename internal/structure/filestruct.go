@@ -19,6 +19,7 @@ import (
 // a name pattern plus optional existence, size, and hash constraints.
 type File struct {
 	Name      string   `json:"name"`
+	NameRegex string   `json:"name_regex,omitempty"`
 	Existence string   `json:"existence,omitempty"`
 	DataSize  Size     `json:"size,omitempty"`
 	Checksums Checksum `json:"checksums,omitempty"`

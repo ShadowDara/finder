@@ -7,7 +7,10 @@ _The whole finder CHANGELOG_
 - added Author field to finder templates
 - added a subcommand to validate templates
 - install templates from the web
-- optimizing finder search
+- optimizing finder search- fix min in template creator
+- finder templates now support the extensions [`.json`, `.jsonc`, `json5`]
+- fix min in template creator
+- regexes are not supported in name, only in regex name
 
 ## 0.3.17 - 13.09.2026
 
