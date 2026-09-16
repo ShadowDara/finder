@@ -25,6 +25,16 @@ export const auth = betterAuth({
     provider: "postgresql",
   }),
 
+  user: {
+    additionalFields: {
+      username: {
+        type: "string",
+        required: true,
+        input: false, // server-derived via databaseHooks.user.create.before
+      },
+    },
+  },
+
   baseURL,
 
   trustedOrigins: async (request) => {
