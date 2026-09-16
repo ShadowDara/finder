@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-16T12:21:44.533Z",
+  "generatedAt": "2026-09-16T12:26:46.268Z",
   "total": {
-    "files": 178,
-    "bytes": 35427373,
-    "kilobytes": 34597.04,
+    "files": 179,
+    "bytes": 35435654,
+    "kilobytes": 34605.13,
     "megabytes": 33.79
   },
   "byExtension": [
@@ -11,7 +11,7 @@
       "extension": ".js",
       "files": 127,
       "bytes": 34432966,
-      "percentage": 97.19
+      "percentage": 97.17
     },
     {
       "extension": ".wasm",
@@ -33,9 +33,9 @@
     },
     {
       "extension": ".html",
-      "files": 29,
-      "bytes": 10628,
-      "percentage": 0.03
+      "files": 30,
+      "bytes": 18909,
+      "percentage": 0.05
     },
     {
       "extension": ".svg",
@@ -275,6 +275,11 @@
       "path": "assets/razor.js",
       "extension": ".js",
       "bytes": 8310
+    },
+    {
+      "path": "test/gitviewer/index.html",
+      "extension": ".html",
+      "bytes": 8281
     },
     {
       "path": "assets/perl.js",
