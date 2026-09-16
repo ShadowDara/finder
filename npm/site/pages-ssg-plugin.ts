@@ -104,6 +104,24 @@ export interface PagesPluginOptions {
   title?: (id: string) => string;
 
   /**
+   * Extra HTML to inject into the `<head>` of every emitted page — e.g.
+   * favicon links, `<meta name="description">`, Open Graph tags, …
+   *
+   * Can be:
+   *
+   * - a static string applied to every page
+   * - a record mapping page id → head HTML (missing ids get nothing)
+   * - a function receiving the page id → head HTML
+   *
+   * The result is inserted as-is (raw HTML) into the page shell right
+   * after the style tags, both in the default template and in custom
+   * `template` implementations via `ctx.head`.
+   *
+   * @default ""
+   */
+  head?: string | Record<string, string> | ((id: string) => string);
+
+  /**
    * Wrap/replace the emitted HTML shell entirely. Receives the computed
    * script/style tags and page metadata; must return a full HTML document.
    * Falls back to a minimal built-in template.
@@ -212,6 +230,13 @@ export interface PageRenderContext {
   styleTag: string;
 
   /**
+   * Extra `<head>` HTML (favicon, meta description, …) computed from the
+   * plugin's `head` option for the current page. Insert it into the
+   * `<head>` of a custom `template`.
+   */
+  head: string;
+
+  /**
    * Pre-rendered body content (e.g. Liquid pages). When set, the template
    * renders it as-is instead of bootstrapping the client app.
    */
@@ -277,6 +302,19 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
   const shouldIgnore =
     options.ignore ?? ((id: string) => id.split("/").pop()!.startsWith("_"));
   const getTitle = options.title ?? ((id: string) => id);
+  const getHead = (id: string): string => {
+    const head = options.head;
+
+    if (typeof head === "function") {
+      return head(id);
+    }
+
+    if (head && typeof head === "object") {
+      return head[id] ?? "";
+    }
+
+    return head ?? "";
+  };
   const writeDts = options.dts ?? true;
   const liquidTemplateRoot = options.liquidTemplateRoot ?? "src/templates";
 
@@ -892,6 +930,7 @@ declare module "virtual:pages" {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${escapeHtml(ctx.title)}</title>
   ${ctx.styleTag}
+  ${ctx.head}
 </head>
 <body>
 ${ctx.content}
@@ -907,6 +946,7 @@ ${ctx.content}
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${escapeHtml(ctx.title)}</title>
   ${ctx.styleTag}
+  ${ctx.head}
 </head>
 <body>
   <div id="app"></div>
@@ -1164,6 +1204,7 @@ ${ctx.content}
             globalVar,
             scriptTag: `<script type="module" src="${entry}"></script>`,
             styleTag: "",
+            head: getHead(page.id),
           };
 
           const html = (options.template ?? defaultTemplate)(ctx);
@@ -1192,6 +1233,7 @@ ${ctx.content}
           globalVar,
           scriptTag: `<script type="module" src="${entry}"></script>`,
           styleTag: "",
+          head: getHead("__404__"),
         };
 
         const html = (options.template ?? defaultTemplate)(ctx);
@@ -1460,6 +1502,7 @@ ${ctx.content}
           globalVar,
           scriptTag,
           styleTag,
+          head: getHead(page.id),
         };
 
         let html = (options.template ?? defaultTemplate)(ctx);
