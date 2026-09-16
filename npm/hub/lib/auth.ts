@@ -29,8 +29,8 @@ export const auth = betterAuth({
     additionalFields: {
       username: {
         type: "string",
-        required: true,
-        input: false, // server-derived via databaseHooks.user.create.before
+        required: false, // server-derived via databaseHooks.user.create.before
+        input: false, // not accepted from client; the DB column enforces NOT NULL
       },
     },
   },
