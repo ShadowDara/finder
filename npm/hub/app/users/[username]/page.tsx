@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/db";
 import { notFound } from "next/navigation";
-import { UserClient } from "../[id]/user-client";
+import { UserClient } from "../id/[id]/user-client";
 
 export default async function UserPage({
   params,
