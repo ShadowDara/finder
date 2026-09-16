@@ -39,10 +39,24 @@ Größen werden nach dem Laden der Commit-Liste einzeln pro Commit im
 Hintergrund nachgeladen (Endpoint `/api/size`), damit die Commit-Liste bei
 großen Repos sofort erscheint.
 
+Es gibt zwei unterschiedliche Größen-Spalten:
+
+- **Größe des Repos zu diesem Commit** – kumulierte Gesamtgröße aller Dateien
+  im Baum zu diesem Zeitpunkt (`git ls-tree -r -l`). Wächst über die Historie
+  hinweg fast immer an, weil sie den kompletten Stand zeigt, nicht die Änderung.
+- **Änderung durch diesen Commit** – wie viele Bytes durch genau diesen Commit
+  hinzugekommen bzw. entfernt wurden (`git diff-tree --raw` gegen den
+  Elternteil, bzw. gegen den leeren Baum beim allerersten Commit). Das ist die
+  Antwort auf "wie groß ist dieser Commit selbst".
+
+  Bei Merge-Commits wird bewusst nur gegen den ersten Elternteil verglichen
+  (wie bei `git log --first-parent`), damit das Ergebnis eindeutig bleibt.
+
 ## API
 
 - `GET /api/commits?repo=<Pfad>` → Liste der Commits (Hash, Autor, Datum, Message)
-- `GET /api/size?repo=<Pfad>&commit=<Hash>` → `{ size, sizeHuman, fileCount }`
+- `GET /api/size?repo=<Pfad>&commit=<Hash>` → `{ size, sizeHuman, fileCount }` (kumulierte Gesamtgröße)
+- `GET /api/diffsize?repo=<Pfad>&commit=<Hash>` → `{ added, removed, delta, addedHuman, removedHuman, deltaHuman, filesChanged, isRoot }` (Änderung durch diesen Commit)
 
 ## Projektstruktur
 

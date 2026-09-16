@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-16T11:58:31.021Z",
+  "generatedAt": "2026-09-16T12:21:44.533Z",
   "total": {
     "files": 178,
-    "bytes": 35426696,
-    "kilobytes": 34596.38,
+    "bytes": 35427373,
+    "kilobytes": 34597.04,
     "megabytes": 33.79
   },
   "byExtension": [
@@ -22,7 +22,7 @@
     {
       "extension": ".css",
       "files": 18,
-      "bytes": 366805,
+      "bytes": 367482,
       "percentage": 1.04
     },
     {
@@ -432,6 +432,11 @@
       "bytes": 4112
     },
     {
+      "path": "assets/main.css",
+      "extension": ".css",
+      "bytes": 4068
+    },
+    {
       "path": "assets/rust.js",
       "extension": ".js",
       "bytes": 4022
@@ -510,11 +515,6 @@
       "path": "assets/redis.js",
       "extension": ".js",
       "bytes": 3418
-    },
-    {
-      "path": "assets/main.css",
-      "extension": ".css",
-      "bytes": 3391
     },
     {
       "path": "assets/samfile.js",
