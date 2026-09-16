@@ -1,12 +1,16 @@
-/** @type {import('next').NextConfig} */
+const isVercel = process.env.VERCEL === "1";
+
 const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+
   images: {
     unoptimized: true,
   },
-  output: "standalone",
+
+  ...(isVercel ? {} : { output: "standalone" }),
+
   async rewrites() {
     return [
       { source: "/t/:id.json5", destination: "/t/:id" },
