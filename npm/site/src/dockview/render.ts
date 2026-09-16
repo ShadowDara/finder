@@ -16,13 +16,13 @@ export default function renderDockview(el: HTMLDivElement) {
     createComponent(options: CreateComponentOptions): IContentRenderer {
       switch (options.name) {
         case "explorer":
-          return new ExplorerPanel(options);
+          return new ExplorerPanel();
 
         case "editor":
-          return new EditorPanel(options);
+          return new EditorPanel();
 
         case "terminal":
-          return new TerminalPanel(options);
+          return new TerminalPanel();
 
         case "welcome":
           return new WelcomePanel();
@@ -33,23 +33,57 @@ export default function renderDockview(el: HTMLDivElement) {
     },
   });
 
+  /*
+   * ==========================
+   * Editor
+   * ==========================
+   */
+
   const editor = api.addPanel({
     id: "editor",
     component: "editor",
     title: "main.ts",
   });
 
-  const explorer = api.addPanel({
-    id: "explorer",
-    component: "explorer",
-    title: "Explorer",
-  });
+  /*
+   * ==========================
+   * Terminal
+   * ==========================
+   */
 
-  const terminal = api.addPanel({
+  api.addPanel({
     id: "terminal",
     component: "terminal",
     title: "Terminal",
+
+    position: {
+      referencePanel: editor,
+      direction: "below",
+    },
   });
+
+  /*
+   * ==========================
+   * Explorer
+   * ==========================
+   */
+
+  api.addPanel({
+    id: "explorer",
+    component: "explorer",
+    title: "Explorer",
+
+    position: {
+      referencePanel: editor,
+      direction: "left",
+    },
+  });
+
+  /*
+   * ==========================
+   * Welcome
+   * ==========================
+   */
 
   const welcome = api.addPanel({
     id: "welcome",
@@ -57,27 +91,11 @@ export default function renderDockview(el: HTMLDivElement) {
     title: "Welcome",
   });
 
-  // Editor als Hauptbereich
-  editor.api.setActive();
-
-  // Terminal unter den Editor
-  terminal.api.moveTo({
-    position: {
-      direction: "below",
-      referencePanel: editor,
-    },
-  });
-
-  // Explorer links vom Editor
-  explorer.api.moveTo({
-    position: {
-      direction: "left",
-      referencePanel: editor,
-    },
-  });
-
-  // Welcome zunächst schließen
+  // Nicht sichtbar lassen
   welcome.api.close();
+
+  // Editor aktivieren
+  editor.api.setActive();
 
   return api;
 }

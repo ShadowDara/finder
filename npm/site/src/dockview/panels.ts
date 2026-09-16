@@ -1,4 +1,4 @@
-import type { CreateComponentOptions, IContentRenderer } from "dockview";
+import type { IContentRenderer } from "dockview";
 
 function createElement(html: string): HTMLDivElement {
   const element = document.createElement("div");
@@ -9,7 +9,7 @@ function createElement(html: string): HTMLDivElement {
 export class ExplorerPanel implements IContentRenderer {
   element: HTMLElement;
 
-  constructor(private readonly options: CreateComponentOptions) {
+  constructor() {
     this.element = createElement(`
       <div class="explorer">
         <div class="explorer__section">
@@ -84,7 +84,7 @@ export class ExplorerPanel implements IContentRenderer {
 export class EditorPanel implements IContentRenderer {
   element: HTMLElement;
 
-  constructor(private readonly options: CreateComponentOptions) {
+  constructor() {
     this.element = createElement(`
       <div class="editor">
         <div class="editor__breadcrumbs">
@@ -155,7 +155,7 @@ export class EditorPanel implements IContentRenderer {
 export class TerminalPanel implements IContentRenderer {
   element: HTMLElement;
 
-  constructor(private readonly options: CreateComponentOptions) {
+  constructor() {
     this.element = createElement(`
       <div class="terminal">
         <div class="terminal__line">
