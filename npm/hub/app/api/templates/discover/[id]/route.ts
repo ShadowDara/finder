@@ -16,11 +16,12 @@ export async function GET(request: Request, context: Context) {
     select: {
       id: true,
       name: true,
+      slug: true,
       content: true,
       createdAt: true,
       updatedAt: true,
       tags: true,
-      user: { select: { id: true, name: true, email: true } },
+      user: { select: { id: true, name: true, username: true, email: true } },
     },
   })
 
@@ -28,8 +29,8 @@ export async function GET(request: Request, context: Context) {
   return NextResponse.json({
     template: {
       ...template,
-      url: templateDownloadUrl(origin, template.id),
-      install: templateInstallCommand(origin, template.id),
+      url: templateDownloadUrl(origin, template),
+      install: templateInstallCommand(origin, template),
     },
   })
 }

@@ -20,19 +20,20 @@ export async function GET(request: Request) {
     select: {
       id: true,
       name: true,
+      slug: true,
       createdAt: true,
       updatedAt: true,
       tags: true,
-      user: { select: { id: true, name: true, email: true } },
+      user: { select: { id: true, name: true, username: true, email: true } },
     },
     orderBy: { updatedAt: 'desc' },
   })
 
   return NextResponse.json({
-    templates: templates.map((template: { id: string, name: string, createdAt: string, updatedAt: string, tags: string[], user: { id: string, name: string } }) => ({
+    templates: templates.map((template) => ({
       ...template,
-      url: templateDownloadUrl(origin, template.id),
-      install: templateInstallCommand(origin, template.id),
+      url: templateDownloadUrl(origin, template),
+      install: templateInstallCommand(origin, template),
     })),
   })
 }

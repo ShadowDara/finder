@@ -31,7 +31,7 @@ const EDITOR_OPTIONS = {
   minimap: { enabled: false },
   fontSize: 15,
   tabSize: 2,
-  wordWrap: "on",
+  wordWrap: "on" as const,
   scrollBeyondLastLine: false,
   automaticLayout: true,
 };
@@ -39,6 +39,7 @@ const EDITOR_OPTIONS = {
 type Template = {
   id: string;
   name: string;
+  slug?: string;
   content: string;
   tags?: string[];
   updatedAt: string;
@@ -46,10 +47,12 @@ type Template = {
 
 export function DashboardClient({
   userId,
+  username,
   userEmail,
   initialTemplates,
 }: {
   userId: string;
+  username?: string;
   userEmail: string;
   initialTemplates: Template[];
 }) {
@@ -207,7 +210,7 @@ export function DashboardClient({
         <div>
           <h1>
             Dashboard - <Link href="/">Discover</Link> -{" "}
-            <Link href={`/users/${userId}`}>User Page</Link>
+            <Link href={`/users/${username ?? userId}`}>User Page</Link>
           </h1>
           <p>Angemeldet als {userEmail}</p>
         </div>
@@ -333,7 +336,19 @@ export function DashboardClient({
                   </span>
                 </div>
 
-                <TemplateView template={template} showclose={false} />
+                <TemplateView
+                  template={
+                    template
+                      ? {
+                          ...template,
+                          username,
+                          slug: template.slug ?? template.id,
+                        }
+                      : null
+                  }
+                  onClose={() => {}}
+                  showclose={false}
+                />
               </li>
             ))}
           </ul>

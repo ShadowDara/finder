@@ -8,9 +8,10 @@ import { TemplateView } from "@/components/template-view";
 type T = {
   id: string;
   name: string;
+  slug?: string;
   updatedAt: string;
   tags: string[];
-  user: { id: string; name: string; email: string };
+  user: { id: string; name: string; username?: string; email: string };
 };
 
 export default function DiscoverClient() {
@@ -121,8 +122,11 @@ export default function DiscoverClient() {
               <h3>{t.name}</h3>
               <p className="muted">
                 von{" "}
-                <Link href={`/users/${t.user.id}`} className="inline-link">
-                  {t.user.name || t.user.email}
+                <Link
+                  href={`/users/${t.user.username ?? t.user.id}`}
+                  className="inline-link"
+                >
+                  {t.user.username ?? t.user.name ?? t.user.email}
                 </Link>
               </p>
               <div className="tag-row">
@@ -139,7 +143,10 @@ export default function DiscoverClient() {
                 >
                   Template ansehen
                 </button>
-                <a className="button button-outline" href={`/t/${t.id}.json5`}>
+                <a
+                  className="button button-outline"
+                  href={`/t/${t.user.username ?? t.user.id}/${t.slug ?? t.id}.json5`}
+                >
                   Download
                 </a>
               </div>
@@ -148,7 +155,15 @@ export default function DiscoverClient() {
         </div>
       </section>
       <TemplateView
-        template={selected}
+        template={
+          selected
+            ? {
+                ...selected,
+                username: selected.user.username,
+                slug: selected.slug ?? selected.id,
+              }
+            : null
+        }
         onClose={() => setSelected(null)}
         showclose={true}
       />

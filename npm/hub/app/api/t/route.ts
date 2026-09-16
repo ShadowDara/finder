@@ -29,10 +29,11 @@ export async function GET(request: Request) {
     select: {
       id: true,
       name: true,
+      slug: true,
       createdAt: true,
       updatedAt: true,
       tags: true,
-      user: { select: { id: true, name: true } },
+      user: { select: { id: true, name: true, username: true } },
     },
     orderBy: { updatedAt: "desc" },
   });
@@ -40,8 +41,8 @@ export async function GET(request: Request) {
   return NextResponse.json({
     templates: templates.map((template) => ({
       ...template,
-      url: templateDownloadUrl(origin, template.id),
-      install: templateInstallCommand(origin, template.id),
+      url: templateDownloadUrl(origin, template),
+      install: templateInstallCommand(origin, template),
     })),
   });
 }

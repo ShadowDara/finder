@@ -4,12 +4,28 @@ export function hubOrigin(request: Request): string {
   return new URL(request.url).origin.replace(/\/$/, "");
 }
 
-export function templateDownloadUrl(origin: string, id: string): string {
-  return `${origin.replace(/\/$/, "")}/t/${id}.json5`;
+/**
+ * Bau der Download-URL im GitHub-Repo-Stil:
+ * /t/{username}/{slug}.json5
+ *
+ * Fallback auf die alte ID-URL, falls kein Username bekannt ist.
+ */
+export function templateDownloadUrl(
+  origin: string,
+  ref: { id: string; username?: string | null; slug?: string | null },
+): string {
+  const base = origin.replace(/\/$/, "");
+  if (ref.username && ref.slug) {
+    return `${base}/t/${encodeURIComponent(ref.username)}/${encodeURIComponent(ref.slug)}.json5`;
+  }
+  return `${base}/t/${ref.id}.json5`;
 }
 
-export function templateInstallCommand(origin: string, id: string): string {
-  return `finder install ${templateDownloadUrl(origin, id)}`;
+export function templateInstallCommand(
+  origin: string,
+  ref: { id: string; username?: string | null; slug?: string | null },
+): string {
+  return `finder install ${templateDownloadUrl(origin, ref)}`;
 }
 
 export function templateDownloadFileName(name: string, id: string): string {

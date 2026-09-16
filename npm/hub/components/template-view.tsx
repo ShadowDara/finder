@@ -6,15 +6,30 @@ import { parseMarkdown } from "@shadowdara/dlib";
 import { useState } from "react";
 
 type TemplateViewProps = {
-  template: { id: string; name: string; content: string } | null;
+  template: {
+    id: string;
+    name: string;
+    content: string;
+    slug?: string;
+    username?: string;
+  } | null;
   onClose: () => void;
   showclose: boolean | null;
 };
 
-function installCommand(id: string): string {
+function installCommand(t: {
+  id: string;
+  slug?: string;
+  username?: string;
+}): string {
   const origin =
-    typeof window === "undefined" ? "" : window.location.origin.replace(/\/$/, "");
-  return `finder install ${origin}/t/${id}.json5`;
+    typeof window === "undefined"
+      ? ""
+      : window.location.origin.replace(/\/$/, "");
+  if (t.username && t.slug) {
+    return `finder install ${origin}/t/${encodeURIComponent(t.username)}/${encodeURIComponent(t.slug)}.json5`;
+  }
+  return `finder install ${origin}/t/${t.id}.json5`;
 }
 
 export function TemplateView(props: TemplateViewProps) {
@@ -22,7 +37,7 @@ export function TemplateView(props: TemplateViewProps) {
   if (!props.template) return null;
 
   const mdnote: string | undefined = JSON.parse(props.template.content)?.mdnote;
-  const command = installCommand(props.template.id);
+  const command = installCommand(props.template);
 
   async function copyInstall() {
     try {
@@ -48,7 +63,11 @@ export function TemplateView(props: TemplateViewProps) {
 
         <div className="install-row">
           <code>{command}</code>
-          <button type="button" className="button button-outline" onClick={copyInstall}>
+          <button
+            type="button"
+            className="button button-outline"
+            onClick={copyInstall}
+          >
             {copied ? "Kopiert" : "Kopieren"}
           </button>
         </div>
