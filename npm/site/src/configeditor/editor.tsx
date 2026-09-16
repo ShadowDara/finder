@@ -1,4 +1,4 @@
-import { jsx, Fragment } from "@shadowdara/ssg-pages-plugin/jsx-runtime";
+import { jsx, Fragment } from "@twine/core";
 import type { ConfigSchema } from "./types";
 import { asHtml, renderField } from "./fields";
 

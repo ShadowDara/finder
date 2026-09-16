@@ -1,4 +1,4 @@
-import { jsx } from "@shadowdara/ssg-pages-plugin/jsx-runtime";
+import { jsx } from "@twine/core";
 import type { Existence, FileNode, FolderNode, TemplateJSON } from "./types";
 import {
   decodeMarkdownNote,

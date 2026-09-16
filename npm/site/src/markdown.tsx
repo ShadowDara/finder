@@ -1,5 +1,5 @@
-import { jsx, Fragment } from "@shadowdara/ssg-pages-plugin/jsx-runtime";
-import { raw } from "@shadowdara/ssg-pages-plugin/jsx-runtime";
+import { jsx, Fragment } from "@twine/core";
+import { raw } from "@twine/core";
 import { PageEntry } from "virtual:pages";
 
 export async function renderMarkdown(app: HTMLElement, page: PageEntry) {

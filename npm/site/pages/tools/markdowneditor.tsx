@@ -1,4 +1,4 @@
-import { jsx, raw } from "@shadowdara/ssg-pages-plugin/jsx-runtime";
+import { jsx, raw } from "@twine/core";
 import { parseMarkdown, parseMarkdownToDocument } from "@shadowdara/dlib";
 // import { SERVER_ADRESS } from "../../src/vars";
 import "./markdowneditor.css";

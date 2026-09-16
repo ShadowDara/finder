@@ -234,7 +234,7 @@ export interface PagesPluginOptions {
    * (`jsx`/`Fragment`) is available. Defaults to the jsx-runtime shipped
    * with this package.
    *
-   * @default "@shadowdara/ssg-pages-plugin/jsx-runtime"
+   * @default "@twine/core"
    */
   jsxRuntimePath?: string;
 }
@@ -335,8 +335,7 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
   const writeDts = options.dts ?? true;
   const dtsPathOpt = options.dtsPath ?? "src/pages.d.ts";
   const liquidTemplateRoot = options.liquidTemplateRoot ?? "src/templates";
-  const jsxRuntimePath =
-    options.jsxRuntimePath ?? "@shadowdara/ssg-pages-plugin/jsx-runtime";
+  const jsxRuntimePath = options.jsxRuntimePath ?? "@twine/core";
 
   let config: ResolvedConfig;
   let pages: PageEntry[] = [];

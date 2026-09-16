@@ -1,7 +1,7 @@
 // Prob buildin Pages later (but they can be overwritten)
 
 import { PageEntry } from "virtual:pages";
-import { jsx, raw } from "@shadowdara/ssg-pages-plugin/jsx-runtime";
+import { jsx, raw } from "@twine/core";
 
 // Render the 404 Page
 export function render404(app: HTMLElement) {

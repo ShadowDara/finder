@@ -1,4 +1,4 @@
-import { jsx } from "@shadowdara/ssg-pages-plugin/jsx-runtime";
+import { jsx } from "@twine/core";
 import { generateRegex, type MatchMode } from "../src/lib/regex";
 import "./regexcreator.css";
 

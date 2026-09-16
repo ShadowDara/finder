@@ -1,9 +1,4 @@
-import {
-  escapeHtml,
-  jsx,
-  raw,
-  Fragment,
-} from "@shadowdara/ssg-pages-plugin/jsx-runtime";
+import { escapeHtml, jsx, raw, Fragment } from "@twine/core";
 import "./index.css";
 
 const tools = [

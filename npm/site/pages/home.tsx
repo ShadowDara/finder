@@ -1,5 +1,5 @@
 // Passe den Import unten an den Pfad deiner JSX-Factory an.
-import { jsx, Fragment } from "@shadowdara/ssg-pages-plugin/jsx-runtime";
+import { jsx, Fragment } from "@twine/core";
 import "./home.css";
 
 type Os = "mac" | "windows" | "linux";

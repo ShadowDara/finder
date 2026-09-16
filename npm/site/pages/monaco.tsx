@@ -1,4 +1,4 @@
-import { jsx, Fragment } from "@shadowdara/ssg-pages-plugin/jsx-runtime";
+import { jsx, Fragment } from "@twine/core";
 import * as monaco from "monaco-editor";
 import "./monaco.css";
 import { jsToFling } from "js-to-fling";

@@ -1,5 +1,5 @@
 // Passe die Imports unten an die Pfade deines Projekts an.
-import { jsx } from "@shadowdara/ssg-pages-plugin/jsx-runtime";
+import { jsx } from "@twine/core";
 import renderEditor from "../src/configeditor/render";
 import "./configeditor.css";
 

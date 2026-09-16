@@ -1,4 +1,4 @@
-import { jsx, Fragment, raw } from "@shadowdara/ssg-pages-plugin/jsx-runtime";
+import { jsx, Fragment, raw } from "@twine/core";
 import { SERVER_ADRESS } from "../src/vars";
 
 export default function render(el: HTMLDivElement, data: string) {
