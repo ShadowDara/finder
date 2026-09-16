@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-09-16T12:26:46.268Z",
+  "generatedAt": "2026-09-16T13:24:33.201Z",
   "total": {
-    "files": 179,
-    "bytes": 35435654,
-    "kilobytes": 34605.13,
-    "megabytes": 33.79
+    "files": 181,
+    "bytes": 35438535,
+    "kilobytes": 34607.94,
+    "megabytes": 33.8
   },
   "byExtension": [
     {
       "extension": ".js",
-      "files": 127,
-      "bytes": 34432966,
-      "percentage": 97.17
+      "files": 128,
+      "bytes": 34433167,
+      "percentage": 97.16
     },
     {
       "extension": ".wasm",
@@ -33,9 +33,9 @@
     },
     {
       "extension": ".html",
-      "files": 30,
-      "bytes": 18909,
-      "percentage": 0.05
+      "files": 31,
+      "bytes": 21337,
+      "percentage": 0.06
     },
     {
       "extension": ".svg",
@@ -46,7 +46,7 @@
     {
       "extension": ".txt",
       "files": 1,
-      "bytes": 1854,
+      "bytes": 2106,
       "percentage": 0.01
     }
   ],
@@ -234,7 +234,7 @@
     {
       "path": "assets/main_entry.js",
       "extension": ".js",
-      "bytes": 9874
+      "bytes": 9976
     },
     {
       "path": "assets/configeditor.js",
@@ -277,7 +277,7 @@
       "bytes": 8310
     },
     {
-      "path": "test/gitviewer/index.html",
+      "path": "gitviewer/index.html",
       "extension": ".html",
       "bytes": 8281
     },
@@ -652,6 +652,11 @@
       "bytes": 2122
     },
     {
+      "path": "dependencies.txt",
+      "extension": ".txt",
+      "bytes": 2106
+    },
+    {
       "path": "assets/cameligo.js",
       "extension": ".js",
       "bytes": 2047
@@ -670,11 +675,6 @@
       "path": "assets/pascaligo.js",
       "extension": ".js",
       "bytes": 1862
-    },
-    {
-      "path": "dependencies.txt",
-      "extension": ".txt",
-      "bytes": 1854
     },
     {
       "path": "assets/index.css",
@@ -745,6 +745,21 @@
       "path": "assets/index4.js",
       "extension": ".js",
       "bytes": 1164
+    },
+    {
+      "path": "tools/picture-mode-maker/index.html",
+      "extension": ".html",
+      "bytes": 1130
+    },
+    {
+      "path": "tools/line_formatter/line_extender/index.html",
+      "extension": ".html",
+      "bytes": 1067
+    },
+    {
+      "path": "tools/line_formatter/index.html",
+      "extension": ".html",
+      "bytes": 1025
     },
     {
       "path": "assets/ini.js",
@@ -857,29 +872,14 @@
       "bytes": 395
     },
     {
-      "path": "tools/line_formatter/line_extender/page/index.html",
-      "extension": ".html",
-      "bytes": 395
-    },
-    {
       "path": "home/index.html",
       "extension": ".html",
       "bytes": 391
     },
     {
-      "path": "tools/picture-mode-maker/page/index.html",
-      "extension": ".html",
-      "bytes": 379
-    },
-    {
       "path": "tools/minecraft/modelviewer/index.html",
       "extension": ".html",
       "bytes": 377
-    },
-    {
-      "path": "tools/line_formatter/page/index.html",
-      "extension": ".html",
-      "bytes": 375
     },
     {
       "path": "mcapp/worlds/index.html",
@@ -893,6 +893,11 @@
     },
     {
       "path": "mcapp/about/index.html",
+      "extension": ".html",
+      "bytes": 355
+    },
+    {
+      "path": "tools/color/index.html",
       "extension": ".html",
       "bytes": 355
     },
@@ -935,6 +940,11 @@
       "path": "test/jekyll/index.html",
       "extension": ".html",
       "bytes": 107
+    },
+    {
+      "path": "assets/color.js",
+      "extension": ".js",
+      "bytes": 99
     },
     {
       "path": "test/ejs/index.html",

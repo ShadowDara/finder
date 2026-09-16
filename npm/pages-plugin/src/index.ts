@@ -7,7 +7,7 @@ import { parseMarkdown } from "@shadowdara/dlib";
 import { transformWithEsbuild } from "vite";
 import { tsImport } from "tsx/esm/api";
 import { escapeHtml } from "./jsx-runtime.js";
-export { jsx, Fragment, raw, escapeHtml, loadStyles } from "./jsx-runtime.js";
+// export { jsx, Fragment, raw, escapeHtml } from "./jsx-runtime.js";
 export type { HtmlValue } from "./jsx-runtime.js";
 import hljs from "highlight.js/lib/common";
 import { Liquid } from "liquidjs";
@@ -1205,6 +1205,44 @@ ${ctx.content}
             return;
           }
 
+          /*
+           * EJS pages: same pre-rendered flow as Liquid — serve the
+           * rendered content with JS_SCRIPT replaced by the client entry.
+           */
+          if (page.type === "ejs") {
+            const scriptTag =
+              page.scriptSource && !isBuildDataFile(page.scriptSource)
+                ? `<script type="module" src="/${path
+                    .relative(config.root, page.scriptSource)
+                    .replace(/\\/g, "/")}"></script>`
+                : "";
+
+            let content =
+              page.html
+                ?.replaceAll(LIQUID_SCRIPT_PLACEHOLDER, scriptTag)
+                .replaceAll("{{ JS_SCRIPT }}", scriptTag) ?? "";
+
+            if (options.minify) {
+              content = await minify(content, {
+                collapseWhitespace: true,
+                removeComments: true,
+                removeRedundantAttributes: true,
+                removeEmptyAttributes: true,
+                useShortDoctype: true,
+                minifyCSS: true,
+                minifyJS: true,
+              });
+            }
+
+            const transformed = await server.transformIndexHtml(url, content);
+
+            res.statusCode = 200;
+            res.setHeader("Content-Type", "text/html; charset=utf-8");
+            res.end(transformed);
+
+            return;
+          }
+
           const ctx: PageRenderContext = {
             id: page.id,
             title: getTitle(page.id),
@@ -1292,15 +1330,16 @@ ${ctx.content}
       const result = await transformWithEsbuild(code, id, {
         loader: "tsx",
         target: "esnext",
-        // Automatic JSX runtime: esbuild injects `import { jsx } from
-        // "<jsxImportSource>/jsx-runtime"` itself, so no manual import prepend needed.
-        jsx: "automatic",
-        jsxImportSource: jsxRuntimePath.replace(/\/jsx-runtime$/, ""),
+        jsxFactory: "jsx",
+        jsxFragment: "Fragment",
         sourcemap: true,
       });
 
       return {
-        code: result.code,
+        code: [
+          `import { jsx, Fragment } from ${JSON.stringify(jsxRuntimePath)};`,
+          result.code,
+        ].join("\n"),
         map: result.map as any,
       };
     },
@@ -1475,9 +1514,64 @@ ${ctx.content}
           continue;
         }
 
-        // EJS: already rendered in preparePages() into page.html
+        // EJS: already rendered in preparePages() into page.html.
+        // Same script-injection flow as Liquid: compile the client
+        // page script and replace the JS_SCRIPT placeholder.
         if (page.type === "ejs") {
-          let ejsHtml = page.html ?? "";
+          let scriptTagForContent = "";
+
+          if (
+            page.scriptSource &&
+            !isBuildDataFile(page.scriptSource) &&
+            fs.existsSync(page.scriptSource)
+          ) {
+            const scriptSourceCode = fs.readFileSync(page.scriptSource, "utf8");
+
+            const scriptExtension = path
+              .extname(page.scriptSource)
+              .slice(1)
+              .toLowerCase();
+
+            const loader =
+              scriptExtension === "ts" || scriptExtension === "tsx"
+                ? "ts"
+                : scriptExtension === "jsx"
+                  ? "jsx"
+                  : "js";
+
+            const result = await transformWithEsbuild(
+              scriptSourceCode,
+              page.scriptSource,
+              {
+                loader,
+                target: "esnext",
+                minify: true,
+              },
+            );
+
+            const scriptName = path.basename(
+              page.scriptSource,
+              path.extname(page.scriptSource),
+            );
+
+            const scriptFileName = `assets/${scriptName}.js`;
+
+            this.emitFile({
+              type: "asset",
+              fileName: scriptFileName,
+              source: result.code,
+            });
+
+            scriptTagForContent = `<script type="module" src="${getAssetPath(
+              htmlFileName,
+              scriptFileName,
+            )}"></script>`;
+          }
+
+          let ejsHtml =
+            page.html
+              ?.replaceAll(LIQUID_SCRIPT_PLACEHOLDER, scriptTagForContent)
+              .replaceAll("{{ JS_SCRIPT }}", scriptTagForContent) ?? "";
 
           if (options.minify) {
             ejsHtml = await minify(ejsHtml, {
