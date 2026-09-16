@@ -1,5 +1,5 @@
 // Passe den Import unten an den Pfad deiner JSX-Factory an.
-import { Fragment } from "@twine/core/jsx-runtime";
+import { jsx, Fragment } from "@twine/core/jsx-runtime";
 import "./home.css";
 
 type Os = "mac" | "windows" | "linux";

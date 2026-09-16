@@ -14,6 +14,7 @@ import {
 } from "./state";
 import { SERVER_ADRESS } from "../vars";
 import { highlightFinderTemplate } from "@shadowdara/finder-lib/highlight";
+import { jsx } from "@twine/core/jsx-runtime";
 // import "highlight.js/styles/github-dark.css";
 
 export function renderCreator(app: HTMLDivElement, version: string) {

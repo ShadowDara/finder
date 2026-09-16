@@ -1,5 +1,6 @@
 import type { ConfigSchema } from "./types";
 import { asHtml, renderField } from "./fields";
+import { jsx, Fragment } from "@twine/core/jsx-runtime";
 
 export { registerFieldType } from "./fields";
 export type {

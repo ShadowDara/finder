@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-09-16T13:24:33.201Z",
+  "generatedAt": "2026-09-16T14:09:54.519Z",
   "total": {
     "files": 181,
-    "bytes": 35438535,
-    "kilobytes": 34607.94,
-    "megabytes": 33.8
+    "bytes": 35433761,
+    "kilobytes": 34603.28,
+    "megabytes": 33.79
   },
   "byExtension": [
     {
       "extension": ".js",
       "files": 128,
-      "bytes": 34433167,
+      "bytes": 34428393,
       "percentage": 97.16
     },
     {
@@ -64,7 +64,7 @@
     {
       "path": "assets/monaco.js",
       "extension": ".js",
-      "bytes": 4941723
+      "bytes": 4941518
     },
     {
       "path": "monacoeditorwork/css.worker.bundle.js",
@@ -119,7 +119,7 @@
     {
       "path": "assets/console.js",
       "extension": ".js",
-      "bytes": 338341
+      "bytes": 338160
     },
     {
       "path": "assets/monaco.css",
@@ -149,7 +149,7 @@
     {
       "path": "assets/installscript.js",
       "extension": ".js",
-      "bytes": 33514
+      "bytes": 32268
     },
     {
       "path": "assets/_virtual_page-markdown_changelog.js",
@@ -179,7 +179,7 @@
     {
       "path": "assets/creator.js",
       "extension": ".js",
-      "bytes": 17501
+      "bytes": 17157
     },
     {
       "path": "assets/powerquery.js",
@@ -234,12 +234,7 @@
     {
       "path": "assets/main_entry.js",
       "extension": ".js",
-      "bytes": 9976
-    },
-    {
-      "path": "assets/configeditor.js",
-      "extension": ".js",
-      "bytes": 9597
+      "bytes": 9797
     },
     {
       "path": "assets/clojure.js",
@@ -252,9 +247,9 @@
       "bytes": 9401
     },
     {
-      "path": "assets/viewer.js",
+      "path": "assets/configeditor.js",
       "extension": ".js",
-      "bytes": 9021
+      "bytes": 9239
     },
     {
       "path": "assets/protobuf.js",
@@ -270,6 +265,11 @@
       "path": "assets/ruby.js",
       "extension": ".js",
       "bytes": 8366
+    },
+    {
+      "path": "assets/viewer.js",
+      "extension": ".js",
+      "bytes": 8312
     },
     {
       "path": "assets/razor.js",
@@ -302,11 +302,6 @@
       "bytes": 7465
     },
     {
-      "path": "assets/regexcreator.js",
-      "extension": ".js",
-      "bytes": 7412
-    },
-    {
       "path": "assets/st.js",
       "extension": ".js",
       "bytes": 7261
@@ -325,6 +320,11 @@
       "path": "assets/julia.js",
       "extension": ".js",
       "bytes": 7011
+    },
+    {
+      "path": "assets/regexcreator.js",
+      "extension": ".js",
+      "bytes": 6983
     },
     {
       "path": "assets/handlebars.js",
@@ -382,19 +382,9 @@
       "bytes": 5033
     },
     {
-      "path": "assets/cacheviewer.js",
-      "extension": ".js",
-      "bytes": 4922
-    },
-    {
       "path": "assets/typescript.js",
       "extension": ".js",
       "bytes": 4919
-    },
-    {
-      "path": "assets/tellraw.js",
-      "extension": ".js",
-      "bytes": 4794
     },
     {
       "path": "assets/msdax.js",
@@ -407,6 +397,11 @@
       "bytes": 4690
     },
     {
+      "path": "assets/tellraw.js",
+      "extension": ".js",
+      "bytes": 4685
+    },
+    {
       "path": "assets/home.css",
       "extension": ".css",
       "bytes": 4615
@@ -415,6 +410,11 @@
       "path": "assets/html.js",
       "extension": ".js",
       "bytes": 4546
+    },
+    {
+      "path": "assets/cacheviewer.js",
+      "extension": ".js",
+      "bytes": 4508
     },
     {
       "path": "assets/csharp.js",
@@ -472,11 +472,6 @@
       "bytes": 3736
     },
     {
-      "path": "assets/home.js",
-      "extension": ".js",
-      "bytes": 3717
-    },
-    {
       "path": "assets/cacheviewer.css",
       "extension": ".css",
       "bytes": 3675
@@ -515,6 +510,11 @@
       "path": "assets/tcl.js",
       "extension": ".js",
       "bytes": 3433
+    },
+    {
+      "path": "assets/home.js",
+      "extension": ".js",
+      "bytes": 3421
     },
     {
       "path": "assets/redis.js",
@@ -717,19 +717,19 @@
       "bytes": 1545
     },
     {
-      "path": "assets/index2.js",
-      "extension": ".js",
-      "bytes": 1495
-    },
-    {
       "path": "assets/markdowneditor.js",
       "extension": ".js",
-      "bytes": 1427
+      "bytes": 1355
     },
     {
       "path": "assets/csp.js",
       "extension": ".js",
       "bytes": 1281
+    },
+    {
+      "path": "assets/index2.js",
+      "extension": ".js",
+      "bytes": 1240
     },
     {
       "path": "assets/worlds.js",
@@ -937,14 +937,14 @@
       "bytes": 129
     },
     {
+      "path": "assets/color.js",
+      "extension": ".js",
+      "bytes": 122
+    },
+    {
       "path": "test/jekyll/index.html",
       "extension": ".html",
       "bytes": 107
-    },
-    {
-      "path": "assets/color.js",
-      "extension": ".js",
-      "bytes": 99
     },
     {
       "path": "test/ejs/index.html",

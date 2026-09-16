@@ -1,3 +1,4 @@
+import { jsx } from "@twine/core/jsx-runtime";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import model from "./model.json";
