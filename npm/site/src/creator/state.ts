@@ -116,8 +116,18 @@ function serializeSize(
   if (!size) return undefined;
   if (size.min === undefined && size.max === undefined) return undefined;
   const out: SizeConstraint = {};
-  if (size.min !== undefined) out.min = size.min;
-  if (size.max !== undefined) out.max = size.max;
+  if (size.min !== undefined) {
+    out.min = size.min;
+    if (size.min_size_type && size.min_size_type !== "B") {
+      out.min_size_type = size.min_size_type;
+    }
+  }
+  if (size.max !== undefined) {
+    out.max = size.max;
+    if (size.max_size_type && size.max_size_type !== "B") {
+      out.max_size_type = size.max_size_type;
+    }
+  }
   return out;
 }
 
@@ -223,7 +233,14 @@ function parseFiles(raw: unknown): FileNode[] {
       name: e.name ?? "",
       nameRegex: e.name_regex ?? "",
       existence: e.existence ?? "required",
-      size: e.size ? { min: e.size.min, max: e.size.max } : null,
+      size: e.size
+        ? {
+            min: e.size.min,
+            max: e.size.max,
+            min_size_type: e.size.min_size_type,
+            max_size_type: e.size.max_size_type,
+          }
+        : null,
       checksums: e.checksums
         ? {
             sha256: e.checksums.sha256 ?? "",
@@ -253,7 +270,14 @@ export function parseFolder(raw: FolderJSON | TemplateJSON): FolderNode {
     tags: Array.isArray(t.tags) ? [...t.tags] : [],
     files: parseFiles(t.files),
     folders: Array.isArray(t.folders) ? t.folders.map(parseFolder) : [],
-    size: t.size ? { min: t.size.min, max: t.size.max } : null,
+    size: t.size
+      ? {
+          min: t.size.min,
+          max: t.size.max,
+          min_size_type: t.size.min_size_type,
+          max_size_type: t.size.max_size_type,
+        }
+      : null,
     markdownNote,
   };
 }

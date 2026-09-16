@@ -332,8 +332,16 @@ textarea {
 
 .size-range {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr auto 1fr auto;
   gap: 8px;
+  align-items: center;
+}
+
+.size-range select {
+  padding: 4px 6px;
+  font-size: 13px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 /* ---------- Preview ---------- */

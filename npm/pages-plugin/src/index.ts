@@ -303,6 +303,9 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
     "/node_modules/",
     "/src/",
     "/__devframes_plugin_terminals/",
+    "/__devtools-vite/",
+    "/__devtools-rolldown/",
+    "/__devtools-oxc/",
     ...(options.ignoredPathnames ?? []),
   ].filter((prefix, index, prefixes) => prefixes.indexOf(prefix) === index);
   const splitMarkdown = options.splitMarkdown ?? false;

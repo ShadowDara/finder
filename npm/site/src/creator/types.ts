@@ -34,13 +34,19 @@ export type FolderJSON = newest.Folder;
 export type TemplateJSON = newest.Template;
 
 /** Size range as edited in the UI; serialized via `serializeSize`. */
-export type SizeConstraint = Pick<newest.Size, "min" | "max">;
+export type SizeConstraint = Pick<
+  newest.Size,
+  "min" | "max" | "min_size_type" | "max_size_type"
+>;
 
 /** Checksum pair as edited in the UI ("" = unset). */
 export type Checksum = Required<newest.Checksums>;
 
 /** Existence values from the finder schema. */
 export type Existence = newest.Existence;
+
+/** Size unit type: B, KB, MB, or GB. */
+export type SizeType = newest.SizeType;
 
 /** A single file entry in the editor tree. */
 export interface FileNode {

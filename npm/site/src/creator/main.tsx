@@ -1,4 +1,11 @@
-import type { Existence, FileNode, FolderNode, TemplateJSON } from "./types";
+import type {
+  Existence,
+  FileNode,
+  FolderNode,
+  SizeConstraint,
+  SizeType,
+  TemplateJSON,
+} from "./types";
 import {
   decodeMarkdownNote,
   encodeMarkdownNote,
@@ -410,9 +417,11 @@ export function renderCreator(app: HTMLDivElement, version: string) {
   }
 
   function sizeFields(
-    size: { min?: number; max?: number } | null,
-    onChange: (size: { min?: number; max?: number } | null) => void,
+    size: SizeConstraint | null,
+    onChange: (size: SizeConstraint | null) => void,
   ): HTMLDivElement {
+    const SIZE_UNITS = ["B", "KB", "MB", "GB"] as const;
+
     const container = document.createElement("div");
     container.className = "size-fields";
 
@@ -433,29 +442,67 @@ export function renderCreator(app: HTMLDivElement, version: string) {
 
     const minInput = document.createElement("input");
     minInput.type = "number";
-    minInput.placeholder = "min bytes";
+    minInput.placeholder = "min";
     minInput.value = size?.min?.toString() ?? "";
+
+    const minUnit = document.createElement("select");
+    for (const u of SIZE_UNITS) {
+      const opt = document.createElement("option");
+      opt.value = u;
+      opt.textContent = u;
+      minUnit.appendChild(opt);
+    }
+    minUnit.value = size?.min_size_type ?? "B";
 
     const maxInput = document.createElement("input");
     maxInput.type = "number";
-    maxInput.placeholder = "max bytes";
+    maxInput.placeholder = "max";
     maxInput.value = size?.max?.toString() ?? "";
+
+    const maxUnit = document.createElement("select");
+    for (const u of SIZE_UNITS) {
+      const opt = document.createElement("option");
+      opt.value = u;
+      opt.textContent = u;
+      maxUnit.appendChild(opt);
+    }
+    maxUnit.value = size?.max_size_type ?? "B";
 
     function emit() {
       const min = minInput.value === "" ? undefined : Number(minInput.value);
       const max = maxInput.value === "" ? undefined : Number(maxInput.value);
-      onChange({ min, max });
+      const minSizeType = minUnit.value as SizeType;
+      const maxSizeType = maxUnit.value as SizeType;
+      onChange({
+        min,
+        max,
+        min_size_type: minSizeType,
+        max_size_type: maxSizeType,
+      });
     }
 
     minInput.addEventListener("input", emit);
     maxInput.addEventListener("input", emit);
+    minUnit.addEventListener("change", emit);
+    maxUnit.addEventListener("change", emit);
     range.appendChild(minInput);
+    range.appendChild(minUnit);
     range.appendChild(maxInput);
+    range.appendChild(maxUnit);
     container.appendChild(range);
 
     checkbox.addEventListener("change", () => {
       range.hidden = !checkbox.checked;
-      onChange(checkbox.checked ? { min: undefined, max: undefined } : null);
+      onChange(
+        checkbox.checked
+          ? {
+              min: undefined,
+              max: undefined,
+              min_size_type: "B",
+              max_size_type: "B",
+            }
+          : null,
+      );
     });
 
     return container;
