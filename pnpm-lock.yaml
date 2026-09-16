@@ -235,6 +235,9 @@ importers:
       comlink:
         specifier: ^4.4.2
         version: 4.4.2
+      dockview:
+        specifier: ^8.3.1
+        version: 8.3.1
       droll:
         specifier: ^0.2.1
         version: 0.2.1
@@ -3337,6 +3340,12 @@ packages:
   diff@8.0.4:
     resolution: {integrity: sha512-DPi0FmjiSU5EvQV0++GFDOJ9ASQUVFh5kD+OzOnYdi7n3Wpm9hWWGfB/O2blfHcMVTL5WkQXSnRiK9makhrcnw==}
     engines: {node: '>=0.3.1'}
+
+  dockview-core@8.3.1:
+    resolution: {integrity: sha512-6Loais9hlIRo25sTQSWGWlgbPr22ddoLBzpGDFaTnocawnC45twp5f2S2WxUz5/HPa/a65I4yxKUqZa8xrcc5Q==}
+
+  dockview@8.3.1:
+    resolution: {integrity: sha512-2odBC9cDKcVCVx8Db86vq9s9JZKzbgvdkxDzcfsrD9nORLc5UqhLgLvVcJguorBv7CyEpKDzFO1JVLYWJCYrJA==}
 
   dom-serializer@2.0.0:
     resolution: {integrity: sha512-wIkAryiqt/nV5EQKqQpo3SToSOV9J0DnbJqwK7Wv/Trc92zIAYZ4FlMu+JPFW1DfGFt81ZTCGgDEabffXeLyJg==}
@@ -8593,6 +8602,12 @@ snapshots:
   diff@4.0.4: {}
 
   diff@8.0.4: {}
+
+  dockview-core@8.3.1: {}
+
+  dockview@8.3.1:
+    dependencies:
+      dockview-core: 8.3.1
 
   dom-serializer@2.0.0:
     dependencies:
