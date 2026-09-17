@@ -1,1 +1,1 @@
-{"description":"Ruby on Rails web framework","files":["Gemfile","config.ru"],"folders":[{"files":[],"folders":[],"name":"app"}],"min_version":"0.3.17","name":"*"}
+{"description":"Ruby on Rails web framework","files":["Gemfile","config.ru"],"folders":[{"files":[],"folders":[],"name":"app"}],"min_version":"0.3.17","name":"*","tags":["ruby","web"]}

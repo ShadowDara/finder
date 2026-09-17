@@ -12,5 +12,9 @@
         "Gemfile",
         "config.ru"
     ],
-    "min_version": "0.3.17"
+    "min_version": "0.3.17",
+    "tags": [
+        "ruby",
+        "web"
+    ]
 }
