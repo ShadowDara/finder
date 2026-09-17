@@ -28,8 +28,8 @@ jobs:
         run: |
           TODAY=$(date -u +%Y-%m-%d)
 
-          if [ -f .github/test-last-run ]; then
-            LAST_RUN=$(cat .github/test-last-run)
+          if [ -f .github/tests/test-last-run ]; then
+            LAST_RUN=$(cat .github/tests/test-last-run)
 
             if [ "$LAST_RUN" = "$TODAY" ]; then
               echo "Already ran today ($TODAY). Skipping."
