@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-09-17T16:05:08.012Z",
+  "generatedAt": "2026-09-17T16:55:31.678Z",
   "total": {
     "files": 181,
-    "bytes": 35499648,
-    "kilobytes": 34667.63,
+    "bytes": 35499819,
+    "kilobytes": 34667.79,
     "megabytes": 33.86
   },
   "byExtension": [
     {
       "extension": ".js",
       "files": 128,
-      "bytes": 34482146,
+      "bytes": 34482393,
       "percentage": 97.13
     },
     {
@@ -40,7 +40,7 @@
     {
       "extension": ".txt",
       "files": 1,
-      "bytes": 10666,
+      "bytes": 10590,
       "percentage": 0.03
     },
     {
@@ -159,7 +159,7 @@
     {
       "path": "assets/_virtual_page-markdown_readme.js",
       "extension": ".js",
-      "bytes": 28935
+      "bytes": 29179
     },
     {
       "path": "assets/lspLanguageFeatures.js",
@@ -229,7 +229,7 @@
     {
       "path": "dependencies.txt",
       "extension": ".txt",
-      "bytes": 10666
+      "bytes": 10590
     },
     {
       "path": "assets/sql.js",
@@ -759,7 +759,7 @@
     {
       "path": "assets/index2.js",
       "extension": ".js",
-      "bytes": 1010
+      "bytes": 1013
     },
     {
       "path": "assets/ini.js",

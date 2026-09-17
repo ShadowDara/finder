@@ -1,4 +1,4 @@
-import { jsx, Fragment } from "twynejss/jsx-runtime";
+import { jsx, Fragment } from "twynejs/jsx-runtime";
 import "./mcappstyle.css";
 
 export default function render() {

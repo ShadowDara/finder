@@ -1,56 +1,61 @@
 {
-  "generatedAt": "2026-09-17T16:35:57.787Z",
+  "generatedAt": "2026-09-17T16:54:23.033Z",
   "total": {
-    "files": 176,
-    "bytes": 17170675,
-    "kilobytes": 16768.24,
-    "megabytes": 16.38
+    "files": 181,
+    "bytes": 35434058,
+    "kilobytes": 34603.57,
+    "megabytes": 33.79
   },
   "byExtension": [
     {
       "extension": ".js",
-      "files": 123,
-      "bytes": 16153439,
-      "percentage": 94.08
+      "files": 128,
+      "bytes": 34416898,
+      "percentage": 97.13
     },
     {
       "extension": ".wasm",
       "files": 1,
       "bytes": 468274,
-      "percentage": 2.73
+      "percentage": 1.32
     },
     {
       "extension": ".css",
       "files": 18,
       "bytes": 370790,
-      "percentage": 2.16
+      "percentage": 1.05
     },
     {
       "extension": ".ttf",
       "files": 1,
       "bytes": 140956,
-      "percentage": 0.82
+      "percentage": 0.4
     },
     {
       "extension": ".html",
       "files": 31,
       "bytes": 21337,
-      "percentage": 0.12
+      "percentage": 0.06
     },
     {
       "extension": ".txt",
       "files": 1,
-      "bytes": 10666,
-      "percentage": 0.06
+      "bytes": 10590,
+      "percentage": 0.03
     },
     {
       "extension": ".svg",
       "files": 1,
       "bytes": 5213,
-      "percentage": 0.03
+      "percentage": 0.01
     }
   ],
   "files": [
+    {
+      "path": "monacoeditorwork/ts.worker.bundle.js",
+      "extension": ".js",
+      "bytes": 13365068
+    },
     {
       "path": "assets/ts.worker-Bs0vidAd.js",
       "extension": ".js",
@@ -62,14 +67,34 @@
       "bytes": 4941515
     },
     {
+      "path": "monacoeditorwork/css.worker.bundle.js",
+      "extension": ".js",
+      "bytes": 1969660
+    },
+    {
+      "path": "monacoeditorwork/html.worker.bundle.js",
+      "extension": ".js",
+      "bytes": 1350059
+    },
+    {
       "path": "assets/css.worker-CT4YU7ZE.js",
       "extension": ".js",
       "bytes": 1052295
     },
     {
+      "path": "monacoeditorwork/json.worker.bundle.js",
+      "extension": ".js",
+      "bytes": 940733
+    },
+    {
       "path": "assets/html.worker-XmF3pKa_.js",
       "extension": ".js",
       "bytes": 714832
+    },
+    {
+      "path": "monacoeditorwork/editor.worker.bundle.js",
+      "extension": ".js",
+      "bytes": 637641
     },
     {
       "path": "assets/modelviewer.js",
@@ -129,7 +154,7 @@
     {
       "path": "assets/_virtual_page-markdown_readme.js",
       "extension": ".js",
-      "bytes": 28935
+      "bytes": 29179
     },
     {
       "path": "assets/lspLanguageFeatures.js",
@@ -199,7 +224,7 @@
     {
       "path": "dependencies.txt",
       "extension": ".txt",
-      "bytes": 10666
+      "bytes": 10590
     },
     {
       "path": "assets/sql.js",
@@ -697,14 +722,14 @@
       "bytes": 1355
     },
     {
+      "path": "assets/index2.js",
+      "extension": ".js",
+      "bytes": 1294
+    },
+    {
       "path": "assets/csp.js",
       "extension": ".js",
       "bytes": 1281
-    },
-    {
-      "path": "assets/index2.js",
-      "extension": ".js",
-      "bytes": 1240
     },
     {
       "path": "assets/worlds.js",
