@@ -46,6 +46,10 @@ name, so a template fetched from
 `https://example.com/foo/template.json5` is reachable as
 `example.com/foo/template`.
 
+Those long installed names can be shortened with **template aliases**
+(CLI-only, stored in `~/.finder/aliases.json` — not a template field).
+See section 8.5.
+
 The filename without its extension becomes the template name, for
 example:
 
@@ -738,6 +742,60 @@ If a template exists in the custom template folder, it will be loaded
 automatically. Templates installed from the web (`finder install
 <url-or-name>`) are looked up in `~/.finder/installed/templates/` (and
 `./.finder/installed/templates/`) under their URL-derived name.
+
+---
+
+## 8.5) Template aliases (CLI, not a template field)
+
+Aliases are user-defined short names for templates. They are **not**
+part of the template JSON schema — do not add an `aliases` (or
+`alias`) field to a template file. Finder will ignore it during
+matching.
+
+Aliases live in `~/.finder/aliases.json` and are managed with the CLI:
+
+```bash
+# Create an alias for a (usually installed) template
+finder alias myvue shadowdara.github.io/test/template
+
+# Search / view using the alias — resolved before the template loads
+finder myvue
+finder view myvue
+
+# List aliases
+finder aliases          # alias: alias-list
+
+# Remove an alias
+finder unalias myvue    # alias: alias-remove
+```
+
+An alias whose name ends with `/` is a **start-path alias**. It
+expands a prefix of the searched name; the rest of the input is
+appended to the target. The longest matching prefix wins:
+
+```bash
+finder alias s/ shadowdara.github.io/templates/
+finder s/test
+# → searches shadowdara.github.io/templates/test
+```
+
+Rules for assistants:
+
+- never write `aliases` / `alias` into a generated template file
+- tell the user to create aliases with `finder alias <name> <template>`
+- resolution is single-level (no alias chains)
+- exact match is tried first; otherwise the longest start-path prefix
+  (keys ending with `/`) wins
+- alias names cannot contain `\` or inner `/`; the only allowed slash
+  is a single trailing `/` for start-path aliases
+- overwriting an existing alias is allowed (upsert)
+- `finder s/` alone resolves to the start path itself (no trailing
+  slash)
+- aliases apply to `finder <name>`, `finder template <name>`, and
+  `finder view <name>`
+
+This is the recommended way to shorten installed template names such
+as `shadowdara.github.io/test/template`.
 
 ---
 
