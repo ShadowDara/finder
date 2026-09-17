@@ -1,61 +1,56 @@
 {
-  "generatedAt": "2026-09-17T16:04:10.724Z",
+  "generatedAt": "2026-09-17T16:34:03.316Z",
   "total": {
-    "files": 181,
-    "bytes": 35433836,
-    "kilobytes": 34603.36,
-    "megabytes": 33.79
+    "files": 176,
+    "bytes": 17170675,
+    "kilobytes": 16768.24,
+    "megabytes": 16.38
   },
   "byExtension": [
     {
       "extension": ".js",
-      "files": 128,
-      "bytes": 34416600,
-      "percentage": 97.13
+      "files": 123,
+      "bytes": 16153439,
+      "percentage": 94.08
     },
     {
       "extension": ".wasm",
       "files": 1,
       "bytes": 468274,
-      "percentage": 1.32
+      "percentage": 2.73
     },
     {
       "extension": ".css",
       "files": 18,
       "bytes": 370790,
-      "percentage": 1.05
+      "percentage": 2.16
     },
     {
       "extension": ".ttf",
       "files": 1,
       "bytes": 140956,
-      "percentage": 0.4
+      "percentage": 0.82
     },
     {
       "extension": ".html",
       "files": 31,
       "bytes": 21337,
-      "percentage": 0.06
+      "percentage": 0.12
     },
     {
       "extension": ".txt",
       "files": 1,
       "bytes": 10666,
-      "percentage": 0.03
+      "percentage": 0.06
     },
     {
       "extension": ".svg",
       "files": 1,
       "bytes": 5213,
-      "percentage": 0.01
+      "percentage": 0.03
     }
   ],
   "files": [
-    {
-      "path": "monacoeditorwork/ts.worker.bundle.js",
-      "extension": ".js",
-      "bytes": 13365068
-    },
     {
       "path": "assets/ts.worker-Bs0vidAd.js",
       "extension": ".js",
@@ -67,34 +62,14 @@
       "bytes": 4941515
     },
     {
-      "path": "monacoeditorwork/css.worker.bundle.js",
-      "extension": ".js",
-      "bytes": 1969660
-    },
-    {
-      "path": "monacoeditorwork/html.worker.bundle.js",
-      "extension": ".js",
-      "bytes": 1350059
-    },
-    {
       "path": "assets/css.worker-CT4YU7ZE.js",
       "extension": ".js",
       "bytes": 1052295
     },
     {
-      "path": "monacoeditorwork/json.worker.bundle.js",
-      "extension": ".js",
-      "bytes": 940733
-    },
-    {
       "path": "assets/html.worker-XmF3pKa_.js",
       "extension": ".js",
       "bytes": 714832
-    },
-    {
-      "path": "monacoeditorwork/editor.worker.bundle.js",
-      "extension": ".js",
-      "bytes": 637641
     },
     {
       "path": "assets/modelviewer.js",
