@@ -1,5 +1,5 @@
 import { defineConfig } from "vite";
-import { pagesPlugin } from "twynejsss";
+import { pagesPlugin } from "twynejs";
 import { visualizer } from "rollup-plugin-visualizer";
 import tailwindcss from "@tailwindcss/vite";
 import path from "node:path";
