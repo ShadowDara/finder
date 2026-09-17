@@ -33,6 +33,11 @@ export default function render(el: HTMLDivElement, data: string) {
               <a href="./mcapp">MCAPP</a>
             </li>
           )}
+          {import.meta.env.MODE == "backend" && (
+            <li>
+              <a href="./gitviewer">Git Viewer</a>
+            </li>
+          )}
           {/* {import.meta.env.MODE == "backend" && (
             <li>
               <a href="./cacheviewer">Cache Viewer</a>
