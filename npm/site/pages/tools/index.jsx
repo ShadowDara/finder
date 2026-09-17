@@ -1,4 +1,4 @@
-import { escapeHtml, jsx, raw, Fragment } from "twynejss/jsx-runtime";
+import { escapeHtml, jsx, raw, Fragment } from "twynejs/jsx-runtime";
 import "./index.css";
 
 const tools = [
