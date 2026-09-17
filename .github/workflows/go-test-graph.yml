@@ -1,9 +1,14 @@
-name: Go Tests
+name: Go Tests Graph
 
 on:
   push:
+    branches:
+      - main
     paths-ignore:
-      - "test-results.svg"
+      - ".github/tests/test-results.svg"
+      - ".github/tests/test-results.json"
+      - ".github/tests/test-last-run"
+
   workflow_dispatch:
 
 permissions:
@@ -17,19 +22,40 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Check daily limit
+        id: limit
+        shell: bash
+        run: |
+          TODAY=$(date -u +%Y-%m-%d)
+
+          if [ -f .github/test-last-run ]; then
+            LAST_RUN=$(cat .github/test-last-run)
+
+            if [ "$LAST_RUN" = "$TODAY" ]; then
+              echo "Already ran today ($TODAY). Skipping."
+              echo "skip=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+          fi
+
+          echo "Running tests for $TODAY"
+          echo "skip=false" >> "$GITHUB_OUTPUT"
+
       - name: Setup Go
+        if: steps.limit.outputs.skip != 'true'
         uses: actions/setup-go@v6
         with:
           go-version-file: go.mod
           cache: true
 
       - name: Run Go tests
+        if: steps.limit.outputs.skip != 'true'
         id: tests
         shell: bash
         run: |
           set +e
 
-          go test -json ./... > test-results.json
+          go test -json ./... > .github/tests/test-results.json
 
           TEST_EXIT_CODE=$?
 
@@ -38,6 +64,7 @@ jobs:
           exit 0
 
       - name: Generate test graph
+        if: steps.limit.outputs.skip != 'true'
         run: |
           python3 <<'PY'
           import json
@@ -46,7 +73,7 @@ jobs:
 
           events = []
 
-          with open("test-results.json") as f:
+          with open(".github/tests/test-results.json") as f:
               for line in f:
                   try:
                       events.append(json.loads(line))
@@ -166,15 +193,22 @@ jobs:
           </svg>
           """
 
-          Path("test-results.svg").write_text(svg)
+          Path(".github/tests/test-results.svg").write_text(svg)
           PY
 
-      - name: Commit test graph
+      - name: Update last run
+        if: steps.limit.outputs.skip != 'true'
+        run: |
+          mkdir -p .github
+          date -u +%Y-%m-%d > .github/test-last-run
+
+      - name: Commit test results
+        if: steps.limit.outputs.skip != 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add test-results.svg
+          git add .github/tests/test-results.svg .github/tests/test-results.json .github/tests/test-last-run
 
           if git diff --cached --quiet; then
             echo "No changes to commit."
@@ -184,7 +218,7 @@ jobs:
           fi
 
       - name: Fail workflow if tests failed
-        if: steps.tests.outputs.exit_code != '0'
+        if: steps.limit.outputs.skip != 'true' && steps.tests.outputs.exit_code != '0'
         run: |
           echo "Go tests failed."
           exit 1
