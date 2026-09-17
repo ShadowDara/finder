@@ -29,13 +29,8 @@ jobs:
         with:
           version: 10
 
-      - name: Check versions
-        run: |
-          node --version
-          pnpm --version
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Install site dependencies
+        run: pnpm install --frozen-lockfile --filter ./npm/site...
 
       - name: Build static site
         run: pnpm run build:static
