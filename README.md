@@ -25,6 +25,7 @@ It ships with **370+ built-in templates** covering a huge range of
 technologies, frameworks, and services — and you can add your own
 without recompiling.
 
+> [!NOTE]
 > **Current version: 0.3.18**
 
 ## Features
