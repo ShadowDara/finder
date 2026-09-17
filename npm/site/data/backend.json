@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-09-16T14:09:54.519Z",
+  "generatedAt": "2026-09-17T12:28:01.450Z",
   "total": {
     "files": 181,
-    "bytes": 35433761,
-    "kilobytes": 34603.28,
-    "megabytes": 33.79
+    "bytes": 35447279,
+    "kilobytes": 34616.48,
+    "megabytes": 33.81
   },
   "byExtension": [
     {
       "extension": ".js",
       "files": 128,
-      "bytes": 34428393,
-      "percentage": 97.16
+      "bytes": 34430582,
+      "percentage": 97.13
     },
     {
       "extension": ".wasm",
@@ -22,7 +22,7 @@
     {
       "extension": ".css",
       "files": 18,
-      "bytes": 367482,
+      "bytes": 370251,
       "percentage": 1.04
     },
     {
@@ -38,15 +38,15 @@
       "percentage": 0.06
     },
     {
+      "extension": ".txt",
+      "files": 1,
+      "bytes": 10666,
+      "percentage": 0.03
+    },
+    {
       "extension": ".svg",
       "files": 1,
       "bytes": 5213,
-      "percentage": 0.01
-    },
-    {
-      "extension": ".txt",
-      "files": 1,
-      "bytes": 2106,
       "percentage": 0.01
     }
   ],
@@ -64,7 +64,7 @@
     {
       "path": "assets/monaco.js",
       "extension": ".js",
-      "bytes": 4941518
+      "bytes": 4941515
     },
     {
       "path": "monacoeditorwork/css.worker.bundle.js",
@@ -164,7 +164,7 @@
     {
       "path": "assets/_virtual_page-markdown_readme.js",
       "extension": ".js",
-      "bytes": 25738
+      "bytes": 25861
     },
     {
       "path": "assets/tsMode.js",
@@ -172,14 +172,14 @@
       "bytes": 22056
     },
     {
+      "path": "assets/creator.js",
+      "extension": ".js",
+      "bytes": 19225
+    },
+    {
       "path": "assets/solidity.js",
       "extension": ".js",
       "bytes": 18459
-    },
-    {
-      "path": "assets/creator.js",
-      "extension": ".js",
-      "bytes": 17157
     },
     {
       "path": "assets/powerquery.js",
@@ -222,6 +222,11 @@
       "bytes": 10726
     },
     {
+      "path": "dependencies.txt",
+      "extension": ".txt",
+      "bytes": 10666
+    },
+    {
       "path": "assets/sql.js",
       "extension": ".js",
       "bytes": 10159
@@ -234,7 +239,7 @@
     {
       "path": "assets/main_entry.js",
       "extension": ".js",
-      "bytes": 9797
+      "bytes": 9798
     },
     {
       "path": "assets/clojure.js",
@@ -280,6 +285,11 @@
       "path": "gitviewer/index.html",
       "extension": ".html",
       "bytes": 8281
+    },
+    {
+      "path": "assets/creator.css",
+      "extension": ".css",
+      "bytes": 8185
     },
     {
       "path": "assets/perl.js",
@@ -355,11 +365,6 @@
       "path": "assets/regexcreator.css",
       "extension": ".css",
       "bytes": 5380
-    },
-    {
-      "path": "assets/creator.css",
-      "extension": ".css",
-      "bytes": 5365
     },
     {
       "path": "favicon.svg",
@@ -644,17 +649,12 @@
     {
       "path": "assets/markdownstyle.css",
       "extension": ".css",
-      "bytes": 2194
+      "bytes": 2143
     },
     {
       "path": "assets/graphql.js",
       "extension": ".js",
       "bytes": 2122
-    },
-    {
-      "path": "dependencies.txt",
-      "extension": ".txt",
-      "bytes": 2106
     },
     {
       "path": "assets/cameligo.js",
