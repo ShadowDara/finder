@@ -19,26 +19,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10
-          package_json_file: npm/site/package.json
-
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
           node-version: 22
-          cache: pnpm
-          cache-dependency-path: npm/site/pnpm-lock.yaml
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Check versions
+        run: |
+          node --version
+          pnpm --version
 
       - name: Install dependencies
-        working-directory: npm/site
         run: pnpm install --frozen-lockfile
 
       - name: Build static site
-        working-directory: npm/site
         run: pnpm run build:static
+        working-directory: npm/site
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
