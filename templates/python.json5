@@ -8,5 +8,6 @@
     "tags": [
         "python"
     ],
-    "min_version": "0.3.16"
+    "min_version": "0.3.16",
+    "description": "Template for a project which uses python"
 }

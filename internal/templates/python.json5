@@ -1,1 +1,1 @@
-{"files":["requirements.txt","*.py"],"folders":[],"min_version":"0.3.16","name":"*","tags":["python"]}
+{"description":"Template for a project which uses python","files":["requirements.txt","*.py"],"folders":[],"min_version":"0.3.16","name":"*","tags":["python"]}
