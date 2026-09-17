@@ -10,7 +10,10 @@ test:
 
 # Build the Program in Debug Mode
 build:
-	go build ./cmd/finder
+	echo "Building the containers"
+	go build -ldflags="-s -w" ./cmd/finder
+	go build -ldflags="-s -w" ./cmd/findergen
+	go build -ldflags="-s -w" ./cmd/csf
 
 # Build a Release
 release:

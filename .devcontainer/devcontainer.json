@@ -4,7 +4,10 @@
         "dockerfile": "Dockerfile"
     },
     "features": {
-        "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+        "ghcr.io/devcontainers/features/node:1": {
+            "version": "24"
+        },
     },
     "customizations": {
         "vscode": {
@@ -25,5 +28,5 @@
     "forwardPorts": [
         8080
     ],
-    "postCreateCommand": "go mod download"
+    "postCreateCommand": "go mod download && make"
 }

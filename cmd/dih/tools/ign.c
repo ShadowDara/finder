@@ -138,7 +138,7 @@ int line_exists(const char *filename, const char *line)
 int ign_main(int argc, char *argv[])
 {
     // Check for arguments
-    if (argc < 2)
+    if (argc < 1)
     {
         printf("Please run with at least one argument or -h.\n");
         return 1;
@@ -209,7 +209,9 @@ int ign_main(int argc, char *argv[])
     for (int i = 1; i < argc; i++)
     {
         if (strcmp(argv[i], "--help") == 0)
+        {
             continue;
+        }
 
         char entry[PATH_MAX_LEN];
         snprintf(entry, sizeof(entry), "%s/%s", relative, argv[i]);

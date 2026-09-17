@@ -13,8 +13,12 @@
 int cli(int argc, const char *argv[])
 {
     SubCommand subcommands[] = {
-        {"help", handle_help}, {"init", handle_init}, {"build", handle_build},
-        {"run", handle_run},   {"m", handle_cmo},     {"ign", handle_ign},
+        {"help", "help message", handle_help},
+        {"init", "init", handle_init},
+        {"build", "build", handle_build},
+        {"run", "run", handle_run},
+        {"m", "cmo", handle_cmo},
+        {"ign", "ign", handle_ign},
     };
 
     Command command = {.name = "dih",
@@ -27,10 +31,12 @@ int cli(int argc, const char *argv[])
         {
             if (strcmp(argv[1], command.subcommands[i].name) == 0)
             {
-                return command.subcommands[i].handler(argc - 2, argv + 2);
+                return command.subcommands[i].handler(argc - 1, argv + 1);
             }
         }
     }
+
+    argparser_help(&command);
 
     return 1;
 }
