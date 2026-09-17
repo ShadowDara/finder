@@ -1,8 +1,8 @@
-import { escapeHtml, jsx, raw, Fragment } from "../src/jsx-runtime";
+import { escapeHtml, jsx, raw, Fragment } from "@twine/core/jsx-runtime";
 import { parseMarkdown } from "@shadowdara/dlib";
 import "./viewer.css";
 import builtinTemplates from "../src/templates.js";
-import { SERVER_ADRESS } from "../src/vars.js";
+import { isStatic, SERVER_ADRESS } from "../src/vars.js";
 
 export interface ServerResponse {
   count_templates: number;
@@ -20,8 +20,6 @@ let adress = "/api/template/load/all";
 if (import.meta.env.DEV) {
   adress = SERVER_ADRESS + "/api/template/load/all";
 }
-
-const isStatic = import.meta.env.MODE === "static";
 
 export default function render(el: HTMLDivElement) {
   if (isStatic) {

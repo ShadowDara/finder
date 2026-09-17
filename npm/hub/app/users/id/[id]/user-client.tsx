@@ -7,20 +7,23 @@ import { TemplateView } from "@/components/template-view";
 type TemplateDetail = {
   id: string;
   name: string;
+  slug?: string;
   content: string;
   updatedAt: string;
   tags: string[];
-  user: { id: string; name: string; email: string };
+  user: { id: string; name: string; username?: string; email: string };
 };
 
 type UserData = {
   id: string;
+  username?: string;
   name: string;
   image: string | null;
   createdAt: string;
   templates: {
     id: string;
     name: string;
+    slug?: string;
     updatedAt: string;
     tags: string[];
   }[];
@@ -49,7 +52,7 @@ export function UserClient({ user }: { user: UserData }) {
         </div>
         <div>
           <p className="eyebrow">Creator-Profil</p>
-          <h1>{user.name || "Unbekannter User"}</h1>
+          <h1>{user.username ?? user.name ?? "Unbekannter User"}</h1>
           <p className="muted">{user.templates.length} öffentliche Templates</p>
         </div>
       </section>
@@ -79,18 +82,38 @@ export function UserClient({ user }: { user: UserData }) {
                   Aktualisiert{" "}
                   {new Date(template.updatedAt).toLocaleDateString("de-DE")}
                 </p>
-                <button
-                  className="button button-outline"
-                  onClick={() => open(template.id)}
-                >
-                  Template ansehen
-                </button>
+                <div className="card-actions">
+                  <button
+                    className="button button-outline"
+                    onClick={() => open(template.id)}
+                  >
+                    Template ansehen
+                  </button>
+                  <a
+                    className="button button-outline"
+                    href={`/t/${user.username ?? user.id}/${template.slug ?? template.id}.json5`}
+                  >
+                    Download
+                  </a>
+                </div>
               </article>
             ))}
           </div>
         )}
       </section>
-      <TemplateView template={selected} onClose={() => setSelected(null)} />
+      <TemplateView
+        template={
+          selected
+            ? {
+                ...selected,
+                username: selected.user.username,
+                slug: selected.slug ?? selected.id,
+              }
+            : null
+        }
+        onClose={() => setSelected(null)}
+        showclose={false}
+      />
     </main>
   );
 }

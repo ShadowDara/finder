@@ -1,5 +1,5 @@
 import { zipSync, unzipSync } from "fflate";
-import { VfsError, VfsNotFoundError, VfsExistsError } from "../errors.js";
+import { VfsError, VfsNotFoundError, VfsExistsError } from "./errors.js";
 import type {
   NodeId,
   VNode,
@@ -14,7 +14,7 @@ import type {
   WriteFileOptions,
   ImportZipOptions,
   SerializedVfs,
-} from "../types.js";
+} from "./types.js";
 
 const textEncoder = new TextEncoder();
 const textDecoder = new TextDecoder();

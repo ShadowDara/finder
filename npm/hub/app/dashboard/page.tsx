@@ -16,6 +16,7 @@ export default async function DashboardPage() {
   const initialTemplates = templates.map((t) => ({
     id: t.id,
     name: t.name,
+    slug: t.slug,
     content: t.content,
     updatedAt: t.updatedAt.toISOString(),
   }));
@@ -23,6 +24,7 @@ export default async function DashboardPage() {
   return (
     <DashboardClient
       userId={session.user.id}
+      username={session.user.username}
       userEmail={session.user.email}
       initialTemplates={initialTemplates}
     />

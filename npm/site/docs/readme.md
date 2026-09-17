@@ -23,7 +23,7 @@ It ships with **370+ built-in templates** covering a huge range of
 technologies, frameworks, and services — and you can add your own
 without recompiling.
 
-> **Current version: 0.3.17**
+> **Current version: 0.3.18**
 
 ## Features
 
@@ -32,6 +32,8 @@ without recompiling.
 - **Custom templates** — drop `.json5` files into
   `~/.finder/templates/` or `./.finder/templates/` and they are
   loaded automatically. User templates can override built-in ones.
+- **Template aliases** — map short names (and start-path prefixes)
+  to templates with `finder alias`. Stored in `~/.finder/aliases.json`.
 - **Regex support** — use regular expressions in template patterns
   for advanced matching.
 - **Async search** — searches all drives (Windows) or root `/`
@@ -116,18 +118,26 @@ finder git
 
 ### Commands
 
-| Command                  | Aliases   | Description                                |
-| ------------------------ | --------- | ------------------------------------------ |
-| `finder <template>`      |           | Search for projects matching a template    |
-| `finder check`           |           | Validate all built-in and custom templates |
-| `finder validate`        | `val`     | Validate a single template file            |
-| `finder list`            | `ls`      | List all available templates               |
-| `finder tags`            | `tag`     | Show all tags in the console               |
-| `finder -t <tag>`        |           | Search for templates by tag                |
-| `finder -b`              |           | Search for executables in your `$PATH`     |
-| `finder cp`              |           | Print the path to the global config file   |
-| `finder version`         | `-v`, `v` | Print the current version                  |
-| `finder template <name>` | `tpl`     | Search using an explicit template name     |
+| Command                           | Aliases           | Description                                        |
+| --------------------------------- | ----------------- | -------------------------------------------------- |
+| `finder <template>`               |                   | Search for projects matching a template            |
+| `finder check`                    |                   | Validate all built-in and custom templates         |
+| `finder validate`                 | `val`             | Validate a single template file                    |
+| `finder list`                     | `ls`              | List all available templates                       |
+| `finder tags`                     | `tag`             | Show all tags in the console                       |
+| `finder -t <tag>`                 |                   | Search for templates by tag                        |
+| `finder -b`                       |                   | Search for executables in your `$PATH`             |
+| `finder cp`                       |                   | Print the path to the global config file           |
+| `finder version`                  | `-v`, `v`         | Print the current version                          |
+| `finder template <name>`          | `tpl`             | Search using an explicit template name             |
+| `finder view <name>`              |                   | View the content of a template in the command line |
+| `finder install <url-or-name>`    | `i`               | Install a template from the web                    |
+| `finder list-installed`           | `installed`, `li` | List installed (downloaded) templates              |
+| `finder uninstall <name>`         | `uni`             | Uninstall an installed template                    |
+| `finder alias <alias> <template>` |                   | Create a short name for a template                 |
+| `finder unalias <alias>`          | `alias-remove`    | Remove a template alias                            |
+| `finder aliases`                  | `alias-list`      | List all template aliases                          |
+| `finder cache-size`               | `cachesize`, `cs` | Print the size of the Finder cache                 |
 
 ### Global flags
 
@@ -164,6 +174,10 @@ finder -t python
 
 # List all templates
 finder list
+
+# Create a short alias for an installed template, then search with it
+finder alias myvue shadowdara.github.io/test/template
+finder myvue
 ```
 
 ### Validate a single template
@@ -190,6 +204,50 @@ depends on JSON5 features (e.g. unquoted keys):
 File                       Result     Warning
 my-template.json5          OK (File)  Template is not plain JSON - it needs the JSON5 preprocessor to be parsed
 ```
+
+### Template aliases
+
+Aliases are **not** a field inside a template file. They are
+user-defined short names stored in `~/.finder/aliases.json` and
+managed with the CLI. This is especially useful for installed
+templates, whose names keep the URL-derived path
+(e.g. `shadowdara.github.io/test/template`).
+
+```sh
+# Create an alias
+finder alias myvue shadowdara.github.io/test/template
+
+# Search / view using the alias (resolved before the template is loaded)
+finder myvue
+finder view myvue
+
+# List aliases
+finder aliases
+
+# Remove an alias
+finder unalias myvue
+```
+
+An alias whose name ends with `/` is a **start-path alias**. It
+expands a prefix of the searched name; the rest is appended to the
+target:
+
+```sh
+finder alias s/ shadowdara.github.io/templates/
+finder s/test
+# → searches shadowdara.github.io/templates/test
+```
+
+Rules:
+
+- Resolution is single-level (no alias chains).
+- An exact alias match is tried first; otherwise the longest matching
+  start-path prefix (keys ending with `/`) wins.
+- Alias names cannot contain `\` or inner `/`. The only allowed slash
+  is a single trailing `/` for start-path aliases.
+- Overwriting an existing alias is allowed (upsert).
+- `finder s/` alone resolves to the start path itself (without a
+  trailing slash).
 
 ## Templates
 
@@ -246,6 +304,12 @@ A full template with all supported fields:
 ```
 
 ### Custom templates
+
+> [!IMPORTANT]
+> Starting with Finder version 0.3.18, Finder supports the following template file extensions: [`.json`, `.jsonc`, `.json5`]
+
+> [!WARNING]
+> Starting with finder version 0.3.25 (not released yet), running a template which end with `.json5` while create a warning
 
 Place your own `.json5` template files in:
 
@@ -439,6 +503,12 @@ go run ./cmd/finder list
 - Add new templates via PR. Keep them in JSON5 and provide a short
   description of what the template matches.
 - Feel free to contribute code improvements or new features.
+
+### Clone the Repo
+
+```sh
+git clone --depth=1 https://github.com/shadowdara/finder
+```
 
 ## Roadmap
 

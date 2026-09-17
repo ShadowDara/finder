@@ -1,10 +1,67 @@
 {
-  "name": "@shadowdara/ssg-pages-plugin",
+  "name": "@twine/core",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "keywords": [],
-  "author": "",
+  "description": "A Vite SSG plugin that turns .ts/.tsx pages, Markdown docs and Liquid/EJS templates into a multi-page static build with a virtual:pages module.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./jsx-runtime": {
+      "types": "./dist/jsx-runtime.d.ts",
+      "import": "./dist/jsx-runtime.js"
+    },
+    "./styles": {
+      "types": "./dist/styles.d.ts",
+      "import": "./dist/styles.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "vite",
+    "plugin",
+    "ssg",
+    "static-site",
+    "pages",
+    "markdown",
+    "liquid",
+    "ejs"
+  ],
+  "author": "Shadowdara",
   "license": "Apache-2.0",
-  "type": "module"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shadowdara/finder",
+    "directory": "npm/pages-plugin"
+  },
+  "bugs": {
+    "url": "https://github.com/shadowdara/finder/issues"
+  },
+  "peerDependencies": {
+    "vite": ">=5.0.0"
+  },
+  "dependencies": {
+    "@shadowdara/dlib": "^0.0.4",
+    "ejs": "^6.0.1",
+    "highlight.js": "^11.12.0",
+    "html-minifier-terser": "^7.2.0",
+    "liquidjs": "^10.29.0",
+    "tsx": "^4.23.13"
+  },
+  "devDependencies": {
+    "@types/ejs": "^3.1.5",
+    "@types/html-minifier-terser": "^7.0.2",
+    "@types/node": "^26.5.0",
+    "typescript": "^5.5.0",
+    "vite": "6.4.3"
+  }
 }

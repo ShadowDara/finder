@@ -1,4 +1,3 @@
-import { jsx, Fragment } from "../../src/jsx-runtime";
 import {
   generateInstallerScript,
   type BinarySpec,
@@ -8,6 +7,7 @@ import {
   type TargetOS,
 } from "../../src/lib/installer";
 import "./installscript.css";
+import { jsx, Fragment } from "@twine/core/jsx-runtime";
 
 class ValidationError extends Error {}
 
@@ -641,20 +641,21 @@ export default function buildPage(app: HTMLElement): void {
 
         <h3>Ausführen</h3>
         <p>
-          Nach dem Generieren kannst du das Skript direkt im Terminal
-          ausführen. Am einfachsten mit:
+          Nach dem Generieren kannst du das Skript direkt im Terminal ausführen.
+          Am einfachsten mit:
         </p>
-        <pre><code>sh install.sh</code></pre>
-        <p>
-          Oder erst ausführbar machen und dann starten (Linux/macOS):
-        </p>
-        <pre><code>chmod +x install.sh
-./install.sh</code></pre>
+        <pre>
+          <code>sh install.sh</code>
+        </pre>
+        <p>Oder erst ausführbar machen und dann starten (Linux/macOS):</p>
+        <pre>
+          <code>chmod +x install.sh ./install.sh</code>
+        </pre>
         <p>
           Das Skript lädt das passende Archiv für dein System (Linux/macOS und
           Architektur) herunter, entpackt es und installiert die Binaries nach{" "}
-          <code>$HOME/.local/&lt;app&gt;/bin</code>. Anschließend trägt es diesen
-          Ordner in den PATH deiner Shell-RC ein (z.B.{" "}
+          <code>$HOME/.local/&lt;app&gt;/bin</code>. Anschließend trägt es
+          diesen Ordner in den PATH deiner Shell-RC ein (z.B.{" "}
           <code>~/.bashrc</code> oder <code>~/.zshrc</code>).
         </p>
 
@@ -663,9 +664,13 @@ export default function buildPage(app: HTMLElement): void {
           Damit der PATH-Update wirkt, starte eine neue Shell oder lade deine
           Konfiguration neu:
         </p>
-        <pre><code>source ~/.bashrc</code></pre>
+        <pre>
+          <code>source ~/.bashrc</code>
+        </pre>
         <p>Danach sollte der Befehl direkt verfügbar sein:</p>
-        <pre><code>&lt;app&gt; --help</code></pre>
+        <pre>
+          <code>&lt;app&gt; --help</code>
+        </pre>
 
         <h3>Installationstypen wählen</h3>
         <p>
@@ -674,9 +679,13 @@ export default function buildPage(app: HTMLElement): void {
           werden soll. Für eine automatisierte Installation kannst du den Typ
           direkt angeben:
         </p>
-        <pre><code>sh install.sh -t minimal</code></pre>
+        <pre>
+          <code>sh install.sh -t minimal</code>
+        </pre>
         <p>Alle verfügbaren Typen anzeigen:</p>
-        <pre><code>sh install.sh --list</code></pre>
+        <pre>
+          <code>sh install.sh --list</code>
+        </pre>
 
         <h3>Neueste Version installieren</h3>
         <p>
@@ -684,25 +693,36 @@ export default function buildPage(app: HTMLElement): void {
           Skript beim Ausführen die aktuellste Version automatisch von der
           GitHub-API. Alternativ kannst du das auch manuell erzwingen:
         </p>
-        <pre><code>sh install.sh --latest</code></pre>
+        <pre>
+          <code>sh install.sh --latest</code>
+        </pre>
 
         <h3>Zielverzeichnis ändern</h3>
-        <p>Standard ist <code>$HOME/.local/&lt;app&gt;</code>. Mit <code>--prefix</code> kannst du ein anderes Ziel wählen:</p>
-        <pre><code>sh install.sh --prefix /opt/mein-app</code></pre>
+        <p>
+          Standard ist <code>$HOME/.local/&lt;app&gt;</code>. Mit{" "}
+          <code>--prefix</code> kannst du ein anderes Ziel wählen:
+        </p>
+        <pre>
+          <code>sh install.sh --prefix /opt/mein-app</code>
+        </pre>
 
         <h3>Ohne Ladeanimation</h3>
         <p>
           In Skripten oder CI-Umgebungen (ohne TTY) werden Animationen
           automatisch deaktiviert. Du kannst sie aber auch explizit abschalten:
         </p>
-        <pre><code>sh install.sh --no-animation</code></pre>
+        <pre>
+          <code>sh install.sh --no-animation</code>
+        </pre>
 
         <h3>Per curl direkt installieren</h3>
         <p>
-          Wenn du das Skript irgendwo gehostet hast, kann man es direkt von
-          dort ausführen, ohne es erst herunterzuladen:
+          Wenn du das Skript irgendwo gehostet hast, kann man es direkt von dort
+          ausführen, ohne es erst herunterzuladen:
         </p>
-        <pre><code>curl -fsSL https://example.com/install.sh | sh</code></pre>
+        <pre>
+          <code>curl -fsSL https://example.com/install.sh | sh</code>
+        </pre>
         <p>
           Achtung: Bei dieser Variante läuft das Skript ohne TTY, also
           automatisch nicht-interaktiv (es wird der erste Installationstyp

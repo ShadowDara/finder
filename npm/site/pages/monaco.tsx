@@ -1,4 +1,4 @@
-import { jsx, Fragment } from "../src/jsx-runtime";
+import { jsx, Fragment } from "@twine/core/jsx-runtime";
 import * as monaco from "monaco-editor";
 import "./monaco.css";
 import { jsToFling } from "js-to-fling";
@@ -7,7 +7,7 @@ import { Registry } from "monaco-textmate";
 import { wireTmGrammars } from "monaco-editor-textmate";
 import onigasmWasm from "onigasm/lib/onigasm.wasm?url";
 import * as shikiLangs from "@shikijs/langs";
-import flingTm from "./../data/fling/fling.tmLanguage.json";
+import flingTm from "./../data/fling.tmLanguage.json";
 
 const DEFAULT_VALUE = `// examples/example1.ts
 // A tour of the subset this compiler supports. Compile with:

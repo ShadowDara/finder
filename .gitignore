@@ -45,3 +45,8 @@ npm/site/tsconfig.tsbuildinfo
 *.vsix
 /npm/fling-vscode/node_modules
 /npm/site/data/fling
+/npm/pages-plugin/node_modules
+/npm/pages-plugin/dist
+/npm/hub/.claude
+/npm/hub/.windsurf
+/npm/hub/.agents

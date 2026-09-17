@@ -20,6 +20,45 @@ import (
 	"github.com/shadowdara/finder/pub/json5"
 )
 
+// View a Template
+func View(searchTemplate string) string {
+	// Replace the template name with a user-defined alias, if present
+	searchTemplate = ResolveAlias(searchTemplate)
+
+	// Load all template names (built-in + custom) — used for error output
+	templateNames, userTemplates, err := templates.LoadAllWithUserTemplates()
+	templateName := searchTemplate
+	if err != nil {
+		log.Fatalf("%sCould not load templates: %v%s\n", color.Red, err, color.Reset)
+	}
+
+	// Load the template — user templates take precedence over built-ins
+	data, err := templates.JSONtemplateLoaderWithUserTemplates(templateName, userTemplates)
+	if err != nil {
+		// Template not found: helpful error message listing all available templates
+		fmt.Printf("%sTemplate '%s' not found.%s\n", color.Red, templateName, color.Reset)
+		fmt.Printf("Available templates: %s\n", color.Yellow)
+		for i, t := range templateNames {
+			if i > 0 {
+				fmt.Print(", ")
+			}
+			fmt.Print(t)
+		}
+		fmt.Printf("%s\n", color.Reset)
+		return ""
+	}
+
+	strrrr := structure.LoadJSON5(string(data))
+	returnJSON, err := json.Marshal(strrrr)
+	if err != nil {
+		log.Printf("%sCould not encode template: %v%s\n", color.Red, err, color.Reset)
+		return ""
+	}
+
+	return string(returnJSON)
+
+}
+
 // Search is the main search function: it searches the filesystem for
 // folders that match the given template.
 //

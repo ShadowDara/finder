@@ -13,6 +13,7 @@
   "dependencies": {
     "@base-ui/react": "^1.5.0",
     "@monaco-editor/react": "^4.7.0",
+    "@prisma/adapter-pg": "^7.10.0",
     "@prisma/client": "^7.10.0",
     "@shadowdara/dlib": "^0.0.4",
     "@shadowdara/finder-lib": "0.3.17",

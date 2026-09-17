@@ -1,5 +1,5 @@
-export { VirtualFileSystem } from "../vfs.js";
-export { VfsError, VfsNotFoundError, VfsExistsError } from "../errors.js";
+export { VirtualFileSystem } from "./vfs.js";
+export { VfsError, VfsNotFoundError, VfsExistsError } from "./errors.js";
 export type {
   NodeId,
   VNode,
@@ -16,4 +16,4 @@ export type {
   WriteFileOptions,
   ImportZipOptions,
   SerializedVfs,
-} from "../types.js";
+} from "./types.js";

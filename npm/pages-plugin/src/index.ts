@@ -6,7 +6,9 @@ import { minify } from "html-minifier-terser";
 import { parseMarkdown } from "@shadowdara/dlib";
 import { transformWithEsbuild } from "vite";
 import { tsImport } from "tsx/esm/api";
-import { escapeHtml } from "./src/jsx-runtime";
+import { escapeHtml } from "./jsx-runtime.js";
+// export { jsx, Fragment, raw, escapeHtml } from "./jsx-runtime.js";
+export type { HtmlValue } from "./jsx-runtime.js";
 import hljs from "highlight.js/lib/common";
 import { Liquid } from "liquidjs";
 import ejs from "ejs";
@@ -104,6 +106,24 @@ export interface PagesPluginOptions {
   title?: (id: string) => string;
 
   /**
+   * Extra HTML to inject into the `<head>` of every emitted page — e.g.
+   * favicon links, `<meta name="description">`, Open Graph tags, …
+   *
+   * Can be:
+   *
+   * - a static string applied to every page
+   * - a record mapping page id → head HTML (missing ids get nothing)
+   * - a function receiving the page id → head HTML
+   *
+   * The result is inserted as-is (raw HTML) into the page shell right
+   * after the style tags, both in the default template and in custom
+   * `template` implementations via `ctx.head`.
+   *
+   * @default ""
+   */
+  head?: string | Record<string, string> | ((id: string) => string);
+
+  /**
    * Wrap/replace the emitted HTML shell entirely. Receives the computed
    * script/style tags and page metadata; must return a full HTML document.
    * Falls back to a minimal built-in template.
@@ -128,6 +148,14 @@ export interface PagesPluginOptions {
    * @default true
    */
   dts?: boolean;
+
+  /**
+   * Where to write the ambient `pages.d.ts` declaration (relative to
+   * `config.root`). Ignored when `dts` is `false`.
+   *
+   * @default "src/pages.d.ts"
+   */
+  dtsPath?: string;
 
   /** Skip a file (by page id) from becoming a page. Default: ids starting with "_". */
   ignore?: (id: string) => boolean;
@@ -202,6 +230,15 @@ export interface PagesPluginOptions {
    * @default "src/templates"
    */
   liquidTemplateRoot?: string;
+
+  /**
+   * Module specifier injected into every `.tsx` page so the JSX factory
+   * (`jsx`/`Fragment`) is available. Defaults to the jsx-runtime shipped
+   * with this package.
+   *
+   * @default "@twine/core/jsx-runtime"
+   */
+  jsxRuntimePath?: string;
 }
 
 export interface PageRenderContext {
@@ -210,6 +247,13 @@ export interface PageRenderContext {
   globalVar: string;
   scriptTag: string;
   styleTag: string;
+
+  /**
+   * Extra `<head>` HTML (favicon, meta description, …) computed from the
+   * plugin's `head` option for the current page. Insert it into the
+   * `<head>` of a custom `template`.
+   */
+  head: string;
 
   /**
    * Pre-rendered body content (e.g. Liquid pages). When set, the template
@@ -259,6 +303,9 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
     "/node_modules/",
     "/src/",
     "/__devframes_plugin_terminals/",
+    "/__devtools-vite/",
+    "/__devtools-rolldown/",
+    "/__devtools-oxc/",
     ...(options.ignoredPathnames ?? []),
   ].filter((prefix, index, prefixes) => prefixes.indexOf(prefix) === index);
   const splitMarkdown = options.splitMarkdown ?? false;
@@ -277,8 +324,23 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
   const shouldIgnore =
     options.ignore ?? ((id: string) => id.split("/").pop()!.startsWith("_"));
   const getTitle = options.title ?? ((id: string) => id);
+  const getHead = (id: string): string => {
+    const head = options.head;
+
+    if (typeof head === "function") {
+      return head(id);
+    }
+
+    if (head && typeof head === "object") {
+      return head[id] ?? "";
+    }
+
+    return head ?? "";
+  };
   const writeDts = options.dts ?? true;
+  const dtsPathOpt = options.dtsPath ?? "src/pages.d.ts";
   const liquidTemplateRoot = options.liquidTemplateRoot ?? "src/templates";
+  const jsxRuntimePath = options.jsxRuntimePath ?? "@twine/core/jsx-runtime";
 
   let config: ResolvedConfig;
   let pages: PageEntry[] = [];
@@ -555,8 +617,10 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
       })
       .filter((page) => !shouldIgnore(page.id));
 
-    // Template pages: every `X.html` / `X.ejs` that has a sibling
-    // `X.build.[tj]s` becomes a build-time-rendered template page.
+    // Template pages: every `X.html` / `X.ejs` becomes a build-time
+    // rendered template page. A sibling `X.build.[tj]s` is optional —
+    // it only supplies the render data via its `build()` export. Without
+    // it the template renders with an empty context.
     //
     // - .html => Liquid
     // - .ejs  => EJS
@@ -576,14 +640,6 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
       }
 
       if (componentPages.some((page) => page.id === id)) {
-        continue;
-      }
-
-      const buildFile = [".ts", ".tsx", ".js", ".jsx"]
-        .map((ext) => file.slice(0, -".html".length) + `.build${ext}`)
-        .find((candidate) => fs.existsSync(candidate));
-
-      if (!buildFile) {
         continue;
       }
 
@@ -618,14 +674,6 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
       }
 
       if (componentPages.some((page) => page.id === id)) {
-        continue;
-      }
-
-      const buildFile = [".ts", ".tsx", ".js", ".jsx"]
-        .map((ext) => file.slice(0, -".ejs".length) + `.build${ext}`)
-        .find((candidate) => fs.existsSync(candidate));
-
-      if (!buildFile) {
         continue;
       }
 
@@ -793,7 +841,7 @@ ${entries}
 `;
   }
   function writeTypeDeclaration() {
-    const dtsPath = path.resolve(config.root, "src/pages.d.ts");
+    const dtsPath = path.resolve(config.root, dtsPathOpt);
 
     const content = `// Auto-generated by vite-plugin-pages-ssg. Do not edit by hand.
 
@@ -892,6 +940,7 @@ declare module "virtual:pages" {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${escapeHtml(ctx.title)}</title>
   ${ctx.styleTag}
+  ${ctx.head}
 </head>
 <body>
 ${ctx.content}
@@ -907,6 +956,7 @@ ${ctx.content}
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${escapeHtml(ctx.title)}</title>
   ${ctx.styleTag}
+  ${ctx.head}
 </head>
 <body>
   <div id="app"></div>
@@ -1158,12 +1208,51 @@ ${ctx.content}
             return;
           }
 
+          /*
+           * EJS pages: same pre-rendered flow as Liquid — serve the
+           * rendered content with JS_SCRIPT replaced by the client entry.
+           */
+          if (page.type === "ejs") {
+            const scriptTag =
+              page.scriptSource && !isBuildDataFile(page.scriptSource)
+                ? `<script type="module" src="/${path
+                    .relative(config.root, page.scriptSource)
+                    .replace(/\\/g, "/")}"></script>`
+                : "";
+
+            let content =
+              page.html
+                ?.replaceAll(LIQUID_SCRIPT_PLACEHOLDER, scriptTag)
+                .replaceAll("{{ JS_SCRIPT }}", scriptTag) ?? "";
+
+            if (options.minify) {
+              content = await minify(content, {
+                collapseWhitespace: true,
+                removeComments: true,
+                removeRedundantAttributes: true,
+                removeEmptyAttributes: true,
+                useShortDoctype: true,
+                minifyCSS: true,
+                minifyJS: true,
+              });
+            }
+
+            const transformed = await server.transformIndexHtml(url, content);
+
+            res.statusCode = 200;
+            res.setHeader("Content-Type", "text/html; charset=utf-8");
+            res.end(transformed);
+
+            return;
+          }
+
           const ctx: PageRenderContext = {
             id: page.id,
             title: getTitle(page.id),
             globalVar,
             scriptTag: `<script type="module" src="${entry}"></script>`,
             styleTag: "",
+            head: getHead(page.id),
           };
 
           const html = (options.template ?? defaultTemplate)(ctx);
@@ -1192,6 +1281,7 @@ ${ctx.content}
           globalVar,
           scriptTag: `<script type="module" src="${entry}"></script>`,
           styleTag: "",
+          head: getHead("__404__"),
         };
 
         const html = (options.template ?? defaultTemplate)(ctx);
@@ -1248,11 +1338,9 @@ ${ctx.content}
         sourcemap: true,
       });
 
-      const runtimePath = path.resolve(config.root, "src/jsx-runtime.ts");
-
       return {
         code: [
-          `import { jsx, Fragment } from ${JSON.stringify(runtimePath)};`,
+          `import { jsx, Fragment } from ${JSON.stringify(jsxRuntimePath)};`,
           result.code,
         ].join("\n"),
         map: result.map as any,
@@ -1429,9 +1517,64 @@ ${ctx.content}
           continue;
         }
 
-        // EJS: already rendered in preparePages() into page.html
+        // EJS: already rendered in preparePages() into page.html.
+        // Same script-injection flow as Liquid: compile the client
+        // page script and replace the JS_SCRIPT placeholder.
         if (page.type === "ejs") {
-          let ejsHtml = page.html ?? "";
+          let scriptTagForContent = "";
+
+          if (
+            page.scriptSource &&
+            !isBuildDataFile(page.scriptSource) &&
+            fs.existsSync(page.scriptSource)
+          ) {
+            const scriptSourceCode = fs.readFileSync(page.scriptSource, "utf8");
+
+            const scriptExtension = path
+              .extname(page.scriptSource)
+              .slice(1)
+              .toLowerCase();
+
+            const loader =
+              scriptExtension === "ts" || scriptExtension === "tsx"
+                ? "ts"
+                : scriptExtension === "jsx"
+                  ? "jsx"
+                  : "js";
+
+            const result = await transformWithEsbuild(
+              scriptSourceCode,
+              page.scriptSource,
+              {
+                loader,
+                target: "esnext",
+                minify: true,
+              },
+            );
+
+            const scriptName = path.basename(
+              page.scriptSource,
+              path.extname(page.scriptSource),
+            );
+
+            const scriptFileName = `assets/${scriptName}.js`;
+
+            this.emitFile({
+              type: "asset",
+              fileName: scriptFileName,
+              source: result.code,
+            });
+
+            scriptTagForContent = `<script type="module" src="${getAssetPath(
+              htmlFileName,
+              scriptFileName,
+            )}"></script>`;
+          }
+
+          let ejsHtml =
+            page.html
+              ?.replaceAll(LIQUID_SCRIPT_PLACEHOLDER, scriptTagForContent)
+              .replaceAll("{{ JS_SCRIPT }}", scriptTagForContent) ?? "";
 
           if (options.minify) {
             ejsHtml = await minify(ejsHtml, {
@@ -1460,6 +1603,7 @@ ${ctx.content}
           globalVar,
           scriptTag,
           styleTag,
+          head: getHead(page.id),
         };
 
         let html = (options.template ?? defaultTemplate)(ctx);

@@ -1,0 +1,882 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Commit Graph</title>
+    <script src="chart.umd.min.js"></script>
+    <style>
+      :root {
+        --bg: #0f1115;
+        --panel: #171a21;
+        --panel-2: #1e2229;
+        --border: #2a2f3a;
+        --text: #e6e8eb;
+        --text-dim: #9aa2af;
+        --accent: #5b9dff;
+        --accent-2: #7ee3a8;
+        --danger: #ff6b6b;
+        --radius: 10px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+          Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+      }
+      header {
+        padding: 20px 28px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      header h1 {
+        font-size: 18px;
+        margin: 0;
+        font-weight: 600;
+      }
+      header .dot {
+        color: var(--accent);
+      }
+      .layout {
+        display: grid;
+        grid-template-columns: 340px 1fr;
+        gap: 0;
+        min-height: calc(100vh - 65px);
+      }
+      .sidebar {
+        padding: 20px;
+        border-right: 1px solid var(--border);
+        background: var(--panel);
+        overflow-y: auto;
+      }
+      .main {
+        padding: 20px 28px;
+      }
+      .field {
+        margin-bottom: 16px;
+      }
+      .field label {
+        display: block;
+        font-size: 12px;
+        color: var(--text-dim);
+        margin-bottom: 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+      .field input[type="text"],
+      .field input[type="date"],
+      .field input[type="number"],
+      .field select {
+        width: 100%;
+        padding: 9px 10px;
+        background: var(--panel-2);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        color: var(--text);
+        font-size: 13px;
+      }
+      .field input:focus,
+      .field select:focus {
+        outline: none;
+        border-color: var(--accent);
+      }
+      .row2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .checkbox-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        color: var(--text-dim);
+      }
+      .checkbox-row input {
+        width: auto;
+      }
+      button.primary {
+        width: 100%;
+        padding: 11px;
+        background: var(--accent);
+        color: #06101f;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        margin-top: 6px;
+      }
+      button.primary:hover {
+        filter: brightness(1.08);
+      }
+      button.primary:disabled {
+        opacity: 0.5;
+        cursor: default;
+      }
+      .hint {
+        font-size: 11px;
+        color: var(--text-dim);
+        margin-top: 4px;
+        line-height: 1.4;
+      }
+      .status {
+        margin-top: 12px;
+        font-size: 13px;
+        padding: 10px 12px;
+        border-radius: 8px;
+        display: none;
+      }
+      .status.error {
+        display: block;
+        background: rgba(255, 107, 107, 0.12);
+        color: var(--danger);
+        border: 1px solid rgba(255, 107, 107, 0.3);
+      }
+      .status.info {
+        display: block;
+        background: rgba(91, 157, 255, 0.1);
+        color: var(--accent);
+        border: 1px solid rgba(91, 157, 255, 0.25);
+      }
+
+      .tabs {
+        display: flex;
+        gap: 6px;
+        margin-bottom: 18px;
+        border-bottom: 1px solid var(--border);
+      }
+      .tab {
+        padding: 9px 16px;
+        cursor: pointer;
+        color: var(--text-dim);
+        font-size: 13px;
+        border-bottom: 2px solid transparent;
+      }
+      .tab.active {
+        color: var(--text);
+        border-bottom-color: var(--accent);
+      }
+      .view {
+        display: none;
+      }
+      .view.active {
+        display: block;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+      .stat-card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 14px 16px;
+      }
+      .stat-card .val {
+        font-size: 22px;
+        font-weight: 700;
+      }
+      .stat-card .lbl {
+        font-size: 12px;
+        color: var(--text-dim);
+        margin-top: 2px;
+      }
+
+      .chart-card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 20px;
+        height: 440px;
+        position: relative;
+      }
+      .empty {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        color: var(--text-dim);
+        font-size: 14px;
+        text-align: center;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      /* heatmap */
+      .heatmap-wrap {
+        overflow-x: auto;
+      }
+      table.heatmap {
+        border-collapse: collapse;
+        margin-top: 10px;
+      }
+      table.heatmap th,
+      table.heatmap td {
+        padding: 0;
+        text-align: center;
+        font-size: 10px;
+        color: var(--text-dim);
+      }
+      table.heatmap th {
+        padding-bottom: 4px;
+        font-weight: 400;
+      }
+      table.heatmap td.cell {
+        width: 22px;
+        height: 22px;
+        border-radius: 4px;
+        border: 1px solid var(--bg);
+      }
+      table.heatmap td.rowlabel {
+        padding-right: 8px;
+        white-space: nowrap;
+        text-align: right;
+      }
+
+      .legend {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11px;
+        color: var(--text-dim);
+        margin-top: 14px;
+      }
+      .legend .sq {
+        width: 12px;
+        height: 12px;
+        border-radius: 3px;
+      }
+
+      .author-list {
+        margin-top: 16px;
+      }
+      .author-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 8px;
+      }
+      .author-row .name {
+        width: 160px;
+        font-size: 13px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .author-row .bar-bg {
+        flex: 1;
+        background: var(--panel-2);
+        border-radius: 4px;
+        height: 14px;
+        overflow: hidden;
+      }
+      .author-row .bar-fill {
+        background: var(--accent);
+        height: 100%;
+      }
+      .author-row .count {
+        width: 44px;
+        text-align: right;
+        font-size: 12px;
+        color: var(--text-dim);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1><span class="dot">●</span> Commit Graph</h1>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="field">
+          <label>Repository-Pfad (auf dem Server)</label>
+          <input type="text" id="repoPath" placeholder="/home/user/mein-repo" />
+          <div class="hint">
+            Absoluter Pfad zu einem lokalen Git-Repository, das der Server lesen
+            kann.
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Branch</label>
+          <select id="branchSelect">
+            <option value="--all">Alle Branches</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Autor</label>
+          <select id="authorSelect">
+            <option value="">Alle Autoren</option>
+          </select>
+        </div>
+
+        <div class="field row2">
+          <div>
+            <label>Seit</label>
+            <input type="date" id="sinceDate" />
+          </div>
+          <div>
+            <label>Bis</label>
+            <input type="date" id="untilDate" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Gruppierung (Zeitverlauf)</label>
+          <select id="granularity">
+            <option value="hour">Stunde</option>
+            <option value="day" selected>Tag</option>
+            <option value="week">Woche</option>
+            <option value="month">Monat</option>
+            <option value="year">Jahr</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Diagrammtyp</label>
+          <select id="chartType">
+            <option value="bar" selected>Balken</option>
+            <option value="line">Linie</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Nachricht enthält</label>
+          <input
+            type="text"
+            id="grepFilter"
+            placeholder="z.B. fix, feature ..."
+          />
+        </div>
+
+        <div class="field">
+          <label>Dateipfad-Filter</label>
+          <input
+            type="text"
+            id="filePathFilter"
+            placeholder="z.B. src/main.go"
+          />
+        </div>
+
+        <div class="field">
+          <label>Top N Autoren (Autoren-Ansicht)</label>
+          <input type="number" id="topN" value="10" min="1" max="50" />
+        </div>
+
+        <div class="field checkbox-row">
+          <input type="checkbox" id="noMerges" />
+          <label style="margin: 0; text-transform: none; letter-spacing: 0"
+            >Merge-Commits ausschließen</label
+          >
+        </div>
+
+        <button class="primary" id="loadBtn">Repository laden</button>
+        <div class="status" id="status"></div>
+      </aside>
+
+      <main class="main">
+        <div class="tabs">
+          <div class="tab active" data-view="timeline">Zeitverlauf</div>
+          <div class="tab" data-view="heatmap">Heatmap</div>
+          <div class="tab" data-view="authors">Autoren</div>
+        </div>
+
+        <div class="stats" id="stats" style="display: none">
+          <div class="stat-card">
+            <div class="val" id="statTotal">–</div>
+            <div class="lbl">Commits</div>
+          </div>
+          <div class="stat-card">
+            <div class="val" id="statAuthors">–</div>
+            <div class="lbl">Autoren</div>
+          </div>
+          <div class="stat-card">
+            <div class="val" id="statRange">–</div>
+            <div class="lbl">Zeitraum</div>
+          </div>
+          <div class="stat-card">
+            <div class="val" id="statAvg">–</div>
+            <div class="lbl">Ø Commits / Tag</div>
+          </div>
+        </div>
+
+        <div class="view active" id="view-timeline">
+          <div class="chart-card">
+            <canvas id="timelineChart" style="display: none"></canvas>
+            <div class="empty" id="timelineEmpty">
+              <div>Noch keine Daten.</div>
+              <div>
+                Repository-Pfad eingeben und "Repository laden" klicken.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="view" id="view-heatmap">
+          <div class="chart-card" style="height: auto; min-height: 300px">
+            <div class="heatmap-wrap" id="heatmapWrap">
+              <div class="empty"><div>Noch keine Daten.</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="view" id="view-authors">
+          <div class="chart-card" style="height: auto; min-height: 300px">
+            <div class="author-list" id="authorList">
+              <div class="empty"><div>Noch keine Daten.</div></div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      let commits = [];
+      let chartInstance = null;
+
+      const $ = (id) => document.getElementById(id);
+
+      // ---------- Tabs ----------
+      document.querySelectorAll(".tab").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          document
+            .querySelectorAll(".tab")
+            .forEach((t) => t.classList.remove("active"));
+          document
+            .querySelectorAll(".view")
+            .forEach((v) => v.classList.remove("active"));
+          tab.classList.add("active");
+          $("view-" + tab.dataset.view).classList.add("active");
+        });
+      });
+
+      function setStatus(msg, type) {
+        const el = $("status");
+        el.textContent = msg;
+        el.className = "status " + (type || "info");
+      }
+      function clearStatus() {
+        const el = $("status");
+        el.className = "status";
+        el.textContent = "";
+      }
+
+      // ---------- Loading repo ----------
+      $("loadBtn").addEventListener("click", loadRepo);
+
+      async function loadRepo() {
+        const path = $("repoPath").value.trim();
+        if (!path) {
+          setStatus("Bitte einen Repository-Pfad angeben.", "error");
+          return;
+        }
+
+        const btn = $("loadBtn");
+        btn.disabled = true;
+        setStatus("Lade Repository ...", "info");
+
+        try {
+          const valid = await fetchJSON(
+            "/api/validate?path=" + encodeURIComponent(path),
+          );
+          if (!valid.valid) throw new Error("Kein gültiges Git-Repository");
+
+          const [branches, authors] = await Promise.all([
+            fetchJSON("/api/branches?path=" + encodeURIComponent(path)),
+            fetchJSON("/api/authors?path=" + encodeURIComponent(path)),
+          ]);
+          populateSelect($("branchSelect"), branches, "--all", "Alle Branches");
+          populateSelect($("authorSelect"), authors, "", "Alle Autoren");
+
+          await fetchCommits();
+          clearStatus();
+        } catch (e) {
+          setStatus("Fehler: " + e.message, "error");
+        } finally {
+          btn.disabled = false;
+        }
+      }
+
+      function populateSelect(select, items, defaultValue, defaultLabel) {
+        select.innerHTML = "";
+        const def = document.createElement("option");
+        def.value = defaultValue;
+        def.textContent = defaultLabel;
+        select.appendChild(def);
+        items.forEach((item) => {
+          const opt = document.createElement("option");
+          opt.value = item;
+          opt.textContent = item;
+          select.appendChild(opt);
+        });
+      }
+
+      async function fetchJSON(url) {
+        const res = await fetch(url);
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Unbekannter Fehler");
+        return data;
+      }
+
+      // re-fetch commits whenever a filter changes (after initial load)
+      [
+        "branchSelect",
+        "authorSelect",
+        "sinceDate",
+        "untilDate",
+        "grepFilter",
+        "filePathFilter",
+        "noMerges",
+      ].forEach((id) => {
+        $(id).addEventListener("change", () => {
+          if (repoLoaded()) fetchCommits();
+        });
+      });
+      ["granularity", "chartType"].forEach((id) => {
+        $(id).addEventListener("change", () => {
+          if (commits.length || repoLoaded()) renderAll();
+        });
+      });
+      $("topN").addEventListener("change", () => {
+        if (commits.length) renderAuthors();
+      });
+
+      function repoLoaded() {
+        return $("repoPath").value.trim() !== "";
+      }
+
+      async function fetchCommits() {
+        const path = $("repoPath").value.trim();
+        const params = new URLSearchParams({ path });
+        const branch = $("branchSelect").value;
+        if (branch) params.set("branch", branch);
+        const author = $("authorSelect").value;
+        if (author) params.set("author", author);
+        const since = $("sinceDate").value;
+        if (since) params.set("since", since);
+        const until = $("untilDate").value;
+        if (until) params.set("until", until);
+        const grep = $("grepFilter").value.trim();
+        if (grep) params.set("grep", grep);
+        const filePath = $("filePathFilter").value.trim();
+        if (filePath) params.set("filePath", filePath);
+        if ($("noMerges").checked) params.set("noMerges", "true");
+
+        setStatus("Lade Commits ...", "info");
+        commits = await fetchJSON("/api/commits?" + params.toString());
+        clearStatus();
+        renderAll();
+      }
+
+      // ---------- Rendering orchestration ----------
+      function renderAll() {
+        renderStats();
+        renderTimeline();
+        renderHeatmap();
+        renderAuthors();
+      }
+
+      function renderStats() {
+        const statsEl = $("stats");
+        if (!commits.length) {
+          statsEl.style.display = "none";
+          return;
+        }
+        statsEl.style.display = "grid";
+
+        $("statTotal").textContent = commits.length.toLocaleString("de-DE");
+
+        const authorSet = new Set(commits.map((c) => c.author));
+        $("statAuthors").textContent = authorSet.size;
+
+        const dates = commits
+          .map((c) => new Date(c.date))
+          .sort((a, b) => a - b);
+        const first = dates[0],
+          last = dates[dates.length - 1];
+        $("statRange").textContent = fmtDate(first) + " – " + fmtDate(last);
+
+        const days = Math.max(1, (last - first) / 86400000);
+        $("statAvg").textContent = (commits.length / days).toFixed(1);
+      }
+
+      function fmtDate(d) {
+        return d.toLocaleDateString("de-DE", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+        });
+      }
+
+      // ---------- Timeline ----------
+      function bucketKey(date, granularity) {
+        const d = new Date(date);
+        switch (granularity) {
+          case "hour": {
+            const k = new Date(
+              d.getFullYear(),
+              d.getMonth(),
+              d.getDate(),
+              d.getHours(),
+            );
+            return k;
+          }
+          case "day":
+            return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+          case "week": {
+            const day = d.getDay() === 0 ? 7 : d.getDay(); // Monday=1..Sunday=7
+            const monday = new Date(
+              d.getFullYear(),
+              d.getMonth(),
+              d.getDate() - (day - 1),
+            );
+            return monday;
+          }
+          case "month":
+            return new Date(d.getFullYear(), d.getMonth(), 1);
+          case "year":
+            return new Date(d.getFullYear(), 0, 1);
+          default:
+            return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+        }
+      }
+
+      function stepDate(d, granularity) {
+        const nd = new Date(d);
+        switch (granularity) {
+          case "hour":
+            nd.setHours(nd.getHours() + 1);
+            break;
+          case "day":
+            nd.setDate(nd.getDate() + 1);
+            break;
+          case "week":
+            nd.setDate(nd.getDate() + 7);
+            break;
+          case "month":
+            nd.setMonth(nd.getMonth() + 1);
+            break;
+          case "year":
+            nd.setFullYear(nd.getFullYear() + 1);
+            break;
+        }
+        return nd;
+      }
+
+      function labelFor(d, granularity) {
+        switch (granularity) {
+          case "hour":
+            return (
+              d.toLocaleString("de-DE", {
+                day: "2-digit",
+                month: "2-digit",
+                hour: "2-digit",
+              }) + "h"
+            );
+          case "day":
+            return d.toLocaleDateString("de-DE", {
+              day: "2-digit",
+              month: "2-digit",
+              year: "2-digit",
+            });
+          case "week":
+            return "KW " + isoWeek(d) + " " + d.getFullYear();
+          case "month":
+            return d.toLocaleDateString("de-DE", {
+              month: "short",
+              year: "numeric",
+            });
+          case "year":
+            return String(d.getFullYear());
+        }
+      }
+
+      function isoWeek(d) {
+        const date = new Date(
+          Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()),
+        );
+        const dayNum = date.getUTCDay() || 7;
+        date.setUTCDate(date.getUTCDate() + 4 - dayNum);
+        const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
+        return Math.ceil(((date - yearStart) / 86400000 + 1) / 7);
+      }
+
+      function renderTimeline() {
+        const canvas = $("timelineChart");
+        const empty = $("timelineEmpty");
+        if (!commits.length) {
+          canvas.style.display = "none";
+          empty.style.display = "flex";
+          if (chartInstance) {
+            chartInstance.destroy();
+            chartInstance = null;
+          }
+          return;
+        }
+        canvas.style.display = "block";
+        empty.style.display = "none";
+
+        const granularity = $("granularity").value;
+        const buckets = new Map();
+        commits.forEach((c) => {
+          const key = bucketKey(c.date, granularity).getTime();
+          buckets.set(key, (buckets.get(key) || 0) + 1);
+        });
+
+        const keys = Array.from(buckets.keys()).sort((a, b) => a - b);
+        const start = new Date(keys[0]);
+        const end = new Date(keys[keys.length - 1]);
+
+        const labels = [];
+        const values = [];
+        let cursor = new Date(start);
+        while (cursor <= end) {
+          const k = cursor.getTime();
+          labels.push(labelFor(cursor, granularity));
+          values.push(buckets.get(k) || 0);
+          cursor = stepDate(cursor, granularity);
+        }
+
+        if (chartInstance) chartInstance.destroy();
+        const type = $("chartType").value;
+        chartInstance = new Chart(canvas.getContext("2d"), {
+          type: type,
+          data: {
+            labels,
+            datasets: [
+              {
+                label: "Commits",
+                data: values,
+                backgroundColor: "rgba(91,157,255,0.55)",
+                borderColor: "#5b9dff",
+                borderWidth: type === "line" ? 2 : 1,
+                borderRadius: type === "bar" ? 3 : 0,
+                tension: 0.25,
+                fill: type === "line",
+                pointRadius: type === "line" ? (values.length > 80 ? 0 : 2) : 0,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+              x: {
+                ticks: {
+                  color: "#9aa2af",
+                  maxRotation: 60,
+                  autoSkip: true,
+                  maxTicksLimit: 24,
+                },
+                grid: { color: "#2a2f3a" },
+              },
+              y: {
+                beginAtZero: true,
+                ticks: { color: "#9aa2af", precision: 0 },
+                grid: { color: "#2a2f3a" },
+              },
+            },
+          },
+        });
+      }
+
+      // ---------- Heatmap (Wochentag x Stunde) ----------
+      function renderHeatmap() {
+        const wrap = $("heatmapWrap");
+        if (!commits.length) {
+          wrap.innerHTML =
+            '<div class="empty"><div>Noch keine Daten.</div></div>';
+          return;
+        }
+        const dayNames = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
+        const grid = Array.from({ length: 7 }, () => Array(24).fill(0));
+        commits.forEach((c) => {
+          const d = new Date(c.date);
+          const dow = (d.getDay() + 6) % 7; // Monday=0
+          grid[dow][d.getHours()]++;
+        });
+        const max = Math.max(1, ...grid.flat());
+
+        let html = '<table class="heatmap"><thead><tr><th></th>';
+        for (let h = 0; h < 24; h++) html += `<th>${h}</th>`;
+        html += "</tr></thead><tbody>";
+        for (let d = 0; d < 7; d++) {
+          html += `<tr><td class="rowlabel">${dayNames[d]}</td>`;
+          for (let h = 0; h < 24; h++) {
+            const v = grid[d][h];
+            const alpha = v === 0 ? 0.06 : 0.15 + 0.85 * (v / max);
+            html += `<td class="cell" style="background: rgba(91,157,255,${alpha.toFixed(2)});" title="${dayNames[d]} ${h}:00 – ${v} Commits"></td>`;
+          }
+          html += "</tr>";
+        }
+        html += "</tbody></table>";
+        html += `<div class="legend"><span>Wenig</span>
+    <span class="sq" style="background:rgba(91,157,255,0.1)"></span>
+    <span class="sq" style="background:rgba(91,157,255,0.4)"></span>
+    <span class="sq" style="background:rgba(91,157,255,0.7)"></span>
+    <span class="sq" style="background:rgba(91,157,255,1)"></span>
+    <span>Viel</span></div>`;
+        wrap.innerHTML = html;
+      }
+
+      // ---------- Authors ----------
+      function renderAuthors() {
+        const container = $("authorList");
+        if (!commits.length) {
+          container.innerHTML =
+            '<div class="empty"><div>Noch keine Daten.</div></div>';
+          return;
+        }
+        const counts = new Map();
+        commits.forEach((c) =>
+          counts.set(c.author, (counts.get(c.author) || 0) + 1),
+        );
+        const topN = parseInt($("topN").value, 10) || 10;
+        const sorted = Array.from(counts.entries())
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, topN);
+        const max = sorted.length ? sorted[0][1] : 1;
+
+        container.innerHTML = sorted
+          .map(
+            ([name, count]) => `
+    <div class="author-row">
+      <div class="name" title="${escapeHtml(name)}">${escapeHtml(name)}</div>
+      <div class="bar-bg"><div class="bar-fill" style="width:${((count / max) * 100).toFixed(1)}%"></div></div>
+      <div class="count">${count}</div>
+    </div>
+  `,
+          )
+          .join("");
+      }
+
+      function escapeHtml(s) {
+        return s.replace(
+          /[&<>"']/g,
+          (m) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            })[m],
+        );
+      }
+    </script>
+  </body>
+</html>

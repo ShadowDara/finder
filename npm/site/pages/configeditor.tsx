@@ -1,5 +1,5 @@
 // Passe die Imports unten an die Pfade deines Projekts an.
-import { jsx } from "../src/jsx-runtime";
+import { jsx } from "@twine/core/jsx-runtime";
 import renderEditor from "../src/configeditor/render";
 import "./configeditor.css";
 

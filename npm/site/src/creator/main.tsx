@@ -1,5 +1,11 @@
-import { jsx } from "../jsx-runtime";
-import type { Existence, FileNode, FolderJSON, FolderNode } from "./types";
+import type {
+  Existence,
+  FileNode,
+  FolderNode,
+  SizeConstraint,
+  SizeType,
+  TemplateJSON,
+} from "./types";
 import {
   decodeMarkdownNote,
   encodeMarkdownNote,
@@ -15,7 +21,10 @@ import {
 } from "./state";
 import { SERVER_ADRESS } from "../vars";
 import { highlightFinderTemplate } from "@shadowdara/finder-lib/highlight";
+import { jsx } from "@twine/core/jsx-runtime";
+import { parseMarkdown } from "@shadowdara/dlib";
 // import "highlight.js/styles/github-dark.css";
+import "./../markdownstyle.css";
 
 export function renderCreator(app: HTMLDivElement, version: string) {
   type Selection = { kind: "folder" | "file"; id: string } | null;
@@ -69,7 +78,7 @@ export function renderCreator(app: HTMLDivElement, version: string) {
             id="btn-back-to-origin"
             class="btn btn-ghost"
             type="button"
-            href={`${origin_link}?template=${encodeURIComponent(JSON.stringify(serializeFolder(root, true)))}&name=${filname}`}
+            href={`${origin_link}?template=${encodeURIComponent(JSON.stringify(serializeFolder(root)))}&name=${filname}`}
           >
             Go back to origin
           </a>
@@ -117,6 +126,20 @@ export function renderCreator(app: HTMLDivElement, version: string) {
         </section>
       </main>
 
+      <div id="markdown-floating-preview" class="markdown-floating-preview">
+        <div id="markdown-floating-header" class="markdown-floating-header">
+          <span>Markdown Preview</span>
+          <button id="markdown-floating-close" type="button">
+            ×
+          </button>
+        </div>
+
+        <div
+          id="markdown-floating-content"
+          class="markdown-floating-content markdown"
+        ></div>
+      </div>
+
       <dialog id="import-dialog" class="import-dialog">
         <form method="dialog" class="import-form">
           <h3>Import a template</h3>
@@ -145,9 +168,9 @@ export function renderCreator(app: HTMLDivElement, version: string) {
   );
 
   async function saveTemplateToBackend(name: string): Promise<void> {
-    const payload: { name: string; content: FolderJSON } = {
+    const payload: { name: string; content: TemplateJSON } = {
       name,
-      content: serializeFolder(root, true),
+      content: serializeFolder(root),
     };
 
     console.log(payload);
@@ -219,10 +242,71 @@ export function renderCreator(app: HTMLDivElement, version: string) {
     "#btn-back-to-origin",
   );
 
+  const markdownFloatingPreview = document.querySelector<HTMLDivElement>(
+    "#markdown-floating-preview",
+  )!;
+
+  const markdownFloatingHeader = document.querySelector<HTMLDivElement>(
+    "#markdown-floating-header",
+  )!;
+
+  const markdownFloatingContent = document.querySelector<HTMLDivElement>(
+    "#markdown-floating-content",
+  )!;
+
+  const markdownFloatingClose = document.querySelector<HTMLButtonElement>(
+    "#markdown-floating-close",
+  )!;
+
+  function renderMarkdownPreview(): void {
+    const folder =
+      selection?.kind === "folder" ? findFolder(root, selection.id) : null;
+
+    const markdown = folder?.markdownNote ?? "";
+
+    markdownFloatingContent.innerHTML = parseMarkdown(markdown);
+  }
+
+  let dragging = false;
+  let dragOffsetX = 0;
+  let dragOffsetY = 0;
+
+  markdownFloatingHeader.addEventListener("pointerdown", (event) => {
+    if ((event.target as HTMLElement).closest("button")) {
+      return;
+    }
+
+    dragging = true;
+
+    const rect = markdownFloatingPreview.getBoundingClientRect();
+
+    dragOffsetX = event.clientX - rect.left;
+    dragOffsetY = event.clientY - rect.top;
+
+    markdownFloatingHeader.setPointerCapture(event.pointerId);
+  });
+
+  markdownFloatingHeader.addEventListener("pointermove", (event) => {
+    if (!dragging) return;
+
+    markdownFloatingPreview.style.left = `${event.clientX - dragOffsetX}px`;
+
+    markdownFloatingPreview.style.top = `${event.clientY - dragOffsetY}px`;
+  });
+
+  markdownFloatingHeader.addEventListener("pointerup", () => {
+    dragging = false;
+  });
+
+  markdownFloatingClose.addEventListener("click", () => {
+    markdownFloatingPreview.hidden = true;
+  });
+
   function render(): void {
     renderTree();
     renderInspector();
     renderPreview();
+    renderMarkdownPreview();
     updateOriginLink();
   }
 
@@ -231,7 +315,7 @@ export function renderCreator(app: HTMLDivElement, version: string) {
   // root serialisiert wird und nicht der Stand vom ersten Rendering.
   function updateOriginLink(): void {
     if (!originLinkEl || !origin_link) return;
-    originLinkEl.href = `${origin_link}?template=${encodeURIComponent(JSON.stringify(serializeFolder(root, true)))}&name=${filname}`;
+    originLinkEl.href = `${origin_link}?template=${encodeURIComponent(JSON.stringify(serializeFolder(root)))}&name=${filname}`;
   }
 
   // ---------- Tree ----------
@@ -410,9 +494,11 @@ export function renderCreator(app: HTMLDivElement, version: string) {
   }
 
   function sizeFields(
-    size: { min?: number; max?: number } | null,
-    onChange: (size: { min?: number; max?: number } | null) => void,
+    size: SizeConstraint | null,
+    onChange: (size: SizeConstraint | null) => void,
   ): HTMLDivElement {
+    const SIZE_UNITS = ["B", "KB", "MB", "GB"] as const;
+
     const container = document.createElement("div");
     container.className = "size-fields";
 
@@ -433,29 +519,67 @@ export function renderCreator(app: HTMLDivElement, version: string) {
 
     const minInput = document.createElement("input");
     minInput.type = "number";
-    minInput.placeholder = "min bytes";
+    minInput.placeholder = "min";
     minInput.value = size?.min?.toString() ?? "";
+
+    const minUnit = document.createElement("select");
+    for (const u of SIZE_UNITS) {
+      const opt = document.createElement("option");
+      opt.value = u;
+      opt.textContent = u;
+      minUnit.appendChild(opt);
+    }
+    minUnit.value = size?.min_size_type ?? "B";
 
     const maxInput = document.createElement("input");
     maxInput.type = "number";
-    maxInput.placeholder = "max bytes";
+    maxInput.placeholder = "max";
     maxInput.value = size?.max?.toString() ?? "";
+
+    const maxUnit = document.createElement("select");
+    for (const u of SIZE_UNITS) {
+      const opt = document.createElement("option");
+      opt.value = u;
+      opt.textContent = u;
+      maxUnit.appendChild(opt);
+    }
+    maxUnit.value = size?.max_size_type ?? "B";
 
     function emit() {
       const min = minInput.value === "" ? undefined : Number(minInput.value);
       const max = maxInput.value === "" ? undefined : Number(maxInput.value);
-      onChange({ min, max });
+      const minSizeType = minUnit.value as SizeType;
+      const maxSizeType = maxUnit.value as SizeType;
+      onChange({
+        min,
+        max,
+        min_size_type: minSizeType,
+        max_size_type: maxSizeType,
+      });
     }
 
     minInput.addEventListener("input", emit);
     maxInput.addEventListener("input", emit);
+    minUnit.addEventListener("change", emit);
+    maxUnit.addEventListener("change", emit);
     range.appendChild(minInput);
+    range.appendChild(minUnit);
     range.appendChild(maxInput);
+    range.appendChild(maxUnit);
     container.appendChild(range);
 
     checkbox.addEventListener("change", () => {
       range.hidden = !checkbox.checked;
-      onChange(checkbox.checked ? { min: undefined, max: undefined } : null);
+      onChange(
+        checkbox.checked
+          ? {
+              min: undefined,
+              max: undefined,
+              min_size_type: "B",
+              max_size_type: "B",
+            }
+          : null,
+      );
     });
 
     return container;
@@ -528,23 +652,27 @@ export function renderCreator(app: HTMLDivElement, version: string) {
               folder.nameRegex = v;
               renderPreview();
             },
-            '^project-[0-9]+$',
+            "^project-[0-9]+$",
           ),
           "Optional Go regex (RE2) matched against the name instead of the glob.",
         ),
       );
 
-      inspectorEl.appendChild(
-        labeled(
-          "Description",
-          textArea(folder.description, (v) => {
-            folder.description = v;
-            renderPreview();
-          }),
-        ),
-      );
-
+      // Root-only metadata: description, min_version, tags and the markdown
+      // note are only valid on the root per the finder schema. Nested
+      // folders carry just name / name_regex / files / folders / command /
+      // invert_command / size.
       if (isRoot) {
+        inspectorEl.appendChild(
+          labeled(
+            "Description",
+            textArea(folder.description, (v) => {
+              folder.description = v;
+              renderPreview();
+            }),
+          ),
+        );
+
         inspectorEl.appendChild(
           labeled(
             "Minimum finder version",
@@ -559,39 +687,46 @@ export function renderCreator(app: HTMLDivElement, version: string) {
             "Old templates without a matching version will warn the user.",
           ),
         );
+
+        const markdownTextArea = textArea(
+          folder.markdownNote,
+          (v) => {
+            folder.markdownNote = v;
+            renderPreview();
+          },
+          "# Kurze Beschreibung …\n\nOptional: weitere Details zu diesem Template",
+        );
+        markdownTextArea.rows = 6;
+        const noteField = labeled(
+          "Markdown note",
+          markdownTextArea,
+          "Wird percent-encodiert (wie encodeURIComponent, z.B. neue Zeilen als %0A) im Feld mdnote gespeichert.",
+        );
+
+        markdownTextArea.addEventListener("input", () => {
+          renderNotePreview();
+
+          markdownFloatingPreview.hidden = false;
+          renderMarkdownPreview();
+        });
+
+        const notePreview = document.createElement("code");
+        notePreview.className = "note-mdnote-preview";
+
+        const noteFolder = folder; // narrowed non-null reference for closures
+
+        function renderNotePreview(): void {
+          const note = encodeMarkdownNote(noteFolder.markdownNote);
+          notePreview.textContent = note ? `mdnote: "${note}"` : "";
+        }
+
+        markdownTextArea.addEventListener("input", () => {
+          renderNotePreview();
+        });
+
+        noteField.appendChild(notePreview);
+        inspectorEl.appendChild(noteField);
       }
-
-      const markdownTextArea = textArea(
-        folder.markdownNote,
-        (v) => {
-          folder.markdownNote = v;
-          renderPreview();
-        },
-        "# Kurze Beschreibung …\n\nOptional: weitere Details zu diesem Template",
-      );
-      markdownTextArea.rows = 6;
-      const noteField = labeled(
-        "Markdown note",
-        markdownTextArea,
-        "Wird percent-encodiert (wie encodeURIComponent, z.B. neue Zeilen als %0A) im Feld mdnote gespeichert.",
-      );
-
-      const notePreview = document.createElement("code");
-      notePreview.className = "note-mdnote-preview";
-
-      const noteFolder = folder; // narrowed non-null reference for closures
-
-      function renderNotePreview(): void {
-        const note = encodeMarkdownNote(noteFolder.markdownNote);
-        notePreview.textContent = note ? `mdnote: "${note}"` : "";
-      }
-
-      markdownTextArea.addEventListener("input", () => {
-        renderNotePreview();
-      });
-
-      noteField.appendChild(notePreview);
-      inspectorEl.appendChild(noteField);
 
       inspectorEl.appendChild(
         labeled(
@@ -623,23 +758,25 @@ export function renderCreator(app: HTMLDivElement, version: string) {
       );
       inspectorEl.appendChild(invertLabel);
 
-      inspectorEl.appendChild(
-        labeled(
-          "Tags",
-          textInput(
-            folder.tags.join(", "),
-            (v) => {
-              folder.tags = v
-                .split(",")
-                .map((t) => t.trim())
-                .filter(Boolean);
-              renderPreview();
-            },
-            "backend, node, monorepo",
+      if (isRoot) {
+        inspectorEl.appendChild(
+          labeled(
+            "Tags",
+            textInput(
+              folder.tags.join(", "),
+              (v) => {
+                folder.tags = v
+                  .split(",")
+                  .map((t) => t.trim())
+                  .filter(Boolean);
+                renderPreview();
+              },
+              "backend, node, monorepo",
+            ),
+            "Comma-separated.",
           ),
-          "Comma-separated.",
-        ),
-      );
+        );
+      }
 
       inspectorEl.appendChild(
         labeled(
@@ -691,7 +828,7 @@ export function renderCreator(app: HTMLDivElement, version: string) {
             file.nameRegex = v;
             renderPreview();
           },
-          '^(main|app|server)\\.py$',
+          "^(main|app|server)\\.py$",
         ),
         "Optional Go regex (RE2) matched against the file name instead of the glob.",
       ),
@@ -743,7 +880,7 @@ export function renderCreator(app: HTMLDivElement, version: string) {
   // ---------- Preview ----------
 
   function renderPreview(): void {
-    const json = serializeFolder(root, true);
+    const json = serializeFolder(root);
     previewEl.innerHTML = highlightFinderTemplate(
       JSON.stringify(json, null, 2),
     );
@@ -777,7 +914,7 @@ export function renderCreator(app: HTMLDivElement, version: string) {
   document
     .querySelector<HTMLButtonElement>("#btn-download")!
     .addEventListener("click", () => {
-      const json = serializeFolder(root, true);
+      const json = serializeFolder(root);
       const blob = new Blob([JSON.stringify(json, null, 2)], {
         type: "application/json",
       });
@@ -791,7 +928,7 @@ export function renderCreator(app: HTMLDivElement, version: string) {
 
   // Extract the markdown note from a parsed template so the import dialog
   // (which uses JSON.parse directly) also gets the note.
-  function applyNoteFromRaw(raw: FolderJSON): void {
+  function applyNoteFromRaw(raw: TemplateJSON): void {
     const rawWithNote = raw as unknown as { mdnote?: unknown };
     if (typeof rawWithNote.mdnote === "string") {
       root.markdownNote = decodeMarkdownNote(rawWithNote.mdnote);

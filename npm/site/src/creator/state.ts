@@ -5,7 +5,8 @@ import type {
   FileNode,
   FolderJSON,
   FolderNode,
-  Size as SizeConstraint,
+  SizeConstraint,
+  TemplateJSON,
 } from "./types";
 
 let counter = 0;
@@ -113,10 +114,20 @@ function serializeSize(
   size: SizeConstraint | null,
 ): SizeConstraint | undefined {
   if (!size) return undefined;
-  if (size.mix === undefined && size.max === undefined) return undefined;
+  if (size.min === undefined && size.max === undefined) return undefined;
   const out: SizeConstraint = {};
-  if (size.mix !== undefined) out.mix = size.mix;
-  if (size.max !== undefined) out.max = size.max;
+  if (size.min !== undefined) {
+    out.min = size.min;
+    if (size.min_size_type && size.min_size_type !== "B") {
+      out.min_size_type = size.min_size_type;
+    }
+  }
+  if (size.max !== undefined) {
+    out.max = size.max;
+    if (size.max_size_type && size.max_size_type !== "B") {
+      out.max_size_type = size.max_size_type;
+    }
+  }
   return out;
 }
 
@@ -154,8 +165,13 @@ function serializeChecksums(
   return out;
 }
 
-export function serializeFolder(folder: FolderNode, isRoot = true): FolderJSON {
-  const out: FolderJSON = { name: folder.name };
+/**
+ * Serialize the root folder into the full template JSON. Only the root
+ * carries the root-only metadata (description, min_version, tags, mdnote);
+ * nested folders are serialized via `serializeChildFolder`.
+ */
+export function serializeFolder(folder: FolderNode): TemplateJSON {
+  const out: TemplateJSON = { name: folder.name };
 
   if (folder.nameRegex.trim()) out.name_regex = folder.nameRegex.trim();
   if (folder.description.trim()) out.description = folder.description;
@@ -164,19 +180,35 @@ export function serializeFolder(folder: FolderNode, isRoot = true): FolderJSON {
   if (folder.tags.length > 0) out.tags = folder.tags;
   if (folder.files.length > 0) out.files = folder.files.map(serializeFile);
   if (folder.folders.length > 0) {
-    out.folders = folder.folders.map((f) => serializeFolder(f, false));
+    out.folders = folder.folders.map(serializeChildFolder);
   }
-  if (isRoot && folder.minVersion.trim()) {
-    out.min_version = folder.minVersion.trim();
-  }
+  if (folder.minVersion.trim()) out.min_version = folder.minVersion.trim();
   const size = serializeSize(folder.size);
   if (size) out.size = size;
 
-  // Only the root carries the markdown note.
-  if (isRoot) {
-    const note = encodeMarkdownNote(folder.markdownNote);
-    if (note) out.mdnote = note;
+  const note = encodeMarkdownNote(folder.markdownNote);
+  if (note) out.mdnote = note;
+
+  return out;
+}
+
+/**
+ * Serialize a nested folder. Only fields that are valid on every nesting
+ * level end up here (name, name_regex, command, invert_command, files,
+ * folders, size) — root-only metadata never leaks into subfolders.
+ */
+function serializeChildFolder(folder: FolderNode): FolderJSON {
+  const out: FolderJSON = { name: folder.name };
+
+  if (folder.nameRegex.trim()) out.name_regex = folder.nameRegex.trim();
+  if (folder.command.trim()) out.command = folder.command;
+  if (folder.invertCommand) out.invert_command = true;
+  if (folder.files.length > 0) out.files = folder.files.map(serializeFile);
+  if (folder.folders.length > 0) {
+    out.folders = folder.folders.map(serializeChildFolder);
   }
+  const size = serializeSize(folder.size);
+  if (size) out.size = size;
 
   return out;
 }
@@ -201,7 +233,14 @@ function parseFiles(raw: unknown): FileNode[] {
       name: e.name ?? "",
       nameRegex: e.name_regex ?? "",
       existence: e.existence ?? "required",
-      size: e.size ? { min: e.size.mix, max: e.size.max } : null,
+      size: e.size
+        ? {
+            min: e.size.min,
+            max: e.size.max,
+            min_size_type: e.size.min_size_type,
+            max_size_type: e.size.max_size_type,
+          }
+        : null,
       checksums: e.checksums
         ? {
             sha256: e.checksums.sha256 ?? "",
@@ -212,8 +251,9 @@ function parseFiles(raw: unknown): FileNode[] {
   });
 }
 
-export function parseFolder(raw: FolderJSON): FolderNode {
-  const mdnote = (raw as unknown as { mdnote?: unknown }).mdnote;
+export function parseFolder(raw: FolderJSON | TemplateJSON): FolderNode {
+  const t = raw as TemplateJSON;
+  const mdnote = t.mdnote;
   let markdownNote = "";
   if (typeof mdnote === "string" && mdnote.length > 0) {
     markdownNote = decodeMarkdownNote(mdnote);
@@ -221,16 +261,23 @@ export function parseFolder(raw: FolderJSON): FolderNode {
 
   return {
     id: nextId(),
-    name: raw.name ?? "",
-    nameRegex: raw.name_regex ?? "",
-    description: raw.description ?? "",
-    minVersion: raw.min_version ?? "",
-    command: raw.command ?? "",
-    invertCommand: !!raw.invert_command,
-    tags: Array.isArray(raw.tags) ? [...raw.tags] : [],
-    files: parseFiles((raw as unknown as { files: unknown }).files),
-    folders: Array.isArray(raw.folders) ? raw.folders.map(parseFolder) : [],
-    size: raw.size ? { mix: raw.size.mix, max: raw.size.max } : null,
+    name: t.name ?? "",
+    nameRegex: t.name_regex ?? "",
+    description: t.description ?? "",
+    minVersion: t.min_version ?? "",
+    command: t.command ?? "",
+    invertCommand: !!t.invert_command,
+    tags: Array.isArray(t.tags) ? [...t.tags] : [],
+    files: parseFiles(t.files),
+    folders: Array.isArray(t.folders) ? t.folders.map(parseFolder) : [],
+    size: t.size
+      ? {
+          min: t.size.min,
+          max: t.size.max,
+          min_size_type: t.size.min_size_type,
+          max_size_type: t.size.max_size_type,
+        }
+      : null,
     markdownNote,
   };
 }

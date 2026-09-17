@@ -1,6 +1,4 @@
-// for the lib
-
-// Custom JSX Runtime for the SSG Plugin
+// Custom JSX Runtime for the SSG Pages Plugin
 
 const HTML = Symbol("html");
 
@@ -10,11 +8,32 @@ export interface HtmlValue {
   toString(): string;
 }
 
+function renderChildren(children: unknown[]): string {
+  return children
+    .flat(Infinity)
+    .filter((child) => child != null && child !== false)
+    .map((child) => {
+      if (isHtml(child)) {
+        return child.value;
+      }
+
+      return escapeText(String(child));
+    })
+    .join("");
+}
+
 export function jsx(
   tag: string | ((props: any) => any),
   props: Record<string, any> | null,
   ...children: any[]
 ): HtmlValue | string {
+  // Automatic JSX runtime: children kommen als props.children (Array) rein.
+  if (Array.isArray(props?.children)) {
+    children = props.children;
+    props = { ...props };
+    delete props.children;
+  }
+
   if (typeof tag === "function") {
     return tag({
       ...(props ?? {}),
@@ -62,17 +81,7 @@ export function jsx(
     })
     .join("");
 
-  const content = children
-    .flat(Infinity)
-    .filter((child) => child != null && child !== false)
-    .map((child) => {
-      if (isHtml(child)) {
-        return child.value;
-      }
-
-      return escapeText(String(child));
-    })
-    .join("");
+  const content = renderChildren(children);
 
   const voidElements = new Set([
     "area",
@@ -98,18 +107,16 @@ export function jsx(
   return createHtml(html);
 }
 
-export function Fragment(props: { children?: any[] }): HtmlValue {
-  const content = (props.children ?? [])
-    .flat(Infinity)
-    .filter((child) => child != null && child !== false)
-    .map((child) => {
-      if (isHtml(child)) {
-        return child.value;
-      }
+// Automatic JSX runtime nutzt jsxs für statische Elemente (gleiche Semantik).
+export function jsxs(
+  tag: string | ((props: any) => any),
+  props: Record<string, any> | null,
+): HtmlValue | string {
+  return jsx(tag, props);
+}
 
-      return escapeText(String(child));
-    })
-    .join("");
+export function Fragment(props: { children?: any[] }): HtmlValue {
+  const content = renderChildren(props.children ?? []);
 
   return createHtml(content);
 }
@@ -161,29 +168,4 @@ export function escapeHtml(value: string): string {
  */
 export function raw(value: string): HtmlValue {
   return createHtml(value);
-}
-
-// Function is from the lib thats why it in jsx rumtime
-export function loadStyles(styles: string[]) {
-  if (import.meta.env.DEV) {
-    console.log("[pages] loading styles:", styles);
-  }
-
-  for (const href of styles) {
-    const url = new URL(href, import.meta.url).href;
-
-    if (
-      document.head.querySelector(`link[data-page-style="${CSS.escape(url)}"]`)
-    ) {
-      continue;
-    }
-
-    const link = document.createElement("link");
-
-    link.rel = "stylesheet";
-    link.href = url;
-    link.dataset.pageStyle = url;
-
-    document.head.appendChild(link);
-  }
 }

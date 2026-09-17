@@ -251,6 +251,30 @@ button {
   font-size: 13px;
   line-height: 1.5;
 }
+.card-actions,
+.install-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 16px;
+  width: 100%;
+}
+.install-row {
+  align-items: center;
+  margin: 0 0 16px;
+  padding-top: 0;
+}
+.install-row code {
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--pine-soft);
+  font: 500 12px var(--mono);
+}
 .tag-list,
 .tags {
   display: flex;

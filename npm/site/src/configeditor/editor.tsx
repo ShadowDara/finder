@@ -1,6 +1,6 @@
-import { jsx, Fragment } from "../jsx-runtime";
 import type { ConfigSchema } from "./types";
 import { asHtml, renderField } from "./fields";
+import { jsx, Fragment } from "@twine/core/jsx-runtime";
 
 export { registerFieldType } from "./fields";
 export type {
@@ -118,7 +118,8 @@ export function setupConfigEditor(
   function setPath(obj: any, path: string, value: unknown) {
     const parts = path.split(".");
     const blockedKeys = new Set(["__proto__", "constructor", "prototype"]);
-    if (parts.length === 0 || parts.some((part) => blockedKeys.has(part))) return;
+    if (parts.length === 0 || parts.some((part) => blockedKeys.has(part)))
+      return;
 
     let cur: any = obj;
     for (let i = 0; i < parts.length - 1; i++) {

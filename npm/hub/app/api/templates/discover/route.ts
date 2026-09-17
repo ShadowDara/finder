@@ -1,10 +1,16 @@
 import { prisma } from '@/lib/db'
+import {
+  hubOrigin,
+  templateDownloadUrl,
+  templateInstallCommand,
+} from '@/lib/template-download'
 import { NextResponse } from 'next/server'
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const query = searchParams.get('q')?.trim() ?? ''
   const tags = (searchParams.get('tags')?.split(',') ?? []).map((tag) => tag.trim().toLowerCase()).filter(Boolean)
+  const origin = hubOrigin(request)
 
   const templates = await prisma.template.findMany({
     where: {
@@ -14,13 +20,20 @@ export async function GET(request: Request) {
     select: {
       id: true,
       name: true,
+      slug: true,
       createdAt: true,
       updatedAt: true,
       tags: true,
-      user: { select: { id: true, name: true, email: true } },
+      user: { select: { id: true, name: true, username: true, email: true } },
     },
     orderBy: { updatedAt: 'desc' },
   })
 
-  return NextResponse.json({ templates })
+  return NextResponse.json({
+    templates: templates.map((template) => ({
+      ...template,
+      url: templateDownloadUrl(origin, template),
+      install: templateInstallCommand(origin, template),
+    })),
+  })
 }

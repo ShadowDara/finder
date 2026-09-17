@@ -48,7 +48,7 @@ release:
 
 brews:
   - name: finder
-    homepage: https://github.com/yourname/finder
+    homepage: https://github.com/shadowdara/finder
     description: Fast file finder CLI
     license: MIT
     tap:
@@ -60,7 +60,7 @@ brews:
 
 scoops:
   - name: finder
-    homepage: https://github.com/yourname/finder
+    homepage: https://github.com/shadowdara/finder
     description: Fast file finder CLI
     license: MIT
     bucket:

@@ -1,4 +1,4 @@
-import { escapeHtml, jsx, raw, Fragment } from "../src/jsx-runtime";
+import { jsx, Fragment, escapeHtml, raw } from "@twine/core/jsx-runtime";
 import { SERVER_ADRESS } from "../src/vars";
 import "./cacheviewer.css";
 
@@ -254,7 +254,7 @@ function renderCards(items: ParsedLocation[]): string {
 // ---------------------------------------------------------------------------
 
 function setupViewer(el: HTMLDivElement) {
-  if (import.meta.env.MODE == "static") {
+  if (import.meta.env.MODE != "backend") {
     return (
       <>
         <h1>Cache Viewer</h1>

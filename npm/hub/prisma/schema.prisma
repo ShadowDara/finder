@@ -9,17 +9,18 @@ datasource db {
 // ---- Better Auth models ----
 
 model User {
-  id            String     @id
-  name          String
-  email         String     @unique
-  emailVerified Boolean    @default(false)
-  image         String?
+  id              String     @id
+  name            String
+  username        String     @unique
+  email           String     @unique
+  emailVerified   Boolean    @default(false)
+  image           String?
   recoveryKeyHash String?
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
-  sessions      Session[]
-  accounts      Account[]
-  templates     Template[]
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  sessions        Session[]
+  accounts        Account[]
+  templates       Template[]
 
   @@map("user")
 }
@@ -73,6 +74,7 @@ model Verification {
 model Template {
   id        String   @id @default(cuid())
   name      String
+  slug      String
   // JSON template stored as a string. Size (max 5KB) is validated in the app layer.
   content   String
   tags      String[] @default([])
@@ -81,6 +83,7 @@ model Template {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@unique([userId, slug])
   @@index([userId])
   @@map("template")
 }
