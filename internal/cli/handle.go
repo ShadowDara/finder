@@ -48,14 +48,7 @@ func View(searchTemplate string) string {
 		return ""
 	}
 
-	strrrr := structure.LoadJSON5(string(data))
-	returnJSON, err := json.Marshal(strrrr)
-	if err != nil {
-		log.Printf("%sCould not encode template: %v%s\n", color.Red, err, color.Reset)
-		return ""
-	}
-
-	return string(returnJSON)
+	return string(data)
 
 }
 

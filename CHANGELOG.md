@@ -2,6 +2,10 @@
 
 _The whole finder CHANGELOG_
 
+## Next
+
+- fixed a bug that `finder view git` didnt shot the content of the git template in the command line
+
 ## 0.3.18 - 17.09.2026
 
 - **New Features**
