@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-09-17T12:28:01.450Z",
+  "generatedAt": "2026-09-17T16:04:10.724Z",
   "total": {
     "files": 181,
-    "bytes": 35447279,
-    "kilobytes": 34616.48,
-    "megabytes": 33.81
+    "bytes": 35433836,
+    "kilobytes": 34603.36,
+    "megabytes": 33.79
   },
   "byExtension": [
     {
       "extension": ".js",
       "files": 128,
-      "bytes": 34430582,
+      "bytes": 34416600,
       "percentage": 97.13
     },
     {
@@ -22,8 +22,8 @@
     {
       "extension": ".css",
       "files": 18,
-      "bytes": 370251,
-      "percentage": 1.04
+      "bytes": 370790,
+      "percentage": 1.05
     },
     {
       "extension": ".ttf",
@@ -144,7 +144,7 @@
     {
       "path": "assets/_virtual_page-data_index.js",
       "extension": ".js",
-      "bytes": 33588
+      "bytes": 36569
     },
     {
       "path": "assets/installscript.js",
@@ -152,19 +152,14 @@
       "bytes": 32268
     },
     {
-      "path": "assets/_virtual_page-markdown_changelog.js",
+      "path": "assets/_virtual_page-markdown_readme.js",
       "extension": ".js",
-      "bytes": 31063
+      "bytes": 28935
     },
     {
       "path": "assets/lspLanguageFeatures.js",
       "extension": ".js",
       "bytes": 28659
-    },
-    {
-      "path": "assets/_virtual_page-markdown_readme.js",
-      "extension": ".js",
-      "bytes": 25861
     },
     {
       "path": "assets/tsMode.js",
@@ -217,6 +212,11 @@
       "bytes": 11136
     },
     {
+      "path": "assets/_virtual_page-markdown_changelog.js",
+      "extension": ".js",
+      "bytes": 11026
+    },
+    {
       "path": "assets/markdown.js",
       "extension": ".js",
       "bytes": 10726
@@ -262,6 +262,11 @@
       "bytes": 8908
     },
     {
+      "path": "assets/creator.css",
+      "extension": ".css",
+      "bytes": 8724
+    },
+    {
       "path": "assets/console.css",
       "extension": ".css",
       "bytes": 8677
@@ -285,11 +290,6 @@
       "path": "gitviewer/index.html",
       "extension": ".html",
       "bytes": 8281
-    },
-    {
-      "path": "assets/creator.css",
-      "extension": ".css",
-      "bytes": 8185
     },
     {
       "path": "assets/perl.js",
