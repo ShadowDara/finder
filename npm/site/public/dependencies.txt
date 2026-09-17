@@ -178,6 +178,7 @@ find-up@5.0.0 -- MIT
 finder-template-generator@0.3.18 -- UNLICENSED
 flat-cache@4.0.1 -- MIT
 flatted@3.4.4 -- ISC
+fling-lang@0.1.2 -- MIT
 fs.realpath@1.0.0 -- ISC
 function-bind@1.1.2 -- MIT
 geist@1.7.2 -- MIT*

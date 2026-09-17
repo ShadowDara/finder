@@ -478,3 +478,50 @@ textarea {
     border-bottom: 1px solid var(--line);
   }
 }
+
+.markdown-floating-preview {
+  position: fixed;
+
+  top: 100px;
+  right: 40px;
+
+  width: 420px;
+  max-height: 600px;
+
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+
+  z-index: 1000;
+
+  overflow: hidden;
+}
+
+.markdown-floating-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 10px 14px;
+
+  background: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+
+  cursor: grab;
+
+  user-select: none;
+}
+
+.markdown-floating-header:active {
+  cursor: grabbing;
+}
+
+.markdown-floating-header button {
+  border: 0;
+  background: transparent;
+
+  font-size: 20px;
+  cursor: pointer;
+}

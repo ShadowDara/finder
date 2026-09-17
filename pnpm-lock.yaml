@@ -250,6 +250,9 @@ importers:
       droll:
         specifier: ^0.2.1
         version: 0.2.1
+      fling-lang:
+        specifier: ^0.1.2
+        version: 0.1.2
       geist:
         specifier: ^1.7.2
         version: 1.7.2(next@16.3.3(@babel/core@7.29.7)(@types/node@26.5.1)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.104.1))
@@ -337,7 +340,7 @@ importers:
         version: 0.186.0
       '@vitejs/devtools':
         specifier: ^0.7.2
-        version: 0.7.3(b3182547c3e2db127fb1693c80c21a17)
+        version: 0.7.3(0e5e971c4fd2f3d1fcfd9f02379a5454)
       '@vitejs/devtools-oxc':
         specifier: ^0.7.4
         version: 0.7.4(crossws@0.4.12(srvx@1.0.4))(srvx@1.0.4)(typescript@5.7.3)(vite@6.4.3(@types/node@26.5.1)(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.104.1)(terser@5.51.2)(tsx@4.23.13)(yaml@2.9.1))
@@ -3839,6 +3842,10 @@ packages:
   flatted@3.4.4:
     resolution: {integrity: sha512-5+ybhBZANEJxaH3X5evAFatUxLfEHSr7n6kYJ+1Qd0mUqr4eu9gIf6GDbWHf8RJijHrjjO8G+la14SlL2SeS1Q==}
 
+  fling-lang@0.1.2:
+    resolution: {integrity: sha512-lfsH4cjkS7PpQh2DT1+402j2z5VJ0IhlqhJF/NBm4oXehMHOPQ7A5cf93cwWZH+lAyRAiKe9KXBCL2yDhjCKaQ==}
+    engines: {node: '>=18'}
+
   follow-redirects@1.16.0:
     resolution: {integrity: sha512-y5rN/uOsadFT/JfYwhxRS5R7Qce+g3zG97+JrtFZlC9klX/W5hD7iiLzScI4nZqUS7DNUdhPgw4xI8W2LuXlUw==}
     engines: {node: '>=4.0'}
@@ -6619,12 +6626,12 @@ snapshots:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
 
-  '@devframes/hub-ui@0.9.18(@devframes/hub@0.10.0(crossws@0.4.12(srvx@1.0.4))(devframe@0.10.0(cac@7.0.0)(srvx@1.0.4)))(@devframes/json-render@0.9.18(@devframes/hub@0.10.0(crossws@0.4.12(srvx@1.0.4))(devframe@0.10.0(cac@7.0.0)(srvx@1.0.4)))(devframe@0.10.0(cac@7.0.0)(srvx@1.0.4)))(devframe@0.10.0(cac@7.0.0)(srvx@1.0.4))':
+  '@devframes/hub-ui@0.9.18(@devframes/hub@0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(@devframes/json-render@0.9.18(@devframes/hub@0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4))':
     dependencies:
-      '@devframes/hub': 0.10.0(crossws@0.4.12(srvx@1.0.4))(devframe@0.10.0(cac@7.0.0)(srvx@1.0.4))
-      devframe: 0.10.0(cac@7.0.0)(srvx@1.0.4)
+      '@devframes/hub': 0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4))
+      devframe: 0.9.18(cac@7.0.0)(srvx@1.0.4)
     optionalDependencies:
-      '@devframes/json-render': 0.9.18(@devframes/hub@0.10.0(crossws@0.4.12(srvx@1.0.4))(devframe@0.10.0(cac@7.0.0)(srvx@1.0.4)))(devframe@0.10.0(cac@7.0.0)(srvx@1.0.4))
+      '@devframes/json-render': 0.9.18(@devframes/hub@0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4))
 
   '@devframes/hub@0.10.0(crossws@0.4.12(srvx@1.0.4))(devframe@0.10.0(cac@7.0.0)(srvx@1.0.4))':
     dependencies:
@@ -6666,16 +6673,6 @@ snapshots:
     optionalDependencies:
       '@devframes/hub': 0.10.0(crossws@0.4.12(srvx@1.0.4))(devframe@0.10.0(cac@7.0.0)(srvx@1.0.4))
 
-  '@devframes/json-render@0.9.18(@devframes/hub@0.10.0(crossws@0.4.12(srvx@1.0.4))(devframe@0.10.0(cac@7.0.0)(srvx@1.0.4)))(devframe@0.10.0(cac@7.0.0)(srvx@1.0.4))':
-    dependencies:
-      '@json-render/core': 0.20.0(zod@4.6.5)
-      '@standard-schema/spec': 1.1.0
-      devframe: 0.10.0(cac@7.0.0)(srvx@1.0.4)
-      zod: 4.6.5
-    optionalDependencies:
-      '@devframes/hub': 0.10.0(crossws@0.4.12(srvx@1.0.4))(devframe@0.10.0(cac@7.0.0)(srvx@1.0.4))
-    optional: true
-
   '@devframes/json-render@0.9.18(@devframes/hub@0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4))':
     dependencies:
       '@json-render/core': 0.20.0(zod@4.6.5)
@@ -6701,9 +6698,9 @@ snapshots:
     optionalDependencies:
       vite: 6.4.3(@types/node@26.5.1)(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.104.1)(terser@5.51.2)(tsx@4.23.13)(yaml@2.9.1)
 
-  '@devframes/plugin-terminals@0.9.18(@devframes/hub-ui@0.9.18(@devframes/hub@0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(@devframes/json-render@0.9.18(@devframes/hub@0.10.0(crossws@0.4.12(srvx@1.0.4))(devframe@0.10.0(cac@7.0.0)(srvx@1.0.4)))(devframe@0.10.0(cac@7.0.0)(srvx@1.0.4)))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(@devframes/hub@0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4))(vite@6.4.3(@types/node@26.5.1)(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.104.1)(terser@5.51.2)(tsx@4.23.13)(yaml@2.9.1))':
+  '@devframes/plugin-terminals@0.9.18(@devframes/hub-ui@0.9.18(@devframes/hub@0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(@devframes/json-render@0.9.18(@devframes/hub@0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(@devframes/hub@0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4))(vite@6.4.3(@types/node@26.5.1)(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.104.1)(terser@5.51.2)(tsx@4.23.13)(yaml@2.9.1))':
     dependencies:
-      '@devframes/vite': 0.9.18(@devframes/hub-ui@0.9.18(@devframes/hub@0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(@devframes/json-render@0.9.18(@devframes/hub@0.10.0(crossws@0.4.12(srvx@1.0.4))(devframe@0.10.0(cac@7.0.0)(srvx@1.0.4)))(devframe@0.10.0(cac@7.0.0)(srvx@1.0.4)))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(@devframes/hub@0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4))(vite@6.4.3(@types/node@26.5.1)(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.104.1)(terser@5.51.2)(tsx@4.23.13)(yaml@2.9.1))
+      '@devframes/vite': 0.9.18(@devframes/hub-ui@0.9.18(@devframes/hub@0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(@devframes/json-render@0.9.18(@devframes/hub@0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(@devframes/hub@0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4))(vite@6.4.3(@types/node@26.5.1)(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.104.1)(terser@5.51.2)(tsx@4.23.13)(yaml@2.9.1))
       cac: 7.0.0
       devframe: 0.9.18(cac@7.0.0)(srvx@1.0.4)
       zigpty: 0.2.1
@@ -6718,13 +6715,13 @@ snapshots:
       devframe: 0.9.18(cac@7.0.0)(srvx@1.0.4)
       pathe: 2.0.3
 
-  '@devframes/vite@0.9.18(@devframes/hub-ui@0.9.18(@devframes/hub@0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(@devframes/json-render@0.9.18(@devframes/hub@0.10.0(crossws@0.4.12(srvx@1.0.4))(devframe@0.10.0(cac@7.0.0)(srvx@1.0.4)))(devframe@0.10.0(cac@7.0.0)(srvx@1.0.4)))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(@devframes/hub@0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4))(vite@6.4.3(@types/node@26.5.1)(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.104.1)(terser@5.51.2)(tsx@4.23.13)(yaml@2.9.1))':
+  '@devframes/vite@0.9.18(@devframes/hub-ui@0.9.18(@devframes/hub@0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(@devframes/json-render@0.9.18(@devframes/hub@0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(@devframes/hub@0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4))(vite@6.4.3(@types/node@26.5.1)(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.104.1)(terser@5.51.2)(tsx@4.23.13)(yaml@2.9.1))':
     dependencies:
       devframe: 0.9.18(cac@7.0.0)(srvx@1.0.4)
       pathe: 2.0.3
     optionalDependencies:
       '@devframes/hub': 0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4))
-      '@devframes/hub-ui': 0.9.18(@devframes/hub@0.10.0(crossws@0.4.12(srvx@1.0.4))(devframe@0.10.0(cac@7.0.0)(srvx@1.0.4)))(@devframes/json-render@0.9.18(@devframes/hub@0.10.0(crossws@0.4.12(srvx@1.0.4))(devframe@0.10.0(cac@7.0.0)(srvx@1.0.4)))(devframe@0.10.0(cac@7.0.0)(srvx@1.0.4)))(devframe@0.10.0(cac@7.0.0)(srvx@1.0.4))
+      '@devframes/hub-ui': 0.9.18(@devframes/hub@0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(@devframes/json-render@0.9.18(@devframes/hub@0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4))
       vite: 6.4.3(@types/node@26.5.1)(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.104.1)(terser@5.51.2)(tsx@4.23.13)(yaml@2.9.1)
 
   '@dimforge/rapier3d-compat@0.12.0': {}
@@ -8268,14 +8265,14 @@ snapshots:
       - srvx
       - vite
 
-  '@vitejs/devtools@0.7.3(b3182547c3e2db127fb1693c80c21a17)':
+  '@vitejs/devtools@0.7.3(0e5e971c4fd2f3d1fcfd9f02379a5454)':
     dependencies:
       '@devframes/hub': 0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4))
-      '@devframes/hub-ui': 0.9.18(@devframes/hub@0.10.0(crossws@0.4.12(srvx@1.0.4))(devframe@0.10.0(cac@7.0.0)(srvx@1.0.4)))(@devframes/json-render@0.9.18(@devframes/hub@0.10.0(crossws@0.4.12(srvx@1.0.4))(devframe@0.10.0(cac@7.0.0)(srvx@1.0.4)))(devframe@0.10.0(cac@7.0.0)(srvx@1.0.4)))(devframe@0.10.0(cac@7.0.0)(srvx@1.0.4))
+      '@devframes/hub-ui': 0.9.18(@devframes/hub@0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(@devframes/json-render@0.9.18(@devframes/hub@0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4))
       '@devframes/json-render-ui': 0.9.18(@devframes/hub@0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4))
       '@devframes/plugin-inspect': 0.9.18(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4))(vite@6.4.3(@types/node@26.5.1)(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.104.1)(terser@5.51.2)(tsx@4.23.13)(yaml@2.9.1))
       '@devframes/plugin-messages': 0.9.18(@devframes/hub@0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4))(vite@6.4.3(@types/node@26.5.1)(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.104.1)(terser@5.51.2)(tsx@4.23.13)(yaml@2.9.1))
-      '@devframes/plugin-terminals': 0.9.18(@devframes/hub-ui@0.9.18(@devframes/hub@0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(@devframes/json-render@0.9.18(@devframes/hub@0.10.0(crossws@0.4.12(srvx@1.0.4))(devframe@0.10.0(cac@7.0.0)(srvx@1.0.4)))(devframe@0.10.0(cac@7.0.0)(srvx@1.0.4)))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(@devframes/hub@0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4))(vite@6.4.3(@types/node@26.5.1)(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.104.1)(terser@5.51.2)(tsx@4.23.13)(yaml@2.9.1))
+      '@devframes/plugin-terminals': 0.9.18(@devframes/hub-ui@0.9.18(@devframes/hub@0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(@devframes/json-render@0.9.18(@devframes/hub@0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(@devframes/hub@0.9.18(crossws@0.4.12(srvx@1.0.4))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4)))(devframe@0.9.18(cac@7.0.0)(srvx@1.0.4))(vite@6.4.3(@types/node@26.5.1)(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.104.1)(terser@5.51.2)(tsx@4.23.13)(yaml@2.9.1))
       '@vitejs/devtools-kit': 0.7.3(cac@7.0.0)(crossws@0.4.12(srvx@1.0.4))(srvx@1.0.4)(vite@6.4.3(@types/node@26.5.1)(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.104.1)(terser@5.51.2)(tsx@4.23.13)(yaml@2.9.1))
       cac: 7.0.0
       devframe: 0.9.18(cac@7.0.0)(srvx@1.0.4)
@@ -9519,6 +9516,8 @@ snapshots:
       hookified: 1.15.1
 
   flatted@3.4.4: {}
+
+  fling-lang@0.1.2: {}
 
   follow-redirects@1.16.0: {}
 

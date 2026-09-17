@@ -22,7 +22,9 @@ import {
 import { SERVER_ADRESS } from "../vars";
 import { highlightFinderTemplate } from "@shadowdara/finder-lib/highlight";
 import { jsx } from "@twine/core/jsx-runtime";
+import { parseMarkdown } from "@shadowdara/dlib";
 // import "highlight.js/styles/github-dark.css";
+import "./../markdownstyle.css";
 
 export function renderCreator(app: HTMLDivElement, version: string) {
   type Selection = { kind: "folder" | "file"; id: string } | null;
@@ -123,6 +125,20 @@ export function renderCreator(app: HTMLDivElement, version: string) {
           <pre id="preview" class="preview"></pre>
         </section>
       </main>
+
+      <div id="markdown-floating-preview" class="markdown-floating-preview">
+        <div id="markdown-floating-header" class="markdown-floating-header">
+          <span>Markdown Preview</span>
+          <button id="markdown-floating-close" type="button">
+            ×
+          </button>
+        </div>
+
+        <div
+          id="markdown-floating-content"
+          class="markdown-floating-content markdown"
+        ></div>
+      </div>
 
       <dialog id="import-dialog" class="import-dialog">
         <form method="dialog" class="import-form">
@@ -226,10 +242,71 @@ export function renderCreator(app: HTMLDivElement, version: string) {
     "#btn-back-to-origin",
   );
 
+  const markdownFloatingPreview = document.querySelector<HTMLDivElement>(
+    "#markdown-floating-preview",
+  )!;
+
+  const markdownFloatingHeader = document.querySelector<HTMLDivElement>(
+    "#markdown-floating-header",
+  )!;
+
+  const markdownFloatingContent = document.querySelector<HTMLDivElement>(
+    "#markdown-floating-content",
+  )!;
+
+  const markdownFloatingClose = document.querySelector<HTMLButtonElement>(
+    "#markdown-floating-close",
+  )!;
+
+  function renderMarkdownPreview(): void {
+    const folder =
+      selection?.kind === "folder" ? findFolder(root, selection.id) : null;
+
+    const markdown = folder?.markdownNote ?? "";
+
+    markdownFloatingContent.innerHTML = parseMarkdown(markdown);
+  }
+
+  let dragging = false;
+  let dragOffsetX = 0;
+  let dragOffsetY = 0;
+
+  markdownFloatingHeader.addEventListener("pointerdown", (event) => {
+    if ((event.target as HTMLElement).closest("button")) {
+      return;
+    }
+
+    dragging = true;
+
+    const rect = markdownFloatingPreview.getBoundingClientRect();
+
+    dragOffsetX = event.clientX - rect.left;
+    dragOffsetY = event.clientY - rect.top;
+
+    markdownFloatingHeader.setPointerCapture(event.pointerId);
+  });
+
+  markdownFloatingHeader.addEventListener("pointermove", (event) => {
+    if (!dragging) return;
+
+    markdownFloatingPreview.style.left = `${event.clientX - dragOffsetX}px`;
+
+    markdownFloatingPreview.style.top = `${event.clientY - dragOffsetY}px`;
+  });
+
+  markdownFloatingHeader.addEventListener("pointerup", () => {
+    dragging = false;
+  });
+
+  markdownFloatingClose.addEventListener("click", () => {
+    markdownFloatingPreview.hidden = true;
+  });
+
   function render(): void {
     renderTree();
     renderInspector();
     renderPreview();
+    renderMarkdownPreview();
     updateOriginLink();
   }
 
@@ -625,6 +702,13 @@ export function renderCreator(app: HTMLDivElement, version: string) {
           markdownTextArea,
           "Wird percent-encodiert (wie encodeURIComponent, z.B. neue Zeilen als %0A) im Feld mdnote gespeichert.",
         );
+
+        markdownTextArea.addEventListener("input", () => {
+          renderNotePreview();
+
+          markdownFloatingPreview.hidden = false;
+          renderMarkdownPreview();
+        });
 
         const notePreview = document.createElement("code");
         notePreview.className = "note-mdnote-preview";

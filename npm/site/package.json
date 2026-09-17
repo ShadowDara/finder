@@ -74,6 +74,7 @@
     "comlink": "^4.4.2",
     "dockview": "^8.3.1",
     "droll": "^0.2.1",
+    "fling-lang": "^0.1.2",
     "geist": "^1.7.2",
     "gray-matter": "^4.0.3",
     "highlight.js": "^11.12.0",
