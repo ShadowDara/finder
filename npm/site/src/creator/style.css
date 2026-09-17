@@ -486,10 +486,10 @@ textarea {
   right: 40px;
 
   width: 420px;
-  max-height: 600px;
+  height: 600px;
 
-  background: white;
-  border: 1px solid #ccc;
+  background: var(--panel);
+  border: 1px solid var(--line);
   border-radius: 10px;
 
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -497,20 +497,24 @@ textarea {
   z-index: 1000;
 
   overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
 }
 
 .markdown-floating-header {
+  flex: 0 0 auto;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
 
   padding: 10px 14px;
 
-  background: #f5f5f5;
-  border-bottom: 1px solid #ddd;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
 
   cursor: grab;
-
   user-select: none;
 }
 
@@ -524,4 +528,55 @@ textarea {
 
   font-size: 20px;
   cursor: pointer;
+}
+
+/* Das ist der eigentliche Scroll-Bereich */
+.markdown-floating-content {
+  flex: 1;
+  min-height: 0;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding: 0;
+}
+
+/*
+ * Dein globales .markdown hat max-width + margin.
+ * Für das Floating-Fenster wollen wir das nicht.
+ */
+.markdown-floating-content.markdown {
+  max-width: none;
+  width: auto;
+
+  margin: 0;
+  padding: 16px;
+
+  line-height: var(--md-line-height);
+
+  /*
+   * Normale Wörter umbrechen und auch extrem lange
+   * URLs / Strings nicht aus dem Fenster laufen lassen.
+   */
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Bilder dürfen das Fenster niemals sprengen */
+.markdown-floating-content img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Codeblöcke horizontal scrollen */
+.markdown-floating-content pre {
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* Inline-Code darf bei Bedarf umbrechen */
+.markdown-floating-content code {
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
