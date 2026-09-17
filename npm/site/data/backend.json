@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-09-17T12:28:01.450Z",
+  "generatedAt": "2026-09-17T16:54:23.033Z",
   "total": {
     "files": 181,
-    "bytes": 35447279,
-    "kilobytes": 34616.48,
-    "megabytes": 33.81
+    "bytes": 35434058,
+    "kilobytes": 34603.57,
+    "megabytes": 33.79
   },
   "byExtension": [
     {
       "extension": ".js",
       "files": 128,
-      "bytes": 34430582,
+      "bytes": 34416898,
       "percentage": 97.13
     },
     {
@@ -22,8 +22,8 @@
     {
       "extension": ".css",
       "files": 18,
-      "bytes": 370251,
-      "percentage": 1.04
+      "bytes": 370790,
+      "percentage": 1.05
     },
     {
       "extension": ".ttf",
@@ -40,7 +40,7 @@
     {
       "extension": ".txt",
       "files": 1,
-      "bytes": 10666,
+      "bytes": 10590,
       "percentage": 0.03
     },
     {
@@ -144,7 +144,7 @@
     {
       "path": "assets/_virtual_page-data_index.js",
       "extension": ".js",
-      "bytes": 33588
+      "bytes": 36569
     },
     {
       "path": "assets/installscript.js",
@@ -152,19 +152,14 @@
       "bytes": 32268
     },
     {
-      "path": "assets/_virtual_page-markdown_changelog.js",
+      "path": "assets/_virtual_page-markdown_readme.js",
       "extension": ".js",
-      "bytes": 31063
+      "bytes": 29179
     },
     {
       "path": "assets/lspLanguageFeatures.js",
       "extension": ".js",
       "bytes": 28659
-    },
-    {
-      "path": "assets/_virtual_page-markdown_readme.js",
-      "extension": ".js",
-      "bytes": 25861
     },
     {
       "path": "assets/tsMode.js",
@@ -217,6 +212,11 @@
       "bytes": 11136
     },
     {
+      "path": "assets/_virtual_page-markdown_changelog.js",
+      "extension": ".js",
+      "bytes": 11026
+    },
+    {
       "path": "assets/markdown.js",
       "extension": ".js",
       "bytes": 10726
@@ -224,7 +224,7 @@
     {
       "path": "dependencies.txt",
       "extension": ".txt",
-      "bytes": 10666
+      "bytes": 10590
     },
     {
       "path": "assets/sql.js",
@@ -262,6 +262,11 @@
       "bytes": 8908
     },
     {
+      "path": "assets/creator.css",
+      "extension": ".css",
+      "bytes": 8724
+    },
+    {
       "path": "assets/console.css",
       "extension": ".css",
       "bytes": 8677
@@ -285,11 +290,6 @@
       "path": "gitviewer/index.html",
       "extension": ".html",
       "bytes": 8281
-    },
-    {
-      "path": "assets/creator.css",
-      "extension": ".css",
-      "bytes": 8185
     },
     {
       "path": "assets/perl.js",
@@ -722,14 +722,14 @@
       "bytes": 1355
     },
     {
+      "path": "assets/index2.js",
+      "extension": ".js",
+      "bytes": 1294
+    },
+    {
       "path": "assets/csp.js",
       "extension": ".js",
       "bytes": 1281
-    },
-    {
-      "path": "assets/index2.js",
-      "extension": ".js",
-      "bytes": 1240
     },
     {
       "path": "assets/worlds.js",

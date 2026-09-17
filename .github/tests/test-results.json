@@ -1,0 +1,768 @@
+{"ImportPath":"github.com/shadowdara/finder/internal/bt/scriptcompiler","Action":"build-output","Output":"# github.com/shadowdara/finder/internal/bt/scriptcompiler\n"}
+{"ImportPath":"github.com/shadowdara/finder/internal/bt/scriptcompiler","Action":"build-output","Output":"internal/bt/scriptcompiler/path.go:12:2: fmt.Println arg list ends with redundant newline\n"}
+{"ImportPath":"github.com/shadowdara/finder/internal/bt/scriptcompiler","Action":"build-output","Output":"internal/bt/scriptcompiler/path.go:14:2: fmt.Println arg list ends with redundant newline\n"}
+{"ImportPath":"github.com/shadowdara/finder/internal/bt/scriptcompiler","Action":"build-output","Output":"internal/bt/scriptcompiler/path.go:16:2: fmt.Println arg list ends with redundant newline\n"}
+{"ImportPath":"github.com/shadowdara/finder/internal/bt/scriptcompiler","Action":"build-fail"}
+{"Time":"2026-09-17T16:31:19.462637825Z","Action":"start","Package":"github.com/shadowdara/finder/cmd/csf"}
+{"Time":"2026-09-17T16:31:19.462689083Z","Action":"output","Package":"github.com/shadowdara/finder/cmd/csf","Output":"?   \tgithub.com/shadowdara/finder/cmd/csf\t[no test files]\n"}
+{"Time":"2026-09-17T16:31:19.462696885Z","Action":"skip","Package":"github.com/shadowdara/finder/cmd/csf","Elapsed":0}
+{"Time":"2026-09-17T16:31:25.91817681Z","Action":"start","Package":"github.com/shadowdara/finder/cmd/finder"}
+{"Time":"2026-09-17T16:31:25.918192201Z","Action":"output","Package":"github.com/shadowdara/finder/cmd/finder","Output":"?   \tgithub.com/shadowdara/finder/cmd/finder\t[no test files]\n"}
+{"Time":"2026-09-17T16:31:25.918197594Z","Action":"skip","Package":"github.com/shadowdara/finder/cmd/finder","Elapsed":0}
+{"ImportPath":"github.com/shadowdara/finder/cmd/findergen","Action":"build-output","Output":"# github.com/shadowdara/finder/cmd/findergen\n"}
+{"ImportPath":"github.com/shadowdara/finder/cmd/findergen","Action":"build-output","Output":"cmd/findergen/writer.go:35:2: fmt.Println arg list ends with redundant newline\n"}
+{"ImportPath":"github.com/shadowdara/finder/cmd/findergen","Action":"build-fail"}
+{"Time":"2026-09-17T16:31:26.25583812Z","Action":"start","Package":"github.com/shadowdara/finder/cmd/findergen"}
+{"Time":"2026-09-17T16:31:26.255854025Z","Action":"output","Package":"github.com/shadowdara/finder/cmd/findergen","Output":"FAIL\tgithub.com/shadowdara/finder/cmd/findergen [build failed]\n"}
+{"Time":"2026-09-17T16:31:26.25585991Z","Action":"fail","Package":"github.com/shadowdara/finder/cmd/findergen","Elapsed":0,"FailedBuild":"github.com/shadowdara/finder/cmd/findergen"}
+{"Time":"2026-09-17T16:31:26.255873944Z","Action":"start","Package":"github.com/shadowdara/finder/cmd/tester"}
+{"Time":"2026-09-17T16:31:26.255933472Z","Action":"output","Package":"github.com/shadowdara/finder/cmd/tester","Output":"?   \tgithub.com/shadowdara/finder/cmd/tester\t[no test files]\n"}
+{"Time":"2026-09-17T16:31:26.255939568Z","Action":"skip","Package":"github.com/shadowdara/finder/cmd/tester","Elapsed":0}
+{"Time":"2026-09-17T16:31:26.255948584Z","Action":"start","Package":"github.com/shadowdara/finder/internal/bt/config"}
+{"Time":"2026-09-17T16:31:26.255951926Z","Action":"output","Package":"github.com/shadowdara/finder/internal/bt/config","Output":"?   \tgithub.com/shadowdara/finder/internal/bt/config\t[no test files]\n"}
+{"Time":"2026-09-17T16:31:26.255955067Z","Action":"skip","Package":"github.com/shadowdara/finder/internal/bt/config","Elapsed":0}
+{"Time":"2026-09-17T16:31:26.255961499Z","Action":"start","Package":"github.com/shadowdara/finder/internal/bt/core"}
+{"Time":"2026-09-17T16:31:26.255964485Z","Action":"output","Package":"github.com/shadowdara/finder/internal/bt/core","Output":"?   \tgithub.com/shadowdara/finder/internal/bt/core\t[no test files]\n"}
+{"Time":"2026-09-17T16:31:26.255966796Z","Action":"skip","Package":"github.com/shadowdara/finder/internal/bt/core","Elapsed":0}
+{"Time":"2026-09-17T16:31:26.255970866Z","Action":"start","Package":"github.com/shadowdara/finder/internal/bt/gitrepo"}
+{"Time":"2026-09-17T16:31:26.255972965Z","Action":"output","Package":"github.com/shadowdara/finder/internal/bt/gitrepo","Output":"?   \tgithub.com/shadowdara/finder/internal/bt/gitrepo\t[no test files]\n"}
+{"Time":"2026-09-17T16:31:26.255978834Z","Action":"skip","Package":"github.com/shadowdara/finder/internal/bt/gitrepo","Elapsed":0}
+{"Time":"2026-09-17T16:31:26.256094481Z","Action":"start","Package":"github.com/shadowdara/finder/internal/bt/scriptcompiler"}
+{"Time":"2026-09-17T16:31:26.256119489Z","Action":"output","Package":"github.com/shadowdara/finder/internal/bt/scriptcompiler","Output":"FAIL\tgithub.com/shadowdara/finder/internal/bt/scriptcompiler [build failed]\n"}
+{"Time":"2026-09-17T16:31:26.256128357Z","Action":"fail","Package":"github.com/shadowdara/finder/internal/bt/scriptcompiler","Elapsed":0,"FailedBuild":"github.com/shadowdara/finder/internal/bt/scriptcompiler"}
+{"Time":"2026-09-17T16:31:26.256191345Z","Action":"start","Package":"github.com/shadowdara/finder/internal/cache"}
+{"Time":"2026-09-17T16:31:26.256197635Z","Action":"output","Package":"github.com/shadowdara/finder/internal/cache","Output":"?   \tgithub.com/shadowdara/finder/internal/cache\t[no test files]\n"}
+{"Time":"2026-09-17T16:31:26.256201489Z","Action":"skip","Package":"github.com/shadowdara/finder/internal/cache","Elapsed":0}
+{"Time":"2026-09-17T16:31:26.25623484Z","Action":"start","Package":"github.com/shadowdara/finder/internal/cache/db"}
+{"Time":"2026-09-17T16:31:26.256249541Z","Action":"output","Package":"github.com/shadowdara/finder/internal/cache/db","Output":"?   \tgithub.com/shadowdara/finder/internal/cache/db\t[no test files]\n"}
+{"Time":"2026-09-17T16:31:26.256257273Z","Action":"skip","Package":"github.com/shadowdara/finder/internal/cache/db","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.246886539Z","Action":"start","Package":"github.com/shadowdara/finder/internal/cli"}
+{"Time":"2026-09-17T16:31:27.246981995Z","Action":"start","Package":"github.com/shadowdara/finder/internal/config"}
+{"Time":"2026-09-17T16:31:27.2470119Z","Action":"output","Package":"github.com/shadowdara/finder/internal/config","Output":"?   \tgithub.com/shadowdara/finder/internal/config\t[no test files]\n"}
+{"Time":"2026-09-17T16:31:27.247020394Z","Action":"skip","Package":"github.com/shadowdara/finder/internal/config","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.247031889Z","Action":"start","Package":"github.com/shadowdara/finder/internal/finderversion"}
+{"Time":"2026-09-17T16:31:27.247046701Z","Action":"output","Package":"github.com/shadowdara/finder/internal/finderversion","Output":"?   \tgithub.com/shadowdara/finder/internal/finderversion\t[no test files]\n"}
+{"Time":"2026-09-17T16:31:27.247053601Z","Action":"skip","Package":"github.com/shadowdara/finder/internal/finderversion","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.247117999Z","Action":"start","Package":"github.com/shadowdara/finder/internal/history"}
+{"Time":"2026-09-17T16:31:27.247124762Z","Action":"output","Package":"github.com/shadowdara/finder/internal/history","Output":"?   \tgithub.com/shadowdara/finder/internal/history\t[no test files]\n"}
+{"Time":"2026-09-17T16:31:27.247131273Z","Action":"skip","Package":"github.com/shadowdara/finder/internal/history","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.249312775Z","Action":"run","Package":"github.com/shadowdara/finder/internal/cli","Test":"TestResolveAliasStartPath"}
+{"Time":"2026-09-17T16:31:27.249331097Z","Action":"output","Package":"github.com/shadowdara/finder/internal/cli","Test":"TestResolveAliasStartPath","Output":"=== RUN   TestResolveAliasStartPath\n"}
+{"Time":"2026-09-17T16:31:27.249367541Z","Action":"run","Package":"github.com/shadowdara/finder/internal/cli","Test":"TestResolveAliasStartPath/s/test_expands_to_shadowdara.github.io/templates/test"}
+{"Time":"2026-09-17T16:31:27.249370717Z","Action":"output","Package":"github.com/shadowdara/finder/internal/cli","Test":"TestResolveAliasStartPath/s/test_expands_to_shadowdara.github.io/templates/test","Output":"=== RUN   TestResolveAliasStartPath/s/test_expands_to_shadowdara.github.io/templates/test\n"}
+{"Time":"2026-09-17T16:31:27.249379338Z","Action":"output","Package":"github.com/shadowdara/finder/internal/cli","Test":"TestResolveAliasStartPath/s/test_expands_to_shadowdara.github.io/templates/test","Output":"--- PASS: TestResolveAliasStartPath/s/test_expands_to_shadowdara.github.io/templates/test (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.249388585Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/cli","Test":"TestResolveAliasStartPath/s/test_expands_to_shadowdara.github.io/templates/test","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.249394433Z","Action":"run","Package":"github.com/shadowdara/finder/internal/cli","Test":"TestResolveAliasStartPath/bare_prefix_resolves_to_the_start_path_itself"}
+{"Time":"2026-09-17T16:31:27.249397501Z","Action":"output","Package":"github.com/shadowdara/finder/internal/cli","Test":"TestResolveAliasStartPath/bare_prefix_resolves_to_the_start_path_itself","Output":"=== RUN   TestResolveAliasStartPath/bare_prefix_resolves_to_the_start_path_itself\n"}
+{"Time":"2026-09-17T16:31:27.249401215Z","Action":"output","Package":"github.com/shadowdara/finder/internal/cli","Test":"TestResolveAliasStartPath/bare_prefix_resolves_to_the_start_path_itself","Output":"--- PASS: TestResolveAliasStartPath/bare_prefix_resolves_to_the_start_path_itself (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.249404304Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/cli","Test":"TestResolveAliasStartPath/bare_prefix_resolves_to_the_start_path_itself","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.249407179Z","Action":"run","Package":"github.com/shadowdara/finder/internal/cli","Test":"TestResolveAliasStartPath/normal_single_template_alias_still_works_as_exact_match"}
+{"Time":"2026-09-17T16:31:27.249409515Z","Action":"output","Package":"github.com/shadowdara/finder/internal/cli","Test":"TestResolveAliasStartPath/normal_single_template_alias_still_works_as_exact_match","Output":"=== RUN   TestResolveAliasStartPath/normal_single_template_alias_still_works_as_exact_match\n"}
+{"Time":"2026-09-17T16:31:27.249414754Z","Action":"output","Package":"github.com/shadowdara/finder/internal/cli","Test":"TestResolveAliasStartPath/normal_single_template_alias_still_works_as_exact_match","Output":"--- PASS: TestResolveAliasStartPath/normal_single_template_alias_still_works_as_exact_match (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.249417931Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/cli","Test":"TestResolveAliasStartPath/normal_single_template_alias_still_works_as_exact_match","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.249420706Z","Action":"run","Package":"github.com/shadowdara/finder/internal/cli","Test":"TestResolveAliasStartPath/start-path_alias_does_not_hijack_unrelated_names"}
+{"Time":"2026-09-17T16:31:27.249423264Z","Action":"output","Package":"github.com/shadowdara/finder/internal/cli","Test":"TestResolveAliasStartPath/start-path_alias_does_not_hijack_unrelated_names","Output":"=== RUN   TestResolveAliasStartPath/start-path_alias_does_not_hijack_unrelated_names\n"}
+{"Time":"2026-09-17T16:31:27.249427669Z","Action":"output","Package":"github.com/shadowdara/finder/internal/cli","Test":"TestResolveAliasStartPath/start-path_alias_does_not_hijack_unrelated_names","Output":"--- PASS: TestResolveAliasStartPath/start-path_alias_does_not_hijack_unrelated_names (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.24943069Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/cli","Test":"TestResolveAliasStartPath/start-path_alias_does_not_hijack_unrelated_names","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.24943378Z","Action":"run","Package":"github.com/shadowdara/finder/internal/cli","Test":"TestResolveAliasStartPath/name_equal_to_a_start-path_key_minus_slash_is_not_hijacked"}
+{"Time":"2026-09-17T16:31:27.249436145Z","Action":"output","Package":"github.com/shadowdara/finder/internal/cli","Test":"TestResolveAliasStartPath/name_equal_to_a_start-path_key_minus_slash_is_not_hijacked","Output":"=== RUN   TestResolveAliasStartPath/name_equal_to_a_start-path_key_minus_slash_is_not_hijacked\n"}
+{"Time":"2026-09-17T16:31:27.249441048Z","Action":"output","Package":"github.com/shadowdara/finder/internal/cli","Test":"TestResolveAliasStartPath/name_equal_to_a_start-path_key_minus_slash_is_not_hijacked","Output":"--- PASS: TestResolveAliasStartPath/name_equal_to_a_start-path_key_minus_slash_is_not_hijacked (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.249450442Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/cli","Test":"TestResolveAliasStartPath/name_equal_to_a_start-path_key_minus_slash_is_not_hijacked","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.249453832Z","Action":"output","Package":"github.com/shadowdara/finder/internal/cli","Test":"TestResolveAliasStartPath","Output":"--- PASS: TestResolveAliasStartPath (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.249456701Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/cli","Test":"TestResolveAliasStartPath","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.249459606Z","Action":"run","Package":"github.com/shadowdara/finder/internal/cli","Test":"TestResolveAliasLongestPrefix"}
+{"Time":"2026-09-17T16:31:27.249462084Z","Action":"output","Package":"github.com/shadowdara/finder/internal/cli","Test":"TestResolveAliasLongestPrefix","Output":"=== RUN   TestResolveAliasLongestPrefix\n"}
+{"Time":"2026-09-17T16:31:27.249470414Z","Action":"output","Package":"github.com/shadowdara/finder/internal/cli","Test":"TestResolveAliasLongestPrefix","Output":"--- PASS: TestResolveAliasLongestPrefix (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.249475158Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/cli","Test":"TestResolveAliasLongestPrefix","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.249479407Z","Action":"run","Package":"github.com/shadowdara/finder/internal/cli","Test":"TestAddAliasStartPathValidation"}
+{"Time":"2026-09-17T16:31:27.249482714Z","Action":"output","Package":"github.com/shadowdara/finder/internal/cli","Test":"TestAddAliasStartPathValidation","Output":"=== RUN   TestAddAliasStartPathValidation\n"}
+{"Time":"2026-09-17T16:31:27.24948662Z","Action":"output","Package":"github.com/shadowdara/finder/internal/cli","Test":"TestAddAliasStartPathValidation","Output":"--- PASS: TestAddAliasStartPathValidation (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.249489262Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/cli","Test":"TestAddAliasStartPathValidation","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.249494664Z","Action":"output","Package":"github.com/shadowdara/finder/internal/cli","Output":"PASS\n"}
+{"Time":"2026-09-17T16:31:27.250199066Z","Action":"output","Package":"github.com/shadowdara/finder/internal/cli","Output":"ok  \tgithub.com/shadowdara/finder/internal/cli\t0.003s\n"}
+{"Time":"2026-09-17T16:31:27.250498607Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/cli","Elapsed":0.004}
+{"ImportPath":"github.com/shadowdara/finder/internal/loader [github.com/shadowdara/finder/internal/loader.test]","Action":"build-output","Output":"# github.com/shadowdara/finder/internal/loader [github.com/shadowdara/finder/internal/loader.test]\n"}
+{"ImportPath":"github.com/shadowdara/finder/internal/loader [github.com/shadowdara/finder/internal/loader.test]","Action":"build-output","Output":"internal/loader/customloader_test.go:10:12: undefined: LoadCustomJSON\n"}
+{"ImportPath":"github.com/shadowdara/finder/internal/loader [github.com/shadowdara/finder/internal/loader.test]","Action":"build-output","Output":"internal/loader/customloader_test.go:32:12: undefined: LoadCustomJSON\n"}
+{"ImportPath":"github.com/shadowdara/finder/internal/loader [github.com/shadowdara/finder/internal/loader.test]","Action":"build-output","Output":"internal/loader/customloader_test.go:44:15: undefined: getAppDataPath\n"}
+{"ImportPath":"github.com/shadowdara/finder/internal/loader [github.com/shadowdara/finder/internal/loader.test]","Action":"build-output","Output":"internal/loader/customloader_test.go:56:15: undefined: getAppDataPath\n"}
+{"ImportPath":"github.com/shadowdara/finder/internal/loader [github.com/shadowdara/finder/internal/loader.test]","Action":"build-output","Output":"internal/loader/customloader_test.go:66:9: undefined: getAppDataPath\n"}
+{"ImportPath":"github.com/shadowdara/finder/internal/loader [github.com/shadowdara/finder/internal/loader.test]","Action":"build-output","Output":"internal/loader/customloader_test.go:70:12: undefined: LoadCustomJSON\n"}
+{"ImportPath":"github.com/shadowdara/finder/internal/loader [github.com/shadowdara/finder/internal/loader.test]","Action":"build-output","Output":"internal/loader/customloader_test.go:84:12: undefined: LoadCustomJSON\n"}
+{"ImportPath":"github.com/shadowdara/finder/internal/loader [github.com/shadowdara/finder/internal/loader.test]","Action":"build-fail"}
+{"Time":"2026-09-17T16:31:27.253009255Z","Action":"start","Package":"github.com/shadowdara/finder/internal/loader"}
+{"Time":"2026-09-17T16:31:27.25301634Z","Action":"output","Package":"github.com/shadowdara/finder/internal/loader","Output":"FAIL\tgithub.com/shadowdara/finder/internal/loader [build failed]\n"}
+{"Time":"2026-09-17T16:31:27.253020278Z","Action":"fail","Package":"github.com/shadowdara/finder/internal/loader","Elapsed":0,"FailedBuild":"github.com/shadowdara/finder/internal/loader [github.com/shadowdara/finder/internal/loader.test]"}
+{"Time":"2026-09-17T16:31:27.371610771Z","Action":"start","Package":"github.com/shadowdara/finder/internal/mcapp"}
+{"Time":"2026-09-17T16:31:27.371676263Z","Action":"start","Package":"github.com/shadowdara/finder/internal/mcapp/gitviewer"}
+{"Time":"2026-09-17T16:31:27.371696711Z","Action":"output","Package":"github.com/shadowdara/finder/internal/mcapp/gitviewer","Output":"?   \tgithub.com/shadowdara/finder/internal/mcapp/gitviewer\t[no test files]\n"}
+{"Time":"2026-09-17T16:31:27.371704173Z","Action":"skip","Package":"github.com/shadowdara/finder/internal/mcapp/gitviewer","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.372961411Z","Action":"run","Package":"github.com/shadowdara/finder/internal/mcapp","Test":"TestNormalizeWorldIconPath"}
+{"Time":"2026-09-17T16:31:27.372979279Z","Action":"output","Package":"github.com/shadowdara/finder/internal/mcapp","Test":"TestNormalizeWorldIconPath","Output":"=== RUN   TestNormalizeWorldIconPath\n"}
+{"Time":"2026-09-17T16:31:27.373014863Z","Action":"output","Package":"github.com/shadowdara/finder/internal/mcapp","Test":"TestNormalizeWorldIconPath","Output":"--- PASS: TestNormalizeWorldIconPath (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.373018885Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/mcapp","Test":"TestNormalizeWorldIconPath","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.37302331Z","Action":"output","Package":"github.com/shadowdara/finder/internal/mcapp","Output":"PASS\n"}
+{"Time":"2026-09-17T16:31:27.373365391Z","Action":"output","Package":"github.com/shadowdara/finder/internal/mcapp","Output":"ok  \tgithub.com/shadowdara/finder/internal/mcapp\t0.002s\n"}
+{"Time":"2026-09-17T16:31:27.373734609Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/mcapp","Elapsed":0.002}
+{"Time":"2026-09-17T16:31:27.471957714Z","Action":"start","Package":"github.com/shadowdara/finder/internal/search"}
+{"Time":"2026-09-17T16:31:27.472055712Z","Action":"start","Package":"github.com/shadowdara/finder/internal/search/binarycheck"}
+{"Time":"2026-09-17T16:31:27.472063769Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search/binarycheck","Output":"?   \tgithub.com/shadowdara/finder/internal/search/binarycheck\t[no test files]\n"}
+{"Time":"2026-09-17T16:31:27.472073085Z","Action":"skip","Package":"github.com/shadowdara/finder/internal/search/binarycheck","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.474676778Z","Action":"run","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplateAndFind"}
+{"Time":"2026-09-17T16:31:27.47469065Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplateAndFind","Output":"=== RUN   TestMatchFolderTemplateAndFind\n"}
+{"Time":"2026-09-17T16:31:27.477748405Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplateAndFind","Output":"--- PASS: TestMatchFolderTemplateAndFind (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.477763458Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplateAndFind","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.477771575Z","Action":"run","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchesNamePattern_ExactFastPath"}
+{"Time":"2026-09-17T16:31:27.477774373Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchesNamePattern_ExactFastPath","Output":"=== RUN   TestMatchesNamePattern_ExactFastPath\n"}
+{"Time":"2026-09-17T16:31:27.477778795Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchesNamePattern_ExactFastPath","Output":"--- PASS: TestMatchesNamePattern_ExactFastPath (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.477784657Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchesNamePattern_ExactFastPath","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.477788199Z","Action":"run","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchesNamePattern_StarWildcard"}
+{"Time":"2026-09-17T16:31:27.477790681Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchesNamePattern_StarWildcard","Output":"=== RUN   TestMatchesNamePattern_StarWildcard\n"}
+{"Time":"2026-09-17T16:31:27.477794317Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchesNamePattern_StarWildcard","Output":"--- PASS: TestMatchesNamePattern_StarWildcard (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.477797012Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchesNamePattern_StarWildcard","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.477800726Z","Action":"run","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchesNamePattern_GlobFallback"}
+{"Time":"2026-09-17T16:31:27.477802953Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchesNamePattern_GlobFallback","Output":"=== RUN   TestMatchesNamePattern_GlobFallback\n"}
+{"Time":"2026-09-17T16:31:27.477806419Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchesNamePattern_GlobFallback","Output":"--- PASS: TestMatchesNamePattern_GlobFallback (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.477809265Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchesNamePattern_GlobFallback","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.477812354Z","Action":"run","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchesRegex_Basic"}
+{"Time":"2026-09-17T16:31:27.477814653Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchesRegex_Basic","Output":"=== RUN   TestMatchesRegex_Basic\n"}
+{"Time":"2026-09-17T16:31:27.477818621Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchesRegex_Basic","Output":"--- PASS: TestMatchesRegex_Basic (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.477821364Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchesRegex_Basic","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.477824052Z","Action":"run","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchesRegex_InvalidRegex"}
+{"Time":"2026-09-17T16:31:27.477826437Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchesRegex_InvalidRegex","Output":"=== RUN   TestMatchesRegex_InvalidRegex\n"}
+{"Time":"2026-09-17T16:31:27.477832327Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchesRegex_InvalidRegex","Output":"--- PASS: TestMatchesRegex_InvalidRegex (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.477835062Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchesRegex_InvalidRegex","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.477837664Z","Action":"run","Package":"github.com/shadowdara/finder/internal/search","Test":"TestPrecompilePatterns"}
+{"Time":"2026-09-17T16:31:27.477840195Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestPrecompilePatterns","Output":"=== RUN   TestPrecompilePatterns\n"}
+{"Time":"2026-09-17T16:31:27.477845266Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestPrecompilePatterns","Output":"--- PASS: TestPrecompilePatterns (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.477848005Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/search","Test":"TestPrecompilePatterns","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.477850426Z","Action":"run","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_Checksums"}
+{"Time":"2026-09-17T16:31:27.477852941Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_Checksums","Output":"=== RUN   TestMatchFolderTemplate_Checksums\n"}
+{"Time":"2026-09-17T16:31:27.477856412Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_Checksums","Output":"--- PASS: TestMatchFolderTemplate_Checksums (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.477860768Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_Checksums","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.477863751Z","Action":"run","Package":"github.com/shadowdara/finder/internal/search","Test":"TestFind_NormalOutput"}
+{"Time":"2026-09-17T16:31:27.477867028Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestFind_NormalOutput","Output":"=== RUN   TestFind_NormalOutput\n"}
+{"Time":"2026-09-17T16:31:27.486108941Z","Action":"start","Package":"github.com/shadowdara/finder/internal/structure"}
+{"Time":"2026-09-17T16:31:27.487341515Z","Action":"run","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestNewFolder_DefaultValues"}
+{"Time":"2026-09-17T16:31:27.487354612Z","Action":"output","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestNewFolder_DefaultValues","Output":"=== RUN   TestNewFolder_DefaultValues\n"}
+{"Time":"2026-09-17T16:31:27.488043365Z","Action":"output","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestNewFolder_DefaultValues","Output":"--- PASS: TestNewFolder_DefaultValues (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.488054922Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestNewFolder_DefaultValues","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.488058984Z","Action":"run","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestNewFolder_MultipleInstances"}
+{"Time":"2026-09-17T16:31:27.488061442Z","Action":"output","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestNewFolder_MultipleInstances","Output":"=== RUN   TestNewFolder_MultipleInstances\n"}
+{"Time":"2026-09-17T16:31:27.488064684Z","Action":"output","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestNewFolder_MultipleInstances","Output":"--- PASS: TestNewFolder_MultipleInstances (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.488068963Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestNewFolder_MultipleInstances","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.488072108Z","Action":"run","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_EmptyTemplate"}
+{"Time":"2026-09-17T16:31:27.488074675Z","Action":"output","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_EmptyTemplate","Output":"=== RUN   TestLoadJSON5_EmptyTemplate\n"}
+{"Time":"2026-09-17T16:31:27.488079107Z","Action":"output","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_EmptyTemplate","Output":"--- PASS: TestLoadJSON5_EmptyTemplate (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.488081812Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_EmptyTemplate","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.488084695Z","Action":"run","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_WithCommand"}
+{"Time":"2026-09-17T16:31:27.488089565Z","Action":"output","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_WithCommand","Output":"=== RUN   TestLoadJSON5_WithCommand\n"}
+{"Time":"2026-09-17T16:31:27.488092682Z","Action":"output","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_WithCommand","Output":"--- PASS: TestLoadJSON5_WithCommand (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.488095657Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_WithCommand","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.48809881Z","Action":"run","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_WithInvertCommand"}
+{"Time":"2026-09-17T16:31:27.488101054Z","Action":"output","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_WithInvertCommand","Output":"=== RUN   TestLoadJSON5_WithInvertCommand\n"}
+{"Time":"2026-09-17T16:31:27.488104554Z","Action":"output","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_WithInvertCommand","Output":"--- PASS: TestLoadJSON5_WithInvertCommand (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.48810727Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_WithInvertCommand","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.488109835Z","Action":"run","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_WithNestedFolders"}
+{"Time":"2026-09-17T16:31:27.488112176Z","Action":"output","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_WithNestedFolders","Output":"=== RUN   TestLoadJSON5_WithNestedFolders\n"}
+{"Time":"2026-09-17T16:31:27.488114955Z","Action":"output","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_WithNestedFolders","Output":"--- PASS: TestLoadJSON5_WithNestedFolders (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.488117617Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_WithNestedFolders","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.48812036Z","Action":"run","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_ComplexStructure"}
+{"Time":"2026-09-17T16:31:27.488122788Z","Action":"output","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_ComplexStructure","Output":"=== RUN   TestLoadJSON5_ComplexStructure\n"}
+{"Time":"2026-09-17T16:31:27.488125661Z","Action":"output","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_ComplexStructure","Output":"--- PASS: TestLoadJSON5_ComplexStructure (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.488128545Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_ComplexStructure","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.488130979Z","Action":"run","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_UnquotedKeys"}
+{"Time":"2026-09-17T16:31:27.488133328Z","Action":"output","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_UnquotedKeys","Output":"=== RUN   TestLoadJSON5_UnquotedKeys\n"}
+{"Time":"2026-09-17T16:31:27.488136758Z","Action":"output","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_UnquotedKeys","Output":"--- PASS: TestLoadJSON5_UnquotedKeys (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.488139261Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_UnquotedKeys","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.488142003Z","Action":"run","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_Comments"}
+{"Time":"2026-09-17T16:31:27.488144198Z","Action":"output","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_Comments","Output":"=== RUN   TestLoadJSON5_Comments\n"}
+{"Time":"2026-09-17T16:31:27.488147465Z","Action":"output","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_Comments","Output":"--- PASS: TestLoadJSON5_Comments (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.488151738Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_Comments","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.488154031Z","Action":"run","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_EmptyArrays"}
+{"Time":"2026-09-17T16:31:27.488156141Z","Action":"output","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_EmptyArrays","Output":"=== RUN   TestLoadJSON5_EmptyArrays\n"}
+{"Time":"2026-09-17T16:31:27.488158937Z","Action":"output","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_EmptyArrays","Output":"--- PASS: TestLoadJSON5_EmptyArrays (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.488161289Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_EmptyArrays","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.488164733Z","Action":"run","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestFolderStructure_DeepNesting"}
+{"Time":"2026-09-17T16:31:27.488167022Z","Action":"output","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestFolderStructure_DeepNesting","Output":"=== RUN   TestFolderStructure_DeepNesting\n"}
+{"Time":"2026-09-17T16:31:27.488170246Z","Action":"output","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestFolderStructure_DeepNesting","Output":"--- PASS: TestFolderStructure_DeepNesting (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.48817271Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestFolderStructure_DeepNesting","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.488175015Z","Action":"run","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_Simple"}
+{"Time":"2026-09-17T16:31:27.488177124Z","Action":"output","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_Simple","Output":"=== RUN   TestLoadJSON5_Simple\n"}
+{"Time":"2026-09-17T16:31:27.488180192Z","Action":"output","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_Simple","Output":"--- PASS: TestLoadJSON5_Simple (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.488182861Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/structure","Test":"TestLoadJSON5_Simple","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.488185275Z","Action":"output","Package":"github.com/shadowdara/finder/internal/structure","Output":"PASS\n"}
+{"Time":"2026-09-17T16:31:27.488419021Z","Action":"output","Package":"github.com/shadowdara/finder/internal/structure","Output":"ok  \tgithub.com/shadowdara/finder/internal/structure\t0.002s\n"}
+{"Time":"2026-09-17T16:31:27.48869642Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/structure","Elapsed":0.003}
+{"Time":"2026-09-17T16:31:27.542167567Z","Action":"start","Package":"github.com/shadowdara/finder/internal/templates"}
+{"Time":"2026-09-17T16:31:27.542206754Z","Action":"start","Package":"github.com/shadowdara/finder/pub/argparser"}
+{"Time":"2026-09-17T16:31:27.542226688Z","Action":"output","Package":"github.com/shadowdara/finder/pub/argparser","Output":"?   \tgithub.com/shadowdara/finder/pub/argparser\t[no test files]\n"}
+{"Time":"2026-09-17T16:31:27.542232248Z","Action":"skip","Package":"github.com/shadowdara/finder/pub/argparser","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.542241894Z","Action":"start","Package":"github.com/shadowdara/finder/pub/checkstaticfiles"}
+{"Time":"2026-09-17T16:31:27.542244945Z","Action":"output","Package":"github.com/shadowdara/finder/pub/checkstaticfiles","Output":"?   \tgithub.com/shadowdara/finder/pub/checkstaticfiles\t[no test files]\n"}
+{"Time":"2026-09-17T16:31:27.542248232Z","Action":"skip","Package":"github.com/shadowdara/finder/pub/checkstaticfiles","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.542253278Z","Action":"start","Package":"github.com/shadowdara/finder/pub/checkstaticfiles/core"}
+{"Time":"2026-09-17T16:31:27.542261437Z","Action":"output","Package":"github.com/shadowdara/finder/pub/checkstaticfiles/core","Output":"?   \tgithub.com/shadowdara/finder/pub/checkstaticfiles/core\t[no test files]\n"}
+{"Time":"2026-09-17T16:31:27.542264982Z","Action":"skip","Package":"github.com/shadowdara/finder/pub/checkstaticfiles/core","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.542277773Z","Action":"start","Package":"github.com/shadowdara/finder/pub/color"}
+{"Time":"2026-09-17T16:31:27.542297627Z","Action":"output","Package":"github.com/shadowdara/finder/pub/color","Output":"?   \tgithub.com/shadowdara/finder/pub/color\t[no test files]\n"}
+{"Time":"2026-09-17T16:31:27.542302985Z","Action":"skip","Package":"github.com/shadowdara/finder/pub/color","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.545255542Z","Action":"run","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestIsTemplateFile"}
+{"Time":"2026-09-17T16:31:27.545269634Z","Action":"output","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestIsTemplateFile","Output":"=== RUN   TestIsTemplateFile\n"}
+{"Time":"2026-09-17T16:31:27.545287456Z","Action":"output","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestIsTemplateFile","Output":"--- PASS: TestIsTemplateFile (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.545291328Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestIsTemplateFile","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.545298162Z","Action":"run","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestTrimTemplateExt"}
+{"Time":"2026-09-17T16:31:27.545301442Z","Action":"output","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestTrimTemplateExt","Output":"=== RUN   TestTrimTemplateExt\n"}
+{"Time":"2026-09-17T16:31:27.545306077Z","Action":"output","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestTrimTemplateExt","Output":"--- PASS: TestTrimTemplateExt (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.545309231Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestTrimTemplateExt","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.545311844Z","Action":"run","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestLoadUserTemplates_ExtensionPriority"}
+{"Time":"2026-09-17T16:31:27.545314438Z","Action":"output","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestLoadUserTemplates_ExtensionPriority","Output":"=== RUN   TestLoadUserTemplates_ExtensionPriority\n"}
+{"Time":"2026-09-17T16:31:27.54531967Z","Action":"output","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestLoadUserTemplates_ExtensionPriority","Output":"--- PASS: TestLoadUserTemplates_ExtensionPriority (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.545322546Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestLoadUserTemplates_ExtensionPriority","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.545330343Z","Action":"run","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestJSONtemplateLoader_ValidTemplate"}
+{"Time":"2026-09-17T16:31:27.545336266Z","Action":"output","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestJSONtemplateLoader_ValidTemplate","Output":"=== RUN   TestJSONtemplateLoader_ValidTemplate\n"}
+{"Time":"2026-09-17T16:31:27.545338917Z","Action":"output","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestJSONtemplateLoader_ValidTemplate","Output":"--- PASS: TestJSONtemplateLoader_ValidTemplate (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.545340915Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestJSONtemplateLoader_ValidTemplate","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.545343245Z","Action":"run","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestJSONtemplateLoader_NonexistentTemplate"}
+{"Time":"2026-09-17T16:31:27.54534498Z","Action":"output","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestJSONtemplateLoader_NonexistentTemplate","Output":"=== RUN   TestJSONtemplateLoader_NonexistentTemplate\n"}
+{"Time":"2026-09-17T16:31:27.545350971Z","Action":"output","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestJSONtemplateLoader_NonexistentTemplate","Output":"--- PASS: TestJSONtemplateLoader_NonexistentTemplate (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.545356812Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestJSONtemplateLoader_NonexistentTemplate","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.545360172Z","Action":"run","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestJSONtemplateLoader_AddsExtension"}
+{"Time":"2026-09-17T16:31:27.545363071Z","Action":"output","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestJSONtemplateLoader_AddsExtension","Output":"=== RUN   TestJSONtemplateLoader_AddsExtension\n"}
+{"Time":"2026-09-17T16:31:27.545366513Z","Action":"output","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestJSONtemplateLoader_AddsExtension","Output":"--- PASS: TestJSONtemplateLoader_AddsExtension (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.545369257Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestJSONtemplateLoader_AddsExtension","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.545372047Z","Action":"run","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestLoadAll_ReturnsSlice"}
+{"Time":"2026-09-17T16:31:27.545374459Z","Action":"output","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestLoadAll_ReturnsSlice","Output":"=== RUN   TestLoadAll_ReturnsSlice\n"}
+{"Time":"2026-09-17T16:31:27.545377921Z","Action":"output","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestLoadAll_ReturnsSlice","Output":"--- PASS: TestLoadAll_ReturnsSlice (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.545381226Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestLoadAll_ReturnsSlice","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.545384158Z","Action":"run","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestLoadAll_ContainsTemplates"}
+{"Time":"2026-09-17T16:31:27.54538667Z","Action":"output","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestLoadAll_ContainsTemplates","Output":"=== RUN   TestLoadAll_ContainsTemplates\n"}
+{"Time":"2026-09-17T16:31:27.545390344Z","Action":"output","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestLoadAll_ContainsTemplates","Output":"--- PASS: TestLoadAll_ContainsTemplates (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.545392927Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestLoadAll_ContainsTemplates","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.545395675Z","Action":"run","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestLoadAll_ContainsDefaultTemplate"}
+{"Time":"2026-09-17T16:31:27.545397878Z","Action":"output","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestLoadAll_ContainsDefaultTemplate","Output":"=== RUN   TestLoadAll_ContainsDefaultTemplate\n"}
+{"Time":"2026-09-17T16:31:27.545401076Z","Action":"output","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestLoadAll_ContainsDefaultTemplate","Output":"--- PASS: TestLoadAll_ContainsDefaultTemplate (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.545403787Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestLoadAll_ContainsDefaultTemplate","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.545406232Z","Action":"run","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestLoadAll_NoFileExtensions"}
+{"Time":"2026-09-17T16:31:27.545408338Z","Action":"output","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestLoadAll_NoFileExtensions","Output":"=== RUN   TestLoadAll_NoFileExtensions\n"}
+{"Time":"2026-09-17T16:31:27.545413301Z","Action":"output","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestLoadAll_NoFileExtensions","Output":"--- PASS: TestLoadAll_NoFileExtensions (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.545417653Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestLoadAll_NoFileExtensions","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.545420328Z","Action":"run","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestLoadAll_UniqueNames"}
+{"Time":"2026-09-17T16:31:27.545422615Z","Action":"output","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestLoadAll_UniqueNames","Output":"=== RUN   TestLoadAll_UniqueNames\n"}
+{"Time":"2026-09-17T16:31:27.545426Z","Action":"output","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestLoadAll_UniqueNames","Output":"--- PASS: TestLoadAll_UniqueNames (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.545428621Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestLoadAll_UniqueNames","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.545431787Z","Action":"run","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestLoadAll_AllTemplatesLoadable"}
+{"Time":"2026-09-17T16:31:27.545434292Z","Action":"output","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestLoadAll_AllTemplatesLoadable","Output":"=== RUN   TestLoadAll_AllTemplatesLoadable\n"}
+{"Time":"2026-09-17T16:31:27.545437557Z","Action":"output","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestLoadAll_AllTemplatesLoadable","Output":"--- PASS: TestLoadAll_AllTemplatesLoadable (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.545440476Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestLoadAll_AllTemplatesLoadable","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.545443218Z","Action":"run","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestJSONtemplateLoader_KnownTemplates"}
+{"Time":"2026-09-17T16:31:27.545445326Z","Action":"output","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestJSONtemplateLoader_KnownTemplates","Output":"=== RUN   TestJSONtemplateLoader_KnownTemplates\n"}
+{"Time":"2026-09-17T16:31:27.545448029Z","Action":"output","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestJSONtemplateLoader_KnownTemplates","Output":"    templateloader_test.go:237: template \"unity\" not available or error: open unity.json5: file does not exist\n"}
+{"Time":"2026-09-17T16:31:27.545451749Z","Action":"output","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestJSONtemplateLoader_KnownTemplates","Output":"--- PASS: TestJSONtemplateLoader_KnownTemplates (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.545454522Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestJSONtemplateLoader_KnownTemplates","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.545457392Z","Action":"run","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestJSONtemplateLoader_DataFormat"}
+{"Time":"2026-09-17T16:31:27.545459894Z","Action":"output","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestJSONtemplateLoader_DataFormat","Output":"=== RUN   TestJSONtemplateLoader_DataFormat\n"}
+{"Time":"2026-09-17T16:31:27.545463495Z","Action":"output","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestJSONtemplateLoader_DataFormat","Output":"--- PASS: TestJSONtemplateLoader_DataFormat (0.00s)\n"}
+{"Time":"2026-09-17T16:31:27.545467101Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/templates","Test":"TestJSONtemplateLoader_DataFormat","Elapsed":0}
+{"Time":"2026-09-17T16:31:27.545471051Z","Action":"output","Package":"github.com/shadowdara/finder/internal/templates","Output":"PASS\n"}
+{"Time":"2026-09-17T16:31:27.545496109Z","Action":"output","Package":"github.com/shadowdara/finder/internal/templates","Output":"ok  \tgithub.com/shadowdara/finder/internal/templates\t0.003s\n"}
+{"Time":"2026-09-17T16:31:27.546049044Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/templates","Elapsed":0.004}
+{"Time":"2026-09-17T16:31:39.274363054Z","Action":"start","Package":"github.com/shadowdara/finder/pub/db/git"}
+{"Time":"2026-09-17T16:31:39.274404038Z","Action":"start","Package":"github.com/shadowdara/finder/pub/filepkg"}
+{"Time":"2026-09-17T16:31:39.274485526Z","Action":"start","Package":"github.com/shadowdara/finder/pub/fsd"}
+{"Time":"2026-09-17T16:31:39.27449346Z","Action":"output","Package":"github.com/shadowdara/finder/pub/fsd","Output":"?   \tgithub.com/shadowdara/finder/pub/fsd\t[no test files]\n"}
+{"Time":"2026-09-17T16:31:39.27450008Z","Action":"skip","Package":"github.com/shadowdara/finder/pub/fsd","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.276926965Z","Action":"run","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestAddAndLock"}
+{"Time":"2026-09-17T16:31:39.276939527Z","Action":"output","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestAddAndLock","Output":"=== RUN   TestAddAndLock\n"}
+{"Time":"2026-09-17T16:31:39.276877167Z","Action":"run","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestIsHex"}
+{"Time":"2026-09-17T16:31:39.276988981Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestIsHex","Output":"=== RUN   TestIsHex\n"}
+{"Time":"2026-09-17T16:31:39.277009843Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestIsHex","Output":"--- PASS: TestIsHex (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.277013363Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestIsHex","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.27701843Z","Action":"run","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestFirstToken"}
+{"Time":"2026-09-17T16:31:39.277023102Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestFirstToken","Output":"=== RUN   TestFirstToken\n"}
+{"Time":"2026-09-17T16:31:39.277027247Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestFirstToken","Output":"--- PASS: TestFirstToken (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.277033523Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestFirstToken","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.277037763Z","Action":"run","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestRefType"}
+{"Time":"2026-09-17T16:31:39.277040159Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestRefType","Output":"=== RUN   TestRefType\n"}
+{"Time":"2026-09-17T16:31:39.277043179Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestRefType","Output":"--- PASS: TestRefType (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.277046453Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestRefType","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.277048992Z","Action":"run","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestParsePerson"}
+{"Time":"2026-09-17T16:31:39.277051193Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestParsePerson","Output":"=== RUN   TestParsePerson\n"}
+{"Time":"2026-09-17T16:31:39.277054948Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestParsePerson","Output":"--- PASS: TestParsePerson (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.277058035Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestParsePerson","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.277060756Z","Action":"run","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestBlobIsText"}
+{"Time":"2026-09-17T16:31:39.277063359Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestBlobIsText","Output":"=== RUN   TestBlobIsText\n"}
+{"Time":"2026-09-17T16:31:39.27706848Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestBlobIsText","Output":"--- PASS: TestBlobIsText (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.277072135Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestBlobIsText","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.277074588Z","Action":"run","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestGzipBytesRoundTrip"}
+{"Time":"2026-09-17T16:31:39.277081696Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestGzipBytesRoundTrip","Output":"=== RUN   TestGzipBytesRoundTrip\n"}
+{"Time":"2026-09-17T16:31:39.277086174Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestGzipBytesRoundTrip","Output":"    gitdb_test.go:112: Hinweis: gzip ist bei diesem kurzen Input nicht kleiner (60 → 75 bytes)\n"}
+{"Time":"2026-09-17T16:31:39.277141549Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestGzipBytesRoundTrip","Output":"--- PASS: TestGzipBytesRoundTrip (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.277157435Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestGzipBytesRoundTrip","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.277161296Z","Action":"run","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestSQLStr"}
+{"Time":"2026-09-17T16:31:39.277164227Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestSQLStr","Output":"=== RUN   TestSQLStr\n"}
+{"Time":"2026-09-17T16:31:39.277182209Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestSQLStr","Output":"--- PASS: TestSQLStr (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.277186291Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestSQLStr","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.277192119Z","Action":"run","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestSQLBlob"}
+{"Time":"2026-09-17T16:31:39.277194901Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestSQLBlob","Output":"=== RUN   TestSQLBlob\n"}
+{"Time":"2026-09-17T16:31:39.277199961Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestSQLBlob","Output":"--- PASS: TestSQLBlob (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.277203132Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestSQLBlob","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.277205821Z","Action":"run","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestCommitHashes"}
+{"Time":"2026-09-17T16:31:39.277208155Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestCommitHashes","Output":"=== RUN   TestCommitHashes\n"}
+{"Time":"2026-09-17T16:31:39.277213401Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestCommitHashes","Output":"--- PASS: TestCommitHashes (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.277215958Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestCommitHashes","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.277219377Z","Action":"run","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestParseCommits"}
+{"Time":"2026-09-17T16:31:39.277221639Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestParseCommits","Output":"=== RUN   TestParseCommits\n"}
+{"Time":"2026-09-17T16:31:39.277266221Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestParseCommits","Output":"--- PASS: TestParseCommits (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.277269315Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestParseCommits","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.27727217Z","Action":"run","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestApplyNumstat"}
+{"Time":"2026-09-17T16:31:39.277274377Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestApplyNumstat","Output":"=== RUN   TestApplyNumstat\n"}
+{"Time":"2026-09-17T16:31:39.277277673Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestApplyNumstat","Output":"--- PASS: TestApplyNumstat (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.27728528Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestApplyNumstat","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.27729095Z","Action":"run","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestGitVersion"}
+{"Time":"2026-09-17T16:31:39.277293145Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestGitVersion","Output":"=== RUN   TestGitVersion\n"}
+{"Time":"2026-09-17T16:31:39.277816347Z","Action":"output","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestAddAndLock","Output":"--- PASS: TestAddAndLock (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.277853686Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestAddAndLock","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.277860441Z","Action":"run","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestPullDownloadAndHash"}
+{"Time":"2026-09-17T16:31:39.277864687Z","Action":"output","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestPullDownloadAndHash","Output":"=== RUN   TestPullDownloadAndHash\n"}
+{"Time":"2026-09-17T16:31:39.279120055Z","Action":"output","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestPullDownloadAndHash","Output":"--- PASS: TestPullDownloadAndHash (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.279138478Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestPullDownloadAndHash","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.279145Z","Action":"run","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestSync"}
+{"Time":"2026-09-17T16:31:39.279171747Z","Action":"output","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestSync","Output":"=== RUN   TestSync\n"}
+{"Time":"2026-09-17T16:31:39.280256175Z","Action":"output","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestSync","Output":"--- PASS: TestSync (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.280595187Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestGitVersion","Output":"    gitdb_test.go:234: Git-Version: git version 2.55.0\n"}
+{"Time":"2026-09-17T16:31:39.280612064Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestGitVersion","Output":"--- PASS: TestGitVersion (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.280615997Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestGitVersion","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.280619722Z","Action":"run","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestSnapshot"}
+{"Time":"2026-09-17T16:31:39.280622718Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestSnapshot","Output":"=== RUN   TestSnapshot\n"}
+{"Time":"2026-09-17T16:31:39.280616057Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestSync","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.28063647Z","Action":"run","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestPullSkipsWhenCurrent"}
+{"Time":"2026-09-17T16:31:39.28063996Z","Action":"output","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestPullSkipsWhenCurrent","Output":"=== RUN   TestPullSkipsWhenCurrent\n"}
+{"Time":"2026-09-17T16:31:39.281378467Z","Action":"output","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestPullSkipsWhenCurrent","Output":"--- PASS: TestPullSkipsWhenCurrent (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.281393686Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestPullSkipsWhenCurrent","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.281408218Z","Action":"run","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestHashMismatchFailsAndRemoves"}
+{"Time":"2026-09-17T16:31:39.281412276Z","Action":"output","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestHashMismatchFailsAndRemoves","Output":"=== RUN   TestHashMismatchFailsAndRemoves\n"}
+{"Time":"2026-09-17T16:31:39.282323905Z","Action":"output","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestHashMismatchFailsAndRemoves","Output":"--- PASS: TestHashMismatchFailsAndRemoves (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.282339807Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestHashMismatchFailsAndRemoves","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.282349862Z","Action":"run","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestCheckStatuses"}
+{"Time":"2026-09-17T16:31:39.282353073Z","Action":"output","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestCheckStatuses","Output":"=== RUN   TestCheckStatuses\n"}
+{"Time":"2026-09-17T16:31:39.282809172Z","Action":"output","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestCheckStatuses","Output":"--- PASS: TestCheckStatuses (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.282826987Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestCheckStatuses","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.282832862Z","Action":"run","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestDiff"}
+{"Time":"2026-09-17T16:31:39.282835893Z","Action":"output","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestDiff","Output":"=== RUN   TestDiff\n"}
+{"Time":"2026-09-17T16:31:39.283330134Z","Action":"output","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestDiff","Output":"--- PASS: TestDiff (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.283339857Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestDiff","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.283350886Z","Action":"run","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestRemove"}
+{"Time":"2026-09-17T16:31:39.28335399Z","Action":"output","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestRemove","Output":"=== RUN   TestRemove\n"}
+{"Time":"2026-09-17T16:31:39.284370914Z","Action":"output","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestRemove","Output":"--- PASS: TestRemove (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.284388113Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestRemove","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.284392193Z","Action":"run","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestNameValidation"}
+{"Time":"2026-09-17T16:31:39.284394839Z","Action":"output","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestNameValidation","Output":"=== RUN   TestNameValidation\n"}
+{"Time":"2026-09-17T16:31:39.284398875Z","Action":"output","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestNameValidation","Output":"--- PASS: TestNameValidation (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.284401952Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestNameValidation","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.284404952Z","Action":"run","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestHTTPError"}
+{"Time":"2026-09-17T16:31:39.284409538Z","Action":"output","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestHTTPError","Output":"=== RUN   TestHTTPError\n"}
+{"Time":"2026-09-17T16:31:39.284646002Z","Action":"output","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestHTTPError","Output":"--- PASS: TestHTTPError (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.284660601Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/filepkg","Test":"TestHTTPError","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.284664775Z","Action":"output","Package":"github.com/shadowdara/finder/pub/filepkg","Output":"PASS\n"}
+{"Time":"2026-09-17T16:31:39.285170288Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestSnapshot","Output":"    gitdb_test.go:248: Snapshot: gitdb: git for-each-ref --format=%(objectname)%09%(refname)%09%(*objectname): chdir c:/Users/dara/Documents/GitHub/finder: no such file or directory\n"}
+{"Time":"2026-09-17T16:31:39.285187398Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestSnapshot","Output":"--- FAIL: TestSnapshot (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.2851912Z","Action":"fail","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestSnapshot","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.285195746Z","Action":"run","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestSnapshotWithBlobs"}
+{"Time":"2026-09-17T16:31:39.285202071Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestSnapshotWithBlobs","Output":"=== RUN   TestSnapshotWithBlobs\n"}
+{"Time":"2026-09-17T16:31:39.285556493Z","Action":"output","Package":"github.com/shadowdara/finder/pub/filepkg","Output":"ok  \tgithub.com/shadowdara/finder/pub/filepkg\t0.011s\n"}
+{"Time":"2026-09-17T16:31:39.289120388Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestSnapshotWithBlobs","Output":"    gitdb_test.go:280: Snapshot: gitdb: git for-each-ref --format=%(objectname)%09%(refname)%09%(*objectname): chdir c:/Users/dara/Documents/GitHub/finder: no such file or directory\n"}
+{"Time":"2026-09-17T16:31:39.289144575Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestSnapshotWithBlobs","Output":"--- FAIL: TestSnapshotWithBlobs (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.289149219Z","Action":"fail","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestSnapshotWithBlobs","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.289153339Z","Action":"run","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestExportSQLite"}
+{"Time":"2026-09-17T16:31:39.289156206Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestExportSQLite","Output":"=== RUN   TestExportSQLite\n"}
+{"Time":"2026-09-17T16:31:39.289333945Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/filepkg","Elapsed":0.015}
+{"Time":"2026-09-17T16:31:39.293568911Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestExportSQLite","Output":"    gitdb_test.go:316: Export: gitdb: git for-each-ref --format=%(objectname)%09%(refname)%09%(*objectname): chdir c:/Users/dara/Documents/GitHub/finder: no such file or directory\n"}
+{"Time":"2026-09-17T16:31:39.293648244Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestExportSQLite","Output":"--- FAIL: TestExportSQLite (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.293655082Z","Action":"fail","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestExportSQLite","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.293660848Z","Action":"run","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestExportJSON"}
+{"Time":"2026-09-17T16:31:39.293665014Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestExportJSON","Output":"=== RUN   TestExportJSON\n"}
+{"Time":"2026-09-17T16:31:39.29832389Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestExportJSON","Output":"    gitdb_test.go:365: Export: gitdb: git for-each-ref --format=%(objectname)%09%(refname)%09%(*objectname): chdir c:/Users/dara/Documents/GitHub/finder: no such file or directory\n"}
+{"Time":"2026-09-17T16:31:39.298338501Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestExportJSON","Output":"--- FAIL: TestExportJSON (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.29834158Z","Action":"fail","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestExportJSON","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.298346745Z","Action":"run","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestExportBothSQLiteAndJSON"}
+{"Time":"2026-09-17T16:31:39.298348821Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestExportBothSQLiteAndJSON","Output":"=== RUN   TestExportBothSQLiteAndJSON\n"}
+{"Time":"2026-09-17T16:31:39.302292913Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestExportBothSQLiteAndJSON","Output":"    gitdb_test.go:412: Export: gitdb: git for-each-ref --format=%(objectname)%09%(refname)%09%(*objectname): chdir c:/Users/dara/Documents/GitHub/finder: no such file or directory\n"}
+{"Time":"2026-09-17T16:31:39.302393044Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestExportBothSQLiteAndJSON","Output":"--- FAIL: TestExportBothSQLiteAndJSON (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.302406165Z","Action":"fail","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestExportBothSQLiteAndJSON","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.302412092Z","Action":"run","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestExportSQL"}
+{"Time":"2026-09-17T16:31:39.302421666Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestExportSQL","Output":"=== RUN   TestExportSQL\n"}
+{"Time":"2026-09-17T16:31:39.313758887Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestExportSQL","Output":"    gitdb_test.go:438: Export: gitdb: git for-each-ref --format=%(objectname)%09%(refname)%09%(*objectname): chdir c:/Users/dara/Documents/GitHub/finder: no such file or directory\n"}
+{"Time":"2026-09-17T16:31:39.313778337Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestExportSQL","Output":"--- FAIL: TestExportSQL (0.01s)\n"}
+{"Time":"2026-09-17T16:31:39.313783056Z","Action":"fail","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestExportSQL","Elapsed":0.01}
+{"Time":"2026-09-17T16:31:39.313789436Z","Action":"run","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestExportAllTargets"}
+{"Time":"2026-09-17T16:31:39.313805145Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestExportAllTargets","Output":"=== RUN   TestExportAllTargets\n"}
+{"Time":"2026-09-17T16:31:39.31683814Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestExportAllTargets","Output":"    gitdb_test.go:512: Export: gitdb: git for-each-ref --format=%(objectname)%09%(refname)%09%(*objectname): chdir c:/Users/dara/Documents/GitHub/finder: no such file or directory\n"}
+{"Time":"2026-09-17T16:31:39.317017454Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestExportAllTargets","Output":"--- FAIL: TestExportAllTargets (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.317033537Z","Action":"fail","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestExportAllTargets","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.317038528Z","Action":"run","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestExportNoTarget"}
+{"Time":"2026-09-17T16:31:39.317041567Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestExportNoTarget","Output":"=== RUN   TestExportNoTarget\n"}
+{"Time":"2026-09-17T16:31:39.317045797Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestExportNoTarget","Output":"--- PASS: TestExportNoTarget (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.317048854Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestExportNoTarget","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.317051984Z","Action":"run","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestReadBlob"}
+{"Time":"2026-09-17T16:31:39.317054612Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestReadBlob","Output":"=== RUN   TestReadBlob\n"}
+{"Time":"2026-09-17T16:31:39.321836382Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestReadBlob","Output":"    gitdb_test.go:545: Export: gitdb: git for-each-ref --format=%(objectname)%09%(refname)%09%(*objectname): chdir c:/Users/dara/Documents/GitHub/finder: no such file or directory\n"}
+{"Time":"2026-09-17T16:31:39.321853395Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestReadBlob","Output":"--- FAIL: TestReadBlob (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.321857398Z","Action":"fail","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestReadBlob","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.321861976Z","Action":"run","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestReportString"}
+{"Time":"2026-09-17T16:31:39.321864477Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestReportString","Output":"=== RUN   TestReportString\n"}
+{"Time":"2026-09-17T16:31:39.321867108Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestReportString","Output":"    gitdb_test.go:578: Report: {\n"}
+{"Time":"2026-09-17T16:31:39.321872159Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestReportString","Output":"          \"meta\": {\n"}
+{"Time":"2026-09-17T16:31:39.321875278Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestReportString","Output":"            \"path\": \"\",\n"}
+{"Time":"2026-09-17T16:31:39.321881268Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestReportString","Output":"            \"remote_url\": \"\",\n"}
+{"Time":"2026-09-17T16:31:39.321891668Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestReportString","Output":"            \"branch\": \"\",\n"}
+{"Time":"2026-09-17T16:31:39.32190835Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestReportString","Output":"            \"git_version\": \"\",\n"}
+{"Time":"2026-09-17T16:31:39.321912228Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestReportString","Output":"            \"hash_algo\": \"\",\n"}
+{"Time":"2026-09-17T16:31:39.321914399Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestReportString","Output":"            \"is_bare\": false\n"}
+{"Time":"2026-09-17T16:31:39.321917058Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestReportString","Output":"          },\n"}
+{"Time":"2026-09-17T16:31:39.321920037Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestReportString","Output":"          \"commits\": 10,\n"}
+{"Time":"2026-09-17T16:31:39.321922456Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestReportString","Output":"          \"refs\": 3,\n"}
+{"Time":"2026-09-17T16:31:39.321925145Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestReportString","Output":"          \"trees\": 0,\n"}
+{"Time":"2026-09-17T16:31:39.32192777Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestReportString","Output":"          \"blobs\": 0,\n"}
+{"Time":"2026-09-17T16:31:39.321930406Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestReportString","Output":"          \"byte_size\": 0,\n"}
+{"Time":"2026-09-17T16:31:39.321934811Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestReportString","Output":"          \"elapsed\": \"\",\n"}
+{"Time":"2026-09-17T16:31:39.321937644Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestReportString","Output":"          \"json_dir\": \"test\"\n"}
+{"Time":"2026-09-17T16:31:39.321940525Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestReportString","Output":"        }\n"}
+{"Time":"2026-09-17T16:31:39.321946795Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestReportString","Output":"--- PASS: TestReportString (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.3219501Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/db/git","Test":"TestReportString","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.321953282Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Output":"FAIL\n"}
+{"Time":"2026-09-17T16:31:39.32308978Z","Action":"output","Package":"github.com/shadowdara/finder/pub/db/git","Output":"FAIL\tgithub.com/shadowdara/finder/pub/db/git\t0.049s\n"}
+{"Time":"2026-09-17T16:31:39.323109969Z","Action":"fail","Package":"github.com/shadowdara/finder/pub/db/git","Elapsed":0.049}
+{"Time":"2026-09-17T16:31:39.407523162Z","Action":"start","Package":"github.com/shadowdara/finder/pub/goansi"}
+{"Time":"2026-09-17T16:31:39.408998879Z","Action":"run","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes"}
+{"Time":"2026-09-17T16:31:39.409015429Z","Action":"output","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes","Output":"=== RUN   TestColorWrappers_AddCodes\n"}
+{"Time":"2026-09-17T16:31:39.409139823Z","Action":"run","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes/Black"}
+{"Time":"2026-09-17T16:31:39.409143772Z","Action":"output","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes/Black","Output":"=== RUN   TestColorWrappers_AddCodes/Black\n"}
+{"Time":"2026-09-17T16:31:39.40914945Z","Action":"output","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes/Black","Output":"--- PASS: TestColorWrappers_AddCodes/Black (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.40915256Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes/Black","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.409156989Z","Action":"run","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes/Red"}
+{"Time":"2026-09-17T16:31:39.409159314Z","Action":"output","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes/Red","Output":"=== RUN   TestColorWrappers_AddCodes/Red\n"}
+{"Time":"2026-09-17T16:31:39.409162393Z","Action":"output","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes/Red","Output":"--- PASS: TestColorWrappers_AddCodes/Red (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.409165334Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes/Red","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.409168473Z","Action":"run","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes/Green"}
+{"Time":"2026-09-17T16:31:39.409170882Z","Action":"output","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes/Green","Output":"=== RUN   TestColorWrappers_AddCodes/Green\n"}
+{"Time":"2026-09-17T16:31:39.409174202Z","Action":"output","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes/Green","Output":"--- PASS: TestColorWrappers_AddCodes/Green (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.409176656Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes/Green","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.409179461Z","Action":"run","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes/Yellow"}
+{"Time":"2026-09-17T16:31:39.409181815Z","Action":"output","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes/Yellow","Output":"=== RUN   TestColorWrappers_AddCodes/Yellow\n"}
+{"Time":"2026-09-17T16:31:39.409184966Z","Action":"output","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes/Yellow","Output":"--- PASS: TestColorWrappers_AddCodes/Yellow (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.409187755Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes/Yellow","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.409190828Z","Action":"run","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes/Blue"}
+{"Time":"2026-09-17T16:31:39.409193291Z","Action":"output","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes/Blue","Output":"=== RUN   TestColorWrappers_AddCodes/Blue\n"}
+{"Time":"2026-09-17T16:31:39.409196408Z","Action":"output","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes/Blue","Output":"--- PASS: TestColorWrappers_AddCodes/Blue (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.409292849Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes/Blue","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.40929609Z","Action":"run","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes/Purple"}
+{"Time":"2026-09-17T16:31:39.409298487Z","Action":"output","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes/Purple","Output":"=== RUN   TestColorWrappers_AddCodes/Purple\n"}
+{"Time":"2026-09-17T16:31:39.409304364Z","Action":"output","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes/Purple","Output":"--- PASS: TestColorWrappers_AddCodes/Purple (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.409307151Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes/Purple","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.409309872Z","Action":"run","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes/Cyan"}
+{"Time":"2026-09-17T16:31:39.409312275Z","Action":"output","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes/Cyan","Output":"=== RUN   TestColorWrappers_AddCodes/Cyan\n"}
+{"Time":"2026-09-17T16:31:39.4093155Z","Action":"output","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes/Cyan","Output":"--- PASS: TestColorWrappers_AddCodes/Cyan (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.409318231Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes/Cyan","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.409320839Z","Action":"run","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes/White"}
+{"Time":"2026-09-17T16:31:39.409323344Z","Action":"output","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes/White","Output":"=== RUN   TestColorWrappers_AddCodes/White\n"}
+{"Time":"2026-09-17T16:31:39.409327393Z","Action":"output","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes/White","Output":"--- PASS: TestColorWrappers_AddCodes/White (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.409330165Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes/White","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.409333178Z","Action":"output","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes","Output":"--- PASS: TestColorWrappers_AddCodes (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.409336007Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_AddCodes","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.409338631Z","Action":"run","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_PreserveInput"}
+{"Time":"2026-09-17T16:31:39.409340919Z","Action":"output","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_PreserveInput","Output":"=== RUN   TestColorWrappers_PreserveInput\n"}
+{"Time":"2026-09-17T16:31:39.409344123Z","Action":"output","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_PreserveInput","Output":"--- PASS: TestColorWrappers_PreserveInput (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.409346843Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_PreserveInput","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.409349324Z","Action":"run","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_ExactValues"}
+{"Time":"2026-09-17T16:31:39.409351906Z","Action":"output","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_ExactValues","Output":"=== RUN   TestColorWrappers_ExactValues\n"}
+{"Time":"2026-09-17T16:31:39.409354866Z","Action":"output","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_ExactValues","Output":"--- PASS: TestColorWrappers_ExactValues (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.409460602Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_ExactValues","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.409466518Z","Action":"run","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorConstants_UniquePrefix"}
+{"Time":"2026-09-17T16:31:39.409468966Z","Action":"output","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorConstants_UniquePrefix","Output":"=== RUN   TestColorConstants_UniquePrefix\n"}
+{"Time":"2026-09-17T16:31:39.409476265Z","Action":"output","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorConstants_UniquePrefix","Output":"--- PASS: TestColorConstants_UniquePrefix (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.409479032Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorConstants_UniquePrefix","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.409481761Z","Action":"run","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestStyleConstants_WellFormed"}
+{"Time":"2026-09-17T16:31:39.409484038Z","Action":"output","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestStyleConstants_WellFormed","Output":"=== RUN   TestStyleConstants_WellFormed\n"}
+{"Time":"2026-09-17T16:31:39.409487116Z","Action":"output","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestStyleConstants_WellFormed","Output":"--- PASS: TestStyleConstants_WellFormed (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.40948982Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestStyleConstants_WellFormed","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.409492625Z","Action":"run","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_EmptyInput"}
+{"Time":"2026-09-17T16:31:39.409495456Z","Action":"output","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_EmptyInput","Output":"=== RUN   TestColorWrappers_EmptyInput\n"}
+{"Time":"2026-09-17T16:31:39.409498737Z","Action":"output","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_EmptyInput","Output":"--- PASS: TestColorWrappers_EmptyInput (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.409501466Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/goansi","Test":"TestColorWrappers_EmptyInput","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.409504048Z","Action":"output","Package":"github.com/shadowdara/finder/pub/goansi","Output":"PASS\n"}
+{"Time":"2026-09-17T16:31:39.410179107Z","Action":"output","Package":"github.com/shadowdara/finder/pub/goansi","Output":"ok  \tgithub.com/shadowdara/finder/pub/goansi\t0.003s\n"}
+{"Time":"2026-09-17T16:31:39.41044387Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/goansi","Elapsed":0.003}
+{"Time":"2026-09-17T16:31:39.424025078Z","Action":"start","Package":"github.com/shadowdara/finder/pub/json5"}
+{"Time":"2026-09-17T16:31:39.425265331Z","Action":"run","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_BasicKeyQuoting"}
+{"Time":"2026-09-17T16:31:39.425285407Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_BasicKeyQuoting","Output":"=== RUN   TestPreprocessJSON5_BasicKeyQuoting\n"}
+{"Time":"2026-09-17T16:31:39.425326434Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_BasicKeyQuoting","Output":"--- PASS: TestPreprocessJSON5_BasicKeyQuoting (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.425330559Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_BasicKeyQuoting","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.425335102Z","Action":"run","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_UnderscoreKeys"}
+{"Time":"2026-09-17T16:31:39.42533768Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_UnderscoreKeys","Output":"=== RUN   TestPreprocessJSON5_UnderscoreKeys\n"}
+{"Time":"2026-09-17T16:31:39.425359325Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_UnderscoreKeys","Output":"--- PASS: TestPreprocessJSON5_UnderscoreKeys (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.425365456Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_UnderscoreKeys","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.425368624Z","Action":"run","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_SpecialCharKeys"}
+{"Time":"2026-09-17T16:31:39.42537129Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_SpecialCharKeys","Output":"=== RUN   TestPreprocessJSON5_SpecialCharKeys\n"}
+{"Time":"2026-09-17T16:31:39.425400469Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_SpecialCharKeys","Output":"--- PASS: TestPreprocessJSON5_SpecialCharKeys (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.425405402Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_SpecialCharKeys","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.425408288Z","Action":"run","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_LineCommentRemoval"}
+{"Time":"2026-09-17T16:31:39.425410743Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_LineCommentRemoval","Output":"=== RUN   TestPreprocessJSON5_LineCommentRemoval\n"}
+{"Time":"2026-09-17T16:31:39.425432241Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_LineCommentRemoval","Output":"--- PASS: TestPreprocessJSON5_LineCommentRemoval (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.425437058Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_LineCommentRemoval","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.425440021Z","Action":"run","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_BlockCommentRemoval"}
+{"Time":"2026-09-17T16:31:39.425442583Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_BlockCommentRemoval","Output":"=== RUN   TestPreprocessJSON5_BlockCommentRemoval\n"}
+{"Time":"2026-09-17T16:31:39.425461685Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_BlockCommentRemoval","Output":"--- PASS: TestPreprocessJSON5_BlockCommentRemoval (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.425465636Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_BlockCommentRemoval","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.425469437Z","Action":"run","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_MultipleComments"}
+{"Time":"2026-09-17T16:31:39.425472071Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_MultipleComments","Output":"=== RUN   TestPreprocessJSON5_MultipleComments\n"}
+{"Time":"2026-09-17T16:31:39.425493521Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_MultipleComments","Output":"--- PASS: TestPreprocessJSON5_MultipleComments (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.425499295Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_MultipleComments","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.425502274Z","Action":"run","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_NestedComments"}
+{"Time":"2026-09-17T16:31:39.425504729Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_NestedComments","Output":"=== RUN   TestPreprocessJSON5_NestedComments\n"}
+{"Time":"2026-09-17T16:31:39.425525073Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_NestedComments","Output":"--- PASS: TestPreprocessJSON5_NestedComments (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.425528976Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_NestedComments","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.425532624Z","Action":"run","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_StringQuotesPreserved"}
+{"Time":"2026-09-17T16:31:39.425535416Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_StringQuotesPreserved","Output":"=== RUN   TestPreprocessJSON5_StringQuotesPreserved\n"}
+{"Time":"2026-09-17T16:31:39.425558994Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_StringQuotesPreserved","Output":"--- PASS: TestPreprocessJSON5_StringQuotesPreserved (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.425565659Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_StringQuotesPreserved","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.425568608Z","Action":"run","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_TrailingCommas"}
+{"Time":"2026-09-17T16:31:39.425571065Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_TrailingCommas","Output":"=== RUN   TestPreprocessJSON5_TrailingCommas\n"}
+{"Time":"2026-09-17T16:31:39.425590295Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_TrailingCommas","Output":"--- PASS: TestPreprocessJSON5_TrailingCommas (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.4255951Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_TrailingCommas","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.42559893Z","Action":"run","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_EmptyObject"}
+{"Time":"2026-09-17T16:31:39.425601552Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_EmptyObject","Output":"=== RUN   TestPreprocessJSON5_EmptyObject\n"}
+{"Time":"2026-09-17T16:31:39.425618534Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_EmptyObject","Output":"--- PASS: TestPreprocessJSON5_EmptyObject (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.425622322Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_EmptyObject","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.425625976Z","Action":"run","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_ArrayValues"}
+{"Time":"2026-09-17T16:31:39.425628665Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_ArrayValues","Output":"=== RUN   TestPreprocessJSON5_ArrayValues\n"}
+{"Time":"2026-09-17T16:31:39.425647942Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_ArrayValues","Output":"--- PASS: TestPreprocessJSON5_ArrayValues (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.425651708Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_ArrayValues","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.425655322Z","Action":"run","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_ComplexNesting"}
+{"Time":"2026-09-17T16:31:39.425657981Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_ComplexNesting","Output":"=== RUN   TestPreprocessJSON5_ComplexNesting\n"}
+{"Time":"2026-09-17T16:31:39.425689959Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_ComplexNesting","Output":"--- PASS: TestPreprocessJSON5_ComplexNesting (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.42569376Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_ComplexNesting","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.425696776Z","Action":"run","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_NumericValues"}
+{"Time":"2026-09-17T16:31:39.425699319Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_NumericValues","Output":"=== RUN   TestPreprocessJSON5_NumericValues\n"}
+{"Time":"2026-09-17T16:31:39.425718428Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_NumericValues","Output":"--- PASS: TestPreprocessJSON5_NumericValues (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.425722394Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_NumericValues","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.425725917Z","Action":"run","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_BooleanValues"}
+{"Time":"2026-09-17T16:31:39.425730576Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_BooleanValues","Output":"=== RUN   TestPreprocessJSON5_BooleanValues\n"}
+{"Time":"2026-09-17T16:31:39.425748029Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_BooleanValues","Output":"--- PASS: TestPreprocessJSON5_BooleanValues (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.425751796Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_BooleanValues","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.425755222Z","Action":"run","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_NullValue"}
+{"Time":"2026-09-17T16:31:39.425757675Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_NullValue","Output":"=== RUN   TestPreprocessJSON5_NullValue\n"}
+{"Time":"2026-09-17T16:31:39.425802022Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_NullValue","Output":"--- PASS: TestPreprocessJSON5_NullValue (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.425823739Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_NullValue","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.425828282Z","Action":"run","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_MixedQuotedUnquotedKeys"}
+{"Time":"2026-09-17T16:31:39.425831166Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_MixedQuotedUnquotedKeys","Output":"=== RUN   TestPreprocessJSON5_MixedQuotedUnquotedKeys\n"}
+{"Time":"2026-09-17T16:31:39.425839897Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_MixedQuotedUnquotedKeys","Output":"--- PASS: TestPreprocessJSON5_MixedQuotedUnquotedKeys (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.425843065Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_MixedQuotedUnquotedKeys","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.425846328Z","Action":"run","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_SingleLineComment"}
+{"Time":"2026-09-17T16:31:39.425848985Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_SingleLineComment","Output":"=== RUN   TestPreprocessJSON5_SingleLineComment\n"}
+{"Time":"2026-09-17T16:31:39.42585505Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_SingleLineComment","Output":"--- PASS: TestPreprocessJSON5_SingleLineComment (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.425857876Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_SingleLineComment","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.425860697Z","Action":"run","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_Whitespace"}
+{"Time":"2026-09-17T16:31:39.425862983Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_Whitespace","Output":"=== RUN   TestPreprocessJSON5_Whitespace\n"}
+{"Time":"2026-09-17T16:31:39.42588679Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_Whitespace","Output":"--- PASS: TestPreprocessJSON5_Whitespace (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.425889807Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_Whitespace","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.425893557Z","Action":"run","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_SpecialCharactersInStrings"}
+{"Time":"2026-09-17T16:31:39.425909825Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_SpecialCharactersInStrings","Output":"=== RUN   TestPreprocessJSON5_SpecialCharactersInStrings\n"}
+{"Time":"2026-09-17T16:31:39.425919766Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_SpecialCharactersInStrings","Output":"--- PASS: TestPreprocessJSON5_SpecialCharactersInStrings (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.425923677Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_SpecialCharactersInStrings","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.425930974Z","Action":"run","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_UnicodeCharacters"}
+{"Time":"2026-09-17T16:31:39.425933391Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_UnicodeCharacters","Output":"=== RUN   TestPreprocessJSON5_UnicodeCharacters\n"}
+{"Time":"2026-09-17T16:31:39.425953251Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_UnicodeCharacters","Output":"--- PASS: TestPreprocessJSON5_UnicodeCharacters (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.425956216Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_UnicodeCharacters","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.425959949Z","Action":"run","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_LargeInput"}
+{"Time":"2026-09-17T16:31:39.4259624Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_LargeInput","Output":"=== RUN   TestPreprocessJSON5_LargeInput\n"}
+{"Time":"2026-09-17T16:31:39.429792327Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_LargeInput","Output":"--- PASS: TestPreprocessJSON5_LargeInput (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.429809469Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_LargeInput","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.429973339Z","Action":"run","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_CommentOnlyLines"}
+{"Time":"2026-09-17T16:31:39.429984692Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_CommentOnlyLines","Output":"=== RUN   TestPreprocessJSON5_CommentOnlyLines\n"}
+{"Time":"2026-09-17T16:31:39.430091488Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_CommentOnlyLines","Output":"--- PASS: TestPreprocessJSON5_CommentOnlyLines (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.430095315Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_CommentOnlyLines","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.43009804Z","Action":"run","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_RemovesCommentsAndQuotesKeys"}
+{"Time":"2026-09-17T16:31:39.430099643Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_RemovesCommentsAndQuotesKeys","Output":"=== RUN   TestPreprocessJSON5_RemovesCommentsAndQuotesKeys\n"}
+{"Time":"2026-09-17T16:31:39.430132528Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_RemovesCommentsAndQuotesKeys","Output":"--- PASS: TestPreprocessJSON5_RemovesCommentsAndQuotesKeys (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.430136917Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_RemovesCommentsAndQuotesKeys","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.430142508Z","Action":"run","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_Comments"}
+{"Time":"2026-09-17T16:31:39.430145017Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_Comments","Output":"=== RUN   TestPreprocessJSON5_Comments\n"}
+{"Time":"2026-09-17T16:31:39.430168714Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_Comments","Output":"--- PASS: TestPreprocessJSON5_Comments (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.430172065Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_Comments","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.430177527Z","Action":"run","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_QuotesKeys"}
+{"Time":"2026-09-17T16:31:39.430179303Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_QuotesKeys","Output":"=== RUN   TestPreprocessJSON5_QuotesKeys\n"}
+{"Time":"2026-09-17T16:31:39.430183775Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_QuotesKeys","Output":"--- PASS: TestPreprocessJSON5_QuotesKeys (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.430187532Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_QuotesKeys","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.430190251Z","Action":"run","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_DoesNotDoubleQuote"}
+{"Time":"2026-09-17T16:31:39.430192325Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_DoesNotDoubleQuote","Output":"=== RUN   TestPreprocessJSON5_DoesNotDoubleQuote\n"}
+{"Time":"2026-09-17T16:31:39.430215197Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_DoesNotDoubleQuote","Output":"--- PASS: TestPreprocessJSON5_DoesNotDoubleQuote (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.43021761Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/json5","Test":"TestPreprocessJSON5_DoesNotDoubleQuote","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.430219526Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Output":"PASS\n"}
+{"Time":"2026-09-17T16:31:39.43046138Z","Action":"output","Package":"github.com/shadowdara/finder/pub/json5","Output":"ok  \tgithub.com/shadowdara/finder/pub/json5\t0.006s\n"}
+{"Time":"2026-09-17T16:31:39.430684108Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/json5","Elapsed":0.007}
+{"Time":"2026-09-17T16:31:39.446106007Z","Action":"start","Package":"github.com/shadowdara/finder/pub/version"}
+{"Time":"2026-09-17T16:31:39.447105357Z","Action":"run","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_MajorVersion"}
+{"Time":"2026-09-17T16:31:39.447121625Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_MajorVersion","Output":"=== RUN   TestIsNewer_MajorVersion\n"}
+{"Time":"2026-09-17T16:31:39.447160872Z","Action":"run","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_MajorVersion/newer_major"}
+{"Time":"2026-09-17T16:31:39.447165046Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_MajorVersion/newer_major","Output":"=== RUN   TestIsNewer_MajorVersion/newer_major\n"}
+{"Time":"2026-09-17T16:31:39.447170898Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_MajorVersion/newer_major","Output":"--- PASS: TestIsNewer_MajorVersion/newer_major (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.4471747Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_MajorVersion/newer_major","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.447179245Z","Action":"run","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_MajorVersion/older_major"}
+{"Time":"2026-09-17T16:31:39.447181949Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_MajorVersion/older_major","Output":"=== RUN   TestIsNewer_MajorVersion/older_major\n"}
+{"Time":"2026-09-17T16:31:39.447185461Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_MajorVersion/older_major","Output":"--- PASS: TestIsNewer_MajorVersion/older_major (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.447188323Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_MajorVersion/older_major","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.447192003Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_MajorVersion","Output":"--- PASS: TestIsNewer_MajorVersion (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.447201178Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_MajorVersion","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.447203937Z","Action":"run","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_MinorVersion"}
+{"Time":"2026-09-17T16:31:39.447206598Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_MinorVersion","Output":"=== RUN   TestIsNewer_MinorVersion\n"}
+{"Time":"2026-09-17T16:31:39.447209731Z","Action":"run","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_MinorVersion/newer_minor"}
+{"Time":"2026-09-17T16:31:39.447212462Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_MinorVersion/newer_minor","Output":"=== RUN   TestIsNewer_MinorVersion/newer_minor\n"}
+{"Time":"2026-09-17T16:31:39.447215708Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_MinorVersion/newer_minor","Output":"--- PASS: TestIsNewer_MinorVersion/newer_minor (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.447218552Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_MinorVersion/newer_minor","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.447221435Z","Action":"run","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_MinorVersion/older_minor"}
+{"Time":"2026-09-17T16:31:39.44722399Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_MinorVersion/older_minor","Output":"=== RUN   TestIsNewer_MinorVersion/older_minor\n"}
+{"Time":"2026-09-17T16:31:39.447229013Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_MinorVersion/older_minor","Output":"--- PASS: TestIsNewer_MinorVersion/older_minor (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.447231974Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_MinorVersion/older_minor","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.447234643Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_MinorVersion","Output":"--- PASS: TestIsNewer_MinorVersion (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.4472373Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_MinorVersion","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.447240095Z","Action":"run","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_PatchVersion"}
+{"Time":"2026-09-17T16:31:39.447242529Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_PatchVersion","Output":"=== RUN   TestIsNewer_PatchVersion\n"}
+{"Time":"2026-09-17T16:31:39.447245462Z","Action":"run","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_PatchVersion/newer_patch"}
+{"Time":"2026-09-17T16:31:39.4472481Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_PatchVersion/newer_patch","Output":"=== RUN   TestIsNewer_PatchVersion/newer_patch\n"}
+{"Time":"2026-09-17T16:31:39.447252586Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_PatchVersion/newer_patch","Output":"--- PASS: TestIsNewer_PatchVersion/newer_patch (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.447255473Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_PatchVersion/newer_patch","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.447258152Z","Action":"run","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_PatchVersion/older_patch"}
+{"Time":"2026-09-17T16:31:39.447260686Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_PatchVersion/older_patch","Output":"=== RUN   TestIsNewer_PatchVersion/older_patch\n"}
+{"Time":"2026-09-17T16:31:39.447263733Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_PatchVersion/older_patch","Output":"--- PASS: TestIsNewer_PatchVersion/older_patch (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.447269319Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_PatchVersion/older_patch","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.447272307Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_PatchVersion","Output":"--- PASS: TestIsNewer_PatchVersion (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.447274751Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_PatchVersion","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.447277375Z","Action":"run","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_EqualVersions"}
+{"Time":"2026-09-17T16:31:39.447281084Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_EqualVersions","Output":"=== RUN   TestIsNewer_EqualVersions\n"}
+{"Time":"2026-09-17T16:31:39.447285043Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_EqualVersions","Output":"--- PASS: TestIsNewer_EqualVersions (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.447287841Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_EqualVersions","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.447290401Z","Action":"run","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_InvalidVersions"}
+{"Time":"2026-09-17T16:31:39.447292836Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_InvalidVersions","Output":"=== RUN   TestIsNewer_InvalidVersions\n"}
+{"Time":"2026-09-17T16:31:39.447301488Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_InvalidVersions","Output":"    version_test.go:88: IsNewer(1.0.0, \"-1.2.3\") should be false for invalid version\n"}
+{"Time":"2026-09-17T16:31:39.447317007Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_InvalidVersions","Output":"--- FAIL: TestIsNewer_InvalidVersions (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.447321594Z","Action":"fail","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_InvalidVersions","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.447324808Z","Action":"run","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_BothInvalid"}
+{"Time":"2026-09-17T16:31:39.44732766Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_BothInvalid","Output":"=== RUN   TestIsNewer_BothInvalid\n"}
+{"Time":"2026-09-17T16:31:39.447332433Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_BothInvalid","Output":"--- PASS: TestIsNewer_BothInvalid (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.447335762Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_BothInvalid","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.447339222Z","Action":"run","Package":"github.com/shadowdara/finder/pub/version","Test":"TestParseVersion_Valid"}
+{"Time":"2026-09-17T16:31:39.447342001Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Test":"TestParseVersion_Valid","Output":"=== RUN   TestParseVersion_Valid\n"}
+{"Time":"2026-09-17T16:31:39.447347282Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Test":"TestParseVersion_Valid","Output":"--- PASS: TestParseVersion_Valid (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.447351653Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/version","Test":"TestParseVersion_Valid","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.447355001Z","Action":"run","Package":"github.com/shadowdara/finder/pub/version","Test":"TestParseVersion_Invalid"}
+{"Time":"2026-09-17T16:31:39.447357554Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Test":"TestParseVersion_Invalid","Output":"=== RUN   TestParseVersion_Invalid\n"}
+{"Time":"2026-09-17T16:31:39.447363151Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Test":"TestParseVersion_Invalid","Output":"--- PASS: TestParseVersion_Invalid (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.447367376Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/version","Test":"TestParseVersion_Invalid","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.447370505Z","Action":"run","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_LargeNumbers"}
+{"Time":"2026-09-17T16:31:39.447373203Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_LargeNumbers","Output":"=== RUN   TestIsNewer_LargeNumbers\n"}
+{"Time":"2026-09-17T16:31:39.447378432Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_LargeNumbers","Output":"--- PASS: TestIsNewer_LargeNumbers (0.00s)\n"}
+{"Time":"2026-09-17T16:31:39.447381699Z","Action":"pass","Package":"github.com/shadowdara/finder/pub/version","Test":"TestIsNewer_LargeNumbers","Elapsed":0}
+{"Time":"2026-09-17T16:31:39.447385325Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Output":"FAIL\n"}
+{"Time":"2026-09-17T16:31:39.447553878Z","Action":"output","Package":"github.com/shadowdara/finder/pub/version","Output":"FAIL\tgithub.com/shadowdara/finder/pub/version\t0.001s\n"}
+{"Time":"2026-09-17T16:31:39.447561404Z","Action":"fail","Package":"github.com/shadowdara/finder/pub/version","Elapsed":0.001}
+{"Time":"2026-09-17T16:32:19.831091022Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestFind_NormalOutput","Output":"    search_test.go:47: expected '# Found:' header in output, got: Description: Test Folder\n"}
+{"Time":"2026-09-17T16:32:19.831208751Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestFind_NormalOutput","Output":"        Search by finder took: 52.3533 seconds\n"}
+{"Time":"2026-09-17T16:32:19.831213176Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestFind_NormalOutput","Output":"        Found:  Results\n"}
+{"Time":"2026-09-17T16:32:19.831215961Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestFind_NormalOutput","Output":"    search_test.go:50: expected '# End of the List' footer in output, got: Description: Test Folder\n"}
+{"Time":"2026-09-17T16:32:19.831221903Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestFind_NormalOutput","Output":"        Search by finder took: 52.3533 seconds\n"}
+{"Time":"2026-09-17T16:32:19.831224103Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestFind_NormalOutput","Output":"        Found:  Results\n"}
+{"Time":"2026-09-17T16:32:19.831231536Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestFind_NormalOutput","Output":"--- FAIL: TestFind_NormalOutput (52.35s)\n"}
+{"Time":"2026-09-17T16:32:19.831233985Z","Action":"fail","Package":"github.com/shadowdara/finder/internal/search","Test":"TestFind_NormalOutput","Elapsed":52.35}
+{"Time":"2026-09-17T16:32:19.831243363Z","Action":"run","Package":"github.com/shadowdara/finder/internal/search","Test":"TestFind_ClearOutput"}
+{"Time":"2026-09-17T16:32:19.831245885Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestFind_ClearOutput","Output":"=== RUN   TestFind_ClearOutput\n"}
+{"Time":"2026-09-17T16:32:21.191939897Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestFind_ClearOutput","Output":"--- PASS: TestFind_ClearOutput (1.36s)\n"}
+{"Time":"2026-09-17T16:32:21.191971398Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/search","Test":"TestFind_ClearOutput","Elapsed":1.36}
+{"Time":"2026-09-17T16:32:21.191979402Z","Action":"run","Package":"github.com/shadowdara/finder/internal/search","Test":"TestFind_JSONOutput"}
+{"Time":"2026-09-17T16:32:21.191983632Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestFind_JSONOutput","Output":"=== RUN   TestFind_JSONOutput\n"}
+{"Time":"2026-09-17T16:32:22.545232971Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestFind_JSONOutput","Output":"    search_test.go:88: expected valid JSON output, got:  (error: unexpected end of JSON input)\n"}
+{"Time":"2026-09-17T16:32:22.54527059Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestFind_JSONOutput","Output":"--- FAIL: TestFind_JSONOutput (1.35s)\n"}
+{"Time":"2026-09-17T16:32:22.545274864Z","Action":"fail","Package":"github.com/shadowdara/finder/internal/search","Test":"TestFind_JSONOutput","Elapsed":1.35}
+{"Time":"2026-09-17T16:32:22.545280965Z","Action":"run","Package":"github.com/shadowdara/finder/internal/search","Test":"TestGetSearchRoots_ReturnsSlice"}
+{"Time":"2026-09-17T16:32:22.545284114Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestGetSearchRoots_ReturnsSlice","Output":"=== RUN   TestGetSearchRoots_ReturnsSlice\n"}
+{"Time":"2026-09-17T16:32:22.545296967Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestGetSearchRoots_ReturnsSlice","Output":"--- PASS: TestGetSearchRoots_ReturnsSlice (0.00s)\n"}
+{"Time":"2026-09-17T16:32:22.545299657Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/search","Test":"TestGetSearchRoots_ReturnsSlice","Elapsed":0}
+{"Time":"2026-09-17T16:32:22.54530334Z","Action":"run","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_NoTemplate"}
+{"Time":"2026-09-17T16:32:22.545305933Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_NoTemplate","Output":"=== RUN   TestMatchFolderTemplate_NoTemplate\n"}
+{"Time":"2026-09-17T16:32:22.545415755Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_NoTemplate","Output":"--- PASS: TestMatchFolderTemplate_NoTemplate (0.00s)\n"}
+{"Time":"2026-09-17T16:32:22.545422306Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_NoTemplate","Elapsed":0}
+{"Time":"2026-09-17T16:32:22.545425727Z","Action":"run","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_WithFileName"}
+{"Time":"2026-09-17T16:32:22.545428489Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_WithFileName","Output":"=== RUN   TestMatchFolderTemplate_WithFileName\n"}
+{"Time":"2026-09-17T16:32:22.545533166Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_WithFileName","Output":"--- PASS: TestMatchFolderTemplate_WithFileName (0.00s)\n"}
+{"Time":"2026-09-17T16:32:22.545537582Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_WithFileName","Elapsed":0}
+{"Time":"2026-09-17T16:32:22.545541019Z","Action":"run","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_WithWildcard"}
+{"Time":"2026-09-17T16:32:22.54554331Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_WithWildcard","Output":"=== RUN   TestMatchFolderTemplate_WithWildcard\n"}
+{"Time":"2026-09-17T16:32:22.545634856Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_WithWildcard","Output":"--- PASS: TestMatchFolderTemplate_WithWildcard (0.00s)\n"}
+{"Time":"2026-09-17T16:32:22.545639554Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_WithWildcard","Elapsed":0}
+{"Time":"2026-09-17T16:32:22.545643166Z","Action":"run","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_WithFile"}
+{"Time":"2026-09-17T16:32:22.54564643Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_WithFile","Output":"=== RUN   TestMatchFolderTemplate_WithFile\n"}
+{"Time":"2026-09-17T16:32:22.545777414Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_WithFile","Output":"--- PASS: TestMatchFolderTemplate_WithFile (0.00s)\n"}
+{"Time":"2026-09-17T16:32:22.545782269Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_WithFile","Elapsed":0}
+{"Time":"2026-09-17T16:32:22.545785646Z","Action":"run","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_MissingFile"}
+{"Time":"2026-09-17T16:32:22.545788421Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_MissingFile","Output":"=== RUN   TestMatchFolderTemplate_MissingFile\n"}
+{"Time":"2026-09-17T16:32:22.545891187Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_MissingFile","Output":"--- PASS: TestMatchFolderTemplate_MissingFile (0.00s)\n"}
+{"Time":"2026-09-17T16:32:22.545911897Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_MissingFile","Elapsed":0}
+{"Time":"2026-09-17T16:32:22.545915681Z","Action":"run","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_WithSubfolder"}
+{"Time":"2026-09-17T16:32:22.545918839Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_WithSubfolder","Output":"=== RUN   TestMatchFolderTemplate_WithSubfolder\n"}
+{"Time":"2026-09-17T16:32:22.546026323Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_WithSubfolder","Output":"--- PASS: TestMatchFolderTemplate_WithSubfolder (0.00s)\n"}
+{"Time":"2026-09-17T16:32:22.546031855Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_WithSubfolder","Elapsed":0}
+{"Time":"2026-09-17T16:32:22.54603596Z","Action":"run","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_MissingSubfolder"}
+{"Time":"2026-09-17T16:32:22.546039209Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_MissingSubfolder","Output":"=== RUN   TestMatchFolderTemplate_MissingSubfolder\n"}
+{"Time":"2026-09-17T16:32:22.546117719Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_MissingSubfolder","Output":"--- PASS: TestMatchFolderTemplate_MissingSubfolder (0.00s)\n"}
+{"Time":"2026-09-17T16:32:22.546121809Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_MissingSubfolder","Elapsed":0}
+{"Time":"2026-09-17T16:32:22.546125522Z","Action":"run","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchAny_ExactMatch"}
+{"Time":"2026-09-17T16:32:22.546128283Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchAny_ExactMatch","Output":"=== RUN   TestMatchAny_ExactMatch\n"}
+{"Time":"2026-09-17T16:32:22.546132731Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchAny_ExactMatch","Output":"--- PASS: TestMatchAny_ExactMatch (0.00s)\n"}
+{"Time":"2026-09-17T16:32:22.546135463Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchAny_ExactMatch","Elapsed":0}
+{"Time":"2026-09-17T16:32:22.546138192Z","Action":"run","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchAny_WildcardMatch"}
+{"Time":"2026-09-17T16:32:22.546140917Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchAny_WildcardMatch","Output":"=== RUN   TestMatchAny_WildcardMatch\n"}
+{"Time":"2026-09-17T16:32:22.546144884Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchAny_WildcardMatch","Output":"--- PASS: TestMatchAny_WildcardMatch (0.00s)\n"}
+{"Time":"2026-09-17T16:32:22.546150835Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchAny_WildcardMatch","Elapsed":0}
+{"Time":"2026-09-17T16:32:22.546153727Z","Action":"run","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchAny_RegexMatch"}
+{"Time":"2026-09-17T16:32:22.546156443Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchAny_RegexMatch","Output":"=== RUN   TestMatchAny_RegexMatch\n"}
+{"Time":"2026-09-17T16:32:22.546160134Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchAny_RegexMatch","Output":"--- PASS: TestMatchAny_RegexMatch (0.00s)\n"}
+{"Time":"2026-09-17T16:32:22.546162532Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchAny_RegexMatch","Elapsed":0}
+{"Time":"2026-09-17T16:32:22.546165268Z","Action":"run","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderPattern_Regex"}
+{"Time":"2026-09-17T16:32:22.546167428Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderPattern_Regex","Output":"=== RUN   TestMatchFolderPattern_Regex\n"}
+{"Time":"2026-09-17T16:32:22.546210069Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderPattern_Regex","Output":"--- PASS: TestMatchFolderPattern_Regex (0.00s)\n"}
+{"Time":"2026-09-17T16:32:22.546214034Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderPattern_Regex","Elapsed":0}
+{"Time":"2026-09-17T16:32:22.546217498Z","Action":"run","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_RegexMatch"}
+{"Time":"2026-09-17T16:32:22.546219862Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_RegexMatch","Output":"=== RUN   TestMatchFolderTemplate_RegexMatch\n"}
+{"Time":"2026-09-17T16:32:22.546354002Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_RegexMatch","Output":"--- PASS: TestMatchFolderTemplate_RegexMatch (0.00s)\n"}
+{"Time":"2026-09-17T16:32:22.546358803Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchFolderTemplate_RegexMatch","Elapsed":0}
+{"Time":"2026-09-17T16:32:22.546361933Z","Action":"run","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchAny_NoMatch"}
+{"Time":"2026-09-17T16:32:22.546364847Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchAny_NoMatch","Output":"=== RUN   TestMatchAny_NoMatch\n"}
+{"Time":"2026-09-17T16:32:22.546369169Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchAny_NoMatch","Output":"--- PASS: TestMatchAny_NoMatch (0.00s)\n"}
+{"Time":"2026-09-17T16:32:22.546371952Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/search","Test":"TestMatchAny_NoMatch","Elapsed":0}
+{"Time":"2026-09-17T16:32:22.546374938Z","Action":"run","Package":"github.com/shadowdara/finder/internal/search","Test":"TestExecuteCommand_EmptyCommand"}
+{"Time":"2026-09-17T16:32:22.546377897Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestExecuteCommand_EmptyCommand","Output":"=== RUN   TestExecuteCommand_EmptyCommand\n"}
+{"Time":"2026-09-17T16:32:22.546443798Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestExecuteCommand_EmptyCommand","Output":"--- PASS: TestExecuteCommand_EmptyCommand (0.00s)\n"}
+{"Time":"2026-09-17T16:32:22.546448357Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/search","Test":"TestExecuteCommand_EmptyCommand","Elapsed":0}
+{"Time":"2026-09-17T16:32:22.546451749Z","Action":"run","Package":"github.com/shadowdara/finder/internal/search","Test":"TestExecuteCommand_ValidCommand"}
+{"Time":"2026-09-17T16:32:22.546454273Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestExecuteCommand_ValidCommand","Output":"=== RUN   TestExecuteCommand_ValidCommand\n"}
+{"Time":"2026-09-17T16:32:22.547517277Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestExecuteCommand_ValidCommand","Output":"--- PASS: TestExecuteCommand_ValidCommand (0.00s)\n"}
+{"Time":"2026-09-17T16:32:22.547535215Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/search","Test":"TestExecuteCommand_ValidCommand","Elapsed":0}
+{"Time":"2026-09-17T16:32:22.547540244Z","Action":"run","Package":"github.com/shadowdara/finder/internal/search","Test":"TestExecuteCommand_InvertedCommand"}
+{"Time":"2026-09-17T16:32:22.547543478Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestExecuteCommand_InvertedCommand","Output":"=== RUN   TestExecuteCommand_InvertedCommand\n"}
+{"Time":"2026-09-17T16:32:22.548329795Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestExecuteCommand_InvertedCommand","Output":"--- PASS: TestExecuteCommand_InvertedCommand (0.00s)\n"}
+{"Time":"2026-09-17T16:32:22.548341519Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/search","Test":"TestExecuteCommand_InvertedCommand","Elapsed":0}
+{"Time":"2026-09-17T16:32:22.548346061Z","Action":"run","Package":"github.com/shadowdara/finder/internal/search","Test":"TestFindMatchingFolders_Empty"}
+{"Time":"2026-09-17T16:32:22.548349216Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestFindMatchingFolders_Empty","Output":"=== RUN   TestFindMatchingFolders_Empty\n"}
+{"Time":"2026-09-17T16:32:22.548442673Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestFindMatchingFolders_Empty","Output":"--- PASS: TestFindMatchingFolders_Empty (0.00s)\n"}
+{"Time":"2026-09-17T16:32:22.548447778Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/search","Test":"TestFindMatchingFolders_Empty","Elapsed":0}
+{"Time":"2026-09-17T16:32:22.548451143Z","Action":"run","Package":"github.com/shadowdara/finder/internal/search","Test":"TestFindMatchingFolders_SingleMatch"}
+{"Time":"2026-09-17T16:32:22.54845389Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestFindMatchingFolders_SingleMatch","Output":"=== RUN   TestFindMatchingFolders_SingleMatch\n"}
+{"Time":"2026-09-17T16:32:22.548558306Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestFindMatchingFolders_SingleMatch","Output":"--- PASS: TestFindMatchingFolders_SingleMatch (0.00s)\n"}
+{"Time":"2026-09-17T16:32:22.548563293Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/search","Test":"TestFindMatchingFolders_SingleMatch","Elapsed":0}
+{"Time":"2026-09-17T16:32:22.54856663Z","Action":"run","Package":"github.com/shadowdara/finder/internal/search","Test":"TestFindMatchingFolders_MultipleMatches"}
+{"Time":"2026-09-17T16:32:22.548569832Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestFindMatchingFolders_MultipleMatches","Output":"=== RUN   TestFindMatchingFolders_MultipleMatches\n"}
+{"Time":"2026-09-17T16:32:22.54872059Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Test":"TestFindMatchingFolders_MultipleMatches","Output":"--- PASS: TestFindMatchingFolders_MultipleMatches (0.00s)\n"}
+{"Time":"2026-09-17T16:32:22.548725324Z","Action":"pass","Package":"github.com/shadowdara/finder/internal/search","Test":"TestFindMatchingFolders_MultipleMatches","Elapsed":0}
+{"Time":"2026-09-17T16:32:22.548728036Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Output":"FAIL\n"}
+{"Time":"2026-09-17T16:32:22.5494831Z","Action":"output","Package":"github.com/shadowdara/finder/internal/search","Output":"FAIL\tgithub.com/shadowdara/finder/internal/search\t55.077s\n"}
+{"Time":"2026-09-17T16:32:22.549494571Z","Action":"fail","Package":"github.com/shadowdara/finder/internal/search","Elapsed":55.078}

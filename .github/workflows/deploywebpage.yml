@@ -23,14 +23,14 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 22
-          cache: pnpm
-          cache-dependency-path: pnpm-lock.yaml
 
-      - name: Enable pnpm (corepack)
-        run: corepack enable
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Install site dependencies
+        run: pnpm install --frozen-lockfile --filter ./npm/site...
 
       - name: Build static site
         run: pnpm run build:static
@@ -39,7 +39,7 @@ jobs:
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: ./npm/site/dist-static
+          path: npm/site/dist-static
 
   deploy:
     needs: build

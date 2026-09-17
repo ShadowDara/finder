@@ -408,6 +408,10 @@ func restoreZip(archive, destination string) error {
 	if err != nil {
 		return err
 	}
+	rootPrefix := rootAbs
+	if !strings.HasSuffix(rootPrefix, string(os.PathSeparator)) {
+		rootPrefix += string(os.PathSeparator)
+	}
 	for _, file := range reader.File {
 		if file.Name == "" {
 			return fmt.Errorf("unsicherer ZIP-Pfad erkannt: %s", file.Name)
@@ -425,6 +429,9 @@ func restoreZip(archive, destination string) error {
 		resolved, err := filepath.Abs(target)
 		if err != nil {
 			return err
+		}
+		if resolved != rootAbs && !strings.HasPrefix(resolved, rootPrefix) {
+			return fmt.Errorf("unsicherer ZIP-Pfad erkannt: %s", file.Name)
 		}
 		rel, err := filepath.Rel(rootAbs, resolved)
 		if err != nil {

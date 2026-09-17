@@ -236,7 +236,7 @@ export interface PagesPluginOptions {
    * (`jsx`/`Fragment`) is available. Defaults to the jsx-runtime shipped
    * with this package.
    *
-   * @default "@twine/core/jsx-runtime"
+   * @default "twynejs/jsx-runtime"
    */
   jsxRuntimePath?: string;
 }
@@ -340,7 +340,7 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
   const writeDts = options.dts ?? true;
   const dtsPathOpt = options.dtsPath ?? "src/pages.d.ts";
   const liquidTemplateRoot = options.liquidTemplateRoot ?? "src/templates";
-  const jsxRuntimePath = options.jsxRuntimePath ?? "@twine/core/jsx-runtime";
+  const jsxRuntimePath = options.jsxRuntimePath ?? "twynejs/jsx-runtime";
 
   let config: ResolvedConfig;
   let pages: PageEntry[] = [];

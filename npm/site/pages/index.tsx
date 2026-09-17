@@ -1,4 +1,4 @@
-import { jsx, Fragment, raw } from "@twine/core/jsx-runtime";
+import { jsx, Fragment, raw } from "twynejs/jsx-runtime";
 import { SERVER_ADRESS } from "../src/vars";
 
 export default function render(el: HTMLDivElement, data: string) {
@@ -31,6 +31,11 @@ export default function render(el: HTMLDivElement, data: string) {
           {import.meta.env.MODE == "backend" && (
             <li>
               <a href="./mcapp">MCAPP</a>
+            </li>
+          )}
+          {import.meta.env.MODE == "backend" && (
+            <li>
+              <a href="./gitviewer">Git Viewer</a>
             </li>
           )}
           {/* {import.meta.env.MODE == "backend" && (

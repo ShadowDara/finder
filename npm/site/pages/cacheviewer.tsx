@@ -1,4 +1,4 @@
-import { jsx, Fragment, escapeHtml, raw } from "@twine/core/jsx-runtime";
+import { jsx, Fragment, escapeHtml, raw } from "twynejs/jsx-runtime";
 import { SERVER_ADRESS } from "../src/vars";
 import "./cacheviewer.css";
 

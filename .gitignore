@@ -32,7 +32,8 @@ npm/hub/database-export.sql
 npm/site/stats.html
 npm/site/static-stats.html
 /npm/site/dist
-/npm/site/dist-static
+/npm/site/dist-static/**
+!/npm/site/dist-static/.gitkeep
 npm/site/tsconfig.tsbuildinfo
 /npm/vfs/node_modules
 /npm/vfs/dist
@@ -50,3 +51,4 @@ npm/site/tsconfig.tsbuildinfo
 /npm/hub/.claude
 /npm/hub/.windsurf
 /npm/hub/.agents
+npm/site/public/dependencies.txt

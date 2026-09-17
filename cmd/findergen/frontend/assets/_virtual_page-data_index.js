@@ -46,6 +46,10 @@ name, so a template fetched from
 <span class="hljs-code">\`https://example.com/foo/template.json5\`</span> is reachable as
 <span class="hljs-code">\`example.com/foo/template\`</span>.
 
+Those long installed names can be shortened with <span class="hljs-strong">**template aliases**</span>
+(CLI-only, stored in <span class="hljs-code">\`~/.finder/aliases.json\`</span> — not a template field).
+See section 8.5.
+
 The filename without its extension becomes the template name, for
 example:
 
@@ -738,6 +742,60 @@ If a template exists in the custom template folder, it will be loaded
 automatically. Templates installed from the web (\`finder install
 <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">url-or-name</span>&gt;</span></span><span class="hljs-code">\`) are looked up in \`</span>~/.finder/installed/templates/\` (and
 <span class="hljs-code">\`./.finder/installed/templates/\`</span>) under their URL-derived name.
+
+---
+
+<span class="hljs-section">## 8.5) Template aliases (CLI, not a template field)</span>
+
+Aliases are user-defined short names for templates. They are <span class="hljs-strong">**not**</span>
+part of the template JSON schema — do not add an <span class="hljs-code">\`aliases\`</span> (or
+<span class="hljs-code">\`alias\`</span>) field to a template file. Finder will ignore it during
+matching.
+
+Aliases live in <span class="hljs-code">\`~/.finder/aliases.json\`</span> and are managed with the CLI:
+
+<span class="hljs-code">\`\`\`bash
+# Create an alias for a (usually installed) template
+finder alias myvue shadowdara.github.io/test/template
+
+# Search / view using the alias — resolved before the template loads
+finder myvue
+finder view myvue
+
+# List aliases
+finder aliases          # alias: alias-list
+
+# Remove an alias
+finder unalias myvue    # alias: alias-remove
+\`\`\`</span>
+
+An alias whose name ends with <span class="hljs-code">\`/\`</span> is a <span class="hljs-strong">**start-path alias**</span>. It
+expands a prefix of the searched name; the rest of the input is
+appended to the target. The longest matching prefix wins:
+
+<span class="hljs-code">\`\`\`bash
+finder alias s/ shadowdara.github.io/templates/
+finder s/test
+# → searches shadowdara.github.io/templates/test
+\`\`\`</span>
+
+Rules for assistants:
+
+<span class="hljs-bullet">-</span> never write <span class="hljs-code">\`aliases\`</span> / <span class="hljs-code">\`alias\`</span> into a generated template file
+<span class="hljs-bullet">-</span> tell the user to create aliases with <span class="hljs-code">\`finder alias &lt;name&gt; &lt;template&gt;\`</span>
+<span class="hljs-bullet">-</span> resolution is single-level (no alias chains)
+<span class="hljs-bullet">-</span> exact match is tried first; otherwise the longest start-path prefix
+  (keys ending with <span class="hljs-code">\`/\`</span>) wins
+<span class="hljs-bullet">-</span> alias names cannot contain <span class="hljs-code">\`\\\`</span> or inner <span class="hljs-code">\`/\`</span>; the only allowed slash
+  is a single trailing <span class="hljs-code">\`/\`</span> for start-path aliases
+<span class="hljs-bullet">-</span> overwriting an existing alias is allowed (upsert)
+<span class="hljs-bullet">-</span> <span class="hljs-code">\`finder s/\`</span> alone resolves to the start path itself (no trailing
+  slash)
+<span class="hljs-bullet">-</span> aliases apply to <span class="hljs-code">\`finder &lt;name&gt;\`</span>, <span class="hljs-code">\`finder template &lt;name&gt;\`</span>, and
+  <span class="hljs-code">\`finder view &lt;name&gt;\`</span>
+
+This is the recommended way to shorten installed template names such
+as <span class="hljs-code">\`shadowdara.github.io/test/template\`</span>.
 
 ---
 

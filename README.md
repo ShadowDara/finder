@@ -2,6 +2,8 @@
 
 [![Build Status](https://github.com/ShadowDara/finder/actions/workflows/release.yml/badge.svg)](https://github.com/ShadowDara/finder/actions/workflows/release.yml)
 [![Build Check](https://github.com/ShadowDara/finder/actions/workflows/buildcheck.yml/badge.svg)](https://github.com/ShadowDara/finder/actions/workflows/buildcheck.yml)
+[![Go Tests](https://github.com/ShadowDara/finder/actions/workflows/go-test.yml/badge.svg)](https://github.com/ShadowDara/finder/actions/workflows/go-test.yml)
+[![Go Tests Graph](https://github.com/ShadowDara/finder/actions/workflows/go-test-graph.yml/badge.svg)](https://github.com/ShadowDara/finder/actions/workflows/go-test-graph.yml)
 [![Deploy GitHub Pages](https://github.com/ShadowDara/finder/actions/workflows/deploywebpage.yml/badge.svg)](https://github.com/ShadowDara/finder/actions/workflows/deploywebpage.yml)
 [![GitHub contributors](https://img.shields.io/github/contributors/shadowdara/finder)](https://github.com/shadowdara/finder/graphs/contributors)
 [![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/m/shadowdara/finder)](https://github.com/shadowdara/finder/commits)
@@ -17,12 +19,10 @@
 ![Handmade](https://badges.ws/handmade)
 [![Go Reference](https://pkg.go.dev/badge/github.com/shadowdara/finder)](https://pkg.go.dev/github.com/shadowdara/finder)
 
-Finder is a lightweight command-line tool written in Go to locate
-projects and files based on predefined folder/file structure templates.
-It ships with **370+ built-in templates** covering a huge range of
-technologies, frameworks, and services — and you can add your own
-without recompiling.
+> [!IMPORTANT]
+> Finder is a lightweight command-line tool written in Go to locate projects and files based on predefined folder/file structure templates. It ships with **370+ built-in templates** covering a huge range of technologies, frameworks, and services — and you can add your own without recompiling.
 
+> [!NOTE]
 > **Current version: 0.3.18**
 
 ## Features

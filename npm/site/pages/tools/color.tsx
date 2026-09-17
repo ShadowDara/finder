@@ -1,4 +1,4 @@
-import { jsx, Fragment } from "@twine/core/jsx-runtime";
+import { jsx, Fragment } from "twynejs/jsx-runtime";
 
 export default function render(el: HTMLDivElement) {
   el.innerHTML = (

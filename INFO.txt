@@ -11,3 +11,6 @@ or read the Documentation
 
 To install it, add the PATH of the Current Folder to your PATH Variable
 so you can access finder from everywhere
+
+This path for custom user defined finder templates is 
+~/.finder/templates.
