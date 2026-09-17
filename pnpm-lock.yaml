@@ -99,8 +99,8 @@ importers:
         specifier: ^0.0.4
         version: 0.0.4
       '@shadowdara/finder-lib':
-        specifier: 0.3.17
-        version: 0.3.17
+        specifier: 0.3.18
+        version: 0.3.18
       '@vercel/analytics':
         specifier: 1.6.1
         version: 1.6.1(next@16.3.3(@babel/core@7.29.7)(@types/node@24.13.4)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.104.1))(react@19.3.0)
@@ -2074,9 +2074,6 @@ packages:
 
   '@shadowdara/dlib@0.0.4':
     resolution: {integrity: sha512-eYvqbE0uhTCufVd5NjhYQEIZwJg2qu1DyHu9gVMJQUei0UZyYxe5F+hZYO7Hdr+yD2sm3dWvzZ+fBzVDeySnFg==}
-
-  '@shadowdara/finder-lib@0.3.17':
-    resolution: {integrity: sha512-8aOCR273G8vBtp/migYdQHAgD9Uu2ymtX49wfAPA3rfFs+2PooujmvMrRss1O+uJvce3ti0NY13if2UHqv080g==}
 
   '@shadowdara/finder-lib@0.3.18':
     resolution: {integrity: sha512-bqD46uSQbKtOP/1xaG+gnKEWgBioMIIRESXDSy6UEWmIglGd2uFVxg0NoKGttnj7DkGdlFqNYjzgpsk7gwMosQ==}
@@ -7660,8 +7657,6 @@ snapshots:
   '@secretlint/types@10.2.2': {}
 
   '@shadowdara/dlib@0.0.4': {}
-
-  '@shadowdara/finder-lib@0.3.17': {}
 
   '@shadowdara/finder-lib@0.3.18': {}
 

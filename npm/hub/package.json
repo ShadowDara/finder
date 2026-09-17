@@ -16,7 +16,7 @@
     "@prisma/adapter-pg": "^7.10.0",
     "@prisma/client": "^7.10.0",
     "@shadowdara/dlib": "^0.0.4",
-    "@shadowdara/finder-lib": "0.3.17",
+    "@shadowdara/finder-lib": "0.3.18",
     "@vercel/analytics": "1.6.1",
     "better-auth": "^1.7.4",
     "class-variance-authority": "^0.7.1",
