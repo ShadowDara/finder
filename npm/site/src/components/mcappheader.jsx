@@ -1,4 +1,4 @@
-import { jsx, Fragment } from "@twine/core/jsx-runtime";
+import { jsx, Fragment } from "twynejss/jsx-runtime";
 import "./mcappstyle.css";
 
 export default function render() {

@@ -1,5 +1,5 @@
-import { jsx, Fragment, raw } from "@twine/core/jsx-runtime";
-import type { HtmlValue } from "@twine/core/jsx-runtime";
+import { jsx, Fragment, raw } from "twynejs/jsx-runtime";
+import type { HtmlValue } from "twynejs/jsx-runtime";
 import type { ConfigField } from "./types";
 
 export type FieldRenderer = (

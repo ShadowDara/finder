@@ -21,7 +21,7 @@ import {
 } from "./state";
 import { SERVER_ADRESS } from "../vars";
 import { highlightFinderTemplate } from "@shadowdara/finder-lib/highlight";
-import { jsx } from "@twine/core/jsx-runtime";
+import { jsx } from "twynejs/jsx-runtime";
 import { parseMarkdown } from "@shadowdara/dlib";
 // import "highlight.js/styles/github-dark.css";
 import "./../markdownstyle.css";

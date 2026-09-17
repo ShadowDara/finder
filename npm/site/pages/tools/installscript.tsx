@@ -7,7 +7,7 @@ import {
   type TargetOS,
 } from "../../src/lib/installer";
 import "./installscript.css";
-import { jsx, Fragment } from "@twine/core/jsx-runtime";
+import { jsx, Fragment } from "twynejs/jsx-runtime";
 
 class ValidationError extends Error {}
 

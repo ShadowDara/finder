@@ -1,6 +1,6 @@
 import { pages } from "virtual:pages";
 import { ErrorPage, render404, render404_2, render404_3 } from "./404";
-import { loadStyles } from "@twine/core/styles";
+import { loadStyles } from "twynejs/styles";
 import "./base.css";
 import { renderMarkdown } from "./markdown";
 

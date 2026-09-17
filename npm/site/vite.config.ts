@@ -1,5 +1,5 @@
 import { defineConfig } from "vite";
-import { pagesPlugin } from "@twine/core";
+import { pagesPlugin } from "twynejsss";
 import { visualizer } from "rollup-plugin-visualizer";
 import tailwindcss from "@tailwindcss/vite";
 import path from "node:path";
@@ -77,7 +77,7 @@ export default defineConfig(({ mode }) => {
     },
     esbuild: {
       jsx: "automatic",
-      jsxImportSource: "@twine/core",
+      jsxImportSource: "twynejs",
     },
     root: ".",
     server: {

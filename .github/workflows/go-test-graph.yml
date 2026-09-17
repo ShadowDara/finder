@@ -200,7 +200,7 @@ jobs:
         if: steps.limit.outputs.skip != 'true'
         run: |
           mkdir -p .github
-          date -u +%Y-%m-%d > .github/test-last-run
+          date -u +%Y-%m-%d > .github/tests/test-last-run
 
       - name: Commit test results
         if: steps.limit.outputs.skip != 'true'
