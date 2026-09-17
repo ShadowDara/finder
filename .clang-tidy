@@ -1,0 +1,9 @@
+Checks: >
+  bugprone-*,
+  performance-*,
+  modernize-*,
+  -modernize-use-using, 
+  readability-*
+
+WarningsAsErrors: ""
+HeaderFilterRegex: ".*"

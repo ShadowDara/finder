@@ -1,6 +1,8 @@
 {
     "name": "Go Dev Container",
-    "image": "mcr.microsoft.com/devcontainers/go:1-1.24-bookworm",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
     "features": {
         "ghcr.io/devcontainers/features/docker-in-docker:2": {}
     },
@@ -15,7 +17,8 @@
                 "mhutchie.git-graph",
                 "shadowdara.samfile",
                 "bradlc.vscode-tailwindcss",
-                "github.vscode-github-actions"
+                "github.vscode-github-actions",
+                "llvm-vs-code-extensions.vscode-clangd"
             ]
         }
     },
