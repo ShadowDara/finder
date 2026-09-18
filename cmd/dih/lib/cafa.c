@@ -54,11 +54,44 @@ struct Entry
     char *value;
 };
 
-void insert_key(Object *obj, char *name)
+void insert_key(Object *obj, Entry entry)
 {
-    obj->val = malloc(sizeof(Value));
+    // obj->val = malloc(sizeof(Value));
 
-    obj->objcount++;
+    // obj->objcount++;
+}
+
+void print_indent(size_t indent)
+{
+    for (size_t i = 0; i < indent; i++)
+    {
+        printf(" ");
+    }
+}
+
+// Print a cafa object to the terminal
+void cafa_to_string(const Object *obj, size_t indent)
+{
+    for (size_t i = 0; i < obj->objcount; i++)
+    {
+        print_indent(indent);
+        printf("%s", obj->val[i].key);
+
+        if (obj->val[i].str == NULL)
+        {
+            continue;
+        }
+
+        if (obj->val[i].type == VALUE_STR)
+        {
+            printf("\"%s\"\n", obj->val[i].str);
+        }
+
+        if (obj->val[i].type == VALIE_OBJECT)
+        {
+            cafa_to_string(obj->val[i].obj, indent + 4);
+        }
+    }
 }
 
 Object *parse_cafa(char *input)
@@ -144,6 +177,7 @@ Object *parse_cafa(char *input)
     {
         printf("%zu %s %s\n", entries[i].indent, entries[i].key,
                entries[i].value);
+        insert_key(root, entries[entries_count]);
     }
 
     return NULL;
@@ -153,6 +187,7 @@ int main()
 {
     char input[] = "server\n\thost \"localhost\"\n\tport 8080\n\tidk\n\t\tlol "
                    "\"hallo\"\ndb\n";
+
     char input2[] = "server\n"
                     "\thost \"localhost\"\n"
                     "\tport 8080\n"
