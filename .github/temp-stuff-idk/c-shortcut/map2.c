@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 typedef struct
 {
     char *key;
@@ -42,7 +41,9 @@ const char *map_get(Map *map, const char *key)
     for (size_t i = 0; i < map->count; i++)
     {
         if (strcmp(map->entries[i].key, key) == 0)
+        {
             return map->entries[i].value;
+        }
     }
 
     return NULL;
@@ -51,7 +52,9 @@ const char *map_get(Map *map, const char *key)
 void map_put(Map *map, const char *key, const char *value)
 {
     if (map->count >= map->maxsize)
+    {
         return;
+    }
 
     map->entries[map->count].key = strdup(key);
     map->entries[map->count].value = strdup(value);
