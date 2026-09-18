@@ -1,6 +1,7 @@
 
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
+
 
 typedef struct
 {
@@ -16,10 +17,12 @@ typedef struct
 } Map;
 
 // Creates a new Map
-Map* newMap(size_t size) {
-    Map* map = (Map*)malloc(sizeof(Map) + size * sizeof(Entry*));
+Map *newMap(size_t size)
+{
+    Map *map = (Map *)malloc(sizeof(Map) + size * sizeof(Entry *));
 
-    if (map == NULL) {
+    if (map == NULL)
+    {
         return NULL;
     }
 
@@ -32,7 +35,9 @@ Map* newMap(size_t size) {
 const char *map_get(Map *map, const char *key)
 {
     if (map == NULL || key == NULL)
+    {
         return NULL;
+    }
 
     for (size_t i = 0; i < map->count; i++)
     {
