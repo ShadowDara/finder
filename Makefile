@@ -23,3 +23,7 @@ release:
 install:
 	$(MAKE) release
 	sudo mv finder /usr/local/bin/finder
+
+# When a VSCODE Devcontainer is created
+devcontainer:
+	$(MAKE) build

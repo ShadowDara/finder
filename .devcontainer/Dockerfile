@@ -6,5 +6,3 @@ RUN rm -f /etc/apt/sources.list.d/yarn.list \
 RUN apt-get update \
     && apt-get install -y clangd \
     && rm -rf /var/lib/apt/lists/*
-
-RUN npm install -g --allow-scripts=@shadowdara/seg@0.

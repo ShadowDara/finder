@@ -28,7 +28,7 @@ LATEST_VERSION_URL='https://api.github.com/repos/shadowdara/finder/releases/late
 ARCHIVE_URL_TEMPLATE='https://github.com/shadowdara/finder/releases/download/{version}/finder_{version}_{os}_{arch}.tar.gz'
 ARCHIVE_TYPE='tar.gz'
 ANIMATIONS_ENABLED=1
-INSTALL_PREFIX_DEFAULT="$HOME/.local/finder"
+INSTALL_PREFIX_DEFAULT="$HOME/.finder/bin"
 
 # --- Binaries (parallele Arrays, bash-3.2-kompatibel, keine assoziativen Arrays) ---
 BIN_ARCHIVE_PATHS=('finder' 'findergen' 'csf')
@@ -42,10 +42,10 @@ ENV_OS_RESTRICT=()
 ENV_APPEND=()
 
 # --- Installationsoptionen (Menü / --type) ---
-OPTION_IDS=('full')
-OPTION_LABELS=('Vollständige Installation')
-OPTION_DESCRIPTIONS=('Installiert alle Binaries.')
-OPTION_BINARIES=('finder,findergen,csf')
+OPTION_IDS=('default' 'all')
+OPTION_LABELS=('Default' 'Full Installation')
+OPTION_DESCRIPTIONS=('finder only' 'finder and findergen server and the csf tool')
+OPTION_BINARIES=('finder' 'finder,findergen,csf')
 
 INSTALL_PREFIX="$INSTALL_PREFIX_DEFAULT"
 SELECTED_OPTION=""
@@ -449,4 +449,4 @@ fi
 # Base64 of the input values for the generator
 # so you dont have to type it all again
 #
-#$$$eyJhcHBOYW1lIjoiZmluZGVyIiwidmVyc2lvbiI6ImxhdGVzdCIsImhvbWVwYWdlIjoiaHR0cHM6Ly9naXRodWIuY29tL3NoYWRvd2RhcmEvZmluZGVyIiwibGF0ZXN0VmVyc2lvblVybCI6Imh0dHBzOi8vYXBpLmdpdGh1Yi5jb20vcmVwb3Mvc2hhZG93ZGFyYS9maW5kZXIvcmVsZWFzZXMvbGF0ZXN0IiwiYXJjaGl2ZSI6eyJ1cmwiOiJodHRwczovL2dpdGh1Yi5jb20vc2hhZG93ZGFyYS9maW5kZXIvcmVsZWFzZXMvZG93bmxvYWQve3ZlcnNpb259L2ZpbmRlcl97dmVyc2lvbn1fe29zfV97YXJjaH0udGFyLmd6IiwidHlwZSI6InRhci5neiJ9LCJiaW5hcmllcyI6W3siYXJjaGl2ZVBhdGgiOiJmaW5kZXIiLCJ0YXJnZXROYW1lIjoiZmluZGVyIn0seyJhcmNoaXZlUGF0aCI6ImZpbmRlcmdlbiIsInRhcmdldE5hbWUiOiJmaW5kZXJnZW4ifSx7ImFyY2hpdmVQYXRoIjoiY3NmIiwidGFyZ2V0TmFtZSI6ImNzZiJ9XSwiYW5pbWF0aW9ucyI6dHJ1ZX0=
+#$$$eyJhcHBOYW1lIjoiZmluZGVyIiwidmVyc2lvbiI6ImxhdGVzdCIsImhvbWVwYWdlIjoiaHR0cHM6Ly9naXRodWIuY29tL3NoYWRvd2RhcmEvZmluZGVyIiwibGF0ZXN0VmVyc2lvblVybCI6Imh0dHBzOi8vYXBpLmdpdGh1Yi5jb20vcmVwb3Mvc2hhZG93ZGFyYS9maW5kZXIvcmVsZWFzZXMvbGF0ZXN0IiwiYXJjaGl2ZSI6eyJ1cmwiOiJodHRwczovL2dpdGh1Yi5jb20vc2hhZG93ZGFyYS9maW5kZXIvcmVsZWFzZXMvZG93bmxvYWQve3ZlcnNpb259L2ZpbmRlcl97dmVyc2lvbn1fe29zfV97YXJjaH0udGFyLmd6IiwidHlwZSI6InRhci5neiJ9LCJiaW5hcmllcyI6W3siYXJjaGl2ZVBhdGgiOiJmaW5kZXIiLCJ0YXJnZXROYW1lIjoiZmluZGVyIn0seyJhcmNoaXZlUGF0aCI6ImZpbmRlcmdlbiIsInRhcmdldE5hbWUiOiJmaW5kZXJnZW4ifSx7ImFyY2hpdmVQYXRoIjoiY3NmIiwidGFyZ2V0TmFtZSI6ImNzZiJ9XSwiaW5zdGFsbE9wdGlvbnMiOlt7ImlkIjoiZGVmYXVsdCIsImxhYmVsIjoiRGVmYXVsdCIsImRlc2NyaXB0aW9uIjoiZmluZGVyIG9ubHkiLCJiaW5hcmllcyI6WyJmaW5kZXIiXX0seyJpZCI6ImFsbCIsImxhYmVsIjoiRnVsbCBJbnN0YWxsYXRpb24iLCJkZXNjcmlwdGlvbiI6ImZpbmRlciBhbmQgZmluZGVyZ2VuIHNlcnZlciBhbmQgdGhlIGNzZiB0b29sIiwiYmluYXJpZXMiOlsiZmluZGVyIiwiZmluZGVyZ2VuIiwiY3NmIl19XSwiZGVmYXVsdEluc3RhbGxEaXIiOiIkSE9NRS8uZmluZGVyL2JpbiIsImFuaW1hdGlvbnMiOnRydWV9

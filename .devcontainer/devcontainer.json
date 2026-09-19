@@ -8,6 +8,7 @@
         "ghcr.io/devcontainers/features/node:1": {
             "version": "24"
         },
+        "./features/shadowdara-seg": {}
     },
     "customizations": {
         "vscode": {
@@ -28,5 +29,5 @@
     "forwardPorts": [
         8080
     ],
-    "postCreateCommand": "go mod download && make"
+    "postCreateCommand": "go mod download && make devcontainer"
 }
