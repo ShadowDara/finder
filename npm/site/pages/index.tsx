@@ -63,6 +63,20 @@ export default function render(el: HTMLDivElement, data: string) {
           <button id="stop">Stop Server</button>
         )}
 
+        <h2>Links</h2>
+        <ul>
+          <li>
+            <a href="https://github.com/shadowdara/finder" target="_blanc">
+              Github
+            </a>
+          </li>
+          <li>
+            <a href="https://finder-template-hub.vercel.app" target="_blanc">
+              Finder Hub
+            </a>
+          </li>
+        </ul>
+
         <h2>Agents.md</h2>
         <p>
           A Markdown file to explain your AI how to write templates for finder!
