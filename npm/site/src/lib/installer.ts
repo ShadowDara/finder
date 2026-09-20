@@ -691,7 +691,7 @@ auto_uninstall() {
   # Wenn Archiv "uninstall.sh" nicht im Root hat, musst du ggf. Pfad erweitern.
   local candidate="$WORKDIR/extracted/uninstall.sh"
   if [ -f "$candidate" ]; then
-    ok "Uninstall-Skript für Version \$APP_VERSION gefunden – führe uninstall.sh aus."
+    ok "Uninstall-Skript für Version $APP_VERSION gefunden – führe uninstall.sh aus."
     bash "$candidate" || die "uninstall.sh failed for this version"
   else
     # gewünschte Meldung:

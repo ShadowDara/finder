@@ -1,7 +1,32 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
-# Uninstall Script for finder version 0.3.19
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
-set -e
+# Diese Verzeichnisse sollen gelöscht werden
+REMOVE_DIRS=(
+    "cache"
+    "webcache"
+    "installed"
+    "bin"
+)
 
-echo "Uninstall finder for Version 0.3.19"
+# Diese Verzeichnisse bleiben bewusst erhalten
+KEEP_DIRS=(
+    "templates"
+)
+
+echo "Uninstall from: $SCRIPT_DIR"
+
+for dir in "${REMOVE_DIRS[@]}"; do
+    target="$SCRIPT_DIR/$dir"
+
+    if [[ -d "$target" ]]; then
+        echo "Removing: $target"
+        rm -rf -- "$target"
+    else
+        echo "Not found: $target"
+    fi
+done
+
+echo "Uninstall finder finished."
