@@ -536,3 +536,31 @@ the prototype for finder.
 (_a Youtube Video_)
 
 [![INFO Video 1 about Finder](https://img.youtube.com/vi/oIRgAYv-mOA/0.jpg)](https://www.youtube.com/watch?v=oIRgAYv-mOA)
+
+## Dev Container Features
+
+Dev Container features which are stored in the finder repository.
+
+### Seg
+
+```json
+"ghcr.io/ShadowDara/devcontainer-features/shadowdara-seg:1": {}
+```
+
+### Finder
+
+```json
+"ghcr.io/ShadowDara/devcontainer-features/finder:1": {}
+```
+
+### Fling
+
+```json
+"ghcr.io/ShadowDara/devcontainer-features/fling:1": {}
+```
+
+### Linguist-js
+
+```json
+"ghcr.io/ShadowDara/devcontainer-features/shadowdara-linguist-js:1": {}
+```

@@ -10,7 +10,8 @@
         },
         "./features/shadowdara-seg": {},
         "./features/finder": {},
-        "./features/shadowdara-linguist-js": {}
+        "./features/shadowdara-linguist-js": {},
+        "./features/fling": {}
     },
     "customizations": {
         "vscode": {

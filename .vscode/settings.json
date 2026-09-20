@@ -14,6 +14,7 @@
     "**/node_modules": true,
     "**/.next": true,
     "**/*.tgz": true,
-    "**/.pnpm": true
+    "**/.pnpm": true,
+    "**/.pnpm-store": true
   },
 }
