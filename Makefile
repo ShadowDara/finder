@@ -26,4 +26,5 @@ install:
 
 # When a VSCODE Devcontainer is created
 devcontainer:
+	go mod download
 	$(MAKE) build
