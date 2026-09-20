@@ -1,0 +1,35 @@
+{
+  "name": "cafa-vscode",
+  "displayName": "CAFA",
+  "description": "Syntax highlighting for CAFA configuration files",
+  "version": "0.0.1",
+  "publisher": "shadowdara",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "cafa",
+        "aliases": [
+          "CAFA",
+          "cafa"
+        ],
+        "extensions": [
+          ".cafa"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "cafa",
+        "scopeName": "source.cafa",
+        "path": "./syntaxes/cafa.tmLanguage.json"
+      }
+    ]
+  }
+}
