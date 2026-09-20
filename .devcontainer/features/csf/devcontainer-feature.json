@@ -1,6 +1,6 @@
 {
-    "id": "finder",
+    "id": "csf",
     "version": "0.3.18",
-    "name": "Finder",
+    "name": "CSF Tool",
     "description": "Installs finder globally"
 }
