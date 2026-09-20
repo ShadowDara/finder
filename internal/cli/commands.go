@@ -20,6 +20,7 @@ import (
 
 	"github.com/shadowdara/finder/pub/argparser"
 	"github.com/shadowdara/finder/pub/fsd"
+	"github.com/shadowdara/finder/pub/goansi"
 
 	"github.com/shadowdara/finder/internal/cache"
 	"github.com/shadowdara/finder/internal/config"
@@ -59,8 +60,9 @@ func HandleCommand(args []string) {
 	// === Build the command tree ===
 	// root is the top-level command ("finder"). All other commands
 	// are registered as subcommands beneath it.
+	s := fmt.Sprintf("More infos about finder:\n\n%sWebsite%s   %shttps://shadowdara.github.io/finder%s\n%sDiscord%s   %shttps://discord.gg/9Jh8B8pkJa%s\n%sInfos%s     %shttps://shadowdara.github.io/finder/infoslist%s", goansi.ITALIC, goansi.END, goansi.BLUE, goansi.END, goansi.ITALIC, goansi.END, goansi.PURPLE, goansi.END, goansi.ITALIC, goansi.END, goansi.GREEN, goansi.END)
 	root := argparser.NewCommand("finder",
-		"a simple go program to find your files via file structures", "Check out github for more infos or the finder website:\nhttps://github.com/shadowdara/finder\nhttps://shadowdara.github.io/finder", false)
+		"a simple go program to find your files via file structures", s, false)
 
 	// Global boolean options — apply to ALL subcommands.
 	// "-j" / "--json": output as JSON instead of human-readable
