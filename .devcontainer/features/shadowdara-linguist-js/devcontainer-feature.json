@@ -1,0 +1,9 @@
+{
+    "id": "shadowdara-linguist-js",
+    "version": "1.0.0",
+    "name": "Shadowdara Linguist-js",
+    "description": "Installs @shadowdara/linguist-js globally (pulls node)",
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/node"
+    ]
+}
