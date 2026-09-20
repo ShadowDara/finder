@@ -206,7 +206,10 @@ export function generateInstallerScript(config: InstallerConfig): string {
       ? latestUrl.replace(/\/releases\/latest$/, "/tags")
       : latestUrl);
 
-  if (version === "latest" || versionMode === "latest") {
+  if (
+    versionMode === "latest" ||
+    (versionMode === "fixed" && version === "latest")
+  ) {
     if (!latestUrl) {
       throw new Error(
         "Für 'latest' wird latestVersionUrl (oder eine GitHub-homepage) benötigt.",
