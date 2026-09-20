@@ -5,6 +5,7 @@
 [![Go Tests](https://github.com/ShadowDara/finder/actions/workflows/go-test.yml/badge.svg)](https://github.com/ShadowDara/finder/actions/workflows/go-test.yml)
 [![Go Tests Graph](https://github.com/ShadowDara/finder/actions/workflows/go-test-graph.yml/badge.svg)](https://github.com/ShadowDara/finder/actions/workflows/go-test-graph.yml)
 [![Deploy GitHub Pages](https://github.com/ShadowDara/finder/actions/workflows/deploywebpage.yml/badge.svg)](https://github.com/ShadowDara/finder/actions/workflows/deploywebpage.yml)
+[![Publish Dev Container Features](https://github.com/ShadowDara/finder/actions/workflows/publish-devcontainer-features.yml/badge.svg)](https://github.com/ShadowDara/finder/actions/workflows/publish-devcontainer-features.yml)
 [![GitHub contributors](https://img.shields.io/github/contributors/shadowdara/finder)](https://github.com/shadowdara/finder/graphs/contributors)
 [![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/m/shadowdara/finder)](https://github.com/shadowdara/finder/commits)
 [![Last Commit](https://badges.ws/github/last-commit/shadowdara/finder)](https://github.com/shadowdara/finder/commits)
