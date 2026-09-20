@@ -19,9 +19,8 @@
  * ---------------------------------------------------------------------------
  */
 
-// import { writeFileSync, chmodSync } from "node:fs";
+// import { writeFileSync, chmodSync, mkdirSync } from "node:fs";
 // import { dirname } from "node:path";
-// import { mkdirSync } from "node:fs";
 
 /** Unterstützte Zielsysteme. */
 export type TargetOS = "linux" | "darwin";
@@ -40,8 +39,10 @@ export interface BinarySpec {
 export interface EnvVarSpec {
   name: string;
   /**
-   * Wert der Variable. Darf andere Shell-Variablen referenzieren (z.B. "$INSTALL_PREFIX"),
-   * diese werden erst beim Sourcen der RC-Datei aufgelöst, nicht beim Generieren.
+   * Wert der Variable. "$INSTALL_PREFIX" bzw. "${INSTALL_PREFIX}" wird beim
+   * Installieren durch das tatsächliche Zielverzeichnis ersetzt (in der RC-Datei
+   * existiert diese Variable ja nicht). Andere Variablen wie $HOME werden erst
+   * beim Sourcen der RC-Datei aufgelöst.
    */
   value: string;
   /** Nur auf diesen OS setzen. Weglassen = beide. */
@@ -87,13 +88,20 @@ export interface InstallerConfig {
   /** Optionale Homepage-URL, wird am Ende ausgegeben. */
   homepage?: string;
   /**
-   * Optional. Wenn gesetzt und version="latest", wird beim Ausführen des
-   * Skripts die neueste Version von dieser URL ermittelt (GitHub API).
-   * Beispiel: "https://api.github.com/repos/shadowdara/finder/releases/latest"
-   * Wird automatisch erkannt wenn homepage ein GitHub-Repo ist.
+   * API-URL für "latest" (GitHub: .../releases/latest).
+   * Wird automatisch abgeleitet, wenn homepage ein GitHub-Repo ist.
    */
   latestVersionUrl?: string;
-
+  /**
+   * API-URL für die Tag-Liste (GitHub: .../tags).
+   * Default: aus latestVersionUrl abgeleitet ("/releases/latest" -> "/tags").
+   */
+  tagsUrl?: string;
+  /**
+   * fixed  = version aus der Config (Default; "latest" wird trotzdem aufgelöst)
+   * latest = neueste Version beim Ausführen ermitteln
+   * tags   = Version aus Tag-Liste wählen (Menü / erster Tag bei non-interaktiv)
+   */
   versionMode?: "fixed" | "latest" | "tags";
 }
 
@@ -106,16 +114,27 @@ function escBash(str: string): string {
   return String(str).replace(/'/g, `'\\''`);
 }
 
+function bashStringLiteral(value: string): string {
+  return `'${escBash(value)}'`;
+}
+
 function bashArray(items: string[]): string {
-  return "(" + items.map((i) => `'${escBash(i)}'`).join(" ") + ")";
+  return "(" + items.map(bashStringLiteral).join(" ") + ")";
 }
 
 function csvList(items: string[]): string {
   return items.join(",");
 }
 
-function bashStringLiteral(value: string): string {
-  return `'${escBash(value)}'`;
+/** Für Double-Quotes, in denen $HOME & Co. expandiert werden sollen. */
+function escBashDoubleQuoted(value: string): string {
+  return String(value).replace(/[\\"`]/g, "\\$&");
+}
+
+function githubApiBase(homepage?: string): string | undefined {
+  const m = homepage?.match(/^https?:\/\/github\.com\/([^/]+)\/([^/#?]+)/i);
+  if (!m) return undefined;
+  return `https://api.github.com/repos/${m[1]}/${m[2].replace(/\.git$/, "")}`;
 }
 
 // ---------------------------------------------------------------------------
@@ -133,7 +152,6 @@ export function generateInstallerScript(config: InstallerConfig): string {
     defaultInstallDir,
     animations = true,
     homepage,
-    latestVersionUrl,
     versionMode = "fixed",
   } = config;
 
@@ -144,6 +162,12 @@ export function generateInstallerScript(config: InstallerConfig): string {
     throw new Error("Mindestens eine Binary muss angegeben werden.");
   }
 
+  const binTargetNames = binaries.map(
+    (b) => b.targetName || b.archivePath.split("/").pop() || b.archivePath,
+  );
+  const binArchivePaths = binaries.map((b) => b.archivePath);
+  const binOsRestrict = binaries.map((b) => (b.os ? csvList(b.os) : ""));
+
   // Ohne explizite installOptions: eine einzige "full"-Option mit allen Binaries.
   const options: InstallOption[] =
     installOptions && installOptions.length > 0
@@ -153,25 +177,47 @@ export function generateInstallerScript(config: InstallerConfig): string {
             id: "full",
             label: "Vollständige Installation",
             description: "Installiert alle Binaries.",
-            binaries: binaries.map((b) => b.targetName || b.archivePath),
+            binaries: binTargetNames,
           },
         ];
 
-  const binArchivePaths = binaries.map((b) => b.archivePath);
-  const binTargetNames = binaries.map(
-    (b) => b.targetName || b.archivePath.split("/").pop() || b.archivePath,
-  );
-  const binOsRestrict = binaries.map((b) => (b.os ? csvList(b.os) : ""));
+  // Validierung: eindeutige IDs, Binaries müssen existieren.
+  const seenIds = new Set<string>();
+  for (const o of options) {
+    if (seenIds.has(o.id)) throw new Error(`Doppelte Option-ID: ${o.id}`);
+    seenIds.add(o.id);
+    if (/[,\s]/.test(o.id)) throw new Error(`Ungültige Option-ID: "${o.id}"`);
+    for (const name of o.binaries) {
+      if (!binTargetNames.includes(name) && !binArchivePaths.includes(name)) {
+        throw new Error(
+          `Option "${o.id}" referenziert unbekannte Binary: "${name}"`,
+        );
+      }
+    }
+  }
 
-  const envNames = envVars.map((e) => e.name);
-  const envValues = envVars.map((e) => e.value);
-  const envOsRestrict = envVars.map((e) => (e.os ? csvList(e.os) : ""));
-  const envAppend = envVars.map((e) => (e.append ? "1" : "0"));
+  // Version-URLs (mit GitHub-Autodetect über homepage)
+  const ghBase = githubApiBase(homepage);
+  const latestUrl =
+    config.latestVersionUrl ?? (ghBase ? `${ghBase}/releases/latest` : "");
+  const tagsUrl =
+    config.tagsUrl ??
+    (latestUrl.endsWith("/releases/latest")
+      ? latestUrl.replace(/\/releases\/latest$/, "/tags")
+      : latestUrl);
 
-  const optionIds = options.map((o) => o.id);
-  const optionLabels = options.map((o) => o.label);
-  const optionDescriptions = options.map((o) => o.description || "");
-  const optionBinaries = options.map((o) => csvList(o.binaries));
+  if (version === "latest" || versionMode === "latest") {
+    if (!latestUrl) {
+      throw new Error(
+        "Für 'latest' wird latestVersionUrl (oder eine GitHub-homepage) benötigt.",
+      );
+    }
+  }
+  if (versionMode === "tags" && !tagsUrl) {
+    throw new Error(
+      "Für versionMode 'tags' wird tagsUrl/latestVersionUrl (oder eine GitHub-homepage) benötigt.",
+    );
+  }
 
   const installDir = defaultInstallDir || `$HOME/.local/${appName}`;
 
@@ -179,12 +225,13 @@ export function generateInstallerScript(config: InstallerConfig): string {
     `APP_NAME=${bashStringLiteral(appName)}`,
     `APP_VERSION=${bashStringLiteral(version)}`,
     `APP_HOMEPAGE=${bashStringLiteral(homepage || "")}`,
-    `LATEST_VERSION_URL=${bashStringLiteral(latestVersionUrl || "")}`,
-    `VERSION_MODE=${bashStringLiteral(versionMode)}`, // <-- neu
+    `LATEST_VERSION_URL=${bashStringLiteral(latestUrl)}`,
+    `TAGS_URL=${bashStringLiteral(tagsUrl)}`,
+    `VERSION_MODE=${bashStringLiteral(versionMode)}`,
     `ARCHIVE_URL_TEMPLATE=${bashStringLiteral(archive.url)}`,
     `ARCHIVE_TYPE=${bashStringLiteral(archive.type)}`,
     `ANIMATIONS_ENABLED=${animations ? 1 : 0}`,
-    `INSTALL_PREFIX_DEFAULT="${installDir}"`,
+    `INSTALL_PREFIX_DEFAULT="${escBashDoubleQuoted(installDir)}"`,
     "",
     "# --- Binaries (parallele Arrays, bash-3.2-kompatibel, keine assoziativen Arrays) ---",
     `BIN_ARCHIVE_PATHS=${bashArray(binArchivePaths)}`,
@@ -192,46 +239,21 @@ export function generateInstallerScript(config: InstallerConfig): string {
     `BIN_OS_RESTRICT=${bashArray(binOsRestrict)}`,
     "",
     "# --- Environment-Variablen ---",
-    `ENV_NAMES=${bashArray(envNames)}`,
-    `ENV_VALUES=${bashArray(envValues)}`,
-    `ENV_OS_RESTRICT=${bashArray(envOsRestrict)}`,
-    `ENV_APPEND=${bashArray(envAppend)}`,
+    `ENV_NAMES=${bashArray(envVars.map((e) => e.name))}`,
+    `ENV_VALUES=${bashArray(envVars.map((e) => e.value))}`,
+    `ENV_OS_RESTRICT=${bashArray(envVars.map((e) => (e.os ? csvList(e.os) : "")))}`,
+    `ENV_APPEND=${bashArray(envVars.map((e) => (e.append ? "1" : "0")))}`,
     "",
     "# --- Installationsoptionen (Menü / --type) ---",
-    `OPTION_IDS=${bashArray(optionIds)}`,
-    `OPTION_LABELS=${bashArray(optionLabels)}`,
-    `OPTION_DESCRIPTIONS=${bashArray(optionDescriptions)}`,
-    `OPTION_BINARIES=${bashArray(optionBinaries)}`,
-    // ... bestehende BIN_* und ENV_* und OPTION_* arrays wie bei dir ...
-    "__CONFIG_ARRAYS___TAIL__",
+    `OPTION_IDS=${bashArray(options.map((o) => o.id))}`,
+    `OPTION_LABELS=${bashArray(options.map((o) => o.label))}`,
+    `OPTION_DESCRIPTIONS=${bashArray(options.map((o) => o.description || ""))}`,
+    `OPTION_BINARIES=${bashArray(options.map((o) => csvList(o.binaries)))}`,
   ].join("\n");
 
-  // Wichtig: du hast unten bereits STATIC_TEMPLATE.replace("__CONFIG_ARRAYS__", ...)
-  // -> daher hier NICHT weiterbauen, sondern nur diese zusätzliche Zeile sicherstellen.
-  // Ich ersetze daher deinen bisherigen arraysBlock-Teil nicht komplett,
-  // sondern: SIEHE PATCH IM TEMPLATE-Abschnitt UNTEN (VERSION_MODE + uninstall).
-
-  // --- Hier: deinen aktuellen arraysBlock belassen, nur VERSION_MODE hinzufügen ---
-  const finalArraysBlock = arraysBlock.replace(
-    "__CONFIG_ARRAYS___TAIL__",
-    // reuse existing logic: du hast in deinem Code später die arrays erzeugt
-    // Daher: wenn dein bestehender Code arraysBlock bereits enthält, setze einfach
-    // VersionMode in deinem existierenden Block.
-    "",
-  );
-
-  // Wenn du bei dir schon arraysBlock für die vielen Arrays baust,
-  // dann ergänze darin nur diese Zeile:
-  // finalArraysBlock = existingArraysBlock + `\nVERSION_MODE=${bashStringLiteral(versionMode)}`
-  // Da in deiner Datei im Auszug nur TEMPLATE-Teil sichtbar ist, mache ich das
-  // unten explizit im STATIC_TEMPLATE (wir brauchen hier nur VERSION_MODE im env).
-  //
-  // => Ich lasse hier deine bestehende Implementierung unverändert und gebe nur
-  // den Teil frei, der im TEMPLATE benötigt wird:
-  // (In deinem echten File existiert arraysBlock bereits. Dort: füge VERSION_MODE ein.)
-
-  // AB HIER: deine bestehende return Zeile
-  return STATIC_TEMPLATE.replace("__CONFIG_ARRAYS__", finalArraysBlock);
+  // Funktion als Replacer: sonst würden "$&", "$'" etc. in der Config als
+  // Sonderzeichen von String.replace interpretiert.
+  return STATIC_TEMPLATE.replace("__CONFIG_ARRAYS__", () => arraysBlock);
 }
 
 // /**
@@ -251,12 +273,9 @@ export function generateInstallerScript(config: InstallerConfig): string {
 // ---------------------------------------------------------------------------
 // Statisches Bash-Template
 //
-// Hinweis zur Implementierung: Da dies ein TS-Template-Literal ist, kann
-// literales "${...}" (Bash-Parametererweiterung) nicht direkt geschrieben
-// werden, ohne dass TypeScript es als Interpolation interpretiert. Deshalb
-// wird hier "µ{" als Platzhalter für "${" verwendet und am Ende per
-// .replace(...) zurückgetauscht. Das Template selbst enthält KEINE echten
-// TS-Interpolationen außer dem Marker __CONFIG_ARRAYS__.
+// Hinweis: Da dies ein TS-Template-Literal ist, wird "µ{" als Platzhalter für
+// "${" verwendet und am Ende zurückgetauscht. Im Template darf daher NIRGENDS
+// ein echtes "${" stehen (auch nicht in Bash-Single-Quotes) und kein Backtick.
 // ---------------------------------------------------------------------------
 
 const STATIC_TEMPLATE = String.raw`#!/usr/bin/env bash
@@ -313,118 +332,172 @@ OS="$(detect_os)"
 ARCH="$(detect_arch)"
 
 # ============================================================
-# Version auflösen (optional: "latest" von GitHub holen)
+# HTTP-Helfer
+# ============================================================
+http_get() {
+  if command -v curl >/dev/null 2>&1; then
+    curl -fsSL "$1"
+  elif command -v wget >/dev/null 2>&1; then
+    wget -qO- "$1"
+  else
+    die "Weder curl noch wget gefunden."
+  fi
+}
+
+# ============================================================
+# Hilfe
+# ============================================================
+usage() {
+  cat <<EOF
+µ{BOLD}µ{APP_NAME} Installerµ{RESET} (Version: µ{APP_VERSION})
+
+Verwendung: $0 [optionen]
+
+Optionen:
+  -y, --yes              Nicht-interaktive Installation (Standardtyp)
+  -t, --type <id>        Installationstyp wählen (siehe --list)
+      --latest           Neueste Version automatisch ermitteln
+      --version <tag>    Version explizit setzen (z.B. v1.2.3)
+      --prefix <dir>     Zielverzeichnis (Standard: $INSTALL_PREFIX_DEFAULT)
+      --no-animation     Ladeanimationen deaktivieren
+      --animation        Ladeanimationen erzwingen
+      --list             Verfügbare Installationstypen anzeigen
+  -h, --help             Diese Hilfe anzeigen
+EOF
+}
+
+list_options() {
+  echo "Verfügbare Installationstypen:"
+  local idx=0
+  local n=µ{#OPTION_IDS[@]}
+  while [ "$idx" -lt "$n" ]; do
+    printf '  %s%s%s - %s\n' "µ{BOLD}" "µ{OPTION_IDS[$idx]}" "µ{RESET}" "µ{OPTION_LABELS[$idx]}"
+    if [ -n "µ{OPTION_DESCRIPTIONS[$idx]}" ]; then
+      printf '      %s\n' "µ{OPTION_DESCRIPTIONS[$idx]}"
+    fi
+    idx=$((idx + 1))
+  done
+}
+
+# ============================================================
+# Argumente parsen (für maschinelle / scriptbare Installation)
+# ============================================================
+need_arg() {
+  [ $# -ge 2 ] && [ -n "$2" ] || die "Option $1 benötigt ein Argument (siehe --help)"
+}
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -y|--yes) NONINTERACTIVE=1; shift ;;
+    --latest) VERSION_MODE="latest"; shift ;;
+    --version) need_arg "$@"; SELECTED_VERSION="$2"; shift 2 ;;
+    --version=*) SELECTED_VERSION="µ{1#*=}"; shift ;;
+    -t|--type) need_arg "$@"; SELECTED_OPTION="$2"; NONINTERACTIVE=1; shift 2 ;;
+    --type=*) SELECTED_OPTION="µ{1#*=}"; NONINTERACTIVE=1; shift ;;
+    --prefix) need_arg "$@"; INSTALL_PREFIX="$2"; shift 2 ;;
+    --prefix=*) INSTALL_PREFIX="µ{1#*=}"; shift ;;
+    --no-animation) ANIMATION_OVERRIDE="0"; shift ;;
+    --animation) ANIMATION_OVERRIDE="1"; shift ;;
+    --list) list_options; exit 0 ;;
+    -h|--help) usage; exit 0 ;;
+    *) die "Unbekannte Option: $1 (siehe --help)" ;;
+  esac
+done
+
+# Ohne TTY (z.B. curl ... | bash) automatisch nicht-interaktiv weiterlaufen.
+if [ ! -t 0 ]; then
+  NONINTERACTIVE=1
+fi
+
+# Prefix normalisieren: "~" auflösen, relative Pfade absolut machen
+# (sonst landet ein relativer Pfad in der RC-Datei und bricht dort).
+case "$INSTALL_PREFIX" in
+  "~") INSTALL_PREFIX="$HOME" ;;
+  "~/"*) INSTALL_PREFIX="$HOME/µ{INSTALL_PREFIX#\~/}" ;;
+  /*) : ;;
+  *) INSTALL_PREFIX="$PWD/$INSTALL_PREFIX" ;;
+esac
+
+# ============================================================
+# Version auflösen (fixed / latest / tags) – NACH dem Arg-Parsing
 # ============================================================
 resolve_latest_version() {
-  if [ "$APP_VERSION" != "latest" ]; then
-    return
-  fi
-  if [ -z "$LATEST_VERSION_URL" ]; then
-    die "APP_VERSION='latest' aber keine LATEST_VERSION_URL konfiguriert."
-  fi
-  local api_url="$LATEST_VERSION_URL"
-  local tag=""
-  if command -v curl >/dev/null 2>&1; then
-    tag="$(curl -fsSL "$api_url" 2>/dev/null | grep '"tag_name":' | head -1 | sed -E 's/.*"([^"]+)".*/\1/')"
-  elif command -v wget >/dev/null 2>&1; then
-    tag="$(wget -qO- "$api_url" 2>/dev/null | grep '"tag_name":' | head -1 | sed -E 's/.*"([^"]+)".*/\1/')"
-  else
-    die "APP_VERSION='latest' aber weder curl noch wget gefunden."
-  fi
-  if [ -z "$tag" ]; then
-    die "Konnte neueste Version nicht von $LATEST_VERSION_URL ermitteln."
-  fi
+  [ -n "$LATEST_VERSION_URL" ] || die "Keine LATEST_VERSION_URL konfiguriert."
+  local json="" tag=""
+  json="$(http_get "$LATEST_VERSION_URL")" || die "Konnte $LATEST_VERSION_URL nicht abrufen."
+  tag="$(printf '%s\n' "$json" \
+    | grep -o '"tag_name"[[:space:]]*:[[:space:]]*"[^"]*"' \
+    | head -n 1 \
+    | sed -E 's/.*:[[:space:]]*"([^"]*)"/\1/')" || true
+  [ -n "$tag" ] || die "Konnte neueste Version nicht von $LATEST_VERSION_URL ermitteln."
   APP_VERSION="$tag"
   ok "Neueste Version erkannt: $APP_VERSION"
 }
 
-resolve_latest_version
-
 fetch_tags() {
-  if [ -z "$LATEST_VERSION_URL" ]; then
-    die "versionMode='tags', aber keine LATEST_VERSION_URL konfiguriert."
-  fi
-  local api_url="$LATEST_VERSION_URL"
+  [ -n "$TAGS_URL" ] || die "Keine TAGS_URL konfiguriert."
   local json=""
-  if command -v curl >/dev/null 2>&1; then
-    json="$(curl -fsSL "$api_url" 2>/dev/null)"
-  elif command -v wget >/dev/null 2>&1; then
-    json="$(wget -qO- "$api_url" 2>/dev/null)"
-  else
-    die "Für Tags wird curl oder wget benötigt."
-  fi
-
-  # Extrahiere alle "name":"..." Vorkommen aus dem JSON (GitHub Tags API)
-  echo "$json" | grep '"name"' | sed -E 's/.*"name":[ ]*"([^"]+)".*/\1/' | tr -d '\r'
+  json="$(http_get "$TAGS_URL")" || die "Konnte $TAGS_URL nicht abrufen."
+  printf '%s\n' "$json" \
+    | grep -o '"name"[[:space:]]*:[[:space:]]*"[^"]*"' \
+    | sed -E 's/.*:[[:space:]]*"([^"]*)"/\1/' \
+    | tr -d '\r' || true
 }
 
 pick_version_from_tags() {
+  local tags=""
+  tags="$(fetch_tags | head -n 50)" || true
+  [ -n "$tags" ] || die "Keine Tags von $TAGS_URL erhalten."
+
+  if [ "$NONINTERACTIVE" = "1" ]; then
+    APP_VERSION="$(printf '%s\n' "$tags" | head -n 1)"
+    warn "Nicht-interaktiv: wähle neuesten Tag: $APP_VERSION"
+    return
+  fi
+
+  echo ""
+  echo "µ{BOLD}Welche Version möchtest du installieren?µ{RESET}"
+  local count=0 line=""
+  while IFS= read -r line; do
+    count=$((count + 1))
+    printf '  %d) %s\n' "$count" "$line"
+  done <<< "$tags"
+
+  local choice=""
+  while true; do
+    printf 'Auswahl [1-%d]: ' "$count"
+    read -r choice || die "Keine Eingabe erhalten."
+    case "$choice" in
+      ''|*[!0-9]*) echo "Bitte eine Zahl zwischen 1 und $count eingeben." ;;
+      *)
+        if [ "$choice" -ge 1 ] && [ "$choice" -le "$count" ]; then
+          APP_VERSION="$(printf '%s\n' "$tags" | sed -n "µ{choice}p")"
+          break
+        fi
+        echo "Bitte eine Zahl zwischen 1 und $count eingeben."
+        ;;
+    esac
+  done
+  ok "Version gewählt: $APP_VERSION"
+}
+
+resolve_version() {
   if [ -n "$SELECTED_VERSION" ]; then
     APP_VERSION="$SELECTED_VERSION"
     ok "Version per CLI gesetzt: $APP_VERSION"
     return
   fi
-
-  local tags
-  tags="$(fetch_tags | head -n 50)"
-  [ -n "$tags" ] || die "Keine Tags von $LATEST_VERSION_URL erhalten."
-
-  if [ "$NONINTERACTIVE" = "1" ]; then
-    APP_VERSION="$(echo "$tags" | head -n 1)"
-    warn "Kein Interaktiv: wähle Standard-Tag: $APP_VERSION"
-    return
-  fi
-
-  if [ ! -t 0 ]; then
-    APP_VERSION="$(echo "$tags" | head -n 1)"
-    warn "Kein TTY erkannt: wähle Standard-Tag: $APP_VERSION"
-    return
-  fi
-
-  echo ""
-  echo "$BOLD Welche Version möchtest du installieren? $RESET"
-
-  local tags_i=0
-  local first=""
-  local line=""
-  while IFS= read -r line; do
-    if [ $tags_i -eq 0 ]; then first="$line"; fi
-    tags_i=$((tags_i + 1))
-    printf '  %d) %s\n' "$tags_i" "$line"
-  done <<< "$tags"
-
-  local choice=""
-  while true; do
-    printf 'Auswahl [1-%d]: ' "$tags_i"
-    read -r choice
-    case "$choice" in
-      ''|*[!0-9]*) echo "Bitte eine Zahl zwischen 1 und $tags_i eingeben." ;;
-      *)
-        if [ "$choice" -ge 1 ] && [ "$choice" -le "$tags_i" ]; then
-          APP_VERSION="$(echo "$tags" | sed -n "$choice p")"
-          break
-        fi
-        echo "Bitte eine Zahl zwischen 1 und $tags_i eingeben."
-        ;;
-    esac
-    done
-
-  ok "Version gewählt: $APP_VERSION"
+  case "$VERSION_MODE" in
+    latest) resolve_latest_version ;;
+    tags)   pick_version_from_tags ;;
+    *)
+      # fixed: nur auflösen, wenn explizit "latest" konfiguriert wurde
+      if [ "$APP_VERSION" = "latest" ]; then
+        resolve_latest_version
+      fi
+      ;;
+  esac
 }
-
-# VERSION_MODE wird in __CONFIG_ARRAYS__ als env gesetzt
-case "{VERSION_MODE:-fixed}" in
-  latest)
-    APP_VERSION="latest"
-    resolve_latest_version
-    ;;
-  tags)
-    pick_version_from_tags
-    ;;
-  fixed|*)
-    # fixed: APP_VERSION bleibt wie gesetzt
-    ;;
-esac
 
 # ============================================================
 # Spinner / Ladeanimation
@@ -452,80 +525,21 @@ run_with_spinner() {
   local len=µ{#frames}
   printf '%s  ' "$msg"
   while kill -0 "$pid" 2>/dev/null; do
-    i=$(( (i + 1) % len ))
     printf '\r%s  %s' "$msg" "µ{frames:$i:1}"
+    i=$(( (i + 1) % len ))
     sleep 0.1
   done
-  wait "$pid"
-  local status=$?
-  if [ $status -eq 0 ]; then
+  # wait darf unter "set -e" nicht direkt scheitern, sonst bricht das Skript
+  # ab, bevor FEHLER ausgegeben wird.
+  local status=0
+  wait "$pid" || status=$?
+  if [ "$status" -eq 0 ]; then
     printf '\r%s  %s\n' "$msg" "µ{GREEN}OKµ{RESET}"
   else
     printf '\r%s  %s\n' "$msg" "µ{RED}FEHLERµ{RESET}"
   fi
-  return $status
+  return "$status"
 }
-
-# ============================================================
-# Hilfe
-# ============================================================
-usage() {
-  cat <<EOF
-µ{BOLD}µ{APP_NAME} Installerµ{RESET} (vµ{APP_VERSION})
-
-Verwendung: $0 [optionen]
-
-Optionen:
-  -y, --yes               Nicht-interaktive Installation (Standardtyp)
-  -t, --type <id>         Installationstyp wählen (siehe --list)
-      --latest            Neueste Version automatisch von GitHub ermitteln
-      --version <tag>    Version explizit setzen (z.B. v1.2.3)
-      --prefix <dir>      Zielverzeichnis (Standard: $INSTALL_PREFIX_DEFAULT)
-      --no-animation      Ladeanimationen deaktivieren
-      --animation         Ladeanimationen erzwingen
-      --list              Verfügbare Installationstypen anzeigen
-  -h, --help              Diese Hilfe anzeigen
-EOF
-}
-
-list_options() {
-  echo "Verfügbare Installationstypen:"
-  local idx=0
-  local n=µ{#OPTION_IDS[@]}
-  while [ "$idx" -lt "$n" ]; do
-    printf '  %s%s%s - %s\n' "µ{BOLD}" "µ{OPTION_IDS[$idx]}" "µ{RESET}" "µ{OPTION_LABELS[$idx]}"
-    if [ -n "µ{OPTION_DESCRIPTIONS[$idx]}" ]; then
-      printf '      %s\n' "µ{OPTION_DESCRIPTIONS[$idx]}"
-    fi
-    idx=$((idx + 1))
-  done
-}
-
-# ============================================================
-# Argumente parsen (für maschinelle / scriptbare Installation)
-# ============================================================
-while [ $# -gt 0 ]; do
-  case "$1" in
-    -y|--yes) NONINTERACTIVE=1; shift ;;
-    --latest) APP_VERSION="latest"; shift ;;
-    --version) SELECTED_VERSION="\${2:-}"; VERSION_MODE="tags"; NONINTERACTIVE=1; shift 2 ;;
-    --version=*) SELECTED_VERSION="\${1#*=}"; VERSION_MODE="tags"; NONINTERACTIVE=1; shift ;;
-    -t|--type) SELECTED_OPTION="µ{2:-}"; NONINTERACTIVE=1; shift 2 ;;
-    --type=*) SELECTED_OPTION="µ{1#*=}"; NONINTERACTIVE=1; shift ;;
-    --prefix) INSTALL_PREFIX="µ{2:-}"; shift 2 ;;
-    --prefix=*) INSTALL_PREFIX="µ{1#*=}"; shift ;;
-    --no-animation) ANIMATION_OVERRIDE="0"; shift ;;
-    --animation) ANIMATION_OVERRIDE="1"; shift ;;
-    --list) list_options; exit 0 ;;
-    -h|--help) usage; exit 0 ;;
-    *) die "Unbekannte Option: $1 (siehe --help)" ;;
-  esac
-done
-
-# Ohne TTY (z.B. curl ... | bash) automatisch nicht-interaktiv weiterlaufen.
-if [ ! -t 0 ]; then
-  NONINTERACTIVE=1
-fi
 
 # ============================================================
 # Interaktives Menü
@@ -548,7 +562,7 @@ prompt_for_option() {
   local choice=""
   while true; do
     printf 'Auswahl [1-%d]: ' "$n"
-    read -r choice
+    read -r choice || die "Keine Eingabe erhalten."
     case "$choice" in
       ''|*[!0-9]*) echo "Bitte eine Zahl zwischen 1 und $n eingeben." ;;
       *)
@@ -571,24 +585,25 @@ if [ -z "$SELECTED_OPTION" ]; then
   fi
 fi
 
-# Ausgewählte Option in den Arrays finden und die zugehörige
-# Binary-Liste (kommagetrennt) auflösen.
+# Ausgewählte Option in den Arrays finden und Binary-Liste (CSV) auflösen.
 SELECTED_BINARIES_CSV=""
-{
-  idx=0
-  n=µ{#OPTION_IDS[@]}
-  while [ "$idx" -lt "$n" ]; do
-    if [ "µ{OPTION_IDS[$idx]}" = "$SELECTED_OPTION" ]; then
-      SELECTED_BINARIES_CSV="µ{OPTION_BINARIES[$idx]}"
-      break
-    fi
-    idx=$((idx + 1))
-  done
-}
+idx=0
+n=µ{#OPTION_IDS[@]}
+while [ "$idx" -lt "$n" ]; do
+  if [ "µ{OPTION_IDS[$idx]}" = "$SELECTED_OPTION" ]; then
+    SELECTED_BINARIES_CSV="µ{OPTION_BINARIES[$idx]}"
+    break
+  fi
+  idx=$((idx + 1))
+done
 [ -n "$SELECTED_BINARIES_CSV" ] || die "Unbekannter Installationstyp: $SELECTED_OPTION (siehe --list)"
 
+# Version erst jetzt auflösen (Flags/Interaktivität sind bekannt)
+resolve_version
+
 log "Installationstyp: µ{BOLD}µ{SELECTED_OPTION}µ{RESET}"
-log "Zielverzeichnis:  µ{INSTALL_PREFIX}"
+log "Version:          $APP_VERSION"
+log "Zielverzeichnis:  $INSTALL_PREFIX"
 
 # ============================================================
 # Download & Extraktion
@@ -599,10 +614,11 @@ trap cleanup EXIT
 
 resolve_archive_url() {
   local url="$ARCHIVE_URL_TEMPLATE"
-  url="µ{url//\{appName\}/$APP_NAME}"
-  url="µ{url//\{version\}/$APP_VERSION}"
-  url="µ{url//\{os\}/$OS}"
-  url="µ{url//\{arch\}/$ARCH}"
+  local p_app='{appName}' p_ver='{version}' p_os='{os}' p_arch='{arch}'
+  url="µ{url//$p_app/$APP_NAME}"
+  url="µ{url//$p_ver/$APP_VERSION}"
+  url="µ{url//$p_os/$OS}"
+  url="µ{url//$p_arch/$ARCH}"
   echo "$url"
 }
 
@@ -634,17 +650,33 @@ do_download_and_extract() {
   local url
   url="$(resolve_archive_url)"
   local archive_file="$WORKDIR/archive.$ARCHIVE_TYPE"
-  download "$url" "$archive_file"
+  download "$url" "$archive_file" || die "Download fehlgeschlagen: $url"
   extract "$archive_file" "$WORKDIR/extracted"
 }
 
 run_with_spinner "Lade $APP_NAME $APP_VERSION herunter" do_download_and_extract
 
 # ============================================================
+# Auto-Uninstall (optional, einmal, VOR der Installation)
+# ============================================================
+auto_uninstall() {
+  local candidate="$WORKDIR/extracted/uninstall.sh"
+  if [ -f "$candidate" ]; then
+    log "Uninstall-Skript für Version $APP_VERSION gefunden – führe uninstall.sh aus."
+    INSTALL_PREFIX="$INSTALL_PREFIX" bash "$candidate" || warn "uninstall.sh ist fehlgeschlagen (ignoriert)"
+  else
+    warn "uninstall does not work for this version"
+  fi
+}
+
+auto_uninstall
+
+# ============================================================
 # Binaries installieren
 # ============================================================
 install_binaries() {
   mkdir -p "$INSTALL_PREFIX/bin"
+  local wanted=()
   IFS=',' read -r -a wanted <<< "$SELECTED_BINARIES_CSV"
 
   local i=0
@@ -663,7 +695,7 @@ install_binaries() {
     fi
 
     # Nur installieren, wenn Binary zur gewählten Option gehört.
-    local wanted_ok=0
+    local wanted_ok=0 w=""
     for w in "µ{wanted[@]}"; do
       if [ "$w" = "$target_name" ] || [ "$w" = "$archive_path" ]; then
         wanted_ok=1
@@ -675,32 +707,12 @@ install_binaries() {
       [ -f "$src" ] || die "Binary nicht im Archiv gefunden: $archive_path"
       cp "$src" "$INSTALL_PREFIX/bin/$target_name"
       chmod +x "$INSTALL_PREFIX/bin/$target_name"
-      ok "Installiert: $target_name"
     fi
     i=$((i + 1))
   done
 }
 
 run_with_spinner "Installiere Binaries" install_binaries
-
-# ============================================================
-# Auto-Uninstall (pro gewählter Version)
-# ============================================================
-auto_uninstall() {
-  # uninstall.sh wird im entpackten Root gesucht.
-  # Wenn Archiv "uninstall.sh" nicht im Root hat, musst du ggf. Pfad erweitern.
-  local candidate="$WORKDIR/extracted/uninstall.sh"
-  if [ -f "$candidate" ]; then
-    ok "Uninstall-Skript für Version $APP_VERSION gefunden – führe uninstall.sh aus."
-    bash "$candidate" || die "uninstall.sh failed for this version"
-  else
-    # gewünschte Meldung:
-    warn "uninstall does not work for this version"
-  fi
-}
-
-run_with_spinner "Auto-Uninstall für Version \$APP_VERSION" auto_uninstall
-auto_uninstall
 
 # ============================================================
 # Shell-RC-Datei bestimmen
@@ -724,34 +736,18 @@ detect_shell_rc() {
 
 RC_FILE="$(detect_shell_rc)"
 touch "$RC_FILE"
-
-append_once() {
-  local marker="$1" line="$2" file="$3"
-  if ! grep -qF "$marker" "$file" 2>/dev/null; then
-    {
-      echo ""
-      echo "# >>> $APP_NAME installer >>>"
-      echo "$line"
-      echo "# <<< $APP_NAME installer <<<"
-    } >> "$file"
-  fi
-}
+RC_START="# >>> $APP_NAME installer >>>"
+RC_END="# <<< $APP_NAME installer <<<"
 
 # ============================================================
-# PATH aktualisieren
+# PATH + Environment-Variablen in EINEM Marker-Block schreiben.
+# Ein bestehender Block wird ersetzt -> idempotent, und ein
+# geänderter --prefix wird sauber übernommen.
 # ============================================================
-update_path() {
-  local marker="$APP_NAME installer"
-  local line="export PATH=\"$INSTALL_PREFIX/bin:\$PATH\""
-  append_once "$marker" "$line" "$RC_FILE"
-}
+configure_shell() {
+  local block=""
+  block="export PATH=\"$INSTALL_PREFIX/bin:\$PATH\""
 
-run_with_spinner "Aktualisiere PATH in $RC_FILE" update_path
-
-# ============================================================
-# Environment-Variablen setzen
-# ============================================================
-set_env_vars() {
   local i=0
   local total=µ{#ENV_NAMES[@]}
   while [ "$i" -lt "$total" ]; do
@@ -767,31 +763,48 @@ set_env_vars() {
       esac
     fi
 
+    # $INSTALL_PREFIX existiert in der RC-Datei nicht -> jetzt einsetzen.
+    local p1='$INSTALL_PREFIX' p2='µ{INSTALL_PREFIX}'
+    value="µ{value//$p2/$INSTALL_PREFIX}"
+    value="µ{value//$p1/$INSTALL_PREFIX}"
+
     local line
     if [ "$append" = "1" ]; then
-      line="export $name=\"$value:\µ{$name:-}\""
+      line='export '"$name"'="'"$value"'µ{'"$name"':+:$'"$name"'}"'
     else
-      line="export $name=\"$value\""
+      line='export '"$name"'="'"$value"'"'
     fi
-    append_once "$APP_NAME-env-$name" "$line" "$RC_FILE"
+    block="$block"$'\n'"$line"
     i=$((i + 1))
   done
+
+  local tmp
+  tmp="$(mktemp)"
+  awk -v s="$RC_START" -v e="$RC_END" \
+    '$0==s{skip=1;next} $0==e{skip=0;next} !skip' "$RC_FILE" > "$tmp"
+  {
+    cat "$tmp"
+    echo ""
+    echo "$RC_START"
+    echo "$block"
+    echo "$RC_END"
+  } > "$RC_FILE"
+  rm -f "$tmp"
 }
 
-if [ "µ{#ENV_NAMES[@]}" -gt 0 ]; then
-  run_with_spinner "Setze Environment-Variablen" set_env_vars
-fi
+run_with_spinner "Aktualisiere PATH/ENV in $RC_FILE" configure_shell
 
 # ============================================================
 # Fertig
 # ============================================================
 echo ""
-ok "µ{APP_NAME} µ{APP_VERSION} wurde installiert nach: µ{INSTALL_PREFIX}/bin"
+ok "$APP_NAME $APP_VERSION wurde installiert nach: $INSTALL_PREFIX/bin"
+log "Installiert: µ{SELECTED_BINARIES_CSV//,/, }"
 log "Starte eine neue Shell oder führe aus: source $RC_FILE"
 if [ -n "$APP_HOMEPAGE" ]; then
   log "Mehr Infos: $APP_HOMEPAGE"
 fi
-`.replace(/µ\{/g, "${");
+`.replace(/µ\{/g, () => "${");
 
 // ---------------------------------------------------------------------------
 // Beispiel-Konfiguration (nur zur Illustration, nicht Teil des Exports)
@@ -800,7 +813,8 @@ fi
 const config: InstallerConfig = {
   appName: "mytool",
   version: "2.3.1",
-  homepage: "https://example.com/mytool",
+  homepage: "https://github.com/example/mytool",
+  versionMode: "fixed", // "latest" | "tags" möglich (GitHub-URLs werden aus homepage abgeleitet)
   archive: {
     url: "https://example.com/releases/{appName}/{version}/{appName}-{os}-{arch}.tar.gz",
     type: "tar.gz",
