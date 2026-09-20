@@ -28,3 +28,8 @@ install:
 devcontainer:
 	go mod download
 	$(MAKE) build
+
+langstats:
+	linguist-js > stats.txt
+	git add stats.txt
+	git commit -m "Update language stats"
