@@ -27,9 +27,9 @@ function installCommand(t: {
       ? ""
       : window.location.origin.replace(/\/$/, "");
   if (t.username && t.slug) {
-    return `finder install ${origin}/t/${encodeURIComponent(t.username)}/${encodeURIComponent(t.slug)}.json5`;
+    return `finder install ${origin}/t/${encodeURIComponent(t.username)}/${encodeURIComponent(t.slug)}.json`;
   }
-  return `finder install ${origin}/t/${t.id}.json5`;
+  return `finder install ${origin}/t/${t.id}.json`;
 }
 
 export function TemplateView(props: TemplateViewProps) {

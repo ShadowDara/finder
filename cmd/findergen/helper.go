@@ -2,10 +2,12 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
 
 	"github.com/shadowdara/finder/internal/templates"
@@ -14,6 +16,14 @@ import (
 
 // Function to create a file
 func saveTemplate(name string, content string) error {
+	if strings.TrimSpace(name) == "" ||
+		strings.Contains(name, "/") ||
+		strings.Contains(name, "\\") ||
+		strings.Contains(name, "..") ||
+		filepath.Base(name) != name {
+		return fmt.Errorf("invalid template name")
+	}
+
 	dir, err := templates.GetCustomTemplatePath()
 	if err != nil {
 		return err
