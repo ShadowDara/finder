@@ -1,7 +1,7 @@
 Sprache-Statistik fuer /workspaces/finder
 
- 47.31%  TypeScript               105 Datei(en), 499790 Bytes
- 32.67%  Go                       81 Datei(en), 345178 Bytes
+ 47.29%  TypeScript               105 Datei(en), 499790 Bytes
+ 32.69%  Go                       81 Datei(en), 345443 Bytes
  10.32%  CSS                      21 Datei(en), 109025 Bytes
   3.01%  JavaScript               27 Datei(en), 31846 Bytes
   2.53%  HTML                     10 Datei(en), 26769 Bytes
