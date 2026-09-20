@@ -7,8 +7,6 @@ import { parseMarkdown } from "@shadowdara/dlib";
 import { transformWithEsbuild } from "vite";
 import { tsImport } from "tsx/esm/api";
 import { escapeHtml } from "./jsx-runtime.js";
-// export { jsx, Fragment, raw, escapeHtml } from "./jsx-runtime.js";
-export type { HtmlValue } from "./jsx-runtime.js";
 import hljs from "highlight.js/lib/common";
 import { Liquid } from "liquidjs";
 import ejs from "ejs";

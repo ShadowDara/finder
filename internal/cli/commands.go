@@ -215,10 +215,11 @@ func HandleCommand(args []string) {
 
 	case viewCMD:
 		if len(cmd.Args) <= 0 {
-			fmt.Errorf("You have to submit a template name after <view>")
+			fmt.Println("You have to submit a template name after <view>")
+			return
 		}
 
-		View(cmd.Args[0])
+		fmt.Println(View(cmd.Args[0]))
 
 	case cacheSizeCmd:
 		{

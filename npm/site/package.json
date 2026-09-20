@@ -21,10 +21,10 @@
     "dev:staticroot": "vite --mode staticroot"
   },
   "devDependencies": {
+    "@babel/parser": "^7.29.8",
     "@eslint/js": "^10.0.1",
     "@rollup/plugin-yaml": "^5.0.0",
     "@tailwindcss/vite": "^4.3.3",
-    "twynejs": "1.0.0",
     "@types/html-minifier-terser": "^7.0.2",
     "@types/jquery": "^4.0.1",
     "@types/license-checker": "^25.0.6",
@@ -48,6 +48,7 @@
     "tailwindcss": "^4.3.3",
     "tinyglobby": "^0.2.17",
     "tsx": "^4.23.13",
+    "twynejs": "1.0.0",
     "typescript": "^5.5.0",
     "typescript-eslint": "^8.69.0",
     "unplugin-remove": "^1.0.3",

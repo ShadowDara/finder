@@ -52,3 +52,8 @@ npm/site/tsconfig.tsbuildinfo
 /npm/hub/.windsurf
 /npm/hub/.agents
 npm/site/public/dependencies.txt
+/csf
+/findergen
+/finder
+/cafa
+/.pnpm-store

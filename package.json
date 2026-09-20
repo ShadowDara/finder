@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "pnpm --filter web dev",
     "build": "pnpm --filter web build",
-    "stats": "pnpm linguist-js"
+    "stats": "pnpm linguist-js",
+    "gotest": "go test -coverprofile=coverage ./... go tool cover -html coverage.out"
   },
   "version": "0.3.18",
   "devDependencies": {

@@ -1,6 +1,8 @@
 {
   "files.associations": {
-    "*.json5": "jsonc"
+    "*.json5": "jsonc",
+    ".clang-tidy": "yaml",
+    ".clang-format": "yaml"
   },
   "files.exclude": {
     "**/*.exe": true,
@@ -12,5 +14,7 @@
     "**/node_modules": true,
     "**/.next": true,
     "**/*.tgz": true,
+    "**/.pnpm": true,
+    "**/.pnpm-store": true
   },
 }

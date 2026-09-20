@@ -1,3 +1,6 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
 # JSON5
 #*.json5 linguist-detectable=true
 #*.json5 linguist-documentation=false

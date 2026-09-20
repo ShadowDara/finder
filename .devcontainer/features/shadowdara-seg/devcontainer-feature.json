@@ -1,0 +1,9 @@
+{
+    "id": "shadowdara-seg",
+    "version": "0.2.4",
+    "name": "Shadowdara Seg",
+    "description": "Installs @shadowdara/seg globally (pulls node)",
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/node"
+    ]
+}
