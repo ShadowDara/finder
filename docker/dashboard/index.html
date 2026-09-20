@@ -192,6 +192,19 @@
           >Open Static Site &rarr;</a
         >
       </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Static Registry</span>
+          <span class="status" id="status-static-registry"
+            ><span class="dot loading"></span> checking...</span
+          >
+        </div>
+        <p class="card-desc">Static Template Registry.</p>
+        <a class="card-link" href="http://localhost:3016" target="_blank"
+          >Open Static Registry &rarr;</a
+        >
+      </div>
     </div>
 
     <div class="refresh-bar">
@@ -205,6 +218,7 @@
         { name: "template-site", url: "http://localhost:3014" },
         { name: "uploadpage", url: "http://localhost:3015" },
         { name: "static-site", url: "http://localhost:3016" },
+        { name: "static-registry", url: "http://localhost:3017" }
       ];
 
       function checkService(svc) {
