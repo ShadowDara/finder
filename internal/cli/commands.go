@@ -60,7 +60,7 @@ func HandleCommand(args []string) {
 	// === Build the command tree ===
 	// root is the top-level command ("finder"). All other commands
 	// are registered as subcommands beneath it.
-	s := fmt.Sprintf("More infos about finder:\n\n%sWebsite%s   %shttps://shadowdara.github.io/finder%s\n%sDiscord%s   %shttps://discord.gg/9Jh8B8pkJa%s\n%sInfos%s     %shttps://shadowdara.github.io/finder/infoslist%s", goansi.ITALIC, goansi.END, goansi.BLUE, goansi.END, goansi.ITALIC, goansi.END, goansi.PURPLE, goansi.END, goansi.ITALIC, goansi.END, goansi.GREEN, goansi.END)
+	s := fmt.Sprintf("More infos about finder:\n\n%sWebsite%s   %shttps://shadowdara.github.io/finder%s\n%sDiscord%s   %shttps://discord.gg/9Jh8B8pkJa%s\n%sInfos%s     %shttps://shadowdara.github.io/finder/infoslist%s\n\nor run %s%s%s%s more-infos%s to get more detailed infos!", goansi.ITALIC, goansi.END, goansi.BLUE, goansi.END, goansi.ITALIC, goansi.END, goansi.PURPLE, goansi.END, goansi.ITALIC, goansi.END, goansi.GREEN, goansi.END, goansi.ITALIC, goansi.BOLD, goansi.YELLOW, args[0], goansi.END)
 	root := argparser.NewCommand("finder",
 		"a simple go program to find your files via file structures", s, false)
 
@@ -151,6 +151,8 @@ func HandleCommand(args []string) {
 	// to view a template in the command line
 	viewCMD := argparser.NewCommand("view", "View a template in the command line", "", false)
 
+	infoCMD := argparser.NewCommand("more-infos", "", "", true)
+
 	// Register all subcommands on the root — the argparser then knows
 	// the whole command tree and can map the arguments correctly.
 	root.AddSubcommand(versionCmd)
@@ -170,6 +172,7 @@ func HandleCommand(args []string) {
 	root.AddSubcommand(unaliasCmd)
 	root.AddSubcommand(aliasesCmd)
 	root.AddSubcommand(viewCMD)
+	root.AddSubcommand(infoCMD)
 
 	// Parse the arguments: args[0] is "finder" itself — pass args[1:]
 	// The result is the subcommand that matches the first argument.
@@ -214,6 +217,10 @@ func HandleCommand(args []string) {
 	case tagsCmd:
 		// Show all tags found in templates
 		Tags()
+
+	// Info CMD
+	case infoCMD:
+		PrintInfo()
 
 	case viewCMD:
 		if len(cmd.Args) <= 0 {
