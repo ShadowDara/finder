@@ -46,6 +46,9 @@ type Folder struct {
 	MarkdownNote string   `json:"mdnote,omitempty"`
 	Author       string   `json:"author,omitempty"`
 	Authors      []string `json:"authors,omitempty"`
+
+	// Names which will be excluded from * name (so you dont have to use a regex)
+	ExcludedNames []string `json:"excluded_names,omitempty"`
 }
 
 // NewFolder erzeugt eine minimale Folder-Instanz mit sinnvollen
@@ -65,6 +68,7 @@ func NewFolder(foldername string) Folder {
 		MarkdownNote:  "",
 		Author:        "",
 		Authors:       []string{},
+		ExcludedNames: []string{},
 	}
 }
 
