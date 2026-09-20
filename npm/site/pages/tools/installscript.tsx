@@ -11,6 +11,26 @@ import { jsx, Fragment } from "twynejs/jsx-runtime";
 
 class ValidationError extends Error {}
 
+type VersionMode = "fixed" | "latest" | "tags";
+
+/** Alle Formularelemente an einer Stelle (statt Dom-Objekte mehrfach zu bauen). */
+interface FormDom {
+  appName: HTMLInputElement;
+  version: HTMLInputElement;
+  homepage: HTMLInputElement;
+  archiveUrl: HTMLInputElement;
+  archiveType: HTMLSelectElement;
+  installDir: HTMLInputElement;
+  animations: HTMLInputElement;
+  useLatest: HTMLInputElement;
+  versionMode: HTMLSelectElement;
+  latestVersionUrl: HTMLInputElement;
+  tagsVersionUrl: HTMLInputElement;
+  binariesContainer: HTMLElement;
+  envContainer: HTMLElement;
+  optionsContainer: HTMLElement;
+}
+
 function el<T extends HTMLElement>(html: string | { toString(): string }): T {
   const markup = String(html).trim();
   const template = document.createElement("template");
@@ -51,6 +71,25 @@ function readOsRestriction(
   if (linux && !darwin) return ["linux"];
   if (darwin && !linux) return ["darwin"];
   return undefined; // beide oder keins angehakt = beide Systeme
+}
+
+/** Gegenstück zu readOsRestriction (für den Import). */
+function applyOsRestriction(row: Element, os?: TargetOS[]): void {
+  const prefix = row.getAttribute("data-os-prefix") || "";
+  const only = os && os.length === 1 ? os[0] : undefined;
+  qs<HTMLInputElement>(row, `[name="${prefix}-linux"]`).checked =
+    only === "linux";
+  qs<HTMLInputElement>(row, `[name="${prefix}-darwin"]`).checked =
+    only === "darwin";
+}
+
+function githubApiBase(homepage: string): string | null {
+  const m = homepage
+    .trim()
+    .match(/^https?:\/\/github\.com\/([^/\s]+)\/([^/#?\s]+)/i);
+  return m
+    ? `https://api.github.com/repos/${m[1]}/${m[2].replace(/\.git$/i, "")}`
+    : null;
 }
 
 // ============================================================================
@@ -188,6 +227,11 @@ function readEnvVars(container: Element): EnvVarSpec[] {
   for (const row of rows) {
     const name = qs<HTMLInputElement>(row, ".env-name").value.trim();
     if (!name) continue;
+    if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(name)) {
+      throw new ValidationError(
+        `Ungültiger Variablenname "${name}" (erlaubt: Buchstaben, Ziffern, _).`,
+      );
+    }
     const value = qs<HTMLInputElement>(row, ".env-value").value.trim();
     const append = qs<HTMLInputElement>(row, ".env-append").checked;
     const prefix = row.getAttribute("data-os-prefix") || "env-os";
@@ -227,33 +271,18 @@ function readInstallOptions(container: Element): InstallOption[] {
   return options;
 }
 
-function collectConfig(dom: {
-  appName: HTMLInputElement;
-  version: HTMLInputElement;
-  homepage: HTMLInputElement;
-  archiveUrl: HTMLInputElement;
-  archiveType: HTMLSelectElement;
-  installDir: HTMLInputElement;
-  animations: HTMLInputElement;
-  useLatest: HTMLInputElement;
-  latestVersionUrl: HTMLInputElement;
-  binariesContainer: HTMLElement;
-  envContainer: HTMLElement;
-  optionsContainer: HTMLElement;
-
-  // neu:
-  versionMode: HTMLSelectElement;
-  tagsVersionUrl: HTMLInputElement;
-}): InstallerConfig {
+function collectConfig(dom: FormDom): InstallerConfig {
   const appName = dom.appName.value.trim();
   if (!appName)
     throw new ValidationError(
       "App-Name fehlt. Ohne Namen kann kein Skript entstehen.",
     );
+  // Der Name landet u.a. im Default-Installpfad im Skript -> keine Shell-Sonderzeichen.
+  if (!/^[A-Za-z0-9._-]+$/.test(appName))
+    throw new ValidationError(
+      "App-Name darf nur Buchstaben, Ziffern, '.', '_' und '-' enthalten.",
+    );
 
-  const versionMode = dom.versionMode.value as "fixed" | "latest" | "tags";
-
-  const versionFixed = dom.version.value.trim();
   const archiveUrl = dom.archiveUrl.value.trim();
   if (!archiveUrl) throw new ValidationError("Die Archiv-URL fehlt.");
 
@@ -267,35 +296,28 @@ function collectConfig(dom: {
   const envVars = readEnvVars(dom.envContainer);
   const installOptions = readInstallOptions(dom.optionsContainer);
 
-  const useLatest = dom.useLatest.checked;
-  const version = dom.version.value.trim();
-  if (!useLatest && !version)
-    throw new ValidationError("Version fehlt. Trag z.B. 1.0.0 ein.");
+  const versionMode = dom.versionMode.value as VersionMode;
+  const versionFixed = dom.version.value.trim();
+  const latestVersionUrl = dom.latestVersionUrl.value.trim() || undefined;
+  const tagsUrl = dom.tagsVersionUrl.value.trim() || undefined;
 
-  // versionMode -> config.version + latestVersionUrl
-  let cfgVersion = versionFixed || "latest";
-  let latestVersionUrl: string | undefined = undefined;
-
-  if (versionMode === "latest") {
-    cfgVersion = "latest";
-    latestVersionUrl = dom.latestVersionUrl.value.trim() || undefined;
-  } else if (versionMode === "tags") {
-    // für tags ist "version" im UI optional; CLI wählt überschreibt später
-    cfgVersion = versionFixed || "latest";
-    latestVersionUrl = dom.tagsVersionUrl.value.trim() || undefined;
-  } else {
+  let version: string;
+  if (versionMode === "fixed") {
     if (!versionFixed)
       throw new ValidationError("Version fehlt. Trag z.B. 1.0.0 ein.");
-    cfgVersion = versionFixed;
-    latestVersionUrl = dom.latestVersionUrl.value.trim() || undefined; // optional (wird nur bei latest/tags gebraucht)
+    version = versionFixed;
+  } else {
+    // latest/tags: konkrete Version wird erst beim Ausführen des Skripts bestimmt.
+    version = "latest";
   }
 
   return {
     appName,
-    version: cfgVersion,
+    version,
     versionMode,
     homepage: dom.homepage.value.trim() || undefined,
     latestVersionUrl,
+    tagsUrl,
     archive: {
       url: archiveUrl,
       type: dom.archiveType.value as "tar.gz" | "zip",
@@ -334,7 +356,7 @@ function base64ToConfig(b64: string): InstallerConfig {
   if (!text) throw new ValidationError("Kein Base64-String eingefügt.");
 
   // Erlaubt sowohl rohen Base64 als auch den Footer eines generierten
-  // Skripts: alles ab dem Marker "#$$$" (inkl. Marker) wird verwendet.
+  // Skripts: alles nach dem Marker "#$$$" wird verwendet.
   const markerIndex = text.lastIndexOf("#$$$");
   const encoded =
     markerIndex !== -1 ? text.slice(markerIndex + 4).trim() : text;
@@ -353,7 +375,7 @@ function base64ToConfig(b64: string): InstallerConfig {
     throw new ValidationError("Ungültiges JSON im Base64-String.");
   }
 
-  if (!parsed || typeof parsed !== "object")
+  if (!parsed || typeof parsed !== "object" || Array.isArray(parsed))
     throw new ValidationError("Ungültiges JSON im Base64-String.");
   return parsed as InstallerConfig;
 }
@@ -373,75 +395,59 @@ function clearContainer(container: HTMLElement): void {
   container.innerHTML = "";
 }
 
-function applyConfigToForm(
-  config: InstallerConfig,
-  dom: {
-    appName: HTMLInputElement;
-    version: HTMLInputElement;
-    homepage: HTMLInputElement;
-    archiveUrl: HTMLInputElement;
-    archiveType: HTMLSelectElement;
-    installDir: HTMLInputElement;
-    animations: HTMLInputElement;
-    useLatest: HTMLInputElement;
-    latestVersionUrl: HTMLInputElement;
-    binariesContainer: HTMLElement;
-    envContainer: HTMLElement;
-    optionsContainer: HTMLElement;
-  },
-): void {
-  const isLatest = config.version === "latest";
+function applyConfigToForm(config: InstallerConfig, dom: FormDom): void {
+  // Ältere Exporte kennen kein versionMode / tagsUrl.
+  const mode: VersionMode =
+    config.versionMode ?? (config.version === "latest" ? "latest" : "fixed");
+
   dom.appName.value = config.appName || "";
-  dom.version.value = isLatest ? "" : config.version || "";
-  dom.version.disabled = isLatest;
+  dom.version.value =
+    config.version && config.version !== "latest" ? config.version : "";
   dom.homepage.value = config.homepage || "";
   dom.archiveUrl.value = config.archive?.url || "";
   dom.archiveType.value = config.archive?.type || "tar.gz";
   dom.installDir.value = config.defaultInstallDir || "";
   dom.animations.checked = config.animations ?? true;
-  dom.useLatest.checked = isLatest;
-  dom.latestVersionUrl.value = config.latestVersionUrl || "";
-  {
-    const sec = dom.latestVersionUrl.closest("section") as HTMLElement | null;
-    if (sec) sec.style.display = isLatest ? "" : "none";
+
+  if (mode === "tags" && !config.tagsUrl) {
+    // Alt-Format: tags-URL lag in latestVersionUrl
+    dom.tagsVersionUrl.value = config.latestVersionUrl || "";
+    dom.latestVersionUrl.value = "";
+  } else {
+    dom.latestVersionUrl.value = config.latestVersionUrl || "";
+    dom.tagsVersionUrl.value = config.tagsUrl || "";
   }
 
+  // Sichtbarkeit/disabled-Zustand übernimmt der change-Handler (syncVersionModeUI).
+  dom.versionMode.value = mode;
+  dom.versionMode.dispatchEvent(new Event("change"));
+
   clearContainer(dom.binariesContainer);
-  const binaries = config.binaries || [];
+  const binaries = Array.isArray(config.binaries) ? config.binaries : [];
   if (binaries.length === 0) {
     dom.binariesContainer.appendChild(createBinaryRow("", ""));
   } else {
     for (const b of binaries) {
       const row = createBinaryRow(b.archivePath || "", b.targetName || "");
-      const prefix = row.getAttribute("data-os-prefix") || "";
-      if (b.os && b.os.length === 1) {
-        qs<HTMLInputElement>(row, `[name="${prefix}-linux"]`).checked =
-          b.os[0] === "linux";
-        qs<HTMLInputElement>(row, `[name="${prefix}-darwin"]`).checked =
-          b.os[0] === "darwin";
-      }
+      applyOsRestriction(row, b.os);
       dom.binariesContainer.appendChild(row);
     }
   }
 
   clearContainer(dom.envContainer);
-  for (const e of config.envVars || []) {
+  for (const e of Array.isArray(config.envVars) ? config.envVars : []) {
     const row = createEnvRow();
     qs<HTMLInputElement>(row, ".env-name").value = e.name || "";
     qs<HTMLInputElement>(row, ".env-value").value = e.value || "";
     qs<HTMLInputElement>(row, ".env-append").checked = !!e.append;
-    const prefix = row.getAttribute("data-os-prefix") || "";
-    if (e.os && e.os.length === 1) {
-      qs<HTMLInputElement>(row, `[name="${prefix}-linux"]`).checked =
-        e.os[0] === "linux";
-      qs<HTMLInputElement>(row, `[name="${prefix}-darwin"]`).checked =
-        e.os[0] === "darwin";
-    }
+    applyOsRestriction(row, e.os);
     dom.envContainer.appendChild(row);
   }
 
   clearContainer(dom.optionsContainer);
-  for (const o of config.installOptions || []) {
+  for (const o of Array.isArray(config.installOptions)
+    ? config.installOptions
+    : []) {
     const row = createOptionRow();
     qs<HTMLInputElement>(row, ".opt-id").value = o.id || "";
     qs<HTMLInputElement>(row, ".opt-label").value = o.label || "";
@@ -484,10 +490,6 @@ export default function buildPage(app: HTMLElement): void {
             <span>App-Name</span>
             <input type="text" id="appName" placeholder="mytool" />
           </label>
-          {/* <label class="field">
-            <span>Version</span>
-            <input type="text" id="version" placeholder="1.0.0" />
-          </label> */}
           <label class="field">
             <span>Homepage (optional)</span>
             <input
@@ -500,6 +502,11 @@ export default function buildPage(app: HTMLElement): void {
       </section>
 
       <section class="card">
+        <h2>Version</h2>
+        <p class="hint">
+          Bei einer GitHub-Homepage werden die API-URLs automatisch
+          vorgeschlagen.
+        </p>
         <div class="field-grid">
           <label class="field wide">
             <span>Version-Modus</span>
@@ -582,7 +589,10 @@ export default function buildPage(app: HTMLElement): void {
 
       <section class="card">
         <h2>Environment</h2>
-        <p class="hint">Optionale Umgebungsvariablen für die Shell-RC-Datei.</p>
+        <p class="hint">
+          Optionale Umgebungsvariablen für die Shell-RC-Datei. $INSTALL_PREFIX
+          wird beim Installieren durch das echte Zielverzeichnis ersetzt.
+        </p>
         <div id="envContainer"></div>
         <button type="button" class="btn-add" id="addEnv">
           + Variable hinzufügen
@@ -678,7 +688,9 @@ export default function buildPage(app: HTMLElement): void {
       <section class="card">
         <h2>Verwendung / Tipps</h2>
         <p class="hint">
-          So führst du das generierte Skript aus und was es dabei tut.
+          So führst du das generierte Skript aus und was es dabei tut. Das
+          Skript braucht bash (nicht sh/dash), da es Arrays und Here-Strings
+          nutzt.
         </p>
 
         <h3>Ausführen</h3>
@@ -687,18 +699,20 @@ export default function buildPage(app: HTMLElement): void {
           Am einfachsten mit:
         </p>
         <pre>
-          <code>sh install.sh</code>
+          <code>bash install.sh</code>
         </pre>
         <p>Oder erst ausführbar machen und dann starten (Linux/macOS):</p>
         <pre>
-          <code>chmod +x install.sh ./install.sh</code>
+          <code>{"chmod +x install.sh\n./install.sh"}</code>
         </pre>
         <p>
           Das Skript lädt das passende Archiv für dein System (Linux/macOS und
           Architektur) herunter, entpackt es und installiert die Binaries nach{" "}
           <code>$HOME/.local/&lt;app&gt;/bin</code>. Anschließend trägt es
           diesen Ordner in den PATH deiner Shell-RC ein (z.B.{" "}
-          <code>~/.bashrc</code> oder <code>~/.zshrc</code>).
+          <code>~/.bashrc</code> oder <code>~/.zshrc</code>). Mehrfaches
+          Ausführen ist sicher: der Eintrag in der RC-Datei wird ersetzt, nicht
+          dupliziert.
         </p>
 
         <h3>Nach der Installation</h3>
@@ -722,21 +736,22 @@ export default function buildPage(app: HTMLElement): void {
           direkt angeben:
         </p>
         <pre>
-          <code>sh install.sh -t minimal</code>
+          <code>bash install.sh -t minimal</code>
         </pre>
         <p>Alle verfügbaren Typen anzeigen:</p>
         <pre>
-          <code>sh install.sh --list</code>
+          <code>bash install.sh --list</code>
         </pre>
 
-        <h3>Neueste Version installieren</h3>
+        <h3>Versionen</h3>
         <p>
-          Ist "Neueste Version verwenden (latest)" aktiviert, ermittelt das
-          Skript beim Ausführen die aktuellste Version automatisch von der
-          GitHub-API. Alternativ kannst du das auch manuell erzwingen:
+          Im Modus "Neueste Release-Version" ermittelt das Skript beim
+          Ausführen die aktuellste Version über die GitHub-API. Im Modus
+          "Tags" darfst du die Version aus einer Liste wählen. Beides lässt sich
+          auch per Parameter erzwingen:
         </p>
         <pre>
-          <code>sh install.sh --latest</code>
+          <code>{"bash install.sh --latest\nbash install.sh --version v1.2.3"}</code>
         </pre>
 
         <h3>Zielverzeichnis ändern</h3>
@@ -745,7 +760,7 @@ export default function buildPage(app: HTMLElement): void {
           <code>--prefix</code> kannst du ein anderes Ziel wählen:
         </p>
         <pre>
-          <code>sh install.sh --prefix /opt/mein-app</code>
+          <code>bash install.sh --prefix /opt/mein-app</code>
         </pre>
 
         <h3>Ohne Ladeanimation</h3>
@@ -754,7 +769,7 @@ export default function buildPage(app: HTMLElement): void {
           automatisch deaktiviert. Du kannst sie aber auch explizit abschalten:
         </p>
         <pre>
-          <code>sh install.sh --no-animation</code>
+          <code>bash install.sh --no-animation</code>
         </pre>
 
         <h3>Per curl direkt installieren</h3>
@@ -763,13 +778,19 @@ export default function buildPage(app: HTMLElement): void {
           ausführen, ohne es erst herunterzuladen:
         </p>
         <pre>
-          <code>curl -fsSL https://example.com/install.sh | sh</code>
+          <code>curl -fsSL https://example.com/install.sh | bash</code>
         </pre>
         <p>
           Achtung: Bei dieser Variante läuft das Skript ohne TTY, also
           automatisch nicht-interaktiv (es wird der erste Installationstyp
-          verwendet).
+          verwendet). Parameter gibst du so mit:
         </p>
+        <pre>
+          <code>
+            curl -fsSL https://example.com/install.sh | bash -s -- --type
+            minimal
+          </code>
+        </pre>
 
         <h3>Konfiguration wiederherstellen</h3>
         <p>
@@ -788,42 +809,65 @@ export default function buildPage(app: HTMLElement): void {
     </>
   );
 
-  const versionModeSelect = qs<HTMLSelectElement>(app, "#versionMode");
-  const versionField = qs<HTMLInputElement>(app, "#version");
+  const dom: FormDom = {
+    appName: qs<HTMLInputElement>(app, "#appName"),
+    version: qs<HTMLInputElement>(app, "#version"),
+    homepage: qs<HTMLInputElement>(app, "#homepage"),
+    archiveUrl: qs<HTMLInputElement>(app, "#archiveUrl"),
+    archiveType: qs<HTMLSelectElement>(app, "#archiveType"),
+    installDir: qs<HTMLInputElement>(app, "#installDir"),
+    animations: qs<HTMLInputElement>(app, "#animations"),
+    useLatest: qs<HTMLInputElement>(app, "#useLatest"),
+    versionMode: qs<HTMLSelectElement>(app, "#versionMode"),
+    latestVersionUrl: qs<HTMLInputElement>(app, "#latestVersionUrl"),
+    tagsVersionUrl: qs<HTMLInputElement>(app, "#tagsVersionUrl"),
+    binariesContainer: qs<HTMLElement>(app, "#binariesContainer"),
+    envContainer: qs<HTMLElement>(app, "#envContainer"),
+    optionsContainer: qs<HTMLElement>(app, "#optionsContainer"),
+  };
 
   const latestSection = qs<HTMLElement>(app, "#latestSection");
   const tagsSection = qs<HTMLElement>(app, "#tagsSection");
 
-  const useLatestCheckbox = qs<HTMLInputElement>(app, "#useLatest"); // falls vorhanden, kannst du es weiterhin nutzen oder ignorieren
-  const latestUrlField = qs<HTMLInputElement>(app, "#latestVersionUrl");
-  const tagsUrlField = qs<HTMLInputElement>(app, "#tagsVersionUrl");
-
-  const binariesContainer = qs<HTMLElement>(app, "#binariesContainer");
-  const envContainer = qs<HTMLElement>(app, "#envContainer");
-  const optionsContainer = qs<HTMLElement>(app, "#optionsContainer");
-
-  function syncVersionModeUI() {
-    const mode = versionModeSelect.value as "fixed" | "latest" | "tags";
+  // Einzige Quelle der Wahrheit für den Version-Zustand ist das Select.
+  // Die "latest"-Checkbox unten spiegelt es nur und kann es umschalten.
+  function syncVersionModeUI(): void {
+    const mode = dom.versionMode.value as VersionMode;
     latestSection.style.display = mode === "latest" ? "" : "none";
     tagsSection.style.display = mode === "tags" ? "" : "none";
-    versionField.disabled = mode !== "fixed";
-    if (useLatestCheckbox) useLatestCheckbox.checked = mode === "latest";
+    dom.version.disabled = mode !== "fixed";
+    dom.useLatest.checked = mode === "latest";
   }
-  versionModeSelect.addEventListener("change", syncVersionModeUI);
+  dom.versionMode.addEventListener("change", syncVersionModeUI);
+  dom.useLatest.addEventListener("change", () => {
+    dom.versionMode.value = dom.useLatest.checked ? "latest" : "fixed";
+    syncVersionModeUI();
+  });
   syncVersionModeUI();
+
+  // Auto-Erkennung: Wenn die Homepage ein GitHub-Repo ist, API-URLs vorschlagen
+  // (nur in leere Felder, damit manuelle Eingaben nie überschrieben werden).
+  dom.homepage.addEventListener("change", () => {
+    const base = githubApiBase(dom.homepage.value);
+    if (!base) return;
+    if (!dom.latestVersionUrl.value.trim())
+      dom.latestVersionUrl.value = `${base}/releases/latest`;
+    if (!dom.tagsVersionUrl.value.trim())
+      dom.tagsVersionUrl.value = `${base}/tags?per_page=100`;
+  });
 
   // Startzustand: eine ausgefüllte Beispielzeile, damit sofort klar ist,
   // was reingehört.
-  binariesContainer.appendChild(createBinaryRow("bin/mytool", "mytool"));
+  dom.binariesContainer.appendChild(createBinaryRow("bin/mytool", "mytool"));
 
   qs<HTMLButtonElement>(app, "#addBinary").addEventListener("click", () => {
-    binariesContainer.appendChild(createBinaryRow());
+    dom.binariesContainer.appendChild(createBinaryRow());
   });
   qs<HTMLButtonElement>(app, "#addEnv").addEventListener("click", () => {
-    envContainer.appendChild(createEnvRow());
+    dom.envContainer.appendChild(createEnvRow());
   });
   qs<HTMLButtonElement>(app, "#addOption").addEventListener("click", () => {
-    optionsContainer.appendChild(createOptionRow());
+    dom.optionsContainer.appendChild(createOptionRow());
   });
 
   const errorBanner = qs<HTMLElement>(app, "#errorBanner");
@@ -832,8 +876,8 @@ export default function buildPage(app: HTMLElement): void {
   let currentScript = "";
   let currentAppName = "install";
 
-  function showError(message: string): void {
-    errorBanner.textContent = message;
+  function showError(e: unknown): void {
+    errorBanner.textContent = e instanceof Error ? e.message : String(e);
     errorBanner.classList.add("visible");
   }
 
@@ -842,75 +886,23 @@ export default function buildPage(app: HTMLElement): void {
     errorBanner.classList.remove("visible");
   }
 
-  useLatestCheckbox.addEventListener("change", () => {
-    latestSection.style.display = useLatestCheckbox.checked ? "" : "none";
-    qs<HTMLInputElement>(app, "#version").disabled = useLatestCheckbox.checked;
-  });
-
-  // Auto-Erkennung: Wenn die Homepage ein GitHub-Repo ist, API-URL vorschlagen
-  const homepageField = qs<HTMLInputElement>(app, "#homepage");
-  homepageField.addEventListener("change", () => {
-    if (useLatestCheckbox.checked && !latestUrlField.value.trim()) {
-      const match = homepageField.value
-        .trim()
-        .match(/^https?:\/\/github\.com\/([^/]+)\/([^/]+)\/?$/);
-      if (match) {
-        latestUrlField.value = `https://api.github.com/repos/${match[1]}/${match[2]}/releases/latest`;
-      }
-    }
-  });
-
-  // 3) currentConfig(): collectConfig() Aufruf erweitert
-  function currentConfig(): InstallerConfig {
-    return collectConfig({
-      appName: qs<HTMLInputElement>(app, "#appName"),
-      version: qs<HTMLInputElement>(app, "#version"),
-      homepage: qs<HTMLInputElement>(app, "#homepage"),
-      archiveUrl: qs<HTMLInputElement>(app, "#archiveUrl"),
-      archiveType: qs<HTMLSelectElement>(app, "#archiveType"),
-      installDir: qs<HTMLInputElement>(app, "#installDir"),
-      animations: qs<HTMLInputElement>(app, "#animations"),
-      useLatest: qs<HTMLInputElement>(app, "#useLatest"),
-      latestVersionUrl: latestUrlField,
-      versionMode: versionModeSelect,
-      tagsVersionUrl: tagsUrlField,
-      binariesContainer,
-      envContainer,
-      optionsContainer,
-    });
-  }
-
   const b64Field = qs<HTMLTextAreaElement>(app, "#b64Field");
 
   qs<HTMLButtonElement>(app, "#exportB64").addEventListener("click", () => {
     clearError();
     try {
-      b64Field.value = configToBase64(currentConfig());
+      b64Field.value = configToBase64(collectConfig(dom));
     } catch (e) {
-      showError(e instanceof Error ? e.message : String(e));
+      showError(e);
     }
   });
 
   qs<HTMLButtonElement>(app, "#importB64").addEventListener("click", () => {
     clearError();
     try {
-      const config = base64ToConfig(b64Field.value);
-      applyConfigToForm(config, {
-        appName: qs<HTMLInputElement>(app, "#appName"),
-        version: qs<HTMLInputElement>(app, "#version"),
-        homepage: qs<HTMLInputElement>(app, "#homepage"),
-        archiveUrl: qs<HTMLInputElement>(app, "#archiveUrl"),
-        archiveType: qs<HTMLSelectElement>(app, "#archiveType"),
-        installDir: qs<HTMLInputElement>(app, "#installDir"),
-        animations: qs<HTMLInputElement>(app, "#animations"),
-        useLatest: qs<HTMLInputElement>(app, "#useLatest"),
-        latestVersionUrl: qs<HTMLInputElement>(app, "#latestVersionUrl"),
-        binariesContainer,
-        envContainer,
-        optionsContainer,
-      });
+      applyConfigToForm(base64ToConfig(b64Field.value), dom);
     } catch (e) {
-      showError(e instanceof Error ? e.message : String(e));
+      showError(e);
     }
   });
 
@@ -921,7 +913,7 @@ export default function buildPage(app: HTMLElement): void {
   qs<HTMLButtonElement>(app, "#generate").addEventListener("click", () => {
     clearError();
     try {
-      const config = currentConfig();
+      const config = collectConfig(dom);
 
       currentScript = buildInstallScript(config);
       currentAppName = config.appName;
@@ -930,11 +922,7 @@ export default function buildPage(app: HTMLElement): void {
       qs<HTMLElement>(outputBody, "pre").textContent = currentScript;
       terminalActions.style.display = "flex";
     } catch (e) {
-      if (e instanceof ValidationError) {
-        showError(e.message);
-      } else {
-        showError(e instanceof Error ? e.message : String(e));
-      }
+      showError(e);
     }
   });
 
