@@ -74,6 +74,7 @@ jobs:
           cp INFO.txt "${PACKAGE_DIR}/"
           cp LICENSE "${PACKAGE_DIR}/"
           cp Newest_Changes.md "${PACKAGE_DIR}/"
+          cp uninstall.sh "${PACKAGE_DIR}/"
 
       - uses: actions/upload-artifact@v4
         with:

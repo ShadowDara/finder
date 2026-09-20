@@ -93,6 +93,8 @@ export interface InstallerConfig {
    * Wird automatisch erkannt wenn homepage ein GitHub-Repo ist.
    */
   latestVersionUrl?: string;
+
+  versionMode?: "fixed" | "latest" | "tags";
 }
 
 // ---------------------------------------------------------------------------
@@ -132,6 +134,7 @@ export function generateInstallerScript(config: InstallerConfig): string {
     animations = true,
     homepage,
     latestVersionUrl,
+    versionMode = "fixed",
   } = config;
 
   if (!appName || !version) {
@@ -177,6 +180,7 @@ export function generateInstallerScript(config: InstallerConfig): string {
     `APP_VERSION=${bashStringLiteral(version)}`,
     `APP_HOMEPAGE=${bashStringLiteral(homepage || "")}`,
     `LATEST_VERSION_URL=${bashStringLiteral(latestVersionUrl || "")}`,
+    `VERSION_MODE=${bashStringLiteral(versionMode)}`, // <-- neu
     `ARCHIVE_URL_TEMPLATE=${bashStringLiteral(archive.url)}`,
     `ARCHIVE_TYPE=${bashStringLiteral(archive.type)}`,
     `ANIMATIONS_ENABLED=${animations ? 1 : 0}`,
@@ -198,9 +202,36 @@ export function generateInstallerScript(config: InstallerConfig): string {
     `OPTION_LABELS=${bashArray(optionLabels)}`,
     `OPTION_DESCRIPTIONS=${bashArray(optionDescriptions)}`,
     `OPTION_BINARIES=${bashArray(optionBinaries)}`,
+    // ... bestehende BIN_* und ENV_* und OPTION_* arrays wie bei dir ...
+    "__CONFIG_ARRAYS___TAIL__",
   ].join("\n");
 
-  return STATIC_TEMPLATE.replace("__CONFIG_ARRAYS__", arraysBlock);
+  // Wichtig: du hast unten bereits STATIC_TEMPLATE.replace("__CONFIG_ARRAYS__", ...)
+  // -> daher hier NICHT weiterbauen, sondern nur diese zusätzliche Zeile sicherstellen.
+  // Ich ersetze daher deinen bisherigen arraysBlock-Teil nicht komplett,
+  // sondern: SIEHE PATCH IM TEMPLATE-Abschnitt UNTEN (VERSION_MODE + uninstall).
+
+  // --- Hier: deinen aktuellen arraysBlock belassen, nur VERSION_MODE hinzufügen ---
+  const finalArraysBlock = arraysBlock.replace(
+    "__CONFIG_ARRAYS___TAIL__",
+    // reuse existing logic: du hast in deinem Code später die arrays erzeugt
+    // Daher: wenn dein bestehender Code arraysBlock bereits enthält, setze einfach
+    // VersionMode in deinem existierenden Block.
+    "",
+  );
+
+  // Wenn du bei dir schon arraysBlock für die vielen Arrays baust,
+  // dann ergänze darin nur diese Zeile:
+  // finalArraysBlock = existingArraysBlock + `\nVERSION_MODE=${bashStringLiteral(versionMode)}`
+  // Da in deiner Datei im Auszug nur TEMPLATE-Teil sichtbar ist, mache ich das
+  // unten explizit im STATIC_TEMPLATE (wir brauchen hier nur VERSION_MODE im env).
+  //
+  // => Ich lasse hier deine bestehende Implementierung unverändert und gebe nur
+  // den Teil frei, der im TEMPLATE benötigt wird:
+  // (In deinem echten File existiert arraysBlock bereits. Dort: füge VERSION_MODE ein.)
+
+  // AB HIER: deine bestehende return Zeile
+  return STATIC_TEMPLATE.replace("__CONFIG_ARRAYS__", finalArraysBlock);
 }
 
 // /**
@@ -257,6 +288,7 @@ INSTALL_PREFIX="$INSTALL_PREFIX_DEFAULT"
 SELECTED_OPTION=""
 NONINTERACTIVE=0
 ANIMATION_OVERRIDE=""
+SELECTED_VERSION=""
 
 # ============================================================
 # OS / Arch Erkennung
@@ -307,6 +339,92 @@ resolve_latest_version() {
 }
 
 resolve_latest_version
+
+fetch_tags() {
+  if [ -z "$LATEST_VERSION_URL" ]; then
+    die "versionMode='tags', aber keine LATEST_VERSION_URL konfiguriert."
+  fi
+  local api_url="$LATEST_VERSION_URL"
+  local json=""
+  if command -v curl >/dev/null 2>&1; then
+    json="$(curl -fsSL "$api_url" 2>/dev/null)"
+  elif command -v wget >/dev/null 2>&1; then
+    json="$(wget -qO- "$api_url" 2>/dev/null)"
+  else
+    die "Für Tags wird curl oder wget benötigt."
+  fi
+
+  # Extrahiere alle "name":"..." Vorkommen aus dem JSON (GitHub Tags API)
+  echo "$json" | grep '"name"' | sed -E 's/.*"name":[ ]*"([^"]+)".*/\1/' | tr -d '\r'
+}
+
+pick_version_from_tags() {
+  if [ -n "$SELECTED_VERSION" ]; then
+    APP_VERSION="$SELECTED_VERSION"
+    ok "Version per CLI gesetzt: $APP_VERSION"
+    return
+  fi
+
+  local tags
+  tags="$(fetch_tags | head -n 50)"
+  [ -n "$tags" ] || die "Keine Tags von $LATEST_VERSION_URL erhalten."
+
+  if [ "$NONINTERACTIVE" = "1" ]; then
+    APP_VERSION="$(echo "$tags" | head -n 1)"
+    warn "Kein Interaktiv: wähle Standard-Tag: $APP_VERSION"
+    return
+  fi
+
+  if [ ! -t 0 ]; then
+    APP_VERSION="$(echo "$tags" | head -n 1)"
+    warn "Kein TTY erkannt: wähle Standard-Tag: $APP_VERSION"
+    return
+  fi
+
+  echo ""
+  echo "$BOLD Welche Version möchtest du installieren? $RESET"
+
+  local tags_i=0
+  local first=""
+  local line=""
+  while IFS= read -r line; do
+    if [ $tags_i -eq 0 ]; then first="$line"; fi
+    tags_i=$((tags_i + 1))
+    printf '  %d) %s\n' "$tags_i" "$line"
+  done <<< "$tags"
+
+  local choice=""
+  while true; do
+    printf 'Auswahl [1-%d]: ' "$tags_i"
+    read -r choice
+    case "$choice" in
+      ''|*[!0-9]*) echo "Bitte eine Zahl zwischen 1 und $tags_i eingeben." ;;
+      *)
+        if [ "$choice" -ge 1 ] && [ "$choice" -le "$tags_i" ]; then
+          APP_VERSION="$(echo "$tags" | sed -n "$choice p")"
+          break
+        fi
+        echo "Bitte eine Zahl zwischen 1 und $tags_i eingeben."
+        ;;
+    esac
+    done
+
+  ok "Version gewählt: $APP_VERSION"
+}
+
+# VERSION_MODE wird in __CONFIG_ARRAYS__ als env gesetzt
+case "{VERSION_MODE:-fixed}" in
+  latest)
+    APP_VERSION="latest"
+    resolve_latest_version
+    ;;
+  tags)
+    pick_version_from_tags
+    ;;
+  fixed|*)
+    # fixed: APP_VERSION bleibt wie gesetzt
+    ;;
+esac
 
 # ============================================================
 # Spinner / Ladeanimation
@@ -361,6 +479,7 @@ Optionen:
   -y, --yes               Nicht-interaktive Installation (Standardtyp)
   -t, --type <id>         Installationstyp wählen (siehe --list)
       --latest            Neueste Version automatisch von GitHub ermitteln
+      --version <tag>    Version explizit setzen (z.B. v1.2.3)
       --prefix <dir>      Zielverzeichnis (Standard: $INSTALL_PREFIX_DEFAULT)
       --no-animation      Ladeanimationen deaktivieren
       --animation         Ladeanimationen erzwingen
@@ -389,6 +508,8 @@ while [ $# -gt 0 ]; do
   case "$1" in
     -y|--yes) NONINTERACTIVE=1; shift ;;
     --latest) APP_VERSION="latest"; shift ;;
+    --version) SELECTED_VERSION="\${2:-}"; VERSION_MODE="tags"; NONINTERACTIVE=1; shift 2 ;;
+    --version=*) SELECTED_VERSION="\${1#*=}"; VERSION_MODE="tags"; NONINTERACTIVE=1; shift ;;
     -t|--type) SELECTED_OPTION="µ{2:-}"; NONINTERACTIVE=1; shift 2 ;;
     --type=*) SELECTED_OPTION="µ{1#*=}"; NONINTERACTIVE=1; shift ;;
     --prefix) INSTALL_PREFIX="µ{2:-}"; shift 2 ;;
@@ -561,6 +682,25 @@ install_binaries() {
 }
 
 run_with_spinner "Installiere Binaries" install_binaries
+
+# ============================================================
+# Auto-Uninstall (pro gewählter Version)
+# ============================================================
+auto_uninstall() {
+  # uninstall.sh wird im entpackten Root gesucht.
+  # Wenn Archiv "uninstall.sh" nicht im Root hat, musst du ggf. Pfad erweitern.
+  local candidate="$WORKDIR/extracted/uninstall.sh"
+  if [ -f "$candidate" ]; then
+    ok "Uninstall-Skript für Version \$APP_VERSION gefunden – führe uninstall.sh aus."
+    bash "$candidate" || die "uninstall.sh failed for this version"
+  else
+    # gewünschte Meldung:
+    warn "uninstall does not work for this version"
+  fi
+}
+
+run_with_spinner "Auto-Uninstall für Version \$APP_VERSION" auto_uninstall
+auto_uninstall
 
 # ============================================================
 # Shell-RC-Datei bestimmen

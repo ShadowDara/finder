@@ -240,6 +240,10 @@ function collectConfig(dom: {
   binariesContainer: HTMLElement;
   envContainer: HTMLElement;
   optionsContainer: HTMLElement;
+
+  // neu:
+  versionMode: HTMLSelectElement;
+  tagsVersionUrl: HTMLInputElement;
 }): InstallerConfig {
   const appName = dom.appName.value.trim();
   if (!appName)
@@ -247,11 +251,9 @@ function collectConfig(dom: {
       "App-Name fehlt. Ohne Namen kann kein Skript entstehen.",
     );
 
-  const useLatest = dom.useLatest.checked;
-  const version = dom.version.value.trim();
-  if (!useLatest && !version)
-    throw new ValidationError("Version fehlt. Trag z.B. 1.0.0 ein.");
+  const versionMode = dom.versionMode.value as "fixed" | "latest" | "tags";
 
+  const versionFixed = dom.version.value.trim();
   const archiveUrl = dom.archiveUrl.value.trim();
   if (!archiveUrl) throw new ValidationError("Die Archiv-URL fehlt.");
 
@@ -265,11 +267,35 @@ function collectConfig(dom: {
   const envVars = readEnvVars(dom.envContainer);
   const installOptions = readInstallOptions(dom.optionsContainer);
 
+  const useLatest = dom.useLatest.checked;
+  const version = dom.version.value.trim();
+  if (!useLatest && !version)
+    throw new ValidationError("Version fehlt. Trag z.B. 1.0.0 ein.");
+
+  // versionMode -> config.version + latestVersionUrl
+  let cfgVersion = versionFixed || "latest";
+  let latestVersionUrl: string | undefined = undefined;
+
+  if (versionMode === "latest") {
+    cfgVersion = "latest";
+    latestVersionUrl = dom.latestVersionUrl.value.trim() || undefined;
+  } else if (versionMode === "tags") {
+    // für tags ist "version" im UI optional; CLI wählt überschreibt später
+    cfgVersion = versionFixed || "latest";
+    latestVersionUrl = dom.tagsVersionUrl.value.trim() || undefined;
+  } else {
+    if (!versionFixed)
+      throw new ValidationError("Version fehlt. Trag z.B. 1.0.0 ein.");
+    cfgVersion = versionFixed;
+    latestVersionUrl = dom.latestVersionUrl.value.trim() || undefined; // optional (wird nur bei latest/tags gebraucht)
+  }
+
   return {
     appName,
-    version: useLatest ? "latest" : version,
+    version: cfgVersion,
+    versionMode,
     homepage: dom.homepage.value.trim() || undefined,
-    latestVersionUrl: dom.latestVersionUrl.value.trim() || undefined,
+    latestVersionUrl,
     archive: {
       url: archiveUrl,
       type: dom.archiveType.value as "tar.gz" | "zip",
@@ -458,16 +484,52 @@ export default function buildPage(app: HTMLElement): void {
             <span>App-Name</span>
             <input type="text" id="appName" placeholder="mytool" />
           </label>
-          <label class="field">
+          {/* <label class="field">
             <span>Version</span>
             <input type="text" id="version" placeholder="1.0.0" />
-          </label>
+          </label> */}
           <label class="field">
             <span>Homepage (optional)</span>
             <input
               type="text"
               id="homepage"
               placeholder="https://example.com/mytool"
+            />
+          </label>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="field-grid">
+          <label class="field wide">
+            <span>Version-Modus</span>
+            <select id="versionMode">
+              <option value="fixed">Feste Version</option>
+              <option value="latest">Neueste Release-Version</option>
+              <option value="tags">Aus GitHub Tags auswählen</option>
+            </select>
+          </label>
+
+          <label class="field wide">
+            <span>Version</span>
+            <input type="text" id="version" placeholder="1.0.0" />
+          </label>
+
+          <label class="field wide" id="latestSection">
+            <span>GitHub API URL (latest)</span>
+            <input
+              type="text"
+              id="latestVersionUrl"
+              placeholder="https://api.github.com/repos/<owner>/<repo>/releases/latest"
+            />
+          </label>
+
+          <label class="field wide" id="tagsSection" style="display:none;">
+            <span>GitHub API URL (tags)</span>
+            <input
+              type="text"
+              id="tagsVersionUrl"
+              placeholder="https://api.github.com/repos/<owner>/<repo>/tags?per_page=100"
             />
           </label>
         </div>
@@ -553,26 +615,6 @@ export default function buildPage(app: HTMLElement): void {
           install.sh generieren
         </button>
       </div>
-
-      <section class="card" id="latestSection" style="display:none;">
-        <h2>Neueste Version</h2>
-        <p class="hint">
-          Wenn aktiviert, wird beim Ausführen des Skripts die neueste Version
-          automatisch von der API ermittelt. Das Skript muss dabei online sein.
-        </p>
-        <div class="field-grid">
-          <label class="field wide">
-            <span>
-              GitHub API URL (optional, wird erkannt wenn Homepage gesetzt)
-            </span>
-            <input
-              type="text"
-              id="latestVersionUrl"
-              placeholder="https://api.github.com/repos/shadowdara/finder/releases/latest"
-            />
-          </label>
-        </div>
-      </section>
 
       <section class="card">
         <h2>Konfiguration speichern / laden</h2>
@@ -746,9 +788,29 @@ export default function buildPage(app: HTMLElement): void {
     </>
   );
 
+  const versionModeSelect = qs<HTMLSelectElement>(app, "#versionMode");
+  const versionField = qs<HTMLInputElement>(app, "#version");
+
+  const latestSection = qs<HTMLElement>(app, "#latestSection");
+  const tagsSection = qs<HTMLElement>(app, "#tagsSection");
+
+  const useLatestCheckbox = qs<HTMLInputElement>(app, "#useLatest"); // falls vorhanden, kannst du es weiterhin nutzen oder ignorieren
+  const latestUrlField = qs<HTMLInputElement>(app, "#latestVersionUrl");
+  const tagsUrlField = qs<HTMLInputElement>(app, "#tagsVersionUrl");
+
   const binariesContainer = qs<HTMLElement>(app, "#binariesContainer");
   const envContainer = qs<HTMLElement>(app, "#envContainer");
   const optionsContainer = qs<HTMLElement>(app, "#optionsContainer");
+
+  function syncVersionModeUI() {
+    const mode = versionModeSelect.value as "fixed" | "latest" | "tags";
+    latestSection.style.display = mode === "latest" ? "" : "none";
+    tagsSection.style.display = mode === "tags" ? "" : "none";
+    versionField.disabled = mode !== "fixed";
+    if (useLatestCheckbox) useLatestCheckbox.checked = mode === "latest";
+  }
+  versionModeSelect.addEventListener("change", syncVersionModeUI);
+  syncVersionModeUI();
 
   // Startzustand: eine ausgefüllte Beispielzeile, damit sofort klar ist,
   // was reingehört.
@@ -780,11 +842,6 @@ export default function buildPage(app: HTMLElement): void {
     errorBanner.classList.remove("visible");
   }
 
-  // --- "Neueste Version" Toggle ---
-  const useLatestCheckbox = qs<HTMLInputElement>(app, "#useLatest");
-  const latestSection = qs<HTMLElement>(app, "#latestSection");
-  const latestUrlField = qs<HTMLInputElement>(app, "#latestVersionUrl");
-
   useLatestCheckbox.addEventListener("change", () => {
     latestSection.style.display = useLatestCheckbox.checked ? "" : "none";
     qs<HTMLInputElement>(app, "#version").disabled = useLatestCheckbox.checked;
@@ -803,7 +860,7 @@ export default function buildPage(app: HTMLElement): void {
     }
   });
 
-  // Aktuelle Formularwerte als InstallerConfig sammeln (ohne generieren).
+  // 3) currentConfig(): collectConfig() Aufruf erweitert
   function currentConfig(): InstallerConfig {
     return collectConfig({
       appName: qs<HTMLInputElement>(app, "#appName"),
@@ -814,7 +871,9 @@ export default function buildPage(app: HTMLElement): void {
       installDir: qs<HTMLInputElement>(app, "#installDir"),
       animations: qs<HTMLInputElement>(app, "#animations"),
       useLatest: qs<HTMLInputElement>(app, "#useLatest"),
-      latestVersionUrl: qs<HTMLInputElement>(app, "#latestVersionUrl"),
+      latestVersionUrl: latestUrlField,
+      versionMode: versionModeSelect,
+      tagsVersionUrl: tagsUrlField,
       binariesContainer,
       envContainer,
       optionsContainer,

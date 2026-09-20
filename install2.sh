@@ -25,6 +25,7 @@ APP_NAME='finder'
 APP_VERSION='latest'
 APP_HOMEPAGE='https://github.com/shadowdara/finder'
 LATEST_VERSION_URL='https://api.github.com/repos/shadowdara/finder/releases/latest'
+VERSION_MODE='latest'
 ARCHIVE_URL_TEMPLATE='https://github.com/shadowdara/finder/releases/download/{version}/finder_{version}_{os}_{arch}.tar.gz'
 ARCHIVE_TYPE='tar.gz'
 ANIMATIONS_ENABLED=1
@@ -47,10 +48,12 @@ OPTION_LABELS=('Default' 'Full Installation')
 OPTION_DESCRIPTIONS=('finder only' 'finder and findergen server and the csf tool')
 OPTION_BINARIES=('finder' 'finder,findergen,csf')
 
+
 INSTALL_PREFIX="$INSTALL_PREFIX_DEFAULT"
 SELECTED_OPTION=""
 NONINTERACTIVE=0
 ANIMATION_OVERRIDE=""
+SELECTED_VERSION=""
 
 # ============================================================
 # OS / Arch Erkennung
@@ -101,6 +104,92 @@ resolve_latest_version() {
 }
 
 resolve_latest_version
+
+fetch_tags() {
+  if [ -z "$LATEST_VERSION_URL" ]; then
+    die "versionMode='tags', aber keine LATEST_VERSION_URL konfiguriert."
+  fi
+  local api_url="$LATEST_VERSION_URL"
+  local json=""
+  if command -v curl >/dev/null 2>&1; then
+    json="$(curl -fsSL "$api_url" 2>/dev/null)"
+  elif command -v wget >/dev/null 2>&1; then
+    json="$(wget -qO- "$api_url" 2>/dev/null)"
+  else
+    die "Für Tags wird curl oder wget benötigt."
+  fi
+
+  # Extrahiere alle "name":"..." Vorkommen aus dem JSON (GitHub Tags API)
+  echo "$json" | grep '"name"' | sed -E 's/.*"name":[ ]*"([^"]+)".*/\1/' | tr -d '\r'
+}
+
+pick_version_from_tags() {
+  if [ -n "$SELECTED_VERSION" ]; then
+    APP_VERSION="$SELECTED_VERSION"
+    ok "Version per CLI gesetzt: $APP_VERSION"
+    return
+  fi
+
+  local tags
+  tags="$(fetch_tags | head -n 50)"
+  [ -n "$tags" ] || die "Keine Tags von $LATEST_VERSION_URL erhalten."
+
+  if [ "$NONINTERACTIVE" = "1" ]; then
+    APP_VERSION="$(echo "$tags" | head -n 1)"
+    warn "Kein Interaktiv: wähle Standard-Tag: $APP_VERSION"
+    return
+  fi
+
+  if [ ! -t 0 ]; then
+    APP_VERSION="$(echo "$tags" | head -n 1)"
+    warn "Kein TTY erkannt: wähle Standard-Tag: $APP_VERSION"
+    return
+  fi
+
+  echo ""
+  echo "$BOLD Welche Version möchtest du installieren? $RESET"
+
+  local tags_i=0
+  local first=""
+  local line=""
+  while IFS= read -r line; do
+    if [ $tags_i -eq 0 ]; then first="$line"; fi
+    tags_i=$((tags_i + 1))
+    printf '  %d) %s\n' "$tags_i" "$line"
+  done <<< "$tags"
+
+  local choice=""
+  while true; do
+    printf 'Auswahl [1-%d]: ' "$tags_i"
+    read -r choice
+    case "$choice" in
+      ''|*[!0-9]*) echo "Bitte eine Zahl zwischen 1 und $tags_i eingeben." ;;
+      *)
+        if [ "$choice" -ge 1 ] && [ "$choice" -le "$tags_i" ]; then
+          APP_VERSION="$(echo "$tags" | sed -n "$choice p")"
+          break
+        fi
+        echo "Bitte eine Zahl zwischen 1 und $tags_i eingeben."
+        ;;
+    esac
+    done
+
+  ok "Version gewählt: $APP_VERSION"
+}
+
+# VERSION_MODE wird in __CONFIG_ARRAYS__ als env gesetzt
+case "{VERSION_MODE:-fixed}" in
+  latest)
+    APP_VERSION="latest"
+    resolve_latest_version
+    ;;
+  tags)
+    pick_version_from_tags
+    ;;
+  fixed|*)
+    # fixed: APP_VERSION bleibt wie gesetzt
+    ;;
+esac
 
 # ============================================================
 # Spinner / Ladeanimation
@@ -155,6 +244,7 @@ Optionen:
   -y, --yes               Nicht-interaktive Installation (Standardtyp)
   -t, --type <id>         Installationstyp wählen (siehe --list)
       --latest            Neueste Version automatisch von GitHub ermitteln
+      --version <tag>    Version explizit setzen (z.B. v1.2.3)
       --prefix <dir>      Zielverzeichnis (Standard: $INSTALL_PREFIX_DEFAULT)
       --no-animation      Ladeanimationen deaktivieren
       --animation         Ladeanimationen erzwingen
@@ -183,6 +273,8 @@ while [ $# -gt 0 ]; do
   case "$1" in
     -y|--yes) NONINTERACTIVE=1; shift ;;
     --latest) APP_VERSION="latest"; shift ;;
+    --version) SELECTED_VERSION="\${2:-}"; VERSION_MODE="tags"; NONINTERACTIVE=1; shift 2 ;;
+    --version=*) SELECTED_VERSION="\${1#*=}"; VERSION_MODE="tags"; NONINTERACTIVE=1; shift ;;
     -t|--type) SELECTED_OPTION="${2:-}"; NONINTERACTIVE=1; shift 2 ;;
     --type=*) SELECTED_OPTION="${1#*=}"; NONINTERACTIVE=1; shift ;;
     --prefix) INSTALL_PREFIX="${2:-}"; shift 2 ;;
@@ -357,6 +449,25 @@ install_binaries() {
 run_with_spinner "Installiere Binaries" install_binaries
 
 # ============================================================
+# Auto-Uninstall (pro gewählter Version)
+# ============================================================
+auto_uninstall() {
+  # uninstall.sh wird im entpackten Root gesucht.
+  # Wenn Archiv "uninstall.sh" nicht im Root hat, musst du ggf. Pfad erweitern.
+  local candidate="$WORKDIR/extracted/uninstall.sh"
+  if [ -f "$candidate" ]; then
+    ok "Uninstall-Skript für Version \$APP_VERSION gefunden – führe uninstall.sh aus."
+    bash "$candidate" || die "uninstall.sh failed for this version"
+  else
+    # gewünschte Meldung:
+    warn "uninstall does not work for this version"
+  fi
+}
+
+run_with_spinner "Auto-Uninstall für Version \$APP_VERSION" auto_uninstall
+auto_uninstall
+
+# ============================================================
 # Shell-RC-Datei bestimmen
 # ============================================================
 detect_shell_rc() {
@@ -449,4 +560,4 @@ fi
 # Base64 of the input values for the generator
 # so you dont have to type it all again
 #
-#$$$eyJhcHBOYW1lIjoiZmluZGVyIiwidmVyc2lvbiI6ImxhdGVzdCIsImhvbWVwYWdlIjoiaHR0cHM6Ly9naXRodWIuY29tL3NoYWRvd2RhcmEvZmluZGVyIiwibGF0ZXN0VmVyc2lvblVybCI6Imh0dHBzOi8vYXBpLmdpdGh1Yi5jb20vcmVwb3Mvc2hhZG93ZGFyYS9maW5kZXIvcmVsZWFzZXMvbGF0ZXN0IiwiYXJjaGl2ZSI6eyJ1cmwiOiJodHRwczovL2dpdGh1Yi5jb20vc2hhZG93ZGFyYS9maW5kZXIvcmVsZWFzZXMvZG93bmxvYWQve3ZlcnNpb259L2ZpbmRlcl97dmVyc2lvbn1fe29zfV97YXJjaH0udGFyLmd6IiwidHlwZSI6InRhci5neiJ9LCJiaW5hcmllcyI6W3siYXJjaGl2ZVBhdGgiOiJmaW5kZXIiLCJ0YXJnZXROYW1lIjoiZmluZGVyIn0seyJhcmNoaXZlUGF0aCI6ImZpbmRlcmdlbiIsInRhcmdldE5hbWUiOiJmaW5kZXJnZW4ifSx7ImFyY2hpdmVQYXRoIjoiY3NmIiwidGFyZ2V0TmFtZSI6ImNzZiJ9XSwiaW5zdGFsbE9wdGlvbnMiOlt7ImlkIjoiZGVmYXVsdCIsImxhYmVsIjoiRGVmYXVsdCIsImRlc2NyaXB0aW9uIjoiZmluZGVyIG9ubHkiLCJiaW5hcmllcyI6WyJmaW5kZXIiXX0seyJpZCI6ImFsbCIsImxhYmVsIjoiRnVsbCBJbnN0YWxsYXRpb24iLCJkZXNjcmlwdGlvbiI6ImZpbmRlciBhbmQgZmluZGVyZ2VuIHNlcnZlciBhbmQgdGhlIGNzZiB0b29sIiwiYmluYXJpZXMiOlsiZmluZGVyIiwiZmluZGVyZ2VuIiwiY3NmIl19XSwiZGVmYXVsdEluc3RhbGxEaXIiOiIkSE9NRS8uZmluZGVyL2JpbiIsImFuaW1hdGlvbnMiOnRydWV9
+#$$$eyJhcHBOYW1lIjoiZmluZGVyIiwidmVyc2lvbiI6ImxhdGVzdCIsInZlcnNpb25Nb2RlIjoibGF0ZXN0IiwiaG9tZXBhZ2UiOiJodHRwczovL2dpdGh1Yi5jb20vc2hhZG93ZGFyYS9maW5kZXIiLCJsYXRlc3RWZXJzaW9uVXJsIjoiaHR0cHM6Ly9hcGkuZ2l0aHViLmNvbS9yZXBvcy9zaGFkb3dkYXJhL2ZpbmRlci9yZWxlYXNlcy9sYXRlc3QiLCJhcmNoaXZlIjp7InVybCI6Imh0dHBzOi8vZ2l0aHViLmNvbS9zaGFkb3dkYXJhL2ZpbmRlci9yZWxlYXNlcy9kb3dubG9hZC97dmVyc2lvbn0vZmluZGVyX3t2ZXJzaW9ufV97b3N9X3thcmNofS50YXIuZ3oiLCJ0eXBlIjoidGFyLmd6In0sImJpbmFyaWVzIjpbeyJhcmNoaXZlUGF0aCI6ImZpbmRlciIsInRhcmdldE5hbWUiOiJmaW5kZXIifSx7ImFyY2hpdmVQYXRoIjoiZmluZGVyZ2VuIiwidGFyZ2V0TmFtZSI6ImZpbmRlcmdlbiJ9LHsiYXJjaGl2ZVBhdGgiOiJjc2YiLCJ0YXJnZXROYW1lIjoiY3NmIn1dLCJpbnN0YWxsT3B0aW9ucyI6W3siaWQiOiJkZWZhdWx0IiwibGFiZWwiOiJEZWZhdWx0IiwiZGVzY3JpcHRpb24iOiJmaW5kZXIgb25seSIsImJpbmFyaWVzIjpbImZpbmRlciJdfSx7ImlkIjoiYWxsIiwibGFiZWwiOiJGdWxsIEluc3RhbGxhdGlvbiIsImRlc2NyaXB0aW9uIjoiZmluZGVyIGFuZCBmaW5kZXJnZW4gc2VydmVyIGFuZCB0aGUgY3NmIHRvb2wiLCJiaW5hcmllcyI6WyJmaW5kZXIiLCJmaW5kZXJnZW4iLCJjc2YiXX1dLCJkZWZhdWx0SW5zdGFsbERpciI6IiRIT01FLy5maW5kZXIvYmluIiwiYW5pbWF0aW9ucyI6dHJ1ZX0=
