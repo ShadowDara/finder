@@ -7,7 +7,7 @@
     "stats": "pnpm linguist-js",
     "gotest": "go test -coverprofile=coverage ./... go tool cover -html coverage.out"
   },
-  "version": "0.3.18",
+  "version": "0.3.19",
   "devDependencies": {
     "@shadowdara/linguist-js": "*",
     "@shadowdara/seg": "0.2.4",
