@@ -118,18 +118,12 @@ export default defineConfig(({ mode }) => {
       }),
       pagesPlugin({
         styles: {
-          changelog: ["/src/markdownrootstyle.css"],
           index: ["/src/markdownrootstyle.css"],
-          cpplib: ["/src/markdownrootstyle.css"],
-          readme: ["/src/markdownrootstyle.css"],
           configeditor: ["/src/markdownstyle.css"],
-          "docs/config": ["/src/markdownrootstyle.css"],
-          "docs/index": ["/src/markdownrootstyle.css"],
         },
         head: {
           index: `<link rel="icon" type="image/svg+xml" href="./favicon.svg" />`,
         },
-        splitMarkdown: true,
         prettyUrls: true,
         entry: "src/main.ts",
         removeConsole: true,
