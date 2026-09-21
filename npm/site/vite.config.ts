@@ -120,6 +120,7 @@ export default defineConfig(({ mode }) => {
         styles: {
           changelog: ["/src/markdownrootstyle.css"],
           index: ["/src/markdownrootstyle.css"],
+          cpplib: ["/src/markdownrootstyle.css"],
           readme: ["/src/markdownrootstyle.css"],
           configeditor: ["/src/markdownstyle.css"],
           "docs/config": ["/src/markdownrootstyle.css"],

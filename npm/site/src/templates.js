@@ -1018,7 +1018,10 @@ export default {
       }
     ],
     "min_version": "0.3.14",
-    "name": "*"
+    "name": "*",
+    "tags": [
+      "C++"
+    ]
   },
   "crystal.json5": {
     "description": "Crystal programming language project",
@@ -4380,6 +4383,7 @@ export default {
     ]
   },
   "python.json5": {
+    "description": "Template for a project which uses python",
     "files": [
       "requirements.txt",
       "*.py"
@@ -4562,7 +4566,11 @@ export default {
       }
     ],
     "min_version": "0.3.17",
-    "name": "*"
+    "name": "*",
+    "tags": [
+      "ruby",
+      "web"
+    ]
   },
   "railway.json5": {
     "description": "Railway platform as a service",
@@ -4909,6 +4917,7 @@ export default {
     "name": "*"
   },
   "rust.json5": {
+    "description": "Template for a project with Rust ( Crablang )",
     "files": [
       "Cargo.toml",
       "Cargo.lock"

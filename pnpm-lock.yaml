@@ -39,6 +39,8 @@ importers:
 
   .github/temp-stuff-idk/mini-vapor: {}
 
+  npm/cafa-vcode: {}
+
   npm/finder-lib:
     devDependencies:
       '@types/node':

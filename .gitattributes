@@ -30,6 +30,7 @@ docker-compose.yml linguist-language=Dockerfile
 # /finder-template-generator-ssg/src/jsx.d.ts linguist-vendored
 
 /npm/site/src/templates.js linguist-vendored
+/npm/site/data/shadowdaralib.hpp linguist-vendored
 
 /.obsidian/** linguist-vendored
 

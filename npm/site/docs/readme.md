@@ -5,6 +5,7 @@
 [![Go Tests](https://github.com/ShadowDara/finder/actions/workflows/go-test.yml/badge.svg)](https://github.com/ShadowDara/finder/actions/workflows/go-test.yml)
 [![Go Tests Graph](https://github.com/ShadowDara/finder/actions/workflows/go-test-graph.yml/badge.svg)](https://github.com/ShadowDara/finder/actions/workflows/go-test-graph.yml)
 [![Deploy GitHub Pages](https://github.com/ShadowDara/finder/actions/workflows/deploywebpage.yml/badge.svg)](https://github.com/ShadowDara/finder/actions/workflows/deploywebpage.yml)
+[![Publish Dev Container Features](https://github.com/ShadowDara/finder/actions/workflows/publish-devcontainer-features.yml/badge.svg)](https://github.com/ShadowDara/finder/actions/workflows/publish-devcontainer-features.yml)
 [![GitHub contributors](https://img.shields.io/github/contributors/shadowdara/finder)](https://github.com/shadowdara/finder/graphs/contributors)
 [![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/m/shadowdara/finder)](https://github.com/shadowdara/finder/commits)
 [![Last Commit](https://badges.ws/github/last-commit/shadowdara/finder)](https://github.com/shadowdara/finder/commits)
@@ -19,12 +20,10 @@
 ![Handmade](https://badges.ws/handmade)
 [![Go Reference](https://pkg.go.dev/badge/github.com/shadowdara/finder)](https://pkg.go.dev/github.com/shadowdara/finder)
 
-Finder is a lightweight command-line tool written in Go to locate
-projects and files based on predefined folder/file structure templates.
-It ships with **370+ built-in templates** covering a huge range of
-technologies, frameworks, and services — and you can add your own
-without recompiling.
+> [!IMPORTANT]
+> Finder is a lightweight command-line tool written in Go to locate projects and files based on predefined folder/file structure templates. It ships with **370+ built-in templates** covering a huge range of technologies, frameworks, and services — and you can add your own without recompiling.
 
+> [!NOTE]
 > **Current version: 0.3.18**
 
 ## Features
@@ -538,3 +537,31 @@ the prototype for finder.
 (_a Youtube Video_)
 
 [![INFO Video 1 about Finder](https://img.youtube.com/vi/oIRgAYv-mOA/0.jpg)](https://www.youtube.com/watch?v=oIRgAYv-mOA)
+
+## Dev Container Features
+
+Dev Container features which are stored in the finder repository.
+
+### Seg
+
+```json
+"ghcr.io/ShadowDara/devcontainer-features/shadowdara-seg:1": {}
+```
+
+### Finder
+
+```json
+"ghcr.io/ShadowDara/devcontainer-features/finder:1": {}
+```
+
+### Fling
+
+```json
+"ghcr.io/ShadowDara/devcontainer-features/fling:1": {}
+```
+
+### Linguist-js
+
+```json
+"ghcr.io/ShadowDara/devcontainer-features/shadowdara-linguist-js:1": {}
+```
