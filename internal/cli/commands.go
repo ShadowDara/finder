@@ -60,7 +60,7 @@ func HandleCommand(args []string) {
 	// === Build the command tree ===
 	// root is the top-level command ("finder"). All other commands
 	// are registered as subcommands beneath it.
-	s := fmt.Sprintf("More infos about finder:\n\n%sWebsite%s   %shttps://shadowdara.github.io/finder%s\n%sDiscord%s   %shttps://discord.gg/9Jh8B8pkJa%s\n%sInfos%s     %shttps://shadowdara.github.io/finder/infoslist%s\n\nor run %s%s%s%s more-infos%s to get more detailed infos!", goansi.ITALIC, goansi.END, goansi.BLUE, goansi.END, goansi.ITALIC, goansi.END, goansi.PURPLE, goansi.END, goansi.ITALIC, goansi.END, goansi.GREEN, goansi.END, goansi.ITALIC, goansi.BOLD, goansi.YELLOW, args[0], goansi.END)
+	s := fmt.Sprintf("More infos about finder:\n\n%sWebsite%s   %shttps://shadowdara.github.io/r/finder%s\n%sDiscord%s   %shttps://discord.gg/9Jh8B8pkJa%s\n%sInfos%s     %shttps://shadowdara.github.io/r/finderinfos%s\n\nor run %s%s%s%s more-infos%s to get more detailed infos!", goansi.ITALIC, goansi.END, goansi.BLUE, goansi.END, goansi.ITALIC, goansi.END, goansi.PURPLE, goansi.END, goansi.ITALIC, goansi.END, goansi.GREEN, goansi.END, goansi.ITALIC, goansi.BOLD, goansi.YELLOW, args[0], goansi.END)
 	root := argparser.NewCommand("finder",
 		"a simple go program to find your files via file structures", s, false)
 

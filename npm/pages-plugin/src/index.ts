@@ -1324,13 +1324,16 @@ ${ctx.content}
     },
 
     async transform(code, id) {
-      if (!id.endsWith(".tsx")) {
+      if (!id.endsWith(".tsx") && !id.endsWith(".jsx")) {
         return null;
       }
 
+      const loader = id.endsWith(".tsx") ? "tsx" : "jsx";
+
       const result = await transformWithEsbuild(code, id, {
-        loader: "tsx",
+        loader,
         target: "esnext",
+        jsx: "transform",
         jsxFactory: "jsx",
         jsxFragment: "Fragment",
         sourcemap: true,

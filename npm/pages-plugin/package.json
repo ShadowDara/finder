@@ -1,6 +1,6 @@
 {
   "name": "twynejs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "twine A Vite SSG plugin that turns .ts/.tsx pages, Markdown docs and Liquid/EJS templates into a multi-page static build with a virtual:pages module.",
   "type": "module",
   "main": "./dist/index.js",

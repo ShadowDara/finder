@@ -5,9 +5,14 @@ export default function render(el: HTMLDivElement, data: string) {
   el.innerHTML = (
     <>
       <article class="markdown">
-        <h1 id="finder-server">Finder Server</h1>
+        <h1 id="finder-server">Finder Creator</h1>
 
         <ul>
+          <li>
+            <a href="https://shadowdara.github.io/project/finder">
+              Finder Homepage
+            </a>
+          </li>
           <li>
             <a href="./creator">Template Creator</a>
           </li>
