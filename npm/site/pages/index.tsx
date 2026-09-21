@@ -1,7 +1,7 @@
-import { jsx, Fragment, raw } from "twynejs/jsx-runtime";
+import { jsx, Fragment } from "twynejs/jsx-runtime";
 import { SERVER_ADRESS } from "../src/vars";
 
-export default function render(el: HTMLDivElement, data: string) {
+export default function render(el: HTMLDivElement) {
   el.innerHTML = (
     <>
       <article class="markdown">
