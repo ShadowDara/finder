@@ -1,6 +1,7 @@
 package moresort
 
-import "sort"
+import ("sort"
+"strings")
 
 func Levenshtein(a, b string) int {
 	ar := []rune(a)
@@ -44,8 +45,22 @@ func Levenshtein(a, b string) int {
 func SortBySimilarity(items []string, target string) []string {
 	result := append([]string(nil), items...)
 
+	target = strings.ToLower(target)
+
 	sort.SliceStable(result, func(i, j int) bool {
-		return Levenshtein(result[i], target) < Levenshtein(result[j], target)
+		a := strings.ToLower(result[i])
+		b := strings.ToLower(result[j])
+
+		// Direkte Teiltreffer immer nach vorne.
+		aContains := strings.Contains(a, target)
+		bContains := strings.Contains(b, target)
+
+		if aContains != bContains {
+			return aContains
+		}
+
+		// Danach nach Levenshtein-Distanz sortieren.
+		return Levenshtein(a, target) < Levenshtein(b, target)
 	})
 
 	return result
