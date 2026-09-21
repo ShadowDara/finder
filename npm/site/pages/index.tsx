@@ -68,12 +68,6 @@ export default function render(el: HTMLDivElement, data: string) {
           </li>
         </ul>
 
-        <h2>Agents.md</h2>
-        <p>
-          A Markdown file to explain your AI how to write templates for finder!
-        </p>
-        {raw(data)}
-
         <h2>Tools</h2>
         <ul>
           <li>
