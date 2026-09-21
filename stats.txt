@@ -1,0 +1,15 @@
+Sprache-Statistik fuer /workspaces/finder
+
+ 47.29%  TypeScript               105 Datei(en), 499790 Bytes
+ 32.69%  Go                       81 Datei(en), 345443 Bytes
+ 10.32%  CSS                      21 Datei(en), 109025 Bytes
+  3.01%  JavaScript               27 Datei(en), 31846 Bytes
+  2.53%  HTML                     10 Datei(en), 26769 Bytes
+  2.22%  C                        15 Datei(en), 23463 Bytes
+  0.80%  Dockerfile               10 Datei(en), 8424 Bytes
+  0.53%  Shell                    13 Datei(en), 5549 Bytes
+  0.36%  Python                   1 Datei(en), 3795 Bytes
+  0.13%  PowerShell               2 Datei(en), 1391 Bytes
+  0.07%  Makefile                 1 Datei(en), 719 Bytes
+  0.04%  Batchfile                1 Datei(en), 445 Bytes
+  0.01%  EJS                      1 Datei(en), 130 Bytes
