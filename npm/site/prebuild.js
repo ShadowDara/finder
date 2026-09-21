@@ -3,8 +3,10 @@ import { copyFile } from "fs/promises";
 await copyFile("./../../AGENTS.md", "./data/agents.md");
 await copyFile("./../../CHANGELOG.md", "./docs/changelog.md");
 await copyFile("./../../README.md", "./docs/readme.md");
-await copyFile("./../fling-vscode/syntaxes/fling.tmLanguage.json", "./data/fling.tmLanguage.json");
-await copyFile("./../../shadowdaralib.hpp", "./data/shadowdaralib.hpp");
+await copyFile(
+  "./../fling-vscode/syntaxes/fling.tmLanguage.json",
+  "./data/fling.tmLanguage.json",
+);
 
 // Save all templates for static frontend
 
