@@ -30,6 +30,4 @@ devcontainer:
 	$(MAKE) build
 
 langstats:
-	linguist-js > stats.txt
-	git add stats.txt
-	git commit -m "Update language stats"
+	python3 linguist-stats.py . -o .github/history.json
