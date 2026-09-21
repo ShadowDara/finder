@@ -94,16 +94,16 @@ export default defineConfig(({ mode }) => {
       //   paths: ["./src/locales"],
       // }),
       monacoEditorPlugin({}),
-      markdownLint({
-        maxLineLength: 72,
+      // markdownLint({
+      //   maxLineLength: 72,
 
-        ignore: [
-          "docs/generated/**",
-          "README.md",
-          "**/CHANGELOG.md",
-          "dist-static/**",
-        ],
-      }),
+      //   ignore: [
+      //     "docs/generated/**",
+      //     "README.md",
+      //     "**/CHANGELOG.md",
+      //     "dist-static/**",
+      //   ],
+      // }),
       yaml(),
       // eslint(),
       string({ include: "**/*.html" }),

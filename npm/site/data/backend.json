@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-09-21T16:19:09.834Z",
+  "generatedAt": "2026-09-21T20:17:09.670Z",
   "total": {
-    "files": 182,
-    "bytes": 35442016,
-    "kilobytes": 34611.34,
-    "megabytes": 33.8
+    "files": 175,
+    "bytes": 35431580,
+    "kilobytes": 34601.15,
+    "megabytes": 33.79
   },
   "byExtension": [
     {
       "extension": ".js",
-      "files": 128,
-      "bytes": 34424669,
-      "percentage": 97.13
+      "files": 126,
+      "bytes": 34419621,
+      "percentage": 97.14
     },
     {
       "extension": ".wasm",
@@ -21,9 +21,9 @@
     },
     {
       "extension": ".css",
-      "files": 18,
-      "bytes": 370790,
-      "percentage": 1.05
+      "files": 17,
+      "bytes": 366175,
+      "percentage": 1.03
     },
     {
       "extension": ".ttf",
@@ -33,8 +33,8 @@
     },
     {
       "extension": ".html",
-      "files": 32,
-      "bytes": 21524,
+      "files": 28,
+      "bytes": 20751,
       "percentage": 0.06
     },
     {
@@ -209,7 +209,7 @@
     {
       "path": "assets/_virtual_page-markdown_changelog.js",
       "extension": ".js",
-      "bytes": 11175
+      "bytes": 11256
     },
     {
       "path": "assets/mysql.js",
@@ -237,14 +237,14 @@
       "bytes": 10119
     },
     {
-      "path": "assets/main_entry.js",
-      "extension": ".js",
-      "bytes": 9798
-    },
-    {
       "path": "assets/clojure.js",
       "extension": ".js",
       "bytes": 9505
+    },
+    {
+      "path": "assets/main_entry.js",
+      "extension": ".js",
+      "bytes": 9477
     },
     {
       "path": "assets/viewer.css",
@@ -407,11 +407,6 @@
       "bytes": 4685
     },
     {
-      "path": "assets/home.css",
-      "extension": ".css",
-      "bytes": 4615
-    },
-    {
       "path": "assets/html.js",
       "extension": ".js",
       "bytes": 4546
@@ -517,24 +512,19 @@
       "bytes": 3433
     },
     {
-      "path": "assets/home.js",
-      "extension": ".js",
-      "bytes": 3421
-    },
-    {
       "path": "assets/redis.js",
       "extension": ".js",
       "bytes": 3418
     },
     {
-      "path": "assets/samfile.js",
-      "extension": ".js",
-      "bytes": 3383
-    },
-    {
       "path": "assets/kotlin.js",
       "extension": ".js",
       "bytes": 3262
+    },
+    {
+      "path": "assets/samfile.js",
+      "extension": ".js",
+      "bytes": 3256
     },
     {
       "path": "assets/samfile.css",
@@ -712,14 +702,14 @@
       "bytes": 1629
     },
     {
+      "path": "assets/index2.js",
+      "extension": ".js",
+      "bytes": 1608
+    },
+    {
       "path": "assets/pla.js",
       "extension": ".js",
       "bytes": 1545
-    },
-    {
-      "path": "assets/index2.js",
-      "extension": ".js",
-      "bytes": 1516
     },
     {
       "path": "assets/markdowneditor.js",
@@ -732,24 +722,24 @@
       "bytes": 1281
     },
     {
-      "path": "assets/worlds.js",
-      "extension": ".js",
-      "bytes": 1217
-    },
-    {
       "path": "assets/workers.js",
       "extension": ".js",
       "bytes": 1215
     },
     {
-      "path": "assets/index4.js",
-      "extension": ".js",
-      "bytes": 1164
-    },
-    {
       "path": "tools/picture-mode-maker/index.html",
       "extension": ".html",
       "bytes": 1130
+    },
+    {
+      "path": "assets/worlds.js",
+      "extension": ".js",
+      "bytes": 1099
+    },
+    {
+      "path": "assets/index4.js",
+      "extension": ".js",
+      "bytes": 1069
     },
     {
       "path": "tools/line_formatter/line_extender/index.html",
@@ -772,16 +762,6 @@
       "bytes": 809
     },
     {
-      "path": "assets/info.js",
-      "extension": ".js",
-      "bytes": 760
-    },
-    {
-      "path": "assets/page2.js",
-      "extension": ".js",
-      "bytes": 738
-    },
-    {
       "path": "assets/azcli.js",
       "extension": ".js",
       "bytes": 710
@@ -792,9 +772,9 @@
       "bytes": 623
     },
     {
-      "path": "assets/index3.js",
+      "path": "assets/info.js",
       "extension": ".js",
-      "bytes": 446
+      "bytes": 596
     },
     {
       "path": "tools/minecraft/tellraw/index.html",
@@ -857,11 +837,6 @@
       "bytes": 397
     },
     {
-      "path": "assets/mcappheader.js",
-      "extension": ".js",
-      "bytes": 396
-    },
-    {
       "path": "index.html",
       "extension": ".html",
       "bytes": 396
@@ -872,14 +847,14 @@
       "bytes": 395
     },
     {
-      "path": "home/index.html",
-      "extension": ".html",
-      "bytes": 391
-    },
-    {
       "path": "tools/minecraft/modelviewer/index.html",
       "extension": ".html",
       "bytes": 377
+    },
+    {
+      "path": "assets/index3.js",
+      "extension": ".js",
+      "bytes": 369
     },
     {
       "path": "mcapp/worlds/index.html",
@@ -927,14 +902,14 @@
       "bytes": 344
     },
     {
-      "path": "assets/about.js",
+      "path": "assets/mcappheader.js",
       "extension": ".js",
-      "bytes": 261
+      "bytes": 303
     },
     {
-      "path": "infoslist/index.html",
-      "extension": ".html",
-      "bytes": 187
+      "path": "assets/about.js",
+      "extension": ".js",
+      "bytes": 228
     },
     {
       "path": "assets/index.js",
@@ -947,19 +922,9 @@
       "bytes": 122
     },
     {
-      "path": "test/jekyll/index.html",
-      "extension": ".html",
-      "bytes": 107
-    },
-    {
-      "path": "test/ejs/index.html",
-      "extension": ".html",
-      "bytes": 88
-    },
-    {
       "path": "assets/page.js",
       "extension": ".js",
-      "bytes": 34
+      "bytes": 0
     }
   ]
 }

@@ -128,6 +128,32 @@ export default {
     "min_version": "0.3.15",
     "name": "*"
   },
+  "android-studio.json5": {
+    "description": "Android Studio project identified by Gradle settings",
+    "files": [
+      {
+        "existence": "required",
+        "name_regex": "^settings\\.gradle(\\.kts)?$"
+      }
+    ],
+    "folders": [
+      {
+        "existence": "optional",
+        "name": "app"
+      },
+      {
+        "existence": "optional",
+        "name": "gradle"
+      }
+    ],
+    "min_version": "0.3.18",
+    "name": "*",
+    "tags": [
+      "android",
+      "android-studio",
+      "gradle"
+    ]
+  },
   "angular.json5": {
     "description": "Angular TypeScript web framework project",
     "files": [
