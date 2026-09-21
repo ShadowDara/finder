@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-09-17T16:54:23.033Z",
+  "generatedAt": "2026-09-21T16:19:09.834Z",
   "total": {
-    "files": 181,
-    "bytes": 35434058,
-    "kilobytes": 34603.57,
-    "megabytes": 33.79
+    "files": 182,
+    "bytes": 35442016,
+    "kilobytes": 34611.34,
+    "megabytes": 33.8
   },
   "byExtension": [
     {
       "extension": ".js",
       "files": 128,
-      "bytes": 34416898,
+      "bytes": 34424669,
       "percentage": 97.13
     },
     {
@@ -33,8 +33,8 @@
     },
     {
       "extension": ".html",
-      "files": 31,
-      "bytes": 21337,
+      "files": 32,
+      "bytes": 21524,
       "percentage": 0.06
     },
     {
@@ -142,19 +142,19 @@
       "bytes": 79109
     },
     {
+      "path": "assets/installscript.js",
+      "extension": ".js",
+      "bytes": 38042
+    },
+    {
       "path": "assets/_virtual_page-data_index.js",
       "extension": ".js",
       "bytes": 36569
     },
     {
-      "path": "assets/installscript.js",
-      "extension": ".js",
-      "bytes": 32268
-    },
-    {
       "path": "assets/_virtual_page-markdown_readme.js",
       "extension": ".js",
-      "bytes": 29179
+      "bytes": 30805
     },
     {
       "path": "assets/lspLanguageFeatures.js",
@@ -207,14 +207,14 @@
       "bytes": 11662
     },
     {
+      "path": "assets/_virtual_page-markdown_changelog.js",
+      "extension": ".js",
+      "bytes": 11175
+    },
+    {
       "path": "assets/mysql.js",
       "extension": ".js",
       "bytes": 11136
-    },
-    {
-      "path": "assets/_virtual_page-markdown_changelog.js",
-      "extension": ".js",
-      "bytes": 11026
     },
     {
       "path": "assets/markdown.js",
@@ -717,14 +717,14 @@
       "bytes": 1545
     },
     {
+      "path": "assets/index2.js",
+      "extension": ".js",
+      "bytes": 1516
+    },
+    {
       "path": "assets/markdowneditor.js",
       "extension": ".js",
       "bytes": 1355
-    },
-    {
-      "path": "assets/index2.js",
-      "extension": ".js",
-      "bytes": 1294
     },
     {
       "path": "assets/csp.js",
@@ -930,6 +930,11 @@
       "path": "assets/about.js",
       "extension": ".js",
       "bytes": 261
+    },
+    {
+      "path": "infoslist/index.html",
+      "extension": ".html",
+      "bytes": 187
     },
     {
       "path": "assets/index.js",
