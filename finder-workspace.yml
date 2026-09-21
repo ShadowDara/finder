@@ -1,1 +1,18 @@
 # Workspace for Finder as a YAML File
+
+# Everything which has todo with installing
+install:
+  # From Linksaver
+  gitrepos:
+
+  # More like a file package manager
+  files:
+
+# License Linksaver Stuff
+licenses:
+
+# 3D Project Viewer (soon)
+projectviewer:
+
+# Scratch Compiler (soon)
+scratchcompiler:
