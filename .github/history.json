@@ -1,6 +1,6 @@
 {
   "repo": "/workspaces/finder",
-  "commit_count": 563,
+  "commit_count": 579,
   "commits": [
     {
       "sha": "6817b647c5b97d63586e7dbb4385144ea6c312a8",
@@ -38734,6 +38734,1510 @@
         ]
       },
       "index": 562
+    },
+    {
+      "sha": "5fdd8cb33fdf0c4d4790a6ac25d9309c9a458a28",
+      "date": "2026-09-21T11:59:05+02:00",
+      "author": "ShadowDara",
+      "message": "Update finder-workspace.yml",
+      "languages": {
+        "root": "/workspaces/finder",
+        "totalBytes": 1056424,
+        "languages": [
+          {
+            "language": "TypeScript",
+            "bytes": 499790,
+            "files": 105,
+            "percentage": 47.31
+          },
+          {
+            "language": "Go",
+            "bytes": 345178,
+            "files": 81,
+            "percentage": 32.67
+          },
+          {
+            "language": "CSS",
+            "bytes": 109025,
+            "files": 21,
+            "percentage": 10.32
+          },
+          {
+            "language": "JavaScript",
+            "bytes": 31846,
+            "files": 27,
+            "percentage": 3.01
+          },
+          {
+            "language": "HTML",
+            "bytes": 26769,
+            "files": 10,
+            "percentage": 2.53
+          },
+          {
+            "language": "C",
+            "bytes": 23463,
+            "files": 15,
+            "percentage": 2.22
+          },
+          {
+            "language": "Dockerfile",
+            "bytes": 8424,
+            "files": 10,
+            "percentage": 0.8
+          },
+          {
+            "language": "Shell",
+            "bytes": 5549,
+            "files": 13,
+            "percentage": 0.53
+          },
+          {
+            "language": "Python",
+            "bytes": 3795,
+            "files": 1,
+            "percentage": 0.36
+          },
+          {
+            "language": "PowerShell",
+            "bytes": 1391,
+            "files": 2,
+            "percentage": 0.13
+          },
+          {
+            "language": "Makefile",
+            "bytes": 619,
+            "files": 1,
+            "percentage": 0.06
+          },
+          {
+            "language": "Batchfile",
+            "bytes": 445,
+            "files": 1,
+            "percentage": 0.04
+          },
+          {
+            "language": "EJS",
+            "bytes": 130,
+            "files": 1,
+            "percentage": 0.01
+          }
+        ]
+      },
+      "index": 563
+    },
+    {
+      "sha": "597af4b494e6e8f95c82c18da59b46a8698efeb6",
+      "date": "2026-09-21T11:59:07+02:00",
+      "author": "ShadowDara",
+      "message": "Merge branch 'develop' of https://github.com/ShadowDara/finder into develop",
+      "languages": {
+        "root": "/workspaces/finder",
+        "totalBytes": 1056890,
+        "languages": [
+          {
+            "language": "TypeScript",
+            "bytes": 499790,
+            "files": 105,
+            "percentage": 47.29
+          },
+          {
+            "language": "Go",
+            "bytes": 345544,
+            "files": 82,
+            "percentage": 32.69
+          },
+          {
+            "language": "CSS",
+            "bytes": 109025,
+            "files": 21,
+            "percentage": 10.32
+          },
+          {
+            "language": "JavaScript",
+            "bytes": 31846,
+            "files": 27,
+            "percentage": 3.01
+          },
+          {
+            "language": "HTML",
+            "bytes": 26769,
+            "files": 10,
+            "percentage": 2.53
+          },
+          {
+            "language": "C",
+            "bytes": 23463,
+            "files": 15,
+            "percentage": 2.22
+          },
+          {
+            "language": "Dockerfile",
+            "bytes": 8424,
+            "files": 10,
+            "percentage": 0.8
+          },
+          {
+            "language": "Shell",
+            "bytes": 5549,
+            "files": 13,
+            "percentage": 0.53
+          },
+          {
+            "language": "Python",
+            "bytes": 3795,
+            "files": 1,
+            "percentage": 0.36
+          },
+          {
+            "language": "PowerShell",
+            "bytes": 1391,
+            "files": 2,
+            "percentage": 0.13
+          },
+          {
+            "language": "Makefile",
+            "bytes": 719,
+            "files": 1,
+            "percentage": 0.07
+          },
+          {
+            "language": "Batchfile",
+            "bytes": 445,
+            "files": 1,
+            "percentage": 0.04
+          },
+          {
+            "language": "EJS",
+            "bytes": 130,
+            "files": 1,
+            "percentage": 0.01
+          }
+        ]
+      },
+      "index": 564
+    },
+    {
+      "sha": "fea666837aa9561be3d006a5b51571b36b5dcda8",
+      "date": "2026-09-21T10:44:28Z",
+      "author": "ShadowDara",
+      "message": "Merge branch 'develop' of https://github.com/ShadowDara/finder into develop",
+      "languages": {
+        "root": "/workspaces/finder",
+        "totalBytes": 1064223,
+        "languages": [
+          {
+            "language": "TypeScript",
+            "bytes": 499790,
+            "files": 105,
+            "percentage": 46.96
+          },
+          {
+            "language": "Go",
+            "bytes": 345558,
+            "files": 83,
+            "percentage": 32.47
+          },
+          {
+            "language": "CSS",
+            "bytes": 109025,
+            "files": 21,
+            "percentage": 10.24
+          },
+          {
+            "language": "JavaScript",
+            "bytes": 31846,
+            "files": 27,
+            "percentage": 2.99
+          },
+          {
+            "language": "HTML",
+            "bytes": 26769,
+            "files": 10,
+            "percentage": 2.52
+          },
+          {
+            "language": "C",
+            "bytes": 23463,
+            "files": 15,
+            "percentage": 2.2
+          },
+          {
+            "language": "Python",
+            "bytes": 11114,
+            "files": 2,
+            "percentage": 1.04
+          },
+          {
+            "language": "Dockerfile",
+            "bytes": 8424,
+            "files": 10,
+            "percentage": 0.79
+          },
+          {
+            "language": "Shell",
+            "bytes": 5549,
+            "files": 13,
+            "percentage": 0.52
+          },
+          {
+            "language": "PowerShell",
+            "bytes": 1391,
+            "files": 2,
+            "percentage": 0.13
+          },
+          {
+            "language": "Makefile",
+            "bytes": 719,
+            "files": 1,
+            "percentage": 0.07
+          },
+          {
+            "language": "Batchfile",
+            "bytes": 445,
+            "files": 1,
+            "percentage": 0.04
+          },
+          {
+            "language": "EJS",
+            "bytes": 130,
+            "files": 1,
+            "percentage": 0.01
+          }
+        ]
+      },
+      "index": 565
+    },
+    {
+      "sha": "7166341faecb72a5674261806d4d29e373122c92",
+      "date": "2026-09-21T10:45:14Z",
+      "author": "ShadowDara",
+      "message": "rename",
+      "languages": {
+        "root": "/workspaces/finder",
+        "totalBytes": 1064223,
+        "languages": [
+          {
+            "language": "TypeScript",
+            "bytes": 499790,
+            "files": 105,
+            "percentage": 46.96
+          },
+          {
+            "language": "Go",
+            "bytes": 345558,
+            "files": 83,
+            "percentage": 32.47
+          },
+          {
+            "language": "CSS",
+            "bytes": 109025,
+            "files": 21,
+            "percentage": 10.24
+          },
+          {
+            "language": "JavaScript",
+            "bytes": 31846,
+            "files": 27,
+            "percentage": 2.99
+          },
+          {
+            "language": "HTML",
+            "bytes": 26769,
+            "files": 10,
+            "percentage": 2.52
+          },
+          {
+            "language": "C",
+            "bytes": 23463,
+            "files": 15,
+            "percentage": 2.2
+          },
+          {
+            "language": "Python",
+            "bytes": 11114,
+            "files": 2,
+            "percentage": 1.04
+          },
+          {
+            "language": "Dockerfile",
+            "bytes": 8424,
+            "files": 10,
+            "percentage": 0.79
+          },
+          {
+            "language": "Shell",
+            "bytes": 5549,
+            "files": 13,
+            "percentage": 0.52
+          },
+          {
+            "language": "PowerShell",
+            "bytes": 1391,
+            "files": 2,
+            "percentage": 0.13
+          },
+          {
+            "language": "Makefile",
+            "bytes": 719,
+            "files": 1,
+            "percentage": 0.07
+          },
+          {
+            "language": "Batchfile",
+            "bytes": 445,
+            "files": 1,
+            "percentage": 0.04
+          },
+          {
+            "language": "EJS",
+            "bytes": 130,
+            "files": 1,
+            "percentage": 0.01
+          }
+        ]
+      },
+      "index": 566
+    },
+    {
+      "sha": "7a6663ebe30c8a8b7eb4635035c9232098a3397b",
+      "date": "2026-09-21T10:46:16Z",
+      "author": "ShadowDara",
+      "message": "added history",
+      "languages": {
+        "root": "/workspaces/finder",
+        "totalBytes": 1064223,
+        "languages": [
+          {
+            "language": "TypeScript",
+            "bytes": 499790,
+            "files": 105,
+            "percentage": 46.96
+          },
+          {
+            "language": "Go",
+            "bytes": 345558,
+            "files": 83,
+            "percentage": 32.47
+          },
+          {
+            "language": "CSS",
+            "bytes": 109025,
+            "files": 21,
+            "percentage": 10.24
+          },
+          {
+            "language": "JavaScript",
+            "bytes": 31846,
+            "files": 27,
+            "percentage": 2.99
+          },
+          {
+            "language": "HTML",
+            "bytes": 26769,
+            "files": 10,
+            "percentage": 2.52
+          },
+          {
+            "language": "C",
+            "bytes": 23463,
+            "files": 15,
+            "percentage": 2.2
+          },
+          {
+            "language": "Python",
+            "bytes": 11114,
+            "files": 2,
+            "percentage": 1.04
+          },
+          {
+            "language": "Dockerfile",
+            "bytes": 8424,
+            "files": 10,
+            "percentage": 0.79
+          },
+          {
+            "language": "Shell",
+            "bytes": 5549,
+            "files": 13,
+            "percentage": 0.52
+          },
+          {
+            "language": "PowerShell",
+            "bytes": 1391,
+            "files": 2,
+            "percentage": 0.13
+          },
+          {
+            "language": "Makefile",
+            "bytes": 719,
+            "files": 1,
+            "percentage": 0.07
+          },
+          {
+            "language": "Batchfile",
+            "bytes": 445,
+            "files": 1,
+            "percentage": 0.04
+          },
+          {
+            "language": "EJS",
+            "bytes": 130,
+            "files": 1,
+            "percentage": 0.01
+          }
+        ]
+      },
+      "index": 567
+    },
+    {
+      "sha": "6b313faa7c21bb2f90dbb3edeedf2f12a05e12b3",
+      "date": "2026-09-21T10:46:26Z",
+      "author": "ShadowDara",
+      "message": "added installer maker",
+      "languages": {
+        "root": "/workspaces/finder",
+        "totalBytes": 1064268,
+        "languages": [
+          {
+            "language": "TypeScript",
+            "bytes": 499790,
+            "files": 105,
+            "percentage": 46.96
+          },
+          {
+            "language": "Go",
+            "bytes": 345558,
+            "files": 83,
+            "percentage": 32.47
+          },
+          {
+            "language": "CSS",
+            "bytes": 109025,
+            "files": 21,
+            "percentage": 10.24
+          },
+          {
+            "language": "JavaScript",
+            "bytes": 31846,
+            "files": 27,
+            "percentage": 2.99
+          },
+          {
+            "language": "HTML",
+            "bytes": 26769,
+            "files": 10,
+            "percentage": 2.52
+          },
+          {
+            "language": "C",
+            "bytes": 23463,
+            "files": 15,
+            "percentage": 2.2
+          },
+          {
+            "language": "Python",
+            "bytes": 11114,
+            "files": 2,
+            "percentage": 1.04
+          },
+          {
+            "language": "Dockerfile",
+            "bytes": 8424,
+            "files": 10,
+            "percentage": 0.79
+          },
+          {
+            "language": "Shell",
+            "bytes": 5549,
+            "files": 13,
+            "percentage": 0.52
+          },
+          {
+            "language": "PowerShell",
+            "bytes": 1391,
+            "files": 2,
+            "percentage": 0.13
+          },
+          {
+            "language": "Makefile",
+            "bytes": 719,
+            "files": 1,
+            "percentage": 0.07
+          },
+          {
+            "language": "Batchfile",
+            "bytes": 445,
+            "files": 1,
+            "percentage": 0.04
+          },
+          {
+            "language": "EJS",
+            "bytes": 130,
+            "files": 1,
+            "percentage": 0.01
+          },
+          {
+            "language": "Rust",
+            "bytes": 45,
+            "files": 1,
+            "percentage": 0
+          }
+        ]
+      },
+      "index": 568
+    },
+    {
+      "sha": "130c1870d340b5f43ad2635776500daf029b0e9b",
+      "date": "2026-09-21T10:53:16Z",
+      "author": "ShadowDara",
+      "message": "rename files",
+      "languages": {
+        "root": "/workspaces/finder",
+        "totalBytes": 1064236,
+        "languages": [
+          {
+            "language": "TypeScript",
+            "bytes": 499790,
+            "files": 105,
+            "percentage": 46.96
+          },
+          {
+            "language": "Go",
+            "bytes": 345558,
+            "files": 83,
+            "percentage": 32.47
+          },
+          {
+            "language": "CSS",
+            "bytes": 109025,
+            "files": 21,
+            "percentage": 10.24
+          },
+          {
+            "language": "JavaScript",
+            "bytes": 31846,
+            "files": 27,
+            "percentage": 2.99
+          },
+          {
+            "language": "HTML",
+            "bytes": 26769,
+            "files": 10,
+            "percentage": 2.52
+          },
+          {
+            "language": "C",
+            "bytes": 23463,
+            "files": 15,
+            "percentage": 2.2
+          },
+          {
+            "language": "Python",
+            "bytes": 11114,
+            "files": 2,
+            "percentage": 1.04
+          },
+          {
+            "language": "Dockerfile",
+            "bytes": 8424,
+            "files": 10,
+            "percentage": 0.79
+          },
+          {
+            "language": "Shell",
+            "bytes": 5549,
+            "files": 13,
+            "percentage": 0.52
+          },
+          {
+            "language": "PowerShell",
+            "bytes": 1391,
+            "files": 2,
+            "percentage": 0.13
+          },
+          {
+            "language": "Makefile",
+            "bytes": 687,
+            "files": 1,
+            "percentage": 0.06
+          },
+          {
+            "language": "Batchfile",
+            "bytes": 445,
+            "files": 1,
+            "percentage": 0.04
+          },
+          {
+            "language": "EJS",
+            "bytes": 130,
+            "files": 1,
+            "percentage": 0.01
+          },
+          {
+            "language": "Rust",
+            "bytes": 45,
+            "files": 1,
+            "percentage": 0
+          }
+        ]
+      },
+      "index": 569
+    },
+    {
+      "sha": "39e3f17e128cb1043ec8c1f005ade2b737b19fab",
+      "date": "2026-09-21T17:32:41+02:00",
+      "author": "ShadowDara",
+      "message": "add C++ lib",
+      "languages": {
+        "root": "/workspaces/finder",
+        "totalBytes": 1086904,
+        "languages": [
+          {
+            "language": "TypeScript",
+            "bytes": 501357,
+            "files": 107,
+            "percentage": 46.13
+          },
+          {
+            "language": "Go",
+            "bytes": 345558,
+            "files": 83,
+            "percentage": 31.79
+          },
+          {
+            "language": "CSS",
+            "bytes": 109025,
+            "files": 21,
+            "percentage": 10.03
+          },
+          {
+            "language": "JavaScript",
+            "bytes": 31920,
+            "files": 27,
+            "percentage": 2.94
+          },
+          {
+            "language": "HTML",
+            "bytes": 26769,
+            "files": 10,
+            "percentage": 2.46
+          },
+          {
+            "language": "C",
+            "bytes": 23463,
+            "files": 15,
+            "percentage": 2.16
+          },
+          {
+            "language": "C++",
+            "bytes": 21027,
+            "files": 1,
+            "percentage": 1.93
+          },
+          {
+            "language": "Python",
+            "bytes": 11114,
+            "files": 2,
+            "percentage": 1.02
+          },
+          {
+            "language": "Dockerfile",
+            "bytes": 8424,
+            "files": 10,
+            "percentage": 0.78
+          },
+          {
+            "language": "Shell",
+            "bytes": 5549,
+            "files": 13,
+            "percentage": 0.51
+          },
+          {
+            "language": "PowerShell",
+            "bytes": 1391,
+            "files": 2,
+            "percentage": 0.13
+          },
+          {
+            "language": "Makefile",
+            "bytes": 687,
+            "files": 1,
+            "percentage": 0.06
+          },
+          {
+            "language": "Batchfile",
+            "bytes": 445,
+            "files": 1,
+            "percentage": 0.04
+          },
+          {
+            "language": "EJS",
+            "bytes": 130,
+            "files": 1,
+            "percentage": 0.01
+          },
+          {
+            "language": "Rust",
+            "bytes": 45,
+            "files": 1,
+            "percentage": 0
+          }
+        ]
+      },
+      "index": 570
+    },
+    {
+      "sha": "d443583e029fef60f07c388a221e82f1628a1073",
+      "date": "2026-09-21T18:19:05+02:00",
+      "author": "ShadowDara",
+      "message": "change",
+      "languages": {
+        "root": "/workspaces/finder",
+        "totalBytes": 1064297,
+        "languages": [
+          {
+            "language": "TypeScript",
+            "bytes": 499841,
+            "files": 105,
+            "percentage": 46.96
+          },
+          {
+            "language": "Go",
+            "bytes": 345558,
+            "files": 83,
+            "percentage": 32.47
+          },
+          {
+            "language": "CSS",
+            "bytes": 109025,
+            "files": 21,
+            "percentage": 10.24
+          },
+          {
+            "language": "JavaScript",
+            "bytes": 31856,
+            "files": 27,
+            "percentage": 2.99
+          },
+          {
+            "language": "HTML",
+            "bytes": 26769,
+            "files": 10,
+            "percentage": 2.52
+          },
+          {
+            "language": "C",
+            "bytes": 23463,
+            "files": 15,
+            "percentage": 2.2
+          },
+          {
+            "language": "Python",
+            "bytes": 11114,
+            "files": 2,
+            "percentage": 1.04
+          },
+          {
+            "language": "Dockerfile",
+            "bytes": 8424,
+            "files": 10,
+            "percentage": 0.79
+          },
+          {
+            "language": "Shell",
+            "bytes": 5549,
+            "files": 13,
+            "percentage": 0.52
+          },
+          {
+            "language": "PowerShell",
+            "bytes": 1391,
+            "files": 2,
+            "percentage": 0.13
+          },
+          {
+            "language": "Makefile",
+            "bytes": 687,
+            "files": 1,
+            "percentage": 0.06
+          },
+          {
+            "language": "Batchfile",
+            "bytes": 445,
+            "files": 1,
+            "percentage": 0.04
+          },
+          {
+            "language": "EJS",
+            "bytes": 130,
+            "files": 1,
+            "percentage": 0.01
+          },
+          {
+            "language": "Rust",
+            "bytes": 45,
+            "files": 1,
+            "percentage": 0
+          }
+        ]
+      },
+      "index": 571
+    },
+    {
+      "sha": "31d3bf17dfcdd50ffb0ed142c70e0ec75e1e3a60",
+      "date": "2026-09-21T18:19:42+02:00",
+      "author": "ShadowDara",
+      "message": "update site",
+      "languages": {
+        "root": "/workspaces/finder",
+        "totalBytes": 1064297,
+        "languages": [
+          {
+            "language": "TypeScript",
+            "bytes": 499841,
+            "files": 105,
+            "percentage": 46.96
+          },
+          {
+            "language": "Go",
+            "bytes": 345558,
+            "files": 83,
+            "percentage": 32.47
+          },
+          {
+            "language": "CSS",
+            "bytes": 109025,
+            "files": 21,
+            "percentage": 10.24
+          },
+          {
+            "language": "JavaScript",
+            "bytes": 31856,
+            "files": 27,
+            "percentage": 2.99
+          },
+          {
+            "language": "HTML",
+            "bytes": 26769,
+            "files": 10,
+            "percentage": 2.52
+          },
+          {
+            "language": "C",
+            "bytes": 23463,
+            "files": 15,
+            "percentage": 2.2
+          },
+          {
+            "language": "Python",
+            "bytes": 11114,
+            "files": 2,
+            "percentage": 1.04
+          },
+          {
+            "language": "Dockerfile",
+            "bytes": 8424,
+            "files": 10,
+            "percentage": 0.79
+          },
+          {
+            "language": "Shell",
+            "bytes": 5549,
+            "files": 13,
+            "percentage": 0.52
+          },
+          {
+            "language": "PowerShell",
+            "bytes": 1391,
+            "files": 2,
+            "percentage": 0.13
+          },
+          {
+            "language": "Makefile",
+            "bytes": 687,
+            "files": 1,
+            "percentage": 0.06
+          },
+          {
+            "language": "Batchfile",
+            "bytes": 445,
+            "files": 1,
+            "percentage": 0.04
+          },
+          {
+            "language": "EJS",
+            "bytes": 130,
+            "files": 1,
+            "percentage": 0.01
+          },
+          {
+            "language": "Rust",
+            "bytes": 45,
+            "files": 1,
+            "percentage": 0
+          }
+        ]
+      },
+      "index": 572
+    },
+    {
+      "sha": "d58a016ccb392a173be1d0abf667028c2b9afe52",
+      "date": "2026-09-21T20:24:04+02:00",
+      "author": "ShadowDara",
+      "message": "similarity search",
+      "languages": {
+        "root": "/workspaces/finder",
+        "totalBytes": 1065350,
+        "languages": [
+          {
+            "language": "TypeScript",
+            "bytes": 499841,
+            "files": 105,
+            "percentage": 46.92
+          },
+          {
+            "language": "Go",
+            "bytes": 346611,
+            "files": 84,
+            "percentage": 32.53
+          },
+          {
+            "language": "CSS",
+            "bytes": 109025,
+            "files": 21,
+            "percentage": 10.23
+          },
+          {
+            "language": "JavaScript",
+            "bytes": 31856,
+            "files": 27,
+            "percentage": 2.99
+          },
+          {
+            "language": "HTML",
+            "bytes": 26769,
+            "files": 10,
+            "percentage": 2.51
+          },
+          {
+            "language": "C",
+            "bytes": 23463,
+            "files": 15,
+            "percentage": 2.2
+          },
+          {
+            "language": "Python",
+            "bytes": 11114,
+            "files": 2,
+            "percentage": 1.04
+          },
+          {
+            "language": "Dockerfile",
+            "bytes": 8424,
+            "files": 10,
+            "percentage": 0.79
+          },
+          {
+            "language": "Shell",
+            "bytes": 5549,
+            "files": 13,
+            "percentage": 0.52
+          },
+          {
+            "language": "PowerShell",
+            "bytes": 1391,
+            "files": 2,
+            "percentage": 0.13
+          },
+          {
+            "language": "Makefile",
+            "bytes": 687,
+            "files": 1,
+            "percentage": 0.06
+          },
+          {
+            "language": "Batchfile",
+            "bytes": 445,
+            "files": 1,
+            "percentage": 0.04
+          },
+          {
+            "language": "EJS",
+            "bytes": 130,
+            "files": 1,
+            "percentage": 0.01
+          },
+          {
+            "language": "Rust",
+            "bytes": 45,
+            "files": 1,
+            "percentage": 0
+          }
+        ]
+      },
+      "index": 573
+    },
+    {
+      "sha": "de97a8c01a17786cc700222a85b1f7783514b88f",
+      "date": "2026-09-21T21:54:54+02:00",
+      "author": "ShadowDara",
+      "message": "rm pages",
+      "languages": {
+        "root": "/workspaces/finder",
+        "totalBytes": 1053676,
+        "languages": [
+          {
+            "language": "TypeScript",
+            "bytes": 494594,
+            "files": 104,
+            "percentage": 46.94
+          },
+          {
+            "language": "Go",
+            "bytes": 346610,
+            "files": 84,
+            "percentage": 32.9
+          },
+          {
+            "language": "CSS",
+            "bytes": 102816,
+            "files": 20,
+            "percentage": 9.76
+          },
+          {
+            "language": "JavaScript",
+            "bytes": 31856,
+            "files": 27,
+            "percentage": 3.02
+          },
+          {
+            "language": "HTML",
+            "bytes": 26552,
+            "files": 9,
+            "percentage": 2.52
+          },
+          {
+            "language": "C",
+            "bytes": 23463,
+            "files": 15,
+            "percentage": 2.23
+          },
+          {
+            "language": "Python",
+            "bytes": 11114,
+            "files": 2,
+            "percentage": 1.05
+          },
+          {
+            "language": "Dockerfile",
+            "bytes": 8424,
+            "files": 10,
+            "percentage": 0.8
+          },
+          {
+            "language": "Shell",
+            "bytes": 5549,
+            "files": 13,
+            "percentage": 0.53
+          },
+          {
+            "language": "PowerShell",
+            "bytes": 1391,
+            "files": 2,
+            "percentage": 0.13
+          },
+          {
+            "language": "Makefile",
+            "bytes": 687,
+            "files": 1,
+            "percentage": 0.07
+          },
+          {
+            "language": "Batchfile",
+            "bytes": 445,
+            "files": 1,
+            "percentage": 0.04
+          },
+          {
+            "language": "EJS",
+            "bytes": 130,
+            "files": 1,
+            "percentage": 0.01
+          },
+          {
+            "language": "Rust",
+            "bytes": 45,
+            "files": 1,
+            "percentage": 0
+          }
+        ]
+      },
+      "index": 574
+    },
+    {
+      "sha": "86e5d59a98b6733e8cfd0abb8e242311d27086ff",
+      "date": "2026-09-21T21:55:27+02:00",
+      "author": "ShadowDara",
+      "message": "rm pages",
+      "languages": {
+        "root": "/workspaces/finder",
+        "totalBytes": 1053164,
+        "languages": [
+          {
+            "language": "TypeScript",
+            "bytes": 494594,
+            "files": 104,
+            "percentage": 46.96
+          },
+          {
+            "language": "Go",
+            "bytes": 346610,
+            "files": 84,
+            "percentage": 32.91
+          },
+          {
+            "language": "CSS",
+            "bytes": 102816,
+            "files": 20,
+            "percentage": 9.76
+          },
+          {
+            "language": "JavaScript",
+            "bytes": 31606,
+            "files": 24,
+            "percentage": 3
+          },
+          {
+            "language": "HTML",
+            "bytes": 26420,
+            "files": 8,
+            "percentage": 2.51
+          },
+          {
+            "language": "C",
+            "bytes": 23463,
+            "files": 15,
+            "percentage": 2.23
+          },
+          {
+            "language": "Python",
+            "bytes": 11114,
+            "files": 2,
+            "percentage": 1.06
+          },
+          {
+            "language": "Dockerfile",
+            "bytes": 8424,
+            "files": 10,
+            "percentage": 0.8
+          },
+          {
+            "language": "Shell",
+            "bytes": 5549,
+            "files": 13,
+            "percentage": 0.53
+          },
+          {
+            "language": "PowerShell",
+            "bytes": 1391,
+            "files": 2,
+            "percentage": 0.13
+          },
+          {
+            "language": "Makefile",
+            "bytes": 687,
+            "files": 1,
+            "percentage": 0.07
+          },
+          {
+            "language": "Batchfile",
+            "bytes": 445,
+            "files": 1,
+            "percentage": 0.04
+          },
+          {
+            "language": "Rust",
+            "bytes": 45,
+            "files": 1,
+            "percentage": 0
+          }
+        ]
+      },
+      "index": 575
+    },
+    {
+      "sha": "785202254a2170013fd95a03b7c42e612fca4543",
+      "date": "2026-09-21T22:17:11+02:00",
+      "author": "ShadowDara",
+      "message": "fix",
+      "languages": {
+        "root": "/workspaces/finder",
+        "totalBytes": 1052852,
+        "languages": [
+          {
+            "language": "TypeScript",
+            "bytes": 494621,
+            "files": 104,
+            "percentage": 46.98
+          },
+          {
+            "language": "Go",
+            "bytes": 346610,
+            "files": 84,
+            "percentage": 32.92
+          },
+          {
+            "language": "CSS",
+            "bytes": 102816,
+            "files": 20,
+            "percentage": 9.77
+          },
+          {
+            "language": "JavaScript",
+            "bytes": 31267,
+            "files": 24,
+            "percentage": 2.97
+          },
+          {
+            "language": "HTML",
+            "bytes": 26420,
+            "files": 8,
+            "percentage": 2.51
+          },
+          {
+            "language": "C",
+            "bytes": 23463,
+            "files": 15,
+            "percentage": 2.23
+          },
+          {
+            "language": "Python",
+            "bytes": 11114,
+            "files": 2,
+            "percentage": 1.06
+          },
+          {
+            "language": "Dockerfile",
+            "bytes": 8424,
+            "files": 10,
+            "percentage": 0.8
+          },
+          {
+            "language": "Shell",
+            "bytes": 5549,
+            "files": 13,
+            "percentage": 0.53
+          },
+          {
+            "language": "PowerShell",
+            "bytes": 1391,
+            "files": 2,
+            "percentage": 0.13
+          },
+          {
+            "language": "Makefile",
+            "bytes": 687,
+            "files": 1,
+            "percentage": 0.07
+          },
+          {
+            "language": "Batchfile",
+            "bytes": 445,
+            "files": 1,
+            "percentage": 0.04
+          },
+          {
+            "language": "Rust",
+            "bytes": 45,
+            "files": 1,
+            "percentage": 0
+          }
+        ]
+      },
+      "index": 576
+    },
+    {
+      "sha": "1f9667bb74b2fa04625821fc356c09f2a5c98556",
+      "date": "2026-09-21T22:17:57+02:00",
+      "author": "ShadowDara",
+      "message": "better site",
+      "languages": {
+        "root": "/workspaces/finder",
+        "totalBytes": 1052852,
+        "languages": [
+          {
+            "language": "TypeScript",
+            "bytes": 494621,
+            "files": 104,
+            "percentage": 46.98
+          },
+          {
+            "language": "Go",
+            "bytes": 346610,
+            "files": 84,
+            "percentage": 32.92
+          },
+          {
+            "language": "CSS",
+            "bytes": 102816,
+            "files": 20,
+            "percentage": 9.77
+          },
+          {
+            "language": "JavaScript",
+            "bytes": 31267,
+            "files": 24,
+            "percentage": 2.97
+          },
+          {
+            "language": "HTML",
+            "bytes": 26420,
+            "files": 8,
+            "percentage": 2.51
+          },
+          {
+            "language": "C",
+            "bytes": 23463,
+            "files": 15,
+            "percentage": 2.23
+          },
+          {
+            "language": "Python",
+            "bytes": 11114,
+            "files": 2,
+            "percentage": 1.06
+          },
+          {
+            "language": "Dockerfile",
+            "bytes": 8424,
+            "files": 10,
+            "percentage": 0.8
+          },
+          {
+            "language": "Shell",
+            "bytes": 5549,
+            "files": 13,
+            "percentage": 0.53
+          },
+          {
+            "language": "PowerShell",
+            "bytes": 1391,
+            "files": 2,
+            "percentage": 0.13
+          },
+          {
+            "language": "Makefile",
+            "bytes": 687,
+            "files": 1,
+            "percentage": 0.07
+          },
+          {
+            "language": "Batchfile",
+            "bytes": 445,
+            "files": 1,
+            "percentage": 0.04
+          },
+          {
+            "language": "Rust",
+            "bytes": 45,
+            "files": 1,
+            "percentage": 0
+          }
+        ]
+      },
+      "index": 577
+    },
+    {
+      "sha": "b67ba07dbbf2ab9066ea62b38ecb00d479eaa647",
+      "date": "2026-09-21T22:19:04+02:00",
+      "author": "ShadowDara",
+      "message": "Update linguist-stats.py",
+      "languages": {
+        "root": "/workspaces/finder",
+        "totalBytes": 1055257,
+        "languages": [
+          {
+            "language": "TypeScript",
+            "bytes": 494621,
+            "files": 104,
+            "percentage": 46.87
+          },
+          {
+            "language": "Go",
+            "bytes": 346610,
+            "files": 84,
+            "percentage": 32.85
+          },
+          {
+            "language": "CSS",
+            "bytes": 102816,
+            "files": 20,
+            "percentage": 9.74
+          },
+          {
+            "language": "JavaScript",
+            "bytes": 31267,
+            "files": 24,
+            "percentage": 2.96
+          },
+          {
+            "language": "HTML",
+            "bytes": 26420,
+            "files": 8,
+            "percentage": 2.5
+          },
+          {
+            "language": "C",
+            "bytes": 23463,
+            "files": 15,
+            "percentage": 2.22
+          },
+          {
+            "language": "Python",
+            "bytes": 13519,
+            "files": 2,
+            "percentage": 1.28
+          },
+          {
+            "language": "Dockerfile",
+            "bytes": 8424,
+            "files": 10,
+            "percentage": 0.8
+          },
+          {
+            "language": "Shell",
+            "bytes": 5549,
+            "files": 13,
+            "percentage": 0.53
+          },
+          {
+            "language": "PowerShell",
+            "bytes": 1391,
+            "files": 2,
+            "percentage": 0.13
+          },
+          {
+            "language": "Makefile",
+            "bytes": 687,
+            "files": 1,
+            "percentage": 0.07
+          },
+          {
+            "language": "Batchfile",
+            "bytes": 445,
+            "files": 1,
+            "percentage": 0.04
+          },
+          {
+            "language": "Rust",
+            "bytes": 45,
+            "files": 1,
+            "percentage": 0
+          }
+        ]
+      },
+      "index": 578
     }
   ]
 }
