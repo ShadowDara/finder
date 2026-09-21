@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 """
 linguist_history.py
@@ -9,12 +8,17 @@ mit der Reihenfolge/Metadaten der Commits in einer JSON-Datei.
 Die Struktur ist so gewählt, dass man sie danach leicht für
 Chart.js aufbereiten kann.
 
+Wichtig: Die Ausgabedatei darf im Repo liegen (auch committet). Zwischenstände
+werden außerhalb des Repos in einer Checkpoint-Datei gespeichert, und die
+finale Ausgabedatei wird erst NACH dem Zurücksetzen auf den ursprünglichen
+Ref geschrieben. So überschreibt `git checkout` sie nicht mehr.
+
 Voraussetzungen:
 - Git muss installiert sein und im PATH liegen.
 - Node.js/npm muss installiert sein (für `npx linguist-js`).
 - Das Zielverzeichnis muss ein sauberes Git-Repo sein
-  (keine uncommitteten Änderungen), da zwischen Commits hin-
-  und hergesprungen wird.
+  (keine uncommitteten Änderungen, außer der Ausgabedatei selbst),
+  da zwischen Commits hin- und hergesprungen wird.
 
 Nutzung:
     python linguist_history.py /pfad/zum/repo -o ergebnis.json
@@ -22,9 +26,11 @@ Nutzung:
 """
 
 import argparse
+import hashlib
 import json
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 
@@ -99,13 +105,13 @@ def run_linguist(repo_path):
         return None
 
 
-def load_existing_results(output_path):
+def load_existing_results(path):
     """
-    Lädt eine bereits vorhandene Ausgabedatei (falls vorhanden) und gibt
+    Lädt eine bereits vorhandene Ergebnisdatei (falls vorhanden) und gibt
     ein Dict sha -> commit-Ergebnis zurück. So können bereits verarbeitete
     Commits übersprungen werden.
     """
-    path = Path(output_path)
+    path = Path(path)
     if not path.exists():
         return {}
 
@@ -113,7 +119,7 @@ def load_existing_results(output_path):
         with open(path, "r", encoding="utf-8") as f:
             data = json.load(f)
     except (json.JSONDecodeError, OSError) as e:
-        print(f"[Warnung] Konnte bestehende Datei {output_path} nicht lesen ({e}), starte neu.", file=sys.stderr)
+        print(f"[Warnung] Konnte bestehende Datei {path} nicht lesen ({e}), ignoriere sie.", file=sys.stderr)
         return {}
 
     existing = {}
@@ -122,6 +128,62 @@ def load_existing_results(output_path):
         if sha and commit.get("languages") is not None:
             existing[sha] = commit
     return existing
+
+
+def write_output(output_path, repo_path, commits, results_by_sha):
+    """
+    Schreibt eine Ergebnisdatei in der ursprünglichen Commit-Reihenfolge.
+    Commits, die noch nicht verarbeitet wurden, werden ausgelassen.
+    """
+    ordered = []
+    index = 0
+    for commit in commits:
+        result = results_by_sha.get(commit["sha"])
+        if result is None:
+            continue
+        entry = dict(result)
+        entry["index"] = index
+        ordered.append(entry)
+        index += 1
+
+    output_path = Path(output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    # Erst in temporäre Datei schreiben, dann ersetzen -> keine halb geschriebenen Dateien
+    tmp_path = output_path.with_name(output_path.name + ".tmp")
+    with open(tmp_path, "w", encoding="utf-8") as f:
+        json.dump(
+            {"repo": str(repo_path), "commit_count": len(ordered), "commits": ordered},
+            f, indent=2, ensure_ascii=False,
+        )
+    tmp_path.replace(output_path)
+
+
+def get_checkpoint_path(repo_path, output_path):
+    """Checkpoint-Datei im Temp-Verzeichnis (außerhalb des Repos), eindeutig pro Repo+Ausgabe."""
+    key = hashlib.sha1(f"{repo_path}|{output_path}".encode("utf-8")).hexdigest()[:10]
+    return Path(tempfile.gettempdir()) / f"linguist_history_{repo_path.name}_{key}.partial.json"
+
+
+def is_repo_clean(repo_path, output_path):
+    """
+    Prüft, ob das Working Directory sauber ist. Die eigene Ausgabedatei
+    wird dabei ignoriert, da sie im Repo liegen und geändert sein darf.
+    """
+    lines = run(["git", "status", "--porcelain"], cwd=repo_path).splitlines()
+
+    try:
+        rel_out = output_path.relative_to(repo_path).as_posix()
+    except ValueError:
+        rel_out = None
+
+    dirty = []
+    for line in lines:
+        path = line[3:].strip().strip('"')
+        if rel_out and path == rel_out:
+            continue
+        dirty.append(line)
+    return not dirty
 
 
 def main():
@@ -134,13 +196,16 @@ def main():
     args = parser.parse_args()
 
     repo_path = Path(args.repo).resolve()
+    # Ausgabepfad relativ zum aktuellen Verzeichnis auflösen, BEVOR irgendein cwd-Wechsel passiert
+    output_path = Path(args.output).resolve()
+    checkpoint_path = get_checkpoint_path(repo_path, output_path)
+
     if not (repo_path / ".git").exists():
         print(f"Fehler: {repo_path} ist kein Git-Repository.", file=sys.stderr)
         sys.exit(1)
 
     # Sauberes Arbeitsverzeichnis sicherstellen, da wir zwischen Commits hin- und herspringen
-    status = run(["git", "status", "--porcelain"], cwd=repo_path)
-    if status:
+    if not is_repo_clean(repo_path, output_path):
         print("Fehler: Working Directory ist nicht sauber (uncommitted changes). Bitte committen/stashen.", file=sys.stderr)
         sys.exit(1)
 
@@ -150,7 +215,16 @@ def main():
     commits = get_commit_list(repo_path, branch=args.branch, limit=args.limit)
     print(f"{len(commits)} Commits gefunden.")
 
-    existing = {} if args.force else load_existing_results(args.output)
+    # Bestehende Ergebnisse VOR dem ersten Checkout in den Speicher laden,
+    # da der Checkout die Ausgabedatei im Repo überschreiben könnte.
+    existing = {}
+    if args.force:
+        checkpoint_path.unlink(missing_ok=True)
+    else:
+        existing = {
+            **load_existing_results(checkpoint_path),
+            **load_existing_results(output_path),
+        }
     if existing:
         print(f"{len(existing)} bereits verarbeitete Commits gefunden, diese werden übersprungen.")
 
@@ -172,37 +246,20 @@ def main():
                 "languages": languages,
             }
 
-            # Nach jedem Commit zwischenspeichern, damit bei Abbruch nichts verloren geht
-            merged = {**existing, **new_results}
-            write_output(args.output, repo_path, commits, merged)
+            # Zwischenspeichern AUSSERHALB des Repos, damit Checkouts es nicht überschreiben
+            write_output(checkpoint_path, repo_path, commits, {**existing, **new_results})
     finally:
         print(f"Stelle ursprünglichen Ref wieder her: {original_ref}")
-        checkout(repo_path, original_ref)
+        try:
+            checkout(repo_path, original_ref)
+        finally:
+            # Erst NACH dem Restore die finale Datei schreiben (auch bei Abbruch),
+            # damit der Restore sie nicht wieder überschreibt.
+            write_output(output_path, repo_path, commits, {**existing, **new_results})
 
-    print(f"Fertig. Ergebnis gespeichert in: {args.output}")
-
-
-def write_output(output_path, repo_path, commits, results_by_sha):
-    """
-    Schreibt die Ausgabedatei in der ursprünglichen Commit-Reihenfolge.
-    Commits, die noch nicht verarbeitet wurden, werden ausgelassen.
-    """
-    ordered = []
-    index = 0
-    for commit in commits:
-        result = results_by_sha.get(commit["sha"])
-        if result is None:
-            continue
-        entry = dict(result)
-        entry["index"] = index
-        ordered.append(entry)
-        index += 1
-
-    with open(output_path, "w", encoding="utf-8") as f:
-        json.dump(
-            {"repo": str(repo_path), "commit_count": len(ordered), "commits": ordered},
-            f, indent=2, ensure_ascii=False,
-        )
+    # Nur bei erfolgreichem Durchlauf ist der Checkpoint überflüssig
+    checkpoint_path.unlink(missing_ok=True)
+    print(f"Fertig. Ergebnis gespeichert in: {output_path}")
 
 
 if __name__ == "__main__":
