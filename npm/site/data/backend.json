@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-09-21T20:17:09.670Z",
+  "generatedAt": "2026-09-21T20:31:39.792Z",
   "total": {
-    "files": 175,
-    "bytes": 35431580,
-    "kilobytes": 34601.15,
-    "megabytes": 33.79
+    "files": 170,
+    "bytes": 35351534,
+    "kilobytes": 34522.98,
+    "megabytes": 33.71
   },
   "byExtension": [
     {
       "extension": ".js",
-      "files": 126,
-      "bytes": 34419621,
+      "files": 123,
+      "bytes": 34340302,
       "percentage": 97.14
     },
     {
@@ -22,8 +22,8 @@
     {
       "extension": ".css",
       "files": 17,
-      "bytes": 366175,
-      "percentage": 1.03
+      "bytes": 366139,
+      "percentage": 1.04
     },
     {
       "extension": ".ttf",
@@ -33,8 +33,8 @@
     },
     {
       "extension": ".html",
-      "files": 28,
-      "bytes": 20751,
+      "files": 26,
+      "bytes": 20060,
       "percentage": 0.06
     },
     {
@@ -147,16 +147,6 @@
       "bytes": 38042
     },
     {
-      "path": "assets/_virtual_page-data_index.js",
-      "extension": ".js",
-      "bytes": 36569
-    },
-    {
-      "path": "assets/_virtual_page-markdown_readme.js",
-      "extension": ".js",
-      "bytes": 30805
-    },
-    {
       "path": "assets/lspLanguageFeatures.js",
       "extension": ".js",
       "bytes": 28659
@@ -207,11 +197,6 @@
       "bytes": 11662
     },
     {
-      "path": "assets/_virtual_page-markdown_changelog.js",
-      "extension": ".js",
-      "bytes": 11256
-    },
-    {
       "path": "assets/mysql.js",
       "extension": ".js",
       "bytes": 11136
@@ -242,11 +227,6 @@
       "bytes": 9505
     },
     {
-      "path": "assets/main_entry.js",
-      "extension": ".js",
-      "bytes": 9477
-    },
-    {
       "path": "assets/viewer.css",
       "extension": ".css",
       "bytes": 9401
@@ -255,6 +235,11 @@
       "path": "assets/configeditor.js",
       "extension": ".js",
       "bytes": 9239
+    },
+    {
+      "path": "assets/main_entry.js",
+      "extension": ".js",
+      "bytes": 9124
     },
     {
       "path": "assets/protobuf.js",
@@ -439,7 +424,7 @@
     {
       "path": "assets/main.css",
       "extension": ".css",
-      "bytes": 4068
+      "bytes": 4032
     },
     {
       "path": "assets/rust.js",
@@ -702,11 +687,6 @@
       "bytes": 1629
     },
     {
-      "path": "assets/index2.js",
-      "extension": ".js",
-      "bytes": 1608
-    },
-    {
       "path": "assets/pla.js",
       "extension": ".js",
       "bytes": 1545
@@ -720,6 +700,11 @@
       "path": "assets/csp.js",
       "extension": ".js",
       "bytes": 1281
+    },
+    {
+      "path": "assets/index2.js",
+      "extension": ".js",
+      "bytes": 1272
     },
     {
       "path": "assets/workers.js",
@@ -890,16 +875,6 @@
       "path": "docs/index.html",
       "extension": ".html",
       "bytes": 348
-    },
-    {
-      "path": "changelog/index.html",
-      "extension": ".html",
-      "bytes": 347
-    },
-    {
-      "path": "readme/index.html",
-      "extension": ".html",
-      "bytes": 344
     },
     {
       "path": "assets/mcappheader.js",
