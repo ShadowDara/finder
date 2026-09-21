@@ -50,20 +50,6 @@ export default function render(el: HTMLDivElement, data: string) {
           )} */}
         </ul>
 
-        <p>
-          Here you can create new templates for finder or view existing, or read
-          the changelog!
-        </p>
-
-        <ul>
-          <li>
-            <a href="./changelog">Changelog</a>
-          </li>
-          <li>
-            <a href="./readme">README</a>
-          </li>
-        </ul>
-
         {import.meta.env.MODE == "backend" && (
           <button id="stop">Stop Server</button>
         )}
