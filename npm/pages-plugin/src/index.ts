@@ -1507,16 +1507,18 @@ ${ctx.content}
 
       const entryJsChunk = jsChunk;
 
-      /* ------------------------------------------------------------------
-       * Single-file export: one `index.html` with a `#` hash router.
-       *
-       * All "component"/"markdown" pages already flow through the same
-       * entry chunk (thanks to `inlineDynamicImports`, forced above), so
-       * this just has to inline that chunk's JS and every emitted CSS
-       * asset straight into one HTML document instead of writing one HTML
-       * file per page, then remove those now-inlined files from the
-       * bundle so they aren't also emitted standalone.
-       * ------------------------------------------------------------------ */
+      /*
+       * Single-file export: skip the normal per-page HTML emission
+       * entirely — the actual `index.html` is assembled in `writeBundle`
+       * instead (see below), once every other plugin's `generateBundle`
+       * hook (including Vite's own internal dynamic-import / preload
+       * handling, e.g. its `__VITE_PRELOAD__` substitution) has already
+       * run. Reading `entryJsChunk.code` here, in this plugin's own
+       * `generateBundle` (registered with `enforce: "pre"`, so it can run
+       * *before* Vite's internal build plugins), would risk capturing
+       * unfinished code and inlining an unresolved `__VITE_PRELOAD__`
+       * placeholder straight into the page.
+       */
       if (singleFile) {
         const skippedPages = pages.filter(
           (page) => page.type === "liquid" || page.type === "ejs",
@@ -1529,100 +1531,6 @@ ${ctx.content}
               .join(
                 ", ",
               )}) — they are static, build-time-rendered documents and are not compatible with the single-file hash router. Only "component" and "markdown" pages are bundled into index.html.`,
-          );
-        }
-
-        const otherChunkCount = Object.values(bundle).filter(
-          (item) => item.type === "chunk" && item !== entryJsChunk,
-        ).length;
-
-        if (otherChunkCount > 0) {
-          this.warn(
-            `[vite-plugin-pages-ssg] singleFile: found ${otherChunkCount} extra JS chunk(s) besides the entry chunk that could not be inlined into index.html. They will still be emitted as separate files, so the build is not a true single file — check for a custom "manualChunks"/"output" config that overrides "inlineDynamicImports".`,
-          );
-        }
-
-        const cssParts: string[] = [];
-        const cssFileNames: string[] = [];
-
-        for (const [fileName, item] of Object.entries(bundle)) {
-          if (item.type === "asset" && fileName.toLowerCase().endsWith(".css")) {
-            const source = item.source;
-            cssParts.push(
-              typeof source === "string"
-                ? source
-                : Buffer.from(source).toString("utf8"),
-            );
-            cssFileNames.push(fileName);
-          }
-        }
-
-        const cssContent = cssParts.join("\n");
-
-        const bundledPages = pages.filter(
-          (page) => page.type === "component" || page.type === "markdown",
-        );
-
-        const rootId = bundledPages.some((page) => page.id === "index")
-          ? "index"
-          : (bundledPages[0]?.id ?? "index");
-
-        const title = getTitle(rootId);
-        const head = getHead(rootId);
-        const bootstrapScript = singleFileBootstrapScript(rootId);
-        const inlineJs = escapeScriptClose(entryJsChunk.code);
-
-        let html = `<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>${escapeHtml(title)}</title>
-  ${cssContent ? `<style>\n${cssContent}\n  </style>` : ""}
-  ${head}
-</head>
-<body>
-  <div id="app"></div>
-
-  <script>
-${bootstrapScript}
-  </script>
-
-  <script type="module">
-${inlineJs}
-  </script>
-</body>
-</html>
-`;
-
-        if (options.minify) {
-          html = await minify(html, {
-            collapseWhitespace: true,
-            removeComments: true,
-            removeRedundantAttributes: true,
-            removeEmptyAttributes: true,
-            useShortDoctype: true,
-            minifyCSS: true,
-            minifyJS: true,
-          });
-        }
-
-        // The entry chunk and every CSS asset are now embedded directly
-        // in index.html — drop them so they don't also ship as loose files.
-        delete (bundle as Record<string, unknown>)[entryJsChunk.fileName];
-        for (const fileName of cssFileNames) {
-          delete (bundle as Record<string, unknown>)[fileName];
-        }
-
-        this.emitFile({
-          type: "asset",
-          fileName: "index.html",
-          source: html,
-        });
-
-        if (verbose) {
-          console.log(
-            `[vite-plugin-pages-ssg] Emitted single-file build: index.html (${bundledPages.length} page(s) bundled, ${skippedPages.length} skipped)`,
           );
         }
 
@@ -1863,6 +1771,150 @@ ${inlineJs}
           fileName: htmlFileName,
           source: html,
         });
+      }
+    },
+
+    /*
+     * Runs strictly after every plugin's `generateBundle` hook has
+     * finished and Rollup has already written the bundle to disk — so by
+     * now Vite's own internal transforms (dynamic-import preload
+     * handling, `__VITE_PRELOAD__` substitution, etc.) are guaranteed to
+     * be fully resolved in `bundle[...].code`. This is what makes it safe
+     * to read the entry chunk's final code and inline it, unlike doing
+     * the same thing inside `generateBundle` (see the comment there).
+     */
+    async writeBundle(outputOptions, bundle) {
+      if (!singleFile) {
+        return;
+      }
+
+      const entryJsChunk = Object.values(bundle).find(
+        (item) =>
+          item.type === "chunk" &&
+          item.isEntry &&
+          item.fileName.endsWith(".js"),
+      );
+
+      if (!entryJsChunk || entryJsChunk.type !== "chunk") {
+        this.error(
+          "[vite-plugin-pages-ssg] singleFile: could not find the generated entry .js chunk while writing the bundle.",
+        );
+
+        return;
+      }
+
+      const otherChunkCount = Object.values(bundle).filter(
+        (item) => item.type === "chunk" && item !== entryJsChunk,
+      ).length;
+
+      if (otherChunkCount > 0) {
+        this.warn(
+          `[vite-plugin-pages-ssg] singleFile: found ${otherChunkCount} extra JS chunk(s) besides the entry chunk that could not be inlined into index.html. They will still be left as separate files, so the build is not a true single file — check for a custom "manualChunks"/"output" config that overrides "inlineDynamicImports".`,
+        );
+      }
+
+      const cssParts: string[] = [];
+      const cssFileNames: string[] = [];
+
+      for (const [fileName, item] of Object.entries(bundle)) {
+        if (item.type === "asset" && fileName.toLowerCase().endsWith(".css")) {
+          const source = item.source;
+          cssParts.push(
+            typeof source === "string"
+              ? source
+              : Buffer.from(source).toString("utf8"),
+          );
+          cssFileNames.push(fileName);
+        }
+      }
+
+      const cssContent = cssParts.join("\n");
+
+      const bundledPages = pages.filter(
+        (page) => page.type === "component" || page.type === "markdown",
+      );
+
+      const rootId = bundledPages.some((page) => page.id === "index")
+        ? "index"
+        : (bundledPages[0]?.id ?? "index");
+
+      const title = getTitle(rootId);
+      const head = getHead(rootId);
+      const bootstrapScript = singleFileBootstrapScript(rootId);
+      const inlineJs = escapeScriptClose(entryJsChunk.code);
+
+      let html = `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${escapeHtml(title)}</title>
+  ${cssContent ? `<style>\n${cssContent}\n  </style>` : ""}
+  ${head}
+</head>
+<body>
+  <div id="app"></div>
+
+  <script>
+${bootstrapScript}
+  </script>
+
+  <script type="module">
+${inlineJs}
+  </script>
+</body>
+</html>
+`;
+
+      if (options.minify) {
+        html = await minify(html, {
+          collapseWhitespace: true,
+          removeComments: true,
+          removeRedundantAttributes: true,
+          removeEmptyAttributes: true,
+          useShortDoctype: true,
+          minifyCSS: true,
+          minifyJS: true,
+        });
+      }
+
+      const outDir = path.resolve(
+        config.root,
+        outputOptions.dir ?? config.build.outDir ?? "dist",
+      );
+
+      fs.writeFileSync(path.join(outDir, "index.html"), html, "utf8");
+
+      // The entry chunk and every CSS asset are now embedded directly in
+      // index.html (already written above) — remove the now-redundant
+      // loose files from disk so only index.html remains.
+      const filesToRemove = [entryJsChunk.fileName, ...cssFileNames];
+      const dirsTouched = new Set<string>();
+
+      for (const fileName of filesToRemove) {
+        const filePath = path.join(outDir, fileName);
+
+        if (fs.existsSync(filePath)) {
+          fs.rmSync(filePath);
+          dirsTouched.add(path.dirname(filePath));
+        }
+      }
+
+      // Clean up asset directories (e.g. "assets/") left empty behind.
+      for (const dir of dirsTouched) {
+        if (
+          dir !== outDir &&
+          fs.existsSync(dir) &&
+          fs.readdirSync(dir).length === 0
+        ) {
+          fs.rmdirSync(dir);
+        }
+      }
+
+      if (verbose) {
+        console.log(
+          `[vite-plugin-pages-ssg] Emitted single-file build: index.html (${bundledPages.length} page(s) bundled)`,
+        );
       }
     },
   };
