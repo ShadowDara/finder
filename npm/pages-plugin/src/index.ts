@@ -967,15 +967,20 @@ declare module "virtual:pages" {
   }>;
   }
 
-  export interface LiquidPage {
-    id: string;
-    type: "liquid";
-    title: string;
-    html: string;
-    styles: string[];
-  }
-
-  export type PageEntry = ComponentPage | MarkdownPage | LiquidPage;
+  // Note: there is intentionally no exported "LiquidPage" variant here.
+  // Liquid/EJS template pages are rendered fully at build time as
+  // standalone static documents; when one of them also has a sibling
+  // client script (\`page.[tj]s\`), it is exposed through \`virtual:pages\`
+  // as an ordinary ComponentPage (\`type: "component"\`) so the app can
+  // mount it like any other page. Without a sibling script it never
+  // appears in \`pages\` at all. A runtime object shaped like
+  // \`{ type: "liquid", ... }\` is never actually produced, so including
+  // it in this union previously made every \`pages[id]\` access widen to
+  // \`ComponentPage | LiquidPage\` after narrowing out "markdown", even
+  // though \`LiquidPage\` has no \`load\` — causing spurious
+  // "Property 'load' does not exist on type 'LiquidPage'" errors in
+  // consumers under \`tsc -b\`.
+  export type PageEntry = ComponentPage | MarkdownPage;
 
   export const pages: Record<string, PageEntry>;
 }
@@ -1541,10 +1546,7 @@ ${ctx.content}
         const cssFileNames: string[] = [];
 
         for (const [fileName, item] of Object.entries(bundle)) {
-          if (
-            item.type === "asset" &&
-            fileName.toLowerCase().endsWith(".css")
-          ) {
+          if (item.type === "asset" && fileName.toLowerCase().endsWith(".css")) {
             const source = item.source;
             cssParts.push(
               typeof source === "string"
