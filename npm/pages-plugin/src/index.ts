@@ -359,6 +359,7 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
     "/__devtools-vite/",
     "/__devtools-rolldown/",
     "/__devtools-oxc/",
+    "/__vitest__/",
     ...(options.ignoredPathnames ?? []),
   ].filter((prefix, index, prefixes) => prefixes.indexOf(prefix) === index);
   const verbose = options.verbose ?? false;
