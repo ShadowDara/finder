@@ -57,6 +57,18 @@ function escapeBareAngles(html: string): string {
   });
 }
 
+/**
+ * Escape `</script` inside a string that will be embedded verbatim into an
+ * inline `<script>` tag. The HTML tokenizer ends a `<script>` element the
+ * moment it sees the literal text `</script`, regardless of whether that
+ * text sits inside a JS string/comment — without this, bundled code that
+ * happens to contain that substring (e.g. inside a template literal)
+ * would truncate the page.
+ */
+function escapeScriptClose(code: string): string {
+  return code.replace(/<\/script/gi, "<\\/script");
+}
+
 export interface PagesPluginOptions {
   /**
    * Directory containing the page modules (one `.ts`/`.tsx` file per page).
@@ -92,6 +104,8 @@ export interface PagesPluginOptions {
    * URLs). The page with id `"index"` is always emitted as the top-level
    * `index.html`, never `index/index.html`.
    *
+   * Ignored when `singleFile` is enabled.
+   *
    * @default false
    */
   prettyUrls?: boolean;
@@ -125,6 +139,9 @@ export interface PagesPluginOptions {
    * Wrap/replace the emitted HTML shell entirely. Receives the computed
    * script/style tags and page metadata; must return a full HTML document.
    * Falls back to a minimal built-in template.
+   *
+   * Not used when `singleFile` is enabled — the single-file shell has its
+   * own hash-router bootstrap and is built independently of `template`.
    */
   template?: (ctx: PageRenderContext) => string;
 
@@ -211,6 +228,9 @@ export interface PagesPluginOptions {
    * Put each compiled Markdown page into its own dynamically loaded chunk
    * instead of embedding all Markdown HTML into the main bundle.
    *
+   * Forced back to `false` when `singleFile` is enabled — a split chunk
+   * would defeat the point of a single-file export.
+   *
    * @default false
    */
   splitMarkdown?: boolean;
@@ -237,6 +257,41 @@ export interface PagesPluginOptions {
    * @default "twynejs/jsx-runtime"
    */
   jsxRuntimePath?: string;
+
+  /**
+   * Emit the whole site as a single `index.html` file with client-side,
+   * hash-based routing (`#/guide/install`) instead of one HTML file per
+   * page. Everything needed to render every "component"/"markdown" page —
+   * JS and CSS — is inlined into that one file, so the result can be
+   * opened directly via `file://`, embedded, or dropped onto any static
+   * host with no server-side rewrites.
+   *
+   * What this implies automatically, so you normally don't need to set
+   * them yourself:
+   *
+   * - Rollup output is forced to `inlineDynamicImports: true` (like
+   *   `singleBundle`), so every page ends up in one JS chunk.
+   * - `splitMarkdown` is ignored (forced off) and all build data is
+   *   inlined regardless of size — there is nowhere else to put it.
+   *
+   * Limitations:
+   *
+   * - Only `"component"` and `"markdown"` pages participate in the
+   *   router. Liquid (`.html`) and EJS (`.ejs`) pages are build-time
+   *   *static* documents and are not compatible with a client-side hash
+   *   router; if any exist, they are skipped with a build warning.
+   * - The shared client `entry` is responsible for reading
+   *   `window[globalVar]` on load, calling `pages[id].load()` to mount it,
+   *   and listening for the `window` `"pagechange"` `CustomEvent`
+   *   (`event.detail.id`) to re-render when the hash changes, since the
+   *   plugin only owns the HTML shell and the routing bootstrap, not your
+   *   app's rendering logic.
+   * - `template`/`prettyUrls`/per-page output file naming are not used;
+   *   the output is always a single `index.html`.
+   *
+   * @default false
+   */
+  singleFile?: boolean;
 }
 
 export interface PageRenderContext {
@@ -306,9 +361,12 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
     "/__devtools-oxc/",
     ...(options.ignoredPathnames ?? []),
   ].filter((prefix, index, prefixes) => prefixes.indexOf(prefix) === index);
-  const splitMarkdown = options.splitMarkdown ?? false;
   const verbose = options.verbose ?? false;
   const singleBundle = options.singleBundle ?? false;
+  // Single-file export needs everything in one JS chunk and everything
+  // inlined, so it forces off `splitMarkdown` regardless of what was set.
+  const singleFile = options.singleFile ?? false;
+  const splitMarkdown = (options.splitMarkdown ?? false) && !singleFile;
   const removeConsole = options.removeConsole ?? false;
   const relativePath = options.relativePaths ?? false;
   const addRawMarkdown = options.addRawMarkdown ?? false;
@@ -757,6 +815,11 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
           .map((style) => styleImports.get(style)!)
           .join(", ");
 
+        // Exposed to the client so an app (in particular a `singleFile`
+        // hash-router shell) can update `document.title` itself when the
+        // active page changes, without a full page reload.
+        const titleField = `title: ${JSON.stringify(getTitle(page.id))},`;
+
         /* Liquid/EJS template pages are fully static (rendered at build
          * time) — they are served/emitted as-is and do not need a
          * client-side entry in the pages map (which would bloat the
@@ -769,6 +832,7 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
             return `  ${JSON.stringify(page.id)}: {
     id: ${JSON.stringify(page.id)},
     type: "component",
+    ${titleField}
     load: () => import(${JSON.stringify(page.importPath ?? page.scriptSource)}),
     styles: []
   }`;
@@ -788,6 +852,7 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
             return `  ${JSON.stringify(page.id)}: {
     id: ${JSON.stringify(page.id)},
     type: "markdown",
+    ${titleField}
     load: () => import(${JSON.stringify(markdownModuleId)}),
     styles: [${styles}]
   }`;
@@ -800,6 +865,7 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
           return `  ${JSON.stringify(page.id)}: {
     id: ${JSON.stringify(page.id)},
     type: "markdown",
+    ${titleField}
     ${markdownField}
     html: ${JSON.stringify(page.html ?? "")},
     styles: [${styles}]
@@ -809,10 +875,12 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
         // Große Build-Daten (z. B. gerendertes Markdown) nicht inline in
         // den Entry packen, sondern in einen eigenen Chunk auslagern, der
         // erst beim Laden der Seite per import() geholt wird.
+        // In `singleFile` mode there is nowhere else to put a lazily
+        // loaded chunk, so everything is always inlined regardless of size.
         const dataSize =
           typeof page.buildData === "string" ? page.buildData.length : 1024;
 
-        const inlineData = dataSize < 8 * 1024;
+        const inlineData = singleFile || dataSize < 8 * 1024;
 
         const dataField = inlineData
           ? `data: ${JSON.stringify(page.buildData ?? null)},`
@@ -823,6 +891,7 @@ export function pagesPlugin(options: PagesPluginOptions = {}): Plugin {
         return `  ${JSON.stringify(page.id)}: {
     id: ${JSON.stringify(page.id)},
     type: "component",
+    ${titleField}
     load: () => import(${JSON.stringify(page.importPath)}),
     ${dataField}
     styles: [${styles}]
@@ -870,6 +939,10 @@ declare module "virtual:pages" {
   export interface ComponentPage {
     id: string;
     type: "component";
+    /** Resolved via the plugin's \`title\` option. Handy for setting
+     *  \`document.title\` yourself when routing client-side (e.g. in
+     *  \`singleFile\` / hash-router mode). */
+    title: string;
     data?: unknown;
     /** Lazy-loaded build data (large payloads). */
     loadData?: () => Promise<unknown>;
@@ -880,6 +953,7 @@ declare module "virtual:pages" {
   export interface MarkdownPage {
     id: string;
     type: "markdown";
+    title: string;
     markdown?: string;
     html: string;
     styles: string[];
@@ -896,6 +970,7 @@ declare module "virtual:pages" {
   export interface LiquidPage {
     id: string;
     type: "liquid";
+    title: string;
     html: string;
     styles: string[];
   }
@@ -969,6 +1044,32 @@ ${ctx.content}
 `;
   }
 
+  /**
+   * Bootstrap script for `singleFile` mode: derives the current page id
+   * from `location.hash` (`#/guide/install` → `"guide/install"`, empty →
+   * `rootId`), exposes it on `window[globalVar]` just like the multi-page
+   * template does, and re-derives it on every `hashchange`, dispatching a
+   * `"pagechange"` `CustomEvent` (`event.detail.id`) so the app's entry can
+   * re-render without a full page reload.
+   */
+  function singleFileBootstrapScript(rootId: string): string {
+    return `(function () {
+  var DEFAULT_PAGE = ${JSON.stringify(rootId)};
+  function currentPageId() {
+    var hash = window.location.hash || "";
+    hash = hash.replace(/^#\\/?/, "").replace(/\\/+$/, "");
+    return hash || DEFAULT_PAGE;
+  }
+  window.${globalVar} = currentPageId();
+  window.addEventListener("hashchange", function () {
+    window.${globalVar} = currentPageId();
+    window.dispatchEvent(
+      new CustomEvent("pagechange", { detail: { id: window.${globalVar} } })
+    );
+  });
+})();`;
+  }
+
   return {
     name: "vite-plugin-pages-ssg",
 
@@ -1030,6 +1131,7 @@ ${ctx.content}
       export default ${JSON.stringify({
         id: page.id,
         type: "markdown",
+        title: getTitle(page.id),
         ...(addRawMarkdown ? { markdown: page.markdown ?? "" } : {}),
         html: page.html ?? "",
       })};
@@ -1125,6 +1227,12 @@ ${ctx.content}
       // Serve each page's HTML on its own dev URL (e.g. /guide/installation
       // or /guide/installation.html), mirroring what generateBundle emits
       // for production, so `vite dev` is multi-page too — not just the build.
+      //
+      // Note: `singleFile` only changes the *production build* output.
+      // The dev server keeps serving one URL per page id as usual — the
+      // hash-router bootstrap only exists in the emitted single-file
+      // production HTML — since normal multi-URL dev navigation is more
+      // convenient while developing.
       const entry =
         "/" +
         (options.entry ?? "src/main.ts")
@@ -1292,9 +1400,9 @@ ${ctx.content}
       });
     },
 
-    // for single bundle
+    // for single bundle / single file
     config() {
-      if (!singleBundle && !removeConsole) {
+      if (!singleBundle && !removeConsole && !singleFile) {
         return {};
       }
 
@@ -1309,7 +1417,9 @@ ${ctx.content}
 
       const build: Record<string, unknown> = {};
 
-      if (singleBundle) {
+      if (singleBundle || singleFile) {
+        // `singleFile` needs exactly one JS chunk to inline into the HTML
+        // shell, same requirement as `singleBundle`.
         build.rollupOptions = {
           output: {
             inlineDynamicImports: true,
@@ -1391,6 +1501,131 @@ ${ctx.content}
       }
 
       const entryJsChunk = jsChunk;
+
+      /* ------------------------------------------------------------------
+       * Single-file export: one `index.html` with a `#` hash router.
+       *
+       * All "component"/"markdown" pages already flow through the same
+       * entry chunk (thanks to `inlineDynamicImports`, forced above), so
+       * this just has to inline that chunk's JS and every emitted CSS
+       * asset straight into one HTML document instead of writing one HTML
+       * file per page, then remove those now-inlined files from the
+       * bundle so they aren't also emitted standalone.
+       * ------------------------------------------------------------------ */
+      if (singleFile) {
+        const skippedPages = pages.filter(
+          (page) => page.type === "liquid" || page.type === "ejs",
+        );
+
+        if (skippedPages.length > 0) {
+          this.warn(
+            `[vite-plugin-pages-ssg] singleFile: skipping ${skippedPages.length} Liquid/EJS page(s) (${skippedPages
+              .map((page) => page.id)
+              .join(
+                ", ",
+              )}) — they are static, build-time-rendered documents and are not compatible with the single-file hash router. Only "component" and "markdown" pages are bundled into index.html.`,
+          );
+        }
+
+        const otherChunkCount = Object.values(bundle).filter(
+          (item) => item.type === "chunk" && item !== entryJsChunk,
+        ).length;
+
+        if (otherChunkCount > 0) {
+          this.warn(
+            `[vite-plugin-pages-ssg] singleFile: found ${otherChunkCount} extra JS chunk(s) besides the entry chunk that could not be inlined into index.html. They will still be emitted as separate files, so the build is not a true single file — check for a custom "manualChunks"/"output" config that overrides "inlineDynamicImports".`,
+          );
+        }
+
+        const cssParts: string[] = [];
+        const cssFileNames: string[] = [];
+
+        for (const [fileName, item] of Object.entries(bundle)) {
+          if (
+            item.type === "asset" &&
+            fileName.toLowerCase().endsWith(".css")
+          ) {
+            const source = item.source;
+            cssParts.push(
+              typeof source === "string"
+                ? source
+                : Buffer.from(source).toString("utf8"),
+            );
+            cssFileNames.push(fileName);
+          }
+        }
+
+        const cssContent = cssParts.join("\n");
+
+        const bundledPages = pages.filter(
+          (page) => page.type === "component" || page.type === "markdown",
+        );
+
+        const rootId = bundledPages.some((page) => page.id === "index")
+          ? "index"
+          : (bundledPages[0]?.id ?? "index");
+
+        const title = getTitle(rootId);
+        const head = getHead(rootId);
+        const bootstrapScript = singleFileBootstrapScript(rootId);
+        const inlineJs = escapeScriptClose(entryJsChunk.code);
+
+        let html = `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${escapeHtml(title)}</title>
+  ${cssContent ? `<style>\n${cssContent}\n  </style>` : ""}
+  ${head}
+</head>
+<body>
+  <div id="app"></div>
+
+  <script>
+${bootstrapScript}
+  </script>
+
+  <script type="module">
+${inlineJs}
+  </script>
+</body>
+</html>
+`;
+
+        if (options.minify) {
+          html = await minify(html, {
+            collapseWhitespace: true,
+            removeComments: true,
+            removeRedundantAttributes: true,
+            removeEmptyAttributes: true,
+            useShortDoctype: true,
+            minifyCSS: true,
+            minifyJS: true,
+          });
+        }
+
+        // The entry chunk and every CSS asset are now embedded directly
+        // in index.html — drop them so they don't also ship as loose files.
+        delete (bundle as Record<string, unknown>)[entryJsChunk.fileName];
+        for (const fileName of cssFileNames) {
+          delete (bundle as Record<string, unknown>)[fileName];
+        }
+
+        this.emitFile({
+          type: "asset",
+          fileName: "index.html",
+          source: html,
+        });
+
+        if (verbose) {
+          console.log(
+            `[vite-plugin-pages-ssg] Emitted single-file build: index.html (${bundledPages.length} page(s) bundled, ${skippedPages.length} skipped)`,
+          );
+        }
+
+        return;
+      }
 
       for (const page of pages) {
         const htmlFileName = outputFileName(page.id);
