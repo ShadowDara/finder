@@ -57,3 +57,4 @@ npm/site/public/dependencies.txt
 /finder
 /cafa
 /.pnpm-store
+/target

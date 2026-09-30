@@ -81,6 +81,13 @@ func matchFolderTemplate(dirPath string, template structure.Folder) bool {
 	// Check folder name if provided
 	dirName := filepath.Base(dirPath)
 
+	// Return false when in excluded names
+	for _, e := range template.ExcludedNames {
+		if e == dirName {
+			return false
+		}
+	}
+
 	if template.Name != "" {
 		if !matchesNamePattern(template.Name, dirName) {
 			return false

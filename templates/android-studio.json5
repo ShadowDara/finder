@@ -1,0 +1,26 @@
+{
+    "description": "Android Studio project identified by Gradle settings",
+    "name": "*",
+    "files": [
+        {
+            "name_regex": "^settings\\.gradle(\\.kts)?$",
+            "existence": "required"
+        }
+    ],
+    "folders": [
+        {
+            "name": "app",
+            "existence": "optional"
+        },
+        {
+            "name": "gradle",
+            "existence": "optional"
+        }
+    ],
+    "tags": [
+        "android",
+        "android-studio",
+        "gradle"
+    ],
+    "min_version": "0.3.19"
+}

@@ -8,6 +8,70 @@ export interface HtmlValue {
   toString(): string;
 }
 
+/**
+ * The CSS-module map (e.g. `import styles from "./about.module.css"`)
+ * that `jsx()` should currently consult when resolving `class`/
+ * `className` attribute values — see `useStyles()` below.
+ */
+let activeStyles: Record<string, string> | null | undefined = null;
+
+/**
+ * Registers the CSS-module map `jsx()` should use to resolve plain class
+ * names for the *current* render, so you don't have to write
+ * `className={styles.title}` on every single element. Call it once,
+ * before building the JSX tree that should use it — typically as the
+ * first line of a page's `mount()`:
+ *
+ * ```tsx
+ * import styles from "./about.module.css";
+ * import { useStyles } from "twynejs/jsx-runtime";
+ *
+ * export default function mount(el: HTMLElement) {
+ *   useStyles(styles);
+ *   el.innerHTML = (
+ *     <>
+ *       <h1 className="title">About</h1>
+ *       <p className="title lead">Still just a plain string.</p>
+ *     </>
+ *   );
+ * }
+ * ```
+ *
+ * Every whitespace-separated class token that matches a key in `styles`
+ * is swapped for its scoped/hashed value (`"title"` → `styles.title`,
+ * e.g. `"_title_a1b2c3_1"`); any token that doesn't match (utility
+ * classes, classes from a global stylesheet, …) is left exactly as
+ * written. Pass `null` (or nothing) to go back to plain, unresolved class
+ * names.
+ *
+ * Because this whole library renders synchronously — there is no `await`
+ * between `useStyles()` and the `jsx()` calls it applies to — one
+ * module-level value is enough for a single page's render. It does,
+ * however, stay set until something changes it again: if your app's
+ * router calls multiple pages' `mount()` functions over the page's
+ * lifetime (as the `singleFile` hash-router example does), call
+ * `useStyles(null)` right before invoking a page's `mount()` (or have
+ * every page call `useStyles()` itself, even with `null`) so a previous
+ * page's classes can't leak into one that doesn't expect them.
+ */
+export function useStyles(styles: Record<string, string> | null): void {
+  activeStyles = styles;
+}
+
+function resolveClassName(value: string): string {
+  if (!activeStyles) {
+    return value;
+  }
+
+  const styles = activeStyles;
+
+  return value
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((token) => styles[token] ?? token)
+    .join(" ");
+}
+
 function renderChildren(children: unknown[]): string {
   return children
     .flat(Infinity)
@@ -65,6 +129,14 @@ export function jsx(
       // Echte HTML-Boolean-Attribute: Präsenz = wahr, sonst weglassen.
       if (typeof value === "boolean" && booleanHtmlAttributes.has(attribute)) {
         return value ? ` ${attribute}` : "";
+      }
+
+      // `class`/`className`: plain class-name tokens get resolved against
+      // whatever `useStyles()` last registered, so authors can keep
+      // writing ordinary string class names instead of `styles.xxx` on
+      // every element.
+      if (attribute === "class" && typeof value === "string") {
+        value = resolveClassName(value);
       }
 
       // Alles andere (inkl. data-*/aria-*) bekommt immer einen expliziten

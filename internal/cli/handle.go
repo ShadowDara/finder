@@ -18,6 +18,7 @@ import (
 	"github.com/shadowdara/finder/pub/color"
 	"github.com/shadowdara/finder/pub/goansi"
 	"github.com/shadowdara/finder/pub/json5"
+	"github.com/shadowdara/finder/pub/moresort"
 )
 
 // View a Template
@@ -105,7 +106,10 @@ func Search(searchTemplate string, OutputType string, Verbose bool, createCache 
 		// Template not found: helpful error message listing all available templates
 		fmt.Printf("%sTemplate '%s' not found.%s\n", color.Red, templateName, color.Reset)
 		fmt.Printf("Available templates: %s\n", color.Yellow)
-		for i, t := range templateNames {
+
+		sortedNames := moresort.SortBySimilarity(templateNames, templateName)
+
+		for i, t := range sortedNames {
 			if i > 0 {
 				fmt.Print(", ")
 			}

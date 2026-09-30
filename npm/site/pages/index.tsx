@@ -1,13 +1,18 @@
-import { jsx, Fragment, raw } from "twynejs/jsx-runtime";
+import { jsx, Fragment } from "twynejs/jsx-runtime";
 import { SERVER_ADRESS } from "../src/vars";
 
-export default function render(el: HTMLDivElement, data: string) {
+export default function render(el: HTMLDivElement) {
   el.innerHTML = (
     <>
       <article class="markdown">
-        <h1 id="finder-server">Finder Server</h1>
+        <h1 id="finder-server">Finder Creator</h1>
 
         <ul>
+          <li>
+            <a href="https://shadowdara.github.io/project/finder">
+              Finder Homepage
+            </a>
+          </li>
           <li>
             <a href="./creator">Template Creator</a>
           </li>
@@ -45,20 +50,6 @@ export default function render(el: HTMLDivElement, data: string) {
           )} */}
         </ul>
 
-        <p>
-          Here you can create new templates for finder or view existing, or read
-          the changelog!
-        </p>
-
-        <ul>
-          <li>
-            <a href="./changelog">Changelog</a>
-          </li>
-          <li>
-            <a href="./readme">README</a>
-          </li>
-        </ul>
-
         {import.meta.env.MODE == "backend" && (
           <button id="stop">Stop Server</button>
         )}
@@ -76,12 +67,6 @@ export default function render(el: HTMLDivElement, data: string) {
             </a>
           </li>
         </ul>
-
-        <h2>Agents.md</h2>
-        <p>
-          A Markdown file to explain your AI how to write templates for finder!
-        </p>
-        {raw(data)}
 
         <h2>Tools</h2>
         <ul>

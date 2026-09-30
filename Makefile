@@ -28,3 +28,6 @@ install:
 devcontainer:
 	go mod download
 	$(MAKE) build
+
+langstats:
+	python3 linguist-stats.py . -o .github/history.json

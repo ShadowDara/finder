@@ -1,0 +1,97 @@
+{
+  "name": "CAFA",
+  "scopeName": "source.cafa",
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#strings"
+    },
+    {
+      "include": "#numbers"
+    },
+    {
+      "include": "#booleans"
+    },
+    {
+      "include": "#keywords"
+    },
+    {
+      "include": "#keys"
+    }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.block.cafa",
+          "begin": "/\\*",
+          "end": "\\*/"
+        }
+      ]
+    },
+
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.cafa",
+          "begin": "\"",
+          "end": "\"",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.begin.cafa"
+            }
+          },
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.end.cafa"
+            }
+          },
+          "patterns": [
+            {
+              "name": "constant.character.escape.cafa",
+              "match": "\\\\(?:[nrt\"\\\\]|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4})"
+            }
+          ]
+        }
+      ]
+    },
+
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.cafa",
+          "match": "\\b(?:0|[1-9][0-9]*(?:\\.[0-9]+)?)\\b"
+        }
+      ]
+    },
+
+    "booleans": {
+      "patterns": [
+        {
+          "name": "constant.language.boolean.cafa",
+          "match": "\\b(?:true|false|yes|no|on|off)\\b"
+        }
+      ]
+    },
+
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.cafa",
+          "match": "\\b(?:server|database|more)\\b"
+        }
+      ]
+    },
+
+    "keys": {
+      "patterns": [
+        {
+          "name": "variable.other.property.cafa",
+          "match": "^\\s*[A-Za-z_][A-Za-z0-9_-]*(?=\\s)"
+        }
+      ]
+    }
+  }
+}

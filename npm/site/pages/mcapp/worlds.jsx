@@ -1,4 +1,3 @@
-import { jsx, Fragment } from "twynejs/jsx-runtime";
 import Header from "../../src/components/mcappheader.jsx";
 import * as f from "../../src/components/mcappstyle.js";
 import { SERVER_ADRESS } from "../../src/vars.js";

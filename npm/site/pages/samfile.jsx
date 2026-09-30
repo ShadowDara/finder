@@ -1,4 +1,3 @@
-import { jsx, Fragment } from "twynejs/jsx-runtime";
 import { genSamfile, genSamfileJson } from "../src/lib/gen";
 import "./samfile.css";
 import { $ } from "jquery";

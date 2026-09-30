@@ -10,6 +10,8 @@
 
 /*
 
+# This is a Comment
+
 server
     host "localhost"
     port 8080
@@ -20,43 +22,40 @@ database
     name "myapp"
     pool 10
 
+more
+    lol this is string
+    lol2 "this is string too"
+    lol3 "and this is a string too"
+
  */
 
 typedef struct Value Value;
 typedef struct Object Object;
 typedef struct Entry Entry;
 
-struct Object
-{
-    char *key;
-    Value *val;
-    size_t objcount;
+struct Object {
+  char *key;
+  Value *val;
+  size_t objcount;
 };
 
-enum ValueType
-{
-    VALUE_STR,
-    VALIE_OBJECT
+enum ValueType { VALUE_STR, VALIE_OBJECT };
+
+struct Value {
+  char *key;
+
+  enum ValueType type;
+
+  union {
+    char *str;
+    Object *obj;
+  };
 };
 
-struct Value
-{
-    char *key;
-
-    enum ValueType type;
-
-    union
-    {
-        char *str;
-        Object *obj;
-    };
-};
-
-struct Entry
-{
-    size_t indent;
-    char *key;
-    char *value;
+struct Entry {
+  size_t indent;
+  char *key;
+  char *value;
 };
 
 // Print a cafa object to the terminal
