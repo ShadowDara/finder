@@ -36,7 +36,7 @@ docker-compose.yml linguist-language=Dockerfile
 
 /install2.sh linguist-vendored
 
-/.github/temp-stuff-idk linguist-vendored
+/.github/temp-stuff-idk/** linguist-vendored
 
 /npm/fling-compiler/** linguist-vendored
 /npm/vite-plugin-minisite/** linguist-vendored
