@@ -40,3 +40,4 @@ docker-compose.yml linguist-language=Dockerfile
 
 /npm/fling-compiler/** linguist-vendored
 /npm/vite-plugin-minisite/** linguist-vendored
+/npm/pages-plugin/** linguist-vendored
