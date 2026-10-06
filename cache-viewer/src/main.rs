@@ -11,7 +11,12 @@ use crossterm::{
 };
 
 use ratatui::{
-    Terminal, backend::CrosstermBackend, layout::{Constraint, Direction, Layout}, style::{Color, Modifier, Style}, text::{Line, Span}, widgets::{Block, Borders, Clear, List, ListItem, ListState, Paragraph, Wrap},
+    backend::CrosstermBackend,
+    layout::{Constraint, Direction, Layout},
+    style::{Color, Modifier, Style},
+    text::{Line, Span},
+    widgets::{Block, Borders, Clear, List, ListItem, ListState, Paragraph, Wrap},
+    Terminal,
 };
 
 use serde::{Deserialize, Serialize};
@@ -227,6 +232,40 @@ impl App {
             }
         }
     }
+
+    fn copy_selected(&mut self) {
+        let text = match self.screen {
+            Screen::Files => {
+                let Some(file) = self.selected_file() else {
+                    return;
+                };
+
+                file.path.display().to_string()
+            }
+
+            Screen::Locations => {
+                let Some(file) = self.selected_file() else {
+                    return;
+                };
+
+                let Some(location) = file.entry.locations.get(self.selected_location) else {
+                    return;
+                };
+
+                location.clone()
+            }
+        };
+
+        match arboard::Clipboard::new().and_then(|mut clipboard| clipboard.set_text(text.clone())) {
+            Ok(_) => {
+                self.status = format!("Copied: {text}");
+            }
+
+            Err(err) => {
+                self.status = format!("Copy failed: {err}");
+            }
+        }
+    }
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -275,6 +314,19 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> io::Result<
 }
 
 fn handle_key(app: &mut App, key: KeyEvent) -> io::Result<bool> {
+    // Popup ist geöffnet: nur noch Popup-Steuerung erlauben.
+    if app.show_info {
+        match key.code {
+            KeyCode::Esc => {
+                app.show_info = false;
+            }
+
+            _ => {}
+        }
+
+        return Ok(false);
+    }
+
     // q / Ctrl+C beendet die Anwendung.
     if key.code == KeyCode::Char('q')
         || (key.code == KeyCode::Char('c') && key.modifiers.contains(KeyModifiers::CONTROL))
@@ -305,6 +357,10 @@ fn handle_key(app: &mut App, key: KeyEvent) -> io::Result<bool> {
 
         KeyCode::Char('i') => {
             app.show_info = true;
+        }
+
+        KeyCode::Char('c') => {
+            app.copy_selected();
         }
 
         KeyCode::Char('r') => {
@@ -354,14 +410,12 @@ fn draw_info_popup(frame: &mut ratatui::Frame, app: &App) {
     frame.render_widget(Clear, area);
 
     let content = vec![
-        Line::from(vec![
-            Span::styled(
-                "Finder Cache",
-                Style::default()
-                    .fg(Color::Cyan)
-                    .add_modifier(Modifier::BOLD),
-            ),
-        ]),
+        Line::from(vec![Span::styled(
+            "Finder Cache",
+            Style::default()
+                .fg(Color::Cyan)
+                .add_modifier(Modifier::BOLD),
+        )]),
         Line::from(""),
         Line::from("A small TUI for browsing finder cache files."),
         Line::from(""),
@@ -378,6 +432,7 @@ fn draw_info_popup(frame: &mut ratatui::Frame, app: &App) {
         Line::from("  i           Info"),
         Line::from("  Esc         Close"),
         Line::from("  q           Quit"),
+        Line::from("  c           Copy"),
     ];
 
     let popup = Paragraph::new(content)
@@ -392,7 +447,6 @@ fn draw_info_popup(frame: &mut ratatui::Frame, app: &App) {
 
     frame.render_widget(popup, area);
 }
-
 
 fn draw_ui(frame: &mut ratatui::Frame, app: &App) {
     let area = frame.area();
@@ -426,20 +480,14 @@ fn draw_ui(frame: &mut ratatui::Frame, app: &App) {
     }
 }
 
-fn draw_header(
-    frame: &mut ratatui::Frame,
-    app: &App,
-    area: ratatui::layout::Rect,
-) {
+fn draw_header(frame: &mut ratatui::Frame, app: &App, area: ratatui::layout::Rect) {
     let title = match app.screen {
         Screen::Files => " finder cache ".to_string(),
 
-        Screen::Locations => {
-            match app.selected_file() {
-                Some(file) => format!(" {} ", file.name),
-                None => " finder cache ".to_string(),
-            }
-        }
+        Screen::Locations => match app.selected_file() {
+            Some(file) => format!(" {} ", file.name),
+            None => " finder cache ".to_string(),
+        },
     };
 
     let paragraph = Paragraph::new(title)
@@ -581,9 +629,9 @@ fn draw_locations(frame: &mut ratatui::Frame, app: &App, area: ratatui::layout::
 
 fn draw_footer(frame: &mut ratatui::Frame, app: &App, area: ratatui::layout::Rect) {
     let help = match app.screen {
-        Screen::Files => " ↑↓/jk navigate Enter open d delete r refresh q quit ",
+        Screen::Files => " ↑↓/jk navigate Enter open d delete r refresh q quit i info c copy",
 
-        Screen::Locations => " ↑↓/jk navigate   Esc back   r refresh   q quit ",
+        Screen::Locations => " ↑↓/jk navigate   Esc back   r refresh   q quit   i info   c copy",
     };
 
     let text = if app.status.is_empty() {
