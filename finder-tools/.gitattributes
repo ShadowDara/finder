@@ -1,0 +1,8 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+thirdparty/** linguist-vendored
+json.hpp linguist-vendored
+
+include/argparser.h linguist-vendored
+src/argparser.c linguist-vendored

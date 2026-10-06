@@ -1,0 +1,68 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            artifact: linux
+            exe: c++m
+          - os: windows-latest
+            artifact: windows
+            exe: c++m.exe
+          - os: macos-latest
+            artifact: macos
+            exe: c++m
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure
+        run: cmake -B build -S . -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build --config Release
+
+      - name: Package
+        shell: bash
+        run: |
+          mkdir release
+          ./build/${{ matrix.exe }} gen || ./build/Release/${{ matrix.exe }} gen
+          cp build/${{ matrix.exe }} release/ || cp build/Release/${{ matrix.exe }} release/
+          cd release
+          if [[ "${{ runner.os }}" == "Windows" ]]; then
+            powershell Compress-Archive * ../${{ matrix.artifact }}.zip
+          else
+            zip -r ../${{ matrix.artifact }}.zip .
+          fi
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: ${{ matrix.artifact }}.zip
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/**/*.zip

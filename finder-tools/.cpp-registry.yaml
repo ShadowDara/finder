@@ -1,0 +1,7 @@
+# file for the package
+
+packages:
+    - "nlohman/json"
+    - "jbeder/yaml-cpp"
+    - "shadowdara/argparser"
+

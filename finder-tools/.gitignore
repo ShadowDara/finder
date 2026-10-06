@@ -1,0 +1,18 @@
+/out
+bin/
+build/
+/.vs
+.idea/
+
+logs.txt
+
+###### CPPM-CONFIG-SECTION-START
+#% name=Max
+#% city=Stuttgart
+#% country=Germany
+#% language=German
+#% status=active
+###### CPPM-CONFIG-SECTION-END
+
+/.cache
+

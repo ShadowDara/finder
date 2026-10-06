@@ -1,5 +1,7 @@
 [workspace]
-members = []
+members = [
+  "cache-viewer"
+]
 
 resolver = "3"
 

@@ -1,0 +1,20 @@
+[package]
+name = "finder-cache-viewer"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+ratatui = "0.29"
+crossterm = "0.28"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+dirs = "6"
+
+[profile.release]
+opt-level = 3       # 0 -> no optimizing, 3 -> max speed
+lto = "fat"         # oder "thin" für schnelleren Build
+codegen-units = 1   # bessere Optimierung, aber langsamerer Compile
+panic = "abort"     # spart etwas Platz, leicht schneller
+strip = true        # entfernt Debug-Symbole (optional)
+debug = false
+incremental = false

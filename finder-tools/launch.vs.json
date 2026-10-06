@@ -1,0 +1,56 @@
+{
+  "configurations": [
+    {
+      "type": "default",
+      "name": "test",
+      "project": "CMakeLists.txt",
+      "projectTarget": "c++m.exe",
+      "args": [],
+      "currentDir": "${workspaceRoot}"
+    },
+    {
+      "type": "default",
+      "name": "help",
+      "project": "CMakeLists.txt",
+      "projectTarget": "c++m.exe",
+      "args": [
+        "--help"
+      ],
+      "currentDir": "${workspaceRoot}"
+    },
+    {
+      "type": "default",
+      "name": "search",
+      "project": "CMakeLists.txt",
+      "projectTarget": "c++m.exe",
+      "args": [
+        "search",
+        "--name",
+        "shadowdara/argparser"
+      ],
+      "currentDir": "${workspaceRoot}"
+    },
+    {
+      "type": "default",
+      "name": "test conf",
+      "project": "CMakeLists.txt",
+      "projectTarget": "c++m.exe",
+      "args": [
+        "conf"
+      ],
+      "currentDir": "${workspaceRoot}"
+    },
+    {
+      "type": "default",
+      "name": "doctor",
+      "project": "CMakeLists.txt",
+      "projectTarget": "c++m.exe",
+      "args": [
+        "doctor"
+      ],
+      "currentDir": "${workspaceRoot}"
+    }
+  ],
+  "defaults": {},
+  "version": "0.2.1"
+}
