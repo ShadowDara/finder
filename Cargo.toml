@@ -1,6 +1,7 @@
 [workspace]
 members = [
-  "cache-viewer"
+  "cache-viewer",
+  "proginfo",
 ]
 
 resolver = "3"
