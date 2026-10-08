@@ -1,8 +1,17 @@
+// FInder Tools
+//
+// C++ Version
+//
+// 08.10.2026
+
+#include <cstdlib>
+
 #include <iostream>
 
 #include <string>
 #include <vector>
 #include <sstream>
+#include <fstream>
 
 #include <yaml-cpp/yaml.h>
 
@@ -83,14 +92,23 @@ int main(int argc, char **argv)
         //
         ArgCommand* createconfCMD = arg_command_new("create", "command to create a new config", "", false, NULL, 0);
         ArgCommand* viewconfCMD = arg_command_new("view", "view config values", "", false, NULL, 0);
+        ArgCommand* editCMD = arg_command_new("edit", "edit config values", "", false, NULL, 0);
 
         // Register
         arg_command_add_subcommand(configCMD, createconfCMD);
         arg_command_add_subcommand(configCMD, viewconfCMD);
+        arg_command_add_subcommand(configCMD, editCMD);
+        
+        // EDIT CMD
+        arg_command_string(editCMD, "name", "", "name for the config value", true, NULL, 0);
+        arg_command_string(editCMD, "value", "", "content of the config value", true, NULL, 0);
     
 
     // Linki Command
     ArgCommand* linkicmd = arg_command_new("linki", "", "", false, NULL, 0);
+
+    // Cache viewer
+    ArgCommand* cacheviewerCMD = arg_command_new("cv", "start the config viewer", "", false, NULL, 0);
 
     // Search Command
     const char* name_aliases[] = { "n" };
@@ -119,13 +137,19 @@ int main(int argc, char **argv)
     arg_command_add_subcommand(root, doctorcmd);
     arg_command_add_subcommand(root, runcmd);
     arg_command_add_subcommand(root, buildcmd);
-    arg_command_add_subcommand(root, linki);
+    arg_command_add_subcommand(root, linkicmd);
+    arg_command_add_subcommand(root, cacheviewerCMD);
 
     // Parsed command
     ArgCommand* cmd = arg_command_parse(root, argc - 1, argv + 1);
 
     // CONFIG COMMAND
     if (cmd == configCMD)
+    {
+        arg_command_print_help(cmd);
+    }
+
+    else if (cmd == viewconfCMD)
     {
         auto confpath = getConfigPath();
         std::ifstream file(confpath);
@@ -145,7 +169,45 @@ int main(int argc, char **argv)
     else if (cmd == createconfCMD)
     {
         auto confpath = getConfigPathC();
+        
+        std::ifstream filein(confpath);
+
+        if (filein.peek() == std::ifstream::traits_type::eof())
+        {
         std::ofstream file(confpath);
+       
+        if (!file)
+        {
+            std::cerr << "Could not create file!\n";
+            return 1;
+        } 
+ file << "{}";
+        file.close();
+
+        std::cout << "Config created at " << confpath << "\n";
+        }
+        return 0;
+    }
+
+    // Edit Config Values Command
+    else if (cmd == editCMD)
+    {
+        const char* name = arg_command_get_string(cmd, "name");
+        const char* value = arg_command_get_string(cmd, "value");
+
+        // Null Checks
+        if (name == nullptr || name[0] == '\0')
+        {
+            return 1;
+        }
+
+        if (value == nullptr || value[0] == '\0')
+        {
+            return 1;
+        }
+
+        auto confpath = getConfigPathC();
+        std::ifstream file(confpath);
 
         if (!file)
         {
@@ -153,11 +215,15 @@ int main(int argc, char **argv)
             return 1;
         }
 
-        file << "{}";
+        json data;
+        file >> data;
+
+        data["name"] = value;
+
+        std::ofstream output(confpath);
+        output << data.dump(4);
 
         file.close();
-
-        std::cout << "Config created at " << confpath << "\n";
 
         return 0;
     }
@@ -166,6 +232,13 @@ int main(int argc, char **argv)
     else if (cmd == linkicmd)
     {
         std::cout << "Linki\n";
+    }
+
+    else if (cmd == cacheviewerCMD)
+    {
+        system("finder-cache-viewer");
+
+        return 0;
     }
 
     // Search Command

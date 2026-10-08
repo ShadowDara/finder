@@ -5,9 +5,7 @@ use std::{
 };
 
 use crossterm::{
-    event::{self, Event, KeyCode, KeyEvent, KeyModifiers},
-    execute,
-    terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
+    event::{self, Event, KeyCode, KeyEvent, KeyEventKind, KeyModifiers}, execute, terminal::{EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode, enable_raw_mode},
 };
 
 use ratatui::{
@@ -296,6 +294,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> io::Result<()> {
     let mut app = App::new()?;
 
+
     loop {
         terminal.draw(|frame| {
             draw_ui(frame, &app);
@@ -303,8 +302,13 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> io::Result<
 
         if event::poll(Duration::from_millis(100))? {
             if let Event::Key(key) = event::read()? {
-                if handle_key(&mut app, key)? {
-                    break;
+                match key.kind {
+                    KeyEventKind::Press | KeyEventKind::Repeat => {
+                        if handle_key(&mut app, key)? {
+                            break;
+                        }
+                    }
+                    KeyEventKind::Release => {}
                 }
             }
         }
