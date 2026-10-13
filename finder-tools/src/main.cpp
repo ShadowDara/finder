@@ -212,7 +212,7 @@ int main(int argc, char **argv)
 
         if (!file)
         {
-            std::cerr << "Could not create file!\n";
+            std::cerr << "Could not read file!\n";
             return 1;
         }
 
