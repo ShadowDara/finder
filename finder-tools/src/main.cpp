@@ -143,6 +143,16 @@ int main(int argc, char **argv)
     // Parsed command
     ArgCommand* cmd = arg_command_parse(root, argc - 1, argv + 1);
 
+//     if (cmd == nullptr) {
+//     std::cerr << "Argument parsing failed.\n";
+//     arg_command_free(root);
+//     return EXIT_FAILURE;
+// }
+
+// std::cerr << "Parsed command: " << cmd->name << '\n';
+// std::cerr << "name = [" << arg_command_get_string(cmd, "name") << "]\n";
+// std::cerr << "value = [" << arg_command_get_string(cmd, "value") << "]\n";
+
     // CONFIG COMMAND
     if (cmd == configCMD)
     {
@@ -219,7 +229,7 @@ int main(int argc, char **argv)
         json data;
         file >> data;
 
-        data["name"] = value;
+        data[name] = value;
 
         std::ofstream output(confpath);
         output << data.dump(4);

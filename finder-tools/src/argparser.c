@@ -517,50 +517,64 @@ ArgCommand *arg_command_parse(ArgCommand *command, int argc, char **argv) {
 
     if (strncmp(arg, "--", 2) == 0) {
       char *key = arg + 2;
-
-      /*
-       * --key=value
-       */
       char *equals = strchr(key, '=');
+      const char *value = NULL;
+      char *name = NULL;
 
       if (equals) {
         size_t key_len = (size_t)(equals - key);
 
-        char *name = xmalloc(key_len + 1);
-
+        name = xmalloc(key_len + 1);
         memcpy(name, key, key_len);
         name[key_len] = '\0';
 
-        const char *value = equals + 1;
-
-        ArgFlag *flag = find_available_flag(command, name);
-
-        if (flag && flag->type != ARG_FLAG_BOOL) {
-          set_flag_value(flag, value);
-        }
-
-        free(name);
-
-        continue;
+        value = equals + 1;
+        key = name;
       }
 
-      /*
-       * --key
-       */
       ArgFlag *flag = find_available_flag(command, key);
 
-      if (flag) {
-        if (flag->type == ARG_FLAG_BOOL) {
-          flag->bool_value = true;
-          flag->set = true;
-        } else if (i + 1 < argc) {
-          set_flag_value(flag, argv[i + 1]);
+      if (!flag) {
+        fprintf(stderr, "Unknown flag: --%s\n", key);
+        free(name);
+        return NULL;
+      }
 
-          i++;
+      if (flag->type == ARG_FLAG_BOOL) {
+        if (value) {
+          fprintf(stderr, "Boolean flag does not accept a value: --%s\n", key);
+          free(name);
+          return NULL;
         }
 
-        continue;
+        flag->bool_value = true;
+        flag->set = true;
+      } else {
+        if (!value) {
+          if (i + 1 >= argc) {
+            fprintf(stderr, "Missing value for --%s\n", key);
+            free(name);
+            return NULL;
+          }
+
+          value = argv[++i];
+        }
+
+        if (flag->type == ARG_FLAG_NUMBER) {
+          int64_t number;
+
+          if (!parse_number(value, &number)) {
+            fprintf(stderr, "Invalid number for --%s: %s\n", key, value);
+            free(name);
+            return NULL;
+          }
+        }
+
+        set_flag_value(flag, value);
       }
+
+      free(name);
+      continue;
     }
 
     /*
