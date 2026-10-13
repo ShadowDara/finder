@@ -11,6 +11,9 @@ serde_json = "1"
 dirs = "6"
 arboard = "3"
 
+[build-dependencies]
+winres = "0.1"
+
 [profile.release]
 opt-level = 3       # 0 -> no optimizing, 3 -> max speed
 lto = "fat"         # oder "thin" für schnelleren Build
