@@ -110,6 +110,9 @@ int main(int argc, char **argv)
     // Cache viewer
     ArgCommand* cacheviewerCMD = arg_command_new("cv", "start the config viewer", "", false, NULL, 0);
 
+    // Template Edit CMD
+    ArgCommand* templateeditCMD = arg_command_new("edit", "edit the user templates", "", false, NULL, 0);
+
     // Search Command
     const char* name_aliases[] = { "n" };
     ArgCommand* search = arg_command_new("search", "search for librarys.", "", false, NULL, 0);
@@ -139,6 +142,7 @@ int main(int argc, char **argv)
     arg_command_add_subcommand(root, buildcmd);
     arg_command_add_subcommand(root, linkicmd);
     arg_command_add_subcommand(root, cacheviewerCMD);
+    arg_command_add_subcommand(root, templateeditCMD);
 
     // Parsed command
     ArgCommand* cmd = arg_command_parse(root, argc - 1, argv + 1);
@@ -306,6 +310,18 @@ int main(int argc, char **argv)
     else if (cmd == doctorcmd)
     {
         doctor();
+    }
+
+    // edit template CMD
+    else if (cmd == templateeditCMD)
+    {
+        if (argc <= 2)
+        {
+            arg_command_print_help(templateeditCMD);
+            return 0;
+        }
+
+        std::cout << "Template name" << argv[2] << "\n";
     }
 
     // default
