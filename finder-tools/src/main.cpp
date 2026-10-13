@@ -314,19 +314,24 @@ int main(int argc, char **argv)
 	// help check
         if (arg_command_get_bool(root, "help"))
 	{
-	    arg_command_print_help(root); return 0;
+	    arg_command_print_help(root);
+      return 0;
 	}
 
 	// default message
-        std::cout << NAME " - package viewer for the cpp registry: https://cpp-registry.github.io\n";
-        if (conf.size() > 0)
-        {
-            std::cout << "\nPackages:\n";
-            for (const auto& e : conf)
-            {
-                std::cout << e.owner << "/" << e.pkgname << "\n";
-            }
-        }
+        //std::cout << NAME " - package viewer for the cpp registry: https://cpp-registry.github.io\n";
+        //if (conf.size() > 0)
+        //{
+        //    std::cout << "\nPackages:\n";
+        //    for (const auto& e : conf)
+        //    {
+        //        std::cout << e.owner << "/" << e.pkgname << "\n";
+        //    }
+        //}
+        
+
+        arg_command_print_help(root);
+        return 0;
     }
     
     arg_command_free(root);
