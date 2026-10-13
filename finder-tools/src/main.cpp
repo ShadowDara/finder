@@ -181,7 +181,8 @@ int main(int argc, char **argv)
             std::cerr << "Could not create file!\n";
             return 1;
         } 
- file << "{}";
+
+        file << "{}";
         file.close();
 
         std::cout << "Config created at " << confpath << "\n";
