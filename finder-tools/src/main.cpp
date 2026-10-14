@@ -313,6 +313,13 @@ int main(int argc, char **argv)
     }
 
     // edit template CMD
+    //
+    // TODO
+    //
+    // Currently this feature only works for templates which ends with .json
+    // but it should work for JSONC and currently JSON5 and later maybe yaml
+    // too!
+    //
     else if (cmd == templateeditCMD)
     {
         if (argc <= 2)
@@ -321,7 +328,10 @@ int main(int argc, char **argv)
             return 0;
         }
 
-        std::cout << "Template name" << argv[2] << "\n";
+        auto homeDir = getHomeDirectory() / ".finder" / "templates";
+        auto path = homeDir / argv[2];
+
+        system((std::string("vim ") + path.string() + std::string(".json")).c_str());
     }
 
     // default
