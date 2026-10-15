@@ -1,7 +1,7 @@
 # Makefile for c++m
 
 BUILD_DIR := build
-BIN := c++m
+BIN := "ft"
 
 .PHONY: all build clean rebuild run
 

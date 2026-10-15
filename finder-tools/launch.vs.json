@@ -4,7 +4,7 @@
       "type": "default",
       "name": "test",
       "project": "CMakeLists.txt",
-      "projectTarget": "c++m.exe",
+      "projectTarget": "ft.exe",
       "args": [],
       "currentDir": "${workspaceRoot}"
     },
@@ -12,7 +12,7 @@
       "type": "default",
       "name": "help",
       "project": "CMakeLists.txt",
-      "projectTarget": "c++m.exe",
+      "projectTarget": "ft.exe",
       "args": [
         "--help"
       ],
@@ -22,7 +22,7 @@
       "type": "default",
       "name": "search",
       "project": "CMakeLists.txt",
-      "projectTarget": "c++m.exe",
+      "projectTarget": "ft.exe",
       "args": [
         "search",
         "--name",
@@ -34,7 +34,7 @@
       "type": "default",
       "name": "test conf",
       "project": "CMakeLists.txt",
-      "projectTarget": "c++m.exe",
+      "projectTarget": "ft.exe",
       "args": [
         "conf"
       ],
@@ -44,7 +44,7 @@
       "type": "default",
       "name": "doctor",
       "project": "CMakeLists.txt",
-      "projectTarget": "c++m.exe",
+      "projectTarget": "ft.exe",
       "args": [
         "doctor"
       ],
